@@ -59,7 +59,7 @@ const Boardroom: React.FC = () => {
             <br />
             The boardroom upgrade was successful. Please settle and withdraw your stake from the
             legacy boardroom, then stake again on the new boardroom contract{' '}
-            <b>to continue earning BAC seigniorage.</b>
+            <b>to continue earning ARTH seigniorage.</b>
           </Notice>
         </StyledNoticeWrapper>
       );
@@ -75,7 +75,7 @@ const Boardroom: React.FC = () => {
           <PageHeader
             icon={'🤝'}
             title="Join the Boardroom"
-            subtitle="Deposit Basis Shares and earn inflationary rewards"
+            subtitle="Deposit MAHAs and earn inflationary rewards"
           />
           <LaunchCountdown
             deadline={config.boardroomLaunchesAt}
@@ -95,7 +95,7 @@ const Boardroom: React.FC = () => {
             <PageHeader
               icon={'🤝'}
               title="Join the Boardroom"
-              subtitle="Deposit Basis Shares and earn inflationary rewards"
+              subtitle="Deposit MAHAs and earn inflationary rewards"
             />
             {migrateNotice}
             <StyledHeader>
@@ -107,7 +107,7 @@ const Boardroom: React.FC = () => {
               <Stat
                 icon="💵"
                 title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
-                description="BAC Price (TWAP)"
+                description="ARTH Price (TWAP)"
               />
               <Stat
                 icon="🚀"

@@ -33,7 +33,7 @@ const Bond: React.FC = () => {
       const tx = await basisCash.buyBonds(amount);
       const bondAmount = Number(amount) / Number(getDisplayBalance(cashPrice));
       addTransaction(tx, {
-        summary: `Buy ${bondAmount.toFixed(2)} BAB with ${amount} BAC`,
+        summary: `Buy ${bondAmount.toFixed(2)} ARTHB with ${amount} ARTH`,
       });
     },
     [basisCash, addTransaction, cashPrice],
@@ -42,7 +42,7 @@ const Bond: React.FC = () => {
   const handleRedeemBonds = useCallback(
     async (amount: string) => {
       const tx = await basisCash.redeemBonds(amount);
-      addTransaction(tx, { summary: `Redeem ${amount} BAB` });
+      addTransaction(tx, { summary: `Redeem ${amount} ARTHB` });
     },
     [basisCash, addTransaction],
   );
@@ -61,7 +61,7 @@ const Bond: React.FC = () => {
           />
           <LaunchCountdown
             deadline={config.bondLaunchesAt}
-            description="How does Basis bond work?"
+            description="How does ARTH Bond work?"
             descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
           />
         </Page>
@@ -85,16 +85,16 @@ const Bond: React.FC = () => {
                 <ExchangeCard
                   action="Purchase"
                   fromToken={basisCash.BAC}
-                  fromTokenName="Basis Cash"
+                  fromTokenName="ARTH"
                   toToken={basisCash.BAB}
-                  toTokenName="Basis Bond"
+                  toTokenName="ARTH Bond"
                   priceDesc={
                     cashIsOverpriced
-                      ? 'BAC is over $1'
+                      ? 'ARTH is over $1'
                       : cashIsUnderPriced
                       ? `${Math.floor(
                           100 / Number(bondStat.priceInDAI) - 100,
-                        )}% return when BAC > $1`
+                        )}% return when ARTH > $1`
                       : '-'
                   }
                   onExchange={handleBuyBonds}
@@ -103,14 +103,14 @@ const Bond: React.FC = () => {
               </StyledCardWrapper>
               <StyledStatsWrapper>
                 <ExchangeStat
-                  tokenName="BAC"
+                  tokenName="ARTH"
                   description="Base Price (Last-Day TWAP)"
                   price={getDisplayBalance(cashPrice, 18, 2)}
                 />
                 <Spacer size="md" />
                 <ExchangeStat
-                  tokenName="BAB"
-                  description="Current Price: (BAC)^2"
+                  tokenName="ARTHB"
+                  description="Current Price: (ARTH)^2"
                   price={bondStat?.priceInDAI || '-'}
                 />
               </StyledStatsWrapper>
@@ -118,10 +118,10 @@ const Bond: React.FC = () => {
                 <ExchangeCard
                   action="Redeem"
                   fromToken={basisCash.BAB}
-                  fromTokenName="Basis Bond"
+                  fromTokenName="ARTH Bond"
                   toToken={basisCash.BAC}
-                  toTokenName="Basis Cash"
-                  priceDesc={`${getDisplayBalance(bondBalance)} BAB Available`}
+                  toTokenName="ARTH Cash"
+                  priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                   onExchange={handleRedeemBonds}
                   disabled={!bondStat || bondBalance.eq(0) || cashIsUnderPriced}
                 />

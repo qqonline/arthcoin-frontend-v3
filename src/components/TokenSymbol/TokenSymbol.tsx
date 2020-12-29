@@ -9,15 +9,15 @@ import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
 
-const logosBySymbol: {[title: string]: string} = {
-  'BAC': bacLogo,
-  'BAB': babLogo,
-  'BAS': basLogo,
-  'yCRV': yCRVLogo,
-  'DAI': DAILogo,
-  'SUSD': sUSDLogo,
-  'USDC': USDCLogo,
-  'USDT': USDTLogo,
+const logosBySymbol: { [title: string]: string } = {
+  ARTH: bacLogo,
+  BAB: babLogo,
+  BAS: basLogo,
+  yCRV: yCRVLogo,
+  DAI: DAILogo,
+  SUSD: sUSDLogo,
+  USDC: USDCLogo,
+  USDT: USDTLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'BAS_DAI-UNI-LPv2': basLogo,
 };
@@ -25,20 +25,13 @@ const logosBySymbol: {[title: string]: string} = {
 type BasisLogoProps = {
   symbol: string;
   size?: number;
-}
+};
 
 const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
   if (!logosBySymbol[symbol]) {
     throw new Error(`Invalid BasisLogo symbol: ${symbol}`);
   }
-  return (
-    <img
-      src={logosBySymbol[symbol]}
-      alt={`${symbol} Logo`}
-      width={size}
-      height={size}
-    />
-  )
+  return <img src={logosBySymbol[symbol]} alt={`${symbol} Logo`} width={size} height={size} />;
 };
 
 export default TokenSymbol;

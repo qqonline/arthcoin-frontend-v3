@@ -28,68 +28,68 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAC" />
+          <TokenSymbol symbol="ARTH" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="BAC Available" />
+            <Label text="ARTH Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAS" />
+          <TokenSymbol symbol="MAHA" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="BAS Available" />
+            <Label text="MAHA Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="BAB" />
+          <TokenSymbol symbol="ARTHB" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="BAB Available" />
+            <Label text="ARTHB Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>
     </Modal>
-  )
-}
+  );
+};
 
 const StyledValue = styled.div`
-  color: ${props => props.theme.color.grey[300]};
+  color: ${(props) => props.theme.color.grey[300]};
   font-size: 30px;
   font-weight: 700;
-`
+`;
 
 const StyledBalance = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const Balances = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: ${props => props.theme.spacing[4]}px;
-`
+  margin-bottom: ${(props) => props.theme.spacing[4]}px;
+`;
 
 const StyledBalanceWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin: 0 ${props => props.theme.spacing[3]}px;
-`
+  margin: 0 ${(props) => props.theme.spacing[3]}px;
+`;
 
 const StyledBalanceIcon = styled.div`
   font-size: 36px;
-  margin-right: ${props => props.theme.spacing[3]}px;
-`
+  margin-right: ${(props) => props.theme.spacing[3]}px;
+`;
 
 const StyledBalanceActions = styled.div`
   align-items: center;
   display: flex;
-  margin-top: ${props => props.theme.spacing[4]}px;
-`
+  margin-top: ${(props) => props.theme.spacing[4]}px;
+`;
 
-export default AccountModal
+export default AccountModal;

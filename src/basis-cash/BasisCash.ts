@@ -11,7 +11,7 @@ import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import { parseUnits } from 'ethers/lib/utils';
 
 /**
- * An API module of Basis Cash contracts.
+ * An API module of ARTH contracts.
  * All contract-interacting domain logic should be defined in here.
  */
 export class BasisCash {
@@ -41,9 +41,9 @@ export class BasisCash {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
     }
-    this.BAC = new ERC20(deployments.Cash.address, provider, 'BAC');
-    this.BAS = new ERC20(deployments.Share.address, provider, 'BAS');
-    this.BAB = new ERC20(deployments.Bond.address, provider, 'BAB');
+    this.BAC = new ERC20(deployments.Cash.address, provider, 'ARTH');
+    this.BAS = new ERC20(deployments.Share.address, provider, 'MAHA');
+    this.BAB = new ERC20(deployments.Bond.address, provider, 'ARTHB');
 
     // Uniswap V2 Pair
     this.bacDai = new Contract(
@@ -95,8 +95,8 @@ export class BasisCash {
   }
 
   /**
-   * @returns Basis Cash (BAC) stats from Uniswap.
-   * It may differ from the BAC price used on Treasury (which is calculated in TWAP)
+   * @returns ARTH (ARTH) stats from Uniswap.
+   * It may differ from the ARTH price used on Treasury (which is calculated in TWAP)
    */
   async getCashStatFromUniswap(): Promise<TokenStat> {
     const supply = await this.BAC.displayedTotalSupply();
@@ -107,7 +107,7 @@ export class BasisCash {
   }
 
   /**
-   * @returns Estimated Basis Cash (BAC) price data,
+   * @returns Estimated ARTH (ARTH) price data,
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
    */
   async getCashStatInEstimatedTWAP(): Promise<TokenStat> {
@@ -268,14 +268,14 @@ export class BasisCash {
     const balance1 = await Boardroom1.getShareOf(this.myAccount);
     if (balance1.gt(0)) {
       console.log(
-        `👀 The user is using Boardroom v1. (Staked ${getDisplayBalance(balance1)} BAS)`,
+        `👀 The user is using Boardroom v1. (Staked ${getDisplayBalance(balance1)} MAHA)`,
       );
       return 'v1';
     }
     const balance2 = await Boardroom2.balanceOf(this.myAccount);
     if (balance2.gt(0)) {
       console.log(
-        `👀 The user is using Boardroom v2. (Staked ${getDisplayBalance(balance2)} BAS)`,
+        `👀 The user is using Boardroom v2. (Staked ${getDisplayBalance(balance2)} MAHA)`,
       );
       return 'v2';
     }
@@ -305,7 +305,7 @@ export class BasisCash {
 
   async stakeShareToBoardroom(amount: string): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
-      throw new Error("you're using old Boardroom. please withdraw and deposit the BAS again.");
+      throw new Error("you're using old Boardroom. please withdraw and deposit the MAHA again.");
     }
     const Boardroom = this.currentBoardroom();
     return await Boardroom.stake(decimalToBalance(amount));

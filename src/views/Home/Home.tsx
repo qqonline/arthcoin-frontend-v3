@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     if (basisCash) {
       fetchStats().catch((err) => console.error(err.stack));
     }
-  }, [basisCash]);
+  }, [basisCash, fetchStats]);
 
   const cashAddr = useMemo(() => basisCash?.BAC.address, [basisCash]);
   const shareAddr = useMemo(() => basisCash?.BAS.address, [basisCash]);
@@ -39,31 +39,25 @@ const Home: React.FC = () => {
     <Page>
       <PageHeader
         icon="👋"
-        subtitle="Buy, sell, and provide liquidity for Basis Cash and Basis Shares on Uniswap"
-        title="Welcome to Basis Cash!"
+        subtitle="Buy, sell, and provide liquidity for ARTH and MAHA on Uniswap"
+        title="Welcome to ARTH!"
       />
       <Spacer size="md" />
       <CardWrapper>
         <HomeCard
-          title="Basis Cash"
-          symbol="BAC"
+          title="ARTH"
+          symbol="ARTH"
           color="#EEA7ED"
           supplyLabel="Circulating Supply"
           address={cashAddr}
           stat={cash}
         />
         <Spacer size="lg" />
-        <HomeCard
-          title="Basis Share"
-          symbol="BAS"
-          color="#E83725"
-          address={shareAddr}
-          stat={share}
-        />
+        <HomeCard title="MAHA" symbol="MAHA" color="#E83725" address={shareAddr} stat={share} />
         <Spacer size="lg" />
         <HomeCard
-          title="Basis Bond"
-          symbol="BAB"
+          title="ARTH Bond"
+          symbol="ARTHB"
           color="#ECF25C"
           address={bondAddr}
           stat={bond}

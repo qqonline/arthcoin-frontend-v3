@@ -40,7 +40,7 @@ const Stake: React.FC = () => {
 
   const { onStake } = useStakeToBoardroom();
   const { onWithdraw } = useWithdrawFromBoardroom();
-  const { onRedeem } = useRedeemOnBoardroom('Redeem BAS for Boardroom Migration');
+  const { onRedeem } = useRedeemOnBoardroom('Redeem MAHA for Boardroom Migration');
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal
@@ -49,7 +49,7 @@ const Stake: React.FC = () => {
         onStake(value);
         onDismissDeposit();
       }}
-      tokenName={'Basis Share'}
+      tokenName={'MAHA'}
     />,
   );
 
@@ -60,7 +60,7 @@ const Stake: React.FC = () => {
         onWithdraw(value);
         onDismissWithdraw();
       }}
-      tokenName={'Basis Share'}
+      tokenName={'MAHA'}
     />,
   );
 
@@ -70,25 +70,21 @@ const Stake: React.FC = () => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="BAS" />
+              <TokenSymbol symbol="MAHA" />
             </CardIcon>
             <Value value={getDisplayBalance(stakedBalance)} />
-            <Label text="Basis Share Staked" />
+            <Label text="MAHA Staked" />
           </StyledCardHeader>
           <StyledCardActions>
             {!isOldBoardroomMember && approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                 onClick={approve}
-                text="Approve Basis Share"
+                text="Approve MAHA"
               />
             ) : isOldBoardroomMember ? (
               <>
-                <Button
-                  onClick={onRedeem}
-                  variant="secondary"
-                  text="Settle & Withdraw"
-                />
+                <Button onClick={onRedeem} variant="secondary" text="Settle & Withdraw" />
               </>
             ) : (
               <>
