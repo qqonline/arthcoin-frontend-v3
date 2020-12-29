@@ -120,7 +120,7 @@ const Bond: React.FC = () => {
                   fromToken={basisCash.BAB}
                   fromTokenName="ARTH Bond"
                   toToken={basisCash.BAC}
-                  toTokenName="ARTH Cash"
+                  toTokenName="ARTH"
                   priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                   onExchange={handleRedeemBonds}
                   disabled={!bondStat || bondBalance.eq(0) || cashIsUnderPriced}

@@ -45,7 +45,7 @@ const App: React.FC = () => {
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider chainId={config.chainId}>
+      <UseWalletProvider chainId={1}>
         <Provider store={store}>
           <Updaters />
           <BasisCashProvider>

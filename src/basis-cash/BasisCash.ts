@@ -190,7 +190,7 @@ export class BasisCash {
   }
 
   /**
-   * Redeem bonds for cash.
+   * Redeem bonds for ARTH.
    * @param amount amount of bonds to redeem.
    */
   async redeemBonds(amount: string): Promise<TransactionResponse> {

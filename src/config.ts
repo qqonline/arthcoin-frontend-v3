@@ -6,9 +6,9 @@ import { BigNumber } from 'ethers';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
-    chainId: ChainId.KOVAN,
-    etherscanUrl: 'https://kovan.etherscan.io',
-    defaultProvider: 'https://kovan.infura.io/v3/06ecf536272c43c78adfba29b908a68d',
+    chainId: ChainId.MAINNET,
+    etherscanUrl: 'https://etherscan.io',
+    defaultProvider: 'https://infura.io/v3/69666afe933b4175afe4999170158a5f',
     deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
     externalTokens: {
       DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
@@ -28,7 +28,7 @@ const configurations: { [env: string]: Configuration } = {
   production: {
     chainId: ChainId.MAINNET,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'https://mainnet.infura.io/v3/06ecf536272c43c78adfba29b908a68d',
+    defaultProvider: 'https://mainnet.infura.io/v3/69666afe933b4175afe4999170158a5f',
     deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
     externalTokens: {
       DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
@@ -61,7 +61,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     contract: 'BACUSDCPool',
     depositTokenName: 'USDC',
     earnTokenName: 'ARTH',
-    finished: true,
+    finished: false,
     sort: 4,
   },
   BACSUSDPool: {
@@ -106,4 +106,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-export default configurations[process.env.NODE_ENV || "development"];
+export default configurations[process.env.NODE_ENV || "production"];
