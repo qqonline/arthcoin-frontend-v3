@@ -11,6 +11,7 @@ import ModalsProvider from './contexts/Modals';
 import Banks from './views/Banks';
 import Home from './views/Home';
 import Bond from './views/Bond';
+import Stats from './views/Stats';
 
 import store from './state';
 import theme from './theme';
@@ -26,6 +27,9 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/stats">
+            <Stats />
           </Route>
           <Route path="/bank">
             <Banks />
