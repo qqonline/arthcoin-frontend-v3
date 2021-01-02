@@ -34,28 +34,23 @@ const StyledNav = styled.nav`
 
 const StyledLink = styled(NavLink)`
   color: ${(props) => props.theme.color.grey[400]};
-  font-weight: 700;
+  height: 69px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: ${(props) => props.theme.spacing[3]}px;
   padding-right: ${(props) => props.theme.spacing[3]}px;
   text-decoration: none;
+  border-bottom: 2px solid transparent;
   &:hover {
-    color: ${(props) => props.theme.color.grey[500]};
+    color: #fff;
+    background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, rgba(253, 86, 86, 0.1) 100%);
+    border-bottom: 2px solid rgba(253, 86, 86, 0.3);
   }
   &.active {
-    color: ${(props) => props.theme.color.primary.main};
-  }
-`;
-const StyledLink2 = styled.a`
-  color: ${(props) => props.theme.color.grey[400]};
-  font-weight: 700;
-  padding-left: ${(props) => props.theme.spacing[3]}px;
-  padding-right: ${(props) => props.theme.spacing[3]}px;
-  text-decoration: none;
-  &:hover {
-    color: ${(props) => props.theme.color.grey[500]};
-  }
-  &.active {
-    color: ${(props) => props.theme.color.primary.main};
+    border-bottom: 2px solid #f47f57;
+    background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, rgba(253, 86, 86, 0.1) 100%);
+    color: #fff;
   }
 `;
 

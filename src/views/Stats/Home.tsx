@@ -7,6 +7,7 @@ import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
 import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
+import StastIcon from './stats.png';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -37,7 +38,7 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon="👋"
+        icon={<img alt="stats" src={StastIcon} />}
         subtitle="View information about the current ARTH market"
         title="Statistics"
       />
