@@ -79,7 +79,7 @@ const Bond: React.FC = () => {
             <PageHeader
               icon={<img alt="bonds" src={BondsIcon} />}
               title="Buy & Redeem Bonds"
-              subtitle="Bonds can be bought when ARTH is trading below it's target price and can be redeemed at a premium when ARTH is tarding above it's target price."
+              subtitle="Bonds can be bought when ARTH is trading below it's target price and can be redeemed at a premium when ARTH is trading above it's target price."
             />
           </Route>
           <StyledBond>

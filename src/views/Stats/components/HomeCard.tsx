@@ -6,6 +6,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
+import Spacer from '../../../components/Spacer';
 
 interface HomeCardProps {
   title: string;
@@ -27,46 +28,69 @@ const HomeCard: React.FC<HomeCardProps> = ({
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>
-      <CardHeader>{title}</CardHeader>
       <StyledCards>
-        <TokenSymbol symbol={symbol} />
-        <CardSection>
-          {stat ? (
-            <StyledValue>{(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}</StyledValue>
-          ) : (
-            <ValueSkeleton />
-          )}
-          <Label text="Current Price" color={color} />
-        </CardSection>
+        <CardHeader>
+          <TokenSymbol size={40} symbol={symbol} />
+          <Spacer size="sm" />
+          {title}
+        </CardHeader>
 
-        <CardSection>
-          {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : <ValueSkeleton />}
-          <StyledSupplyLabel href={tokenUrl} target="_blank" color={color}>
-            {supplyLabel}
-          </StyledSupplyLabel>
-        </CardSection>
+        <CardContent>
+          <CardSection>
+            {stat ? (
+              <StyledValue>
+                {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
+              </StyledValue>
+            ) : (
+              '-'
+            )}
+
+            <Label text="Current Price" color={'#ffffff99'} />
+          </CardSection>
+
+          <CardSection className="right">
+            {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : '-'}
+            <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
+              {supplyLabel}
+            </StyledSupplyLabel>
+          </CardSection>
+        </CardContent>
       </StyledCards>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  min-width: 200px;
+  width: 100%;
+
   @media (max-width: 768px) {
     margin-top: ${(props) => props.theme.spacing[4]}px;
   }
 `;
 
+const CardContent = styled.div`
+  display: flex;
+  margin: 0 15px 15px;
+`;
+
 const CardHeader = styled.h2`
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
 
 const StyledCards = styled.div`
-  min-width: 200px;
-  padding: ${(props) => props.theme.spacing[3]}px;
-  color: ${(props) => props.theme.color.white};
-  background-color: ${(props) => props.theme.color.grey[900]};
-  border-radius: 5px;
+  padding: 5px 0;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  backdrop-filter: blur(70px);
+
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -74,15 +98,19 @@ const StyledCards = styled.div`
 
 const StyledValue = styled.span`
   display: inline-block;
-  font-size: 36px;
+  font-size: 18px;
   color: #eeeeee;
 `;
 
 const CardSection = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[4]}px;
+  flex: 1;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &.right {
+    text-align: right;
   }
 `;
 

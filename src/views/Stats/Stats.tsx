@@ -72,6 +72,27 @@ const Home: React.FC = () => {
         title="Statistics"
       />
 
+      <CardWrapper>
+        <HomeCard
+          title="ARTH"
+          symbol="ARTH"
+          color="#EEA7ED"
+          supplyLabel="Circulating Supply"
+          address={cashAddr}
+          stat={cash}
+        />
+        <Spacer size="lg" />
+        <HomeCard title="MAHA" symbol="MAHA" color="#E83725" address={shareAddr} stat={share} />
+        <Spacer size="lg" />
+        <HomeCard
+          title="ARTH Bond"
+          symbol="ARTHB"
+          color="#ECF25C"
+          address={bondAddr}
+          stat={bond}
+        />
+      </CardWrapper>
+
       <Spacer size="md" />
 
       <StyledHeader>
@@ -115,27 +136,6 @@ const Home: React.FC = () => {
           description="Debt increase by next Epoch"
         />
       </StyledHeader>
-
-      <CardWrapper>
-        <HomeCard
-          title="ARTH"
-          symbol="ARTH"
-          color="#EEA7ED"
-          supplyLabel="Circulating Supply"
-          address={cashAddr}
-          stat={cash}
-        />
-        <Spacer size="lg" />
-        <HomeCard title="MAHA" symbol="MAHA" color="#E83725" address={shareAddr} stat={share} />
-        <Spacer size="lg" />
-        <HomeCard
-          title="ARTH Bond"
-          symbol="ARTHB"
-          color="#ECF25C"
-          address={bondAddr}
-          stat={bond}
-        />
-      </CardWrapper>
     </Page>
   );
 };
@@ -144,6 +144,7 @@ const CardWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 950px;
 
   @media (max-width: 768px) {
     width: 100%;
