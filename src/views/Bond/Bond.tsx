@@ -17,6 +17,7 @@ import LaunchCountdown from '../../components/LaunchCountdown';
 import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../utils/formatBalance';
+import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../basis-cash/constants';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -46,8 +47,8 @@ const Bond: React.FC = () => {
     },
     [basisCash, addTransaction],
   );
-  const cashIsOverpriced = useMemo(() => cashPrice.gt(1.0), [cashPrice]);
-  const cashIsUnderPriced = useMemo(() => Number(bondStat?.priceInDAI) < 1.0, [bondStat]);
+  const isBondRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
+  const isBondPurchasable = useMemo(() => Number(bondStat?.priceInDAI) < 1.0, [bondStat]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
   if (!isLaunched) {
@@ -89,22 +90,20 @@ const Bond: React.FC = () => {
                   toToken={basisCash.BAB}
                   toTokenName="ARTH Bond"
                   priceDesc={
-                    cashIsOverpriced
-                      ? 'ARTH is over $1'
-                      : cashIsUnderPriced
-                      ? `${Math.floor(
+                    !isBondPurchasable
+                      ? 'BAC is over $1'
+                      : `${Math.floor(
                           100 / Number(bondStat.priceInDAI) - 100,
-                        )}% return when ARTH > $1`
-                      : '-'
+                        )}% return when BAC > $1`
                   }
                   onExchange={handleBuyBonds}
-                  disabled={!bondStat || cashIsOverpriced}
+                  disabled={!bondStat || isBondRedeemable}
                 />
               </StyledCardWrapper>
               <StyledStatsWrapper>
                 <ExchangeStat
-                  tokenName="ARTH"
-                  description="Base Price (Last-Day TWAP)"
+                  tokenName="BAC"
+                  description="Last-Hour TWAP Price"
                   price={getDisplayBalance(cashPrice, 18, 2)}
                 />
                 <Spacer size="md" />
@@ -123,7 +122,10 @@ const Bond: React.FC = () => {
                   toTokenName="ARTH"
                   priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                   onExchange={handleRedeemBonds}
-                  disabled={!bondStat || bondBalance.eq(0) || cashIsUnderPriced}
+                  disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
+                  disabledDescription={
+                    !isBondRedeemable ? `Enabled when BAC > $${BOND_REDEEM_PRICE}` : null
+                  }
                 />
               </StyledCardWrapper>
             </StyledBond>

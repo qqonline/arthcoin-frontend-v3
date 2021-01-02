@@ -8,7 +8,6 @@ import ERC20 from './ERC20';
 import { getDisplayBalance } from '../utils/formatBalance';
 import { getDefaultProvider } from '../utils/provider';
 import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
-import { parseUnits } from 'ethers/lib/utils';
 
 /**
  * An API module of ARTH contracts.
@@ -186,7 +185,7 @@ export class BasisCash {
    */
   async buyBonds(amount: string | number): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    return await Treasury.buyBonds(decimalToBalance(amount));
+    return await Treasury.buyBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP());
   }
 
   /**
@@ -195,7 +194,7 @@ export class BasisCash {
    */
   async redeemBonds(amount: string): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    return await Treasury.redeemBonds(decimalToBalance(amount));
+    return await Treasury.redeemBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP());
   }
 
   async earnedFromBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {
