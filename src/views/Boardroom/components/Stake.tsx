@@ -34,7 +34,7 @@ const Stake: React.FC = () => {
     basisCash.boardroomByVersion(boardroomVersion).address,
   );
 
-  if (basisCash) const tokenBalance = useTokenBalance(basisCash.BAS);
+  const tokenBalance = useTokenBalance(basisCash.BAS);
   const stakedBalance = useStakedBalanceOnBoardroom();
   const isOldBoardroomMember = boardroomVersion !== 'latest';
 

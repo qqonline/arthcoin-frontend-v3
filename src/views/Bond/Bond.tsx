@@ -79,7 +79,7 @@ const Bond: React.FC = () => {
             <PageHeader
               icon={<img alt="bonds" src={BondsIcon} />}
               title="Buy & Redeem Bonds"
-              subtitle="Earn premiums upon redemption"
+              subtitle="Bonds can be bought when ARTH is trading below it's target price and can be redeemed at a premium when ARTH is tarding above it's target price."
             />
           </Route>
           <StyledBond>
@@ -101,19 +101,8 @@ const Bond: React.FC = () => {
                 disabled={!bondStat || isBondRedeemable}
               />
             </StyledCardWrapper>
-            <StyledStatsWrapper>
-              <ExchangeStat
-                tokenName="ARTH"
-                description="Last-Hour TWAP Price"
-                price={getDisplayBalance(cashPrice, 18, 2)}
-              />
-              <Spacer size="md" />
-              <ExchangeStat
-                tokenName="ARTHB"
-                description="Current Price: (ARTH)^2"
-                price={bondStat?.priceInDAI || '-'}
-              />
-            </StyledStatsWrapper>
+            <Spacer size="md" />
+
             <StyledCardWrapper>
               <ExchangeCard
                 action="Redeem"
@@ -129,6 +118,41 @@ const Bond: React.FC = () => {
                 }
               />
             </StyledCardWrapper>
+          </StyledBond>
+
+          <Spacer size="md" />
+
+          <StyledBond>
+            <StyledStatsWrapper>
+              <ExchangeStat
+                tokenName="ARTH"
+                description="Last-Hour TWAP Price"
+                price={getDisplayBalance(cashPrice, 18, 2)}
+              />
+              <Spacer size="md" />
+              <ExchangeStat
+                tokenName="ARTHB"
+                description="Current Price: (ARTH)^2"
+                price={bondStat?.priceInDAI || '-'}
+              />
+              <Spacer size="md" />
+            </StyledStatsWrapper>
+
+            <Spacer size="md" />
+            <StyledStatsWrapper>
+              <ExchangeStat
+                tokenName="Target"
+                description="What the Price of ARTH should be"
+                price={getDisplayBalance(cashPrice, 18, 2)}
+              />
+              <Spacer size="md" />
+              <ExchangeStat
+                tokenName="Bond Premium"
+                description="Redeemable when ARTH is above target price"
+                price={'20.2%'}
+              />
+              <Spacer size="md" />
+            </StyledStatsWrapper>
           </StyledBond>
         </>
       </Page>
@@ -171,7 +195,6 @@ const StyledCardWrapper = styled.div`
 const StyledStatsWrapper = styled.div`
   display: flex;
   flex: 0.8;
-  margin: 0 20px;
   flex-direction: column;
 
   @media (max-width: 768px) {

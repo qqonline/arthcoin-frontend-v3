@@ -11,14 +11,14 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/stats">
         Stats
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/staking">
-        Staking
+      <StyledLink exact activeClassName="active" to="/distribution">
+        Distribution
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/bonds">
         Bonds
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/distribution">
-        Distribution
+      <StyledLink exact activeClassName="active" to="/staking">
+        Staking
       </StyledLink>
       {/* <StyledLink2 href="https://snapshot.page/#/basiscash.eth" target="_blank">
         Vote

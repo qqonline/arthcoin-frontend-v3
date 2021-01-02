@@ -1,28 +1,23 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 interface CardIconProps {
-  children?: React.ReactNode,
+  children?: React.ReactNode;
 }
 
 const CardIcon: React.FC<CardIconProps> = ({ children }) => (
-  <StyledCardIcon>
-    {children}
-  </StyledCardIcon>
-)
+  <StyledCardIcon>{children}</StyledCardIcon>
+);
 
 const StyledCardIcon = styled.div`
-  background-color: ${props => props.theme.color.white};
-  font-size: 36px;
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
-  align-items: center;
+  background-color: ${(props) => props.theme.color.grey[900]};
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
-    inset -6px -6px 12px ${props => props.theme.color.grey[100]};
-  margin: 0 auto ${props => props.theme.spacing[3]}px;
-`
+  margin-bottom: ${(props) => props.theme.spacing[2]}px;
+`;
 
-export default CardIcon
+export default CardIcon;
