@@ -16,6 +16,7 @@ import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../basis-cash/constants';
+import BondsIcon from './bonds.png';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -54,7 +55,7 @@ const Bond: React.FC = () => {
       <Switch>
         <Page>
           <PageHeader
-            icon={'🏦'}
+            icon={<img alt="bonds" src={BondsIcon} />}
             title="Buy & Redeem Bonds"
             subtitle="Earn premiums upon redemption"
           />
@@ -73,11 +74,10 @@ const Bond: React.FC = () => {
   return (
     <Switch>
       <Page>
-        {/* {!!account ? ( */}
         <>
           <Route exact path={path}>
             <PageHeader
-              icon={'🏦'}
+              icon={<img alt="bonds" src={BondsIcon} />}
               title="Buy & Redeem Bonds"
               subtitle="Earn premiums upon redemption"
             />
@@ -89,7 +89,7 @@ const Bond: React.FC = () => {
                 fromToken={basisCash.BAC}
                 fromTokenName="ARTH"
                 toToken={basisCash.BAB}
-                toTokenName="ARTH Bond"
+                toTokenName="ARTHB"
                 priceDesc={
                   !isBondPurchasable
                     ? "ARTH is over it's target price"
@@ -103,7 +103,7 @@ const Bond: React.FC = () => {
             </StyledCardWrapper>
             <StyledStatsWrapper>
               <ExchangeStat
-                tokenName="BAC"
+                tokenName="ARTH"
                 description="Last-Hour TWAP Price"
                 price={getDisplayBalance(cashPrice, 18, 2)}
               />
@@ -118,14 +118,14 @@ const Bond: React.FC = () => {
               <ExchangeCard
                 action="Redeem"
                 fromToken={basisCash.BAB}
-                fromTokenName="ARTH Bond"
+                fromTokenName="ARTHB"
                 toToken={basisCash.BAC}
                 toTokenName="ARTH"
                 priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                 onExchange={handleRedeemBonds}
                 disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
                 disabledDescription={
-                  !isBondRedeemable ? `Enabled when BAC > $${BOND_REDEEM_PRICE}` : null
+                  !isBondRedeemable ? `Enabled when ARTH > $${BOND_REDEEM_PRICE}` : null
                 }
               />
             </StyledCardWrapper>
