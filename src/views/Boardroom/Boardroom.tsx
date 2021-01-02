@@ -12,6 +12,7 @@ import Page from '../../components/Page';
 import useRedeemOnBoardroom from '../../hooks/useRedeemOnBoardroom';
 import useStakedBalanceOnBoardroom from '../../hooks/useStakedBalanceOnBoardroom';
 
+import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
 import Stat from './components/Stat';
@@ -24,10 +25,11 @@ import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import Notice from '../../components/Notice';
 import useBoardroomVersion from '../../hooks/useBoardroomVersion';
 import moment from 'moment';
+import DistributionIcon from './distribution.png';
 
 const Boardroom: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
-  const { account } = useWallet();
+  const basisCash = useBasisCash();
   const { onRedeem } = useRedeemOnBoardroom();
   const stakedBalance = useStakedBalanceOnBoardroom();
 
@@ -73,9 +75,9 @@ const Boardroom: React.FC = () => {
       <Switch>
         <Page>
           <PageHeader
-            icon={'🤝'}
-            title="Join the Boardroom"
-            subtitle="Deposit MAHAs and earn inflationary rewards"
+            icon={<img alt="distribution" src={DistributionIcon} />}
+            title="ARTH Distribution"
+            subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
           />
           <LaunchCountdown
             deadline={config.boardroomLaunchesAt}
@@ -87,76 +89,74 @@ const Boardroom: React.FC = () => {
     );
   }
 
+  if (!basisCash) return <div />;
+
   return (
     <Switch>
       <Page>
-        {!!account ? (
-          <>
-            <PageHeader
-              icon={'🤝'}
-              title="Join the Boardroom"
-              subtitle="Deposit MAHAs and earn inflationary rewards"
+        <>
+          <PageHeader
+            icon={<img alt="distribution" src={DistributionIcon} />}
+            title="ARTH Distribution"
+            subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
+          />
+          {migrateNotice}
+          <StyledHeader>
+            <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
+            <Stat
+              icon="💵"
+              title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
+              description="ARTH Price (TWAP)"
             />
-            {migrateNotice}
-            <StyledHeader>
-              <ProgressCountdown
-                base={prevEpoch}
-                deadline={nextEpoch}
-                description="Next Epoch"
-              />
-              <Stat
-                icon="💵"
-                title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
-                description="ARTH Price (TWAP)"
-              />
-              <Stat
-                icon="🚀"
-                title={scalingFactor ? `x${scalingFactor}` : '-'}
-                description="Scaling Factor"
-              />
-              <Stat
-                icon="💰"
-                title={
-                  treasuryAmount
-                    ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}`
-                    : '-'
-                }
-                description="Treasury Amount"
-              />
-            </StyledHeader>
-            <StyledBoardroom>
-              <StyledCardsWrapper>
-                <StyledCardWrapper>
-                  <Harvest />
-                </StyledCardWrapper>
-                <Spacer />
-                <StyledCardWrapper>
-                  <Stake />
-                </StyledCardWrapper>
-              </StyledCardsWrapper>
-              <Spacer size="lg" />
-              {!usingOldBoardroom && (
-                // for old boardroom users, the button is displayed in Stake component
-                <>
-                  <div>
-                    <Button
-                      disabled={stakedBalance.eq(0)}
-                      onClick={onRedeem}
-                      text="Settle & Withdraw"
-                    />
-                  </div>
-                  <Spacer size="lg" />
-                </>
-              )}
-            </StyledBoardroom>
-          </>
-        ) : (
-          <UnlockWallet />
-        )}
+            <Stat
+              icon="🚀"
+              title={scalingFactor ? `x${scalingFactor}` : '-'}
+              description="Scaling Factor"
+            />
+            <Stat
+              icon="💰"
+              title={
+                treasuryAmount
+                  ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}`
+                  : '-'
+              }
+              description="Treasury Amount"
+            />
+          </StyledHeader>
+          <StyledBoardroom>
+            <StyledCardsWrapper>
+              <StyledCardWrapper>
+                <Stake />
+              </StyledCardWrapper>
+              <Spacer />
+              <StyledCardWrapper>
+                <Harvest />
+              </StyledCardWrapper>
+            </StyledCardsWrapper>
+            <Spacer size="lg" />
+          </StyledBoardroom>
+
+          <StyledBoardroom>
+            <StyledCardsWrapper>
+              <StyledCardWrapper>
+                <Stake />
+              </StyledCardWrapper>
+              <Spacer />
+              <StyledCardWrapper>
+                <Harvest />
+              </StyledCardWrapper>
+            </StyledCardsWrapper>
+            <Spacer size="lg" />
+          </StyledBoardroom>
+        </>
       </Page>
     </Switch>
   );
 };
+
+// ) : (
+//   <UnlockWallet />
+// )}
 
 const UnlockWallet = () => {
   const { connect } = useWallet();

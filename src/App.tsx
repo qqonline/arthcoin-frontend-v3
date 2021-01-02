@@ -36,7 +36,7 @@ const App: React.FC = () => {
           <Route path="/bonds">
             <Bond />
           </Route>
-          <Route path="/boardroom">
+          <Route path="/distribution">
             <Boardroom />
           </Route>
         </Switch>
