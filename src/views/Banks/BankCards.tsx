@@ -9,6 +9,7 @@ import CardIcon from '../../components/CardIcon';
 import useBanks from '../../hooks/useBanks';
 import TokenSymbol from '../../components/TokenSymbol';
 import Notice from '../../components/Notice';
+import { useWallet } from 'use-wallet';
 
 const BankCards: React.FC = () => {
   const [banks] = useBanks();
@@ -74,82 +75,51 @@ interface BankCardProps {
 }
 
 const BankCard: React.FC<BankCardProps> = ({ bank }) => {
+  const { account, connect } = useWallet();
+
   return (
     <StyledCardWrapper>
-      {bank.depositTokenName.includes('LP') &&
-        (bank.depositTokenName.includes('BAS_DAI') ? (
-          <StyledCardSuperAccent />
-        ) : (
-          <StyledCardAccent />
-        ))}
       <Card>
         <CardContent>
           <StyledContent>
+            <StyledTitle>{bank.name}</StyledTitle>
             <CardIcon>
               <TokenSymbol symbol={bank.depositTokenName} size={54} />
             </CardIcon>
-            <StyledTitle>{bank.name}</StyledTitle>
-            <StyledDetails>
-              <StyledDetail>Deposit {bank.depositTokenName.toUpperCase()}</StyledDetail>
-              <StyledDetail>Earn {bank.earnTokenName}</StyledDetail>
-            </StyledDetails>
-            <Button text="Select" to={`/bank/${bank.contract}`} />
+
+            <StyledInfoSlots>
+              <StyledInfoSlot>
+                <SlotTitle>4%</SlotTitle>
+                <SlotDescription>Seinorage Supply</SlotDescription>
+              </StyledInfoSlot>
+
+              <StyledInfoSlot>
+                <SlotTitle>4%</SlotTitle>
+                <SlotDescription>Staked</SlotDescription>
+              </StyledInfoSlot>
+
+              <StyledInfoSlot>
+                <SlotTitle>40%</SlotTitle>
+                <SlotDescription>APY</SlotDescription>
+              </StyledInfoSlot>
+
+              <StyledInfoSlot>
+                <SlotTitle>3 day</SlotTitle>
+                <SlotDescription>lock-in period</SlotDescription>
+              </StyledInfoSlot>
+            </StyledInfoSlots>
+
+            {!!account ? (
+              <Button text="Select" to={`/bank/${bank.contract}`} />
+            ) : (
+              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+            )}
           </StyledContent>
         </CardContent>
       </Card>
     </StyledCardWrapper>
   );
 };
-
-const StyledCardAccent = styled.div`
-  background: linear-gradient(
-    45deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(255, 154, 0, 1) 10%,
-    rgba(208, 222, 33, 1) 20%,
-    rgba(79, 220, 74, 1) 30%,
-    rgba(63, 218, 216, 1) 40%,
-    rgba(47, 201, 226, 1) 50%,
-    rgba(28, 127, 238, 1) 60%,
-    rgba(95, 21, 242, 1) 70%,
-    rgba(186, 12, 248, 1) 80%,
-    rgba(251, 7, 217, 1) 90%,
-    rgba(255, 0, 0, 1) 100%
-  );
-  border-radius: 12px;
-  filter: blur(4px);
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
-  z-index: -1;
-`;
-
-const StyledCardSuperAccent = styled.div`
-  background: linear-gradient(
-    45deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(255, 154, 0, 1) 10%,
-    rgba(208, 222, 33, 1) 20%,
-    rgba(79, 220, 74, 1) 30%,
-    rgba(63, 218, 216, 1) 40%,
-    rgba(47, 201, 226, 1) 50%,
-    rgba(28, 127, 238, 1) 60%,
-    rgba(95, 21, 242, 1) 70%,
-    rgba(186, 12, 248, 1) 80%,
-    rgba(251, 7, 217, 1) 90%,
-    rgba(255, 0, 0, 1) 100%
-  );
-  border-radius: 12px;
-  filter: blur(8px);
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  bottom: -4px;
-  left: -4px;
-  z-index: -1;
-`;
 
 const StyledCards = styled.div`
   display: flex;
@@ -161,17 +131,9 @@ const StyledCards = styled.div`
   }
 `;
 
-const StyledLoadingWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-`;
-
 const StyledRow = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${(props) => props.theme.spacing[4]}px;
   flex-flow: row wrap;
   @media (max-width: 768px) {
     width: 100%;
@@ -182,7 +144,8 @@ const StyledRow = styled.div`
 
 const StyledCardWrapper = styled.div`
   display: flex;
-  width: calc((900px - ${(props) => props.theme.spacing[4]}px * 2) / 3);
+  margin-bottom: 25px;
+  width: calc((900px - ${(props) => props.theme.spacing[4]}px * 2) / 2);
   position: relative;
 `;
 
@@ -206,14 +169,29 @@ const StyledSpacer = styled.div`
   width: ${(props) => props.theme.spacing[4]}px;
 `;
 
-const StyledDetails = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing[6]}px;
-  margin-top: ${(props) => props.theme.spacing[2]}px;
+const StyledInfoSlots = styled.div`
+  display: flex;
   text-align: center;
+
+  padding-top: 5px;
+  padding-bottom: 15px;
 `;
 
-const StyledDetail = styled.div`
-  color: ${(props) => props.theme.color.grey[300]};
+const StyledInfoSlot = styled.div`
+  padding-left: 5px;
+  padding-right: 5px;
+`;
+
+const SlotTitle = styled.div`
+  color: #fff;
+  font-family: Inter;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const SlotDescription = styled.div`
+  color: #fff;
+  font-size: 14px;
 `;
 
 const StyledInactiveNoticeContainer = styled.div`

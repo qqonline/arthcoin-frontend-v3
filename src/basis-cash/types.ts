@@ -11,10 +11,15 @@ export interface BankInfo {
   finished: boolean;
 }
 
-export interface Bank extends  BankInfo {
+export interface Bank extends BankInfo {
   address: string;
   depositToken: ERC20;
   earnToken: ERC20;
+
+  currentAPY: number
+  hasLocking: boolean
+  lockinDays: number
+  supplyFromARTH: number
 }
 
 export type TokenStat = {

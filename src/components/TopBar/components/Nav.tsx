@@ -11,7 +11,7 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/stats">
         Stats
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/bank">
+      <StyledLink exact activeClassName="active" to="/staking">
         Staking
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/bonds">
@@ -20,9 +20,9 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/boardroom">
         Boardroom
       </StyledLink>
-      <StyledLink2 href="https://snapshot.page/#/basiscash.eth" target="_blank">
+      {/* <StyledLink2 href="https://snapshot.page/#/basiscash.eth" target="_blank">
         Vote
-      </StyledLink2>
+      </StyledLink2> */}
     </StyledNav>
   );
 };

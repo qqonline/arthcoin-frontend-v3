@@ -29,6 +29,11 @@ const Banks: React.FC = ({ children }) => {
         address: config.deployments[bankInfo.contract].address,
         depositToken: basisCash.externalTokens[bankInfo.depositTokenName],
         earnToken: bankInfo.earnTokenName === 'ARTH' ? basisCash.BAC : basisCash.BAS,
+
+        currentAPY: 30,
+        hasLocking: true,
+        lockinDays: 2,
+        supplyFromARTH: 4,
       });
     }
     banks.sort((a, b) => (a.sort > b.sort ? 1 : -1));

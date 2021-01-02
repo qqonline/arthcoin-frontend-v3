@@ -1,8 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { useWallet } from 'use-wallet';
 
-import Button from '../../components/Button';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import ExchangeCard from './components/ExchangeCard';
@@ -21,7 +19,6 @@ import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../basis-cash/consta
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
-  const { account, connect } = useWallet();
   const basisCash = useBasisCash();
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
@@ -51,6 +48,7 @@ const Bond: React.FC = () => {
   const isBondPurchasable = useMemo(() => Number(bondStat?.priceInDAI) < 1.0, [bondStat]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
+
   if (!isLaunched) {
     return (
       <Switch>
@@ -69,83 +67,87 @@ const Bond: React.FC = () => {
       </Switch>
     );
   }
+
+  if (!basisCash) return <div />;
+
   return (
     <Switch>
       <Page>
-        {!!account ? (
-          <>
-            <Route exact path={path}>
-              <PageHeader
-                icon={'🏦'}
-                title="Buy & Redeem Bonds"
-                subtitle="Earn premiums upon redemption"
+        {/* {!!account ? ( */}
+        <>
+          <Route exact path={path}>
+            <PageHeader
+              icon={'🏦'}
+              title="Buy & Redeem Bonds"
+              subtitle="Earn premiums upon redemption"
+            />
+          </Route>
+          <StyledBond>
+            <StyledCardWrapper>
+              <ExchangeCard
+                action="Purchase"
+                fromToken={basisCash.BAC}
+                fromTokenName="ARTH"
+                toToken={basisCash.BAB}
+                toTokenName="ARTH Bond"
+                priceDesc={
+                  !isBondPurchasable
+                    ? "ARTH is over it's target price"
+                    : `${Math.floor(
+                        100 / Number(bondStat.priceInDAI) - 100,
+                      )}% return when ARTH is below it's target price`
+                }
+                onExchange={handleBuyBonds}
+                disabled={!bondStat || isBondRedeemable}
               />
-            </Route>
-            <StyledBond>
-              <StyledCardWrapper>
-                <ExchangeCard
-                  action="Purchase"
-                  fromToken={basisCash.BAC}
-                  fromTokenName="ARTH"
-                  toToken={basisCash.BAB}
-                  toTokenName="ARTH Bond"
-                  priceDesc={
-                    !isBondPurchasable
-                      ? 'BAC is over $1'
-                      : `${Math.floor(
-                          100 / Number(bondStat.priceInDAI) - 100,
-                        )}% return when BAC > $1`
-                  }
-                  onExchange={handleBuyBonds}
-                  disabled={!bondStat || isBondRedeemable}
-                />
-              </StyledCardWrapper>
-              <StyledStatsWrapper>
-                <ExchangeStat
-                  tokenName="BAC"
-                  description="Last-Hour TWAP Price"
-                  price={getDisplayBalance(cashPrice, 18, 2)}
-                />
-                <Spacer size="md" />
-                <ExchangeStat
-                  tokenName="ARTHB"
-                  description="Current Price: (ARTH)^2"
-                  price={bondStat?.priceInDAI || '-'}
-                />
-              </StyledStatsWrapper>
-              <StyledCardWrapper>
-                <ExchangeCard
-                  action="Redeem"
-                  fromToken={basisCash.BAB}
-                  fromTokenName="ARTH Bond"
-                  toToken={basisCash.BAC}
-                  toTokenName="ARTH"
-                  priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
-                  onExchange={handleRedeemBonds}
-                  disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
-                  disabledDescription={
-                    !isBondRedeemable ? `Enabled when BAC > $${BOND_REDEEM_PRICE}` : null
-                  }
-                />
-              </StyledCardWrapper>
-            </StyledBond>
-          </>
-        ) : (
-          <div
-            style={{
-              alignItems: 'center',
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-            }}
-          >
-            <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-          </div>
-        )}
+            </StyledCardWrapper>
+            <StyledStatsWrapper>
+              <ExchangeStat
+                tokenName="BAC"
+                description="Last-Hour TWAP Price"
+                price={getDisplayBalance(cashPrice, 18, 2)}
+              />
+              <Spacer size="md" />
+              <ExchangeStat
+                tokenName="ARTHB"
+                description="Current Price: (ARTH)^2"
+                price={bondStat?.priceInDAI || '-'}
+              />
+            </StyledStatsWrapper>
+            <StyledCardWrapper>
+              <ExchangeCard
+                action="Redeem"
+                fromToken={basisCash.BAB}
+                fromTokenName="ARTH Bond"
+                toToken={basisCash.BAC}
+                toTokenName="ARTH"
+                priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
+                onExchange={handleRedeemBonds}
+                disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
+                disabledDescription={
+                  !isBondRedeemable ? `Enabled when BAC > $${BOND_REDEEM_PRICE}` : null
+                }
+              />
+            </StyledCardWrapper>
+          </StyledBond>
+        </>
       </Page>
     </Switch>
   );
 };
+
+// ) : (
+//   <div
+//     style={{
+//       alignItems: 'center',
+//       display: 'flex',
+//       flex: 1,
+//       justifyContent: 'center',
+//     }}
+//   >
+//     <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+//   </div>
+// )}
 
 const StyledBond = styled.div`
   display: flex;

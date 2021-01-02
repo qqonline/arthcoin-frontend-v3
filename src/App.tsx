@@ -15,7 +15,6 @@ import Stats from './views/Stats';
 
 import store from './state';
 import theme from './theme';
-import config from './config';
 import Updaters from './state/Updaters';
 import Boardroom from './views/Boardroom';
 import Popups from './components/Popups';
@@ -31,7 +30,7 @@ const App: React.FC = () => {
           <Route path="/stats">
             <Stats />
           </Route>
-          <Route path="/bank">
+          <Route path="/staking">
             <Banks />
           </Route>
           <Route path="/bonds">

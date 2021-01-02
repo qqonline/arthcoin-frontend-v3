@@ -1,20 +1,15 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-const Card: React.FC = ({ children }) => (
-  <StyledCard>
-    {children}
-  </StyledCard>
-)
+const Card: React.FC = ({ children }) => <StyledCard>{children}</StyledCard>;
 
 const StyledCard = styled.div`
-  background-color: ${props => props.theme.color.grey[800]};
-  border: 1px solid ${props => props.theme.color.grey[900]};
+  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
   border-radius: 12px;
-  box-shadow: inset 1px 1px 0px ${props => props.theme.color.grey[700]};
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex: 1;
   flex-direction: column;
-`
+`;
 
-export default Card
+export default Card;

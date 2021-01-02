@@ -10,14 +10,26 @@ interface PageHeaderProps {
 const PageHeader: React.FC<PageHeaderProps> = ({ icon, subtitle, title }) => {
   return (
     <StyledPageHeader>
-      <StyledTextContainer>
-        <StyledTitle>{title}</StyledTitle>
-        <StyledSubtitle>{subtitle}</StyledSubtitle>
-      </StyledTextContainer>
-      <StyledIcon>{icon}</StyledIcon>
+      <StyledPageContent>
+        <StyledTextContainer>
+          <StyledTitle>{title}</StyledTitle>
+          <StyledSubtitle>{subtitle}</StyledSubtitle>
+        </StyledTextContainer>
+        <StyledIcon>{icon}</StyledIcon>
+      </StyledPageContent>
     </StyledPageHeader>
   );
 };
+
+const StyledPageContent = styled.div`
+  max-width: 900px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 150px;
+  padding: 0 15px;
+`;
 
 const StyledTextContainer = styled.div`
   display: flex;
@@ -30,9 +42,11 @@ const StyledPageHeader = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: 900px;
+  background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   padding-bottom: ${(props) => props.theme.spacing[6]}px;
   padding-top: ${(props) => props.theme.spacing[6]}px;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 const StyledIcon = styled.div`

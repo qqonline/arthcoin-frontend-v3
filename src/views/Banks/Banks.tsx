@@ -4,30 +4,21 @@ import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import Bank from '../Bank';
 import BankCards from './BankCards';
-import { useWallet } from 'use-wallet';
-import Button from '../../components/Button';
-import styled from 'styled-components';
+import StakingIcon from './staking.png';
 
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
-  const { account, connect } = useWallet();
 
   return (
     <Switch>
       <Page>
         <Route exact path={path}>
           <PageHeader
-            icon={'🏦'}
-            title="Pick a Bank."
-            subtitle="Earn MAHAs by providing liquidity"
+            icon={<img alt="staking" src={StakingIcon} />}
+            title="Pick a Staking Pool"
+            subtitle="Stake tokens and earn rewards in MAHA or ARTH"
           />
-          {!!account ? (
-            <BankCards />
-          ) : (
-            <Center>
-              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            </Center>
-          )}
+          <BankCards />
         </Route>
         <Route path={`${path}/:bankId`}>
           <Bank />
@@ -36,12 +27,5 @@ const Banks: React.FC = () => {
     </Switch>
   );
 };
-
-const Center = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default Banks;
