@@ -18,6 +18,7 @@ import theme from './theme';
 import Updaters from './state/Updaters';
 import Boardroom from './views/Boardroom';
 import Popups from './components/Popups';
+import config from './config';
 
 const App: React.FC = () => {
   return (
@@ -48,7 +49,7 @@ const App: React.FC = () => {
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider chainId={1}>
+      <UseWalletProvider chainId={config.chainId} connectors={{ injected: {} }}>
         <Provider store={store}>
           <Updaters />
           <BasisCashProvider>

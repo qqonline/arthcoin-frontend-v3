@@ -40,7 +40,9 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   disabled = false,
   disabledDescription,
 }) => {
-  const { account, connect } = useWallet();
+  const { account, connect, chainId } = useWallet();
+
+  console.log('chainId', chainId, account);
 
   const catchError = useCatchError();
   const {

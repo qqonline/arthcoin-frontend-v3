@@ -45,7 +45,7 @@ const Bond: React.FC = () => {
     },
     [basisCash, addTransaction],
   );
-  const isBondRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
+  const isBondRedeemable = useMemo(() => cashPrice?.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
   const isBondPurchasable = useMemo(() => Number(bondStat?.priceInDAI) < 1.0, [bondStat]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
@@ -159,19 +159,6 @@ const Bond: React.FC = () => {
     </Switch>
   );
 };
-
-// ) : (
-//   <div
-//     style={{
-//       alignItems: 'center',
-//       display: 'flex',
-//       flex: 1,
-//       justifyContent: 'center',
-//     }}
-//   >
-//     <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-//   </div>
-// )}
 
 const StyledBond = styled.div`
   display: flex;

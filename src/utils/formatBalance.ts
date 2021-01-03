@@ -9,6 +9,6 @@ export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
   return getDisplayBalance(balance, decimals);
 };
 
-export function getBalance(balance: BigNumber, decimals = 18) : number {
-  return balance.div(BigNumber.from(10).pow(decimals)).toNumber();
+export function getBalance(balance: BigNumber, decimals = 18): number {
+  return balance?.div(BigNumber.from(10).pow(decimals)).toNumber();
 }

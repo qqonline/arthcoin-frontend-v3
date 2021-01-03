@@ -267,32 +267,11 @@ export class BasisCash {
   }
 
   async fetchBoardroomVersionOfUser(): Promise<string> {
-    const { Boardroom1, Boardroom2 } = this.contracts;
-    const balance1 = await Boardroom1.getShareOf(this.myAccount);
-    if (balance1.gt(0)) {
-      console.log(
-        `👀 The user is using Boardroom v1. (Staked ${getDisplayBalance(balance1)} MAHA)`,
-      );
-      return 'v1';
-    }
-    const balance2 = await Boardroom2.balanceOf(this.myAccount);
-    if (balance2.gt(0)) {
-      console.log(
-        `👀 The user is using Boardroom v2. (Staked ${getDisplayBalance(balance2)} MAHA)`,
-      );
-      return 'v2';
-    }
     return 'latest';
   }
 
   boardroomByVersion(version: string): Contract {
-    if (version === 'v1') {
-      return this.contracts.Boardroom1;
-    }
-    if (version === 'v2') {
-      return this.contracts.Boardroom2;
-    }
-    return this.contracts.Boardroom3;
+    return this.contracts.MahaBoardroom;
   }
 
   currentBoardroom(): Contract {
@@ -308,44 +287,42 @@ export class BasisCash {
 
   async stakeShareToBoardroom(amount: string): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
-      throw new Error("you're using old Boardroom. please withdraw and deposit the MAHA again.");
+      throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-    const Boardroom = this.currentBoardroom();
-    return await Boardroom.stake(decimalToBalance(amount));
+    const ArthBoardroom = this.currentBoardroom();
+    return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
   async getStakedSharesOnBoardroom(): Promise<BigNumber> {
-    const Boardroom = this.currentBoardroom();
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.getShareOf(this.myAccount);
-    }
-    return await Boardroom.balanceOf(this.myAccount);
+    const ArthBoardroom = this.currentBoardroom();
+
+    return await ArthBoardroom.balanceOf(this.myAccount);
   }
 
   async getEarningsOnBoardroom(): Promise<BigNumber> {
-    const Boardroom = this.currentBoardroom();
+    const ArthBoardroom = this.currentBoardroom();
     if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.getCashEarningsOf(this.myAccount);
+      return await ArthBoardroom.getCashEarningsOf(this.myAccount);
     }
-    return await Boardroom.earned(this.myAccount);
+    return await ArthBoardroom.earned(this.myAccount);
   }
 
   async withdrawShareFromBoardroom(amount: string): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
-    return await Boardroom.withdraw(decimalToBalance(amount));
+    const ArthBoardroom = this.currentBoardroom();
+    return await ArthBoardroom.withdraw(decimalToBalance(amount));
   }
 
   async harvestCashFromBoardroom(): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
+    const ArthBoardroom = this.currentBoardroom();
     if (this.boardroomVersionOfUser === 'v1') {
-      return await Boardroom.claimDividends();
+      return await ArthBoardroom.claimDividends();
     }
-    return await Boardroom.claimReward();
+    return await ArthBoardroom.claimReward();
   }
 
   async exitFromBoardroom(): Promise<TransactionResponse> {
-    const Boardroom = this.currentBoardroom();
-    return await Boardroom.exit();
+    const ArthBoardroom = this.currentBoardroom();
+    return await ArthBoardroom.exit();
   }
 
   async getTreasuryNextAllocationTime(): Promise<TreasuryAllocationTime> {
