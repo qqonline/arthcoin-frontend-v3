@@ -133,11 +133,4 @@ const StyledCardWrapper = styled.div`
   }
 `;
 
-const Center = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
 export default Boardroom;

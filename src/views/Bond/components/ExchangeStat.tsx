@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from '../../../components/Card';
+import InfoCard from '../../../components/InfoCard';
 
 interface ExchangeStatProps {
   tokenName: string;
@@ -10,12 +10,12 @@ interface ExchangeStatProps {
 
 const ExchangeStat: React.FC<ExchangeStatProps> = ({ tokenName, description, price }) => {
   return (
-    <Card>
+    <InfoCard>
       <StyledCardContentInner>
         <StyledCardTitle>{`${tokenName} = $${price}`}</StyledCardTitle>
         <StyledDesc>{description}</StyledDesc>
       </StyledCardContentInner>
-    </Card>
+    </InfoCard>
   );
 };
 

@@ -124,27 +124,4 @@ const StyledSupplyLabel = styled.a`
   color: ${(props) => props.color};
 `;
 
-const ValueSkeleton = () => {
-  const theme = useContext(ThemeContext);
-  return (
-    <SkeletonTheme color={theme.color.grey[700]} highlightColor={theme.color.grey[600]}>
-      <ValueSkeletonPadding>
-        <Skeleton height={10} />
-      </ValueSkeletonPadding>
-    </SkeletonTheme>
-  );
-};
-
-const GuideText = styled.span`
-  color: ${(props) => props.theme.color.primary.main};
-  font-size: 0.8rem;
-`;
-
-const ValueText = styled.p`
-  color: ${(props) => props.theme.color.white};
-  font-weight: bold;
-  font-size: 1.25rem;
-  margin: ${(props) => props.theme.spacing[1]}px 0;
-`;
-
 export default HomeCard;
