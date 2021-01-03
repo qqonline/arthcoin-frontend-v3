@@ -114,11 +114,6 @@ const CardSection = styled.div`
   }
 `;
 
-const ValueSkeletonPadding = styled.div`
-  padding-top: ${(props) => props.theme.spacing[3]}px;
-  padding-bottom: ${(props) => props.theme.spacing[2]}px;
-`;
-
 const StyledSupplyLabel = styled.a`
   display: block;
   color: ${(props) => props.color};
