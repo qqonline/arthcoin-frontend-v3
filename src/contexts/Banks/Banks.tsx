@@ -28,7 +28,7 @@ const Banks: React.FC = ({ children }) => {
         ...bankInfo,
         address: config.deployments[bankInfo.contract].address,
         depositToken: basisCash.externalTokens[bankInfo.depositTokenName],
-        earnToken: bankInfo.earnTokenName === 'ARTH' ? basisCash.BAC : basisCash.BAS,
+        earnToken: bankInfo.earnTokenName === 'ARTH' ? basisCash.ARTH : basisCash.MAHA,
 
         currentAPY: 30,
         hasLocking: true,

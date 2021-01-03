@@ -4,10 +4,10 @@ import { BankInfo } from './basis-cash';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
-    chainId: ChainId.MAINNET,
+    chainId: 5777,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'https://mainnet.infura.io/v3/69666afe933b4175afe4999170158a5f',
-    deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
+    defaultProvider: 'http://127.0.0.1:7545',
+    deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
       DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
       yCRV: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 18],
@@ -126,5 +126,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-
-export default configurations["staging"];
+export default configurations["development"];

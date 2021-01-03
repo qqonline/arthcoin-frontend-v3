@@ -11,9 +11,6 @@ import USDTLogo from '../../assets/img/USDT.png';
 
 const logosBySymbol: { [title: string]: string } = {
   ARTH: bacLogo,
-  BAC: bacLogo,
-  BAB: babLogo,
-  BAS: basLogo,
   MAHA: basLogo,
   ARTHB: babLogo,
   yCRV: yCRVLogo,

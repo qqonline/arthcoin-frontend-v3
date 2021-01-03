@@ -25,7 +25,7 @@ const Bond: React.FC = () => {
   const bondStat = useBondStats();
   const cashPrice = useBondOraclePriceInLastTWAP();
 
-  const bondBalance = useTokenBalance(basisCash?.BAB);
+  const bondBalance = useTokenBalance(basisCash?.ARTHB);
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {
@@ -86,9 +86,9 @@ const Bond: React.FC = () => {
             <StyledCardWrapper>
               <ExchangeCard
                 action="Purchase"
-                fromToken={basisCash.BAC}
+                fromToken={basisCash.ARTH}
                 fromTokenName="ARTH"
-                toToken={basisCash.BAB}
+                toToken={basisCash.ARTHB}
                 toTokenName="ARTHB"
                 priceDesc={
                   !isBondPurchasable
@@ -106,9 +106,9 @@ const Bond: React.FC = () => {
             <StyledCardWrapper>
               <ExchangeCard
                 action="Redeem"
-                fromToken={basisCash.BAB}
+                fromToken={basisCash.ARTHB}
                 fromTokenName="ARTHB"
-                toToken={basisCash.BAC}
+                toToken={basisCash.ARTH}
                 toTokenName="ARTH"
                 priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                 onExchange={handleRedeemBonds}

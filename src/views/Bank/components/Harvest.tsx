@@ -14,7 +14,7 @@ const Harvest: React.FC<HarvestProps> = ({ bank }) => {
   const earnings = useEarnings(bank.contract);
   const { onReward } = useHarvest(bank);
 
-  const tokenName = bank.earnTokenName === 'BAS' ? 'MAHA' : 'ARTH';
+  const tokenName = bank.earnTokenName === 'MAHA' ? 'MAHA' : 'ARTH';
   return (
     <Template
       title={`${tokenName} Earned`}

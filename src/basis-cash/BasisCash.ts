@@ -15,7 +15,7 @@ import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
  */
 export class BasisCash {
   myAccount: string;
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.JsonRpcProvider;
   signer?: ethers.Signer;
   config: Configuration;
   contracts: { [name: string]: Contract };
@@ -23,9 +23,9 @@ export class BasisCash {
   boardroomVersionOfUser?: string;
 
   bacDai: Contract;
-  BAC: ERC20;
-  BAS: ERC20;
-  BAB: ERC20;
+  ARTH: ERC20;
+  MAHA: ERC20;
+  ARTHB: ERC20;
 
   constructor(cfg: Configuration) {
     const { deployments, externalTokens } = cfg;
@@ -40,9 +40,10 @@ export class BasisCash {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
     }
-    this.BAC = new ERC20(deployments.Cash.address, provider, 'ARTH');
-    this.BAS = new ERC20(deployments.Share.address, provider, 'MAHA');
-    this.BAB = new ERC20(deployments.Bond.address, provider, 'ARTHB');
+
+    this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
+    this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
+    this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
 
     // Uniswap V2 Pair
     this.bacDai = new Contract(
@@ -67,7 +68,7 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.BAC, this.BAS, this.BAB, ...Object.values(this.externalTokens)];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHB, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -98,9 +99,9 @@ export class BasisCash {
    * It may differ from the ARTH price used on Treasury (which is calculated in TWAP)
    */
   async getCashStatFromUniswap(): Promise<TokenStat> {
-    const supply = await this.BAC.displayedTotalSupply();
+    const supply = await this.ARTH.displayedTotalSupply();
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.BAC),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTH),
       totalSupply: supply,
     };
   }
@@ -110,24 +111,27 @@ export class BasisCash {
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
    */
   async getCashStatInEstimatedTWAP(): Promise<TokenStat> {
-    const { Oracle } = this.contracts;
+    // const { Oracle } = this.contracts;
 
     // estimate current TWAP price
-    const cumulativePrice: BigNumber = await this.bacDai.price0CumulativeLast();
-    const cumulativePriceLast = await Oracle.price0CumulativeLast();
-    const elapsedSec = Math.floor(Date.now() / 1000 - (await Oracle.blockTimestampLast()));
+    // const cumulativePrice: BigNumber = await this.bacDai.price0CumulativeLast();
+    // const cumulativePriceLast = await Oracle.price0CumulativeLast();
 
-    const denominator112 = BigNumber.from(2).pow(112);
-    const denominator1e18 = BigNumber.from(10).pow(18);
-    const cashPriceTWAP = cumulativePrice
-      .sub(cumulativePriceLast)
-      .mul(denominator1e18)
-      .div(elapsedSec)
-      .div(denominator112);
+    // const elapsedSec = Math.floor(Date.now() / 1000 - (await Oracle.blockTimestampLast()));
 
-    const totalSupply = await this.BAC.displayedTotalSupply();
+    // const denominator112 = BigNumber.from(2).pow(112);
+    // const denominator1e18 = BigNumber.from(10).pow(18);
+    // const cashPriceTWAP = cumulativePrice
+    //   .sub(1)
+    //   .mul(denominator1e18)
+    //   .div(elapsedSec)
+    //   .div(denominator112);
+
+    const totalSupply = await this.ARTH.displayedTotalSupply();
     return {
-      priceInDAI: getDisplayBalance(cashPriceTWAP),
+      // priceInDAI: getDisplayBalance(cashPriceTWAP),
+      priceInDAI: getDisplayBalance(BigNumber.from(1)),
+
       totalSupply,
     };
   }
@@ -150,14 +154,14 @@ export class BasisCash {
 
     return {
       priceInDAI: getDisplayBalance(bondPrice),
-      totalSupply: await this.BAB.displayedTotalSupply(),
+      totalSupply: await this.ARTHB.displayedTotalSupply(),
     };
   }
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.BAS),
-      totalSupply: await this.BAS.displayedTotalSupply(),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.MAHA),
+      totalSupply: await this.MAHA.displayedTotalSupply(),
     };
   }
 
