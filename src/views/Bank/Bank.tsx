@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useParams } from 'react-router-dom';
-import { useWallet } from 'use-wallet';
 
 import Button from '../../components/Button';
 import PageHeader from '../../components/PageHeader';
@@ -12,6 +11,7 @@ import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
 import useRedeem from '../../hooks/useRedeem';
 import { Bank as BankEntity } from '../../basis-cash';
+import StakingIcon from '../Banks/staking.png';
 
 const Bank: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -19,13 +19,12 @@ const Bank: React.FC = () => {
   const { bankId } = useParams();
   const bank = useBank(bankId);
 
-  const { account } = useWallet();
   const { onRedeem } = useRedeem(bank);
 
-  return account && bank ? (
+  return bank ? (
     <>
       <PageHeader
-        icon="🏦"
+        icon={<img alt="staking" src={StakingIcon} />}
         subtitle={`Deposit ${bank?.depositTokenName} and earn ${bank?.earnTokenName}`}
         title={bank?.name}
       />
@@ -48,10 +47,8 @@ const Bank: React.FC = () => {
         <Spacer size="lg" />
       </StyledBank>
     </>
-  ) : !bank ? (
-    <BankNotFound />
   ) : (
-    <UnlockWallet />
+    <BankNotFound />
   );
 };
 
@@ -77,20 +74,7 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
 const BankNotFound = () => {
   return (
     <Center>
-      <PageHeader
-        icon="🏚"
-        title="Not Found"
-        subtitle="You've hit a bank just robbed by unicorns."
-      />
-    </Center>
-  );
-};
-
-const UnlockWallet = () => {
-  const { connect } = useWallet();
-  return (
-    <Center>
-      <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+      <PageHeader title="Not Found" subtitle="You've hit a bank just robbed by unicorns." />
     </Center>
   );
 };

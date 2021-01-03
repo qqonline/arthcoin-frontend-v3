@@ -10,6 +10,7 @@ export function web3ProviderFrom(endpoint: string, config?: EthereumConfig): any
     ? Web3.providers.WebsocketProvider
     : Web3.providers.HttpProvider;
 
+  console.log(endpoint)
   return new providerClass(endpoint, {
     timeout: ethConfig.ethereumNodeTimeout,
   });

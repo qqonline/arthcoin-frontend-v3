@@ -110,7 +110,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
             </StyledInfoSlots>
 
             {!!account ? (
-              <Button text="Select" to={`/bank/${bank.contract}`} />
+              <Button text="Select" to={`/staking/${bank.contract}`} />
             ) : (
               <Button onClick={() => connect('injected')} text="Unlock Wallet" />
             )}
