@@ -33,7 +33,7 @@ const Bank: React.FC = () => {
           <StyledCardWrapper>
             <Harvest bank={bank} />
           </StyledCardWrapper>
-          <Spacer />
+          <Divider />
           <StyledCardWrapper>
             <Stake bank={bank} />
           </StyledCardWrapper>
@@ -83,15 +83,20 @@ const StyledBank = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+
+  max-width: 800px;
+  width: 100%;
+
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
-const StyledUniswapLPGuide = styled.div`
-  margin: -24px auto 48px;
+const Divider = styled.div`
+  background: #000;
+  opacity: 0.2;
+  height: 1px;
 `;
-
 const StyledLink = styled.a`
   font-weight: 700;
   text-decoration: none;
@@ -100,12 +105,13 @@ const StyledLink = styled.a`
 
 const StyledCardsWrapper = styled.div`
   display: flex;
-  width: 600px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
+  flex-direction: column;
+  max-width: 800px;
+  width: 100%;
+
+  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
 `;
 
 const StyledCardWrapper = styled.div`

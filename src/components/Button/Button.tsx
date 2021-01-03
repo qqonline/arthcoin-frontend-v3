@@ -108,11 +108,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   font-size: ${(props) => props.fontSize}px;
   font-weight: 700;
-  height: ${(props) => props.size}px;
+  // height: ${(props) => props.size}px;
   justify-content: center;
   outline: none;
-  padding-left: ${(props) => props.padding}px;
-  padding-right: ${(props) => props.padding}px;
+  padding: 10px 22px;
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
   &:hover {

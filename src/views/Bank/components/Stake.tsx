@@ -1,14 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import Button from '../../../components/Button';
-import Card from '../../../components/Card';
-import CardContent from '../../../components/CardContent';
-import CardIcon from '../../../components/CardIcon';
-import { AddIcon, RemoveIcon } from '../../../components/icons';
-import IconButton from '../../../components/IconButton';
-import Label from '../../../components/Label';
-import Value from '../../../components/Value';
 
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useModal from '../../../hooks/useModal';
@@ -21,8 +11,8 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
-import TokenSymbol from '../../../components/TokenSymbol';
 import { Bank } from '../../../basis-cash';
+import Template from './Template';
 
 interface StakeProps {
   bank: Bank;
@@ -62,18 +52,34 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
     />,
   );
 
+  if (approveStatus !== ApprovalState.APPROVED) {
+    return (
+      <Template
+        title={`${bank.depositTokenName} Staked`}
+        buttonLabel={`Approve ${bank.depositTokenName}`}
+        buttonDisabled={
+          approveStatus === ApprovalState.PENDING || approveStatus === ApprovalState.UNKNOWN
+        }
+        buttonOnClick={approve}
+        amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
+        symbol={bank.earnToken.symbol}
+      />
+    );
+  }
+
   return (
-    <Card>
-      <CardContent>
-        <StyledCardContentInner>
-          <StyledCardHeader>
-            <CardIcon>
-              <TokenSymbol symbol={bank.depositToken.symbol} size={54} />
-            </CardIcon>
-            <Value value={getDisplayBalance(stakedBalance, bank.depositToken.decimal)} />
-            <Label text={`${bank.depositTokenName} Staked`} />
-          </StyledCardHeader>
-          <StyledCardActions>
+    <Template
+      title={`${bank.depositTokenName} Staked`}
+      buttonLabel={`Deposit ${bank.depositTokenName}`}
+      buttonDisabled={bank.finished}
+      buttonOnClick={() => (bank.finished ? null : onPresentDeposit())}
+      amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
+      symbol={bank.earnToken.symbol}
+    />
+  );
+};
+/* <CardContent>
+        <StyledCardActions>
             {approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={
@@ -98,35 +104,6 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
               </>
             )}
           </StyledCardActions>
-        </StyledCardContentInner>
-      </CardContent>
-    </Card>
-  );
-};
-
-const StyledCardHeader = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
-const StyledCardActions = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: ${(props) => props.theme.spacing[6]}px;
-  width: 100%;
-`;
-
-const StyledActionSpacer = styled.div`
-  height: ${(props) => props.theme.spacing[4]}px;
-  width: ${(props) => props.theme.spacing[4]}px;
-`;
-
-const StyledCardContentInner = styled.div`
-  align-items: center;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+      </CardContent> */
 
 export default Stake;
