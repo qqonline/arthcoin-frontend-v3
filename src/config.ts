@@ -25,7 +25,7 @@ const configurations: { [env: string]: Configuration } = {
   },
   staging: {
     chainId: ChainId.ROPSTEN,
-    etherscanUrl: 'https://etherscan.io',
+    etherscanUrl: 'https://ropsten.etherscan.io',
     defaultProvider: 'https://ropsten.infura.io/v3/69666afe933b4175afe4999170158a5f',
     deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {

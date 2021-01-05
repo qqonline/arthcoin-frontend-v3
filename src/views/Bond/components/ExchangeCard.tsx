@@ -61,6 +61,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
       tokenName={fromTokenName}
     />,
   );
+
   return (
     <Card>
       <CardContent>

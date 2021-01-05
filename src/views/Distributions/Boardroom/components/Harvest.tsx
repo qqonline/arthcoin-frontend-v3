@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../../../components/Button';
-import TokenSymbol from '../../../components/TokenSymbol';
-import Card from '../../../components/Card';
-import CardContent from '../../../components/CardContent';
-import Label from '../../../components/Label';
-import Value from '../../../components/Value';
-import CardIcon from '../../../components/CardIcon';
-import useHarvestFromBoardroom from '../../../hooks/useHarvestFromBoardroom';
-import useEarningsOnBoardroom from '../../../hooks/useEarningsOnBoardroom';
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import Button from '../../../../components/Button';
+import TokenSymbol from '../../../../components/TokenSymbol';
+import Card from '../../../../components/Card';
+import CardContent from '../../../../components/CardContent';
+import Label from '../../../../components/Label';
+import Value from '../../../../components/Value';
+import CardIcon from '../../../../components/CardIcon';
+import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
+import useEarningsOnBoardroom from '../../../../hooks/useEarningsOnBoardroom';
+import { getDisplayBalance } from '../../../../utils/formatBalance';
+import { BoardroomInfo } from '../../../../basis-cash';
 
-const Harvest: React.FC = () => {
+const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const { onReward } = useHarvestFromBoardroom();
-  const earnings = useEarningsOnBoardroom();
+  const earnings = useEarningsOnBoardroom('arth');
 
   return (
     <Card>

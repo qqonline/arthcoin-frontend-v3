@@ -23,9 +23,11 @@ export class BasisCash {
   boardroomVersionOfUser?: string;
 
   bacDai: Contract;
+  arthDai: Contract;
   ARTH: ERC20;
   MAHA: ERC20;
   ARTHB: ERC20;
+  ARTHDAI_UNIV2: ERC20;
 
   constructor(cfg: Configuration) {
     const { deployments, externalTokens } = cfg;
@@ -44,9 +46,16 @@ export class BasisCash {
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
+    this.ARTHDAI_UNIV2 = new ERC20(externalTokens['BAC_DAI-UNI-LPv2'][0], provider, 'ARTHDAI_UNIV2');
 
     // Uniswap V2 Pair
     this.bacDai = new Contract(
+      externalTokens['BAC_DAI-UNI-LPv2'][0],
+      IUniswapV2PairABI,
+      provider,
+    );
+
+    this.arthDai = new Contract(
       externalTokens['BAC_DAI-UNI-LPv2'][0],
       IUniswapV2PairABI,
       provider,
@@ -270,58 +279,59 @@ export class BasisCash {
     return 'latest';
   }
 
-  boardroomByVersion(version: string): Contract {
-    return this.contracts.MahaBoardroom;
+  boardroomByVersion(kind: 'arthLiquidity' | 'arth', version: string): Contract {
+    if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroom;
+    return this.contracts.ArthBoardroom;
   }
 
-  currentBoardroom(): Contract {
+  currentBoardroom(kind: 'arthLiquidity' | 'arth'): Contract {
     if (!this.boardroomVersionOfUser) {
       throw new Error('you must unlock the wallet to continue.');
     }
-    return this.boardroomByVersion(this.boardroomVersionOfUser);
+    return this.boardroomByVersion(kind, this.boardroomVersionOfUser);
   }
 
   isOldBoardroomMember(): boolean {
     return this.boardroomVersionOfUser !== 'latest';
   }
 
-  async stakeShareToBoardroom(amount: string): Promise<TransactionResponse> {
+  async stakeShareToBoardroom(kind: 'arthLiquidity' | 'arth', amount: string): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-    const ArthBoardroom = this.currentBoardroom();
+    const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
   async getStakedSharesOnBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<BigNumber> {
-    const ArthBoardroom = this.currentBoardroom();
+    const ArthBoardroom = this.currentBoardroom(kind);
 
     return await ArthBoardroom.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnBoardroom(): Promise<BigNumber> {
-    const ArthBoardroom = this.currentBoardroom();
+  async getEarningsOnBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<BigNumber> {
+    const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.getCashEarningsOf(this.myAccount);
     }
     return await ArthBoardroom.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroom(amount: string): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom();
+  async withdrawShareFromBoardroom(kind: 'arthLiquidity' | 'arth', amount: string): Promise<TransactionResponse> {
+    const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom();
+  async harvestCashFromBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<TransactionResponse> {
+    const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.claimDividends();
     }
     return await ArthBoardroom.claimReward();
   }
 
-  async exitFromBoardroom(): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom();
+  async exitFromBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<TransactionResponse> {
+    const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.exit();
   }
 

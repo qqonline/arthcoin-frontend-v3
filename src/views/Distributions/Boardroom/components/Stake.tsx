@@ -1,46 +1,52 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../../../components/Button';
-import Card from '../../../components/Card';
-import CardContent from '../../../components/CardContent';
-import CardIcon from '../../../components/CardIcon';
-import { AddIcon, RemoveIcon } from '../../../components/icons';
-import IconButton from '../../../components/IconButton';
-import Label from '../../../components/Label';
-import Value from '../../../components/Value';
+import Button from '../../../../components/Button';
+import Card from '../../../../components/Card';
+import CardContent from '../../../../components/CardContent';
+import CardIcon from '../../../../components/CardIcon';
+import { AddIcon, RemoveIcon } from '../../../../components/icons';
+import IconButton from '../../../../components/IconButton';
+import Label from '../../../../components/Label';
+import Value from '../../../../components/Value';
 
-import useApprove, { ApprovalState } from '../../../hooks/useApprove';
-import useModal from '../../../hooks/useModal';
-import useTokenBalance from '../../../hooks/useTokenBalance';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useModal from '../../../../hooks/useModal';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
 
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import { getDisplayBalance } from '../../../../utils/formatBalance';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
-import useBasisCash from '../../../hooks/useBasisCash';
-import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
-import TokenSymbol from '../../../components/TokenSymbol';
-import useStakeToBoardroom from '../../../hooks/useStakeToBoardroom';
-import useWithdrawFromBoardroom from '../../../hooks/useWithdrawFromBoardroom';
-import useBoardroomVersion from '../../../hooks/useBoardroomVersion';
-import useRedeemOnBoardroom from '../../../hooks/useRedeemOnBoardroom';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
+import TokenSymbol from '../../../../components/TokenSymbol';
+import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
+import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
 
-const Stake: React.FC = () => {
+import { BoardroomInfo } from '../../../../basis-cash';
+
+const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
-  const boardroomVersion = useBoardroomVersion('arth');
+
+  const stakingToken =
+    boardroom.depositTokenName === 'MAHA'
+      ? basisCash?.MAHA
+      : boardroom.depositTokenName === 'ARTH'
+      ? basisCash?.ARTH
+      : basisCash?.ARTHDAI_UNIV2;
+
   const [approveStatus, approve] = useApprove(
-    basisCash?.MAHA,
-    basisCash?.boardroomByVersion(boardroomVersion)?.address,
+    stakingToken,
+    basisCash?.currentBoardroom('arth')?.address,
   );
 
-  const tokenBalance = useTokenBalance(basisCash.MAHA);
-  const stakedBalance = useStakedBalanceOnBoardroom('arth');
-  const isOldBoardroomMember = boardroomVersion !== 'latest';
+  const tokenBalance = useTokenBalance(stakingToken);
 
-  const { onStake } = useStakeToBoardroom();
+  const stakedBalance = useStakedBalanceOnBoardroom('arth');
+
+  const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = useWithdrawFromBoardroom();
-  const { onRedeem } = useRedeemOnBoardroom('Redeem MAHA for Boardroom Migration');
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal
@@ -49,7 +55,7 @@ const Stake: React.FC = () => {
         onStake(value);
         onDismissDeposit();
       }}
-      tokenName={'MAHA'}
+      tokenName={boardroom.depositTokenName}
     />,
   );
 
@@ -60,7 +66,7 @@ const Stake: React.FC = () => {
         onWithdraw(value);
         onDismissWithdraw();
       }}
-      tokenName={'MAHA'}
+      tokenName={boardroom.depositTokenName}
     />,
   );
 
@@ -70,22 +76,18 @@ const Stake: React.FC = () => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="MAHA" />
+              <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
             <Value value={getDisplayBalance(stakedBalance)} />
-            <Label text="MAHA Staked" />
+            <Label text={`${boardroom.depositTokenName} Staked`} />
           </StyledCardHeader>
           <StyledCardActions>
-            {!isOldBoardroomMember && approveStatus !== ApprovalState.APPROVED ? (
+            {approveStatus !== ApprovalState.APPROVED ? (
               <Button
                 disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                 onClick={approve}
-                text="Approve MAHA"
+                text={`Approve ${boardroom.depositTokenName}`}
               />
-            ) : isOldBoardroomMember ? (
-              <>
-                <Button onClick={onRedeem} variant="secondary" text="Settle & Withdraw" />
-              </>
             ) : (
               <>
                 <IconButton onClick={onPresentWithdraw}>

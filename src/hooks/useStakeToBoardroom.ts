@@ -1,19 +1,20 @@
 import { useCallback } from 'react';
+import { BoardroomInfo } from '../basis-cash';
 import useBasisCash from './useBasisCash';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useStakeToBoardroom = () => {
+const useStakeToBoardroom = (boardroom: BoardroomInfo) => {
   const basisCash = useBasisCash();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleStake = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        basisCash.stakeShareToBoardroom(amount),
-        `Stake ${amount} MAHA to the boardroom`,
+        basisCash.stakeShareToBoardroom('arth', amount),
+        `Stake ${amount} ${boardroom.depositTokenName} to the boardroom`,
       );
     },
-    [basisCash, handleTransactionReceipt],
+    [basisCash, boardroom.depositTokenName, handleTransactionReceipt],
   );
   return { onStake: handleStake };
 };
