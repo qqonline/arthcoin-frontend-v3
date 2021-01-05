@@ -34,16 +34,16 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
       ? basisCash?.MAHA
       : boardroom.depositTokenName === 'ARTH'
       ? basisCash?.ARTH
-      : basisCash?.ARTHDAI_UNIV2;
+      : basisCash?.externalTokens['ARTH_DAI-UNI-LPv2'];
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
-    basisCash?.currentBoardroom('arth')?.address,
+    basisCash?.currentBoardroom(boardroom.kind)?.address,
   );
 
   const tokenBalance = useTokenBalance(stakingToken);
 
-  const stakedBalance = useStakedBalanceOnBoardroom('arth');
+  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
 
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = useWithdrawFromBoardroom(boardroom);

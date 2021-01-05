@@ -64,29 +64,8 @@ const Boardrooms: React.FC = () => {
         subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
       />
 
-      <Boardroom
-        boardroom={{
-          kind: 'arth',
-          contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
-          depositTokenName: 'ARTH',
-          earnTokenName: 'ARTH',
-          seionrageSupplyPercentage: 80,
-          history7dayAPY: 30,
-          lockInPeriodDays: 5,
-        }}
-      />
-
-      <Boardroom
-        boardroom={{
-          kind: 'arth',
-          contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
-          depositTokenName: 'MAHA',
-          earnTokenName: 'ARTH',
-          seionrageSupplyPercentage: 20,
-          history7dayAPY: 30,
-          lockInPeriodDays: 1,
-        }}
-      />
+      <Boardroom boardroom={'arth'} />
+      <Boardroom boardroom={'arthLiquidity'} />
     </>
   );
 };

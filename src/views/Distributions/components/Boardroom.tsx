@@ -1,20 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BoardroomInfo } from '../../../basis-cash';
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
 import CardIcon from '../../../components/CardIcon';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { useWallet } from 'use-wallet';
+import useBasisCash from '../../../hooks/useBasisCash';
 
 interface BoardroomProps {
-  boardroom: BoardroomInfo;
+  boardroom: 'arth' | 'arthLiquidity';
 }
 
-const ArthBoardroom: React.FC<BoardroomProps> = ({ boardroom }) => {
+const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
   const { account, connect } = useWallet();
+  const basisCash = useBasisCash();
+
+  const boardroom = basisCash.getBoardroom(props.boardroom);
 
   return (
     <StyledCardWrapper>
@@ -34,10 +37,10 @@ const ArthBoardroom: React.FC<BoardroomProps> = ({ boardroom }) => {
                 <SlotDescription>Seinorage Supply</SlotDescription>
               </StyledInfoSlot>
 
-              <StyledInfoSlot>
+              {/* <StyledInfoSlot>
                 <SlotTitle>400,000</SlotTitle>
                 <SlotDescription>Bonded</SlotDescription>
-              </StyledInfoSlot>
+              </StyledInfoSlot> */}
 
               <StyledInfoSlot>
                 <SlotTitle>{boardroom.lockInPeriodDays} day</SlotTitle>
@@ -50,7 +53,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = ({ boardroom }) => {
                 <SlotTitle>4%</SlotTitle>
                 <SlotDescription>Staked</SlotDescription>
               </StyledInfoSlot> */}
-
+              {/*
               <StyledInfoSlot>
                 <SlotTitle>{boardroom.history7dayAPY}%</SlotTitle>
                 <SlotDescription>Historic 7-day APY</SlotDescription>
@@ -64,11 +67,11 @@ const ArthBoardroom: React.FC<BoardroomProps> = ({ boardroom }) => {
               <StyledInfoSlot>
                 <SlotTitle>{boardroom.history7dayAPY}%</SlotTitle>
                 <SlotDescription>Estiamted APY</SlotDescription>
-              </StyledInfoSlot>
+              </StyledInfoSlot> */}
             </StyledInfoSlots>
 
             {!!account ? (
-              <Button text="Select" to={`/distribution/${boardroom.contract}`} />
+              <Button text="Select" to={`/distribution/${boardroom.kind}`} />
             ) : (
               <Button onClick={() => connect('injected')} text="Unlock Wallet" />
             )}

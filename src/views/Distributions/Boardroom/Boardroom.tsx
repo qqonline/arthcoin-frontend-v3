@@ -1,22 +1,17 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { BoardroomInfo } from '../../../basis-cash';
 import PageHeader from '../../../components/PageHeader';
 import Spacer from '../../../components/Spacer';
+import useBasisCash from '../../../hooks/useBasisCash';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 
 const Boardroom = () => {
-  const boardroom: BoardroomInfo = {
-    kind: 'arth',
-    contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
-    depositTokenName: 'ARTH',
-    earnTokenName: 'ARTH',
-    seionrageSupplyPercentage: 80,
-    history7dayAPY: 30,
-    lockInPeriodDays: 5,
-  };
+  const { bankId } = useParams<{ bankId: 'arth' | 'arthLiquidity' }>();
+  const basisCash = useBasisCash();
+  const boardroom = basisCash.getBoardroom(bankId);
 
   return (
     <>

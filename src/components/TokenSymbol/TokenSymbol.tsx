@@ -18,6 +18,7 @@ const logosBySymbol: { [title: string]: string } = {
   SUSD: sUSDLogo,
   USDC: USDCLogo,
   USDT: USDTLogo,
+  'ARTH_DAI-UNI-LPv2': bacLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'BAS_DAI-UNI-LPv2': basLogo,
 };

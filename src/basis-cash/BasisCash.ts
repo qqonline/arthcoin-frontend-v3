@@ -1,6 +1,6 @@
 import { Fetcher, Route, Token } from '@uniswap/sdk';
 import { Configuration } from './config';
-import { ContractName, TokenStat, TreasuryAllocationTime } from './types';
+import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
@@ -40,13 +40,14 @@ export class BasisCash {
     }
     this.externalTokens = {};
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
-      this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal
+      this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal+
+      console.log(this.externalTokens)
     }
 
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    this.ARTHDAI_UNIV2 = new ERC20(externalTokens['BAC_DAI-UNI-LPv2'][0], provider, 'ARTHDAI_UNIV2');
+    console.log(externalTokens['ARTH_DAI-UNI-LPv2'][0], provider, 'ARTH_DAI-UNI-LPv2')
 
     // Uniswap V2 Pair
     this.bacDai = new Contract(
@@ -56,7 +57,7 @@ export class BasisCash {
     );
 
     this.arthDai = new Contract(
-      externalTokens['BAC_DAI-UNI-LPv2'][0],
+      externalTokens['ARTH_DAI-UNI-LPv2'][0],
       IUniswapV2PairABI,
       provider,
     );
@@ -93,6 +94,31 @@ export class BasisCash {
 
   get isUnlocked(): boolean {
     return !!this.myAccount;
+  }
+
+  getBoardrooms: () => ['arth', 'arthLiquidity']
+
+
+  getBoardroom(kind: 'arth' | 'arthLiquidity'): BoardroomInfo {
+    if (kind === 'arth') return {
+      kind: 'arth',
+      contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
+      depositTokenName: 'ARTH',
+      earnTokenName: 'ARTH',
+      seionrageSupplyPercentage: 80,
+      history7dayAPY: 30,
+      lockInPeriodDays: 5,
+    }
+
+    return {
+      kind: 'arthLiquidity',
+      contract: '0xFA46d388D658D8E693B5909892d27c9Db4666599',
+      depositTokenName: 'ARTH_DAI-UNI-LPv2',
+      earnTokenName: 'ARTH',
+      seionrageSupplyPercentage: 20,
+      history7dayAPY: 30,
+      lockInPeriodDays: 1,
+    }
   }
 
   gasOptions(gas: BigNumber): Overrides {

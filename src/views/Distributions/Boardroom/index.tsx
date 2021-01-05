@@ -11,7 +11,6 @@ const Boardroom = () => {
   const { account } = useWallet();
   const basisCash = useBasisCash();
 
-  console.log(account, basisCash);
   if (!!!account || !basisCash) return <UnlockWallet />;
 
   return <BoardroomChild />;

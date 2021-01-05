@@ -9,12 +9,13 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
+      DAI: ['0x4193a1411FD675C26Bf95ADdc125F35B7E78d6AA', 18],
       yCRV: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 18],
       SUSD: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
       USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
-      'BAC_DAI-UNI-LPv2': ['0xd4405F0704621DBe9d4dEA60E128E0C3b26bddbD', 18],
+      'ARTH_DAI-UNI-LPv2': ['0x707d2E3f9ED8fA5d19D9A9Aa2CaEeC2c392397Fb', 18],
+      'BAC_DAI-UNI-LPv2': ['0xf4B13Fe3685bFc5C71eAEF9A87fdFaC6c7FDb4F4', 18],
       'BAS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
     },
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
@@ -55,6 +56,7 @@ const configurations: { [env: string]: Configuration } = {
       SUSD: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
       USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
+
       'BAC_DAI-UNI-LPv2': ['0xd4405F0704621DBe9d4dEA60E128E0C3b26bddbD', 18],
       'BAS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
     },
@@ -126,4 +128,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-export default configurations["staging"];
+export default configurations["development"];

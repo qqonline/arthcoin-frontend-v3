@@ -12,14 +12,13 @@ import StastIcon from './stats.png';
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import Humanize from 'humanize-plus';
-import { getBalance, getDisplayBalance } from '../../utils/formatBalance';
+import { getBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 
 import moment from 'moment';
 
 import Stat from './components/Stat';
 import ProgressCountdown from './components/ProgressCountdown';
-import { BigNumber } from 'ethers';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -63,7 +62,16 @@ const Home: React.FC = () => {
         : prevAllocation,
     [prevAllocation, nextAllocation],
   );
-  const nextEpoch = useMemo(() => moment(prevEpoch).add(1, 'days').toDate(), [prevEpoch]);
+
+  // useEffect(() => {
+  //   let _tick = 0;
+  //   const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // });
+
+  const nextEpoch = useMemo(() => moment(prevEpoch).add(10, 'minute').toDate(), [prevEpoch]);
 
   return (
     <Page>
