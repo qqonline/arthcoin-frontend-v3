@@ -16,7 +16,7 @@ import Stats from './views/Stats';
 import store from './state';
 import theme from './theme';
 import Updaters from './state/Updaters';
-import Boardroom from './views/Boardroom';
+import Distributions from './views/Distributions';
 import Popups from './components/Popups';
 import config from './config';
 
@@ -38,7 +38,7 @@ const App: React.FC = () => {
             <Bond />
           </Route>
           <Route path="/distribution">
-            <Boardroom />
+            <Distributions />
           </Route>
         </Switch>
       </Router>

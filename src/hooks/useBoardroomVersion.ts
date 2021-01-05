@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 import useStakedBalanceOnBoardroom from './useStakedBalanceOnBoardroom';
 
-const useBoardroomVersion = () => {
+const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth') => {
   const [boardroomVersion, setBoardroomVersion] = useState('latest');
   const basisCash = useBasisCash();
-  const stakedBalance = useStakedBalanceOnBoardroom();
+  const stakedBalance = useStakedBalanceOnBoardroom(kind);
 
   const updateState = useCallback(async () => {
     setBoardroomVersion(await basisCash.fetchBoardroomVersionOfUser());

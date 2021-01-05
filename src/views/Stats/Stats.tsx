@@ -12,13 +12,14 @@ import StastIcon from './stats.png';
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import Humanize from 'humanize-plus';
-import { getBalance } from '../../utils/formatBalance';
+import { getBalance, getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 
 import moment from 'moment';
 
 import Stat from './components/Stat';
 import ProgressCountdown from './components/ProgressCountdown';
+import { BigNumber } from 'ethers';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -53,7 +54,7 @@ const Home: React.FC = () => {
   //   [cashStat],
   // );
 
-  const { prevAllocation, nextAllocation } = useTreasuryAllocationTimes();
+  const { prevAllocation, nextAllocation, currentEpoch } = useTreasuryAllocationTimes();
 
   const prevEpoch = useMemo(
     () =>
@@ -97,7 +98,7 @@ const Home: React.FC = () => {
 
       <StyledHeader>
         <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
-        <Stat title={'500'} description="Current Epoch" />
+        <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
         <Stat title={'23.3%'} description="Bond Premium" />
         <Stat title={'$234,234,222'} description="Uniswap Liquidity" />
         {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}

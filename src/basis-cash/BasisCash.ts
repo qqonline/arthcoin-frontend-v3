@@ -293,7 +293,7 @@ export class BasisCash {
     return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnBoardroom(): Promise<BigNumber> {
+  async getStakedSharesOnBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom();
 
     return await ArthBoardroom.balanceOf(this.myAccount);
@@ -329,9 +329,12 @@ export class BasisCash {
     const { Treasury } = this.contracts;
     const nextEpochTimestamp: BigNumber = await Treasury.nextEpochPoint();
     const period: BigNumber = await Treasury.getPeriod();
+    const currentEpoch: BigNumber = await Treasury.getCurrentEpoch();
 
     const nextAllocation = new Date(nextEpochTimestamp.mul(1000).toNumber());
     const prevAllocation = new Date(nextAllocation.getTime() - period.toNumber() * 1000);
-    return { prevAllocation, nextAllocation };
+
+
+    return { prevAllocation, nextAllocation, currentEpoch: currentEpoch.toNumber() };
   }
 }

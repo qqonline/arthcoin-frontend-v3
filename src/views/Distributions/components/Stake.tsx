@@ -28,14 +28,14 @@ import useRedeemOnBoardroom from '../../../hooks/useRedeemOnBoardroom';
 
 const Stake: React.FC = () => {
   const basisCash = useBasisCash();
-  const boardroomVersion = useBoardroomVersion();
+  const boardroomVersion = useBoardroomVersion('arth');
   const [approveStatus, approve] = useApprove(
-    basisCash.MAHA,
-    basisCash.boardroomByVersion(boardroomVersion).address,
+    basisCash?.MAHA,
+    basisCash?.boardroomByVersion(boardroomVersion)?.address,
   );
 
   const tokenBalance = useTokenBalance(basisCash.MAHA);
-  const stakedBalance = useStakedBalanceOnBoardroom();
+  const stakedBalance = useStakedBalanceOnBoardroom('arth');
   const isOldBoardroomMember = boardroomVersion !== 'latest';
 
   const { onStake } = useStakeToBoardroom();

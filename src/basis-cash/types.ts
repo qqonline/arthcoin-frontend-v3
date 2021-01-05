@@ -11,6 +11,16 @@ export interface BankInfo {
   finished: boolean;
 }
 
+
+export interface BoardroomInfo {
+  contract: ContractName;
+  depositTokenName: ContractName;
+  earnTokenName: ContractName;
+  seionrageSupplyPercentage: number
+  history7dayAPY: number
+  lockInPeriodDays: number
+}
+
 export interface Bank extends BankInfo {
   address: string;
   depositToken: ERC20;
@@ -28,6 +38,7 @@ export type TokenStat = {
 };
 
 export type TreasuryAllocationTime = {
+  currentEpoch: Number
   prevAllocation: Date;
   nextAllocation: Date;
 }

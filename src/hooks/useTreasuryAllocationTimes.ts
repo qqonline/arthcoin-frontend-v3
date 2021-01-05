@@ -4,6 +4,7 @@ import { TreasuryAllocationTime } from '../basis-cash/types';
 
 const useTreasuryAllocationTimes = () => {
   const [time, setTime] = useState<TreasuryAllocationTime>({
+    currentEpoch: 0,
     prevAllocation: new Date(),
     nextAllocation: new Date(),
   });

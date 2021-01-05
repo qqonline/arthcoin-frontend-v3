@@ -3,13 +3,13 @@ import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
 
-const useStakedBalanceOnBoardroom = () => {
+const useStakedBalanceOnBoardroom = (kind: 'arthLiquidity' | 'arth') => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getStakedSharesOnBoardroom());
-  }, [basisCash]);
+    setBalance(await basisCash.getStakedSharesOnBoardroom(kind));
+  }, [basisCash, kind]);
 
   useEffect(() => {
     if (basisCash?.isUnlocked) {

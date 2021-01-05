@@ -108,7 +108,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   font-size: ${(props) => props.fontSize}px;
   font-weight: 700;
-  // height: ${(props) => props.size}px;
+  height: 38px;
   justify-content: center;
   outline: none;
   padding: 10px 22px;
@@ -127,7 +127,7 @@ const StyledLink = styled(Link)`
   color: inherit;
   display: flex;
   flex: 1;
-  height: 56px;
+  height: 38px;
   justify-content: center;
   margin: 0 ${(props) => -props.theme.spacing[4]}px;
   padding: 0 ${(props) => props.theme.spacing[4]}px;
@@ -139,7 +139,7 @@ const StyledExternalLink = styled.a`
   color: inherit;
   display: flex;
   flex: 1;
-  height: 56px;
+  height: 38px;
   justify-content: center;
   margin: 0 ${(props) => -props.theme.spacing[4]}px;
   padding: 0 ${(props) => props.theme.spacing[4]}px;
