@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import Label from '../../../components/Label';
 import { TokenStat } from '../../../basis-cash/types';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
 import config from '../../../config';

@@ -48,10 +48,10 @@ const Home: React.FC = () => {
 
   const cashStat = useCashPriceInEstimatedTWAP();
   const treasuryAmount = useTreasuryAmount();
-  const scalingFactor = useMemo(
-    () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
-    [cashStat],
-  );
+  // const scalingFactor = useMemo(
+  //   () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
+  //   [cashStat],
+  // );
 
   const { prevAllocation, nextAllocation } = useTreasuryAllocationTimes();
 

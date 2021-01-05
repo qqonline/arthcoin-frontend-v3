@@ -7,7 +7,11 @@ import styled from 'styled-components';
 import Transaction from './Transaction';
 import ModalActions from '../../ModalActions';
 import Spacer from '../../Spacer';
-import { isTransactionRecent, useAllTransactions, useClearAllTransactions } from '../../../state/transactions/hooks';
+import {
+  isTransactionRecent,
+  useAllTransactions,
+  useClearAllTransactions,
+} from '../../../state/transactions/hooks';
 import { Trash } from 'react-feather';
 
 const MAX_TRANSACTION_HISTORY = 10;
@@ -26,7 +30,7 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
     .filter((tx) => tx.receipt)
     .slice(0, MAX_TRANSACTION_HISTORY);
 
-  const isEmpty = (confirmed?.length + pending?.length) == 0;
+  const isEmpty = confirmed?.length + pending?.length === 0;
   return (
     <StyledModal>
       <StyledTitleArea>
@@ -41,7 +45,9 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
         <>
           <Label text="Pending transactions" />
           <StyledTransactionList>
-            {pending.map(tx => <Transaction key={tx.hash} tx={tx} />)}
+            {pending.map((tx) => (
+              <Transaction key={tx.hash} tx={tx} />
+            ))}
           </StyledTransactionList>
           <Spacer size="sm" />
         </>
@@ -50,19 +56,19 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
         <>
           <Label text="Recent transactions" />
           <StyledTransactionList>
-            {confirmed.map(tx => <Transaction key={tx.hash} tx={tx} />)}
+            {confirmed.map((tx) => (
+              <Transaction key={tx.hash} tx={tx} />
+            ))}
           </StyledTransactionList>
         </>
       )}
-      {isEmpty && (
-        <Label text="No transactions." color="#777" />
-      )}
+      {isEmpty && <Label text="No transactions." color="#777" />}
       <ModalActions>
         <Button text="Close" onClick={onDismiss} />
       </ModalActions>
     </StyledModal>
-  )
-}
+  );
+};
 
 const StyledModal = styled(Modal)`
   width: 360px;
@@ -71,12 +77,12 @@ const StyledModal = styled(Modal)`
 const StyledTitleArea = styled.div`
   display: flex;
   align-items: center;
-  height: ${props => props.theme.topBarSize}px;
-  margin-top: ${props => -props.theme.spacing[4]}px;
+  height: ${(props) => props.theme.topBarSize}px;
+  margin-top: ${(props) => -props.theme.spacing[4]}px;
 `;
 
 const StyledModalTitle = styled.div`
-  color: ${props => props.theme.color.grey[300]};
+  color: ${(props) => props.theme.color.grey[300]};
   flex: 1;
   font-size: 18px;
   font-weight: 700;

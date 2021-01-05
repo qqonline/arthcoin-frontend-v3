@@ -6,7 +6,7 @@ import farmer from '../../assets/img/basis-cash-logo.svg';
 const Logo: React.FC = () => {
   return (
     <StyledLogo>
-      <img src={farmer} height="40" style={{ marginTop: -3 }} />
+      <img alt="arth" src={farmer} height="40" style={{ marginTop: -3 }} />
       <StyledLink href="/">ARTH</StyledLink>
     </StyledLogo>
   );

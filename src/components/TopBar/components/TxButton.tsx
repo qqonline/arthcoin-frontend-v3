@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import Button from '../../Button';
-import { isTransactionRecent, useAllTransactions } from '../../../state/transactions/hooks';
+import { useAllTransactions } from '../../../state/transactions/hooks';
 import useModal from '../../../hooks/useModal';
 import TxModal from './TxModal';
 
@@ -26,9 +26,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
         <StyledTxButton>
           <Button
             size="sm"
-            text={
-              pendingTransactions > 0 ? `${pendingTransactions} Pending` : `Transactions`
-            }
+            text={pendingTransactions > 0 ? `${pendingTransactions} Pending` : `Transactions`}
             variant={pendingTransactions > 0 ? 'secondary' : 'default'}
             onClick={() => onPresentTransactionModal()}
           />

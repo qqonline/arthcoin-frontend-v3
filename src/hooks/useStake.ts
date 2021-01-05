@@ -16,7 +16,7 @@ const useStake = (bank: Bank) => {
         `Stake ${amount} ${bank.depositTokenName} to ${bank.contract}`,
       );
     },
-    [bank, basisCash],
+    [bank.contract, bank.depositToken.decimal, bank.depositTokenName, basisCash, handleTransactionReceipt],
   );
   return { onStake: handleStake };
 };
