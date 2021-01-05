@@ -46,7 +46,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const stakedBalance = useStakedBalanceOnBoardroom('arth');
 
   const { onStake } = useStakeToBoardroom(boardroom);
-  const { onWithdraw } = useWithdrawFromBoardroom();
+  const { onWithdraw } = useWithdrawFromBoardroom(boardroom);
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal

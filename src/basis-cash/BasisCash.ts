@@ -285,9 +285,6 @@ export class BasisCash {
   }
 
   currentBoardroom(kind: 'arthLiquidity' | 'arth'): Contract {
-    if (!this.boardroomVersionOfUser) {
-      throw new Error('you must unlock the wallet to continue.');
-    }
     return this.boardroomByVersion(kind, this.boardroomVersionOfUser);
   }
 

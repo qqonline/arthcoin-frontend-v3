@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import PageHeader from '../../components/PageHeader';
 
 import Boardroom from './components/Boardroom';
@@ -67,6 +66,7 @@ const Boardrooms: React.FC = () => {
 
       <Boardroom
         boardroom={{
+          kind: 'arth',
           contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
           depositTokenName: 'ARTH',
           earnTokenName: 'ARTH',
@@ -78,6 +78,7 @@ const Boardrooms: React.FC = () => {
 
       <Boardroom
         boardroom={{
+          kind: 'arth',
           contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
           depositTokenName: 'MAHA',
           earnTokenName: 'ARTH',
@@ -86,40 +87,8 @@ const Boardrooms: React.FC = () => {
           lockInPeriodDays: 1,
         }}
       />
-      {/* {migrateNotice}
-          <StyledBoardroom>
-            <StyledCardsWrapper>
-              <StyledCardWrapper>
-                <Stake />
-              </StyledCardWrapper>
-              <Spacer />
-              <StyledCardWrapper>
-                <Harvest />
-              </StyledCardWrapper>
-            </StyledCardsWrapper>
-            <Spacer size="lg" />
-          </StyledBoardroom>
-
-          <StyledBoardroom>
-            <StyledCardsWrapper>
-              <StyledCardWrapper>
-                <Stake />
-              </StyledCardWrapper>
-              <Spacer />
-              <StyledCardWrapper>
-                <Harvest />
-              </StyledCardWrapper>
-            </StyledCardsWrapper>
-            <Spacer size="lg" />
-          </StyledBoardroom> */}
     </>
   );
 };
-
-const StyledNoticeWrapper = styled.div`
-  width: 768px;
-  margin-top: -20px;
-  margin-bottom: 40px;
-`;
 
 export default Boardrooms;

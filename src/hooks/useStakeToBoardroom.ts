@@ -10,11 +10,11 @@ const useStakeToBoardroom = (boardroom: BoardroomInfo) => {
   const handleStake = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        basisCash.stakeShareToBoardroom('arth', amount),
+        basisCash.stakeShareToBoardroom(boardroom.kind, amount),
         `Stake ${amount} ${boardroom.depositTokenName} to the boardroom`,
       );
     },
-    [basisCash, boardroom.depositTokenName, handleTransactionReceipt],
+    [basisCash, boardroom.depositTokenName, boardroom.kind, handleTransactionReceipt],
   );
   return { onStake: handleStake };
 };

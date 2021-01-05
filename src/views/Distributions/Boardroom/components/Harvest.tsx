@@ -14,8 +14,8 @@ import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { BoardroomInfo } from '../../../../basis-cash';
 
 const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
-  const { onReward } = useHarvestFromBoardroom();
-  const earnings = useEarningsOnBoardroom('arth');
+  const { onReward } = useHarvestFromBoardroom(boardroom);
+  const earnings = useEarningsOnBoardroom(boardroom.kind);
 
   return (
     <Card>

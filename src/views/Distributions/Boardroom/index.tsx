@@ -1,69 +1,36 @@
 import React from 'react';
+import { useWallet } from 'use-wallet';
 
 import styled from 'styled-components';
-import PageHeader from '../../../components/PageHeader';
-import Spacer from '../../../components/Spacer';
-import Harvest from './components/Harvest';
-import Stake from './components/Stake';
+import useBasisCash from '../../../hooks/useBasisCash';
+
+import Button from '../../../components/Button';
+import BoardroomChild from './Boardroom';
 
 const Boardroom = () => {
-  const boardroom = {
-    contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
-    depositTokenName: 'ARTH',
-    earnTokenName: 'ARTH',
-    seionrageSupplyPercentage: 80,
-    history7dayAPY: 30,
-    lockInPeriodDays: 5,
-  };
+  const { account } = useWallet();
+  const basisCash = useBasisCash();
 
+  console.log(account, basisCash);
+  if (!!!account || !basisCash) return <UnlockWallet />;
+
+  return <BoardroomChild />;
+};
+
+const UnlockWallet = () => {
+  const { connect } = useWallet();
   return (
-    <>
-      <PageHeader
-        title="ARTH Distribution"
-        subtitle={`Deposit $${boardroom.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
-      />
-      <StyledBoardroom>
-        <StyledCardsWrapper>
-          <StyledCardWrapper>
-            <Stake boardroom={boardroom} />
-          </StyledCardWrapper>
-          <Spacer />
-          <StyledCardWrapper>
-            <Harvest boardroom={boardroom} />
-          </StyledCardWrapper>
-        </StyledCardsWrapper>
-        <Spacer size="lg" />
-      </StyledBoardroom>
-    </>
+    <Center>
+      <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+    </Center>
   );
 };
 
-const StyledBoardroom = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const StyledCardsWrapper = styled.div`
-  display: flex;
-  width: 600px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
-`;
-
-const StyledCardWrapper = styled.div`
+const Center = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 80%;
-  }
+  align-items: center;
+  justify-content: center;
 `;
 
 export default Boardroom;
