@@ -14,9 +14,11 @@ import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
 import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
+import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../basis-cash/constants';
 import BondsIcon from './bonds.png';
+import { BigNumber } from 'ethers';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -24,6 +26,7 @@ const Bond: React.FC = () => {
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
   const cashPrice = useBondOraclePriceInLastTWAP();
+  const targetPrice = useCashTargetPrice();
 
   const bondBalance = useTokenBalance(basisCash?.ARTHB);
 
@@ -45,8 +48,16 @@ const Bond: React.FC = () => {
     },
     [basisCash, addTransaction],
   );
-  const isBondRedeemable = useMemo(() => cashPrice?.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
-  const isBondPurchasable = useMemo(() => Number(bondStat?.priceInDAI) < 1.0, [bondStat]);
+
+  const isBondRedeemable = useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
+  const isBondPurchasable = useMemo(() => {
+    const denominator1e18 = BigNumber.from(10).pow(18);
+
+    const currentPrice = BigNumber.from(Number(bondStat?.priceInDAI || 0) * 1000)
+      .mul(denominator1e18)
+      .div(1000);
+    return currentPrice.lt(targetPrice);
+  }, [bondStat, targetPrice]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
 
@@ -94,11 +105,11 @@ const Bond: React.FC = () => {
                   !isBondPurchasable
                     ? "ARTH is over it's target price"
                     : `${Math.floor(
-                        100 / Number(bondStat.priceInDAI) - 100,
+                        100 / Number(bondStat?.priceInDAI) - 100,
                       )}% return when ARTH is below it's target price`
                 }
                 onExchange={handleBuyBonds}
-                disabled={!bondStat || isBondRedeemable}
+                disabled={!isBondPurchasable}
               />
             </StyledCardWrapper>
             <Spacer size="md" />
@@ -112,9 +123,11 @@ const Bond: React.FC = () => {
                 toTokenName="ARTH"
                 priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                 onExchange={handleRedeemBonds}
-                disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
+                disabled={!isBondRedeemable}
                 disabledDescription={
-                  !isBondRedeemable ? `Enabled when ARTH > $${BOND_REDEEM_PRICE}` : null
+                  !isBondRedeemable
+                    ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                    : null
                 }
               />
             </StyledCardWrapper>
@@ -143,7 +156,7 @@ const Bond: React.FC = () => {
               <ExchangeStat
                 tokenName="Target"
                 description="What the Price of ARTH should be"
-                price={getDisplayBalance(cashPrice, 18, 2)}
+                price={getDisplayBalance(targetPrice, 18, 2)}
               />
               <Spacer size="md" />
               <ExchangeStat

@@ -146,29 +146,32 @@ export class BasisCash {
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
    */
   async getCashStatInEstimatedTWAP(): Promise<TokenStat> {
-    // const { Oracle } = this.contracts;
+    const { SeigniorageOracle } = this.contracts;
 
     // estimate current TWAP price
-    // const cumulativePrice: BigNumber = await this.bacDai.price0CumulativeLast();
-    // const cumulativePriceLast = await Oracle.price0CumulativeLast();
+    const cumulativePrice: BigNumber = await this.arthDai.price0CumulativeLast();
+    const cumulativePriceLast = await SeigniorageOracle.price0CumulativeLast();
 
-    // const elapsedSec = Math.floor(Date.now() / 1000 - (await Oracle.blockTimestampLast()));
+    const elapsedSec = Math.floor(Date.now() / 1000 - (await SeigniorageOracle.blockTimestampLast()));
 
-    // const denominator112 = BigNumber.from(2).pow(112);
-    // const denominator1e18 = BigNumber.from(10).pow(18);
-    // const cashPriceTWAP = cumulativePrice
-    //   .sub(1)
-    //   .mul(denominator1e18)
-    //   .div(elapsedSec)
-    //   .div(denominator112);
+    const denominator112 = BigNumber.from(2).pow(112);
+    const denominator1e18 = BigNumber.from(10).pow(18);
+    const cashPriceTWAP = cumulativePrice
+      .sub(cumulativePriceLast)
+      .mul(denominator1e18)
+      .div(elapsedSec)
+      .div(denominator112);
 
     const totalSupply = await this.ARTH.displayedTotalSupply();
     return {
-      // priceInDAI: getDisplayBalance(cashPriceTWAP),
-      priceInDAI: getDisplayBalance(BigNumber.from(1)),
-
+      priceInDAI: getDisplayBalance(cashPriceTWAP),
       totalSupply,
     };
+  }
+
+  async getTargetPrice(): Promise<BigNumber> {
+    const { GMUOracle } = this.contracts;
+    return GMUOracle.getPrice();
   }
 
   async getCashPriceInLastTWAP(): Promise<BigNumber> {
