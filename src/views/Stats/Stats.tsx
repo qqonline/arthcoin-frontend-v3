@@ -14,6 +14,7 @@ import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import Humanize from 'humanize-plus';
 import { getBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
+import useFundAmount from '../../hooks/useFundAmount';
 
 import moment from 'moment';
 
@@ -26,9 +27,9 @@ const Home: React.FC = () => {
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
-      basisCash?.getCashStatFromUniswap(),
-      basisCash?.getBondStat(),
-      basisCash?.getShareStat(),
+      basisCash.getCashStatFromUniswap(),
+      basisCash.getBondStat(),
+      basisCash.getShareStat(),
     ]);
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
@@ -42,13 +43,18 @@ const Home: React.FC = () => {
     }
   }, [basisCash, fetchStats]);
 
-  const cashAddr = useMemo(() => basisCash?.ARTH.address, [basisCash]);
-  const shareAddr = useMemo(() => basisCash?.MAHA.address, [basisCash]);
-  const bondAddr = useMemo(() => basisCash?.ARTHB.address, [basisCash]);
+  const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
+  const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
+  const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   const cashStat = useCashPriceInEstimatedTWAP();
   const treasuryAmount = useTreasuryAmount();
+
+  const ecosystemFund = useFundAmount('ecosystem');
+  const cdpFund = useFundAmount('cdp');
+
   // const scalingFactor = useMemo(
+
   //   () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
   //   [cashStat],
   // );
@@ -128,21 +134,23 @@ const Home: React.FC = () => {
       <StyledHeader>
         <Stat
           title={
-            treasuryAmount ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}` : '-'
+            treasuryAmount
+              ? `${Humanize.compactInteger(getBalance(treasuryAmount), 2)} ARTH`
+              : '-'
           }
           description="Redeemable for Bonds"
         />
         <Stat
           title={
-            treasuryAmount ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}` : '-'
+            ecosystemFund
+              ? `${Humanize.compactInteger(getBalance(ecosystemFund), 2)} ARTH`
+              : '-'
           }
-          description="Insurance Fund"
+          description="Ecosystem Fund"
         />
         <Stat
-          title={
-            treasuryAmount ? `~$${Humanize.compactInteger(getBalance(treasuryAmount), 2)}` : '-'
-          }
-          description="Debt increase by next Epoch"
+          title={cdpFund ? `${Humanize.compactInteger(getBalance(cdpFund), 2)} ARTH` : '-'}
+          description="CDP Fund"
         />
       </StyledHeader>
     </Page>

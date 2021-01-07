@@ -28,7 +28,7 @@ const Bond: React.FC = () => {
   const cashPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
 
-  const bondBalance = useTokenBalance(basisCash?.ARTHB);
+  const bondBalance = useTokenBalance(basisCash.ARTHB);
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {

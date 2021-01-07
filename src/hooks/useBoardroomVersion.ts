@@ -12,7 +12,7 @@ const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth') => {
   }, [basisCash]);
 
   useEffect(() => {
-    if (basisCash?.isUnlocked) {
+    if (basisCash.isUnlocked) {
       updateState().catch((err) => console.error(err.stack));
     }
   }, [basisCash, stakedBalance, updateState]);

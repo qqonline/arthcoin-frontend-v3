@@ -31,14 +31,14 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const stakingToken =
     boardroom.depositTokenName === 'MAHA'
-      ? basisCash?.MAHA
+      ? basisCash.MAHA
       : boardroom.depositTokenName === 'ARTH'
-      ? basisCash?.ARTH
-      : basisCash?.externalTokens['ARTH_DAI-UNI-LPv2'];
+      ? basisCash.ARTH
+      : basisCash.externalTokens['ARTH_DAI-UNI-LPv2'];
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
-    basisCash?.currentBoardroom(boardroom.kind)?.address,
+    basisCash.currentBoardroom(boardroom.kind)?.address,
   );
 
   const tokenBalance = useTokenBalance(stakingToken);

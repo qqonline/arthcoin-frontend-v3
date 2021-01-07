@@ -14,9 +14,9 @@ const Home: React.FC = () => {
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
-      basisCash?.getCashStatFromUniswap(),
-      basisCash?.getBondStat(),
-      basisCash?.getShareStat(),
+      basisCash.getCashStatFromUniswap(),
+      basisCash.getBondStat(),
+      basisCash.getShareStat(),
     ]);
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
@@ -30,9 +30,9 @@ const Home: React.FC = () => {
     }
   }, [basisCash, fetchStats]);
 
-  const cashAddr = useMemo(() => basisCash?.ARTH.address, [basisCash]);
-  const shareAddr = useMemo(() => basisCash?.MAHA.address, [basisCash]);
-  const bondAddr = useMemo(() => basisCash?.ARTHB.address, [basisCash]);
+  const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
+  const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
+  const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   return (
     <Page>

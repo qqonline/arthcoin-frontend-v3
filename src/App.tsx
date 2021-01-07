@@ -21,37 +21,7 @@ import Distributions from './views/Distributions';
 import Popups from './components/Popups';
 import config from './config';
 import Button from './components/Button';
-
-const AppRouter: React.FC = () => {
-  return (
-    <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/stats">
-        <Stats />
-      </Route>
-      <Route path="/staking">
-        <Banks />
-      </Route>
-      <Route path="/bonds">
-        <Bond />
-      </Route>
-      <Route path="/distribution">
-        <Distributions />
-      </Route>
-    </Switch>
-  );
-};
-
-const AppWalletRouter = () => {
-  const { account } = useWallet();
-  // const basisCash = useBasisCash();
-
-  if (!!!account) return <UnlockWallet />;
-
-  return <AppRouter />;
-};
+import useBasisCash from './hooks/useBasisCash';
 
 const UnlockWallet = () => {
   const { connect } = useWallet();
@@ -62,16 +32,6 @@ const UnlockWallet = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <Providers>
-      <Router>
-        <AppWalletRouter />
-      </Router>
-    </Providers>
-  );
-};
-
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -79,18 +39,55 @@ const Providers: React.FC = ({ children }) => {
         <Provider store={store}>
           <Updaters />
           <BasisCashProvider>
-            <ModalsProvider>
-              <BanksProvider>
-                <>
-                  <Popups />
-                  {children}
-                </>
-              </BanksProvider>
-            </ModalsProvider>
+            <AppContent>{children}</AppContent>
           </BasisCashProvider>
         </Provider>
       </UseWalletProvider>
     </ThemeProvider>
+  );
+};
+const App: React.FC = () => {
+  return (
+    <Providers>
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/stats">
+            <Stats />
+          </Route>
+          <Route path="/staking">
+            <Banks />
+          </Route>
+          <Route path="/bonds">
+            <Bond />
+          </Route>
+          <Route path="/distribution">
+            <Distributions />
+          </Route>
+        </Switch>
+      </Router>
+    </Providers>
+  );
+};
+
+const AppContent: React.FC = ({ children }) => {
+  const { account } = useWallet();
+  const basisCash = useBasisCash();
+
+  if (!!!account) return <UnlockWallet />;
+  if (!basisCash) return <div>Loading</div>;
+
+  return (
+    <ModalsProvider>
+      <BanksProvider>
+        <>
+          <Popups />
+          {children}
+        </>
+      </BanksProvider>
+    </ModalsProvider>
   );
 };
 

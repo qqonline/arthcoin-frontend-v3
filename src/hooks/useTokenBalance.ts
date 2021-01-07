@@ -9,11 +9,11 @@ const useTokenBalance = (token: ERC20) => {
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await token.balanceOf(basisCash?.myAccount));
+    setBalance(await token.balanceOf(basisCash.myAccount));
   }, [basisCash, token]);
 
   useEffect(() => {
-    if (basisCash?.isUnlocked) {
+    if (basisCash.isUnlocked) {
       fetchBalance().catch((err) =>
         console.error(`Failed to fetch token balance: ${err.stack}`),
       );

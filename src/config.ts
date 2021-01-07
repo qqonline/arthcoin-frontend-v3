@@ -27,7 +27,7 @@ const configurations: { [env: string]: Configuration } = {
   staging: {
     chainId: ChainId.ROPSTEN,
     etherscanUrl: 'https://ropsten.etherscan.io',
-    defaultProvider: 'https://ropsten.infura.io/v3/69666afe933b4175afe4999170158a5f',
+    defaultProvider: 'https://ropsten.infura.io/v3/917cb2fbb9c94f6c9e461330a7ce497d',
     deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {
       DAI: ['0x6B175474E89094C44Da98b954EedeAC495271d0F', 18],
@@ -71,22 +71,22 @@ const configurations: { [env: string]: Configuration } = {
 };
 
 export const bankDefinitions: { [contractName: string]: BankInfo } = {
-  BACDAIPool: {
-    name: 'Earn ARTH by DAI',
-    contract: 'BACDAIPool',
-    depositTokenName: 'DAI',
-    earnTokenName: 'ARTH',
-    finished: true,
-    sort: 3,
-  },
-  BACUSDCPool: {
-    name: 'Earn ARTH by USDC',
-    contract: 'BACUSDCPool',
-    depositTokenName: 'USDC',
-    earnTokenName: 'ARTH',
-    finished: false,
-    sort: 4,
-  },
+  // BACDAIPool: {
+  //   name: 'Earn ARTH by DAI',
+  //   contract: 'BACDAIPool',
+  //   depositTokenName: 'DAI',
+  //   earnTokenName: 'ARTH',
+  //   finished: true,
+  //   sort: 3,
+  // },
+  // BACUSDCPool: {
+  //   name: 'Earn ARTH by USDC',
+  //   contract: 'BACUSDCPool',
+  //   depositTokenName: 'USDC',
+  //   earnTokenName: 'ARTH',
+  //   finished: false,
+  //   sort: 4,
+  // },
   // BACSUSDPool: {
   //   name: 'Earn ARTH by sUSD',
   //   contract: 'BACSUSDPool',

@@ -4,7 +4,7 @@ import BasisCash from '../../basis-cash';
 import config from '../../config';
 
 export interface BasisCashContext {
-  basisCash?: BasisCash;
+  basisCash: BasisCash;
 }
 
 export const Context = createContext<BasisCashContext>({ basisCash: null });
