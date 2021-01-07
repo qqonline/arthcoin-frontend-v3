@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import ExchangeCard from './components/ExchangeCard';
+import ExchangeCardBonds from './components/ExchangeCardBonds';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/useBondStats';
@@ -16,7 +17,7 @@ import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../basis-cash/constants';
+import useStabilityFees from '../../hooks/useStabilityFee';
 import BondsIcon from './bonds.png';
 import { BigNumber } from 'ethers';
 
@@ -27,6 +28,7 @@ const Bond: React.FC = () => {
   const bondStat = useBondStats();
   const cashPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
+  const stabiltiyFees = useStabilityFees();
 
   const bondBalance = useTokenBalance(basisCash.ARTHB);
 
@@ -115,7 +117,7 @@ const Bond: React.FC = () => {
             <Spacer size="md" />
 
             <StyledCardWrapper>
-              <ExchangeCard
+              <ExchangeCardBonds
                 action="Redeem"
                 fromToken={basisCash.ARTHB}
                 fromTokenName="ARTHB"
@@ -138,15 +140,13 @@ const Bond: React.FC = () => {
           <StyledBond>
             <StyledStatsWrapper>
               <ExchangeStat
-                tokenName="ARTH"
+                title={`ARTH: $${getDisplayBalance(cashPrice, 18, 2)}`}
                 description="Last-Hour TWAP Price"
-                price={getDisplayBalance(cashPrice, 18, 2)}
               />
               <Spacer size="md" />
               <ExchangeStat
-                tokenName="ARTHB"
+                title={`ARTHB: $${bondStat?.priceInDAI || '-'}`}
                 description="Current Price: (ARTH)^2"
-                price={bondStat?.priceInDAI || '-'}
               />
               <Spacer size="md" />
             </StyledStatsWrapper>
@@ -154,15 +154,13 @@ const Bond: React.FC = () => {
             <Spacer size="md" />
             <StyledStatsWrapper>
               <ExchangeStat
-                tokenName="Target"
+                title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
                 description="What the Price of ARTH should be"
-                price={getDisplayBalance(targetPrice, 18, 2)}
               />
               <Spacer size="md" />
               <ExchangeStat
-                tokenName="Bond Premium"
-                description="Redeemable when ARTH is above target price"
-                price={'20.2%'}
+                title={`Bond Redemtion Fees: ${stabiltiyFees}%`}
+                description="Fees paid in $MAHA when redeeming bonds"
               />
               <Spacer size="md" />
             </StyledStatsWrapper>

@@ -4,28 +4,21 @@ import Modal, { ModalProps } from '../../../components/Modal';
 import ModalActions from '../../../components/ModalActions';
 import ModalTitle from '../../../components/ModalTitle';
 import TokenInput from '../../../components/TokenInput';
-import { getFullDisplayBalance } from '../../../utils/formatBalance';
+import { getDisplayBalance, getFullDisplayBalance } from '../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
-import Label from '../../../components/Label';
+import MahaFeeCheck from './MahaFeeCheck';
+import useBasisCash from '../../../hooks/useBasisCash';
+import useApprove, { ApprovalState } from '../../../hooks/useApprove';
+import useTokenBalance from '../../../hooks/useTokenBalance';
 
 interface ExchangeModalProps extends ModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   title: string;
   description: string;
-  action: string;
-  tokenName: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({
-  max,
-  title,
-  description,
-  onConfirm,
-  onDismiss,
-  action,
-  tokenName,
-}) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, onDismiss }) => {
   const [val, setVal] = useState('');
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
 
@@ -34,9 +27,22 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     [setVal],
   );
 
+  const {
+    MAHA,
+    contracts: { Treasury },
+  } = useBasisCash();
+  const [mahaApproveStatus, mahaApprove] = useApprove(MAHA, Treasury.address);
+
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);
   }, [fullBalance, setVal]);
+
+  const action = 'Redeem';
+  const tokenName = 'ARTHB';
+
+  const mahaBalance = useTokenBalance(MAHA);
+
+  const isMahaApproved = mahaApproveStatus !== ApprovalState.APPROVED;
 
   return (
     <Modal>
@@ -48,10 +54,19 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         max={fullBalance}
         symbol={tokenName}
       />
-
+      <MahaFeeCheck
+        value={val}
+        approve={mahaApprove}
+        isMahaApproved={isMahaApproved}
+        max={getDisplayBalance(mahaBalance)}
+      />
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
-        <Button text={action} onClick={() => onConfirm(val)} />
+        <Button
+          text={action}
+          disabled={!isMahaApproved || Number(val) <= 0}
+          onClick={() => onConfirm(val)}
+        />
       </ModalActions>
     </Modal>
   );
