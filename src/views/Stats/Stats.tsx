@@ -20,6 +20,9 @@ import moment from 'moment';
 
 import Stat from './components/Stat';
 import ProgressCountdown from './components/ProgressCountdown';
+import useCashTargetPrice from '../../hooks/useCashTargetPrice';
+import useUniswapPrice from '../../hooks/useUniswapPrice';
+import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -29,7 +32,8 @@ const Home: React.FC = () => {
     const [cash, bond, share] = await Promise.all([
       basisCash.getCashStatFromUniswap(),
       basisCash.getBondStat(),
-      basisCash.getShareStat(),
+      // basisCash.getShareStat(),
+      basisCash.getBondStat(),
     ]);
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
@@ -49,6 +53,7 @@ const Home: React.FC = () => {
 
   const cashStat = useCashPriceInEstimatedTWAP();
   const treasuryAmount = useTreasuryAmount();
+  const targetPrice = useCashTargetPrice();
 
   const ecosystemFund = useFundAmount('ecosystem');
   const cdpFund = useFundAmount('cdp');
@@ -77,6 +82,9 @@ const Home: React.FC = () => {
   //   };
   // });
 
+  const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
+  const mahaPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
+  const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
   const nextEpoch = useMemo(() => moment(prevEpoch).add(10, 'minute').toDate(), [prevEpoch]);
 
   return (
@@ -114,7 +122,7 @@ const Home: React.FC = () => {
         <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
         <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
         <Stat title={'23.3%'} description="Bond Premium" />
-        <Stat title={'$234,234,222'} description="Uniswap Liquidity" />
+        <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
         {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
       </StyledHeader>
       <StyledHeader>
@@ -122,12 +130,9 @@ const Home: React.FC = () => {
           title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
           description="ARTH Price (TWAP)"
         />
+        <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
         <Stat
-          title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
-          description="ARTH Price (Spot)"
-        />
-        <Stat
-          title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
+          title={cashStat ? `$${Humanize.compactInteger(getBalance(targetPrice), 2)}` : '-'}
           description="ARTH Price (Target)"
         />
       </StyledHeader>

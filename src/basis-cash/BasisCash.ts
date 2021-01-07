@@ -24,6 +24,8 @@ export class BasisCash {
 
   bacDai: Contract;
   arthDai: Contract;
+
+  DAI: ERC20;
   ARTH: ERC20;
   MAHA: ERC20;
   ARTHB: ERC20;
@@ -41,13 +43,12 @@ export class BasisCash {
     this.externalTokens = {};
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal); // TODO: add decimal+
-      console.log(this.externalTokens)
     }
 
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    console.log(externalTokens['ARTH_DAI-UNI-LPv2'][0], provider, 'ARTH_DAI-UNI-LPv2')
+    this.DAI = this.externalTokens['DAI']
 
     // Uniswap V2 Pair
     this.bacDai = new Contract(
