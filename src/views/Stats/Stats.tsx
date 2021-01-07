@@ -12,7 +12,7 @@ import StastIcon from './stats.png';
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import Humanize from 'humanize-plus';
-import { getBalance } from '../../utils/formatBalance';
+import { getBalance, getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import useFundAmount from '../../hooks/useFundAmount';
 
@@ -23,6 +23,7 @@ import ProgressCountdown from './components/ProgressCountdown';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
+import { BigNumber } from 'ethers';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -132,29 +133,21 @@ const Home: React.FC = () => {
         />
         <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
         <Stat
-          title={cashStat ? `$${Humanize.compactInteger(getBalance(targetPrice), 2)}` : '-'}
+          title={cashStat ? `$${getDisplayBalance(targetPrice)}` : '-'}
           description="ARTH Price (Target)"
         />
       </StyledHeader>
       <StyledHeader>
         <Stat
-          title={
-            treasuryAmount
-              ? `${Humanize.compactInteger(getBalance(treasuryAmount), 2)} ARTH`
-              : '-'
-          }
+          title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTH` : '-'}
           description="Redeemable for Bonds"
         />
         <Stat
-          title={
-            ecosystemFund
-              ? `${Humanize.compactInteger(getBalance(ecosystemFund), 2)} ARTH`
-              : '-'
-          }
+          title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
           description="Ecosystem Fund"
         />
         <Stat
-          title={cdpFund ? `${Humanize.compactInteger(getBalance(cdpFund), 2)} ARTH` : '-'}
+          title={cdpFund ? `${getDisplayBalance(cdpFund)} ARTH` : '-'}
           description="CDP Fund"
         />
       </StyledHeader>

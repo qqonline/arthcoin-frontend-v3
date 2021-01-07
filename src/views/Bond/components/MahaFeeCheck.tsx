@@ -23,7 +23,11 @@ const MahaFeeCheck: React.FC<TokenInputProps> = ({ max, value, isMahaApproved, a
       </StyledMaxText>
 
       <StyledInputWrapper>
-        <StyledInput disabled placeholder={'0'} value={value * stabilityFee.toNumber()} />
+        <StyledInput
+          disabled
+          placeholder={'0'}
+          value={value * stabilityFee.toNumber() * 0.01}
+        />
         <StyledTokenAdornmentWrapper>
           <StyledTokenSymbol>{symbol}</StyledTokenSymbol>
           <StyledSpacer />

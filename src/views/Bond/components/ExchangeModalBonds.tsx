@@ -10,6 +10,7 @@ import MahaFeeCheck from './MahaFeeCheck';
 import useBasisCash from '../../../hooks/useBasisCash';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useTokenBalance from '../../../hooks/useTokenBalance';
+import styled, { ThemeContext } from 'styled-components';
 
 interface ExchangeModalProps extends ModalProps {
   max: BigNumber;
@@ -20,6 +21,8 @@ interface ExchangeModalProps extends ModalProps {
 
 const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, onDismiss }) => {
   const [val, setVal] = useState('');
+  const [mahaVal, setMahaVal] = useState('');
+
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
 
   const handleChange = useCallback(
@@ -42,11 +45,13 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
 
   const mahaBalance = useTokenBalance(MAHA);
 
-  const isMahaApproved = mahaApproveStatus !== ApprovalState.APPROVED;
+  const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
+  const description =
+    'You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA';
 
   return (
     <Modal>
-      <ModalTitle text={title} />
+      <ModalTitle text={'Redeem your ARTH Bonds'} />
       <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
@@ -60,10 +65,11 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
         isMahaApproved={isMahaApproved}
         max={getDisplayBalance(mahaBalance)}
       />
+      <StyledLabel>{description}</StyledLabel>
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
         <Button
-          text={action}
+          text={!isMahaApproved ? 'MAHA Not Approved' : action}
           disabled={!isMahaApproved || Number(val) <= 0}
           onClick={() => onConfirm(val)}
         />
@@ -71,5 +77,11 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
     </Modal>
   );
 };
+
+const StyledLabel = styled.div`
+  color: #fff9;
+  padding: 15px 15px 0;
+  text-align: center;
+`;
 
 export default ExchangeModal;
