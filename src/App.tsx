@@ -27,6 +27,9 @@ const UnlockWallet = () => {
   const { connect } = useWallet();
   return (
     <Center>
+      <p>
+        To use the ARTH platform, please connect your Metamask Account with the Ropsten network
+      </p>
       <Button onClick={() => connect('injected')} text="Unlock Wallet" />
     </Center>
   );
@@ -99,7 +102,10 @@ const Center = styled.div`
   height: 100%;
   width: 100%;
   max-width: 300px;
+  color: #fff9;
+  text-align: center;
   margin: 0 auto;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
 `;
