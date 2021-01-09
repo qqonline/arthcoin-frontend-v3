@@ -64,7 +64,11 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyledCardTitle>{`${action} ${toTokenName}`}</StyledCardTitle>
+          <StyledCardTitle>Redeem ARTH Bonds</StyledCardTitle>
+          <StyledCardDesc>
+            When ARTH is trading above it's target price; you can sell ARTH Bonds for ARTH at a
+            1:1 rate. You can also further sell your ARTH to redeem Dai in just one-click.
+          </StyledCardDesc>
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -120,6 +124,12 @@ const StyledCardTitle = styled.div`
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;
+`;
+
+const StyledCardDesc = styled.div`
+  margin-bottom: 26px;
+  text-align: center;
+  color: #fff9;
 `;
 
 const StyledCardIcon = styled.div`

@@ -66,7 +66,12 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyledCardTitle>{`${action} ${toTokenName}`}</StyledCardTitle>
+          <StyledCardTitle>Purchase ARTH Bonds</StyledCardTitle>
+          <StyledCardDesc>
+            When ARTH is below it's target price; you can buy ARTH Bonds with Dai by influencing
+            the price on Uniswap. Bond tokens are bought at a discount and are redeemed for a
+            profit.
+          </StyledCardDesc>
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -122,6 +127,12 @@ const StyledCardTitle = styled.div`
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;
+`;
+
+const StyledCardDesc = styled.div`
+  margin-bottom: 26px;
+  text-align: center;
+  color: #fff9;
 `;
 
 const StyledCardIcon = styled.div`

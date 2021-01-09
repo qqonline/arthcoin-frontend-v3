@@ -24,9 +24,11 @@ import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
 import { BigNumber } from 'ethers';
+import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
+  const [tick, setTick] = useState(1);
 
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
@@ -53,6 +55,7 @@ const Home: React.FC = () => {
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   const cashStat = useCashPriceInEstimatedTWAP();
+  const cashOraclePrice = useBondOraclePriceInLastTWAP();
   const treasuryAmount = useTreasuryAmount();
   const targetPrice = useCashTargetPrice();
 
@@ -75,18 +78,19 @@ const Home: React.FC = () => {
     [prevAllocation, nextAllocation],
   );
 
-  // useEffect(() => {
-  //   let _tick = 0;
-  //   const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // });
+  useEffect(() => {
+    let _tick = 0;
+    const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const mahaPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
-  const nextEpoch = useMemo(() => moment(prevEpoch).add(10, 'minute').toDate(), [prevEpoch]);
+  // @ts-ignore
+  const nextEpoch = useMemo(() => moment(prevEpoch).add(1, 'hour').toDate(), [prevEpoch]);
 
   return (
     <Page>
@@ -128,7 +132,7 @@ const Home: React.FC = () => {
       </StyledHeader>
       <StyledHeader>
         <Stat
-          title={cashStat ? `$${cashStat.priceInDAI}` : '-'}
+          title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
           description="ARTH Price (TWAP)"
         />
         <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
