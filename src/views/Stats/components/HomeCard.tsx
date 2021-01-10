@@ -10,16 +10,16 @@ import Spacer from '../../../components/Spacer';
 interface HomeCardProps {
   title: string;
   symbol: string;
-  color: string;
   supplyLabel?: string;
   address: string;
+  uniswapInputAddress: string;
   stat?: TokenStat;
 }
 
 const HomeCard: React.FC<HomeCardProps> = ({
   title,
   symbol,
-  color,
+  uniswapInputAddress,
   address,
   supplyLabel = 'Total Supply',
   stat,
@@ -54,6 +54,19 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </StyledSupplyLabel>
           </CardSection>
         </CardContent>
+
+        <UniswapLink
+          target="_blank"
+          href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
+        >
+          <span role="img" aria-label="unicorn">
+            🦄
+          </span>{' '}
+          <LinkText>Buy {symbol} from Uniswap </LinkText>
+          <span role="img" aria-label="unicorn">
+            🦄
+          </span>
+        </UniswapLink>
       </StyledCards>
     </Wrapper>
   );
@@ -66,6 +79,22 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     margin-top: ${(props) => props.theme.spacing[4]}px;
   }
+`;
+
+const UniswapLink = styled.a`
+  color: #fff;
+  text-align: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-decoration: none;
+  margin-bottom: 15px;
+`;
+
+const LinkText = styled.span`
+  text-align: center;
+  margin: 0 15px 5px;
+  border-bottom: 1px dotted #999;
 `;
 
 const CardContent = styled.div`

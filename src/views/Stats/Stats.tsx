@@ -104,18 +104,24 @@ const Home: React.FC = () => {
         <HomeCard
           title="ARTH"
           symbol="ARTH"
-          color="#EEA7ED"
+          uniswapInputAddress={basisCash.DAI.address}
           supplyLabel="Circulating Supply"
           address={cashAddr}
           stat={cash}
         />
         <Spacer size="lg" />
-        <HomeCard title="MAHA" symbol="MAHA" color="#E83725" address={shareAddr} stat={share} />
+        <HomeCard
+          title="MAHA"
+          uniswapInputAddress={basisCash.DAI.address}
+          symbol="MAHA"
+          address={shareAddr}
+          stat={share}
+        />
         <Spacer size="lg" />
         <HomeCard
           title="ARTH Bond"
           symbol="ARTHB"
-          color="#ECF25C"
+          uniswapInputAddress={basisCash.DAI.address}
           address={bondAddr}
           stat={bond}
         />
@@ -126,7 +132,7 @@ const Home: React.FC = () => {
       <StyledHeader>
         <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
         <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
-        <Stat title={'23.3%'} description="Bond Premium" />
+        <Stat title={'23.3%'} description="Stability Fees" />
         <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
         {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
       </StyledHeader>

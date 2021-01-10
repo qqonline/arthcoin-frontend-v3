@@ -101,9 +101,10 @@ export class BasisCash {
 
 
   getBoardroom(kind: 'arth' | 'arthLiquidity'): BoardroomInfo {
+    const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
     if (kind === 'arth') return {
       kind: 'arth',
-      contract: '0x93E710d539368B400C33468f235394B3748C8A0e',
+      contract: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 80,
@@ -113,12 +114,12 @@ export class BasisCash {
 
     return {
       kind: 'arthLiquidity',
-      contract: '0xFA46d388D658D8E693B5909892d27c9Db4666599',
+      contract: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 20,
       history7dayAPY: 30,
-      lockInPeriodDays: 1,
+      lockInPeriodDays: 5,
     }
   }
 

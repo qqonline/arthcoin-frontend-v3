@@ -43,7 +43,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               </StyledInfoSlot> */}
 
               <StyledInfoSlot>
-                <SlotTitle>{boardroom.lockInPeriodDays} day</SlotTitle>
+                <SlotTitle>{boardroom.lockInPeriodDays} minutes</SlotTitle>
                 <SlotDescription>lock-in period</SlotDescription>
               </StyledInfoSlot>
             </StyledInfoSlots>
