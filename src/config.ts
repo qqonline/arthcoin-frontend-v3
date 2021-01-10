@@ -27,18 +27,18 @@ const configurations: { [env: string]: Configuration } = {
   staging: {
     chainId: ChainId.ROPSTEN,
     etherscanUrl: 'https://ropsten.etherscan.io',
-    defaultProvider: 'https://ropsten.infura.io/v3/917cb2fbb9c94f6c9e461330a7ce497d',
+    defaultProvider: 'https://ropsten.infura.io/v3/3f9967d704884ac0b0136b98e5534f55',
     deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {
-      DAI: ['0xd781953a2814882A25b80e146C9E6618E2F96eAa', 18],
+      DAI: ['0x760AE87bBCEFa2CF76B6E0F9bCe80c1408764936', 18],
       yCRV: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 18],
       SUSD: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
 
       USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
-      'ARTH_DAI-UNI-LPv2': ['0x7a22963e28d58b8a1a0b3286fb0caf36ff6b5769', 18],
+      'ARTH_DAI-UNI-LPv2': ['0x80189479C870D3808BcDE2BFDB5d70a9EbD9fECd', 18],
     },
-    uniswapFactory: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
+    uniswapFactory: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
     bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
     boardroomLaunchesAt: new Date('2020-12-11T00:00:00Z'),
@@ -130,4 +130,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-export default configurations["development"];
+export default configurations["staging"];
