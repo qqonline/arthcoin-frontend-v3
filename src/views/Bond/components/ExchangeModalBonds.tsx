@@ -10,7 +10,7 @@ import MahaFeeCheck from './MahaFeeCheck';
 import useBasisCash from '../../../hooks/useBasisCash';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useTokenBalance from '../../../hooks/useTokenBalance';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 
 interface ExchangeModalProps extends ModalProps {
   max: BigNumber;

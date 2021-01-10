@@ -99,8 +99,8 @@ const Bond: React.FC = () => {
             <StyledCardWrapper>
               <ExchangeCard
                 action="Purchase"
-                fromToken={basisCash.ARTH}
-                fromTokenName="ARTH"
+                fromToken={basisCash.DAI}
+                fromTokenName="DAI"
                 toToken={basisCash.ARTHB}
                 toTokenName="ARTHB"
                 priceDesc={
@@ -108,7 +108,7 @@ const Bond: React.FC = () => {
                     ? "ARTH is over it's target price"
                     : `${Math.floor(
                         100 / Number(bondStat?.priceInDAI) - 100,
-                      )}% return when ARTH is below it's target price`
+                      )}% return when ARTH is over it's target price`
                 }
                 onExchange={handleBuyBonds}
                 disabled={!isBondPurchasable}
@@ -121,8 +121,8 @@ const Bond: React.FC = () => {
                 action="Redeem"
                 fromToken={basisCash.ARTHB}
                 fromTokenName="ARTHB"
-                toToken={basisCash.ARTH}
-                toTokenName="ARTH"
+                toToken={basisCash.DAI}
+                toTokenName="DAI"
                 priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                 onExchange={handleRedeemBonds}
                 disabled={!isBondRedeemable}

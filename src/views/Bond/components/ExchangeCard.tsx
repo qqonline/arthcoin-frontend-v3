@@ -91,7 +91,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            {!!account ? (
+            {  (
               approveStatus !== ApprovalState.APPROVED && !disabled ? (
                 <Button
                   disabled={
@@ -108,9 +108,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
                   disabled={disabled}
                 />
               )
-            ) : (
-              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )}
+            ) }
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>

@@ -6,7 +6,7 @@ import ModalTitle from '../../../components/ModalTitle';
 import TokenInput from '../../../components/TokenInput';
 import { getFullDisplayBalance } from '../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
-import Label from '../../../components/Label';
+import styled from 'styled-components';
 
 interface ExchangeModalProps extends ModalProps {
   max: BigNumber;
@@ -40,15 +40,18 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
 
   return (
     <Modal>
-      <ModalTitle text={title} />
+      <ModalTitle text={'Purchase ARTH Bonds'} />
       <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         max={fullBalance}
-        symbol={tokenName}
+        symbol={'tokenName'}
       />
-
+      <StyledLabel>
+        You are purchasing 30,000 ARTHB which can be redeemed for approximately 32,000 DAI
+         when ARTH is back to it's target price..</StyledLabel>
+        <StyledLabel>Please note that when you are redeeming your ARTH Bonds, there is 1% stability fee that needs to be paid in $MAHA.</StyledLabel>
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
         <Button text={action} onClick={() => onConfirm(val)} />
@@ -56,5 +59,12 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     </Modal>
   );
 };
+
+const StyledLabel = styled.div`
+  color: #fff9;
+  padding: 15px 15px 0;
+  text-align: center;
+`;
+
 
 export default ExchangeModal;
