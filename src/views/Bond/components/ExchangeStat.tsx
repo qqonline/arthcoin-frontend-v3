@@ -36,7 +36,7 @@ const StyledCardContentInner = styled.div`
   // align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: ${(props) => props.theme.spacing[2]}px;
+  padding: 10px 20px;
 `;
 
 export default ExchangeStat;
