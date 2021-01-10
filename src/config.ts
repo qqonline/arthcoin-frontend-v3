@@ -9,14 +9,14 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      DAI: ['0xfbC9DA64b3Ac2F6ae2C9828Ab9582B74f2c6ec57', 18],
+      DAI: ['0x8F9ffbc42F1523c475072A930F1c2343Aaf571af', 18],
       yCRV: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8', 18],
       SUSD: ['0x57Ab1E02fEE23774580C119740129eAC7081e9D3', 18],
       USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
-      'ARTH_DAI-UNI-LPv2': ['0xb785Ee1dBdf1F84020A76A1584E1283Df80Cf50B', 18]
+      'ARTH_DAI-UNI-LPv2': ['0x41284a876508E19d80339f9F8935eF24235E5852', 18]
     },
-    uniswapFactory: '0xC83efFdA0F25068E59773e68A5F0582c30e166b2',
+    uniswapFactory: '0x4dC2c34dE248aE0c8FC9091C503729409b94E5db',
 
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
     bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),

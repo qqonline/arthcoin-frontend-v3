@@ -50,6 +50,8 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
     });
   }, [approvalState, token, spender, addTransaction]);
 
+  // TODO: do something about the apprve
+
   return [approvalState, approve];
 }
 
