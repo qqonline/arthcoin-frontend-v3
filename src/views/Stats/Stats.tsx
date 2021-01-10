@@ -60,7 +60,6 @@ const Home: React.FC = () => {
   const targetPrice = useCashTargetPrice();
 
   const ecosystemFund = useFundAmount('ecosystem');
-  const cdpFund = useFundAmount('cdp');
 
   // const scalingFactor = useMemo(
 
@@ -132,7 +131,7 @@ const Home: React.FC = () => {
       <StyledHeader>
         <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
         <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
-        <Stat title={'23.3%'} description="Stability Fees" />
+        <Stat title={'1 %'} description="Stability Fees" />
         <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
         {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
       </StyledHeader>
@@ -156,10 +155,10 @@ const Home: React.FC = () => {
           title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
           description="Ecosystem Fund"
         />
-        <Stat
+        {/* <Stat
           title={cdpFund ? `${getDisplayBalance(cdpFund)} ARTH` : '-'}
           description="CDP Fund"
-        />
+        /> */}
       </StyledHeader>
     </Page>
   );
