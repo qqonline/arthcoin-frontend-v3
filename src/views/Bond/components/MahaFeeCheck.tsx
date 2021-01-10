@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../..//../components/Button';
-import useStabilityFees from '../../../hooks/useStabilityFee';
+import useStabilityFee from '../../../hooks/useStabilityFee';
 
 interface TokenInputProps {
   value: any;
@@ -13,7 +13,7 @@ interface TokenInputProps {
 
 const MahaFeeCheck: React.FC<TokenInputProps> = ({ max, value, isMahaApproved, approve }) => {
   const symbol = 'MAHA';
-  const stabilityFee = useStabilityFees();
+  const stabilityFee = useStabilityFee();
 
   return (
     <StyledTokenInput>

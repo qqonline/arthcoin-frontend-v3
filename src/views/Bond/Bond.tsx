@@ -17,7 +17,7 @@ import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import useStabilityFees from '../../hooks/useStabilityFee';
+import useStabilityFee from '../../hooks/useStabilityFee';
 import BondsIcon from './bonds.png';
 import { BigNumber } from 'ethers';
 
@@ -28,7 +28,7 @@ const Bond: React.FC = () => {
   const bondStat = useBondStats();
   const cashPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
-  const stabiltiyFees = useStabilityFees();
+  const stabiltiyFees = useStabilityFee();
 
   const bondBalance = useTokenBalance(basisCash.ARTHB);
 

@@ -18,6 +18,8 @@ const configurations: { [env: string]: Configuration } = {
       'BAC_DAI-UNI-LPv2': ['0xf4B13Fe3685bFc5C71eAEF9A87fdFaC6c7FDb4F4', 18],
       'BAS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
     },
+    uniswapFactory: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
+
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
     bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
     boardroomLaunchesAt: new Date('2020-12-11T00:00:00Z'),
@@ -37,10 +39,8 @@ const configurations: { [env: string]: Configuration } = {
       USDC: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6],
       USDT: ['0xdAC17F958D2ee523a2206206994597C13D831ec7', 6],
       'ARTH_DAI-UNI-LPv2': ['0x7a22963e28d58b8a1a0b3286fb0caf36ff6b5769', 18],
-
-      'BAC_DAI-UNI-LPv2': ['0x225E9012BAf1cd60FA7e7e90F359Bb0f7386746f', 18],
-      'BAS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
     },
+    uniswapFactory: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
     baseLaunchDate: new Date('2020-11-26T00:00:00Z'),
     bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
     boardroomLaunchesAt: new Date('2020-12-11T00:00:00Z'),
@@ -62,6 +62,8 @@ const configurations: { [env: string]: Configuration } = {
       'BAC_DAI-UNI-LPv2': ['0xd4405F0704621DBe9d4dEA60E128E0C3b26bddbD', 18],
       'BAS_DAI-UNI-LPv2': ['0x0379dA7a5895D13037B6937b109fA8607a659ADF', 18],
     },
+    uniswapFactory: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
+
     baseLaunchDate: new Date('2020-11-29T23:00:00Z'),
     bondLaunchesAt: new Date('2020-12-05T00:00:00Z'),
     boardroomLaunchesAt: new Date('2020-12-11T00:00:00Z'),

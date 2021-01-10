@@ -6,9 +6,10 @@ export type Configuration = {
   etherscanUrl: string,
   defaultProvider: string,
   deployments: Deployments,
-  externalTokens: {[contractName: string]: [string, number]};
+  externalTokens: { [contractName: string]: [string, number] };
   config?: EthereumConfig,
 
+  uniswapFactory: string
   baseLaunchDate: Date,
   bondLaunchesAt: Date,
   boardroomLaunchesAt: Date,

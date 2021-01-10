@@ -1,4 +1,4 @@
-import { Fetcher, Route, Token } from '@uniswap/sdk';
+import { Fetcher, Route, Token, FACTORY_ADDRESS } from '@uniswap/sdk';
 import { Configuration } from './config';
 import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
@@ -8,6 +8,7 @@ import ERC20 from './ERC20';
 import { getDisplayBalance } from '../utils/formatBalance';
 import { getDefaultProvider } from '../utils/provider';
 import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
+import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 
 /**
  * An API module of ARTH contracts.
@@ -51,11 +52,6 @@ export class BasisCash {
     this.DAI = this.externalTokens['DAI']
 
     // Uniswap V2 Pair
-    this.bacDai = new Contract(
-      externalTokens['BAC_DAI-UNI-LPv2'][0],
-      IUniswapV2PairABI,
-      provider,
-    );
 
     this.arthDai = new Contract(
       externalTokens['ARTH_DAI-UNI-LPv2'][0],
@@ -83,7 +79,7 @@ export class BasisCash {
     for (const token of tokens) {
       token.connect(this.signer);
     }
-    this.bacDai = this.bacDai.connect(this.signer);
+    this.arthDai = this.arthDai.connect(this.signer);
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
     this.fetchBoardroomVersionOfUser()
       .then((version) => (this.boardroomVersionOfUser = version))
@@ -228,6 +224,30 @@ export class BasisCash {
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }
+  }
+
+  async estimateAmountOutFromUniswap(amountIn: number, path: ERC20[]): Promise<BigNumber> {
+    await this.provider.ready;
+
+    if (amountIn <= 0) return BigNumber.from(0)
+
+    const denominator1e18 = BigNumber.from(10).pow(18).mul(amountIn);
+    const adjustedAmount = BigNumber.from(1).mul(denominator1e18)
+
+    const UniswapV2Library = new Contract(
+      this.config.uniswapFactory,
+      UniswapV2Router02ABI,
+      this.provider,
+    )
+
+    try {
+      const result: BigNumber[] = await UniswapV2Library.getAmountsOut(adjustedAmount, path.map(p => p.address))
+      return result[result.length - 1]
+    } catch (error) {
+      console.log('Uniswap estimation error', error)
+    }
+
+    return BigNumber.from(0)
   }
 
   /**

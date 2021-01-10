@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 import { BigNumber } from 'ethers';
 
-const useStabilityFees = () => {
+const useStabilityFee = () => {
   const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
   const basisCash = useBasisCash();
 
@@ -17,4 +17,4 @@ const useStabilityFees = () => {
   return price;
 };
 
-export default useStabilityFees;
+export default useStabilityFee;
