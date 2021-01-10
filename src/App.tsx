@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useWallet, UseWalletProvider } from 'use-wallet';
 import styled from 'styled-components';
@@ -54,9 +54,9 @@ const App: React.FC = () => {
     <Providers>
       <Router>
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <Home />
-          </Route>
+          </Route> */}
           <Route path="/stats">
             <Stats />
           </Route>
@@ -69,6 +69,7 @@ const App: React.FC = () => {
           <Route path="/distribution">
             <Distributions />
           </Route>
+          <Redirect to="/stats" />
         </Switch>
       </Router>
     </Providers>
