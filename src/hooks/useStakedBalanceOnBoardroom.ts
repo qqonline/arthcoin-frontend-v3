@@ -18,7 +18,7 @@ const useStakedBalanceOnBoardroom = (kind: 'arthLiquidity' | 'arth') => {
       const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshBalance);
     }
-  }, [setBalance, basisCash, fetchBalance]);
+  }, [setBalance, basisCash.isUnlocked, fetchBalance]);
 
   return balance;
 };

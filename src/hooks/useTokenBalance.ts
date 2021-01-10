@@ -20,7 +20,7 @@ const useTokenBalance = (token: ERC20) => {
       let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshInterval);
     }
-  }, [basisCash, fetchBalance, token]);
+  }, [basisCash.isUnlocked, fetchBalance, token]);
 
   return balance;
 };

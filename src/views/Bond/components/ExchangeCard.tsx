@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useWallet } from 'use-wallet';
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
@@ -40,7 +39,6 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   disabled = false,
   disabledDescription,
 }) => {
-  const { account, connect } = useWallet();
   const catchError = useCatchError();
   const {
     contracts: { Treasury },
@@ -48,6 +46,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
 
   const balance = useTokenBalance(fromToken);
+
   const [onPresent, onDismiss] = useModal(
     <ExchangeModal
       title={action}
@@ -91,24 +90,22 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            {  (
-              approveStatus !== ApprovalState.APPROVED && !disabled ? (
-                <Button
-                  disabled={
-                    approveStatus === ApprovalState.PENDING ||
-                    approveStatus === ApprovalState.UNKNOWN
-                  }
-                  onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                  text={`Approve ${fromTokenName}`}
-                />
-              ) : (
-                <Button
-                  text={disabledDescription || action}
-                  onClick={onPresent}
-                  disabled={disabled}
-                />
-              )
-            ) }
+            {approveStatus !== ApprovalState.APPROVED && !disabled ? (
+              <Button
+                disabled={
+                  approveStatus === ApprovalState.PENDING ||
+                  approveStatus === ApprovalState.UNKNOWN
+                }
+                onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
+                text={`Approve ${fromTokenName}`}
+              />
+            ) : (
+              <Button
+                text={disabledDescription || action}
+                onClick={onPresent}
+                disabled={disabled}
+              />
+            )}
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>

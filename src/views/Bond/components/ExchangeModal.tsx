@@ -22,8 +22,6 @@ interface ExchangeModalProps extends ModalProps {
 
 const ExchangeModal: React.FC<ExchangeModalProps> = ({
   max,
-  title,
-  description,
   onConfirm,
   onDismiss,
   action,
@@ -51,9 +49,9 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         basisCash.ARTH,
       ]);
 
-      const mul = Math.floor(1 / Number(bondStat?.priceInDAI || 1) - 1);
-      const artbAmount = arthAmount.mul(mul);
-      setArthBAmount(artbAmount);
+      // const mul = Math.floor(1 / Number(bondStat?.priceInDAI || 1) - 1);
+      // const artbAmount = arthAmount.mul(mul);
+      setArthBAmount(arthAmount);
     };
 
     job();

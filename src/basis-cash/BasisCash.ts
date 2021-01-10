@@ -231,7 +231,7 @@ export class BasisCash {
 
     if (amountIn <= 0) return BigNumber.from(0)
 
-    const denominator1e18 = BigNumber.from(10).pow(18).mul(amountIn);
+    const denominator1e18 = BigNumber.from(10).pow(18).mul(Math.floor(amountIn));
     const adjustedAmount = BigNumber.from(1).mul(denominator1e18)
 
     const UniswapV2Library = new Contract(
