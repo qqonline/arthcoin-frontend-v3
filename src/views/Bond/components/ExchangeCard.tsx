@@ -15,6 +15,7 @@ import ERC20 from '../../../basis-cash/ERC20';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useCatchError from '../../../hooks/useCatchError';
+import Spacer from '../../../components/Spacer';
 
 interface ExchangeCardProps {
   action: string;
@@ -42,8 +43,10 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   const catchError = useCatchError();
   const {
     contracts: { Treasury },
+    ARTH, DAI
   } = useBasisCash();
-  const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
+  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+  const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
 
   const balance = useTokenBalance(fromToken);
 
@@ -60,6 +63,11 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
       tokenName={fromTokenName}
     />,
   );
+
+  const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED
+  const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED
+
+  console.log(arthApproveStatus, diaApproveStatus)
 
   return (
     <Card>
@@ -90,15 +98,32 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            {approveStatus !== ApprovalState.APPROVED && !disabled ? (
-              <Button
-                disabled={
-                  approveStatus === ApprovalState.PENDING ||
-                  approveStatus === ApprovalState.UNKNOWN
-                }
-                onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                text={`Approve ${fromTokenName}`}
-              />
+            {(!isDAIApproved || !isARTHApproved) ? (
+              <>
+                <Button
+                  disabled={
+                    diaApproveStatus === ApprovalState.PENDING ||
+                    diaApproveStatus === ApprovalState.UNKNOWN
+                  }
+                  onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
+                  text={`Approve DAI`}
+                />
+
+                <Spacer size="md" />
+
+                <Button
+                  disabled={
+                    isARTHApproved ||
+                    arthApproveStatus === ApprovalState.PENDING ||
+                    arthApproveStatus === ApprovalState.UNKNOWN
+                  }
+                  onClick={() => catchError(approveArth(), `Unable to approve ARTH`)}
+                  text={
+                    arthApproveStatus === ApprovalState.PENDING ? 'Approving' :
+                    arthApproveStatus === ApprovalState.APPROVED ? 'ARTH Approved' :
+                    'Approve ARTH'}
+                />
+              </>
             ) : (
               <Button
                 text={disabledDescription || action}
