@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import useBasisCash from '../../../hooks/useBasisCash';
 import useStabilityFee from '../../../hooks/useStabilityFee';
 import useBondStats from '../../../hooks/useBondStats';
+import useCashTargetPrice from '../../../hooks/useCashTargetPrice';
 
 interface ExchangeModalProps extends ModalProps {
   max: BigNumber;
@@ -31,7 +32,9 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
   const basisCash = useBasisCash();
   const bondStat = useBondStats();
+  const targetPrice = useCashTargetPrice();
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
+  const decimals = BigNumber.from(10).pow(18)
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => setVal(Math.floor(Number(e.currentTarget.value))),
@@ -57,21 +60,24 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     job();
   }, [basisCash, bondStat, val]);
 
+
+
   const rorAmount = useMemo(() => {
     const input = Number(val);
-    const output = Number(getFullDisplayBalance(arthBAmount));
+    const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
     return (output - input).toFixed(2);
-  }, [arthBAmount, val]);
+  }, [arthBAmount, targetPrice,decimals, val]);
 
   const rorPercentage = useMemo(() => {
     const input = Number(val);
-    const output = Number(getFullDisplayBalance(arthBAmount));
+    const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
+    console.log(output, input, targetPrice)
     return ((100 * (output - input)) / input).toFixed(2);
-  }, [arthBAmount, val]);
+  }, [arthBAmount, targetPrice, decimals, val]);
 
-  const mahaStabilityFee = useStabilityFee();
+  const mahaStabilityFee = BigNumber.from(1) // useStabilityFee();
 
   const mahaStabilityFeeAmount = useMemo(
     () => arthBAmount.mul(BigNumber.from(mahaStabilityFee)).div(100),
@@ -80,19 +86,19 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
 
   const finalRorAmount = useMemo(() => {
     const input = Number(val);
-    const output = Number(getFullDisplayBalance(arthBAmount));
+    const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-    const amountAfterFees = output - (100 - mahaStabilityFee.toNumber()) / 100;
+    const amountAfterFees = output * (100 - mahaStabilityFee.toNumber()) / 100;
     return (amountAfterFees - input).toFixed(2);
-  }, [arthBAmount, mahaStabilityFee, val]);
+  }, [arthBAmount, targetPrice,mahaStabilityFee,decimals, val]);
 
   const finalRorPercentage = useMemo(() => {
     const input = Number(val);
-    const output = Number(getFullDisplayBalance(arthBAmount));
+    const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-    const amountAfterFees = output - (100 - mahaStabilityFee.toNumber()) / 100;
+    const amountAfterFees = output * (100 - mahaStabilityFee.toNumber()) / 100;
     return ((100 * (amountAfterFees - input)) / input).toFixed(2);
-  }, [arthBAmount, mahaStabilityFee, val]);
+  }, [arthBAmount, targetPrice,mahaStabilityFee,decimals, val]);
 
   return (
     <Modal>
@@ -107,7 +113,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
       />
       <StyledLabel>
         You are purchasing {getFullDisplayBalance(arthBAmount)} ARTHB which can be redeemed for
-        approximately {getFullDisplayBalance(arthBAmount)} DAI
+        approximately {getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals))} DAI
         <RorSpan>
           {' '}
           ({rorPercentage}% or ${rorAmount} ROR){' '}

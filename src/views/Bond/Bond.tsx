@@ -106,9 +106,7 @@ const Bond: React.FC = () => {
                 priceDesc={
                   !isBondPurchasable
                     ? "ARTH is over it's target price"
-                    : `${Math.floor(
-                        100 / Number(bondStat?.priceInDAI) - 100,
-                      )}% return when ARTH is over it's target price`
+                    : `ARTH is below it's target price. You can pruchase bonds now.`
                 }
                 onExchange={handleBuyBonds}
                 disabled={!isBondPurchasable}
