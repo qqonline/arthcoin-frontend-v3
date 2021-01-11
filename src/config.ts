@@ -27,7 +27,7 @@ const configurations: { [env: string]: Configuration } = {
   staging: {
     chainId: ChainId.ROPSTEN,
     etherscanUrl: 'https://ropsten.etherscan.io',
-    defaultProvider: 'https://ropsten.infura.io/v3/3f9967d704884ac0b0136b98e5534f55',
+    defaultProvider: 'https://weathered-young-wave.quiknode.io/75809a67-435c-4d8b-a287-649990316295/IHZHq4dJhpdQq85_QIA5Uidl_btMGwikH8tF3VNPZsgoFhaetWDXXdmkavW1TaTf5JrVwFWnMsx8aJ-fR01pTg==/',
     deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {
       DAI: ['0x760AE87bBCEFa2CF76B6E0F9bCe80c1408764936', 18],
