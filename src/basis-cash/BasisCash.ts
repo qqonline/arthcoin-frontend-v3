@@ -103,7 +103,7 @@ export class BasisCash {
       contract: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 80,
+      seionrageSupplyPercentage: 60,
       history7dayAPY: 30,
       lockInPeriodDays: 5,
     }
@@ -113,7 +113,7 @@ export class BasisCash {
       contract: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 20,
+      seionrageSupplyPercentage: 40,
       history7dayAPY: 30,
       lockInPeriodDays: 5,
     }
