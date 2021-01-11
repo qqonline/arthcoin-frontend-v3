@@ -65,7 +65,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
         isMahaApproved={isMahaApproved}
         max={getDisplayBalance(mahaBalance)}
       />
-      <StyledLabel>{description}</StyledLabel>
+      {/* <StyledLabel>{description}</StyledLabel> */}
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
         <Button
