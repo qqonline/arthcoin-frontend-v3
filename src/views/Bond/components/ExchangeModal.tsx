@@ -73,8 +73,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     const input = Number(val);
     const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-    console.log(output, input, targetPrice)
-    return ((100 * (output - input)) / input).toFixed(2);
+     return ((100 * (output - input)) / input).toFixed(2);
   }, [arthBAmount, targetPrice, decimals, val]);
 
   const mahaStabilityFee = BigNumber.from(1) // useStabilityFee();

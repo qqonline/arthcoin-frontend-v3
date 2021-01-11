@@ -67,8 +67,6 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED
   const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED
 
-  console.log(arthApproveStatus, diaApproveStatus)
-
   return (
     <Card>
       <CardContent>

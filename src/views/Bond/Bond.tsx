@@ -53,13 +53,13 @@ const Bond: React.FC = () => {
 
   const isBondRedeemable = useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
   const isBondPurchasable = useMemo(() => {
-    const denominator1e18 = BigNumber.from(10).pow(18);
+    // const denominator1e18 = BigNumber.from(10).pow(18);
 
-    const currentPrice = BigNumber.from(Number(bondStat?.priceInDAI || 0) * 1000)
-      .mul(denominator1e18)
-      .div(1000);
-    return currentPrice.lt(targetPrice);
-  }, [bondStat, targetPrice]);
+    // const currentPrice = BigNumber.from(cashPrice)
+    //   .mul(denominator1e18)
+    //   .div(1000);
+    return cashPrice.lt(targetPrice);
+  }, [bondStat, cashPrice, targetPrice]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
 
