@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../../components/Button';
-import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import AddIcon from '@material-ui/icons/Add';
 import useModal from '../../../hooks/useModal';
 import ExchangeModal from './ExchangeModal';
 import ERC20 from '../../../basis-cash/ERC20';
@@ -23,16 +24,29 @@ interface ExchangeCardProps {
   fromTokenName: string;
   toToken: ERC20;
   toTokenName: string;
+  addOnTokeName?: string;
+  addOnToken?: string;
   priceDesc: string;
   onExchange: (amount: string) => void;
   disabled?: boolean;
   disabledDescription?: string;
 }
-
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 const ExchangeCard: React.FC<ExchangeCardProps> = ({
   action,
   fromToken,
   fromTokenName,
+  addOnTokeName,
+  addOnToken,
   toToken,
   toTokenName,
   priceDesc,
@@ -43,7 +57,8 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   const catchError = useCatchError();
   const {
     contracts: { Treasury },
-    ARTH, DAI
+    ARTH,
+    DAI,
   } = useBasisCash();
   const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
@@ -64,19 +79,35 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
     />,
   );
 
-  const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED
-  const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED
+  const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
+  const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED;
 
   return (
     <Card>
+      <div className="dialog-class">
+        <StyledCardTitle>Earn ARTH Bond</StyledCardTitle>
+        <HtmlTooltip
+          title={
+            <span>
+              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
+              influencing the price on Uniswap. Bond tokens are bought at a discount are
+              redeemed for a profit.
+            </span>
+          }
+        >
+          <InfoOutlinedIcon className="margin-left-10 white" />
+        </HtmlTooltip>
+      </div>
+      <div className="border-bottom width-100 margin-bottom-20" />
       <CardContent>
         <StyledCardContentInner>
-          <StyledCardTitle>Purchase ARTH Bonds</StyledCardTitle>
-          <StyledCardDesc>
-            When ARTH is below it's target price; you can buy ARTH Bonds with Dai by influencing
-            the price on Uniswap. Bond tokens are bought at a discount and are redeemed for a
-            profit.
-          </StyledCardDesc>
+          {false && (
+            <StyledCardDesc>
+              When ARTH is below it's target price; you can buy ARTH Bonds with Dai by
+              influencing the price on Uniswap. Bond tokens are bought at a discount and are
+              redeemed for a profit.
+            </StyledCardDesc>
+          )}
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -85,7 +116,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <FontAwesomeIcon icon={faArrowRight} />
+              <ArrowRightAltIcon className="font26" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -93,42 +124,59 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               </StyledCardIcon>
               <Label text={toTokenName} variant="normal" />
             </StyledToken>
+            <StyledExchangeArrow>
+              <AddIcon className="font26" />
+            </StyledExchangeArrow>
+            <StyledToken>
+              <StyledCardIcon>
+                <TokenSymbol symbol={addOnToken} size={54} />
+              </StyledCardIcon>
+              <Label text={addOnTokeName} variant="normal" />
+            </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
+          {false && (
+            <StyledCardActions>
+              {!isDAIApproved || !isARTHApproved ? (
+                <>
+                  <Button
+                    disabled={
+                      diaApproveStatus === ApprovalState.PENDING ||
+                      diaApproveStatus === ApprovalState.UNKNOWN
+                    }
+                    onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
+                    text={`Approve DAI`}
+                  />
+
+                  <Spacer size="md" />
+
+                  <Button
+                    disabled={
+                      isARTHApproved ||
+                      arthApproveStatus === ApprovalState.PENDING ||
+                      arthApproveStatus === ApprovalState.UNKNOWN
+                    }
+                    onClick={() => catchError(approveArth(), `Unable to approve ARTH`)}
+                    text={
+                      arthApproveStatus === ApprovalState.PENDING
+                        ? 'Approving'
+                        : arthApproveStatus === ApprovalState.APPROVED
+                        ? 'ARTH Approved'
+                        : 'Approve ARTH'
+                    }
+                  />
+                </>
+              ) : (
+                <Button
+                  text={disabledDescription || action}
+                  onClick={onPresent}
+                  disabled={disabled}
+                />
+              )}
+            </StyledCardActions>
+          )}
           <StyledCardActions>
-            {(!isDAIApproved || !isARTHApproved) ? (
-              <>
-                <Button
-                  disabled={
-                    diaApproveStatus === ApprovalState.PENDING ||
-                    diaApproveStatus === ApprovalState.UNKNOWN
-                  }
-                  onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
-                  text={`Approve DAI`}
-                />
-
-                <Spacer size="md" />
-
-                <Button
-                  disabled={
-                    isARTHApproved ||
-                    arthApproveStatus === ApprovalState.PENDING ||
-                    arthApproveStatus === ApprovalState.UNKNOWN
-                  }
-                  onClick={() => catchError(approveArth(), `Unable to approve ARTH`)}
-                  text={
-                    arthApproveStatus === ApprovalState.PENDING ? 'Approving' :
-                    arthApproveStatus === ApprovalState.APPROVED ? 'ARTH Approved' :
-                    'Approve ARTH'}
-                />
-              </>
-            ) : (
-              <Button
-                text={disabledDescription || action}
-                onClick={onPresent}
-                disabled={disabled}
-              />
-            )}
+            <Button text="Earn" onClick={onPresent} />
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
@@ -141,6 +189,7 @@ const StyledCardTitle = styled.div`
   color: ${(props) => props.theme.color.grey[300]};
   display: flex;
   font-size: 20px;
+  padding-top: 20px;
   font-weight: 700;
   height: 64px;
   justify-content: center;
@@ -193,7 +242,10 @@ const StyledCardActions = styled.div`
 `;
 
 const StyledDesc = styled.span`
-  color: ${(props) => props.theme.color.grey[300]};
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
 `;
 
 const StyledCardContentInner = styled.div`
@@ -203,5 +255,12 @@ const StyledCardContentInner = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-
+const Card = styled.div`
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
+  border-radius: 12px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
 export default ExchangeCard;

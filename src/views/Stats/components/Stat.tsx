@@ -14,8 +14,8 @@ const Stat: React.FC<StatProps> = ({ icon, title, description }) => {
       <StyledCardContentInner>
         {icon && <StyledIcon>{icon}</StyledIcon>}
         <StyledTextWrapper>
-          <StyledCardTitle>{title}</StyledCardTitle>
           <StyledDesc>{description}</StyledDesc>
+          <StyledCardTitle>{title}</StyledCardTitle>
         </StyledTextWrapper>
       </StyledCardContentInner>
     </Card>

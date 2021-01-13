@@ -11,27 +11,33 @@ const ExchangeStat: React.FC<ExchangeStatProps> = ({ title, description }) => {
   return (
     <InfoCard>
       <StyledCardContentInner>
-        <StyledCardTitle>{title}</StyledCardTitle>
         <StyledDesc>{description}</StyledDesc>
+        <StyledCardTitle>{title}</StyledCardTitle>
       </StyledCardContentInner>
     </InfoCard>
   );
 };
 
 const StyledCardTitle = styled.div`
-  color: ${(props) => props.theme.color.grey[200]};
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 700;
+  text-align: center;
+  color: #FFFFFF;
+  opacity: 0.88;
   margin-bottom: ${(props) => props.theme.spacing[2]}px;
 `;
 
 const StyledDesc = styled.span`
-  color: ${(props) => props.theme.color.grey[300]};
+  color: #FFFFFF;
+  opacity: 0.64;
   text-align: center;
+  margin-bottom: 10px;
+  font-size: 12px;
 `;
 
 const StyledCardContentInner = styled.div`
   height: 100%;
+  width:100%;
   display: flex;
   // align-items: center;
   justify-content: center;

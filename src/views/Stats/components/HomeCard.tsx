@@ -29,13 +29,13 @@ const HomeCard: React.FC<HomeCardProps> = ({
     <Wrapper>
       <StyledCards>
         <CardHeader>
-          <TokenSymbol size={40} symbol={symbol} />
-          <Spacer size="sm" />
-          {title}
+          <TokenSymbol size={60} symbol={symbol} />
+          <span className="margin-left-20">{title}</span>
         </CardHeader>
 
         <CardContent>
           <CardSection>
+            <div style={{ color: '#ffffff99' }}>{`${title} Earned`}</div>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
@@ -43,15 +43,13 @@ const HomeCard: React.FC<HomeCardProps> = ({
             ) : (
               '-'
             )}
-
-            <Label text="Current Price" color={'#ffffff99'} />
           </CardSection>
 
           <CardSection className="right">
-            {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : '-'}
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
               {supplyLabel}
             </StyledSupplyLabel>
+            {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : '-'}
           </CardSection>
         </CardContent>
 
@@ -59,13 +57,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
-          <span role="img" aria-label="unicorn">
-            🦄
-          </span>{' '}
           <LinkText>Buy {symbol} from Uniswap </LinkText>
-          <span role="img" aria-label="unicorn">
-            🦄
-          </span>
         </UniswapLink>
       </StyledCards>
     </Wrapper>
@@ -94,7 +86,9 @@ const UniswapLink = styled.a`
 const LinkText = styled.span`
   text-align: center;
   margin: 0 15px 5px;
-  border-bottom: 1px dotted #999;
+  border-bottom: 1px solid #999;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 16px;
 `;
 
 const CardContent = styled.div`
@@ -105,10 +99,11 @@ const CardContent = styled.div`
 const CardHeader = styled.h2`
   color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   text-align: center;
   padding-bottom: 15px;
+  padding-left: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
 

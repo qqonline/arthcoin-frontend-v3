@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import Spacer from '../../components/Spacer';
+import Container from '../../components/Container';
 import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
 import useBasisCash from '../../hooks/useBasisCash';
@@ -94,72 +95,76 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon={<img alt="stats" src={StastIcon} />}
+        icon={<img alt="stats" src={StastIcon} width="200px" />}
         subtitle="View information about the current ARTH market"
         title="Statistics"
+        secondParaTitle="Next Epoch:"
+        secondParaDescription="Protocol debt will increase by 12,218,780.65 ESD. 56.24% coupon premium. No reward for Bonding or LPing."
       />
+      <Container size="lg">
+        <div className="border-bottom width-100 margin-bottom-20" />
+        <CardWrapper>
+          <HomeCard
+            title="MAHA"
+            uniswapInputAddress={basisCash.DAI.address}
+            symbol="MAHA"
+            address={shareAddr}
+            stat={share}
+          />
+          <Spacer size="lg" />
+          <HomeCard
+            title="ARTH"
+            symbol="ARTH"
+            uniswapInputAddress={basisCash.DAI.address}
+            supplyLabel="Circulating Supply"
+            address={cashAddr}
+            stat={cash}
+          />
+          <Spacer size="lg" />
+          <HomeCard
+            title="ARTH Bond"
+            symbol="ARTHB"
+            uniswapInputAddress={basisCash.DAI.address}
+            address={bondAddr}
+            stat={bond}
+          />
+        </CardWrapper>
 
-      <CardWrapper>
-        <HomeCard
-          title="ARTH"
-          symbol="ARTH"
-          uniswapInputAddress={basisCash.DAI.address}
-          supplyLabel="Circulating Supply"
-          address={cashAddr}
-          stat={cash}
-        />
-        <Spacer size="lg" />
-        <HomeCard
-          title="MAHA"
-          uniswapInputAddress={basisCash.DAI.address}
-          symbol="MAHA"
-          address={shareAddr}
-          stat={share}
-        />
-        <Spacer size="lg" />
-        <HomeCard
-          title="ARTH Bond"
-          symbol="ARTHB"
-          uniswapInputAddress={basisCash.DAI.address}
-          address={bondAddr}
-          stat={bond}
-        />
-      </CardWrapper>
+        <Spacer size="md" />
 
-      <Spacer size="md" />
-
-      <StyledHeader>
-        <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
-        <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
-        <Stat title={'1 %'} description="Stability Fees" />
-        <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
-        {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
-      </StyledHeader>
-      <StyledHeader>
-        <Stat
-          title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
-          description="ARTH Price (TWAP)"
-        />
-        <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
-        <Stat
-          title={cashStat ? `$${getDisplayBalance(targetPrice)}` : '-'}
-          description="ARTH Price (Target)"
-        />
-      </StyledHeader>
-      <StyledHeader>
-        <Stat
-          title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTH` : '-'}
-          description="Redeemable for Bonds"
-        />
-        <Stat
-          title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
-          description="Ecosystem Fund"
-        />
-        {/* <Stat
+        <StyledHeader>
+          <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
+          <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
+          <Stat title={'1 %'} description="Stability Fees" />
+          <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
+          {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
+        </StyledHeader>
+        <StyledHeader>
+          <Stat
+            title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
+            description="ARTH Price (TWAP)"
+          />
+          <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
+          <Stat
+            title={cashStat ? `$${getDisplayBalance(targetPrice)}` : '-'}
+            description="ARTH Price (Target)"
+          />
+        </StyledHeader>
+        <StyledHeader>
+          <Stat
+            title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTH` : '-'}
+            description="Redeemable for Bonds"
+          />
+          <Stat
+            title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
+            description="Ecosystem Fund"
+          />
+          {/* <Stat
           title={cdpFund ? `${getDisplayBalance(cdpFund)} ARTH` : '-'}
           description="CDP Fund"
         /> */}
-      </StyledHeader>
+        </StyledHeader>
+      </Container>
     </Page>
   );
 };
@@ -168,7 +173,6 @@ const CardWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 950px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -182,7 +186,6 @@ const StyledHeader = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: ${(props) => props.theme.spacing[5]}px;
-  width: 960px;
 
   > * {
     flex: 1;

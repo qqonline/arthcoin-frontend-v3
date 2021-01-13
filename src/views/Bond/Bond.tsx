@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-
+import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import ExchangeCard from './components/ExchangeCard';
 import ExchangeCardBonds from './components/ExchangeCardBonds';
+import Container from '../../components/Container';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/useBondStats';
@@ -19,6 +20,7 @@ import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useStabilityFee from '../../hooks/useStabilityFee';
 import BondsIcon from './bonds.png';
+import Chart from './components/Chart';
 import { BigNumber } from 'ethers';
 
 const Bond: React.FC = () => {
@@ -68,7 +70,7 @@ const Bond: React.FC = () => {
       <Switch>
         <Page>
           <PageHeader
-            icon={<img alt="bonds" src={BondsIcon} />}
+            icon={<img alt="bonds" src={BondsIcon} width="200px" />}
             title="Buy & Redeem Bonds"
             subtitle="Earn premiums upon redemption"
           />
@@ -90,79 +92,87 @@ const Bond: React.FC = () => {
         <>
           <Route exact path={path}>
             <PageHeader
-              icon={<img alt="bonds" src={BondsIcon} />}
+              icon={<img alt="bonds" src={BondsIcon} width="250px" />}
               title="Buy & Redeem Bonds"
               subtitle="Bonds can be bought when ARTH is trading below it's target price and can be redeemed at a premium when ARTH is trading above it's target price."
             />
           </Route>
-          <StyledBond>
-            <StyledCardWrapper>
-              <ExchangeCard
-                action="Purchase"
-                fromToken={basisCash.DAI}
-                fromTokenName="DAI"
-                toToken={basisCash.ARTHB}
-                toTokenName="ARTHB"
-                priceDesc={
-                  !isBondPurchasable
-                    ? "ARTH is over it's target price"
-                    : `ARTH is below it's target price. You can pruchase bonds now.`
-                }
-                onExchange={handleBuyBonds}
-                disabled={!isBondPurchasable}
-              />
-            </StyledCardWrapper>
-            <Spacer size="md" />
-
-            <StyledCardWrapper>
-              <ExchangeCardBonds
-                action="Redeem"
-                fromToken={basisCash.ARTHB}
-                fromTokenName="ARTHB"
-                toToken={basisCash.DAI}
-                toTokenName="DAI"
-                priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
-                onExchange={handleRedeemBonds}
-                disabled={!isBondRedeemable}
-                disabledDescription={
-                  !isBondRedeemable
-                    ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
-                    : null
-                }
-              />
-            </StyledCardWrapper>
-          </StyledBond>
-
-          <Spacer size="md" />
-
-          <StyledBond>
-            <StyledStatsWrapper>
-              <ExchangeStat
-                title={`ARTH: $${getDisplayBalance(cashPrice, 18, 2)}`}
-                description="Last-Hour TWAP Price"
-              />
-              <Spacer size="md" />
-              <ExchangeStat
-                title={`ARTHB: $${bondStat?.priceInDAI || '-'}`}
-                description="Current Price: (ARTH)^2"
-              />
-              <Spacer size="md" />
-            </StyledStatsWrapper>
-
-            <Spacer size="md" />
-            <StyledStatsWrapper>
-              <ExchangeStat
-                title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
-                description="What the Price of ARTH should be"
-              />
-              <Spacer size="md" />
-              <ExchangeStat
-                title={`Bond Redemtion Fees: ${stabiltiyFees}%`}
-                description="Fees paid in $MAHA when redeeming bonds"
-              />
-              <Spacer size="md" />
-            </StyledStatsWrapper>
-          </StyledBond>
+          <Container size="lg">
+            <div className="border-bottom width-100 margin-bottom-20" />
+            <Grid container spacing={5} justify="center">
+              <Grid container item xs={12} md={9} lg={9} xl={9}>
+                <ChartContainer>
+                  <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
+                  <Chart />
+                </ChartContainer>
+                <Grid container spacing={5} justify="center">
+                  <Grid container item xs={12} md={6} lg={6} xl={6}>
+                    <ExchangeCard
+                      action="Purchase"
+                      fromToken={basisCash.DAI}
+                      fromTokenName="DAI"
+                      toToken={basisCash.ARTHB}
+                      toTokenName="ARTHB"
+                      addOnTokeName="ARTH"
+                      addOnToken="ARTH"
+                      priceDesc={
+                        !isBondPurchasable
+                          ? "ARTH is over it's target price"
+                          : `ARTH is below it's target price. You can pruchase bonds now.`
+                      }
+                      onExchange={handleBuyBonds}
+                      disabled={!isBondPurchasable}
+                    />
+                  </Grid>
+                  <Grid container item xs={12} md={6} lg={6} xl={6}>
+                    <ExchangeCardBonds
+                      action="Redeem"
+                      fromToken={basisCash.ARTHB}
+                      fromTokenName="ARTHB"
+                      toToken={basisCash.DAI}
+                      toTokenName="DAI"
+                      priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
+                      onExchange={handleRedeemBonds}
+                      disabled={!isBondRedeemable}
+                      disabledDescription={
+                        !isBondRedeemable
+                          ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                          : null
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} md={3} lg={3} xl={3}>
+                <Grid container spacing={5} justify="center">
+                  <Grid container item xs={12} md={12} lg={12} xl={12}>
+                    <ExchangeStat
+                      title={`MAHA: $${getDisplayBalance(cashPrice, 18, 2)}`}
+                      description="Last-Hour TWAP Price"
+                    />
+                  </Grid>
+                  <Grid container item xs={12} md={12} lg={12} xl={12}>
+                    <ExchangeStat
+                      title={`ARTHB: $${bondStat?.priceInDAI || '-'}`}
+                      description="Current Price: (ARTH)^2"
+                    />
+                  </Grid>
+                  <Grid container item xs={12} md={12} lg={12} xl={12}>
+                    <ExchangeStat
+                      title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
+                      description="Target Price"
+                    />
+                  </Grid>
+                  <Grid container item xs={12} md={12} lg={12} xl={12}>
+                    <ExchangeStat
+                      title={`${stabiltiyFees}%`}
+                      description="Fees paid in $MAHA when redeeming bonds"
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Container>
         </>
       </Page>
     </Switch>
@@ -188,15 +198,12 @@ const StyledCardWrapper = styled.div`
   }
 `;
 
-const StyledStatsWrapper = styled.div`
-  display: flex;
-  flex: 0.8;
-  flex-direction: column;
-
-  @media (max-width: 768px) {
-    width: 80%;
-    margin: 16px 0;
-  }
+const ChartContainer = styled.div`
+  background: linear-gradient(180deg, #1f1a1a 0%, #211d1d 100%);
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 30px
 `;
 
 export default Bond;

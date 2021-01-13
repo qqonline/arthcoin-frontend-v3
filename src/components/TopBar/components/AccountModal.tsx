@@ -1,15 +1,18 @@
 import React, { useMemo } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import styled from 'styled-components';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-
+import Modal from '../../NewModal/index';
 import Label from '../../Label';
-import Modal, { ModalProps } from '../../Modal';
-import ModalTitle from '../../ModalTitle';
 import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
-
-const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
+import metaMaskIcon from '../../../assets/img/metamask.png';
+interface props {
+  onDismiss?: Function;
+}
+const AccountModal: React.FC<props> = () => {
   const basisCash = useBasisCash();
 
   const bacBalance = useTokenBalance(basisCash.ARTH);
@@ -22,23 +25,36 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
 
   return (
-    <Modal>
-      <ModalTitle text="My Wallet" />
-
+    <Modal title="My Wallet" open>
+      <div className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom">
+        <div className="dialog-class-1 width-100">
+          <span className="white font18">Connected with Metamask</span>
+          <span className="white font20 bold-600 pointer">Change</span>
+        </div>
+        <div className="dialog-class">
+          <img src={metaMaskIcon} alt="Metamask" width="30px" />
+          <CopyToClipboard text="0xf7dD...aD62">
+            <div className="dialog-class margin-left-20">
+              <p className="white font18 margin-right-5">0xf7dD...aD62</p>
+              <FileCopyIcon className="font15 white pointer" />
+            </div>
+          </CopyToClipboard>
+        </div>
+      </div>
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="ARTH" />
+          <TokenSymbol symbol="MAHA" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="ARTH Available" />
+            <Label text="MAHA Earned" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="MAHA" />
+          <TokenSymbol symbol="ARTH" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="MAHA Available" />
+            <Label text="ARTH Earned" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
@@ -46,7 +62,7 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <TokenSymbol symbol="ARTHB" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="ARTHB Available" />
+            <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>
@@ -56,7 +72,9 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
 const StyledValue = styled.div`
   color: ${(props) => props.theme.color.grey[300]};
-  font-size: 30px;
+  font-size: 25px;
+  margin-top: 10px;
+  margin-bottom: 5px;
   font-weight: 700;
 `;
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import { useWallet } from 'use-wallet';
 import Button from '../../../components/Button';
-import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import useModal from '../../../hooks/useModal';
 import ExchangeModal from './ExchangeModalBonds';
 import ERC20 from '../../../basis-cash/ERC20';
@@ -28,7 +28,16 @@ interface ExchangeCardProps {
   disabled?: boolean;
   disabledDescription?: string;
 }
-
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   action,
   fromToken,
@@ -62,13 +71,23 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
 
   return (
     <Card>
+      <div className="dialog-class">
+        <StyledCardTitle>Redeem ARTH</StyledCardTitle>
+        <HtmlTooltip
+          title={
+            <span>
+              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
+              influencing the price on Uniswap. Bond tokens are bought at a discount are
+              redeemed for a profit.
+            </span>
+          }
+        >
+          <InfoOutlinedIcon className="margin-left-10 white" />
+        </HtmlTooltip>
+      </div>
+      <div className="border-bottom width-100 margin-bottom-20" />
       <CardContent>
         <StyledCardContentInner>
-          <StyledCardTitle>Redeem ARTH Bonds</StyledCardTitle>
-          <StyledCardDesc>
-            When ARTH is trading above it's target price; you can sell ARTH Bonds for ARTH at a
-            1:1 rate. You can also further sell your ARTH to redeem Dai in just one-click.
-          </StyledCardDesc>
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -77,7 +96,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <FontAwesomeIcon icon={faArrowRight} />
+              <ArrowRightAltIcon className="font26" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -96,7 +115,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                     approveStatus === ApprovalState.UNKNOWN
                   }
                   onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                  text={`Approve ${fromTokenName}`}
+                  text="Redeem"
                 />
               ) : (
                 <Button
@@ -120,6 +139,7 @@ const StyledCardTitle = styled.div`
   color: ${(props) => props.theme.color.grey[300]};
   display: flex;
   font-size: 20px;
+  padding-top: 20px;
   font-weight: 700;
   height: 64px;
   justify-content: center;
@@ -172,7 +192,10 @@ const StyledCardActions = styled.div`
 `;
 
 const StyledDesc = styled.span`
-  color: ${(props) => props.theme.color.grey[300]};
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
 `;
 
 const StyledCardContentInner = styled.div`
@@ -182,5 +205,12 @@ const StyledCardContentInner = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-
+const Card = styled.div`
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
+  border-radius: 12px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
 export default ExchangeCardBonds;

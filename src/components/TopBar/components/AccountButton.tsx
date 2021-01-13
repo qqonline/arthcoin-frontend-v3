@@ -5,7 +5,7 @@ import { useWallet } from 'use-wallet';
 
 import useModal from '../../../hooks/useModal';
 
-import Button from '../../Button';
+import Button from '../../Button/TransperantButton';
 
 import AccountModal from './AccountModal';
 
@@ -22,13 +22,13 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
         <Button
           onClick={() => connect('injected')}
           size="sm"
-          text="Unlock Wallet"
+          text="Connect"
         />
       ) : (
         <Button
           onClick={onPresentAccountModal}
           size="sm"
-          text="My Wallet"
+          text="0xf7...a6d3"
         />
       )}
     </StyledAccountButton>

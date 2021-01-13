@@ -2,7 +2,10 @@ import React from 'react';
 
 import bacLogo from '../../assets/img/basis-cash-logo.svg';
 import basLogo from '../../assets/img/basis-share-logo.svg';
-import babLogo from '../../assets/img/basis-bond-logo.svg';
+// import babLogo from '../../assets/img/basis-bond-logo.svg';
+import mahaLogo from '../../assets/img/MAHA.png';
+import arthLogo from '../../assets/img/ARTH.png';
+import arthBLogo from '../../assets/img/ARTHB.png';
 import yCRVLogo from '../../assets/img/ycrv.png';
 import DAILogo from '../../assets/img/DAI.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
@@ -10,9 +13,9 @@ import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
 
 const logosBySymbol: { [title: string]: string } = {
-  ARTH: bacLogo,
-  MAHA: basLogo,
-  ARTHB: babLogo,
+  ARTH: arthLogo,
+  MAHA: mahaLogo,
+  ARTHB: arthBLogo,
   yCRV: yCRVLogo,
   DAI: DAILogo,
   SUSD: sUSDLogo,

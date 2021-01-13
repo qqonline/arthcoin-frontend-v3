@@ -99,9 +99,13 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
-  background: linear-gradient(38.44deg, #f47f57 15.81%, #fd5656 87.57%);
-  border: 0;
-  border-radius: 6px;
+  text-align: center;
+  color: #F5F5F5;
+  background: transparent;
+  opacity: 0.88;
+  flex: none;
+  border: 1px solid white;
+  border-radius: 8px;
   box-shadow: ${(props) => props.boxShadow};
   color: #fff;
   cursor: pointer;
@@ -114,9 +118,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   padding: 10px 22px;
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
-  &:hover {
-    background: linear-gradient(38.44deg, #fd5656 15.81%, #fd5656 87.57%);
-  }
   &:disabled {
     background: #999;
   }
