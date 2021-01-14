@@ -7,7 +7,6 @@ import ExchangeCard from './components/ExchangeCard';
 import ExchangeCardBonds from './components/ExchangeCardBonds';
 import Container from '../../components/Container';
 import styled from 'styled-components';
-import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/useBondStats';
 import useBasisCash from '../../hooks/useBasisCash';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';

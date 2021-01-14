@@ -1,10 +1,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
+import Container from '../../../components/Container';
+import ExchangeStat from '../../Bond/components/ExchangeStat';
 import { BoardroomInfo } from '../../../basis-cash';
 import PageHeader from '../../../components/PageHeader';
-import Spacer from '../../../components/Spacer';
+import Button from '../../../components/Button/TransperantButton';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
@@ -20,19 +22,38 @@ const Boardroom = () => {
         title="ARTH Distribution"
         subtitle={`Deposit ${boardroom.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
       />
-      <StyledBoardroom>
-        <StyledCardsWrapper>
-          <StyledCardWrapper>
-            <Stake boardroom={boardroom} />
-          </StyledCardWrapper>
-          <Spacer />
-          <StyledCardWrapper>
-            <Harvest boardroom={boardroom} />
-          </StyledCardWrapper>
-        </StyledCardsWrapper>
-        <Spacer size="lg" />
+      <Container size="lg">
+        <div className="border-bottom width-100 margin-bottom-20" />
+        <Grid container spacing={5} justify="center">
+          <Grid item xs={12} md={9} lg={9} xl={9}>
+            <Grid container spacing={5} justify="center">
+              <Grid container item xs={12} md={6} lg={6} xl={6}>
+                <Stake boardroom={boardroom} />
+              </Grid>
+              <Grid container item xs={12} md={6} lg={6} xl={6}>
+                <Harvest boardroom={boardroom} />
+              </Grid>
+            </Grid>
+            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+              <Button size="sm" text="Settle & Withdraw" />
+            </div>
+          </Grid>
+          <Grid container item xs={12} md={3} lg={3} xl={3}>
+            <Grid container spacing={5} justify="center">
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
+              </Grid>
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="Scaling Factor" title="5x" />
+              </Grid>
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="Treasury Amount" title="~$5" />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
         {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
-      </StyledBoardroom>
+      </Container>
     </>
   );
 };

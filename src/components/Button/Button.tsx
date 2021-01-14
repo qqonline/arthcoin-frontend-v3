@@ -99,6 +99,7 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
+  white-space: nowrap;
   background: linear-gradient(38.44deg, #f47f57 15.81%, #fd5656 87.57%);
   border: 0;
   border-radius: 6px;

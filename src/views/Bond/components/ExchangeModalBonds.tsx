@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Button from '../../../components/Button';
-import Modal, { ModalProps } from '../../../components/Modal';
+import Modal from '../../../components/NewModal/index';
+import ButtonTransperant from '../../../components/Button/TransperantButton';
 import ModalActions from '../../../components/ModalActions';
-import ModalTitle from '../../../components/ModalTitle';
 import TokenInput from '../../../components/TokenInput';
 import { getDisplayBalance, getFullDisplayBalance } from '../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
@@ -12,14 +12,14 @@ import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import styled from 'styled-components';
 
-interface ExchangeModalProps extends ModalProps {
+interface ExchangeModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   title: string;
   description: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, onDismiss }) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) => {
   const [val, setVal] = useState('');
   const [mahaVal, setMahaVal] = useState('');
 
@@ -50,8 +50,10 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
     'You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA';
 
   return (
-    <Modal>
-      <ModalTitle text={'Redeem your ARTH Bonds'} />
+    <Modal open title="Redeem your ARTH Bonds">
+      <p className="font20 bold-600 row-centered" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
+        You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA
+      </p>
       <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
@@ -67,7 +69,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
       />
       {/* <StyledLabel>{description}</StyledLabel> */}
       <ModalActions>
-        <Button text="Cancel" variant="secondary" onClick={onDismiss} />
+        <ButtonTransperant text="Cancel" variant="secondary" />
         <Button
           text={!isMahaApproved ? 'MAHA Not Approved' : action}
           disabled={!isMahaApproved || Number(val) <= 0}

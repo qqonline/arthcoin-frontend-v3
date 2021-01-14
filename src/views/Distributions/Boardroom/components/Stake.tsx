@@ -2,14 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../../../../components/Button';
-import Card from '../../../../components/Card';
 import CardContent from '../../../../components/CardContent';
 import CardIcon from '../../../../components/CardIcon';
 import { AddIcon, RemoveIcon } from '../../../../components/icons';
 import IconButton from '../../../../components/IconButton';
-import Label from '../../../../components/Label';
-import Value from '../../../../components/Value';
-
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
@@ -74,47 +70,62 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
+          <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
-            <Value value={getDisplayBalance(stakedBalance)} />
-            <Label text={`${boardroom.depositTokenName} Staked`} />
+            <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
+            <StyledCardActions>
+              {approveStatus !== ApprovalState.APPROVED ? (
+                <Button
+                  disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                  onClick={approve}
+                  text={`Approve ${boardroom.depositTokenName}`}
+                />
+              ) : (
+                <>
+                  <IconButton onClick={onPresentWithdraw}>
+                    <RemoveIcon />
+                  </IconButton>
+                  <StyledActionSpacer />
+                  <IconButton onClick={onPresentDeposit}>
+                    <AddIcon />
+                  </IconButton>
+                </>
+              )}
+            </StyledCardActions>
           </StyledCardHeader>
-          <StyledCardActions>
-            {approveStatus !== ApprovalState.APPROVED ? (
-              <Button
-                disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                onClick={approve}
-                text={`Approve ${boardroom.depositTokenName}`}
-              />
-            ) : (
-              <>
-                <IconButton onClick={onPresentWithdraw}>
-                  <RemoveIcon />
-                </IconButton>
-                <StyledActionSpacer />
-                <IconButton onClick={onPresentDeposit}>
-                  <AddIcon />
-                </IconButton>
-              </>
-            )}
-          </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
     </Card>
   );
 };
-
+const StyleLabel = styled.div`
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px;
+  align-self: start;
+  line-height: 24px;
+  color: #ffffff;
+  opacity: 0.64;
+`;
+const StyledValue = styled.div`
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 36px;
+  margin-left: 20px;
+  font-weight: 700;
+`;
 const StyledCardHeader = styled.div`
   align-items: center;
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  flex-direction: row;
 `;
 const StyledCardActions = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: ${(props) => props.theme.spacing[6]}px;
+  margin-left: ${(props) => props.theme.spacing[4]}px;
   width: 100%;
 `;
 
@@ -126,9 +137,14 @@ const StyledActionSpacer = styled.div`
 const StyledCardContentInner = styled.div`
   align-items: center;
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: space-between;
 `;
-
+const Card = styled.div`
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
+  border-radius: 12px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+`;
 export default Stake;

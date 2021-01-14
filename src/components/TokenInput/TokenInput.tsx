@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import Button from '../Button';
 import Input, { InputProps } from '../Input';
 
 interface TokenInputProps extends InputProps {
   max: number | string;
   symbol: string;
   type?: string;
+  label?: string;
   onSelectMax?: () => void;
 }
 
 const TokenInput: React.FC<TokenInputProps> = ({
   max,
   symbol,
+  label,
   onChange,
   type,
   onSelectMax,
@@ -22,7 +22,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
   return (
     <StyledTokenInput>
       <StyledMaxText>
-        {max.toLocaleString()} {symbol} Available
+        {label ? label : `${max.toLocaleString()} ${symbol} Available`}
       </StyledMaxText>
       <Input
         type={type}
@@ -31,7 +31,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
             <StyledTokenSymbol>{symbol}</StyledTokenSymbol>
             <StyledSpacer />
             <div>
-              <Button size="sm" text="Max" onClick={onSelectMax} />
+              <Button>SET MAX</Button>
             </div>
           </StyledTokenAdornmentWrapper>
         }
@@ -50,7 +50,24 @@ const TokenInput: React.FC<TokenInputProps> = ({
 */
 
 const StyledTokenInput = styled.div``;
-
+const Button = styled.button`
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  color: #682ae5;
+  background: transparent;
+  border: none;
+  &:hover {
+    background: transparent;
+    border: none;
+  }
+  &:focus {
+    background: transparent;
+    border: none;
+  }
+`;
 const StyledSpacer = styled.div`
   width: ${(props) => props.theme.spacing[3]}px;
 `;
@@ -67,12 +84,14 @@ const StyledMaxText = styled.div`
   font-size: 14px;
   font-weight: 700;
   height: 44px;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 const StyledTokenSymbol = styled.span`
-  color: ${(props) => props.theme.color.grey[600]};
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+  opacity: 0.64;
 `;
 
 export default TokenInput;

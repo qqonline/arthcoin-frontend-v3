@@ -58,24 +58,30 @@ interface props {
 }
 const CustomizedDialogs: React.FC<props> = ({ children, title, handleClose, open }) => {
   const [openModal, setOpen] = React.useState(open);
+  const [isCloseClicked, toggleCloseClicked] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleCloseModal = () => {
     setOpen(false);
+    toggleCloseClicked(true);
     if (handleClose) {
       handleClose();
     }
   };
-
-  return (
-    <div>
+  if (!isCloseClicked && open !== openModal) {
+    setOpen(open);
+  }
+  console.log({ open }, { openModal });
+  let modalJsx = <div />;
+  if (openModal) {
+    modalJsx = (
       <Dialog
         onClose={handleCloseModal}
         aria-labelledby="customized-dialog-title"
         open={openModal}
         classes={{
-          paper: 'custom-dialog-class'
+          paper: 'custom-dialog-class',
         }}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleCloseModal}>
@@ -83,7 +89,8 @@ const CustomizedDialogs: React.FC<props> = ({ children, title, handleClose, open
         </DialogTitle>
         <DialogContent dividers>{children}</DialogContent>
       </Dialog>
-    </div>
-  );
+    );
+  }
+  return modalJsx;
 };
 export default CustomizedDialogs;

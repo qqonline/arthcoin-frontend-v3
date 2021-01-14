@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Button from '../../../components/Button';
-import Modal, { ModalProps } from '../../../components/Modal';
+import Modal from '../../../components/NewModal/index';
 import ModalActions from '../../../components/ModalActions';
-import ModalTitle from '../../../components/ModalTitle';
+import ButtonTransperant from '../../../components/Button/TransperantButton';
 import TokenInput from '../../../components/TokenInput';
 import { getBalance, getFullDisplayBalance } from '../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
@@ -12,7 +12,7 @@ import useStabilityFee from '../../../hooks/useStabilityFee';
 import useBondStats from '../../../hooks/useBondStats';
 import useCashTargetPrice from '../../../hooks/useCashTargetPrice';
 
-interface ExchangeModalProps extends ModalProps {
+interface ExchangeModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   title: string;
@@ -21,20 +21,14 @@ interface ExchangeModalProps extends ModalProps {
   tokenName: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({
-  max,
-  onConfirm,
-  onDismiss,
-  action,
-  tokenName,
-}) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, tokenName }) => {
   const [val, setVal] = useState(0);
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
   const basisCash = useBasisCash();
   const bondStat = useBondStats();
   const targetPrice = useCashTargetPrice();
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
-  const decimals = BigNumber.from(10).pow(18)
+  const decimals = BigNumber.from(10).pow(18);
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => setVal(Math.floor(Number(e.currentTarget.value))),
@@ -60,23 +54,21 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     job();
   }, [basisCash, bondStat, val]);
 
-
-
   const rorAmount = useMemo(() => {
     const input = Number(val);
     const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
     return (output - input).toFixed(2);
-  }, [arthBAmount, targetPrice,decimals, val]);
+  }, [arthBAmount, targetPrice, decimals, val]);
 
   const rorPercentage = useMemo(() => {
     const input = Number(val);
     const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-     return ((100 * (output - input)) / input).toFixed(2);
+    return ((100 * (output - input)) / input).toFixed(2);
   }, [arthBAmount, targetPrice, decimals, val]);
 
-  const mahaStabilityFee = BigNumber.from(1) // useStabilityFee();
+  const mahaStabilityFee = BigNumber.from(1); // useStabilityFee();
 
   const mahaStabilityFeeAmount = useMemo(
     () => arthBAmount.mul(BigNumber.from(mahaStabilityFee)).div(100),
@@ -87,21 +79,20 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     const input = Number(val);
     const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-    const amountAfterFees = output * (100 - mahaStabilityFee.toNumber()) / 100;
+    const amountAfterFees = (output * (100 - mahaStabilityFee.toNumber())) / 100;
     return (amountAfterFees - input).toFixed(2);
-  }, [arthBAmount, targetPrice,mahaStabilityFee,decimals, val]);
+  }, [arthBAmount, targetPrice, mahaStabilityFee, decimals, val]);
 
   const finalRorPercentage = useMemo(() => {
     const input = Number(val);
     const output = Number(getFullDisplayBalance(arthBAmount.mul(targetPrice).div(decimals)));
     if (input === 0 || output === 0) return 0;
-    const amountAfterFees = output * (100 - mahaStabilityFee.toNumber()) / 100;
+    const amountAfterFees = (output * (100 - mahaStabilityFee.toNumber())) / 100;
     return ((100 * (amountAfterFees - input)) / input).toFixed(2);
-  }, [arthBAmount, targetPrice,mahaStabilityFee,decimals, val]);
+  }, [arthBAmount, targetPrice, mahaStabilityFee, decimals, val]);
 
   return (
-    <Modal>
-      <ModalTitle text={'Purchase ARTH Bonds'} />
+    <Modal open title="Earn ARTH Bonds">
       <TokenInput
         value={String(val)}
         onSelectMax={handleSelectMax}
@@ -131,7 +122,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         realisable when ARTH is trading above it's target price.
       </StyledLabel>
       <ModalActions>
-        <Button text="Cancel" variant="secondary" onClick={onDismiss} />
+        <ButtonTransperant text="Cancel" variant="secondary" />
         <Button
           disabled={arthBAmount.lte(0)}
           text={action}
@@ -143,14 +134,17 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
 };
 
 const StyledLabel = styled.div`
-  color: #fff9;
+  color: rgba(255,255,255, 0.64);
+  font-size: 16px;
   padding: 15px 15px 0;
   text-align: center;
 `;
 
 const RorSpan = styled.span`
-  color: aqua;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255,255,255, 0.88);
 `;
 
 export default ExchangeModal;

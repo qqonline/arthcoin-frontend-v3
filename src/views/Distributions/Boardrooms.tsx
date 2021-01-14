@@ -3,8 +3,9 @@ import PageHeader from '../../components/PageHeader';
 
 import Boardroom from './components/Boardroom';
 import { Switch } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
-
+import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
@@ -59,13 +60,21 @@ const Boardrooms: React.FC = () => {
   return (
     <>
       <PageHeader
-        icon={<img alt="distribution" src={DistributionIcon} />}
+        icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
         title="ARTH Distribution"
         subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
       />
-
-      <Boardroom boardroom={'arth'} />
-      <Boardroom boardroom={'arthLiquidity'} />
+      <Container size="lg">
+        <div className="border-bottom width-100 margin-bottom-20" />
+        <Grid container spacing={5} justify="center" alignItems="stretch">
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <Boardroom boardroom={'arth'} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <Boardroom boardroom={'arthLiquidity'} />
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 };

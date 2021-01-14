@@ -24,30 +24,28 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
       <Card>
         <CardContent>
           <StyledContent>
-            <StyledTitle>
-              Bond {boardroom.depositTokenName} to earn {boardroom.earnTokenName}
-            </StyledTitle>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} size={54} />
             </CardIcon>
-
+            <StyledTitle>
+              Bond {boardroom.depositTokenName} to earn {boardroom.earnTokenName}
+            </StyledTitle>
             <StyledInfoSlots>
-              <StyledInfoSlot>
-                <SlotTitle>{boardroom.seionrageSupplyPercentage}%</SlotTitle>
-                <SlotDescription>Seinorage Supply</SlotDescription>
-              </StyledInfoSlot>
-
               {/* <StyledInfoSlot>
                 <SlotTitle>400,000</SlotTitle>
                 <SlotDescription>Bonded</SlotDescription>
               </StyledInfoSlot> */}
-
               <StyledInfoSlot>
-                <SlotTitle>{boardroom.lockInPeriodDays} minutes</SlotTitle>
-                <SlotDescription>lock-in period</SlotDescription>
+                <SlotTitle>{boardroom.lockInPeriodDays} day lock-in period</SlotTitle>
               </StyledInfoSlot>
             </StyledInfoSlots>
-
+            <StyledInfoSlots>
+              <PercentageContainer>
+                <PercentageTilte>
+                  {boardroom.seionrageSupplyPercentage}% Seinorage Supply
+                </PercentageTilte>
+              </PercentageContainer>
+            </StyledInfoSlots>
             <StyledInfoSlots>
               {/* <StyledInfoSlot>
                 <SlotTitle>4%</SlotTitle>
@@ -69,19 +67,22 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
                 <SlotDescription>Estiamted APY</SlotDescription>
               </StyledInfoSlot> */}
             </StyledInfoSlots>
-
-            {!!account ? (
-              <Button text="Select" to={`/distribution/${boardroom.kind}`} />
-            ) : (
-              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )}
+            <ButtonContainer>
+              {!!account ? (
+                <Button text="Select" to={`/distribution/${boardroom.kind}`} />
+              ) : (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              )}
+            </ButtonContainer>
           </StyledContent>
         </CardContent>
       </Card>
     </StyledCardWrapper>
   );
 };
-
+const ButtonContainer = styled.div`
+  max-width: 200px;
+`;
 const StyledCardWrapper = styled.div`
   display: flex;
   margin-bottom: 25px;
@@ -111,22 +112,31 @@ const StyledInfoSlot = styled.div`
 
 const SlotTitle = styled.div`
   color: #fff;
-  font-family: Inter;
-  font-weight: bold;
+  font-weight: 300;
   font-size: 18px;
 `;
-
-const SlotDescription = styled.div`
-  color: #fff;
-  font-size: 14px;
+const PercentageTilte = styled.span`
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: #ffffff;
+`;
+const PercentageContainer = styled.div`
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 15px;
 `;
 
-const StyledTitle = styled.h4`
+const StyledTitle = styled.h3`
   color: ${(props) => props.theme.color.grey[200]};
   font-size: 24px;
   font-weight: 700;
   text-align: center;
-  margin: 0 0 ${(props) => props.theme.spacing[3]}px 0;
+  margin-top: 20px;
   padding: 0;
 `;
 
