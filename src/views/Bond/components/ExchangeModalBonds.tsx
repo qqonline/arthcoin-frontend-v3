@@ -52,7 +52,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
   return (
     <Modal open title="Redeem your ARTH Bonds">
       <p className="font20 bold-600 row-centered" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
-        You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA
+        {description}
       </p>
       <TokenInput
         value={val}
