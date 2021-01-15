@@ -36,24 +36,15 @@ const Boardrooms: React.FC = () => {
   // }, [boardroomVersion]);
 
   const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!isLaunched) {
-    return (
-      <Switch>
-        <Page>
-          <PageHeader
-            icon={<img alt="distribution" src={DistributionIcon} />}
-            title="ARTH Distribution"
-            subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
-          />
-          <LaunchCountdown
-            deadline={config.boardroomLaunchesAt}
-            description="How does the boardroom work?"
-            descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism#expansionary-policy"
-          />
-        </Page>
-      </Switch>
-    );
-  }
+  // if (!isLaunched) {
+  //   return (
+  //     <LaunchCountdown
+  //       deadline={config.boardroomLaunchesAt}
+  //       description="How does the boardroom work?"
+  //       descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism#expansionary-policy"
+  //     />
+  //   );
+  // }
 
   if (!basisCash) return <div />;
 
@@ -62,7 +53,7 @@ const Boardrooms: React.FC = () => {
       <PageHeader
         icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
         title="ARTH Distribution"
-        subtitle="Deposit tokens and earn inflationary rewards from an increase in ARTH supply."
+        subtitle="Bond/Stake tokens and earn inflationary rewards when the ARTH supply expands. Rewards are redeemable only if the protocol is in expansion mode."
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />

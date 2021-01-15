@@ -26,7 +26,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
       <span className="white font16 bold-200 margin-bottom-15" style={{ textAlign: 'center' }}>
         {description}
       </span>
-      <DiscountDiv>{`${appyPercentage}% APY`}</DiscountDiv>
+      <DiscountDiv>{`${appyPercentage}% Filled`}</DiscountDiv>
       <div style={{ maxWidth: '200px', marginBottom: '20px', marginTop: '20px' }}>
         <Button text={buttonText} />
       </div>

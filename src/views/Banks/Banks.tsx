@@ -13,44 +13,46 @@ const stakeCardData = [
   {
     title: 'Earn ARTH',
     logo: coinBaseIcon,
-    subtitle: 'MAHA- DAI-LPv2',
-    description: '5 day lock in period Recieves 3% of ARTH Supply',
+    subtitle: 'by staking MAHA- DAI-LPv2',
+    description: '23,000 MAHA deposited',
     appyPercentage: '40',
     buttonText: 'Stake Now',
   },
   {
     title: 'Earn ARTH',
-    subtitle: 'MAHA- DAI-LPv2',
+    subtitle: 'by staking MAHA- DAI-LPv2',
     logo: StakingIcon,
-    description: '5 day lock in period Recieves 3% of ARTH Supply',
+    description: '23,000 MAHA deposited',
     appyPercentage: '40',
     buttonText: 'Stake Now',
   },
   {
     title: 'Earn ARTH',
-    subtitle: 'MAHA- DAI-LPv2',
+    subtitle: 'by staking MAHA- DAI-LPv2',
     logo: coinBaseIcon,
-    description: '5 day lock in period Recieves 3% of ARTH Supply',
+    description: '23,000 MAHA deposited',
     appyPercentage: '40',
     buttonText: 'Stake Now',
   },
   {
     title: 'Earn ARTH',
-    subtitle: 'MAHA- DAI-LPv2',
+    subtitle: 'by staking MAHA- DAI-LPv2',
     logo: coinBaseIcon,
-    description: '5 day lock in period Recieves 3% of ARTH Supply',
+    description: '23,000 MAHA deposited',
     appyPercentage: '40',
     buttonText: 'Stake Now',
   },
   {
     title: 'Earn ARTH',
-    subtitle: 'MAHA- DAI-LPv2',
+    subtitle: 'by staking MAHA- DAI-LPv2',
     logo: coinBaseIcon,
-    description: '5 day lock in period Recieves 3% of ARTH Supply',
+    description: '23,000 MAHA deposited',
     appyPercentage: '40',
     buttonText: 'Stake Now',
   },
 ];
+
+
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
 
@@ -60,8 +62,8 @@ const Banks: React.FC = () => {
         <Route exact path={path}>
           <PageHeader
             icon={<img alt="staking" src={StakingIcon} width="200px" />}
-            title="Pick a Staking Pool"
-            subtitle="Earn ARTH by providing liquidity"
+            title="Get the first distribution of ARTH"
+            subtitle="Earn the first ARTH tokens by staking in any of the pools below. ARTH is distributed linearly across a 5 day period."
           />
           <BankCards />
           <Container size="lg">

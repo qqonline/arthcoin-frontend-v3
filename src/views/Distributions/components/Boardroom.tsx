@@ -68,11 +68,14 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               </StyledInfoSlot> */}
             </StyledInfoSlots>
             <ButtonContainer>
-              {!!account ? (
+              {/* {!!account ? (
                 <Button text="Select" to={`/distribution/${boardroom.kind}`} />
               ) : (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-              )}
+              )} */}
+              {
+                <Button disabled text="Starting in" />
+              }
             </ButtonContainer>
           </StyledContent>
         </CardContent>

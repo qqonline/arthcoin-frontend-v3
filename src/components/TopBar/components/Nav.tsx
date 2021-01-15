@@ -5,23 +5,23 @@ import { NavLink } from 'react-router-dom';
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      <StyledLink exact activeClassName="active" to="/">
+      {/* <StyledLink exact activeClassName="active" to="/">
         Home
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/supply">
         Supply
-      </StyledLink>
+      </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/staking">
-        Staking
+        Genesis Staking
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/bonds">
         Bonds
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stats">
-        Stats
-      </StyledLink>
       <StyledLink exact activeClassName="active" to="/distribution">
         Distribution
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/stats">
+        Stats
       </StyledLink>
       {/* <StyledLink2 href="https://snapshot.page/#/basiscash.eth" target="_blank">
         Vote

@@ -103,7 +103,7 @@ export class BasisCash {
       contract: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 60,
+      seionrageSupplyPercentage: 40,
       history7dayAPY: 30,
       lockInPeriodDays: 5,
     }
@@ -113,9 +113,9 @@ export class BasisCash {
       contract: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 40,
+      seionrageSupplyPercentage: 60,
       history7dayAPY: 30,
-      lockInPeriodDays: 5,
+      lockInPeriodDays: 1,
     }
   }
 
@@ -266,7 +266,7 @@ export class BasisCash {
    */
   async redeemBonds(amount: string): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    return await Treasury.redeemBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP(), true);
+    return await Treasury.redeemBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP(), false);
   }
 
   async earnedFromBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {
