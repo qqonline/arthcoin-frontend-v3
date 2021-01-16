@@ -62,7 +62,7 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
         }
         buttonOnClick={approve}
         amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
-        symbol={bank.earnToken.symbol}
+        symbol={bank.depositTokenName}
       />
     );
   }
@@ -74,7 +74,7 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
       buttonDisabled={bank.finished}
       buttonOnClick={() => (bank.finished ? null : onPresentDeposit())}
       amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
-      symbol={bank.earnToken.symbol}
+      symbol={bank.depositTokenName}
     />
   );
 };

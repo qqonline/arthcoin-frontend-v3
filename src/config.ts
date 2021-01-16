@@ -128,7 +128,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
     earnTokenName: 'ARTH',
     finished: false,
-    sort: 3,
+    sort: 2,
   },
   ARTHSUSHIPool: {
     name: 'Deposit $SUSHI and Earn $ARTH',
@@ -160,7 +160,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MAHA',
     earnTokenName: 'ARTH',
     finished: false,
-    sort: 3,
+    sort: 2,
   },
   ARTHYFIPool: {
     name: 'Deposit $YFI and Earn $ARTH',
@@ -195,22 +195,22 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     sort: 3,
   },
 
-  // DAIBACLPTokenSharePool: {
-  //   name: 'Deposit DAI and Earn $ARTH-LP',
-  //   contract: 'DAIBACLPTokenSharePool',
-  //   depositTokenName: 'BAC_DAI-UNI-LPv2',
-  //   earnTokenName: 'MAHA',
-  //   finished: false,
-  //   sort: 1,
-  // },
-  // DAIBASLPTokenSharePool: {
-  //   name: 'Deposit DAI and Earn $ARTH-LP',
-  //   contract: 'DAIBASLPTokenSharePool',
-  //   depositTokenName: 'BAS_DAI-UNI-LPv2',
-  //   earnTokenName: 'MAHA',
-  //   finished: false,
-  //   sort: 2,
-  // },
+  DAIARTHLPTokenSharePool: {
+    name: 'Deposit $MAHA_ETH-UNI-LPv2 and Earn $MAHA',
+    contract: 'DAIARTHLPTokenSharePool',
+    depositTokenName: 'MAHA_ETH-UNI-LPv2',
+    earnTokenName: 'MAHA',
+    finished: false,
+    sort: 1,
+  },
+  DAIBASLPTokenSharePool: {
+    name: 'Deposit $ARTH_DAI-UNI-LPv2 and Earn $MAHA',
+    contract: 'DAIARTHLPTokenSharePool',
+    depositTokenName: 'ARTH_DAI-UNI-LPv2',
+    earnTokenName: 'MAHA',
+    finished: false,
+    sort: 1,
+  },
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
