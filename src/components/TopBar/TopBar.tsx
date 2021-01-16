@@ -56,7 +56,7 @@ const TopBar: React.FC = () => {
             }}
           >
             <TxButton />
-            <Select
+            {/* <Select
               labelId="demo-customized-select-label"
               id="demo-customized-select"
               value={netWrokType}
@@ -66,7 +66,7 @@ const TopBar: React.FC = () => {
             >
               <MenuItem value="mainnet">Mainnet</MenuItem>
               <MenuItem value="testnet">Testnet</MenuItem>
-            </Select>
+            </Select> */}
             <AccountButton />
           </div>
         </StyledTopBarInner>

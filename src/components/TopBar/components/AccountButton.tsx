@@ -12,8 +12,8 @@ import AccountModal from './AccountModal';
 interface AccountButtonProps {}
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
-  const [onPresentAccountModal] = useModal(<AccountModal />)
-  
+  // const [onPresentAccountModal] = useModal(<AccountModal />)
+
   const { account, connect } = useWallet()
 
   return (
@@ -26,9 +26,9 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
         />
       ) : (
         <Button
-          onClick={onPresentAccountModal}
+          // onClick={onPresentAccountModal}
           size="sm"
-          text="0xf7...a6d3"
+          text="Connected"
         />
       )}
     </StyledAccountButton>

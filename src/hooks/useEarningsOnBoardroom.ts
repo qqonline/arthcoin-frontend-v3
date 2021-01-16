@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
 
-const useEarningsOnBoardroom = (kind: 'arthLiquidity' | 'arth') => {
+const useEarningsOnBoardroom = (kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
@@ -12,12 +12,12 @@ const useEarningsOnBoardroom = (kind: 'arthLiquidity' | 'arth') => {
   }, [basisCash, kind]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked) {
-      fetchBalance().catch((err) => console.error(err.stack));
+    // if (basisCash.isUnlocked) {
+    //   fetchBalance().catch((err) => console.error(err.stack));
 
-      const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
-      return () => clearInterval(refreshBalance);
-    }
+    //   const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
+    //   return () => clearInterval(refreshBalance);
+    // }
   }, [basisCash.isUnlocked, fetchBalance, setBalance]);
 
   return balance;

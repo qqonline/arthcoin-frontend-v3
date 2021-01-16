@@ -108,7 +108,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
           {' '}
           ({rorPercentage}% or ${rorAmount} ROR){' '}
         </RorSpan>
-        when ARTH is back to it's target price.
+        when ARTH is back to its target price.
       </StyledLabel>
       <StyledLabel>
         Please note that when you are redeeming your ARTH Bonds, there is 1% stability fee
@@ -119,7 +119,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
         <RorSpan>
           ROR after stability fees is {finalRorPercentage}% or ${finalRorAmount}
         </RorSpan>{' '}
-        realisable when ARTH is trading above it's target price.
+        realisable when ARTH is trading above its target price.
       </StyledLabel>
       <ModalActions>
         <ButtonTransperant text="Cancel" variant="secondary" />

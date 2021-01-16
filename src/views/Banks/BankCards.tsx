@@ -90,7 +90,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
             <StyledInfoSlots>
               <StyledInfoSlot>
                 <SlotTitle>4%</SlotTitle>
-                <SlotDescription>Seinorage Supply</SlotDescription>
+                <SlotDescription>Seigniorage Supply</SlotDescription>
               </StyledInfoSlot>
 
               <StyledInfoSlot>

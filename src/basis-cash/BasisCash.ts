@@ -54,7 +54,8 @@ export class BasisCash {
     // Uniswap V2 Pair
 
     this.arthDai = new Contract(
-      externalTokens['ARTH_DAI-UNI-LPv2'][0],
+      externalTokens['DAI'][0],
+      // externalTokens['ARTH_DAI-UNI-LPv2'][0],
       IUniswapV2PairABI,
       provider,
     );
@@ -93,19 +94,30 @@ export class BasisCash {
     return !!this.myAccount;
   }
 
-  getBoardrooms: () => ['arth', 'arthLiquidity']
+  getBoardrooms: () => ['arth', 'arthLiquidity', 'mahaLiquidity']
 
 
-  getBoardroom(kind: 'arth' | 'arthLiquidity'): BoardroomInfo {
+  getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
     const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
     if (kind === 'arth') return {
       kind: 'arth',
       contract: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 40,
+      seionrageSupplyPercentage: 30,
       history7dayAPY: 30,
       lockInPeriodDays: 5,
+    }
+
+    if (kind === 'mahaLiquidity')
+    return {
+      kind: 'mahaLiquidity',
+      contract: contract.address,
+      depositTokenName: 'MAHA_ETH-UNI-LPv2',
+      earnTokenName: 'ARTH',
+      seionrageSupplyPercentage: 10,
+      history7dayAPY: 30,
+      lockInPeriodDays: 1,
     }
 
     return {
@@ -235,7 +247,7 @@ export class BasisCash {
     const adjustedAmount = BigNumber.from(1).mul(denominator1e18)
 
     const UniswapV2Library = new Contract(
-      this.config.uniswapFactory,
+      this.config.uniswapRouter,
       UniswapV2Router02ABI,
       this.provider,
     )
@@ -283,13 +295,13 @@ export class BasisCash {
     poolName: ContractName,
     account = this.myAccount,
   ): Promise<BigNumber> {
-    const pool = this.contracts[poolName];
-    try {
-      return await pool.balanceOf(account);
-    } catch (err) {
-      console.error(`Failed to call balanceOf() on pool ${pool.address}: ${err.stack}`);
+    // const pool = this.contracts[poolName];
+    // try {
+    //   return await pool.balanceOf(account);
+    // } catch (err) {
+    //   console.error(`Failed to call balanceOf() on pool ${pool.address}: ${err.stack}`);
       return BigNumber.from(0);
-    }
+    // }
   }
 
   /**
@@ -338,12 +350,12 @@ export class BasisCash {
     return 'latest';
   }
 
-  boardroomByVersion(kind: 'arthLiquidity' | 'arth', version: string): Contract {
+  boardroomByVersion(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', version: string): Contract {
     if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroom;
     return this.contracts.ArthBoardroom;
   }
 
-  currentBoardroom(kind: 'arthLiquidity' | 'arth'): Contract {
+  currentBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Contract {
     return this.boardroomByVersion(kind, this.boardroomVersionOfUser);
   }
 
@@ -351,7 +363,7 @@ export class BasisCash {
     return this.boardroomVersionOfUser !== 'latest';
   }
 
-  async stakeShareToBoardroom(kind: 'arthLiquidity' | 'arth', amount: string): Promise<TransactionResponse> {
+  async stakeShareToBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', amount: string): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
@@ -359,13 +371,13 @@ export class BasisCash {
     return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<BigNumber> {
+  async getStakedSharesOnBoardroom(kind: 'arthLiquidity' | 'arth'  | 'mahaLiquidity'): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom(kind);
 
     return await ArthBoardroom.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<BigNumber> {
+  async getEarningsOnBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.getCashEarningsOf(this.myAccount);
@@ -373,12 +385,12 @@ export class BasisCash {
     return await ArthBoardroom.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroom(kind: 'arthLiquidity' | 'arth', amount: string): Promise<TransactionResponse> {
+  async withdrawShareFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', amount: string): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<TransactionResponse> {
+  async harvestCashFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') : Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.claimDividends();
@@ -386,7 +398,7 @@ export class BasisCash {
     return await ArthBoardroom.claimReward();
   }
 
-  async exitFromBoardroom(kind: 'arthLiquidity' | 'arth'): Promise<TransactionResponse> {
+  async exitFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.exit();
   }

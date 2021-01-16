@@ -9,7 +9,7 @@ export type Configuration = {
   externalTokens: { [contractName: string]: [string, number] };
   config?: EthereumConfig,
 
-  uniswapFactory: string
+  uniswapRouter: string
   baseLaunchDate: Date,
   bondLaunchesAt: Date,
   boardroomLaunchesAt: Date,

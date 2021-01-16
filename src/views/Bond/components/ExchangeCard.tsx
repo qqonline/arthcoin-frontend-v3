@@ -103,7 +103,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
         <StyledCardContentInner>
           {false && (
             <StyledCardDesc>
-              When ARTH is below it's target price; you can buy ARTH Bonds with Dai by
+              When ARTH is below its target price; you can buy ARTH Bonds with Dai by
               influencing the price on Uniswap. Bond tokens are bought at a discount and are
               redeemed for a profit.
             </StyledCardDesc>

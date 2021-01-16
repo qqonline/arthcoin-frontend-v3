@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 import useStakedBalanceOnBoardroom from './useStakedBalanceOnBoardroom';
 
-const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth') => {
+const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') => {
   const [boardroomVersion, setBoardroomVersion] = useState('latest');
   const basisCash = useBasisCash();
   const stakedBalance = useStakedBalanceOnBoardroom(kind);
@@ -12,9 +12,9 @@ const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth') => {
   }, [basisCash]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked) {
-      updateState().catch((err) => console.error(err.stack));
-    }
+    // if (basisCash.isUnlocked) {
+    //   updateState().catch((err) => console.error(err.stack));
+    // }
   }, [basisCash, stakedBalance, updateState]);
 
   return boardroomVersion;

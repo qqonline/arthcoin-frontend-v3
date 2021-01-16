@@ -64,6 +64,9 @@ const Boardrooms: React.FC = () => {
           <Grid container item xs={12} md={6} lg={6} xl={6}>
             <Boardroom boardroom={'arthLiquidity'} />
           </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <Boardroom boardroom={'mahaLiquidity'} />
+          </Grid>
         </Grid>
       </Container>
     </>

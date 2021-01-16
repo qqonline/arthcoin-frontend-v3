@@ -71,7 +71,7 @@ const Bond: React.FC = () => {
           <PageHeader
             icon={<img alt="bonds" src={BondsIcon} width="200px" />}
             title="Buy & Redeem Bonds"
-            subtitle="Earn premiums upon redemption"
+            subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
           />
           <LaunchCountdown
             deadline={config.bondLaunchesAt}
@@ -93,7 +93,7 @@ const Bond: React.FC = () => {
             <PageHeader
               icon={<img alt="bonds" src={BondsIcon} width="250px" />}
               title="Buy & Redeem Bonds"
-              subtitle="Bonds can be bought when ARTH is trading below it's target price and can be redeemed at a premium when ARTH is trading above it's target price."
+              subtitle="Bonds can be bought when ARTH is trading below its target price and can be redeemed at a premium when ARTH is trading above its target price."
             />
           </Route>
           <Container size="lg">
@@ -116,8 +116,8 @@ const Bond: React.FC = () => {
                       addOnToken="ARTH"
                       priceDesc={
                         !isBondPurchasable
-                          ? "ARTH is over it's target price"
-                          : `ARTH is below it's target price. You can pruchase bonds now.`
+                          ? "ARTH is over its target price"
+                          : `ARTH is below its target price. You can pruchase bonds now.`
                       }
                       onExchange={handleBuyBonds}
                       disabled={!isBondPurchasable}

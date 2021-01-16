@@ -9,10 +9,10 @@ const useWithdrawFromBoardroom = (boardroom: BoardroomInfo) => {
 
   const handleWithdraw = useCallback(
     (amount: string) => {
-      handleTransactionReceipt(
-        basisCash.withdrawShareFromBoardroom(boardroom.kind, amount),
-        `Withdraw ${amount} ${boardroom.depositTokenName} from the boardroom`,
-      );
+      // handleTransactionReceipt(
+      //   basisCash.withdrawShareFromBoardroom(boardroom.kind, amount),
+      //   `Withdraw ${amount} ${boardroom.depositTokenName} from the boardroom`,
+      // );
     },
     [basisCash, boardroom.depositTokenName, boardroom.kind, handleTransactionReceipt],
   );

@@ -9,6 +9,7 @@ import Bank from '../Bank';
 import BankCards from './BankCards';
 import StakingIcon from './staking.png';
 import coinBaseIcon from '../../assets/img/coinBase.png';
+import LaunchCountdown from '../../components/LaunchCountdown';
 const stakeCardData = [
   {
     title: 'Earn ARTH',
@@ -63,9 +64,15 @@ const Banks: React.FC = () => {
           <PageHeader
             icon={<img alt="staking" src={StakingIcon} width="200px" />}
             title="Get the first distribution of ARTH"
-            subtitle="Earn the first ARTH tokens by staking in any of the pools below. ARTH is distributed linearly across a 5 day period."
+            subtitle="To bootstrap the protocol, ARTH is given out linearly across various pools over a period of 5 days"
           />
-          <BankCards />
+
+          <LaunchCountdown
+            deadline={new Date('2021-01-16T15:00:00Z')}
+            description="How does ARTH Bond work?"
+            descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
+          />
+          {/* <BankCards />
           <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center" alignItems="stretch">
@@ -76,7 +83,7 @@ const Banks: React.FC = () => {
                   </Grid>
                 ))}
             </Grid>
-          </Container>
+          </Container> */}
         </Route>
         <Route path={`${path}/:bankId`}>
           <Bank />

@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
 
-const useStakedBalanceOnBoardroom = (kind: 'arthLiquidity' | 'arth') => {
+const useStakedBalanceOnBoardroom = (kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 

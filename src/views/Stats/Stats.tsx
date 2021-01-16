@@ -99,7 +99,7 @@ const Home: React.FC = () => {
         subtitle="View information about the current ARTH market"
         title="Statistics"
         secondParaTitle="Next Epoch:"
-        secondParaDescription="Protocol debt will increase by 12,218,780.65 ESD. 56.24% coupon premium. No reward for Bonding or LPing."
+        secondParaDescription="Protocol will launch on Jan 21st at 3pm GMT"
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />

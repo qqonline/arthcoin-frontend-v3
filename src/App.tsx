@@ -128,7 +128,7 @@ const App: React.FC = () => {
           <Route path="/distribution">
             <Distributions />
           </Route>
-          <Redirect to="/stats" />
+          <Redirect to="/staking" />
         </Switch>
       </Router>
     </Providers>

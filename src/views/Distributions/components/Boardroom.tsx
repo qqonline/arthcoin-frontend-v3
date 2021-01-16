@@ -10,7 +10,7 @@ import { useWallet } from 'use-wallet';
 import useBasisCash from '../../../hooks/useBasisCash';
 
 interface BoardroomProps {
-  boardroom: 'arth' | 'arthLiquidity';
+  boardroom: 'arth' | 'arthLiquidity' | 'mahaLiquidity';
 }
 
 const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
@@ -42,7 +42,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots>
               <PercentageContainer>
                 <PercentageTilte>
-                  {boardroom.seionrageSupplyPercentage}% Seinorage Supply
+                  {boardroom.seionrageSupplyPercentage}% Seigniorage Supply
                 </PercentageTilte>
               </PercentageContainer>
             </StyledInfoSlots>
@@ -68,13 +68,8 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               </StyledInfoSlot> */}
             </StyledInfoSlots>
             <ButtonContainer>
-              {/* {!!account ? (
-                <Button text="Select" to={`/distribution/${boardroom.kind}`} />
-              ) : (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-              )} */}
               {
-                <Button disabled text="Starting in" />
+                <Button disabled text="Bonding starts on 18th" />
               }
             </ButtonContainer>
           </StyledContent>

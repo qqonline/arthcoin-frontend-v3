@@ -39,11 +39,11 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({
           <Countdown date={deadline} renderer={countdownRenderer} />
         </StyledCountdownWrapper>
       </Dial>
-      <StyledDescriptionButton>
+      {/* <StyledDescriptionButton>
         <StyledExternalLink href={descriptionLink} target="_blank">
           {description}
         </StyledExternalLink>
-      </StyledDescriptionButton>
+      </StyledDescriptionButton> */}
     </StyledCard>
   );
 };

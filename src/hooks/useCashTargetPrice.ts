@@ -11,7 +11,7 @@ const useCashTargetPrice = () => {
   }, [basisCash]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
+    // fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;

@@ -13,7 +13,7 @@ export interface BankInfo {
 
 
 export interface BoardroomInfo {
-  kind: 'arth' | 'arthLiquidity'
+  kind: 'arth' | 'arthLiquidity'  | 'mahaLiquidity'
   contract: ContractName;
   depositTokenName: ContractName;
   earnTokenName: ContractName;

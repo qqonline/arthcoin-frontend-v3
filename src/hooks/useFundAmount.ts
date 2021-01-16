@@ -8,14 +8,13 @@ const useFundAmount = (kind: 'development' | 'ecosystem' | 'bonds') => {
 
 
   useEffect(() => {
-    if (basisCash) {
-      const { Treasury, DevelopmentFund, } = basisCash.contracts;
+    // if (basisCash) {
+    //   const { Treasury, DevelopmentFund, } = basisCash.contracts;
 
-
-      if (kind === 'bonds') basisCash.ARTH.balanceOf(Treasury.address).then(setAmount);
-      else if (kind === 'ecosystem') basisCash.ARTH.balanceOf(DevelopmentFund.address).then(setAmount);
-      else if (kind === 'development') basisCash.ARTH.balanceOf(DevelopmentFund.address).then(setAmount);
-    }
+    //   if (kind === 'bonds') basisCash.ARTH.balanceOf(Treasury.address).then(setAmount);
+    //   else if (kind === 'ecosystem') basisCash.ARTH.balanceOf(DevelopmentFund.address).then(setAmount);
+    //   else if (kind === 'development') basisCash.ARTH.balanceOf(DevelopmentFund.address).then(setAmount);
+    // }
   }, [basisCash, kind]);
   return amount;
 };
