@@ -84,6 +84,12 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
           <StyledContent>
             <StyledTitle>{bank.name}</StyledTitle>
             <br />
+            <StyledDesc>Reward Amount: {bank.poolRewards} {bank.earnTokenName}</StyledDesc>
+            <StyledDesc>Pool Duration: {bank.poolDurationInDays} days</StyledDesc>
+            <StyledDesc>Pool size: {bank.poolSize === Infinity ? 'No Limit' : `${bank.poolSize} ${bank.depositTokenName}`}</StyledDesc>
+            {/* <StyledDesc>Current APY: 20%</StyledDesc>
+            <StyledDesc>% of Pool Available: Unlimited</StyledDesc> */}
+            <br />
             <CardIcon>
               <TokenSymbol symbol={bank.depositTokenName} size={54} />
             </CardIcon>
@@ -111,11 +117,12 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
               </StyledInfoSlot>
             </StyledInfoSlots> */}
 
-            {!!account ? (
+            <Button disabled text="Opening at 3pm GMT" />
+            {/* {!!account ? (
               <Button text="Select" to={`/staking/${bank.contract}`} />
             ) : (
               <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )}
+            )} */}
           </StyledContent>
         </CardContent>
       </Card>
@@ -155,6 +162,15 @@ const StyledTitle = styled.h4`
   color: ${(props) => props.theme.color.grey[200]};
   font-size: 24px;
   font-weight: 700;
+  text-align: center;
+  margin: ${(props) => props.theme.spacing[2]}px 0 0;
+  padding: 0;
+`;
+
+const StyledDesc = styled.h4`
+  color: #fff9;
+  font-size: 14px;
+  // font-weight: 700;
   text-align: center;
   margin: ${(props) => props.theme.spacing[2]}px 0 0;
   padding: 0;

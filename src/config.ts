@@ -87,8 +87,13 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     name: 'Deposit $BAS and Earn $ARTH',
     contract: 'ARTHBASPool',
     depositTokenName: 'BAS',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
+
+    poolDurationInDays: 5,
+    poolSize: 84460,
+
     sort: 3,
   },
   ARTHMKRPool: {
@@ -96,104 +101,156 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     contract: 'ARTHMKRPool',
     depositTokenName: 'MKR',
     earnTokenName: 'ARTH',
+    poolRewards: 12500,
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 8334,
   },
   ARTHSHAREPool: {
     name: 'Deposit $SHARE and Earn $ARTH',
     contract: 'ARTHSHAREPool',
     depositTokenName: 'SHARE',
     earnTokenName: 'ARTH',
+    poolRewards: 12500,
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 21551725,
   },
   ARTHCOMPool: {
     name: 'Deposit $COMP and Earn $ARTH',
     contract: 'ARTHCOMPool',
+    poolRewards: 12500,
     depositTokenName: 'COMP',
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 80397,
   },
   ARTHESDPool: {
     name: 'Deposit $ESD and Earn $ARTH',
     contract: 'ARTHESDPool',
+    poolRewards: 12500,
     depositTokenName: 'ESD',
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 19230770,
   },
   ARTHMahaEthLPPool: {
     name: 'Deposit $MAHA_ETH-UNI-LPv2 and Earn $ARTH',
     contract: 'ARTHMahaEthLPPool',
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 2,
+
+    poolDurationInDays: 5,
+    poolSize: Infinity,
   },
   ARTHSUSHIPool: {
     name: 'Deposit $SUSHI and Earn $ARTH',
     contract: 'ARTHSUSHIPool',
     depositTokenName: 'SUSHI',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 3881988,
   },
   ARTHCURVEPool: {
     name: 'Deposit $CURVE and Earn $ARTH',
     contract: 'ARTHCURVEPool',
+    poolRewards: 12500,
     depositTokenName: 'CURVE',
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 10593221,
   },
   ARTHFRAXPool: {
     name: 'Deposit $FRAX and Earn $ARTH',
     contract: 'ARTHFRAXPool',
     depositTokenName: 'FRAX',
     earnTokenName: 'ARTH',
+    poolRewards: 12500,
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 901226,
   },
   ARTHMahaPool: {
     name: 'Deposit $MAHA and Earn $ARTH',
     contract: 'ARTHMahaPool',
     depositTokenName: 'MAHA',
     earnTokenName: 'ARTH',
+    poolRewards: 150000,
     finished: false,
     sort: 2,
+
+    poolDurationInDays: 5,
+    poolSize: Infinity,
   },
   ARTHYFIPool: {
     name: 'Deposit $YFI and Earn $ARTH',
     contract: 'ARTHYFIPool',
     depositTokenName: 'YFI',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 455,
   },
   ARTHDSDPool: {
     name: 'Deposit $DSD and Earn $ARTH',
     contract: 'ARTHDSDPool',
     depositTokenName: 'DSD',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 19531250,
   },
   ARTHMATICPool: {
     name: 'Deposit $MATIC and Earn $ARTH',
     contract: 'ARTHMATICPool',
     depositTokenName: 'MATIC',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 41666667,
   },
   ARTHRSRPool: {
     name: 'Deposit $RSR and Earn $ARTH',
     contract: 'ARTHRSRPool',
     depositTokenName: 'RSR',
+    poolRewards: 12500,
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
+
+    poolDurationInDays: 5,
+    poolSize: 416666667,
   },
 
   MAHAARTHPool: {
@@ -201,8 +258,12 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     contract: 'MAHAARTHPool',
     depositTokenName: 'ARTH',
     earnTokenName: 'MAHA',
+    poolRewards: 4000,
     finished: false,
     sort: 1,
+
+    poolDurationInDays: 5,
+    poolSize: Infinity,
   },
 
   MAHAMAHAETHLPTokenPool: {
@@ -210,16 +271,24 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     contract: 'MAHAMAHAETHLPTokenPool',
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
     earnTokenName: 'MAHA',
+    poolRewards: 2000,
     finished: false,
     sort: 1,
+
+    poolDurationInDays: 5,
+    poolSize: Infinity,
   },
   MAHADAIARTHLPTokenPool: {
     name: 'Deposit $ARTH_DAI-UNI-LPv2 and Earn $MAHA',
     contract: 'MAHADAIARTHLPTokenPool',
     depositTokenName: 'ARTH_DAI-UNI-LPv2',
     earnTokenName: 'MAHA',
+    poolRewards: 4000,
     finished: false,
     sort: 1,
+
+    poolDurationInDays: 5,
+    poolSize: Infinity,
   },
 };
 

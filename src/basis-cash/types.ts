@@ -9,6 +9,10 @@ export interface BankInfo {
   earnTokenName: ContractName;
   sort: number;
   finished: boolean;
+
+  poolRewards: number
+  poolDurationInDays: number
+  poolSize: number
 }
 
 
