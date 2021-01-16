@@ -1,6 +1,6 @@
 {
   "DAI": {
-    "address": "0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15",
+    "address": "0x0f040ed37C0cAB55305dE16ADC6c8114E289942B",
     "abi": [
       {
         "inputs": [],
@@ -478,7 +478,7 @@
     ]
   },
   "ARTH": {
-    "address": "0xc2b1f43D87ccA271A4672DbEB8Bfa8CdB2899F98",
+    "address": "0xdeFc125B051921A3f6ACda1dc9432c0a5257A0F6",
     "abi": [
       {
         "inputs": [],
@@ -932,7 +932,7 @@
     ]
   },
   "ARTHB": {
-    "address": "0xd3DeF9333caCb2e10929221Ddc1f32e7A67bB33D",
+    "address": "0xCc9bD620Bfa8Cd5C7B0b0180Ac2B19A43B6655Bf",
     "abi": [
       {
         "inputs": [],
@@ -1386,7 +1386,7 @@
     ]
   },
   "MahaToken": {
-    "address": "0xa042276826917Fda4c6961cD40ed94B91c537184",
+    "address": "0x5aC2A32BFa475765558CEa2A0Fe0bF0207D58Ca4",
     "abi": [
       {
         "inputs": [],
@@ -3103,7 +3103,7 @@
     ]
   },
   "ARTHBASPool": {
-    "address": "0x9a4C650f702961b82BEc8ccF1AB1552a80C5b5D8",
+    "address": "0xa0F85ca658B89c80E1E2DB609D9fDD8ede9B943A",
     "abi": [
       {
         "inputs": [
@@ -3586,7 +3586,7 @@
     ]
   },
   "ARTHMKRPool": {
-    "address": "0xFb94a3696811F7A99Ff314422146dbC4f615eCb2",
+    "address": "0x4321c559219d7Af7C37eC91465b5c7156B63B4b2",
     "abi": [
       {
         "inputs": [
@@ -4069,7 +4069,7 @@
     ]
   },
   "ARTHSHAREPool": {
-    "address": "0x16De52c0acfb4884934301eA3354e372A7ED4DC8",
+    "address": "0xcAc2d36EeD312d37B830342FB895839eCD838aF0",
     "abi": [
       {
         "inputs": [
@@ -4552,7 +4552,7 @@
     ]
   },
   "ARTHCOMPool": {
-    "address": "0x0fDa02bef5D78D8C879d262bdbF325Cd7fC4fC26",
+    "address": "0x4e919e987540F7a827e25e433deBB0524b26f3BF",
     "abi": [
       {
         "inputs": [
@@ -5035,7 +5035,7 @@
     ]
   },
   "ARTHESDPool": {
-    "address": "0x9bcF0972Ed3E41B577D9d05Ce179Dc148f877143",
+    "address": "0x749967787511ee6a29CC25ff18efCa865ccD4c05",
     "abi": [
       {
         "inputs": [
@@ -5518,7 +5518,7 @@
     ]
   },
   "ARTHMahaEthLPPool": {
-    "address": "0xC42C8c2f5ce4FD6b8680cD753abBEE441495825a",
+    "address": "0xF6B7ACF79DfE3937723D0Db8417826eC2097d9d5",
     "abi": [
       {
         "inputs": [
@@ -6001,7 +6001,7 @@
     ]
   },
   "ARTHSUSHIPool": {
-    "address": "0xfDdD9bdDf71A1909906E9Cf6d9ada29F7FAc42a8",
+    "address": "0xBDC4e53BBFdf74c57EC627A9dC960dC06F0554f7",
     "abi": [
       {
         "inputs": [
@@ -6484,7 +6484,7 @@
     ]
   },
   "ARTHCURVEPool": {
-    "address": "0xE7b6C91ceCCa0d0fbB89849670B2CbA8EF013ADd",
+    "address": "0xf8BACdCf497dFaC67633B4648e6359E3CAB23673",
     "abi": [
       {
         "inputs": [
@@ -6967,7 +6967,7 @@
     ]
   },
   "ARTHFRAXPool": {
-    "address": "0x820cC4506bb8a178fB659a9b02B32D6c5Cd44eE0",
+    "address": "0x7e53072c6Ca9104C60362586D9080a22eA366E91",
     "abi": [
       {
         "inputs": [
@@ -7450,7 +7450,7 @@
     ]
   },
   "ARTHMahaPool": {
-    "address": "0x4018791194cD4AF4077784A41ee00e8278D3970d",
+    "address": "0x80c6ADBe006E6b5B13b6dc02591E4c50b256CdE5",
     "abi": [
       {
         "inputs": [
@@ -7933,7 +7933,7 @@
     ]
   },
   "ARTHYFIPool": {
-    "address": "0xA8da32d79Cd02A5114397813D5Ac3c88F1e71cfE",
+    "address": "0xA41B1d520fbc0FBcc5410967A4Eb197E0A10c908",
     "abi": [
       {
         "inputs": [
@@ -8416,7 +8416,7 @@
     ]
   },
   "ARTHDSDPool": {
-    "address": "0xdca2bA8B982074E3F231D41B45ca7B5327454586",
+    "address": "0x981F0d72650583d4d6961dEf6c186d84d9e0F2B9",
     "abi": [
       {
         "inputs": [
@@ -8899,7 +8899,7 @@
     ]
   },
   "ARTHMATICPool": {
-    "address": "0x4bCd778d118F50f6E5EfaC1A4d76DfF9726fb7c7",
+    "address": "0xfA1C36F01fEa68726eC60cF1F050783Aa9D1076C",
     "abi": [
       {
         "inputs": [
@@ -9382,7 +9382,7 @@
     ]
   },
   "ARTHRSRPool": {
-    "address": "0x6f4be3f3D6BC76BD11Fb4c96C09aefFf64667f31",
+    "address": "0x46EE8695e786c8A8617ff233aeaDa195210C573d",
     "abi": [
       {
         "inputs": [
@@ -9865,7 +9865,7 @@
     ]
   },
   "MAHAARTHPool": {
-    "address": "0xa209Db3D20607F6415B13A49a3152C65081f2203",
+    "address": "0x1c0dC33c66ba3C8D7f2B3e111cb6bC57C7B38AA6",
     "abi": [
       {
         "inputs": [
@@ -10431,7 +10431,7 @@
     ]
   },
   "MAHADAIARTHLPTokenPool": {
-    "address": "0x8Df74ddCf4bA7132eBf5829F1252a54d4D5EfE11",
+    "address": "0x227a3A7aB08D768BB0AADe749421823F0Ee8D35D",
     "abi": [
       {
         "inputs": [
@@ -10997,7 +10997,7 @@
     ]
   },
   "MAHAMAHAETHLPTokenPool": {
-    "address": "0xe498160aeeFAEfBe414BcB0611fC065Bcd8061fC",
+    "address": "0xFf499591C673A020304FC008FCaa385a4F71F702",
     "abi": [
       {
         "inputs": [
