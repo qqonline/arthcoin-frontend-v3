@@ -12,6 +12,20 @@ import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
 
+import MKR from '../../assets/img/MAKER.webp';
+import BAS from '../../assets/img/BAS.webp';
+import SHARE from '../../assets/img/SHARE.webp';
+import COMP from '../../assets/img/COMP.webp';
+import ESD from '../../assets/img/ESD.webp';
+import SUSHI from '../../assets/img/SUSHI.webp';
+import CURVE from '../../assets/img/CURVE.webp';
+import FRAX from '../../assets/img/frax.jpg';
+import YFI from '../../assets/img/YFI.webp';
+import DSD from '../../assets/img/DSD.webp';
+import MATIC from '../../assets/img/Matic.webp';
+import RSR from '../../assets/img/RSR.webp';
+
+
 const logosBySymbol: { [title: string]: string } = {
   ARTH: arthLogo,
   MAHA: mahaLogo,
@@ -21,6 +35,20 @@ const logosBySymbol: { [title: string]: string } = {
   SUSD: sUSDLogo,
   USDC: USDCLogo,
   USDT: USDTLogo,
+
+  MKR: MKR,
+  BAS: BAS,
+  SHARE: SHARE,
+  COMP: COMP,
+  ESD: ESD,
+  SUSHI: SUSHI,
+  CURVE: CURVE,
+  FRAX: FRAX,
+  YFI: YFI,
+  DSD: DSD,
+  MATIC: MATIC,
+  RSR: RSR,
+
   'ARTH_DAI-UNI-LPv2': bacLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'MAHA_ETH-UNI-LPv2': mahaLogo,
@@ -37,7 +65,7 @@ const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
     // throw new Error(`Invalid BasisLogo symbol: ${symbol}`);
     return <img src={logosBySymbol['DAI']} alt={`${symbol} Logo`} width={size} height={size} />;
   }
-  return <img src={logosBySymbol[symbol]} alt={`${symbol} Logo`} width={size} height={size} />;
+  return <img src={logosBySymbol[symbol]} alt={`${symbol} Logo`} style={{ borderRadius: '100%'}} width={size} height={size} />;
 };
 
 export default TokenSymbol;
