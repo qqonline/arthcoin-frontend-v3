@@ -67,13 +67,13 @@ const Banks: React.FC = () => {
             subtitle="To bootstrap the protocol, ARTH is given out linearly across various pools over a period of 5 days"
           />
 
-          <LaunchCountdown
+          {/* <LaunchCountdown
             deadline={new Date('2021-01-16T15:00:00Z')}
             description="How does ARTH Bond work?"
             descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
-          />
-          {/* <BankCards />
-          <Container size="lg">
+          /> */}
+          <BankCards />
+          {/* <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center" alignItems="stretch">
               {stakeCardData &&

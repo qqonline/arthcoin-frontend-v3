@@ -15,12 +15,12 @@ const useStakedBalance = (poolName: ContractName) => {
   }, [basisCash, poolName]);
 
   useEffect(() => {
-    //  if (basisCash.isUnlocked) {
-    //   fetchBalance().catch(err => console.error(err.stack));
+     if (basisCash.isUnlocked) {
+      fetchBalance().catch(err => console.error(err.stack));
 
-    //   const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
-    //   return () => clearInterval(refreshBalance);
-    // }
+      const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
+      return () => clearInterval(refreshBalance);
+    }
   }, [poolName, setBalance, basisCash.isUnlocked, fetchBalance]);
 
   return balance;

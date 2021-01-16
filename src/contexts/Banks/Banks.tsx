@@ -3,6 +3,7 @@ import Context from './context';
 import useBasisCash from '../../hooks/useBasisCash';
 import { Bank } from '../../basis-cash';
 import config, { bankDefinitions } from '../../config';
+import { ControlPointSharp } from '@material-ui/icons';
 
 const Banks: React.FC = ({ children }) => {
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -24,6 +25,8 @@ const Banks: React.FC = ({ children }) => {
           continue;
         }
       }
+
+      console.log(bankInfo.contract)
       banks.push({
         ...bankInfo,
         address: config.deployments[bankInfo.contract].address,

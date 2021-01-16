@@ -295,13 +295,13 @@ export class BasisCash {
     poolName: ContractName,
     account = this.myAccount,
   ): Promise<BigNumber> {
-    // const pool = this.contracts[poolName];
-    // try {
-    //   return await pool.balanceOf(account);
-    // } catch (err) {
-    //   console.error(`Failed to call balanceOf() on pool ${pool.address}: ${err.stack}`);
+    const pool = this.contracts[poolName];
+    try {
+      return await pool.balanceOf(account);
+    } catch (err) {
+      console.error(`Failed to call balanceOf() on pool ${pool.address}: ${err.stack}`);
       return BigNumber.from(0);
-    // }
+    }
   }
 
   /**

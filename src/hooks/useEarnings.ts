@@ -14,13 +14,13 @@ const useEarnings = (poolName: ContractName) => {
   }, [basisCash, poolName]);
 
   useEffect(() => {
-    // if (basisCash.isUnlocked) {
-    //   fetchBalance().catch((err) => console.error(err.stack));
+    if (basisCash.isUnlocked) {
+      fetchBalance().catch((err) => console.error(err.stack));
 
-    //   const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
-    //   return () => clearInterval(refreshBalance);
-    // }
-  }, [poolName, basisCash, fetchBalance]);
+      const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
+      return () => clearInterval(refreshBalance);
+    }
+  }, [poolName, basisCash.isUnlocked, fetchBalance]);
 
   return balance;
 };

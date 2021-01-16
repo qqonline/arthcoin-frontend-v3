@@ -83,11 +83,13 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
         <CardContent>
           <StyledContent>
             <StyledTitle>{bank.name}</StyledTitle>
+            <br />
             <CardIcon>
               <TokenSymbol symbol={bank.depositTokenName} size={54} />
             </CardIcon>
+            <br />
 
-            <StyledInfoSlots>
+            {/* <StyledInfoSlots>
               <StyledInfoSlot>
                 <SlotTitle>4%</SlotTitle>
                 <SlotDescription>Seigniorage Supply</SlotDescription>
@@ -107,7 +109,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
                 <SlotTitle>3 day</SlotTitle>
                 <SlotDescription>lock-in period</SlotDescription>
               </StyledInfoSlot>
-            </StyledInfoSlots>
+            </StyledInfoSlots> */}
 
             {!!account ? (
               <Button text="Select" to={`/staking/${bank.contract}`} />

@@ -13,13 +13,13 @@ const useTokenBalance = (token: ERC20) => {
   }, [basisCash, token]);
 
   useEffect(() => {
-    // if (basisCash.isUnlocked) {
-    //   fetchBalance().catch((err) =>
-    //     console.error(`Failed to fetch token balance: ${err.stack}`),
-    //   );
-    //   let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
-    //   return () => clearInterval(refreshInterval);
-    // }
+    if (basisCash.isUnlocked) {
+      fetchBalance().catch((err) =>
+        console.error(`Failed to fetch token balance: ${err.stack}`),
+      );
+      let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
+      return () => clearInterval(refreshInterval);
+    }
   }, [basisCash.isUnlocked, fetchBalance, token]);
 
   return balance;
