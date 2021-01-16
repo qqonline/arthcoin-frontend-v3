@@ -9,22 +9,23 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      'DAI': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'MKR': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'SHARE': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'COMP': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'ESD': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'MAHA_ETH-UNI-LPv2': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'SUSHI': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'CURVE': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'FRAX': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'MAHA': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'YFI': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'DSD': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'MATIC': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
-      'RSR': ['0x74794D95c38A0cb436F4a1143Cc9D1f57D8bD692', 18],
+      'DAI': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'MKR': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'BAS': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'SHARE': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'COMP': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'ESD': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'SUSHI': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'CURVE': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'FRAX': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'MAHA': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'YFI': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'DSD': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'MATIC': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
+      'RSR': ['0x0F3DC5A455943db2D051AFDd001Dacf51E1c8C15', 18],
 
-      'ARTH_DAI-UNI-LPv2': ['0x41284a876508E19d80339f9F8935eF24235E5852', 18]
+      'MAHA_ETH-UNI-LPv2': ['0x2BC6A53cC79e046263015C3985717796aA7C81Aa', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xf693F67cEb7F08190d2BBA96C3d402c841EEBf4e', 18]
     },
     uniswapRouter: '0x4dC2c34dE248aE0c8FC9091C503729409b94E5db',
 
@@ -83,9 +84,9 @@ const configurations: { [env: string]: Configuration } = {
 
 export const bankDefinitions: { [contractName: string]: BankInfo } = {
   ARTHBASPool: {
-    name: 'Deposit $DAI and Earn $ARTH',
+    name: 'Deposit $BAS and Earn $ARTH',
     contract: 'ARTHBASPool',
-    depositTokenName: 'DAI',
+    depositTokenName: 'BAS',
     earnTokenName: 'ARTH',
     finished: false,
     sort: 3,
@@ -195,17 +196,26 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     sort: 3,
   },
 
-  DAIARTHLPTokenSharePool: {
+  MAHAARTHPool: {
+    name: 'Deposit $ARTH and Earn $MAHA',
+    contract: 'MAHAARTHPool',
+    depositTokenName: 'ARTH',
+    earnTokenName: 'MAHA',
+    finished: false,
+    sort: 1,
+  },
+
+  MAHAMAHAETHLPTokenPool: {
     name: 'Deposit $MAHA_ETH-UNI-LPv2 and Earn $MAHA',
-    contract: 'DAIARTHLPTokenSharePool',
+    contract: 'MAHAMAHAETHLPTokenPool',
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
     earnTokenName: 'MAHA',
     finished: false,
     sort: 1,
   },
-  DAIBASLPTokenSharePool: {
+  MAHADAIARTHLPTokenPool: {
     name: 'Deposit $ARTH_DAI-UNI-LPv2 and Earn $MAHA',
-    contract: 'DAIARTHLPTokenSharePool',
+    contract: 'MAHADAIARTHLPTokenPool',
     depositTokenName: 'ARTH_DAI-UNI-LPv2',
     earnTokenName: 'MAHA',
     finished: false,

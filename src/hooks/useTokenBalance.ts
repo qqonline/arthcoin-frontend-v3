@@ -9,6 +9,7 @@ const useTokenBalance = (token: ERC20) => {
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
+    console.log('fetching balance of', token.symbol)
     setBalance(await token.balanceOf(basisCash.myAccount));
   }, [basisCash, token]);
 
