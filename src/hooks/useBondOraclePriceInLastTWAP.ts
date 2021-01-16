@@ -13,8 +13,8 @@ const useBondOraclePriceInLastTWAP = () => {
 
   useEffect(() => {
     // fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
-    return () => clearInterval(refreshInterval);
+    // const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
+    // return () => clearInterval(refreshInterval);
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;
