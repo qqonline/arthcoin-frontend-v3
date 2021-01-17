@@ -36,7 +36,7 @@ const job = async () => {
     }
 
 
-    console.log(result)
+    console.log(JSON.stringify(result))
 }
 
 // job()
