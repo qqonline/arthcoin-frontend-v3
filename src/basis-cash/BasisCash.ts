@@ -25,6 +25,7 @@ export class BasisCash {
 
   bacDai: Contract;
   arthDai: Contract;
+  mahaEth: Contract;
 
   DAI: ERC20;
   ARTH: ERC20;
@@ -54,8 +55,13 @@ export class BasisCash {
     // Uniswap V2 Pair
 
     this.arthDai = new Contract(
-      externalTokens['DAI'][0],
-      // externalTokens['ARTH_DAI-UNI-LPv2'][0],
+      externalTokens['ARTH_DAI-UNI-LPv2'][0],
+      IUniswapV2PairABI,
+      provider,
+    );
+
+    this.mahaEth = new Contract(
+      externalTokens['MAHA_ETH-UNI-LPv2'][0],
       IUniswapV2PairABI,
       provider,
     );
@@ -101,7 +107,7 @@ export class BasisCash {
     const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
     if (kind === 'arth') return {
       kind: 'arth',
-      contract: contract.address,
+      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 30,
@@ -112,7 +118,7 @@ export class BasisCash {
     if (kind === 'mahaLiquidity')
     return {
       kind: 'mahaLiquidity',
-      contract: contract.address,
+      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
       depositTokenName: 'MAHA_ETH-UNI-LPv2',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 10,
@@ -122,7 +128,7 @@ export class BasisCash {
 
     return {
       kind: 'arthLiquidity',
-      contract: contract.address,
+      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 60,

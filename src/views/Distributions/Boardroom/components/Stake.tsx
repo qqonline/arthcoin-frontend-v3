@@ -30,7 +30,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
       ? basisCash.MAHA
       : boardroom.depositTokenName === 'ARTH'
       ? basisCash.ARTH
-      : basisCash.externalTokens['ARTH_DAI-UNI-LPv2'];
+      : basisCash.externalTokens[boardroom.depositTokenName]
 
   const [approveStatus, approve] = useApprove(
     stakingToken,

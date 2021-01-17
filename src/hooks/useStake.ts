@@ -10,6 +10,7 @@ const useStake = (bank: Bank) => {
 
   const handleStake = useCallback(
     (amount: string) => {
+      console.log(ban)
       const amountBn = parseUnits(amount, bank.depositToken.decimal);
       handleTransactionReceipt(
         basisCash.stake(bank.contract, amountBn),

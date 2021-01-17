@@ -58,11 +58,11 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   if (bank.depositTokenName.includes('ARTH')) {
     pairName = 'ARTH-DAI pair';
     uniswapUrl =
-      'https://app.uniswap.org/#/add/0x3449FC1Cd036255BA1EB19d65fF4BA2b8903A69a/0x6B175474E89094C44Da98b954EedeAC495271d0F';
+      'https://app.uniswap.org/#/add/0x6B175474E89094C44Da98b954EedeAC495271d0F/0x0e3cc2c4fb9252d17d07c67135e48536071735d9';
   } else {
-    pairName = 'MAHA-DAI pair';
+    pairName = 'MAHA-ETH pair';
     uniswapUrl =
-      'https://app.uniswap.org/#/add/0xa7ED29B253D8B4E3109ce07c80fc570f81B63696/0x6B175474E89094C44Da98b954EedeAC495271d0F';
+      'https://app.uniswap.org/#/add/ETH/0xB4d930279552397bbA2ee473229f89Ec245bc365';
   }
   return (
     <StyledLink href={uniswapUrl} target="_blank">

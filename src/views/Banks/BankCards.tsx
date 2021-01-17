@@ -93,7 +93,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
             <CardIcon>
               <TokenSymbol symbol={bank.depositTokenName} size={54} />
             </CardIcon>
-            <br />
+
 
             {/* <StyledInfoSlots>
               <StyledInfoSlot>
@@ -117,12 +117,14 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
               </StyledInfoSlot>
             </StyledInfoSlots> */}
 
-            <Button disabled text="Opening at 3pm GMT" />
-            {/* {!!account ? (
+            <StyledDesc>Pool opens at 3pm GMT</StyledDesc>
+            <br />
+
+            {!!account ? (
               <Button text="Select" to={`/staking/${bank.contract}`} />
             ) : (
               <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )} */}
+            )}
           </StyledContent>
         </CardContent>
       </Card>

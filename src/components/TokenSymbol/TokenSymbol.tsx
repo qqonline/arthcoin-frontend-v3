@@ -44,6 +44,7 @@ const logosBySymbol: { [title: string]: string } = {
   SUSHI: SUSHI,
   CURVE: CURVE,
   FRAX: FRAX,
+  FXS: FRAX,
   YFI: YFI,
   DSD: DSD,
   MATIC: MATIC,
