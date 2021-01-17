@@ -1,104 +1,104 @@
 {
   "MAHAMAHAETHLPTokenPool": {
-    "weeklyAPY": 12.726211960498606,
-    "dailyAPY": 1.8180302800712294,
-    "yearlyAPY": 661.7630219459276,
-    "staked_tvl": 105058.75622298032
+    "weeklyAPY": 12.89956951807262,
+    "dailyAPY": 1.8427956454389458,
+    "yearlyAPY": 670.7776149397763,
+    "staked_tvl": 104732.17715577365
   },
   "MAHADAIARTHLPTokenPool": {
-    "weeklyAPY": 82.18279348081494,
-    "dailyAPY": 11.740399068687848,
-    "yearlyAPY": 4273.505261002377,
-    "staked_tvl": 21691.482987650183
+    "weeklyAPY": 63.90830040829759,
+    "dailyAPY": 9.12975720118537,
+    "yearlyAPY": 3323.231621231475,
+    "staked_tvl": 28186.2187200249
   },
   "ARTHBASPool": {
-    "weeklyAPY": 2.461597444596151,
-    "dailyAPY": 0.3516567777994501,
-    "yearlyAPY": 128.00306711899984,
-    "staked_tvl": 1214081.90056
+    "weeklyAPY": 3.24848383618999,
+    "dailyAPY": 0.46406911945571283,
+    "yearlyAPY": 168.92115948187947,
+    "staked_tvl": 1233124.18604
   },
   "ARTHMKRPool": {
-    "weeklyAPY": 1.4845428419697262,
-    "dailyAPY": 0.21207754885281802,
-    "yearlyAPY": 77.19622778242577,
-    "staked_tvl": 2013132.1370177602
+    "weeklyAPY": 1.980174925008196,
+    "dailyAPY": 0.28288213214402796,
+    "yearlyAPY": 102.96909610042619,
+    "staked_tvl": 2022944.5064553062
   },
   "ARTHSHAREPool": {
-    "weeklyAPY": 4.447421009765467,
-    "dailyAPY": 0.6353458585379238,
-    "yearlyAPY": 231.26589250780427,
-    "staked_tvl": 671980.6596647201
+    "weeklyAPY": 5.80668035119684,
+    "dailyAPY": 0.8295257644566914,
+    "yearlyAPY": 301.94737826223565,
+    "staked_tvl": 689857.84374031
   },
   "ARTHCOMPool": {
-    "weeklyAPY": 2.138605635097524,
-    "dailyAPY": 0.3055150907282177,
-    "yearlyAPY": 111.20749302507124,
-    "staked_tvl": 1397443.6683894035
+    "weeklyAPY": 3.0238416219740447,
+    "dailyAPY": 0.4319773745677207,
+    "yearlyAPY": 157.23976434265032,
+    "staked_tvl": 1324733.3978261715
   },
   "ARTHESDPool": {
-    "weeklyAPY": 0.40058439430252685,
-    "dailyAPY": 0.05722634204321812,
-    "yearlyAPY": 20.830388503731395,
-    "staked_tvl": 7460552.498937132
+    "weeklyAPY": 0.5392326758327031,
+    "dailyAPY": 0.07703323940467187,
+    "yearlyAPY": 28.04009914330056,
+    "staked_tvl": 7428674.421816145
   },
   "ARTHMahaEthLPPool": {
-    "weeklyAPY": 82.12948075804908,
-    "dailyAPY": 11.732782965435584,
-    "yearlyAPY": 4270.732999418552,
-    "staked_tvl": 436663.79619564884
+    "weeklyAPY": 104.72299607705855,
+    "dailyAPY": 14.960428011008364,
+    "yearlyAPY": 5445.595796007045,
+    "staked_tvl": 459014.826132548
   },
   "ARTHSUSHIPool": {
-    "weeklyAPY": 1.2240246620409618,
-    "dailyAPY": 0.17486066600585168,
-    "yearlyAPY": 63.649282426130014,
-    "staked_tvl": 2441601.87015
+    "weeklyAPY": 1.5915301411725122,
+    "dailyAPY": 0.22736144873893033,
+    "yearlyAPY": 82.75956734097063,
+    "staked_tvl": 2516938.81425
   },
   "ARTHCURVEPool": {
-    "weeklyAPY": 2.701700933736691,
-    "dailyAPY": 0.38595727624809867,
-    "yearlyAPY": 140.48844855430792,
-    "staked_tvl": 1106184.9469087843
+    "weeklyAPY": 3.6685973598452626,
+    "dailyAPY": 0.5240853371207518,
+    "yearlyAPY": 190.76706271195366,
+    "staked_tvl": 1091911.5927551226
   },
   "ARTHFRAXPool": {
-    "weeklyAPY": 4.196494228867052,
-    "dailyAPY": 0.599499175552436,
-    "yearlyAPY": 218.2176999010867,
-    "staked_tvl": 712161.3282322506
+    "weeklyAPY": 5.290967341840153,
+    "dailyAPY": 0.7558524774057361,
+    "yearlyAPY": 275.13030177568794,
+    "staked_tvl": 757098.6036312787
   },
   "ARTHMahaPool": {
-    "weeklyAPY": 14.456582316572305,
-    "dailyAPY": 2.065226045224615,
-    "yearlyAPY": 751.7422804617598,
-    "staked_tvl": 2480736.4605309023
+    "weeklyAPY": 19.0390289515702,
+    "dailyAPY": 2.719861278795743,
+    "yearlyAPY": 990.0295054816503,
+    "staked_tvl": 2524782.537946933
   },
   "ARTHYFIPool": {
-    "weeklyAPY": 0.9475919489972118,
-    "dailyAPY": 0.13537027842817312,
-    "yearlyAPY": 49.27478134785501,
-    "staked_tvl": 3153869.033091297
+    "weeklyAPY": 1.2875916606578912,
+    "dailyAPY": 0.18394166580827018,
+    "yearlyAPY": 66.95476635421035,
+    "staked_tvl": 3111067.047699839
   },
   "ARTHDSDPool": {
-    "weeklyAPY": 0.7175319900664856,
-    "dailyAPY": 0.10250457000949795,
-    "yearlyAPY": 37.31166348345725,
-    "staked_tvl": 4165083.85036884
+    "weeklyAPY": 1.0660287945451203,
+    "dailyAPY": 0.15228982779216005,
+    "yearlyAPY": 55.433497316346255,
+    "staked_tvl": 3757669.592851069
   },
   "ARTHMATICPool": {
-    "weeklyAPY": 7.662279996094747,
-    "dailyAPY": 1.0946114280135353,
-    "yearlyAPY": 398.4385597969268,
-    "staked_tvl": 390038.0703226887
+    "weeklyAPY": 10.0065581942814,
+    "dailyAPY": 1.4295083134687714,
+    "yearlyAPY": 520.3410261026328,
+    "staked_tvl": 400315.86371577036
   },
   "ARTHRSRPool": {
-    "weeklyAPY": 2.5103745790148237,
-    "dailyAPY": 0.3586249398592605,
-    "yearlyAPY": 130.53947810877082,
-    "staked_tvl": 1190492.0201676749
+    "weeklyAPY": 3.2602135913822714,
+    "dailyAPY": 0.4657447987688959,
+    "yearlyAPY": 169.5311067518781,
+    "staked_tvl": 1228687.5918051424
   },
   "MAHAARTHPool": {
-    "weeklyAPY": 41.744907155759314,
-    "dailyAPY": 5.9635581651084735,
-    "yearlyAPY": 2170.7351720994843,
-    "staked_tvl": 42703.81198873312
+    "weeklyAPY": 28.429650470320606,
+    "dailyAPY": 4.06137863861723,
+    "yearlyAPY": 1478.3418244566715,
+    "staked_tvl": 63361.07913862153
   }
 }
