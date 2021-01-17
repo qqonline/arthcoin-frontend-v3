@@ -170,10 +170,10 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     name: 'Deposit $MAHA_ETH-UNI-LPv2 and Earn $ARTH',
     contract: 'ARTHMahaEthLPPool',
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
-    poolRewards: 12500,
+    poolRewards: 150000,
     earnTokenName: 'ARTH',
     finished: false,
-    sort: 2,
+    sort: 1,
 
     poolDurationInDays: 5,
     poolSize: Infinity,
