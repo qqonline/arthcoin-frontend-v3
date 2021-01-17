@@ -295,7 +295,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'MAHA',
     poolRewards: 2000,
     finished: false,
-    sort: 1,
+    sort: -1,
 
     poolDurationInDays: 30,
     poolSize: Infinity,
@@ -307,7 +307,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'MAHA',
     poolRewards: 4000,
     finished: false,
-    sort: 1,
+    sort: 0,
 
     poolDurationInDays: 30,
     poolSize: Infinity,

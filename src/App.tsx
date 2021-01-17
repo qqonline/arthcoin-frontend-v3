@@ -10,7 +10,7 @@ import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
 
 import Banks from './views/Banks';
-import Home from './views/Home';
+import VFatProvider from './contexts/VFat';
 import Bond from './views/Bond';
 import Stats from './views/Stats';
 
@@ -57,6 +57,7 @@ const walletOptions = [
     icon: coinBaseIcon,
   },
 ];
+
 const UnlockWallet = () => {
   const { connect } = useWallet();
   const [walletId, setWalletId] = useState(null);

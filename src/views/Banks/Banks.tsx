@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
@@ -9,6 +9,8 @@ import Bank from '../Bank';
 import BankCards from './BankCards';
 import StakingIcon from './staking.png';
 import coinBaseIcon from '../../assets/img/coinBase.png';
+import * as vfat from '../../vfat/core';
+
 import LaunchCountdown from '../../components/LaunchCountdown';
 const stakeCardData = [
   {
@@ -53,9 +55,12 @@ const stakeCardData = [
   },
 ];
 
-
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
+
+  useEffect(() => {
+    // vfat.init();
+  }, []);
 
   return (
     <Switch>
@@ -76,6 +81,7 @@ const Banks: React.FC = () => {
           <br />
           <br />
           <br />
+
           <BankCards />
           {/* <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />

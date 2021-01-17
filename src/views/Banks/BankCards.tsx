@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Bank } from '../../basis-cash';
@@ -7,9 +7,13 @@ import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
 import CardIcon from '../../components/CardIcon';
 import useBanks from '../../hooks/useBanks';
+import usePoolAPY from '../../hooks/usePoolAPY';
 import TokenSymbol from '../../components/TokenSymbol';
 import Notice from '../../components/Notice';
 import { useWallet } from 'use-wallet';
+import { IVFatAPY } from '../../vfat/core';
+
+const APY = require('./apy.json');
 
 const BankCards: React.FC = () => {
   const [banks] = useBanks();
@@ -32,8 +36,18 @@ const BankCards: React.FC = () => {
     [[]],
   );
 
+  const activeBankApys: IVFatAPY[] = []; // usePoolAPY(activeBanks.map((b) => b.contract));
+
   return (
     <StyledCards>
+      <VFATAnn>
+        🌾 Unofficial farming dashboard at{' '}
+        <a href="https://vfat.tools/arth" style={{ color: '#FFf' }} target="_blank">
+          vfat.tools/arth
+        </a>{' '}
+        🌾
+      </VFATAnn>
+
       {inactiveRows[0].length > 0 && (
         <StyledInactiveNoticeContainer>
           <Notice color="grey">
@@ -46,7 +60,7 @@ const BankCards: React.FC = () => {
       <StyledRow>
         {activeBanks.map((bank, i) => (
           <React.Fragment key={bank.name}>
-            <BankCard bank={bank} />
+            <BankCard bank={bank} apy={activeBankApys.length > i ? activeBankApys[i] : null} />
             {i < activeBanks.length - 1 && <StyledSpacer />}
           </React.Fragment>
         ))}
@@ -72,10 +86,13 @@ const BankCards: React.FC = () => {
 
 interface BankCardProps {
   bank: Bank;
+  apy?: IVFatAPY;
 }
 
 const BankCard: React.FC<BankCardProps> = ({ bank }) => {
   const { account, connect } = useWallet();
+
+  const apy: any = APY[bank.contract];
 
   return (
     <StyledCardWrapper>
@@ -84,17 +101,33 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
           <StyledContent>
             <StyledTitle>{bank.name}</StyledTitle>
             <br />
-            <StyledDesc>Reward Amount: {bank.poolRewards} {bank.earnTokenName}</StyledDesc>
+            <StyledDesc>
+              Reward Amount: {bank.poolRewards} {bank.earnTokenName}
+            </StyledDesc>
             <StyledDesc>Pool Duration: {bank.poolDurationInDays} days</StyledDesc>
-            <StyledDesc>Pool size: {bank.poolSize === Infinity ? 'No Limit' : `${bank.poolSize} ${bank.depositTokenName}`}</StyledDesc>
+            <StyledDesc>
+              Pool size:{' '}
+              {bank.poolSize === Infinity
+                ? 'No Limit'
+                : `${bank.poolSize} ${bank.depositTokenName}`}
+            </StyledDesc>
             {/* <StyledDesc>Current APY: 20%</StyledDesc>
             <StyledDesc>% of Pool Available: Unlimited</StyledDesc> */}
             <br />
             <CardIcon>
               <TokenSymbol symbol={bank.depositTokenName} size={54} />
             </CardIcon>
-
-
+            {apy && (
+              <>
+                <ApyTitle>APYs</ApyTitle>
+                <ApyBlocks>
+                  <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
+                  <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
+                  <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy>
+                </ApyBlocks>
+                <ApyNote>Please note that APYs update every hour</ApyNote>
+              </>
+            )}
             {/* <StyledInfoSlots>
               <StyledInfoSlot>
                 <SlotTitle>4%</SlotTitle>
@@ -117,7 +150,7 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
               </StyledInfoSlot>
             </StyledInfoSlots> */}
 
-            <StyledDesc>Pool opens at 3pm GMT</StyledDesc>
+            {/* <StyledDesc>Pool opens at 3pm GMT</StyledDesc> */}
             <br />
 
             {!!account ? (
@@ -140,6 +173,30 @@ const StyledCards = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
+`;
+
+const Apy = styled.div`
+  background: #fff3;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 10px;
+  text-align: center;
+`;
+
+const ApyTitle = styled.div`
+  color: #fff9;
+  margin-top: 10px;
+  font-size: 16px;
+`;
+
+const ApyNote = styled.div`
+  color: #fff9;
+`;
+
+const ApyBlocks = styled.div`
+  margin: 5px;
+  display: flex;
 `;
 
 const StyledRow = styled.div`
@@ -225,6 +282,13 @@ const StyledInactiveBankTitle = styled.p`
   color: ${(props) => props.theme.color.grey[400]};
   margin-top: ${(props) => props.theme.spacing[5]}px;
   margin-bottom: ${(props) => props.theme.spacing[4]}px;
+`;
+
+const VFATAnn = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff9;
+  margin-bottom: 30px;
 `;
 
 export default BankCards;
