@@ -110,7 +110,7 @@ export class BasisCash {
       contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 30,
+      seionrageSupplyPercentage: 20,
       history7dayAPY: 30,
       lockInPeriodDays: 5,
     }
@@ -131,7 +131,7 @@ export class BasisCash {
       contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 60,
+      seionrageSupplyPercentage: 70,
       history7dayAPY: 30,
       lockInPeriodDays: 1,
     }
