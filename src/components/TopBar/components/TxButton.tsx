@@ -22,13 +22,13 @@ const TxButton: React.FC<TxButtonProps> = () => {
   );
   return (
     <>
-      <TranscationSnackbar
+      {/* <TranscationSnackbar
         notificationCount={1}
         open
         title="Redeeming 4 ARTH"
         subtitle="Stability Fee = 4%"
         isScucess={false}
-      />
+      /> */}
       {!!account && (
         <StyledTxButton>
           <Button

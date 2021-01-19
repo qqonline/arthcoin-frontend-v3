@@ -38,11 +38,12 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 const TopBar: React.FC = () => {
-  const [netWrokType, setNetworkType] = React.useState('mainnet');
-  const [showWarning, toggleWarning] = useState(true);
+  const [networkType, setNetworkType] = React.useState('mainnet');
+  const [showWarning, toggleWarning] = useState(false);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
+
   return (
     <>
       <StyledTopBar>
@@ -60,7 +61,7 @@ const TopBar: React.FC = () => {
               }}
             >
               <TxButton />
-              <Select
+              {/* <Select
                 labelId="demo-customized-select-label"
                 id="demo-customized-select"
                 value={netWrokType}
@@ -70,7 +71,7 @@ const TopBar: React.FC = () => {
               >
                 <MenuItem value="mainnet">Mainnet</MenuItem>
                 <MenuItem value="testnet">Testnet</MenuItem>
-              </Select>
+              </Select> */}
               <AccountButton />
             </div>
           </StyledTopBarInner>

@@ -9,7 +9,7 @@ import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
 import Banks from './views/Banks';
-import VFatProvider from './contexts/VFat';
+import Home from './views/Home';
 import Bond from './views/Bond';
 import Stats from './views/Stats';
 
@@ -87,7 +87,7 @@ const UnlockWallet = () => {
         </Modal>
       )}
       <p>
-        To use the ARTH platform, please connect your Metamask Account with the Ropsten network
+        To use the ARTH platform, please connect your Metamask Account with the Ethereum network
       </p>
       <Button onClick={() => toggleModal(true)} text="Unlock Wallet" />
     </Center>

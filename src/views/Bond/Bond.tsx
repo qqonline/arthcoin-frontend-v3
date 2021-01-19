@@ -64,24 +64,24 @@ const Bond: React.FC = () => {
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
 
-  if (!isLaunched) {
-    return (
-      <Switch>
-        <Page>
-          <PageHeader
-            icon={<img alt="bonds" src={BondsIcon} width="200px" />}
-            title="Buy & Redeem Bonds"
-            subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
-          />
-          <LaunchCountdown
-            deadline={config.bondLaunchesAt}
-            description="How does ARTH Bond work?"
-            descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
-          />
-        </Page>
-      </Switch>
-    );
-  }
+  // if (!isLaunched) {
+  //   return (
+  //     <Switch>
+  //       <Page>
+  //         <PageHeader
+  //           icon={<img alt="bonds" src={BondsIcon} width="200px" />}
+  //           title="Buy & Redeem Bonds"
+  //           subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
+  //         />
+  //         <LaunchCountdown
+  //           deadline={config.bondLaunchesAt}
+  //           description="How does ARTH Bond work?"
+  //           descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
+  //         />
+  //       </Page>
+  //     </Switch>
+  //   );
+  // }
 
   if (!basisCash) return <div />;
 
