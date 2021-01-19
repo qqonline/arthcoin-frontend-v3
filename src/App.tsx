@@ -8,7 +8,6 @@ import Modal from './components/NewModal/index';
 import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
-
 import Banks from './views/Banks';
 import VFatProvider from './contexts/VFat';
 import Bond from './views/Bond';
@@ -114,9 +113,9 @@ const App: React.FC = () => {
     <Providers>
       <Router>
         <Switch>
-          {/* <Route path="/" exact>
+          <Route path="/" exact>
             <Home />
-          </Route> */}
+          </Route>
           <Route path="/stats">
             <Stats />
           </Route>
@@ -137,10 +136,10 @@ const App: React.FC = () => {
 };
 
 const AppContent: React.FC = ({ children }) => {
-  // const { account } = useWallet();
+  const { account } = useWallet();
   const basisCash = useBasisCash();
 
-  // if (!!!account) return <UnlockWallet />;
+  if (!!!account) return <UnlockWallet />;
   if (!basisCash) return <div>Loading</div>;
 
   return (

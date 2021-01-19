@@ -100,7 +100,7 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   text-align: center;
-  color: #F5F5F5;
+  color: #FFFFFF;
   background: transparent;
   opacity: 0.88;
   flex: none;
@@ -118,8 +118,23 @@ const StyledButton = styled.button<StyledButtonProps>`
   padding: 10px 22px;
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
+  width: 100%;
+  &:hover {
+    background: #423b38;
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
+  &:selected {
+    background: #2a2827;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
   &:disabled {
-    background: #999;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    box-sizing: border-box;
+    border-radius: 6px;
   }
 `;
 

@@ -8,6 +8,7 @@ import Modal from '../../NewModal/index';
 import Label from '../../Label';
 import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
+import TextButton from '../../Button/TextButton';
 import metaMaskIcon from '../../../assets/img/metamask.png';
 interface props {
   onDismiss?: Function;
@@ -29,7 +30,9 @@ const AccountModal: React.FC<props> = () => {
       <div className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom">
         <div className="dialog-class-1 width-100">
           <span className="white font18">Connected with Metamask</span>
-          <span className="white font20 bold-600 pointer">Change</span>
+          <div style={{ maxWidth: '200px' }}>
+            <TextButton>Change</TextButton>
+          </div>
         </div>
         <div className="dialog-class">
           <img src={metaMaskIcon} alt="Metamask" width="30px" />

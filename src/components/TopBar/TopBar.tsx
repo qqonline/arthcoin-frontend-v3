@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputBase from '@material-ui/core/InputBase';
 import Select from '@material-ui/core/Select';
@@ -37,46 +39,73 @@ const BootstrapInput = withStyles((theme: Theme) =>
 )(InputBase);
 const TopBar: React.FC = () => {
   const [netWrokType, setNetworkType] = React.useState('mainnet');
+  const [showWarning, toggleWarning] = useState(true);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
   return (
-    <StyledTopBar>
-      <Container size="lg">
-        <StyledTopBarInner>
-          <div style={{ flex: 1 }}>
-            <Logo />
-          </div>
-          <Nav />
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <TxButton />
-            {/* <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              value={netWrokType}
-              onChange={handleChange}
-              input={<BootstrapInput />}
-              IconComponent={() => <ExpandMoreIcon className="white" />}
+    <>
+      <StyledTopBar>
+        <Container size="lg">
+          <StyledTopBarInner>
+            <div style={{ flex: 1 }}>
+              <Logo />
+            </div>
+            <Nav />
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
             >
-              <MenuItem value="mainnet">Mainnet</MenuItem>
-              <MenuItem value="testnet">Testnet</MenuItem>
-            </Select> */}
-            <AccountButton />
-          </div>
-        </StyledTopBarInner>
-      </Container>
-    </StyledTopBar>
+              <TxButton />
+              <Select
+                labelId="demo-customized-select-label"
+                id="demo-customized-select"
+                value={netWrokType}
+                onChange={handleChange}
+                input={<BootstrapInput />}
+                IconComponent={() => <ExpandMoreIcon className="white" />}
+              >
+                <MenuItem value="mainnet">Mainnet</MenuItem>
+                <MenuItem value="testnet">Testnet</MenuItem>
+              </Select>
+              <AccountButton />
+            </div>
+          </StyledTopBarInner>
+        </Container>
+      </StyledTopBar>
+      {showWarning && (
+        <ShowWarning>
+          <InfoOutlinedIcon className="margin-right-5" />
+          Please make sure that you are connected to matic mumbai TESTnet.
+          <CloseIcon
+            style={{ position: 'absolute', right: '50px' }}
+            className="pointer"
+            onClick={() => toggleWarning(false)}
+          />
+        </ShowWarning>
+      )}
+    </>
   );
 };
 
 const StyledTopBar = styled.div``;
-
+const ShowWarning = styled.div`
+  background: #ba1e38;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: center;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+`;
 const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;

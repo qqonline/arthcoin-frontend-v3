@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Page from '../../components/Page';
+import Modal from '../../components/NewModal/index';
 import PageHeader from '../../components/PageHeader';
 import Spacer from '../../components/Spacer';
 import HomeCard from './components/HomeCard';
@@ -10,7 +12,7 @@ import config from '../../config';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
-
+  const [openModal, toggleModal] = useState(true);
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
@@ -33,7 +35,9 @@ const Home: React.FC = () => {
   const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
   const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
-
+  const handleClose = () => {
+    toggleModal(false);
+  };
   return (
     <Page>
       <PageHeader
@@ -42,6 +46,18 @@ const Home: React.FC = () => {
         title="Welcome to ARTH!"
       />
       <Spacer size="md" />
+      <Modal
+        title="Disclaimer"
+        open
+        handleClose={handleClose}
+        titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
+      >
+        <ModalText>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci habitant aliquet
+          maecenas congue nisl feugiat tempus netus tempor. Ornare et pulvinar porta vitae.
+        </ModalText>
+        <ModalHyperLink>View token contract on Etherscan</ModalHyperLink>
+      </Modal>
       <CardWrapper>
         <HomeCard
           title="ARTH"
@@ -77,5 +93,20 @@ const CardWrapper = styled.div`
     align-items: center;
   }
 `;
-
+const ModalText = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+const ModalHyperLink = styled.div`
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration-line: underline;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+  margin-top: 20px;
+`;
 export default Home;

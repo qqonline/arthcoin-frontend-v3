@@ -10,7 +10,7 @@ import Button from '../../../components/Button/TransperantButton';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
-
+import DistributionIcon from '../distribution.png';
 const Boardroom = () => {
   const { bankId } = useParams<{ bankId: 'arth' | 'arthLiquidity' }>();
   const basisCash = useBasisCash();
@@ -20,7 +20,9 @@ const Boardroom = () => {
     <>
       <PageHeader
         title="ARTH Distribution"
+        icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
         subtitle={`Deposit ${boardroom.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
+        showEpoch
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
