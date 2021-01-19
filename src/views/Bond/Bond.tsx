@@ -52,7 +52,7 @@ const Bond: React.FC = () => {
     [basisCash, addTransaction],
   );
 
-  const isBondRedeemable = useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
+  const isBondRedeemable = true // useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
   const isBondPurchasable = useMemo(() => {
     // const denominator1e18 = BigNumber.from(10).pow(18);
 
@@ -73,11 +73,7 @@ const Bond: React.FC = () => {
   //           title="Buy & Redeem Bonds"
   //           subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
   //         />
-  //         <LaunchCountdown
-  //           deadline={config.bondLaunchesAt}
-  //           description="How does ARTH Bond work?"
-  //           descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
-  //         />
+
   //       </Page>
   //     </Switch>
   //   );
@@ -100,10 +96,17 @@ const Bond: React.FC = () => {
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center">
               <Grid container item xs={12} md={9} lg={9} xl={9}>
-                <ChartContainer>
+                {/* <ChartContainer>
                   <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
                   <Chart />
-                </ChartContainer>
+                </ChartContainer> */}
+                <LaunchContainer>
+                  <LaunchCountdown
+                    deadline={config.bondLaunchesAt}
+                    description="How does ARTH Bond work?"
+                    descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
+                  />
+                </LaunchContainer>
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard
@@ -115,9 +118,10 @@ const Bond: React.FC = () => {
                       addOnTokeName="ARTH"
                       addOnToken="ARTH"
                       priceDesc={
-                        !isBondPurchasable
-                          ? "ARTH is over its target price"
-                          : `ARTH is below its target price. You can pruchase bonds now.`
+                        ''
+                        // !isBondPurchasable
+                        //   ? "ARTH is over its target price"
+                        //   : `ARTH is below its target price. You can purchase bonds now.`
                       }
                       onExchange={handleBuyBonds}
                       disabled={!isBondPurchasable}
@@ -195,6 +199,19 @@ const StyledCardWrapper = styled.div`
   @media (max-width: 768px) {
     width: 80%;
   }
+`;
+
+
+const LaunchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(70px);
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 30px;
 `;
 
 const ChartContainer = styled.div`

@@ -3,7 +3,7 @@ import useBasisCash from './useBasisCash';
 import { BigNumber } from 'ethers';
 
 const useStabilityFee = () => {
-  const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
+  const [price, setPrice] = useState<BigNumber>(BigNumber.from(1));
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
@@ -11,7 +11,7 @@ const useStabilityFee = () => {
   }, [basisCash]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch stability fees: ${err.stack}`));
+    // fetchCashPrice().catch((err) => console.error(`Failed to fetch stability fees: ${err.stack}`));
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;

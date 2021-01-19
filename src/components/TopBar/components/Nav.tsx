@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
         Supply
       </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/staking">
-        Genesis Distribution
+        Staking
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/bonds">
         Bonds
