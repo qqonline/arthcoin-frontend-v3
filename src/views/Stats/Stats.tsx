@@ -96,7 +96,7 @@ const Home: React.FC = () => {
     <Page>
       <PageHeader
         icon={<img alt="stats" src={StastIcon} width="200px" />}
-        subtitle="View information about the current ARTH market"
+        subtitle="View information about the current ARTH protocol"
         title="Statistics"
         secondParaTitle="Next Epoch:"
         secondParaDescription="Protocol will launch on Jan 21st at 3pm GMT"
@@ -106,8 +106,9 @@ const Home: React.FC = () => {
         <CardWrapper>
           <HomeCard
             title="MAHA"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.MAHA.address}
             symbol="MAHA"
+            supplyLabel="Circulating Supply"
             address={shareAddr}
             stat={share}
           />
@@ -115,7 +116,7 @@ const Home: React.FC = () => {
           <HomeCard
             title="ARTH"
             symbol="ARTH"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.ARTH.address}
             supplyLabel="Circulating Supply"
             address={cashAddr}
             stat={cash}
@@ -124,7 +125,7 @@ const Home: React.FC = () => {
           <HomeCard
             title="ARTH Bond"
             symbol="ARTHB"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.ARTHB.address}
             address={bondAddr}
             stat={bond}
           />

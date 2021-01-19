@@ -39,7 +39,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             <div
               style={{ color: 'rgba(255, 255, 255, 0.64)' }}
               className="font15"
-            >{`${title} Earned`}</div>
+            >Price</div>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}

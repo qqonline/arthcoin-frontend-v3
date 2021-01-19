@@ -7,7 +7,7 @@ const useCashTargetPrice = () => {
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-     setPrice(await basisCash.getTargetPrice());
+    //  setPrice(await basisCash.getTargetPrice());
   }, [basisCash]);
 
   useEffect(() => {

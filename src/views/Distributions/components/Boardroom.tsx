@@ -68,9 +68,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               </StyledInfoSlot> */}
             </StyledInfoSlots>
             <ButtonContainer>
-              {
-                <Button disabled text="Bonding starts on 21st" />
-              }
+              <Button disabled text="Bonding starts on 21st" />
             </ButtonContainer>
           </StyledContent>
         </CardContent>

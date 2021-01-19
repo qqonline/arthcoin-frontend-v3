@@ -108,6 +108,8 @@ const Providers: React.FC = ({ children }) => {
     </ThemeProvider>
   );
 };
+
+
 const App: React.FC = () => {
   return (
     <Providers>
