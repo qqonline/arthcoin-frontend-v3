@@ -46,6 +46,11 @@ const Label = styled.div`
   align-items: center;
   margin-bottom: 5px;
   width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  color: rgba(255, 255, 255, 0.64);
 `;
 
 const Actions = styled.div`
@@ -74,6 +79,10 @@ const Amount = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: rgba(255, 255, 255, 0.88);
   justify-content: center;
 `;
 
