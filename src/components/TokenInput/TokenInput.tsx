@@ -61,11 +61,16 @@ const Button = styled.button`
   border: none;
   &:hover {
     background: transparent;
+    color: #bd9cff;
     border: none;
   }
   &:focus {
     background: transparent;
     border: none;
+  }
+  &:disabled: {
+    color: #ffffff;
+    opacity: 0.32;
   }
 `;
 const StyledSpacer = styled.div`

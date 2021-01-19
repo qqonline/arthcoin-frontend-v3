@@ -6,7 +6,7 @@ import { useWallet } from 'use-wallet';
 import useModal from '../../../hooks/useModal';
 
 import Button from '../../Button/TransperantButton';
-
+import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
 
 interface AccountButtonProps {}
@@ -25,7 +25,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
           text="Connect"
         />
       ) : (
-        <Button
+        <ButtonColored
           onClick={onPresentAccountModal}
           size="sm"
           text="0xf7...a6d3"

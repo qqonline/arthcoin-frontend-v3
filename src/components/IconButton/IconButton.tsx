@@ -1,27 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 interface IconButtonProps {
-  children?: React.ReactNode,
-  disabled?: boolean,
-  onClick?: () => void,
-  to?: string
+  children?: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+  to?: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({ children, disabled, onClick, to }) => {
   return (
     <StyledButton disabled={disabled} onClick={onClick}>
-      {!!to ? (
-        <StyledLink to={to}>{children}</StyledLink>
-      ) : children}
+      {!!to ? <StyledLink to={to}>{children}</StyledLink> : children}
     </StyledButton>
-  )
-}
+  );
+};
 
 interface StyledButtonProps {
-  disabled?: boolean
+  disabled?: boolean;
 }
 /*
   box-shadow: 6px 6px 12px ${props => props.theme.color.grey[600]},
@@ -30,10 +28,11 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
-  background-color: #2A2827;
+  background-color: rgba(255, 255, 255, 0.08);
   border: 0;
   border-radius: 28px;
-  color: ${props => !props.disabled ? props.theme.color.primary.main : props.theme.color.grey[500]};
+  color: ${(props) =>
+    !props.disabled ? props.theme.color.primary.main : props.theme.color.grey[500]};
   cursor: pointer;
   display: flex;
   font-weight: 700;
@@ -43,13 +42,17 @@ const StyledButton = styled.button<StyledButtonProps>`
   outline: none;
   padding: 0;
   margin: 0;
-  pointer-events: ${props => !props.disabled ? undefined : 'none'};
+  pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   text-transform: uppercase;
   width: 56px;
   &:hover {
-    background-color: ${props => props.theme.color.grey[800]};
+    background-color: rgba(255, 255, 255, 0.32);
   }
-`
+  &:disabled {
+    background-color: rgba(255, 255, 255, 0.08);
+    cursor: nonde;
+  }
+`;
 
 const StyledLink = styled(Link)`
   align-items: center;
@@ -58,9 +61,9 @@ const StyledLink = styled(Link)`
   flex: 1;
   height: 56px;
   justify-content: center;
-  margin: 0 ${props => -props.theme.spacing[4]}px;
-  padding: 0 ${props => props.theme.spacing[4]}px;
+  margin: 0 ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
   text-decoration: none;
-`
+`;
 
-export default IconButton
+export default IconButton;

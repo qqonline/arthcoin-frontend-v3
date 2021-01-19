@@ -23,15 +23,19 @@ const styles = (theme: Theme) =>
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
+  titleLogo?: React.ReactNode;
   children: React.ReactNode;
   onClose: () => void;
 }
 
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
-  const { children, classes, onClose, ...other } = props;
+  const { children, classes, onClose, titleLogo, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
+      <div className="dialog-class width-100">
+        {titleLogo && titleLogo}
+        <Typography variant="h6">{children}</Typography>
+      </div>
       {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
@@ -55,8 +59,15 @@ interface props {
   title?: string;
   handleClose?: Function;
   open?: boolean;
+  titleLogo?: React.ReactNode;
 }
-const CustomizedDialogs: React.FC<props> = ({ children, title, handleClose, open }) => {
+const CustomizedDialogs: React.FC<props> = ({
+  children,
+  title,
+  handleClose,
+  open,
+  titleLogo,
+}) => {
   const [openModal, setOpen] = React.useState(open);
   const [isCloseClicked, toggleCloseClicked] = React.useState(false);
   const handleClickOpen = () => {
@@ -72,7 +83,6 @@ const CustomizedDialogs: React.FC<props> = ({ children, title, handleClose, open
   if (!isCloseClicked && open !== openModal) {
     setOpen(open);
   }
-  console.log({ open }, { openModal });
   let modalJsx = <div />;
   if (openModal) {
     modalJsx = (
@@ -84,7 +94,11 @@ const CustomizedDialogs: React.FC<props> = ({ children, title, handleClose, open
           paper: 'custom-dialog-class',
         }}
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleCloseModal}>
+        <DialogTitle
+          id="customized-dialog-title"
+          onClose={handleCloseModal}
+          titleLogo={titleLogo}
+        >
           {title}
         </DialogTitle>
         <DialogContent dividers>{children}</DialogContent>

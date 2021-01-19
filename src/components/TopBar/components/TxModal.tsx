@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import Modal, { ModalProps } from '../../Modal';
+import React, { useMemo, useState } from 'react';
+import Modal from '../../NewModal/index';
 import Label from '../../Label';
 import Button from '../../Button';
 import { TransactionDetails } from '../../../state/transactions/reducer';
@@ -15,9 +15,12 @@ import {
 import { Trash } from 'react-feather';
 
 const MAX_TRANSACTION_HISTORY = 10;
-
-const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
+interface props {
+  onDismiss?: Function;
+}
+const TxModal: React.FC<props> = ({ onDismiss }) => {
   const allTransactions = useAllTransactions();
+  const [openModal, toggleModal] = useState(true);
   const { clearAllTransactions } = useClearAllTransactions();
 
   const sortedRecentTransactions = useMemo(() => {
@@ -31,10 +34,13 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
     .slice(0, MAX_TRANSACTION_HISTORY);
 
   const isEmpty = confirmed?.length + pending?.length === 0;
+  const handleClose = () => {
+    toggleModal(false);
+    onDismiss();
+  };
   return (
-    <StyledModal>
+    <Modal title="Transactions" open handleClose={handleClose}>
       <StyledTitleArea>
-        <StyledModalTitle>Transactions</StyledModalTitle>
         {confirmed?.length > 0 && (
           <StyledClearIconWrapper>
             <Trash onClick={clearAllTransactions} size="16" />
@@ -62,30 +68,20 @@ const TxModal: React.FC<ModalProps> = ({ onDismiss }) => {
           </StyledTransactionList>
         </>
       )}
-      {isEmpty && <Label text="No transactions." color="#777" />}
-      <ModalActions>
-        <Button text="Close" onClick={onDismiss} />
-      </ModalActions>
-    </StyledModal>
+      {isEmpty && (
+        <div className="margin-top-bottom-20">
+          <Label text="No transactions." color="#777" />
+        </div>
+      )}
+
+      <Button text="Close" onClick={handleClose} />
+    </Modal>
   );
 };
-
-const StyledModal = styled(Modal)`
-  width: 360px;
-`;
 
 const StyledTitleArea = styled.div`
   display: flex;
   align-items: center;
-  height: ${(props) => props.theme.topBarSize}px;
-  margin-top: ${(props) => -props.theme.spacing[4]}px;
-`;
-
-const StyledModalTitle = styled.div`
-  color: ${(props) => props.theme.color.grey[300]};
-  flex: 1;
-  font-size: 18px;
-  font-weight: 700;
 `;
 
 const StyledClearIconWrapper = styled.div`

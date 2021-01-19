@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import ProgressCountdown from './ProgressCountDown';
 import Button from '../../components/Button';
 interface AccountButtonProps {
   title: string;
-  logo: string;
-  subtitle: string;
-  description: string;
+  logo: Array<string>;
+  subtitle?: string;
+  poolSize: string;
+  description?: string;
   buttonText: string;
+  percentage: number;
   appyPercentage: string;
+}
+interface ImageConTainerProps {
+  marginLeft: number;
+  zIndex: number;
 }
 
 const StakingCard: React.FC<AccountButtonProps> = ({
@@ -15,24 +22,70 @@ const StakingCard: React.FC<AccountButtonProps> = ({
   logo,
   subtitle,
   description,
+  poolSize,
+  percentage,
   buttonText = 'Stake Now',
   appyPercentage,
 }) => {
   return (
     <CardContainer>
-      <img src={logo} alt={title} width="65px" className="margin-top-bottom-20" />
-      <span className="white font26 bold-800">{title}</span>
-      <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>
-      <span className="white font16 bold-200 margin-bottom-15" style={{ textAlign: 'center' }}>
-        {description}
-      </span>
-      <DiscountDiv>{`${appyPercentage}% APY`}</DiscountDiv>
+      {logo && logo.length > 0 && (
+        <LogoContainer>
+          <ImageConTainer marginLeft={0} zIndex={logo.length + 1}>
+            <img src={logo[0]} alt={title} width="46px" style={{ borderRadius: '50%' }} />
+          </ImageConTainer>
+          {logo.length > 1 &&
+            logo.slice(1).map((eachLogo, index) => (
+              <ImageConTainer marginLeft={15} zIndex={logo.length - index}>
+                <img src={eachLogo} alt={title} width="46px" style={{ borderRadius: '50%' }} />
+              </ImageConTainer>
+            ))}
+        </LogoContainer>
+      )}
+      <span className="white font26 bold-800 margin-bottom-15 row-centered">{title}</span>
+      {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
+      {description && (
+        <span
+          className="white font16 bold-200 margin-bottom-15"
+          style={{ textAlign: 'center' }}
+        >
+          {description}
+        </span>
+      )}
+      <DiscountDiv>
+        <TitleText>{`${appyPercentage}%`}</TitleText>APY
+      </DiscountDiv>
+      <DiscountDiv>
+        <TitleText>{poolSize}</TitleText> {poolSize === 'No limit' ? '' : 'Pool Size'}
+      </DiscountDiv>
+      <div style={{ marginTop: '-15px' }}>
+        <ProgressCountdown percentage={percentage} description="Next Epoch" />
+      </div>
       <div style={{ maxWidth: '200px', marginBottom: '20px', marginTop: '20px' }}>
         <Button text={buttonText} />
       </div>
     </CardContainer>
   );
 };
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ImageConTainer = styled.div`
+  border: 2px solid #363130;
+  margin-left: ${(p: ImageConTainerProps) => `-${p.marginLeft}px`};
+  z-index: ${(p: ImageConTainerProps) => p.zIndex};
+  width: 56px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 56px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
 const CardContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -48,12 +101,17 @@ const DiscountDiv = styled.div`
   flex-direction: row;
   align-items: center;
   background: rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
+  border-radius: 40px;
   text-align: center;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 300;
   color: #ffffff;
-  margin: 20px 0px;
+  margin-bottom: 20px;
   padding: 10px 20px;
+`;
+const TitleText = styled.div`
+  font-size: 18px;
+  margin-right: 5px;
+  font-weight: bold;
 `;
 export default StakingCard;
