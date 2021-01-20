@@ -38,6 +38,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
     toggleModal(false);
     onDismiss();
   };
+
   return (
     <Modal title="Transactions" open handleClose={handleClose}>
       <StyledTitleArea>

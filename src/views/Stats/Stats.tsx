@@ -12,8 +12,7 @@ import StastIcon from './stats.png';
 
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
-import Humanize from 'humanize-plus';
-import { getBalance, getDisplayBalance } from '../../utils/formatBalance';
+import { getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import useFundAmount from '../../hooks/useFundAmount';
 
@@ -24,7 +23,6 @@ import ProgressCountdown from './components/ProgressCountdown';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
-import { BigNumber } from 'ethers';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 
 const Home: React.FC = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Bank } from '../../basis-cash';
@@ -7,7 +7,6 @@ import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
 import CardIcon from '../../components/CardIcon';
 import useBanks from '../../hooks/useBanks';
-import usePoolAPY from '../../hooks/usePoolAPY';
 import TokenSymbol from '../../components/TokenSymbol';
 import Notice from '../../components/Notice';
 import { useWallet } from 'use-wallet';
@@ -41,11 +40,11 @@ const BankCards: React.FC = () => {
   return (
     <StyledCards>
       <VFATAnn>
-        🌾 Unofficial farming dashboard at{' '}
-        <a href="https://vfat.tools/arth" style={{ color: '#FFf' }} target="_blank">
+        <span role="img" aria-label="farming">🌾</span> Unofficial farming dashboard at{' '}
+        <a href="https://vfat.tools/arth" style={{ color: '#FFf' }} rel="noopener noreferrer" target="_blank">
           vfat.tools/arth
         </a>{' '}
-        🌾
+        <span role="img" aria-label="farming">🌾</span>
       </VFATAnn>
 
       {inactiveRows[0].length > 0 && (
@@ -244,31 +243,6 @@ const StyledContent = styled.div`
 const StyledSpacer = styled.div`
   height: ${(props) => props.theme.spacing[4]}px;
   width: ${(props) => props.theme.spacing[4]}px;
-`;
-
-const StyledInfoSlots = styled.div`
-  display: flex;
-  text-align: center;
-
-  padding-top: 5px;
-  padding-bottom: 15px;
-`;
-
-const StyledInfoSlot = styled.div`
-  padding-left: 5px;
-  padding-right: 5px;
-`;
-
-const SlotTitle = styled.div`
-  color: #fff;
-  font-family: Inter;
-  font-weight: bold;
-  font-size: 18px;
-`;
-
-const SlotDescription = styled.div`
-  color: #fff;
-  font-size: 14px;
 `;
 
 const StyledInactiveNoticeContainer = styled.div`
