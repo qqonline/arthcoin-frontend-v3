@@ -5,7 +5,7 @@ import Button from '../../Button/TransperantButton';
 import { useAllTransactions } from '../../../state/transactions/hooks';
 import useModal from '../../../hooks/useModal';
 import TxModal from './TxModal';
-
+import TranscationSnackbar from './TranscationSnackbar';
 interface TxButtonProps {}
 
 const TxButton: React.FC<TxButtonProps> = () => {
@@ -22,6 +22,13 @@ const TxButton: React.FC<TxButtonProps> = () => {
   );
   return (
     <>
+      {/* <TranscationSnackbar
+        notificationCount={1}
+        open
+        title="Redeeming 4 ARTH"
+        subtitle="Stability Fee = 4%"
+        isScucess={false}
+      /> */}
       {!!account && (
         <StyledTxButton>
           <Button

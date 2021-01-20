@@ -28,7 +28,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               <TokenSymbol symbol={boardroom.depositTokenName} size={54} />
             </CardIcon>
             <StyledTitle>
-              Bond {boardroom.depositTokenName} to earn {boardroom.earnTokenName}
+              Bond {boardroom.depositTokenName} to EARN {boardroom.earnTokenName}
             </StyledTitle>
             <StyledInfoSlots>
               {/* <StyledInfoSlot>
@@ -42,7 +42,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots>
               <PercentageContainer>
                 <PercentageTilte>
-                  {boardroom.seionrageSupplyPercentage}% Seigniorage Supply
+                  <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seinorage Supply
                 </PercentageTilte>
               </PercentageContainer>
             </StyledInfoSlots>
@@ -68,9 +68,12 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               </StyledInfoSlot> */}
             </StyledInfoSlots>
             <ButtonContainer>
-              {
-                <Button disabled text="Bonding starts on 21st" />
-              }
+              {!!account ? (
+                <Button text="Select" to={`/distribution/${boardroom.kind}`} />
+              ) : (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              )}
+              {/* <Button disabled text="Bonding starts on 21st" /> */}
             </ButtonContainer>
           </StyledContent>
         </CardContent>
@@ -93,6 +96,8 @@ const StyledContent = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 `;
 
 const StyledInfoSlots = styled.div`
@@ -115,9 +120,14 @@ const SlotTitle = styled.div`
 `;
 const PercentageTilte = styled.span`
   text-align: center;
+  font-weight: 300;
+  font-size: 13px;
+  color: #ffffff;
+`;
+const BoldText = styled.span`
   font-weight: 600;
   font-size: 18px;
-  color: #ffffff;
+  margin-right: 5px;
 `;
 const PercentageContainer = styled.div`
   background: rgba(255, 255, 255, 0.16);

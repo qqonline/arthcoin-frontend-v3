@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Boardrooms } from '../basis-cash/config';
 import useBasisCash from './useBasisCash';
 import useStakedBalanceOnBoardroom from './useStakedBalanceOnBoardroom';
 
-const useBoardroomVersion = (kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') => {
+const useBoardroomVersion = (kind: Boardrooms) => {
   const [boardroomVersion, setBoardroomVersion] = useState('latest');
   const basisCash = useBasisCash();
   const stakedBalance = useStakedBalanceOnBoardroom(kind);

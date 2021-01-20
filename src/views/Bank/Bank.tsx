@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-
+import Grid from '@material-ui/core/Grid';
 import { useParams } from 'react-router-dom';
-
-import Button from '../../components/Button';
+import Container from '../../components/Container';
+import Button from '../../components/Button/TransperantButton';
 import PageHeader from '../../components/PageHeader';
-import Spacer from '../../components/Spacer';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
@@ -28,24 +27,30 @@ const Bank: React.FC = () => {
         subtitle={`Deposit ${bank?.depositTokenName} and earn ${bank?.earnTokenName}`}
         title={bank?.name}
       />
-      <StyledBank>
-        <StyledCardsWrapper>
-          <StyledCardWrapper>
-            <Harvest bank={bank} />
-          </StyledCardWrapper>
-          <Divider />
-          <StyledCardWrapper>
-            <Stake bank={bank} />
-          </StyledCardWrapper>
-        </StyledCardsWrapper>
-        <Spacer size="lg" />
-        {bank.depositTokenName.includes('LP') && <LPTokenHelpText bank={bank} />}
-        <Spacer size="lg" />
-        <div>
-          <Button onClick={onRedeem} text="Settle & Withdraw" />
-        </div>
-        <Spacer size="lg" />
-      </StyledBank>
+      <Container size="lg">
+        <div className="border-bottom width-100 margin-bottom-20" />
+        <Grid container spacing={5} justify="center" alignItems="stretch">
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <StyledCardsWrapper>
+              <StyledCardWrapper>
+                <Harvest bank={bank} />
+              </StyledCardWrapper>
+              <Divider />
+              <StyledCardWrapper>
+                <Stake bank={bank} />
+              </StyledCardWrapper>
+            </StyledCardsWrapper>
+          </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6} justify="flex-end">
+            <ParentContainer>
+              {bank.depositTokenName.includes('LP') && <LPTokenHelpText bank={bank} />}
+              <div style={{ maxWidth: '250px', marginTop: '20px', alignSelf: 'flex-end' }}>
+                <Button onClick={onRedeem} text="Settle & Withdraw" />
+              </div>
+            </ParentContainer>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   ) : (
     <BankNotFound />
@@ -65,7 +70,7 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   }
   return (
     <StyledLink href={uniswapUrl} target="_blank">
-      {`🦄  Provide liquidity to ${pairName} on Uniswap  🦄`}
+      {`Provide liquidity to ${pairName} on Uniswap`}
     </StyledLink>
   );
 };
@@ -78,28 +83,22 @@ const BankNotFound = () => {
   );
 };
 
-const StyledBank = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-
-  max-width: 800px;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const Divider = styled.div`
   background: #000;
   opacity: 0.2;
   height: 1px;
 `;
+const ParentContainer = styled.div`
+  display: flex;
+  justify-content: right;
+  flex-direction: column;
+`;
 const StyledLink = styled.a`
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   text-decoration: none;
-  color: ${(props) => props.theme.color.primary.main};
+  color: rgba(255, 255, 255, 0.88);
 `;
 
 const StyledCardsWrapper = styled.div`

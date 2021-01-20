@@ -14,7 +14,7 @@ interface ButtonProps {
   variant?: 'default' | 'secondary' | 'tertiary';
 }
 
-const Button: React.FC<ButtonProps> = ({
+const TextButton: React.FC<ButtonProps> = ({
   children,
   disabled,
   href,
@@ -100,31 +100,36 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   white-space: nowrap;
-  background: linear-gradient(38.44deg, #f47f57 15.81%, #fd5656 87.57%);
   border: 0;
-  border-radius: 6px;
+  background: transparent;
   box-shadow: ${(props) => props.boxShadow};
-  color: #fff;
+  text-align: center;
+  color: #ffffff;
+  opacity: 0.88;
   cursor: pointer;
   display: flex;
   font-size: ${(props) => props.fontSize}px;
-  font-weight: 700;
+  font-weight: 600;
   height: 38px;
   justify-content: center;
   outline: none;
-  padding: 10px 22px;
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
+  padding: 10px 20px;
   &:hover {
-    background: #ff7f57;
+    background: rgba(250,250,250,0.1);
+    border-radius: 4px;
+    padding: 10px 20px;
+    box-shadow: 0px 12px 24px -4px rgba(0, 0, 0, 0.12), 0px 16px 20px rgba(0, 0, 0, 0.25);
   }
   &:selected {
-    background: linear-gradient(180deg, #f47f57 -11.33%, #fd5656 100%);
+    background: rgba(226,223,223, 0.1);
+    border-radius: 4px;
+    padding: 10px 20px;
   }
   &:disabled {
-    background: rgba(255,255,255,0.32);
-    color: rgba(255, 255, 255, 0.88);
-    cursor: not-allowed;
+    color: #ffffff;
+    opacity: 0.32;
   }
 `;
 
@@ -152,4 +157,4 @@ const StyledExternalLink = styled.a`
   text-decoration: none;
 `;
 
-export default Button;
+export default TextButton;

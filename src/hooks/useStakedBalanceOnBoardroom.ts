@@ -2,14 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
+import { Boardrooms } from '../basis-cash/config';
 
-const useStakedBalanceOnBoardroom = (kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') => {
+const useStakedBalanceOnBoardroom = (kind: Boardrooms) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
     setBalance(await basisCash.getStakedSharesOnBoardroom(kind));
-  }, [basisCash, kind]);
+  }, [basisCash.isUnlocked, kind]);
 
   useEffect(() => {
     if (basisCash.isUnlocked) {

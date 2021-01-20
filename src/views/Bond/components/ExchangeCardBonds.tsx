@@ -146,12 +146,6 @@ const StyledCardTitle = styled.div`
   margin-top: ${(props) => -props.theme.spacing[3]}px;
 `;
 
-const StyledCardDesc = styled.div`
-  margin-bottom: 26px;
-  text-align: center;
-  color: #fff9;
-`;
-
 const StyledCardIcon = styled.div`
   background-color: ${(props) => props.theme.color.grey[900]};
   width: 72px;

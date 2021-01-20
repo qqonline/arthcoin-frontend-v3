@@ -1,5 +1,5 @@
-import { Fetcher, Route, Token, FACTORY_ADDRESS } from '@uniswap/sdk';
-import { Configuration } from './config';
+import { Fetcher, Route, Token } from '@uniswap/sdk';
+import { Boardrooms, Configuration } from './config';
 import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
@@ -192,7 +192,6 @@ export class BasisCash {
 
   async getStabilityFees(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-
     return Treasury.stabilityFee()
   }
 
@@ -204,7 +203,8 @@ export class BasisCash {
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getBondOraclePrice();
+    // return Treasury.getBondOraclePrice();
+    return BigNumber.from(0)
   }
 
   async getBondStat(): Promise<TokenStat> {
@@ -274,7 +274,6 @@ export class BasisCash {
    */
   async buyBonds(amount: string | number): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    console.log(decimalToBalance(amount), (await this.getBondOraclePriceInLastTWAP()).toString())
     return await Treasury.buyBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP());
   }
 
@@ -356,12 +355,13 @@ export class BasisCash {
     return 'latest';
   }
 
-  boardroomByVersion(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', version: string): Contract {
+  boardroomByVersion(kind: Boardrooms, version: string): Contract {
     if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroom;
+    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroom;
     return this.contracts.ArthBoardroom;
   }
 
-  currentBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Contract {
+  currentBoardroom(kind: Boardrooms): Contract {
     return this.boardroomByVersion(kind, this.boardroomVersionOfUser);
   }
 
@@ -369,7 +369,7 @@ export class BasisCash {
     return this.boardroomVersionOfUser !== 'latest';
   }
 
-  async stakeShareToBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', amount: string): Promise<TransactionResponse> {
+  async stakeShareToBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
@@ -377,13 +377,13 @@ export class BasisCash {
     return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnBoardroom(kind: 'arthLiquidity' | 'arth'  | 'mahaLiquidity'): Promise<BigNumber> {
+  async getStakedSharesOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom(kind);
 
     return await ArthBoardroom.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Promise<BigNumber> {
+  async getEarningsOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.getCashEarningsOf(this.myAccount);
@@ -391,12 +391,12 @@ export class BasisCash {
     return await ArthBoardroom.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity', amount: string): Promise<TransactionResponse> {
+  async withdrawShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity') : Promise<TransactionResponse> {
+  async harvestCashFromBoardroom(kind: Boardrooms) : Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.claimDividends();
@@ -404,7 +404,7 @@ export class BasisCash {
     return await ArthBoardroom.claimReward();
   }
 
-  async exitFromBoardroom(kind: 'arthLiquidity' | 'arth' | 'mahaLiquidity'): Promise<TransactionResponse> {
+  async exitFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     return await ArthBoardroom.exit();
   }

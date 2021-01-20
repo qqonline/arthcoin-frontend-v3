@@ -112,7 +112,8 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
       </StyledLabel>
       <StyledLabel>
         Please note that when you are redeeming your ARTH Bonds, there is 1% stability fee
-        approximately {getFullDisplayBalance(mahaStabilityFeeAmount)} MAHA or 10$.
+        approximately {getFullDisplayBalance(mahaStabilityFeeAmount)} MAHA.
+        {/* or 10$. */}
       </StyledLabel>
 
       <StyledLabel>
@@ -124,8 +125,10 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
       <ModalActions>
         <ButtonTransperant text="Cancel" variant="secondary" />
         <Button
+          // disabled={arthBAmount.lte(0)}
+          // text={action}
           disabled={arthBAmount.lte(0)}
-          text={action}
+          text={"Will be enabled after launch"}
           onClick={() => onConfirm(String(val))}
         />
       </ModalActions>

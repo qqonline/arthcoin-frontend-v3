@@ -3,11 +3,11 @@ import useBasisCash from './useBasisCash';
 import { BigNumber } from 'ethers';
 
 const useCashTargetPrice = () => {
-  const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
+  const [price, setPrice] = useState<BigNumber>(BigNumber.from(1));
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-     setPrice(await basisCash.getTargetPrice());
+    //  setPrice(await basisCash.getTargetPrice());
   }, [basisCash]);
 
   useEffect(() => {

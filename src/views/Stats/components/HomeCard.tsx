@@ -5,6 +5,7 @@ import { TokenStat } from '../../../basis-cash/types';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
+// import Card from '../../../components/InfoCard';
 import Spacer from '../../../components/Spacer';
 
 interface HomeCardProps {
@@ -27,7 +28,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>
-      <StyledCards>
+      <Card>
         <CardHeader>
           <TokenSymbol size={60} symbol={symbol} />
           <span className="margin-left-20">{title}</span>
@@ -35,7 +36,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
 
         <CardContent>
           <CardSection>
-            <div style={{ color: '#ffffff99' }}>{`${title} Earned`}</div>
+            <div
+              style={{ color: 'rgba(255, 255, 255, 0.64)' }}
+              className="font15"
+            >Price</div>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
@@ -59,7 +63,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
         >
           <LinkText>Buy {symbol} from Uniswap </LinkText>
         </UniswapLink>
-      </StyledCards>
+      </Card>
     </Wrapper>
   );
 };
@@ -67,7 +71,15 @@ const HomeCard: React.FC<HomeCardProps> = ({
 const Wrapper = styled.div`
   min-width: 200px;
   width: 100%;
-
+  border-radius: 12px;
+  height: 100%;
+  width: 100%;
+  border: 1px solid;
+  border-image-source: linear-gradient(
+    180deg,
+    rgba(255, 116, 38, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   @media (max-width: 768px) {
     margin-top: ${(props) => props.theme.spacing[4]}px;
   }
@@ -110,10 +122,6 @@ const CardHeader = styled.h2`
 const StyledCards = styled.div`
   padding: 5px 0;
   color: #fff;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  backdrop-filter: blur(70px);
-
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -122,7 +130,8 @@ const StyledCards = styled.div`
 const StyledValue = styled.span`
   display: inline-block;
   font-size: 18px;
-  color: #eeeeee;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.88);
 `;
 
 const CardSection = styled.div`
@@ -139,7 +148,22 @@ const CardSection = styled.div`
 
 const StyledSupplyLabel = styled.a`
   display: block;
-  color: ${(props) => props.color};
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 15px;
+`;
+const Card = styled.div`
+  padding: 5px 0;
+  color: #eee;
+  border-radius: 12px;
+  // backdrop-filter: blur(70px);
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
+  position: relative; /*  */
+  box-sizing: border-box;
+  background: #1a1919;
+  background-clip: padding-box;
+  border: solid 1px transparent;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
 `;
 
 export default HomeCard;

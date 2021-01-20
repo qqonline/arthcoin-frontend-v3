@@ -12,8 +12,7 @@ import StastIcon from './stats.png';
 
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
-import Humanize from 'humanize-plus';
-import { getBalance, getDisplayBalance } from '../../utils/formatBalance';
+import { getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import useFundAmount from '../../hooks/useFundAmount';
 
@@ -24,7 +23,6 @@ import ProgressCountdown from './components/ProgressCountdown';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
-import { BigNumber } from 'ethers';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 
 const Home: React.FC = () => {
@@ -96,7 +94,7 @@ const Home: React.FC = () => {
     <Page>
       <PageHeader
         icon={<img alt="stats" src={StastIcon} width="200px" />}
-        subtitle="View information about the current ARTH market"
+        subtitle="View information about the current ARTH protocol"
         title="Statistics"
         secondParaTitle="Next Epoch:"
         secondParaDescription="Protocol will launch on Jan 21st at 3pm GMT"
@@ -106,8 +104,9 @@ const Home: React.FC = () => {
         <CardWrapper>
           <HomeCard
             title="MAHA"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.MAHA.address}
             symbol="MAHA"
+            supplyLabel="Circulating Supply"
             address={shareAddr}
             stat={share}
           />
@@ -115,7 +114,7 @@ const Home: React.FC = () => {
           <HomeCard
             title="ARTH"
             symbol="ARTH"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.ARTH.address}
             supplyLabel="Circulating Supply"
             address={cashAddr}
             stat={cash}
@@ -124,7 +123,7 @@ const Home: React.FC = () => {
           <HomeCard
             title="ARTH Bond"
             symbol="ARTHB"
-            uniswapInputAddress={basisCash.DAI.address}
+            uniswapInputAddress={basisCash.ARTHB.address}
             address={bondAddr}
             stat={bond}
           />
