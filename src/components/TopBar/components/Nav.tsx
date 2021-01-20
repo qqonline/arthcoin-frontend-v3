@@ -1,24 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      <StyledLink exact activeClassName="active" to="/">
+      {/* <StyledLink exact activeClassName="active" to="/">
         Home
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/supply">
         Supply
+      </StyledLink> */}
+      <StyledLink exact activeClassName="active" to="/stats">
+        Stats
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/staking">
         Staking
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/bonds">
         Bonds
-      </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stats">
-        Stats
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/distribution">
         Distribution
@@ -41,7 +40,7 @@ const StyledLink = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   padding-left: ${(props) => props.theme.spacing[3]}px;
   padding-right: ${(props) => props.theme.spacing[3]}px;

@@ -51,7 +51,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
 
   return (
     <Modal open title="Redeem your ARTH Bonds">
-      <p className="font20 bold-600 row-centered" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
+      <p className="font16 bold-600 row-centered" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
         {description}
       </p>
       <TokenInput

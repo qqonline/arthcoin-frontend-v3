@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { TransitionProps } from '@material-ui/core/transitions';
 interface TxButtonProps {
   notificationCount?: number;
   open?: boolean;
@@ -30,50 +32,54 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
 }) => {
   const classes = useStyles();
   const [openSnackbar, setOpen] = React.useState(open);
-  
+
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
     if (handleCancel) {
       handleCancel();
     }
   };
-
+  function SlideTransition(props: TransitionProps) {
+    return <Slide {...props} direction="left" />;
+  }
   return (
     <div className={classes.root}>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <SnackBarParent>
-          <SnackBarInnerContainer>
-            {notificationCount && <NotificationCount>{notificationCount}</NotificationCount>}
-            Transcation
-            <CloseIcon className="pointer" onClick={handleClose} />
-          </SnackBarInnerContainer>
-          {isScucess ? (
-            <SnackBarRedeem>
-              <NotificationsNoneIcon className="margin-left-right-20" />
-              <div className="dialog-class display-flex-column">
-                <span className="margin-bottom-10">{title}</span>
-                <span>{subtitle}</span>
-              </div>
-            </SnackBarRedeem>
-          ) : (
-            <SnackBarRedeemCancelled>
-              <NotificationsNoneIcon className="margin-left-right-20" />
-              <div className="dialog-class display-flex-column">
-                <span>{subtitle}</span>
-              </div>
-            </SnackBarRedeemCancelled>
-          )}
-        </SnackBarParent>
-      </Snackbar>
+      {openSnackbar && (
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={3000}
+          TransitionComponent={SlideTransition}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <SnackBarParent>
+            <SnackBarInnerContainer>
+              {notificationCount && <NotificationCount>{notificationCount}</NotificationCount>}
+              Transcation
+              <CloseIcon className="pointer" onClick={handleClose} />
+            </SnackBarInnerContainer>
+            {isScucess ? (
+              <SnackBarRedeem>
+                <NotificationsNoneIcon className="margin-left-right-20" />
+                <div className="dialog-class display-flex-column">
+                  <span className="margin-bottom-10">{title}</span>
+                  <span>{subtitle}</span>
+                </div>
+              </SnackBarRedeem>
+            ) : (
+              <SnackBarRedeemCancelled>
+                <NotificationsNoneIcon className="margin-left-right-20" />
+                <div className="dialog-class display-flex-column">
+                  <span>{subtitle}</span>
+                </div>
+              </SnackBarRedeemCancelled>
+            )}
+          </SnackBarParent>
+        </Snackbar>
+      )}
     </div>
   );
 };

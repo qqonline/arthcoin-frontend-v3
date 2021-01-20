@@ -100,7 +100,7 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   white-space: nowrap;
-  background: linear-gradient(38.44deg, #f47f57 15.81%, #fd5656 87.57%);
+  background: linear-gradient(38.44deg, #F47F57 15.81%, #FD5656 87.57%);
   border: 0;
   border-radius: 6px;
   box-shadow: ${(props) => props.boxShadow};
@@ -116,10 +116,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
   &:hover {
-    background: #ff7f57;
+    background: #FF7F57;
   }
   &:selected {
-    background: linear-gradient(180deg, #f47f57 -11.33%, #fd5656 100%);
+    background: linear-gradient(180deg, #F47F57 -11.33%, #FD5656 100%);
   }
   &:disabled {
     background: rgba(255,255,255,0.32);

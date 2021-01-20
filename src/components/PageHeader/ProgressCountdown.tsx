@@ -44,9 +44,9 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
           </StyledProgressOuter>
         </StyledCardContentInner>
         {showAdvanceButton && (
-          <div style={{ maxWidth: '200px', margin: '0px 20px' }}>
+          <ButtonContainer style={{}}>
             <Button text="Advance Epoch" />
-          </div>
+          </ButtonContainer>
         )}
       </ParentContainer>
     </Card>
@@ -59,7 +59,13 @@ const StyledCountdown = styled.p`
   color: ${(props) => props.theme.color.grey[100]};
   margin: 0 0 6px 0;
 `;
-
+const ButtonContainer = styled.div`
+  max-width: '200px';
+  margin: '0px 20px';
+  @media (max-width: 768px) {
+    width: 100%;
+  } ;
+`;
 const StyledProgressOuter = styled.div`
   width: 100%;
   height: 16px;
@@ -92,9 +98,15 @@ const ParentContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  background: linear-gradient(180deg,#1f1a1a 0%,#251c1d 100%);
+  padding: 0px 20px;
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
   backdrop-filter: blur(21px);
   border-radius: 12px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 20px;
+    width: auto;
+  } ;
 `;
 const StyledCardContentInner = styled.div`
   height: 100%;

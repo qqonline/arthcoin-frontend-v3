@@ -40,7 +40,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName =
       <Modal title={`Deposit ${tokenName}`} open={openModal} handleClose={handleClose}>
         <TokenInput
           value={val}
-          label="How much ARTH would you like to deposite?"
+          label="How much ARTH would you like to deposit?"
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}

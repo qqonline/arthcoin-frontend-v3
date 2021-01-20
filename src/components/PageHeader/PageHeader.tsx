@@ -69,13 +69,18 @@ const PageHeader: React.FC<PageHeaderProps> = ({
               </Grid>
             )}
           </StyledTextContainer>
-          {icon}
+          <ALignRightOnMobile>{icon}</ALignRightOnMobile>
         </StyledPageContent>
       </Container>
     </StyledPageHeader>
   );
 };
-
+const ALignRightOnMobile = styled.div`
+  align-self: center;
+  @media (max-width: 768px) {
+    align-self: flex-end;
+  } ;
+`;
 const StyledPageContent = styled.div`
   display: flex;
   flex-direction: row;
@@ -84,12 +89,19 @@ const StyledPageContent = styled.div`
   margin: 0 auto;
   min-height: 150px;
   padding: 0 15px;
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    padding: 0px;
+  } ;
 `;
 
 const StyledTextContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  @media (max-width: 768px) {
+    margin-top: -100px;
+  } ;
 `;
 
 const StyledPageHeader = styled.div`
@@ -102,6 +114,11 @@ const StyledPageHeader = styled.div`
   padding-top: ${(props) => props.theme.spacing[6]}px;
   padding-left: 15px;
   padding-right: 15px;
+  @media (max-width: 768px) {
+    width: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+  } ;
 `;
 
 const SecondParaTitle = styled.h3`
@@ -124,7 +141,7 @@ const StyledSubtitle = styled.h3`
 `;
 const SecondParaDescription = styled.h3`
   color: ${(props) => props.theme.color.grey[400]};
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
   max-width: 500px;
   margin: 0;

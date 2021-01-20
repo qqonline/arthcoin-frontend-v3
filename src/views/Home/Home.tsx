@@ -9,6 +9,7 @@ import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
 import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
+import TranscationSnackbar from '../../components/TopBar/components/TranscationSnackbar';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -46,6 +47,13 @@ const Home: React.FC = () => {
         title="Welcome to ARTH!"
       />
       <Spacer size="md" />
+      <TranscationSnackbar
+        notificationCount={1}
+        open
+        title="Redeeming 4 ARTH"
+        subtitle="Stability Fee = 4%"
+        isScucess
+      />
       <Modal
         title="Disclaimer"
         open

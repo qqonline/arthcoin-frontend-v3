@@ -47,25 +47,28 @@ const AccountModal: React.FC<props> = () => {
       <Balances>
         <StyledBalanceWrapper>
           <TokenSymbol symbol="MAHA" />
+          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="MAHA Earned" color="rgba(255, 255, 255, 0.64)" />
+            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
           <TokenSymbol symbol="ARTH" />
+          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="ARTH Earned" color="rgba(255, 255, 255, 0.64)" />
+            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
           <TokenSymbol symbol="ARTHB" />
+          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
+            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>
@@ -82,23 +85,24 @@ const StyledValue = styled.div`
 `;
 
 const StyledBalance = styled.div`
-  align-items: center;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
 `;
 
 const Balances = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: ${(props) => props.theme.spacing[4]}px;
 `;
 
 const StyledBalanceWrapper = styled.div`
   align-items: center;
+  justify-content: space-between;
   display: flex;
-  flex-direction: column;
-  margin: 0 ${(props) => props.theme.spacing[3]}px;
+  flex-direction: row;
+  margin: 10px ${(props) => props.theme.spacing[3]}px;
 `;
 
 export default AccountModal;
