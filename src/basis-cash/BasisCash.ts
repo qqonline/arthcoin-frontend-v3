@@ -357,6 +357,7 @@ export class BasisCash {
 
   boardroomByVersion(kind: Boardrooms, version: string): Contract {
     if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroom;
+    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroom;
     return this.contracts.ArthBoardroom;
   }
 

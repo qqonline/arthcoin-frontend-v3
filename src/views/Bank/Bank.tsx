@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import Container from '../../components/Container';
 import Button from '../../components/Button/TransperantButton';
 import PageHeader from '../../components/PageHeader';
-import Spacer from '../../components/Spacer';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';

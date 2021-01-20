@@ -314,5 +314,5 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-// export default configurations[process.env.NODE_ENV || "development"];
-export default configurations["production"];
+export default configurations[process.env.NODE_ENV || "development"];
+// export default configurations["production"];
