@@ -56,8 +56,8 @@ const configurations: { [env: string]: Configuration } = {
       'MATIC': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
       'RSR': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
 
-      'MAHA_ETH-UNI-LPv2': ['0xb08d2aF7a27859931CD46f6CC28715f821891e35', 18],
-      'ARTH_DAI-UNI-LPv2': ['0x49Ea03C06213595B2b7f82daDf44a510dCFB59cA', 18]
+      'MAHA_ETH-UNI-LPv2': ['0x7fd3038ea7ff780503d3e941d7963b89893cbe7d', 18],
+      'ARTH_DAI-UNI-LPv2': ['0x7fd3038ea7ff780503d3e941d7963b89893cbe7d', 18]
     },
     uniswapRouter: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
 

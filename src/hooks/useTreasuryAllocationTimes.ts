@@ -11,9 +11,9 @@ const useTreasuryAllocationTimes = () => {
   const basisCash = useBasisCash();
 
   useEffect(() => {
-    // if (basisCash) {
-    //   basisCash.getTreasuryNextAllocationTime().then(setTime);
-    // }
+    if (basisCash) {
+      basisCash.getTreasuryNextAllocationTime().then(setTime);
+    }
   }, [basisCash]);
   return time;
 };

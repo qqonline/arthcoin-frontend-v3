@@ -47,7 +47,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     minWidth: 400,
   },
   dividers: {

@@ -107,7 +107,7 @@ export class BasisCash {
     const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
     if (kind === 'arth') return {
       kind: 'arth',
-      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
+      contract: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 20,
@@ -116,19 +116,19 @@ export class BasisCash {
     }
 
     if (kind === 'mahaLiquidity')
-    return {
-      kind: 'mahaLiquidity',
-      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
-      depositTokenName: 'MAHA_ETH-UNI-LPv2',
-      earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 10,
-      history7dayAPY: 30,
-      lockInPeriodDays: 1,
-    }
+      return {
+        kind: 'mahaLiquidity',
+        contract: contract.address,
+        depositTokenName: 'MAHA_ETH-UNI-LPv2',
+        earnTokenName: 'ARTH',
+        seionrageSupplyPercentage: 10,
+        history7dayAPY: 30,
+        lockInPeriodDays: 1,
+      }
 
     return {
       kind: 'arthLiquidity',
-      contract: '0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8',
+      contract: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 70,
@@ -396,7 +396,7 @@ export class BasisCash {
     return await ArthBoardroom.withdraw(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: Boardrooms) : Promise<TransactionResponse> {
+  async harvestCashFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
       return await ArthBoardroom.claimDividends();

@@ -7,11 +7,11 @@ const useCashTargetPrice = () => {
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-    //  setPrice(await basisCash.getTargetPrice());
+    setPrice(await basisCash.getTargetPrice());
   }, [basisCash]);
 
   useEffect(() => {
-    // fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;

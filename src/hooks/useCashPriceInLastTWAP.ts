@@ -12,9 +12,9 @@ const useCashPriceInLastTWAP = () => {
   }, [basisCash]);
 
   useEffect(() => {
-    // fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTH price: ${err.stack}`));
-    // const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
-    // return () => clearInterval(refreshInterval);
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTH price: ${err.stack}`));
+    const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
+    return () => clearInterval(refreshInterval);
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;

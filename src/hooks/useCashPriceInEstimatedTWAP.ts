@@ -8,13 +8,13 @@ const useCashPriceInEstimatedTWAP = () => {
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-    setStat(await basisCash.getCashStatInEstimatedTWAP());
+    g    setStat(await basisCash.getCashStatInEstimatedTWAP());
   }, [basisCash]);
 
   useEffect(() => {
-    // fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-    // const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
-    // return () => clearInterval(refreshInterval);
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
+    const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
+    return () => clearInterval(refreshInterval);
   }, [setStat, basisCash, fetchCashPrice]);
 
   return stat;

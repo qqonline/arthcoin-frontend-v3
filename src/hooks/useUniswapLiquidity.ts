@@ -24,7 +24,7 @@ const useUniswapLiquidity = (assetA: ERC20, assetB: ERC20) => {
   }, [assetAT, assetBT, basisCash.provider]);
 
   useEffect(() => {
-    // fetchCashPrice().catch((err) => console.error(`Failed to fetch uniswap liquidity: ${err.stack}`));
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch uniswap liquidity: ${err.stack}`));
   }, [setPrice, basisCash, fetchCashPrice]);
 
   return price;
