@@ -52,7 +52,7 @@ const Bond: React.FC = () => {
     [basisCash, addTransaction],
   );
 
-  const isBondRedeemable = true // useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
+  const isBondRedeemable = useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
   const isBondPurchasable = useMemo(() => {
     // const denominator1e18 = BigNumber.from(10).pow(18);
 
@@ -60,10 +60,9 @@ const Bond: React.FC = () => {
     //   .mul(denominator1e18)
     //   .div(1000);
     return cashPrice.lt(targetPrice);
-  }, [bondStat, cashPrice, targetPrice]);
+  }, [cashPrice, targetPrice]);
 
-  const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
-
+  // const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
   // if (!isLaunched) {
   //   return (
   //     <Switch>
@@ -100,13 +99,13 @@ const Bond: React.FC = () => {
                   <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
                   <Chart />
                 </ChartContainer> */}
-                <LaunchContainer>
+                {/* <LaunchContainer>
                   <LaunchCountdown
                     deadline={config.bondLaunchesAt}
                     description="How does ARTH Bond work?"
                     descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
                   />
-                </LaunchContainer>
+                </LaunchContainer> */}
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard
@@ -118,10 +117,9 @@ const Bond: React.FC = () => {
                       addOnTokeName="ARTH"
                       addOnToken="ARTH"
                       priceDesc={
-                        ''
-                        // !isBondPurchasable
-                        //   ? "ARTH is over its target price"
-                        //   : `ARTH is below its target price. You can purchase bonds now.`
+                        !isBondPurchasable
+                          ? 'ARTH is over its target price'
+                          : `ARTH is below its target price. You can purchase bonds now.`
                       }
                       onExchange={handleBuyBonds}
                       disabled={!isBondPurchasable}
@@ -200,7 +198,6 @@ const StyledCardWrapper = styled.div`
     width: 80%;
   }
 `;
-
 
 const LaunchContainer = styled.div`
   display: flex;

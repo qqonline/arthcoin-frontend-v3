@@ -205,8 +205,7 @@ export class BasisCash {
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    // return Treasury.getBondOraclePrice();
-    return BigNumber.from(0)
+    return Treasury.getBondOraclePrice();
   }
 
   async getBondStat(): Promise<TokenStat> {
@@ -251,7 +250,7 @@ export class BasisCash {
     await this.provider.ready;
 
     try {
-      const result = await fetch (`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
+      const result = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
       const json = await result.json()
       return (json[tokenContract.address.toLowerCase()].usd).toFixed(3)
     } catch (err) {
