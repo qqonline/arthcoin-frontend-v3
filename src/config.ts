@@ -123,8 +123,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'BAS',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
-
+    finished: true,
     poolDurationInDays: 5,
     poolSize: 84460,
 
@@ -136,7 +135,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MKR',
     earnTokenName: 'ARTH',
     poolRewards: 12500,
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -148,7 +147,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'SHARE',
     earnTokenName: 'ARTH',
     poolRewards: 12500,
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -160,7 +159,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     depositTokenName: 'COMP',
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -172,8 +171,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     depositTokenName: 'ESD',
     earnTokenName: 'ARTH',
-    finished: false,
-    sort: 3,
+    finished: true, sort: 3,
 
     poolDurationInDays: 5,
     poolSize: 19230770,
@@ -184,7 +182,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
     poolRewards: 150000,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
+
     sort: 1,
 
     poolDurationInDays: 5,
@@ -196,7 +195,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'SUSHI',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -208,7 +207,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     depositTokenName: 'CURVE',
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -220,7 +219,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'FXS',
     earnTokenName: 'ARTH',
     poolRewards: 12500,
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -232,7 +231,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MAHA',
     earnTokenName: 'ARTH',
     poolRewards: 150000,
-    finished: false,
+    finished: true,
     sort: 2,
 
     poolDurationInDays: 5,
@@ -244,7 +243,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'YFI',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -256,7 +255,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'DSD',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -268,7 +267,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'MATIC',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,
@@ -280,7 +279,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'RSR',
     poolRewards: 12500,
     earnTokenName: 'ARTH',
-    finished: false,
+    finished: true,
     sort: 3,
 
     poolDurationInDays: 5,

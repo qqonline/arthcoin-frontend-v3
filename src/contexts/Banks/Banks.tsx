@@ -16,17 +16,16 @@ const Banks: React.FC = ({ children }) => {
       if (bankInfo.finished) {
         if (!basisCash.isUnlocked) continue;
 
-        // only show pools staked by user
-        const balance = await basisCash.stakedBalanceOnBank(
-          bankInfo.contract,
-          basisCash.myAccount,
-        );
-        if (balance.lte(0)) {
-          continue;
-        }
+        // // only show pools staked by user
+        // const balance = await basisCash.stakedBalanceOnBank(
+        //   bankInfo.contract,
+        //   basisCash.myAccount,
+        // );
+        // if (balance.lte(0)) {
+        //   continue;
+        // }
       }
 
-      console.log(bankInfo.contract)
       banks.push({
         ...bankInfo,
         address: config.deployments[bankInfo.contract].address,

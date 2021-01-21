@@ -20,7 +20,7 @@ const BankCards: React.FC = () => {
   const activeBanks = banks.filter((bank) => !bank.finished);
   const inactiveBanks = banks.filter((bank) => bank.finished);
 
-  let finishedFirstRow = false;
+  let finishedFirstRow = true;
   const inactiveRows = inactiveBanks.reduce<Bank[][]>(
     (bankRows, bank) => {
       const newBankRows = [...bankRows];
@@ -40,14 +40,24 @@ const BankCards: React.FC = () => {
   return (
     <StyledCards>
       <VFATAnn>
-        <span role="img" aria-label="farming">🌾</span> Unofficial farming dashboard at{' '}
-        <a href="https://vfat.tools/arth" style={{ color: '#FFf' }} rel="noopener noreferrer" target="_blank">
+        <span role="img" aria-label="farming">
+          🌾
+        </span>{' '}
+        Unofficial farming dashboard at{' '}
+        <a
+          href="https://vfat.tools/arth"
+          style={{ color: '#FFf' }}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           vfat.tools/arth
         </a>{' '}
-        <span role="img" aria-label="farming">🌾</span>
+        <span role="img" aria-label="farming">
+          🌾
+        </span>
       </VFATAnn>
 
-      {inactiveRows[0].length > 0 && (
+      {/* {inactiveRows[0].length > 0 && (
         <StyledInactiveNoticeContainer>
           <Notice color="grey">
             <b>You have banks where the mining has finished.</b>
@@ -55,7 +65,8 @@ const BankCards: React.FC = () => {
             Please withdraw and settle your stakes.
           </Notice>
         </StyledInactiveNoticeContainer>
-      )}
+      )} */}
+
       <StyledRow>
         {activeBanks.map((bank, i) => (
           <React.Fragment key={bank.name}>
@@ -64,21 +75,17 @@ const BankCards: React.FC = () => {
           </React.Fragment>
         ))}
       </StyledRow>
-      {inactiveRows[0].length > 0 && (
-        <>
-          <StyledInactiveBankTitle>Inactive Banks</StyledInactiveBankTitle>
-          {inactiveRows.map((bankRow, i) => (
-            <StyledRow key={i}>
-              {bankRow.map((bank, j) => (
-                <React.Fragment key={j}>
-                  <BankCard bank={bank} />
-                  {j < bankRow.length - 1 && <StyledSpacer />}
-                </React.Fragment>
-              ))}
-            </StyledRow>
-          ))}
-        </>
-      )}
+
+      <StyledInactiveBankTitle>Closed Pools</StyledInactiveBankTitle>
+
+      <StyledRow>
+        {inactiveBanks.map((bank, j) => (
+          <React.Fragment key={j}>
+            <BankCard bank={bank} />
+            {j < inactiveBanks.length - 1 && <StyledSpacer />}
+          </React.Fragment>
+        ))}
+      </StyledRow>
     </StyledCards>
   );
 };
@@ -100,56 +107,44 @@ const BankCard: React.FC<BankCardProps> = ({ bank }) => {
           <StyledContent>
             <StyledTitle>{bank.name}</StyledTitle>
             <br />
-            <StyledDesc>
-              Reward Amount: {bank.poolRewards} {bank.earnTokenName}
-            </StyledDesc>
-            <StyledDesc>Pool Duration: {bank.poolDurationInDays} days</StyledDesc>
-            <StyledDesc>
-              Pool size:{' '}
-              {bank.poolSize === Infinity
-                ? 'No Limit'
-                : `${bank.poolSize} ${bank.depositTokenName}`}
-            </StyledDesc>
-            {/* <StyledDesc>Current APY: 20%</StyledDesc>
-            <StyledDesc>% of Pool Available: Unlimited</StyledDesc> */}
-            <br />
-            <CardIcon>
-              <TokenSymbol symbol={bank.depositTokenName} size={54} />
-            </CardIcon>
-            {apy && (
+            {bank.finished ? (
               <>
-                <ApyTitle>APYs</ApyTitle>
-                <ApyBlocks>
-                  <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
-                  <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
-                  <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy>
-                </ApyBlocks>
-                <ApyNote>Please note that APYs update every hour</ApyNote>
+                <StyledDesc>Pool is now closed. Please Withdraw your funds</StyledDesc>
+                <br />
+                <CardIcon>
+                  <TokenSymbol symbol={bank.depositTokenName} size={54} />
+                </CardIcon>
+              </>
+            ) : (
+              <>
+                <StyledDesc>
+                  Reward Amount: {bank.poolRewards} {bank.earnTokenName}
+                </StyledDesc>
+                <StyledDesc>Pool Duration: {bank.poolDurationInDays} days</StyledDesc>
+                <StyledDesc>
+                  Pool size:{' '}
+                  {bank.poolSize === Infinity
+                    ? 'No Limit'
+                    : `${bank.poolSize} ${bank.depositTokenName}`}
+                </StyledDesc>
+                <br />
+                <CardIcon>
+                  <TokenSymbol symbol={bank.depositTokenName} size={54} />
+                </CardIcon>
+                {apy && (
+                  <>
+                    <ApyTitle>APYs</ApyTitle>
+                    <ApyBlocks>
+                      <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
+                      <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
+                      <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy>
+                    </ApyBlocks>
+                    <ApyNote>Please note that APYs update every hour</ApyNote>
+                  </>
+                )}
               </>
             )}
-            {/* <StyledInfoSlots>
-              <StyledInfoSlot>
-                <SlotTitle>4%</SlotTitle>
-                <SlotDescription>Seigniorage Supply</SlotDescription>
-              </StyledInfoSlot>
 
-              <StyledInfoSlot>
-                <SlotTitle>4%</SlotTitle>
-                <SlotDescription>Staked</SlotDescription>
-              </StyledInfoSlot>
-
-              <StyledInfoSlot>
-                <SlotTitle>40%</SlotTitle>
-                <SlotDescription>APY</SlotDescription>
-              </StyledInfoSlot>
-
-              <StyledInfoSlot>
-                <SlotTitle>3 day</SlotTitle>
-                <SlotDescription>lock-in period</SlotDescription>
-              </StyledInfoSlot>
-            </StyledInfoSlots> */}
-
-            {/* <StyledDesc>Pool opens at 3pm GMT</StyledDesc> */}
             <br />
 
             {!!account ? (
