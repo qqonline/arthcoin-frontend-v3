@@ -110,7 +110,6 @@ const Home: React.FC = () => {
             address={shareAddr}
             stat={share}
           />
-          <Spacer size="lg" />
           <HomeCard
             title="ARTH"
             symbol="ARTH"
@@ -119,7 +118,6 @@ const Home: React.FC = () => {
             address={cashAddr}
             stat={cash}
           />
-          <Spacer size="lg" />
           <HomeCard
             title="ARTH Bond"
             symbol="ARTHB"
@@ -128,9 +126,6 @@ const Home: React.FC = () => {
             stat={bond}
           />
         </CardWrapper>
-
-        <Spacer size="md" />
-
         <StyledHeader>
           <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
           <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
@@ -195,6 +190,7 @@ const StyledHeader = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     width: 100%;
+    margin-bottom: 0px;
   }
 `;
 

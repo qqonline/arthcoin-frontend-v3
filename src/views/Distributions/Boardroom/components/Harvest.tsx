@@ -35,13 +35,13 @@ const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 };
 const StyledValue = styled.div`
   color: rgba(255, 255, 255, 0.88);
-  font-size: 36px;
+  font-size: 24px;
   margin-left: 20px;
-  font-weight: 700;
+  font-weight: bold;
 `;
 const StyleLabel = styled.div`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 10px;
   align-self: start;
   line-height: 24px;

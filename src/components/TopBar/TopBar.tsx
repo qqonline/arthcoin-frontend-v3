@@ -4,14 +4,16 @@ import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MenuIcon from '@material-ui/icons/Menu';
 import InputBase from '@material-ui/core/InputBase';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Container from '../Container';
 import Logo from '../Logo';
-
+import { useWallet } from 'use-wallet';
 import AccountButton from './components/AccountButton';
 import Nav from './components/Nav';
+import MobileNav from './components/MobileNav';
 import TxButton from './components/TxButton';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +22,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
       color: 'white',
       border: '1px solid white',
       fontSize: 14,
-      padding: '0px 5px',
+      padding: '0px 15px',
       marginRight: '20px',
       'label + &': {
         marginTop: theme.spacing(3),
@@ -29,6 +31,8 @@ const BootstrapInput = withStyles((theme: Theme) =>
     input: {
       position: 'relative',
       backgroundColor: 'transparent',
+      display: 'flex',
+      alignItems: 'center',
       padding: '10px 26px 10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
       '&:focus': {
@@ -38,8 +42,10 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 const TopBar: React.FC = () => {
-  const [networkType, setNetworkType] = React.useState('mainnet');
+  const { account } = useWallet();
+  const [netWrokType, setNetworkType] = React.useState('mainnet');
   const [showWarning, toggleWarning] = useState(false);
+  const [showMobileMenu, toggleMobileMenu] = useState(false);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
@@ -49,63 +55,127 @@ const TopBar: React.FC = () => {
       <StyledTopBar>
         <Container size="lg">
           <StyledTopBarInner>
-            <div style={{ flex: 1 }}>
+            <div className="dialog-class">
               <Logo />
+              <HideonPhone>
+                <Nav />
+              </HideonPhone>
             </div>
-            <Nav />
-            <div
-              style={{
-                flex: 1,
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <TxButton />
-              {/* <Select
-                labelId="demo-customized-select-label"
-                id="demo-customized-select"
-                value={netWrokType}
-                onChange={handleChange}
-                input={<BootstrapInput />}
-                IconComponent={() => <ExpandMoreIcon className="white" />}
+            <HideonPhone>
+              <div
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }}
               >
-                <MenuItem value="mainnet">Mainnet</MenuItem>
-                <MenuItem value="testnet">Testnet</MenuItem>
-              </Select> */}
-              <AccountButton />
-            </div>
+                <TxButton />
+                <Select
+                  labelId="demo-customized-select-label"
+                  id="demo-customized-select"
+                  value={netWrokType}
+                  label="Mainnet"
+                  onChange={handleChange}
+                  input={<BootstrapInput />}
+                  IconComponent={() => <ExpandMoreIcon className="white" />}
+                >
+                  <MenuItem value="mainnet">
+                    <ColorIcon colorCode="#11af60" />
+                    Mainnet
+                  </MenuItem>
+                  <MenuItem value="ropsten">
+                    <ColorIcon colorCode="#FA4C69" />
+                    Ropsten
+                  </MenuItem>
+                  <MenuItem value="kovan">
+                    <ColorIcon colorCode="#7A3CF6" />
+                    Kovan
+                  </MenuItem>
+                  <MenuItem value="rinkeby">
+                    <ColorIcon colorCode="#FCB400" />
+                    Rinkeby
+                  </MenuItem>
+                  <MenuItem value="goerli">
+                    <ColorIcon colorCode="#BD9CFF" />
+                    Goerli
+                  </MenuItem>
+                </Select>
+                <AccountButton />
+              </div>
+            </HideonPhone>
+            <HideOnBigScreen>
+              <div className="dialog-class">
+                {!!account && (
+                  <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
+                    <TxButton />
+                  </div>
+                )}
+                {!showMobileMenu ? (
+                  <MenuIcon
+                    style={{ color: 'white' }}
+                    className="pointer"
+                    onClick={() => toggleMobileMenu(true)}
+                  />
+                ) : (
+                  <CloseIcon
+                    style={{ color: 'white' }}
+                    className="pointer"
+                    onClick={() => toggleMobileMenu(false)}
+                  />
+                )}
+              </div>
+            </HideOnBigScreen>
+            {showMobileMenu && <MobileNav />}
           </StyledTopBarInner>
         </Container>
       </StyledTopBar>
       {showWarning && (
         <ShowWarning>
-          <InfoOutlinedIcon className="margin-right-5" />
-          Please make sure that you are connected to matic mumbai TESTnet.
-          <CloseIcon
-            style={{ position: 'absolute', right: '50px' }}
-            className="pointer"
-            onClick={() => toggleWarning(false)}
-          />
+          <ShowWarningInner>
+            <InfoOutlinedIcon className="margin-right-5" />
+            Please make sure that you are connected to matic mumbai TESTnet.
+            <CloseIcon className="pointer" onClick={() => toggleWarning(false)} />
+          </ShowWarningInner>
         </ShowWarning>
       )}
     </>
   );
 };
-
+const HideonPhone = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 768px) {
+    display: none;
+  } ;
+`;
+const HideOnBigScreen = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  } ;
+`;
 const StyledTopBar = styled.div``;
-const ShowWarning = styled.div`
-  background: #ba1e38;
+const ShowWarningInner = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
+  margin: 0px 20px;
   color: rgba(255, 255, 255, 0.88);
-  text-align: center;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+`;
+const ShowWarning = styled.div`
+  background: #ba1e38;
   padding: 10px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  position: relative;
 `;
 const StyledTopBarInner = styled.div`
   align-items: center;
@@ -115,6 +185,14 @@ const StyledTopBarInner = styled.div`
   max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
-
+const ColorIcon = styled.div`
+  background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
+  width: 10px;
+  border-radius: 50%;
+  height: 10px;
+  margin-right: 5px;
+  margin-left: -10px;
+`;
 export default TopBar;

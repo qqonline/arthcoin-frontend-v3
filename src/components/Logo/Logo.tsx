@@ -21,6 +21,7 @@ const StyledLink = styled.a`
   color: ${(props) => props.theme.color.grey[100]};
   text-decoration: none;
   font-size: 20px;
+  margin-right: 30px;
   font-weight: 700;
   margin-left: 15px;
 `;

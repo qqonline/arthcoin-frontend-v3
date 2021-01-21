@@ -8,7 +8,7 @@ import useModal from '../../../hooks/useModal';
 import Button from '../../Button/TransperantButton';
 import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
-
+import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 interface AccountButtonProps {}
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
@@ -29,7 +29,9 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
           onClick={onPresentAccountModal}
           size="sm"
           text="Connected"
-        />
+        >
+          <AccountBalanceWalletOutlinedIcon className="margin-right-10 font20"/>
+        </ButtonColored>
       )}
     </StyledAccountButton>
   )

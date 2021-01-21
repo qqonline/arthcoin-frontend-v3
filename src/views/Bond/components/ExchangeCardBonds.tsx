@@ -107,27 +107,32 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            {!!account ? (
-              approveStatus !== ApprovalState.APPROVED && !disabled ? (
-                <Button
-                  disabled={
-                    approveStatus === ApprovalState.PENDING ||
-                    approveStatus === ApprovalState.UNKNOWN
-                  }
-                  onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                  text="Redeem"
-                />
-              ) : (
-                <Button
-                  text={disabledDescription || action}
-                  onClick={onPresent}
-                  disabled={disabled}
-                />
-              )
-            ) : (
-              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )}
+            <Button onClick={onPresent} text="Redeem" />
           </StyledCardActions>
+          {false && (
+            <StyledCardActions>
+              {!!account ? (
+                approveStatus !== ApprovalState.APPROVED && !disabled ? (
+                  <Button
+                    disabled={
+                      approveStatus === ApprovalState.PENDING ||
+                      approveStatus === ApprovalState.UNKNOWN
+                    }
+                    onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
+                    text="Redeem"
+                  />
+                ) : (
+                  <Button
+                    text={disabledDescription || action}
+                    onClick={onPresent}
+                    disabled={disabled}
+                  />
+                )
+              ) : (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              )}
+            </StyledCardActions>
+          )}
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -138,9 +143,9 @@ const StyledCardTitle = styled.div`
   align-items: center;
   color: ${(props) => props.theme.color.grey[300]};
   display: flex;
-  font-size: 20px;
+  font-size: 18px;
   padding-top: 20px;
-  font-weight: 700;
+  font-weight: 600;
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;

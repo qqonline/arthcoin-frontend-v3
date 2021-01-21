@@ -116,7 +116,7 @@ const StyledInfoSlot = styled.div`
 const SlotTitle = styled.div`
   color: #fff;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
 `;
 const PercentageTilte = styled.span`
   text-align: center;

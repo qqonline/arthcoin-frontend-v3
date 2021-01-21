@@ -71,17 +71,20 @@ const HomeCard: React.FC<HomeCardProps> = ({
 const Wrapper = styled.div`
   min-width: 200px;
   width: 100%;
+  margin: 0px 8px;
   border-radius: 12px;
   height: 100%;
   width: 100%;
   border: 1px solid;
+  margin-bottom: ${(props) => props.theme.spacing[5]}px;
   border-image-source: linear-gradient(
     180deg,
     rgba(255, 116, 38, 0.1) 0%,
     rgba(255, 255, 255, 0) 100%
   );
   @media (max-width: 768px) {
-    margin-top: ${(props) => props.theme.spacing[4]}px;
+    margin-top: 0px;
+    margin-bottom: 15px;
   }
 `;
 

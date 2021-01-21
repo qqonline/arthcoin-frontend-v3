@@ -42,7 +42,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
             ))}
         </LogoContainer>
       )}
-      <span className="white font26 bold-800 margin-bottom-15 row-centered">{title}</span>
+      <span className="white font24 bold-800 margin-bottom-15 row-centered">{title}</span>
       {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
       {description && (
         <span
@@ -55,13 +55,13 @@ const StakingCard: React.FC<AccountButtonProps> = ({
       <DiscountDiv>
         <TitleText>{`${appyPercentage}%`}</TitleText>APY
       </DiscountDiv>
-      <DiscountDiv>
-        <TitleText>{poolSize}</TitleText> {poolSize === 'No limit' ? '' : 'Pool Size'}
-      </DiscountDiv>
-      <div style={{ marginTop: '-15px' }}>
+      <PoolSizeDiv>
+        <div className="dialog-class margin-top-20">
+          {poolSize === 'No limit' ? '' : 'Pool Size'} <PoolTitle>{poolSize}</PoolTitle>
+        </div>
         <ProgressCountdown percentage={percentage} description="Next Epoch" />
-      </div>
-      <div style={{ maxWidth: '200px', marginBottom: '20px', marginTop: '20px' }}>
+      </PoolSizeDiv>
+      <div style={{ width: '300px', marginBottom: '20px', marginTop: '20px' }}>
         <Button text={buttonText} />
       </div>
     </CardContainer>
@@ -71,6 +71,27 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const PoolSizeDiv = styled.div`
+  background: #363130;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  color: #ffffff;
+`;
+const PoolTitle = styled.div`
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  margin-left: 5px;
+  color: #ffffff;
 `;
 const ImageConTainer = styled.div`
   border: 2px solid #363130;
@@ -103,14 +124,14 @@ const DiscountDiv = styled.div`
   background: rgba(255, 255, 255, 0.16);
   border-radius: 40px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   color: #ffffff;
   margin-bottom: 20px;
   padding: 10px 20px;
 `;
 const TitleText = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   margin-right: 5px;
   font-weight: bold;
 `;

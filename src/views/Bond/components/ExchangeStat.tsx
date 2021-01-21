@@ -19,7 +19,7 @@ const ExchangeStat: React.FC<ExchangeStatProps> = ({ title, description }) => {
 };
 
 const StyledCardTitle = styled.div`
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
   text-align: center;
   color: #FFFFFF;

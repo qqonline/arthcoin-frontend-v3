@@ -19,6 +19,9 @@ const StyledCard = styled.div`
   backdrop-filter: blur(21px);
   background-clip: padding-box;
   border: solid 1px transparent;
+  @media (max-width: 768px) {
+    margin-bottom: 15px !important;
+  } ;
 `;
 
 export default InfoCard;

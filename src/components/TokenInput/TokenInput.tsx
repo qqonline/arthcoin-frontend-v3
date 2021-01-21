@@ -56,12 +56,12 @@ const Button = styled.button`
   font-size: 16px;
   line-height: 20px;
   text-align: right;
-  color: #682ae5;
+  color: #F7653B;
   background: transparent;
   border: none;
   &:hover {
     background: transparent;
-    color: #bd9cff;
+    color: #FFA981;
     border: none;
   }
   &:focus {

@@ -19,17 +19,10 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({ percentage }) => 
   );
 };
 
-const StyledCountdown = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-  color: ${(props) => props.theme.color.grey[100]};
-  margin: 0 0 6px 0;
-`;
-
 const StyledProgressOuter = styled.div`
   width: 100%;
-  height: 15px;
-  border-radius: 15px;
+  height: 5px;
+  border-radius: 5px;
   background: ${(props) => props.theme.color.grey[700]};
 `;
 
@@ -42,7 +35,7 @@ const StyledProgress = styled.div<{ progress: number }>`
 
 const StyledDesc = styled.span`
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 130%;
   text-align: center;
   color: #ffffff;
@@ -51,16 +44,14 @@ const StyledDesc = styled.span`
 `;
 
 const StyledCardContentInner = styled.div`
-  height: 100%;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: 100%;
   padding: ${(props) => props.theme.spacing[2]}px ${(props) => props.theme.spacing[4]}px;
 `;
 const Card = styled.div`
-  min-width: 250px;
+  min-width: 300px;
 `;
 
 export default ProgressCountdown;

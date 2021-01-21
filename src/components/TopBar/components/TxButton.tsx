@@ -5,7 +5,7 @@ import Button from '../../Button/TransperantButton';
 import { useAllTransactions } from '../../../state/transactions/hooks';
 import useModal from '../../../hooks/useModal';
 import TxModal from './TxModal';
-import TranscationSnackbar from './TranscationSnackbar';
+import transcationIcon from '../../../assets/img/transcation.png';
 interface TxButtonProps {}
 
 const TxButton: React.FC<TxButtonProps> = () => {
@@ -22,21 +22,21 @@ const TxButton: React.FC<TxButtonProps> = () => {
   );
   return (
     <>
-      {/* <TranscationSnackbar
-        notificationCount={1}
-        open
-        title="Redeeming 4 ARTH"
-        subtitle="Stability Fee = 4%"
-        isScucess={false}
-      /> */}
       {!!account && (
         <StyledTxButton>
-          <Button
+          <img
+            alt="txs"
+            src={transcationIcon}
+            width="25px"
+            className="pointer"
+            onClick={() => onPresentTransactionModal()}
+          />
+          {/* <Button
             size="sm"
             text={pendingTransactions > 0 ? `${pendingTransactions} Pending` : `Transactions`}
             variant={pendingTransactions > 0 ? 'secondary' : 'default'}
             onClick={() => onPresentTransactionModal()}
-          />
+          /> */}
         </StyledTxButton>
       )}
     </>
@@ -45,6 +45,14 @@ const TxButton: React.FC<TxButtonProps> = () => {
 
 const StyledTxButton = styled.div`
   margin-right: ${(props) => props.theme.spacing[4]}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  width: 100%;
+  @media (max-width: 768px) {
+    margin-right: 0px;
+  } ;
 `;
 
 export default TxButton;
