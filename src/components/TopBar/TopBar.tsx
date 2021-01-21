@@ -69,36 +69,38 @@ const TopBar: React.FC = () => {
                 }}
               >
                 <TxButton />
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={netWrokType}
-                  label="Mainnet"
-                  onChange={handleChange}
-                  input={<BootstrapInput />}
-                  IconComponent={() => <ExpandMoreIcon className="white" />}
-                >
-                  <MenuItem value="mainnet">
-                    <ColorIcon colorCode="#11af60" />
-                    Mainnet
-                  </MenuItem>
-                  <MenuItem value="ropsten">
-                    <ColorIcon colorCode="#FA4C69" />
-                    Ropsten
-                  </MenuItem>
-                  <MenuItem value="kovan">
-                    <ColorIcon colorCode="#7A3CF6" />
-                    Kovan
-                  </MenuItem>
-                  <MenuItem value="rinkeby">
-                    <ColorIcon colorCode="#FCB400" />
-                    Rinkeby
-                  </MenuItem>
-                  <MenuItem value="goerli">
-                    <ColorIcon colorCode="#BD9CFF" />
-                    Goerli
-                  </MenuItem>
-                </Select>
+                {false && (
+                  <Select
+                    labelId="demo-customized-select-label"
+                    id="demo-customized-select"
+                    value={netWrokType}
+                    label="Mainnet"
+                    onChange={handleChange}
+                    input={<BootstrapInput />}
+                    IconComponent={() => <ExpandMoreIcon className="white" />}
+                  >
+                    <MenuItem value="mainnet">
+                      <ColorIcon colorCode="#11af60" />
+                      Mainnet
+                    </MenuItem>
+                    <MenuItem value="ropsten">
+                      <ColorIcon colorCode="#FA4C69" />
+                      Ropsten
+                    </MenuItem>
+                    <MenuItem value="kovan">
+                      <ColorIcon colorCode="#7A3CF6" />
+                      Kovan
+                    </MenuItem>
+                    <MenuItem value="rinkeby">
+                      <ColorIcon colorCode="#FCB400" />
+                      Rinkeby
+                    </MenuItem>
+                    <MenuItem value="goerli">
+                      <ColorIcon colorCode="#BD9CFF" />
+                      Goerli
+                    </MenuItem>
+                  </Select>
+                )}
                 <AccountButton />
               </div>
             </HideonPhone>

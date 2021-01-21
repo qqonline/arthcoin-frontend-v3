@@ -38,7 +38,7 @@ const AccountModal: React.FC<props> = () => {
           <img src={metaMaskIcon} alt="Metamask" width="30px" />
           <CopyToClipboard text="0xf7dD...aD62">
             <div className="dialog-class margin-left-20">
-              <p className="white font18 margin-right-5">0xf7dD...aD62</p>
+              <span className="white font18 margin-right-5">0xf7dD...aD62</span>
               <FileCopyIcon className="font15 white pointer" />
             </div>
           </CopyToClipboard>

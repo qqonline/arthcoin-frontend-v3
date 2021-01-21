@@ -1,0 +1,45 @@
+.social-items {
+  float: left;
+}
+
+.button3 {
+  width: 52px;
+  height: 52px;
+  border-radius: 45px;
+  color: #ffffff;
+  margin: 11px;
+  text-align: left;
+  justify-content: left;
+  background: linear-gradient(#f47f57, #fd5656);
+}
+
+@media only screen and (min-width: 600px) {
+  .button3 {
+    text-align: left;
+  }
+}
+
+@media only screen and( max-width:392px) {
+  .button3 {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media only screen and( max-width:700px) {
+  .footer-title {
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+button {
+  border: 0;
+  outline: none;
+}
+@media (max-width: 768px) {
+  .hide-pie-on-phone {
+    display: none;
+  }
+} ;

@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      {/* <StyledLink exact activeClassName="active" to="/">
+      <StyledLink exact activeClassName="active" to="/">
         Home
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/supply">
+      {/*<StyledLink exact activeClassName="active" to="/supply">
         Supply
       </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/stats">
@@ -50,6 +50,7 @@ const StyledLink = styled(NavLink)`
     color: #fff;
     background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, rgba(253, 86, 86, 0.1) 100%);
     border-bottom: 2px solid rgba(253, 86, 86, 0.3);
+    text-decoration: none;
   }
   &.active {
     border-bottom: 2px solid #f47f57;

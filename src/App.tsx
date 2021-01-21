@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useWallet, UseWalletProvider } from 'use-wallet';
 import styled from 'styled-components';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Modal from './components/NewModal/index';
 import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
@@ -78,7 +80,7 @@ const UnlockWallet = () => {
                   key={eachWallet.id}
                   onClick={() => setWalletData(eachWallet.id)}
                 >
-                  <p className="white font15">{eachWallet.title}</p>
+                  <span className="white font15">{eachWallet.title}</span>
                   <img src={eachWallet.icon} alt={eachWallet.title} width="30px"></img>
                 </div>
               ))}
@@ -108,6 +110,9 @@ const Providers: React.FC = ({ children }) => {
   );
 };
 const App: React.FC = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
     <Providers>
       <Router>

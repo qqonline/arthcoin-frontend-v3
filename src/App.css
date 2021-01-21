@@ -1,7 +1,7 @@
 .wallet-option {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 25px;
-  padding: 0px 15px;
+  padding: 10px 15px;
   max-width: 300px;
   width: 100%;
   cursor: pointer;
@@ -11,7 +11,7 @@
   background: #2a2827;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 25px;
-  padding: 0px 15px;
+  padding: 10px 15px;
   max-width: 300px;
   width: 100%;
   cursor: pointer;
