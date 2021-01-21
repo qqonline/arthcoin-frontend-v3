@@ -34,8 +34,7 @@ const Home: React.FC = () => {
     const [cash, bond, share] = await Promise.all([
       basisCash.getCashStatFromUniswap(),
       basisCash.getBondStat(),
-      // basisCash.getShareStat(),
-      basisCash.getBondStat(),
+      basisCash.getShareStat()
     ]);
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
@@ -97,7 +96,7 @@ const Home: React.FC = () => {
         subtitle="View information about the current ARTH protocol"
         title="Statistics"
         secondParaTitle="Next Epoch:"
-        secondParaDescription="Protocol will launch on Jan 21st at 3pm GMT"
+        secondParaDescription="Protocol will launch on Jan 22nd at 3pm GMT"
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -138,9 +137,9 @@ const Home: React.FC = () => {
             title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
             description="ARTH Price (TWAP)"
           />
-          <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
+          <Stat title={arthPrice ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
           <Stat
-            title={cashStat ? `$${getDisplayBalance(targetPrice)}` : '-'}
+            title={targetPrice ? `$${getDisplayBalance(targetPrice)}` : '-'}
             description="ARTH Price (Target)"
           />
         </StyledHeader>

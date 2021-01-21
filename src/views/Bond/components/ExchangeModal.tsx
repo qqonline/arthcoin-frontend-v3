@@ -127,7 +127,8 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
         <Button
           // disabled={arthBAmount.lte(0)}
           // text={action}
-          disabled={arthBAmount.lte(0)}
+          // disabled={arthBAmount.lte(0)}
+          disabled={true}
           text={"Will be enabled after launch"}
           onClick={() => onConfirm(String(val))}
         />

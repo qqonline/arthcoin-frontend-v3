@@ -15,6 +15,7 @@ import AccountButton from './components/AccountButton';
 import Nav from './components/Nav';
 import MobileNav from './components/MobileNav';
 import TxButton from './components/TxButton';
+
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -41,6 +42,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
     },
   }),
 )(InputBase);
+
 const TopBar: React.FC = () => {
   const { account } = useWallet();
   const [netWrokType, setNetworkType] = React.useState('mainnet');
@@ -70,7 +72,7 @@ const TopBar: React.FC = () => {
                 }}
               >
                 <TxButton />
-                <Select
+                {/* <Select
                   labelId="demo-customized-select-label"
                   id="demo-customized-select"
                   value={netWrokType}
@@ -99,7 +101,7 @@ const TopBar: React.FC = () => {
                     <ColorIcon colorCode="#BD9CFF" />
                     Goerli
                   </MenuItem>
-                </Select>
+                </Select> */}
                 <AccountButton />
               </div>
             </HideonPhone>

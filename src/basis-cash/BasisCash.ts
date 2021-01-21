@@ -104,7 +104,9 @@ export class BasisCash {
 
 
   getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
-    const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
+    // const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
+    const contract = this.config.deployments.ARTH
+
     if (kind === 'arth') return {
       kind: 'arth',
       contract: contract.address,
@@ -221,8 +223,8 @@ export class BasisCash {
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.MAHA),
-      totalSupply: await this.MAHA.displayedTotalSupply(),
+      priceInDAI: await this.getTokenPriceFromCoingecko(this.MAHA),
+      totalSupply: '783601', // await this.MAHA.displayedTotalSupply(),
     };
   }
 
@@ -239,6 +241,19 @@ export class BasisCash {
       const daiToToken = await Fetcher.fetchPairData(dai, token, this.provider);
       const priceInDAI = new Route([daiToToken], token);
       return priceInDAI.midPrice.toSignificant(3);
+    } catch (err) {
+      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
+    }
+  }
+
+
+  async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<string> {
+    await this.provider.ready;
+
+    try {
+      const result = await fetch (`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
+      const json = await result.json()
+      return (json[tokenContract.address.toLowerCase()].usd).toFixed(3)
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }

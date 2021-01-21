@@ -13,6 +13,7 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
 
 
   const fetchAllowance = useCallback(async () => {
+    console.log(`Fetching Allowance of ${account} ${token.symbol} for ${spender}`);
     const allowance = await token.allowance(account, spender);
     console.log(`Allowance: ${allowance.toString()} ${token.symbol} for ${spender}`);
     setAllowance(allowance);

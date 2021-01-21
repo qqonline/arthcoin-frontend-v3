@@ -150,7 +150,7 @@ const Bond: React.FC = () => {
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={12} lg={12} xl={12}>
                     <ExchangeStat
-                      title={`MAHA: $${getDisplayBalance(cashPrice, 18, 2)}`}
+                      title={`ARTH: $${getDisplayBalance(cashPrice, 18, 2)}`}
                       description="Last-Hour TWAP Price"
                     />
                   </Grid>

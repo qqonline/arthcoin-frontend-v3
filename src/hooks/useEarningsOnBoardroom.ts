@@ -14,10 +14,9 @@ const useEarningsOnBoardroom = (kind: Boardrooms) => {
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
-      fetchBalance().catch((err) => console.error(err.stack));
-
-      const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
-      return () => clearInterval(refreshBalance);
+      // fetchBalance().catch((err) => console.error(err.stack));
+      // const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
+      // return () => clearInterval(refreshBalance);
     }
   }, [basisCash.isUnlocked, fetchBalance, setBalance]);
 

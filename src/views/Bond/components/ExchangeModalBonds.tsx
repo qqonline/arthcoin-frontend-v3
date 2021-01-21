@@ -47,7 +47,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
 
   const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
   const description =
-    'You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA';
+    'You are going to redeem 0 ARTH by paying 0 ARTHB and a stability fee of 0.00 MAHA';
 
   return (
     <Modal open title="Redeem your ARTH Bonds">
@@ -70,11 +70,17 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
       {/* <StyledLabel>{description}</StyledLabel> */}
       <ModalActions>
         <ButtonTransperant text="Cancel" variant="secondary" />
+
         <Button
+          text={'Will be enabled after launch'}
+          disabled={true}
+          // onClick={() => onConfirm(val)}
+        />
+        {/* <Button
           text={!isMahaApproved ? 'MAHA Not Approved' : action}
           disabled={!isMahaApproved || Number(val) <= 0}
           onClick={() => onConfirm(val)}
-        />
+        /> */}
       </ModalActions>
     </Modal>
   );
