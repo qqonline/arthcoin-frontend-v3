@@ -35,26 +35,26 @@ const walletOptions = [
     title: 'Metamask',
     icon: metaMaskIcon,
   },
-  {
-    id: 'tezor',
-    title: 'Tezor',
-    icon: teZorIcon,
-  },
-  {
-    id: 'ledger',
-    title: 'Ledger',
-    icon: ledgerIcon,
-  },
-  {
-    id: 'walletconnect',
-    title: 'Wallet Connect',
-    icon: wallletConnectIcon,
-  },
-  {
-    id: 'coinbase',
-    title: 'Coinbase',
-    icon: coinBaseIcon,
-  },
+  // {
+  //   id: 'tezor',
+  //   title: 'Tezor',
+  //   icon: teZorIcon,
+  // },
+  // {
+  //   id: 'ledger',
+  //   title: 'Ledger',
+  //   icon: ledgerIcon,
+  // },
+  // {
+  //   id: 'walletconnect',
+  //   title: 'Wallet Connect',
+  //   icon: wallletConnectIcon,
+  // },
+  // {
+  //   id: 'coinbase',
+  //   title: 'Coinbase',
+  //   icon: coinBaseIcon,
+  // },
 ];
 
 const UnlockWallet = () => {
