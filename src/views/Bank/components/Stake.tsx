@@ -72,9 +72,11 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
   return (
     <Template
       title={`${bank.depositTokenName} Staked`}
-      buttonLabel={bank.finished ? 'Pool is Closed' : `Deposit ${bank.depositTokenName}`}
-      buttonDisabled={bank.finished}
-      buttonOnClick={() => (bank.finished ? null : onPresentDeposit())}
+      buttonLabel={
+        bank.finished ? `Withdraw ${bank.depositTokenName}` : `Deposit ${bank.depositTokenName}`
+      }
+      buttonDisabled={false}
+      buttonOnClick={() => (bank.finished ? onPresentWithdraw() : onPresentDeposit())}
       amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
       symbol={bank.depositTokenName}
     />
