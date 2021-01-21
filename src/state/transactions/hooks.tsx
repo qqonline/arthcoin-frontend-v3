@@ -2,6 +2,7 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWallet } from 'use-wallet';
+import { useAddPopup } from '../application/hooks';
 
 import { AppDispatch, AppState } from '../index';
 import { addTransaction, clearAllTransactions } from './actions';
@@ -14,6 +15,7 @@ export function useTransactionAdder(): (
 ) => void {
   const { chainId, account } = useWallet();
   const dispatch = useDispatch<AppDispatch>();
+  const addPopup = useAddPopup();
 
   return useCallback(
     (
@@ -30,6 +32,19 @@ export function useTransactionAdder(): (
       if (!hash) {
         throw Error('No transaction hash found.');
       }
+
+      addPopup(
+        {
+          txn: {
+            hash,
+            loading: true,
+            success: false,
+            summary: summary,
+          },
+        },
+        hash,
+      );
+
       dispatch(addTransaction({ hash, from: account, chainId, approval, summary }));
     },
     [dispatch, chainId, account],

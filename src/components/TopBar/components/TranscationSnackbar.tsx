@@ -6,12 +6,11 @@ import Slide from '@material-ui/core/Slide';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { TransitionProps } from '@material-ui/core/transitions';
+import { PopupContent } from '../../../state/application/actions';
 interface TxButtonProps {
   notificationCount?: number;
   open?: boolean;
-  title?: string;
-  subtitle?: string;
-  isScucess: boolean;
+  content?: PopupContent
   handleCancel?: Function;
 }
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,13 +24,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   notificationCount,
   open,
-  title,
-  subtitle,
-  isScucess,
+  content,
   handleCancel,
 }) => {
   const classes = useStyles();
   const [openSnackbar, setOpen] = React.useState(open);
+
+  const isScucess = content?.txn.success
+  const isLoading = content?.txn.loading
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
@@ -45,6 +45,9 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   function SlideTransition(props: TransitionProps) {
     return <Slide {...props} direction="left" />;
   }
+
+  const link = `https://etherscan.io/tx/${content.txn.hash}`
+
   return (
     <div className={classes.root}>
       {openSnackbar && (
@@ -61,19 +64,27 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               Transcation
               <CloseIcon className="pointer" onClick={handleClose} />
             </SnackBarInnerContainer>
-            {isScucess ? (
+            {isLoading ? (
+              <SnackBarLoading>
+                <NotificationsNoneIcon className="margin-left-right-20" />
+                <div className="dialog-class display-flex-column">
+                  <span className="margin-bottom-10">{content.txn.summary}</span>
+                  {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
+                </div>
+              </SnackBarLoading>
+            ) : isScucess ? (
               <SnackBarRedeem>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{title}</span>
-                  <span>{subtitle}</span>
+                  <span className="margin-bottom-10">{content.txn.summary}</span>
+                  {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
                 </div>
               </SnackBarRedeem>
             ) : (
               <SnackBarRedeemCancelled>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                  <span>{subtitle}</span>
+                <span className="margin-bottom-10">{content.txn.summary}</span>
                 </div>
               </SnackBarRedeemCancelled>
             )}
@@ -91,6 +102,19 @@ const SnackBarInnerContainer = styled.div`
 `;
 const SnackBarRedeem = styled.div`
   background: #178a50;
+  color: #ffffff;
+  border-radius: 0px 0px 4px 4px;
+  padding: 15px 0px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+`;
+
+const SnackBarLoading = styled.div`
+  background: #8a8817;
   color: #ffffff;
   border-radius: 0px 0px 4px 4px;
   padding: 15px 0px;

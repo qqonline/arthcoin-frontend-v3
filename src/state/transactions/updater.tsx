@@ -37,7 +37,7 @@ export default function Updater(): null {
 
   const transactions = chainId ? state[chainId] ?? {} : {};
 
-  // show popup on confirm
+  // show d on confirm
   const addPopup = useAddPopup();
 
   useEffect(() => {
@@ -49,9 +49,11 @@ export default function Updater(): null {
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {
+        console.log(hash, 'test')
         provider
           .getTransactionReceipt(hash)
           .then((receipt) => {
+            console.log(receipt, 'test receipt')
             if (receipt) {
               dispatch(
                 finalizeTransaction({
