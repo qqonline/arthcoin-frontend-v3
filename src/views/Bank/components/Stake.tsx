@@ -56,9 +56,11 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
     return (
       <Template
         title={`${bank.depositTokenName} Staked`}
-        buttonLabel={`Approve ${bank.depositTokenName}`}
+        buttonLabel={bank.finished ? 'Pool is Closed' : `Approve ${bank.depositTokenName}`}
         buttonDisabled={
-          approveStatus === ApprovalState.PENDING || approveStatus === ApprovalState.UNKNOWN
+          bank.finished ||
+          approveStatus === ApprovalState.PENDING ||
+          approveStatus === ApprovalState.UNKNOWN
         }
         buttonOnClick={approve}
         amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
@@ -70,7 +72,7 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
   return (
     <Template
       title={`${bank.depositTokenName} Staked`}
-      buttonLabel={`Deposit ${bank.depositTokenName}`}
+      buttonLabel={bank.finished ? 'Pool is Closed' : `Deposit ${bank.depositTokenName}`}
       buttonDisabled={bank.finished}
       buttonOnClick={() => (bank.finished ? null : onPresentDeposit())}
       amount={getDisplayBalance(stakedBalance, bank.depositToken.decimal)}
