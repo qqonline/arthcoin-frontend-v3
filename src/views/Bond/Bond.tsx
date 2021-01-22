@@ -95,17 +95,12 @@ const Bond: React.FC = () => {
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center">
               <Grid container item xs={12} md={9} lg={9} xl={9}>
-                {/* <ChartContainer>
-                  <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
-                  <Chart />
-                </ChartContainer> */}
-                {/* <LaunchContainer>
-                  <LaunchCountdown
-                    deadline={config.bondLaunchesAt}
-                    description="How does ARTH Bond work?"
-                    descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
-                  />
-                </LaunchContainer> */}
+                {false && (
+                  <ChartContainer>
+                    <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
+                    <Chart />
+                  </ChartContainer>
+                )}
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard

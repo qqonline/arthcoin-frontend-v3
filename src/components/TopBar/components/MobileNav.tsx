@@ -14,7 +14,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
       color: 'white',
       border: '1px solid white',
       fontSize: 14,
-      padding: '0px 5px',
+      padding: '0px 15px',
       marginRight: '20px',
       'label + &': {
         marginTop: theme.spacing(3),
@@ -23,6 +23,8 @@ const BootstrapInput = withStyles((theme: Theme) =>
     input: {
       position: 'relative',
       backgroundColor: 'transparent',
+      display: 'flex',
+      alignItems: 'center',
       padding: '10px 26px 10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
       '&:focus': {
@@ -56,29 +58,43 @@ const MobileNav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/distribution">
         Distribution
       </StyledLink>
-      <StyledButton>
-        <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
-          <Select
-            labelId="demo-customized-select-label"
-            id="demo-customized-select"
-            fullWidth
-            value={netWrokType}
-            label="Mainnet"
-            onChange={handleChange}
-            input={<BootstrapInput />}
-            IconComponent={() => <ExpandMoreIcon className="white" />}
-          >
-            <MenuItem value="mainnet">
-              {false && <BlueIcon />}
-              Mainnet
-            </MenuItem>
-            <MenuItem value="testnet">
-              {false && <BlueIcon />}
-              Testnet
-            </MenuItem>
-          </Select>
-        </div>
-      </StyledButton>
+      {false && (
+        <StyledButton>
+          <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
+            <Select
+              labelId="demo-customized-select-label"
+              id="demo-customized-select"
+              value={netWrokType}
+              fullWidth
+              label="Mainnet"
+              onChange={handleChange}
+              input={<BootstrapInput />}
+              IconComponent={() => <ExpandMoreIcon className="white" />}
+            >
+              <MenuItem value="mainnet">
+                <ColorIcon colorCode="#11af60" />
+                Mainnet
+              </MenuItem>
+              <MenuItem value="ropsten">
+                <ColorIcon colorCode="#FA4C69" />
+                Ropsten
+              </MenuItem>
+              <MenuItem value="kovan">
+                <ColorIcon colorCode="#7A3CF6" />
+                Kovan
+              </MenuItem>
+              <MenuItem value="rinkeby">
+                <ColorIcon colorCode="#FCB400" />
+                Rinkeby
+              </MenuItem>
+              <MenuItem value="goerli">
+                <ColorIcon colorCode="#BD9CFF" />
+                Goerli
+              </MenuItem>
+            </Select>
+          </div>
+        </StyledButton>
+      )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
           <AccountButton />
@@ -152,8 +168,8 @@ const StyledButton = styled.div`
     color: rgba(255, 255, 255, 0.88);
   }
 `;
-const BlueIcon = styled.div`
-  background: #11af60;
+const ColorIcon = styled.div`
+  background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
   width: 10px;
   border-radius: 50%;
   height: 10px;
