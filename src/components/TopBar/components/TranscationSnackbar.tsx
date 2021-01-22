@@ -30,8 +30,8 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   const classes = useStyles();
   const [openSnackbar, setOpen] = React.useState(open);
 
-  const isScucess = content?.txn.success
-  const isLoading = content?.txn.loading
+  const isScucess = content?.txn?.success
+  const isLoading = content?.txn?.loading
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
@@ -45,8 +45,6 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   function SlideTransition(props: TransitionProps) {
     return <Slide {...props} direction="left" />;
   }
-
-  const link = `https://etherscan.io/tx/${content.txn.hash}`
 
   return (
     <div className={classes.root}>
@@ -68,7 +66,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               <SnackBarLoading>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{content.txn.summary}</span>
+                  <span className="margin-bottom-10">{content.txn?.summary}</span>
                   {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
                 </div>
               </SnackBarLoading>
@@ -76,7 +74,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               <SnackBarRedeem>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{content.txn.summary}</span>
+                  <span className="margin-bottom-10">{content.txn?.summary}</span>
                   {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
                 </div>
               </SnackBarRedeem>
@@ -84,7 +82,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               <SnackBarRedeemCancelled>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                <span className="margin-bottom-10">{content.txn.summary}</span>
+                <span className="margin-bottom-10">{content.txn?.summary || "Error"}</span>
                 </div>
               </SnackBarRedeemCancelled>
             )}

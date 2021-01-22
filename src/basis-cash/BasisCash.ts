@@ -104,8 +104,10 @@ export class BasisCash {
 
 
   getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
-    // const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom : this.config.deployments.ArthLiquidityBoardroom
-    const contract = this.config.deployments.ARTH
+    const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom :
+      kind === 'mahaLiquidity' ? this.config.deployments.MahaLiquidityBoardroom :
+      this.config.deployments.ArthLiquidityBoardroom
+    // const contract = this.config.deployments.ARTH
 
     if (kind === 'arth') return {
       kind: 'arth',

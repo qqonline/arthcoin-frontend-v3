@@ -77,7 +77,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
-              {approveStatus === ApprovalState.APPROVED ? (
+              {approveStatus !== ApprovalState.APPROVED ? (
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}

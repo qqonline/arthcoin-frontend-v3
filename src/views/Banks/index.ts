@@ -11,20 +11,6 @@ const job = async () => {
     const pools = [
         'MAHAMAHAETHLPTokenPool',
         'MAHADAIARTHLPTokenPool',
-        'ARTHBASPool',
-        'ARTHMKRPool',
-        'ARTHSHAREPool',
-        'ARTHCOMPool',
-        'ARTHESDPool',
-        'ARTHMahaEthLPPool',
-        'ARTHSUSHIPool',
-        'ARTHCURVEPool',
-        'ARTHFRAXPool',
-        'ARTHMahaPool',
-        'ARTHYFIPool',
-        'ARTHDSDPool',
-        'ARTHMATICPool',
-        'ARTHRSRPool',
         'MAHAARTHPool',
     ]
 

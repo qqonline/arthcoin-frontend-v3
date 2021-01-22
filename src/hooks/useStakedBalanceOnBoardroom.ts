@@ -9,7 +9,7 @@ const useStakedBalanceOnBoardroom = (kind: Boardrooms) => {
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    // setBalance(await basisCash.getStakedSharesOnBoardroom(kind));
+    setBalance(await basisCash.getStakedSharesOnBoardroom(kind));
   }, [basisCash.isUnlocked, kind]);
 
   useEffect(() => {

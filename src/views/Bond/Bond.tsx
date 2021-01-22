@@ -100,13 +100,13 @@ const Bond: React.FC = () => {
                   <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
                   <Chart />
                 </ChartContainer> */}
-                <LaunchContainer>
+                {/* <LaunchContainer>
                   <LaunchCountdown
                     deadline={config.bondLaunchesAt}
                     description="How does ARTH Bond work?"
                     descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism"
                   />
-                </LaunchContainer>
+                </LaunchContainer> */}
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard

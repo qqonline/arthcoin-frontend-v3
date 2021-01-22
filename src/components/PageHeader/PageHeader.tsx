@@ -51,7 +51,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                 alignItems="flex-start"
                 style={{ marginTop: '20px' }}
               >
-                <Grid item xs={12} md={4} lg={4} xl={4}>
+                {/* <Grid item xs={12} md={4} lg={4} xl={4}>
                   <ProgressCountdown
                     base={prevEpoch}
                     deadline={nextEpoch}
@@ -65,7 +65,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                     description="Next Epoch"
                     showAdvanceButton
                   />
-                </Grid>
+                </Grid> */}
               </Grid>
             )}
           </StyledTextContainer>

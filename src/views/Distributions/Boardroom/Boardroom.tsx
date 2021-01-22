@@ -40,10 +40,10 @@ const Boardroom = () => {
               <Button size="sm" text="Settle & Withdraw" />
             </div>
           </Grid>
-          <Grid container item xs={12} md={3} lg={3} xl={3}>
+          {/* <Grid container item xs={12} md={3} lg={3} xl={3}>
             <Grid container spacing={5} justify="center">
               <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
+                <ExchangeStat description="ARTH Price(1hr TWAP)" title="$1.150" />
               </Grid>
               <Grid container item xs={12} md={12} lg={12} xl={12}>
                 <ExchangeStat description="Scaling Factor" title="5x" />
@@ -52,7 +52,7 @@ const Boardroom = () => {
                 <ExchangeStat description="Treasury Amount" title="~$5" />
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
         {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
       </Container>

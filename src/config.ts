@@ -41,23 +41,23 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'https://weathered-young-wave.quiknode.io/75809a67-435c-4d8b-a287-649990316295/IHZHq4dJhpdQq85_QIA5Uidl_btMGwikH8tF3VNPZsgoFhaetWDXXdmkavW1TaTf5JrVwFWnMsx8aJ-fR01pTg==/',
     deployments: require('./basis-cash/deployments/deployments.ropsten.json'),
     externalTokens: {
-      DAI: ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'MKR': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'BAS': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'SHARE': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 9],
-      'COMP': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'ESD': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'SUSHI': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'CURVE': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'FRAX': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
+      DAI: ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'MKR': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'BAS': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'SHARE': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 9],
+      'COMP': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'ESD': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'SUSHI': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'CURVE': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'FRAX': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
       'MAHA': ['0x4D83D098C4fe00146C7924a4d98a5B5A2e86F350', 18],
-      'YFI': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'DSD': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'MATIC': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
-      'RSR': ['0xCa168E1c99257d58a0CC304a6Af8cF70D0F28512', 18],
+      'YFI': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'DSD': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'MATIC': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
+      'RSR': ['0xcD0eFae7FA77bFddA4e4997452F3DeB06F290a08', 18],
 
-      'MAHA_ETH-UNI-LPv2': ['0x7fd3038ea7ff780503d3e941d7963b89893cbe7d', 18],
-      'ARTH_DAI-UNI-LPv2': ['0x7fd3038ea7ff780503d3e941d7963b89893cbe7d', 18]
+      'MAHA_ETH-UNI-LPv2': ['0x0C29090B61a01E24b2DeF0aAf1E5BbA430Dae149', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xE17EB33B3Eb7BB8767133fcc6c7Fc150A7C66160', 18]
     },
     uniswapRouter: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
 
@@ -326,4 +326,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-export default configurations["development"];
+export default configurations["staging"];
