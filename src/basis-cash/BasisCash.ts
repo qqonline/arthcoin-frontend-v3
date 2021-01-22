@@ -207,7 +207,10 @@ export class BasisCash {
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getBondOraclePrice();
+    const decimals = BigNumber.from(10).pow(18);
+
+    return BigNumber.from(1).mul(decimals)
+    // return Treasury.getBondOraclePrice();
   }
 
   async getBondStat(): Promise<TokenStat> {

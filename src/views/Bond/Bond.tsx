@@ -26,7 +26,7 @@ const Bond: React.FC = () => {
   const { path } = useRouteMatch();
   const basisCash = useBasisCash();
   const addTransaction = useTransactionAdder();
-  const bondStat = useBondStats();
+  // const bondStat = useBondStats();
   const cashPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
   const stabiltiyFees = useStabilityFee();
@@ -147,12 +147,12 @@ const Bond: React.FC = () => {
                       description="Last-Hour TWAP Price"
                     />
                   </Grid>
-                  <Grid container item xs={12} md={12} lg={12} xl={12}>
+                  {/* <Grid container item xs={12} md={12} lg={12} xl={12}>
                     <ExchangeStat
                       title={`ARTHB: $${bondStat?.priceInDAI || '-'}`}
                       description="Current Price: (ARTH)^2"
                     />
-                  </Grid>
+                  </Grid> */}
                   <Grid container item xs={12} md={12} lg={12} xl={12}>
                     <ExchangeStat
                       title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}

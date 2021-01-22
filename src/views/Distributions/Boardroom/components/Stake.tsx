@@ -81,7 +81,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}
-                  text={`Approve ${boardroom.depositTokenName}`}
+                  text={`Approve`}
                 />
               ) : (
                 <>
