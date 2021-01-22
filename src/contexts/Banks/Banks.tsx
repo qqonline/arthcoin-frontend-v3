@@ -13,6 +13,8 @@ const Banks: React.FC = ({ children }) => {
     const banks: Bank[] = [];
 
     for (const bankInfo of Object.values(bankDefinitions)) {
+      if (!bankInfo.networks.includes(basisCash.config.chainId)) continue
+
       if (bankInfo.finished) {
         if (!basisCash.isUnlocked) continue;
 

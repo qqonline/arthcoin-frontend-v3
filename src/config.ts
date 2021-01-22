@@ -126,7 +126,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: true,
     poolDurationInDays: 5,
     poolSize: 84460,
-
+    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     sort: 3,
   },
   ARTHMKRPool: {
@@ -137,7 +137,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 8334,
   },
@@ -149,7 +149,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 21551725,
   },
@@ -161,7 +161,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 80397,
   },
@@ -172,7 +172,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     depositTokenName: 'ESD',
     earnTokenName: 'ARTH',
     finished: true, sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 19230770,
   },
@@ -183,7 +183,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 150000,
     earnTokenName: 'ARTH',
     finished: true,
-
+    networks: [ChainId.MAINNET],
     sort: 1,
 
     poolDurationInDays: 5,
@@ -197,7 +197,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 3881988,
   },
@@ -209,7 +209,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 10593221,
   },
@@ -221,7 +221,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 12500,
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 901226,
   },
@@ -233,7 +233,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 150000,
     finished: true,
     sort: 2,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: Infinity,
   },
@@ -245,7 +245,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 455,
   },
@@ -257,7 +257,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 19531250,
   },
@@ -269,7 +269,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 41666667,
   },
@@ -281,7 +281,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     earnTokenName: 'ARTH',
     finished: true,
     sort: 3,
-
+    networks: [ChainId.MAINNET],
     poolDurationInDays: 5,
     poolSize: 416666667,
   },
@@ -294,7 +294,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 4000,
     finished: false,
     sort: 1,
-
+    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     poolDurationInDays: 30,
     poolSize: Infinity,
   },
@@ -307,7 +307,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 2000,
     finished: false,
     sort: -1,
-
+    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     poolDurationInDays: 30,
     poolSize: Infinity,
   },
@@ -319,11 +319,11 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolRewards: 4000,
     finished: false,
     sort: 0,
-
+    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     poolDurationInDays: 30,
     poolSize: Infinity,
   },
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-export default configurations["production"];
+export default configurations["development"];

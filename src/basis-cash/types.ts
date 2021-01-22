@@ -1,3 +1,4 @@
+import { ChainId } from '@uniswap/sdk';
 import ERC20 from './ERC20';
 
 export type ContractName = string;
@@ -9,7 +10,7 @@ export interface BankInfo {
   earnTokenName: ContractName;
   sort: number;
   finished: boolean;
-
+  networks: ChainId[]
   poolRewards: number
   poolDurationInDays: number
   poolSize: number
