@@ -15,14 +15,16 @@ import useCashTargetPrice from '../../../hooks/useCashTargetPrice';
 interface ExchangeModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
+  onCancel?: Function;
   title: string;
   description: string;
   action: string;
   tokenName: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, tokenName }) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, tokenName, onCancel }) => {
   const [val, setVal] = useState(0);
+  const [openModal, toggleModalState] = useState(true);
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
   const basisCash = useBasisCash();
   const bondStat = useBondStats();
@@ -90,9 +92,11 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
     const amountAfterFees = (output * (100 - mahaStabilityFee.toNumber())) / 100;
     return ((100 * (amountAfterFees - input)) / input).toFixed(2);
   }, [arthBAmount, targetPrice, mahaStabilityFee, decimals, val]);
-
+  const handleClose = () => {
+    onCancel();
+  };
   return (
-    <Modal open title="Earn ARTH Bonds">
+    <Modal open={openModal} title="Earn ARTH Bonds" handleClose={handleClose}>
       <TokenInput
         value={String(val)}
         onSelectMax={handleSelectMax}
@@ -121,20 +125,28 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
         </RorSpan>{' '}
         realisable when ARTH is trading above it's target price.
       </StyledLabel>
-      <ModalActions>
-        <ButtonTransperant text="Cancel" variant="secondary" />
-        <Button
-          disabled={arthBAmount.lte(0)}
-          text={action}
-          onClick={() => onConfirm(String(val))}
-        />
-      </ModalActions>
+      <ActionButton>
+        <ResponsiveButtonWidth>
+          <ButtonTransperant
+            text="Cancel"
+            variant="secondary"
+            onClick={() => handleClose()}
+          />
+        </ResponsiveButtonWidth>
+        <ResponsiveButtonWidth>
+          <Button
+            disabled={arthBAmount.lte(0)}
+            text={action}
+            onClick={() => onConfirm(String(val))}
+          />
+        </ResponsiveButtonWidth>
+      </ActionButton>
     </Modal>
   );
 };
 
 const StyledLabel = styled.div`
-  color: rgba(255,255,255, 0.64);
+  color: rgba(255, 255, 255, 0.64);
   font-size: 16px;
   padding: 15px 15px 0;
   text-align: center;
@@ -144,7 +156,25 @@ const RorSpan = styled.span`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  color: rgba(255,255,255, 0.88);
+  color: rgba(255, 255, 255, 0.88);
 `;
-
+const ActionButton = styled.div`
+  align-items: center;
+  background-color: ${(props) => props.theme.color.grey[100]}00;
+  display: flex;
+  height: 96px;
+  justify-content: space-between;
+  margin: ${(props) => props.theme.spacing[4]}px ${(props) => -props.theme.spacing[4]}px
+    ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  } ;
+`;
+const ResponsiveButtonWidth = styled.div`
+  width: 250px;
+  @media (max-width: 768px) {
+    width: 100%;
+  } ;
+`;
 export default ExchangeModal;

@@ -99,7 +99,7 @@ const Bond: React.FC = () => {
           <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center">
-              <Grid container item xs={12} md={9} lg={9} xl={9}>
+              <Grid item xs={12} md={9} lg={9} xl={9}>
                 {false && (
                   <ChartContainer>
                     <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
@@ -107,7 +107,7 @@ const Bond: React.FC = () => {
                   </ChartContainer>
                 )}
                 <Grid container spacing={5} justify="center">
-                  <Grid container item xs={12} md={6} lg={6} xl={6}>
+                  <Grid item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard
                       action="Purchase"
                       fromToken={basisCash.DAI}
@@ -125,7 +125,7 @@ const Bond: React.FC = () => {
                       disabled={!isBondPurchasable}
                     />
                   </Grid>
-                  <Grid container item xs={12} md={6} lg={6} xl={6}>
+                  <Grid item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCardBonds
                       action="Redeem"
                       fromToken={basisCash.ARTHB}

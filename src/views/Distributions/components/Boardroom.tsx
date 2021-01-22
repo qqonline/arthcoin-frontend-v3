@@ -30,15 +30,11 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledTitle>
               Bond {boardroom.depositTokenName} to EARN {boardroom.earnTokenName}
             </StyledTitle>
-            <StyledInfoSlots>
-              {/* <StyledInfoSlot>
-                <SlotTitle>400,000</SlotTitle>
-                <SlotDescription>Bonded</SlotDescription>
-              </StyledInfoSlot> */}
+            <LockinDiv>
               <StyledInfoSlot>
                 <SlotTitle>{boardroom.lockInPeriodDays} day lock-in period</SlotTitle>
               </StyledInfoSlot>
-            </StyledInfoSlots>
+            </LockinDiv>
             <StyledInfoSlots>
               <PercentageContainer>
                 <PercentageTilte>
@@ -46,27 +42,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
                 </PercentageTilte>
               </PercentageContainer>
             </StyledInfoSlots>
-            <StyledInfoSlots>
-              {/* <StyledInfoSlot>
-                <SlotTitle>4%</SlotTitle>
-                <SlotDescription>Staked</SlotDescription>
-              </StyledInfoSlot> */}
-              {/*
-              <StyledInfoSlot>
-                <SlotTitle>{boardroom.history7dayAPY}%</SlotTitle>
-                <SlotDescription>Historic 7-day APY</SlotDescription>
-              </StyledInfoSlot>
-
-              <StyledInfoSlot>
-                <SlotTitle>{boardroom.history7dayAPY}%</SlotTitle>
-                <SlotDescription>Historic 30-day APY</SlotDescription>
-              </StyledInfoSlot>
-
-              <StyledInfoSlot>
-                <SlotTitle>{boardroom.history7dayAPY}%</SlotTitle>
-                <SlotDescription>Estiamted APY</SlotDescription>
-              </StyledInfoSlot> */}
-            </StyledInfoSlots>
+            <StyledInfoSlots></StyledInfoSlots>
             <ButtonContainer>
               {!!account ? (
                 <Button text="Select" to={`/distribution/${boardroom.kind}`} />
@@ -81,7 +57,8 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
   );
 };
 const ButtonContainer = styled.div`
-  max-width: 200px;
+  max-width: 300px;
+  width: 100%
 `;
 const StyledCardWrapper = styled.div`
   display: flex;
@@ -106,7 +83,12 @@ const StyledInfoSlots = styled.div`
   padding-top: 5px;
   padding-bottom: 15px;
 `;
-
+const LockinDiv = styled.div`
+  display: flex;
+  text-align: center;
+  padding-bottom: 3px;
+  padding-top: 35px;
+`;
 const StyledInfoSlot = styled.div`
   padding-left: 5px;
   padding-right: 5px;
@@ -120,7 +102,7 @@ const SlotTitle = styled.div`
 const PercentageTilte = styled.span`
   text-align: center;
   font-weight: 300;
-  font-size: 13px;
+  font-size: 16px;
   color: #ffffff;
 `;
 const BoldText = styled.span`

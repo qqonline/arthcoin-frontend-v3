@@ -11,9 +11,9 @@ import TokenSymbol from '../../TokenSymbol';
 import TextButton from '../../Button/TextButton';
 import metaMaskIcon from '../../../assets/img/metamask.png';
 interface props {
-  onDismiss?: Function;
+  onCancel?: Function;
 }
-const AccountModal: React.FC<props> = () => {
+const AccountModal: React.FC<props> = ({ onCancel }) => {
   const basisCash = useBasisCash();
 
   const bacBalance = useTokenBalance(basisCash.ARTH);
@@ -24,25 +24,36 @@ const AccountModal: React.FC<props> = () => {
 
   const babBalance = useTokenBalance(basisCash.ARTHB);
   const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
-
+  const walletAddress = '0xf7dDfwefbefbefbfkaD62';
+  const handleClose = () => {
+    onCancel();
+  };
   return (
-    <Modal title="My Wallet" open>
-      <div className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom">
+    <Modal title="My Wallet" open handleClose={handleClose}>
+      <div
+        className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
+        style={{ minWidth: '300px' }}
+      >
         <div className="dialog-class-1 width-100">
           <span className="white font18">Connected with Metamask</span>
-          <div style={{ maxWidth: '200px' }}>
-            <TextButton>Change</TextButton>
-          </div>
+          {false && (
+            <div style={{ maxWidth: '200px' }}>
+              <TextButton>Change</TextButton>
+            </div>
+          )}
         </div>
-        <div className="dialog-class">
+        <WalletDetils>
           <img src={metaMaskIcon} alt="Metamask" width="30px" />
-          <CopyToClipboard text="0xf7dD...aD62">
+          <CopyToClipboard text="0xf7dDfwefbefbefbfkaD62">
             <div className="dialog-class margin-left-20">
-              <span className="white font18 margin-right-5">0xf7dD...aD62</span>
+              <span className="white font18 margin-right-5">{`${walletAddress.substring(
+                0,
+                4,
+              )}...${walletAddress.substring(walletAddress.length - 4)}`}</span>
               <FileCopyIcon className="font15 white pointer" />
             </div>
           </CopyToClipboard>
-        </div>
+        </WalletDetils>
       </div>
       <Balances>
         <StyledBalanceWrapper>
@@ -104,5 +115,11 @@ const StyledBalanceWrapper = styled.div`
   flex-direction: row;
   margin: 10px ${(props) => props.theme.spacing[3]}px;
 `;
-
+const WalletDetils = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 20px 0px;
+`;
 export default AccountModal;

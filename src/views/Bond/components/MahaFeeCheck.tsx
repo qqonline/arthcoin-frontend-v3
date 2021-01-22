@@ -14,7 +14,7 @@ const AntSwitch = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 35,
-      height: 18,
+      height: 19,
       padding: 0,
       display: 'flex',
     },

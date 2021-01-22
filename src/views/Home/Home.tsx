@@ -7,7 +7,7 @@ import TranscationSnackbar from '../../components/TopBar/components/TranscationS
 import './styles/index.sass';
 import './footer.css';
 const Home: React.FC = () => {
-  const [openModal, toggleModal] = useState(false);
+  const [openModal, toggleModal] = useState(true);
   const handleClose = () => {
     toggleModal(false);
   };
@@ -27,8 +27,21 @@ const Home: React.FC = () => {
         titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
       >
         <ModalText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci habitant aliquet
-          maecenas congue nisl feugiat tempus netus tempor. Ornare et pulvinar porta vitae.
+          Participants from countries under whose national legislation this token may be deemed
+          to be a security or a regulated financial instrument are prohibited from participating
+          in any manner in token issuance, including indirectly, such as via a proxy or a name
+          loan.
+        </ModalText>
+        <ModalText>
+          This token may be deemed to be a security or a regulated financial instrument within
+          the meaning of applicable national legislation in China, India, the United States, the
+          European Union and / or its individual member nations, Canada, South Korea, Singapore
+          and other countries.
+        </ModalText>
+        <ModalText>
+          It is your responsibility to determine whether you are from a country under whose
+          national legislation this token may be deemed to be a security or a regulated
+          financial instrument, and, if so, to respect the prohibition specified herein.
         </ModalText>
         <ModalHyperLink>View token contract on Etherscan</ModalHyperLink>
       </Modal>
@@ -519,7 +532,8 @@ const ModalText = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  text-align: center;
+  text-align: left;
+  margin-bottom: 15px;
   color: rgba(255, 255, 255, 0.64);
 `;
 const ModalHyperLink = styled.div`

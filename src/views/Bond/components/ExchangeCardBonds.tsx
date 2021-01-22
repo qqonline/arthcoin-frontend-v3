@@ -55,25 +55,25 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
     contracts: { Treasury },
   } = useBasisCash();
   const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
-
+  const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
-  const [onPresent, onDismiss] = useModal(
-    <ExchangeModal
-      title={action}
-      description={priceDesc}
-      max={balance}
-      onConfirm={(value) => {
-        onExchange(value);
-        onDismiss();
-      }}
-    />,
-  );
-
   return (
     <Card>
+      {showModal && (
+        <ExchangeModal
+          title={action}
+          description={priceDesc}
+          max={balance}
+          onConfirm={(value) => {
+            onExchange(value);
+          }}
+          onCancel={() => toggleModal(false)}
+        />
+      )}
       <div className="dialog-class">
         <StyledCardTitle>Redeem ARTH</StyledCardTitle>
         <HtmlTooltip
+          enterTouchDelay={0}
           title={
             <span>
               When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
@@ -107,7 +107,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
           <StyledCardActions>
-            <Button onClick={onPresent} text="Redeem" />
+            <Button onClick={() => toggleModal(true)} text="Redeem" />
           </StyledCardActions>
           {false && (
             <StyledCardActions>
@@ -124,7 +124,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                 ) : (
                   <Button
                     text={disabledDescription || action}
-                    onClick={onPresent}
+                    onClick={() => toggleModal(true)}
                     disabled={disabled}
                   />
                 )
@@ -158,7 +158,6 @@ const StyledCardDesc = styled.div`
 `;
 
 const StyledCardIcon = styled.div`
-  background-color: ${(props) => props.theme.color.grey[900]};
   width: 72px;
   height: 72px;
   border-radius: 36px;

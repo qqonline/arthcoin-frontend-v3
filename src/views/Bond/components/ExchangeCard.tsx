@@ -10,7 +10,6 @@ import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddIcon from '@material-ui/icons/Add';
-import useModal from '../../../hooks/useModal';
 import ExchangeModal from './ExchangeModal';
 import ERC20 from '../../../basis-cash/ERC20';
 import useTokenBalance from '../../../hooks/useTokenBalance';
@@ -62,31 +61,30 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
   } = useBasisCash();
   const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
-
+  const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
-
-  const [onPresent, onDismiss] = useModal(
-    <ExchangeModal
-      title={action}
-      description={priceDesc}
-      max={balance}
-      onConfirm={(value) => {
-        onExchange(value);
-        onDismiss();
-      }}
-      action={action}
-      tokenName={fromTokenName}
-    />,
-  );
-
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED;
 
   return (
     <Card>
+      {showModal && (
+        <ExchangeModal
+          title={action}
+          description={priceDesc}
+          max={balance}
+          onConfirm={(value) => {
+            onExchange(value);
+          }}
+          action={action}
+          onCancel={() => toggleModal(false)}
+          tokenName={fromTokenName}
+        />
+      )}
       <div className="dialog-class">
         <StyledCardTitle>Earn ARTH Bond</StyledCardTitle>
         <HtmlTooltip
+          enterTouchDelay={0}
           title={
             <span>
               When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
@@ -169,14 +167,14 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               ) : (
                 <Button
                   text={disabledDescription || action}
-                  onClick={onPresent}
+                  onClick={() => toggleModal(true)}
                   disabled={disabled}
                 />
               )}
             </StyledCardActions>
           )}
           <StyledCardActions>
-            <Button text="Earn" onClick={onPresent} />
+            <Button text="Earn" onClick={() => toggleModal(true)} />
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
@@ -203,7 +201,6 @@ const StyledCardDesc = styled.div`
 `;
 
 const StyledCardIcon = styled.div`
-  background-color: ${(props) => props.theme.color.grey[900]};
   width: 72px;
   height: 72px;
   border-radius: 36px;
@@ -256,6 +253,7 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 const Card = styled.div`
+  height: 100%;
   background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
   border-radius: 12px;
   box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);

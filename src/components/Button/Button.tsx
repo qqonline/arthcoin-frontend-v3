@@ -107,7 +107,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   color: #fff;
   cursor: pointer;
   display: flex;
-  font-size: ${(props) => props.fontSize}px;
+  font-size: 14px;
   font-weight: 700;
   height: 38px;
   justify-content: center;
