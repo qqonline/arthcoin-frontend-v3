@@ -120,9 +120,9 @@ const App: React.FC = () => {
     <Providers>
       <Router>
         <Switch>
-          {/* <Route path="/" exact>
+          <Route path="/" exact>
             <Home />
-          </Route> */}
+          </Route>
           <Route path="/stats">
             <Stats />
           </Route>

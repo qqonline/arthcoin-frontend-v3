@@ -207,10 +207,7 @@ export class BasisCash {
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    const decimals = BigNumber.from(10).pow(18);
-
-    return BigNumber.from(1).mul(decimals)
-    // return Treasury.getBondOraclePrice();
+    return Treasury.getBondOraclePrice();
   }
 
   async getBondStat(): Promise<TokenStat> {
@@ -393,6 +390,7 @@ export class BasisCash {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
     const ArthBoardroom = this.currentBoardroom(kind);
+    console.log('stakedd', ArthBoardroom.address)
     return await ArthBoardroom.stake(decimalToBalance(amount));
   }
 
@@ -404,9 +402,6 @@ export class BasisCash {
 
   async getEarningsOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
     const ArthBoardroom = this.currentBoardroom(kind);
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await ArthBoardroom.getCashEarningsOf(this.myAccount);
-    }
     return await ArthBoardroom.earned(this.myAccount);
   }
 
@@ -437,6 +432,7 @@ export class BasisCash {
     const nextAllocation = new Date(nextEpochTimestamp.mul(1000).toNumber());
     const prevAllocation = new Date(nextAllocation.getTime() - period.toNumber() * 1000);
 
+    console.log('nextAllocation', nextAllocation, nextEpochTimestamp)
 
     return { prevAllocation, nextAllocation, currentEpoch: currentEpoch.toNumber() };
   }

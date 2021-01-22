@@ -30,11 +30,11 @@ const AccountModal: React.FC<props> = () => {
       <div className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom">
         <div className="dialog-class-1 width-100">
           <span className="white font18">Connected with Metamask</span>
-          <div style={{ maxWidth: '200px' }}>
+          {/* <div style={{ maxWidth: '200px' }}>
             <TextButton>Change</TextButton>
-          </div>
+          </div> */}
         </div>
-        <div className="dialog-class">
+        {/* <div className="dialog-class">
           <img src={metaMaskIcon} alt="Metamask" width="30px" />
           <CopyToClipboard text="0xf7dD...aD62">
             <div className="dialog-class margin-left-20">
@@ -42,33 +42,33 @@ const AccountModal: React.FC<props> = () => {
               <FileCopyIcon className="font15 white pointer" />
             </div>
           </CopyToClipboard>
-        </div>
+        </div> */}
       </div>
       <Balances>
         <StyledBalanceWrapper>
           <TokenSymbol symbol="MAHA" />
-          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
+          <Label text="MAHA" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBacBalance}</StyledValue>
-            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
+            {/* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> */}
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
           <TokenSymbol symbol="ARTH" />
-          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
+          <Label text="ARTH" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBasBalance}</StyledValue>
-            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
+            {/* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> */}
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
           <TokenSymbol symbol="ARTHB" />
-          <Label text="ARTHB Earned" color="rgba(255, 255, 255, 0.64)" />
+          <Label text="ARTHB" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
             <StyledValue>{displayBabBalance}</StyledValue>
-            <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" />
+            {/* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> */}
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>

@@ -52,14 +52,15 @@ const Bond: React.FC = () => {
     [basisCash, addTransaction],
   );
 
-  const isBondRedeemable = useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
+  const isBondRedeemable = false // useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
   const isBondPurchasable = useMemo(() => {
     // const denominator1e18 = BigNumber.from(10).pow(18);
 
     // const currentPrice = BigNumber.from(cashPrice)
     //   .mul(denominator1e18)
     //   .div(1000);
-    return cashPrice.lt(targetPrice);
+    return false
+    // return cashPrice.lt(targetPrice);
   }, [cashPrice, targetPrice]);
 
   // const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();

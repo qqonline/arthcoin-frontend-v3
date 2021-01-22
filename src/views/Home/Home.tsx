@@ -59,7 +59,7 @@ const Home: React.FC = () => {
         </div>
 
         <div id="padding-top-30">
-          <a href="arth.html" id="no-txt-decoration">
+          <a target="_blank"  href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9" id="no-txt-decoration">
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
@@ -153,14 +153,14 @@ const Home: React.FC = () => {
               </div>
               <div className="card-body">
                 <h5 className="card-title">
-                  Fair Wealth
+                  Elastic
                   <br />
-                  Distribution
+                  Supply
                 </h5>
                 <p className="card-text">
-                  With a community-centred, decentralised approach, ARTH paves the way for a new
-                  and better financial world with fair and equal, non-concentrated reserve of
-                  wealth. Governed by you.
+                  ARTH is not dependent on depositing any kind of collateral and can
+                  easily scale to meet the organic demand for the coin. Innovating
+                  beyond exisiting algorithmic coins.
                 </p>
               </div>
             </div>
@@ -276,7 +276,7 @@ const Home: React.FC = () => {
           </ul>
         </div>
       </section>
-      <section className="arth-section" id="arth-tech">
+      {/* <section className="arth-section" id="arth-tech">
         <div
           className="arth-heading arth-heading-regular"
           id="arth-tech-title"
@@ -299,8 +299,6 @@ const Home: React.FC = () => {
             <br />
             selection, purchasing power pegging, oracle price feeds and more.
           </div>
-          {/* <div id="arth-technology-image"></div>
-		      <div id="arth-technology-image-mb"></div> */}
           <section className="col-12 col-md-5 " id="arth-cross-border">
             <div
               className="arth-heading arth-heading-regular"
@@ -310,7 +308,7 @@ const Home: React.FC = () => {
               data-aos-once="true"
             >
               <span id="arth-cross-border-img"></span>
-              Cross-border transactions
+              Elastic Supply
               <div
                 className="arth-para arth-para-regular"
                 id="arth-cross-border-para"
@@ -318,10 +316,8 @@ const Home: React.FC = () => {
                 data-aos-duration="2000"
                 data-aos-once="true"
               >
-                Deployed on Layer 2 Protocol, ARTH offers transactions speed of less than 3
-                seconds to cross the border from your wallet to another across the globe. The
-                very near future version of ARTH shall be a cross-chain solution that brings the
-                power of value coin to other blockchains like Ethereum and more
+                ARTH is not dependent on depositing any kind of collateral
+                and can easily scale to meet the organic demand for the coin.
               </div>
             </div>
           </section>
@@ -334,7 +330,7 @@ const Home: React.FC = () => {
               data-aos-once="true"
             >
               <span id="arth-cross-chain-img"></span>
-              Cross-chain liquidity
+              Uniswap Integration
               <div
                 className="arth-para arth-para-regular"
                 id="arth-cross-border-para"
@@ -342,15 +338,15 @@ const Home: React.FC = () => {
                 data-aos-duration="2000"
                 data-aos-once="true"
               >
-                ARTH is compatible with tokens and currencies from other blockchains to create a
-                massive liquidity pool across the chains. You can stake, lend, borrow, trade
-                ARTH across chains. (coming soon)
+                ARTH ensures stability by incentivising actors to buy back
+                ARTH when it is trading below it's target price and sell ARTH
+                when it is trading above.
               </div>
             </div>
           </section>
         </div>
-      </section>
-      <section className="arth-section" id="arth-lead-rev">
+      </section> */}
+      {/* <section className="arth-section" id="arth-lead-rev">
         <div
           className="arth-heading"
           id="arth-maha-dao-title"
@@ -411,7 +407,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section
         className="text-center"
         id="arth-section-title"
@@ -426,7 +422,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div id="padding-top-30">
-          <a href="arth.html" id="no-txt-decoration">
+          <a target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9" id="no-txt-decoration">
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>

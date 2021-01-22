@@ -37,6 +37,8 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     basisCash.currentBoardroom(boardroom.kind)?.address,
   );
 
+  console.log('stake', basisCash.currentBoardroom(boardroom.kind)?.address,)
+
   const tokenBalance = useTokenBalance(stakingToken);
 
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);

@@ -106,20 +106,29 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          <StyledCardActions>
+          {/* <StyledCardActions>
             <Button onClick={onPresent} text="Redeem" />
-          </StyledCardActions>
-          {false && (
+          </StyledCardActions> */}
+          {(
             <StyledCardActions>
-              {!!account ? (
+              {disabled ? (
+                <>
+                <Button
+                    text={disabledDescription || action}
+                    onClick={onPresent}
+                    disabled={disabled}
+                  />
+                </>
+                ) : !!account ? (
                 approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
                     disabled={
+                      disabled ||
                       approveStatus === ApprovalState.PENDING ||
                       approveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                    text="Redeem"
+                    text="Redeem ARTHB"
                   />
                 ) : (
                   <Button

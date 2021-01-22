@@ -84,10 +84,10 @@ const Home: React.FC = () => {
   });
 
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
-  const mahaPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
+
   // @ts-ignore
-  const nextEpoch = useMemo(() => moment(prevEpoch).add(1, 'hour').toDate(), [prevEpoch]);
+  const nextEpoch = useMemo(() => moment(prevEpoch).add(12, 'hour').toDate(), [prevEpoch]);
 
   return (
     <Page>
@@ -95,8 +95,8 @@ const Home: React.FC = () => {
         icon={<img alt="stats" src={StastIcon} width="200px" />}
         subtitle="View information about the current ARTH protocol"
         title="Statistics"
-        secondParaTitle="Next Epoch:"
-        secondParaDescription="Protocol will launch on Jan 22nd at 3pm GMT"
+        secondParaTitle="Protocol Launch"
+        secondParaDescription="Bonding opens at 3pm GMT and the first epoch starts at 4pm GMT"
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -134,8 +134,8 @@ const Home: React.FC = () => {
         </StyledHeader>
         <StyledHeader>
           <Stat
-            title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
-            description="ARTH Price (TWAP)"
+            title={cashOraclePrice ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
+            description="ARTH Price (1hr TWAP)"
           />
           <Stat title={arthPrice ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
           <Stat

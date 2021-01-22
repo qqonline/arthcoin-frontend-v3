@@ -176,7 +176,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
             </StyledCardActions>
           )}
           <StyledCardActions>
-            <Button text="Earn" onClick={onPresent} />
+            <Button disabled={disabled} text="Purchase ARTHB" onClick={onPresent} />
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
