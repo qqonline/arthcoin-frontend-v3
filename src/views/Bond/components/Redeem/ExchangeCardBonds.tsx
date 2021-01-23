@@ -10,7 +10,6 @@ import useBasisCash from '../../../../hooks/useBasisCash';
 import Label from '../../../../components/Label';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import useModal from '../../../../hooks/useModal';
 import ExchangeModal from './ExchangeModalBonds';
 import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
@@ -118,6 +117,12 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                   />
                 </>
                 ) : !!account ? (
+                  balance.eq(0) ? (
+                    <Button
+                    text={"No ARTHB Balance"}
+                    disabled={true}
+                  />
+                ) :
                 approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
                     disabled={
@@ -136,7 +141,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                   />
                 )
               ) : (
-                <Button disabled={disabled} onClick={() => connect('injected')} text="Unlock Wallet" />
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
             </StyledCardActions>
           )}

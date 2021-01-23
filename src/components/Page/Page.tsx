@@ -6,7 +6,7 @@ import TopBar from '../TopBar';
 const Page: React.FC = ({ children }) => (
   <StyledPage>
     <TopBar />
-    <StyledMain style={{ backgroundImage: `url(${bgImg})` }}>{children}</StyledMain>
+    <StyledMain style={{ backgroundImage: `url(${bgImg})`, backgroundSize: 'cover' }}>{children}</StyledMain>
   </StyledPage>
 );
 

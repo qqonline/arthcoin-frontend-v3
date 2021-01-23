@@ -72,7 +72,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
+          <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />

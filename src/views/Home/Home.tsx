@@ -104,9 +104,7 @@ const Home: React.FC = () => {
               </div>
               <div className="card-body">
                 <h5 className="card-title">
-                  Preserve Buying
-                  <br />
-                  Power
+                  Preserve Wealth
                 </h5>
                 <p className="card-text">
                   No more erosion of hard-earned wealth due to inflation. ARTH protects and
@@ -137,9 +135,7 @@ const Home: React.FC = () => {
               </div>
               <div className="card-body">
                 <h5 className="card-title">
-                  Value
-                  <br />
-                  Stable
+                  Value Stable
                 </h5>
                 <p className="card-text">
                   ARTH is pegged against a Global Measurement Unit consisting of a

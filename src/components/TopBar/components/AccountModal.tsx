@@ -31,18 +31,18 @@ const AccountModal: React.FC<props> = ({ onCancel }) => {
   return (
     <Modal title="My Wallet" open handleClose={handleClose}>
       <div
-        className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
-        style={{ minWidth: '300px' }}
+        // className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
+        // style={{ minWidth: '300px' }}
       >
-        <div className="dialog-class-1 width-100">
+        {/* <div className="dialog-class-1 width-100">
           <span className="white font18">Connected with Metamask</span>
           {false && (
             <div style={{ maxWidth: '200px' }}>
               <TextButton>Change</TextButton>
             </div>
           )}
-        </div>
-        <WalletDetils>
+        </div> */}
+        {/* <WalletDetils>
           <img src={metaMaskIcon} alt="Metamask" width="30px" />
           <CopyToClipboard text="0xf7dDfwefbefbefbfkaD62">
             <div className="dialog-class margin-left-20">
@@ -53,7 +53,7 @@ const AccountModal: React.FC<props> = ({ onCancel }) => {
               <FileCopyIcon className="font15 white pointer" />
             </div>
           </CopyToClipboard>
-        </WalletDetils>
+        </WalletDetils> */}
       </div>
       <Balances>
         <StyledBalanceWrapper>

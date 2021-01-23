@@ -16,6 +16,7 @@ import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
 import Spacer from '../../../../components/Spacer';
+import { useWallet } from 'use-wallet';
 
 interface ExchangeCardProps {
   action: string;
@@ -59,6 +60,8 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
     ARTH,
     DAI,
   } = useBasisCash();
+
+  const { account, connect } = useWallet();
   const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
   const [showModal, toggleModal] = React.useState(false);
@@ -125,9 +128,18 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          {false && (
+          {(
             <StyledCardActions>
-              {!isDAIApproved || !isARTHApproved ? (
+              {
+                !account ? (
+                  <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+                ) :
+                disabled ?
+                (
+                  <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
+
+                ) :
+              !isDAIApproved || !isARTHApproved ? (
                 <>
                   <Button
                     disabled={
@@ -165,9 +177,9 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               )}
             </StyledCardActions>
           )}
-          <StyledCardActions>
+          {/* <StyledCardActions>
             <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
-          </StyledCardActions>
+          </StyledCardActions> */}
         </StyledCardContentInner>
       </CardContent>
     </Card>
