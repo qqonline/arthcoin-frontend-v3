@@ -423,6 +423,18 @@ export class BasisCash {
     return await ArthBoardroom.exit();
   }
 
+  async getTreasuryEstimateBondsToIssue(price: BigNumber): Promise<BigNumber> {
+    const { Treasury } = this.contracts;
+    const est = await Treasury.estimateSeignorageToMint(price);
+    return est
+  }
+
+  async getTreasuryEstimateSeignorageToMint(price: BigNumber): Promise<BigNumber> {
+    const { Treasury } = this.contracts;
+    const est = await Treasury.estimateSeignorageToMint(price);
+    return est
+  }
+
   async getTreasuryNextAllocationTime(): Promise<TreasuryAllocationTime> {
     const { Treasury } = this.contracts;
     const nextEpochTimestamp: BigNumber = await Treasury.nextEpochPoint();

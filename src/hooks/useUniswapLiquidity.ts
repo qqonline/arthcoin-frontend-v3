@@ -21,8 +21,6 @@ const useUniswapLiquidity = (assetA: ERC20, assetB: ERC20) => {
     const a = BigNumber.from(Math.floor(Number(pair.reserve0.toFixed(0))))// ARTH
     const b = BigNumber.from(Math.floor(Number(pair.reserve1.toFixed(0)))) // DAI
 
-    console.log(a, b)
-
     const decimals = BigNumber.from(10).pow(18)
 
     setPrice(a.add(b).mul(decimals)) // TODO; need to use price

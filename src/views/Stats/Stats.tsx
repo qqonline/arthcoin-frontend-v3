@@ -25,6 +25,7 @@ import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
+import useNextEpochTargets from '../../hooks/useNextEpochTargets';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -62,7 +63,6 @@ const Home: React.FC = () => {
   const ecosystemFund = useFundAmount('ecosystem');
 
   // const scalingFactor = useMemo(
-
   //   () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
   //   [cashStat],
   // );
@@ -87,9 +87,13 @@ const Home: React.FC = () => {
 
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
+  const targets = useNextEpochTargets(cash1hrPrice)
 
   // @ts-ignore
   const nextEpoch = useMemo(() => moment(prevEpoch).add(12, 'hour').toDate(), [prevEpoch]);
+
+  const supplyIncrease = Number(getDisplayBalance(targets.supplyIncrease, 18, 0))
+  const supplyIncreasePercentage = cash ? (supplyIncrease / Number(cash?.totalSupply)) * 100 : 0
 
   return (
     <Page>
@@ -97,8 +101,13 @@ const Home: React.FC = () => {
         icon={<img alt="stats" src={StastIcon} width="200px" />}
         subtitle="View information about the current ARTH protocol"
         title="Statistics"
-        secondParaTitle="Protocol Launch"
-        secondParaDescription="Bonding opens at 3pm GMT and the first epoch starts at 4pm GMT"
+        secondParaTitle="Next Epoch"
+        secondParaDescription={
+          cash1hrPrice.gt(targetPrice) ?
+          `Protocol will expand the supply by approximately ${commify(supplyIncrease)} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
+        :
+          `Protocol will buyback the supply at approximately 5% of ARTH supply`
+      }
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -155,7 +164,7 @@ const Home: React.FC = () => {
             description="Redeemable for Bonds"
           />
           <Stat
-            title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
+            title={ecosystemFund ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH` : '-'}
             description="Ecosystem Fund"
           />
           {/* <Stat
