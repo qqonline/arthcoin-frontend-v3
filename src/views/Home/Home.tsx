@@ -64,7 +64,7 @@ const Home: React.FC = () => {
         >
           <span className="main-title">Timeless value</span>
           <br />
-          World’s first non-inflationary money.
+          World’s first non-depreciating money.
         </div>
         <div className="title-down-text">
           <div className="line"></div>

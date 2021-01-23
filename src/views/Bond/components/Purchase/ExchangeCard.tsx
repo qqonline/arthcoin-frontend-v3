@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
-import Button from '../../../components/Button';
-import CardContent from '../../../components/CardContent';
-import useBasisCash from '../../../hooks/useBasisCash';
-import Label from '../../../components/Label';
-import TokenSymbol from '../../../components/TokenSymbol';
+import Button from '../../../../components/Button';
+import CardContent from '../../../../components/CardContent';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import Label from '../../../../components/Label';
+import TokenSymbol from '../../../../components/TokenSymbol';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddIcon from '@material-ui/icons/Add';
 import ExchangeModal from './ExchangeModal';
-import ERC20 from '../../../basis-cash/ERC20';
-import useTokenBalance from '../../../hooks/useTokenBalance';
-import useApprove, { ApprovalState } from '../../../hooks/useApprove';
-import useCatchError from '../../../hooks/useCatchError';
-import Spacer from '../../../components/Spacer';
+import ERC20 from '../../../../basis-cash/ERC20';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useCatchError from '../../../../hooks/useCatchError';
+import Spacer from '../../../../components/Spacer';
 
 interface ExchangeCardProps {
   action: string;
@@ -82,7 +82,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Earn ARTH Bond</StyledCardTitle>
+        <StyledCardTitle>Purchase ARTHB</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
@@ -96,16 +96,8 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
           <InfoOutlinedIcon className="margin-left-10 white" />
         </HtmlTooltip>
       </div>
-      {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
       <CardContent>
         <StyledCardContentInner>
-          {false && (
-            <StyledCardDesc>
-              When ARTH is below its target price; you can buy ARTH Bonds with Dai by
-              influencing the price on Uniswap. Bond tokens are bought at a discount and are
-              redeemed for a profit.
-            </StyledCardDesc>
-          )}
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -174,7 +166,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
             </StyledCardActions>
           )}
           <StyledCardActions>
-            <Button text="Earn" onClick={() => toggleModal(true)} />
+            <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
@@ -241,7 +233,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff9;
   text-align: center;
 `;
 

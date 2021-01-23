@@ -4,18 +4,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import { useWallet } from 'use-wallet';
-import Button from '../../../components/Button';
-import CardContent from '../../../components/CardContent';
-import useBasisCash from '../../../hooks/useBasisCash';
-import Label from '../../../components/Label';
-import TokenSymbol from '../../../components/TokenSymbol';
+import Button from '../../../../components/Button';
+import CardContent from '../../../../components/CardContent';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import Label from '../../../../components/Label';
+import TokenSymbol from '../../../../components/TokenSymbol';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import useModal from '../../../hooks/useModal';
+import useModal from '../../../../hooks/useModal';
 import ExchangeModal from './ExchangeModalBonds';
-import ERC20 from '../../../basis-cash/ERC20';
-import useTokenBalance from '../../../hooks/useTokenBalance';
-import useApprove, { ApprovalState } from '../../../hooks/useApprove';
-import useCatchError from '../../../hooks/useCatchError';
+import ERC20 from '../../../../basis-cash/ERC20';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useCatchError from '../../../../hooks/useCatchError';
 
 interface ExchangeCardProps {
   action: string;
@@ -57,6 +57,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
   const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
+
   return (
     <Card>
       {showModal && (
@@ -71,7 +72,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Redeem ARTH</StyledCardTitle>
+        <StyledCardTitle>Redeem ARTHB</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
@@ -106,16 +107,13 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          <StyledCardActions>
-            <Button onClick={() => toggleModal(true)} text="Redeem" />
-          </StyledCardActions>
-          {false && (
+          {(
             <StyledCardActions>
               {disabled ? (
                 <>
                 <Button
                     text={disabledDescription || action}
-                    onClick={onPresent}
+                    // onClick={onPresent}
                     disabled={disabled}
                   />
                 </>
@@ -138,7 +136,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                   />
                 )
               ) : (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+                <Button disabled={disabled} onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
             </StyledCardActions>
           )}

@@ -1,15 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import Button from '../../../components/Button';
-import Modal from '../../../components/NewModal/index';
-import ButtonTransperant from '../../../components/Button/TransperantButton';
-import ModalActions from '../../../components/ModalActions';
-import TokenInput from '../../../components/TokenInput';
-import { getDisplayBalance, getFullDisplayBalance } from '../../../utils/formatBalance';
+import Button from '../../../../components/Button';
+import Modal from '../../../../components/NewModal/index';
+import ButtonTransperant from '../../../../components/Button/TransperantButton';
+import ModalActions from '../../../../components/ModalActions';
+import TokenInput from '../../../../components/TokenInput';
+import { getDisplayBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
-import MahaFeeCheck from './MahaFeeCheck';
-import useBasisCash from '../../../hooks/useBasisCash';
-import useApprove, { ApprovalState } from '../../../hooks/useApprove';
-import useTokenBalance from '../../../hooks/useTokenBalance';
+import MahaFeeCheck from '../MahaFeeCheck';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
 import styled from 'styled-components';
 
 interface ExchangeModalProps {

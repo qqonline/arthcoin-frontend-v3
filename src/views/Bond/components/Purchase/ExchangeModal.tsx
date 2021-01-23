@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Button from '../../../components/Button';
-import Modal from '../../../components/NewModal/index';
-import ModalActions from '../../../components/ModalActions';
-import ButtonTransperant from '../../../components/Button/TransperantButton';
-import TokenInput from '../../../components/TokenInput';
-import { getBalance, getFullDisplayBalance } from '../../../utils/formatBalance';
+import Button from '../../../../components/Button';
+import Modal from '../../../../components/NewModal/index';
+import ModalActions from '../../../../components/ModalActions';
+import ButtonTransperant from '../../../../components/Button/TransperantButton';
+import TokenInput from '../../../../components/TokenInput';
+import { getBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
-import useStabilityFee from '../../../hooks/useStabilityFee';
-import useBondStats from '../../../hooks/useBondStats';
-import useCashTargetPrice from '../../../hooks/useCashTargetPrice';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import useStabilityFee from '../../../../hooks/useStabilityFee';
+import useBondStats from '../../../../hooks/useBondStats';
+import useCashTargetPrice from '../../../../hooks/useCashTargetPrice';
 
 interface ExchangeModalProps {
   max: BigNumber;

@@ -1,3 +1,7 @@
+*, button, input {
+  outline: none;
+}
+
 @media (max-width: 768px) {
   .custom-dialog-class {
     margin-top: 250px !important;

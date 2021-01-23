@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
-import Spacer from '../../components/Spacer';
+import { commify } from 'ethers/lib/utils';
 import Container from '../../components/Container';
 import HomeCard from './components/HomeCard';
 import { OverviewData } from './types';
@@ -24,6 +24,7 @@ import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
+import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -53,7 +54,8 @@ const Home: React.FC = () => {
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   const cashStat = useCashPriceInEstimatedTWAP();
-  const cashOraclePrice = useBondOraclePriceInLastTWAP();
+  const cash1hrPrice = useBondOraclePriceInLastTWAP();
+  const cashe12hrPrice = useCashPriceInLastTWAP();
   const treasuryAmount = useTreasuryAmount();
   const targetPrice = useCashTargetPrice();
 
@@ -129,13 +131,17 @@ const Home: React.FC = () => {
           <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
           <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
           <Stat title={'1 %'} description="Stability Fees" />
-          <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
+          <Stat title={`$${commify(getDisplayBalance(arthLiquidity, 18, 0))}`} description="ARTH Liquidity" />
           {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
           <Stat
-            title={cashOraclePrice ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
+            title={cash1hrPrice ? `$${getDisplayBalance(cash1hrPrice, 18, 2)}` : '-'}
             description="ARTH Price (1hr TWAP)"
+          />
+          <Stat
+            title={cashe12hrPrice ? `$${getDisplayBalance(cashe12hrPrice, 18, 2)}` : '-'}
+            description="ARTH Price (24hr TWAP)"
           />
           <Stat title={arthPrice ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
           <Stat

@@ -3,8 +3,8 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
-import ExchangeCard from './components/ExchangeCard';
-import ExchangeCardBonds from './components/ExchangeCardBonds';
+import ExchangeCard from './components/Purchase/ExchangeCard';
+import ExchangeCardBonds from './components/Redeem/ExchangeCardBonds';
 import Container from '../../components/Container';
 import styled from 'styled-components';
 import useBondStats from '../../hooks/useBondStats';
@@ -27,7 +27,7 @@ const Bond: React.FC = () => {
   const basisCash = useBasisCash();
   const addTransaction = useTransactionAdder();
   // const bondStat = useBondStats();
-  const cashPrice = useBondOraclePriceInLastTWAP();
+  const cash1hrPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
   const stabiltiyFees = useStabilityFee();
 
@@ -52,16 +52,12 @@ const Bond: React.FC = () => {
     [basisCash, addTransaction],
   );
 
-  const isBondRedeemable = false // useMemo(() => cashPrice?.gt(targetPrice), [cashPrice, targetPrice]);
-  const isBondPurchasable = useMemo(() => {
-    // const denominator1e18 = BigNumber.from(10).pow(18);
+  const isBondRedeemable = useMemo(() => cash1hrPrice.gt(targetPrice), [cash1hrPrice, targetPrice]);
 
-    // const currentPrice = BigNumber.from(cashPrice)
-    //   .mul(denominator1e18)
-    //   .div(1000);
-    return false
-    // return cashPrice.lt(targetPrice);
-  }, [cashPrice, targetPrice]);
+  const isBondPurchasable = useMemo(() => {
+    // 95 % of target price
+    return cash1hrPrice.lt(targetPrice.mul(95).div(100))
+  }, [cash1hrPrice, targetPrice]);
 
   // const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
   // if (!isLaunched) {
@@ -123,7 +119,7 @@ const Bond: React.FC = () => {
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCardBonds
-                      action="Redeem"
+                      action="Redeem ARTHB"
                       fromToken={basisCash.ARTHB}
                       fromTokenName="ARTHB"
                       toToken={basisCash.DAI}
@@ -144,7 +140,7 @@ const Bond: React.FC = () => {
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={12} lg={12} xl={12}>
                     <ExchangeStat
-                      title={`ARTH: $${getDisplayBalance(cashPrice, 18, 2)}`}
+                      title={`ARTH: $${getDisplayBalance(cash1hrPrice, 18, 2)}`}
                       description="Last-Hour TWAP Price"
                     />
                   </Grid>
