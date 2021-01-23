@@ -98,15 +98,15 @@ const Bond: React.FC = () => {
           </Route>
           <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
-            <Grid container spacing={5} justify="center">
-              <Grid item xs={12} md={9} lg={9} xl={9}>
+            <Grid container spacing={3} justify="center">
+              <Grid item xs={12} md={8} lg={8} xl={8}>
                 {false && (
                   <ChartContainer>
                     <p className="white font20 bold-600 margin-left-15">ARTH Price</p>
                     <Chart />
                   </ChartContainer>
                 )}
-                <Grid container spacing={5} justify="center">
+                <Grid container spacing={3} justify="center">
                   <Grid item xs={12} md={6} lg={6} xl={6}>
                     <ExchangeCard
                       action="Purchase"
@@ -144,7 +144,7 @@ const Bond: React.FC = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid container item xs={12} md={3} lg={3} xl={3}>
+              <Grid container item xs={12} md={4} lg={4} xl={4}>
                 <Grid container spacing={5} justify="center">
                   <Grid container item xs={12} md={12} lg={12} xl={12}>
                     <ExchangeStat

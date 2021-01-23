@@ -214,6 +214,7 @@ const Card = styled.div`
   border-radius: 12px;
   box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
+  height: 100%;
   flex: 1;
   flex-direction: column;
 `;

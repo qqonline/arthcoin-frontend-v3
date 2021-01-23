@@ -27,6 +27,10 @@ const Home: React.FC = () => {
         titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
       >
         <ModalText>
+          ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
+          all your money. Do not invest you if you are not aware of what you are doing.
+        </ModalText>
+        <ModalText>
           Participants from countries under whose national legislation this token may be deemed
           to be a security or a regulated financial instrument are prohibited from participating
           in any manner in token issuance, including indirectly, such as via a proxy or a name
@@ -159,21 +163,16 @@ const Home: React.FC = () => {
                 data-aos-once="true"
               >
                 <img
-                  src={require('./img/feature-icon/f-icon-3.svg')}
+                  src={require('./img/feature-icon/f-icon-4.svg')}
                   className="img-top"
                   alt="..."
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">
-                  Fair Wealth
-                  <br />
-                  Distribution
-                </h5>
+                <h5 className="card-title">Elastic Supply</h5>
                 <p className="card-text">
-                  With a community-centred, decentralised approach, ARTH paves the way for a new
-                  and better financial world with fair and equal, non-concentrated reserve of
-                  wealth. Governed by you.
+                  Arth has an elastic supply, which means its supply can easily grow or shrink
+                  to meet the current market demand
                 </p>
               </div>
             </div>
@@ -448,7 +447,7 @@ const Home: React.FC = () => {
       <footer>
         <div className="footer-content">
           <div className="row bottom-most">
-            <div className="col-12 col-sm-8">
+            <div className="col-12 col-sm-6">
               <div className="social-items">
                 <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
                   <button className="button3">
@@ -500,10 +499,12 @@ const Home: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="col-12 col-sm-4">
+            <div className="col-12 col-sm-6">
               <div className="footer-end">
+                <StyledLink href="https://docs.arthcoin.com" target="_blank">
+                  Arth GitBook
+                </StyledLink>
                 <span>POWERED BY</span>
-
                 <span>
                   <img src={require('./images/mainlogo.svg')} alt="mahadao-logo" />
                 </span>
@@ -517,15 +518,20 @@ const Home: React.FC = () => {
   );
 };
 
-const CardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
+const StyledLink = styled.a`
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  opacity: 0.64;
+  &:hover {
+    opacity: 0.88;
+    color: #ffffff;
+    text-decoration: none;
   }
 `;
 const ModalText = styled.div`

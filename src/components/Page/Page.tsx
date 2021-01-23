@@ -19,6 +19,10 @@ const StyledMain = styled.div`
   flex-direction: column;
   min-height: calc(100vh - ${(props) => props.theme.topBarSize * 2}px);
   padding-bottom: ${(props) => props.theme.spacing[5]}px;
+  @media (max-width: 768px) {
+    background-size: cover;
+    background-position: center, center;
+  } ;
 `;
 
 export default Page;

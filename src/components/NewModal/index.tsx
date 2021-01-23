@@ -12,6 +12,7 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       margin: 0,
+      borderRadius: '12px',
       padding: theme.spacing(2),
       color: 'white',
     },

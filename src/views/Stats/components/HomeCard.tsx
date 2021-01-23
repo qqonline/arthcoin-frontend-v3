@@ -114,6 +114,8 @@ const CardContent = styled.div`
 const CardHeader = styled.h2`
   color: #fff;
   display: flex;
+  font-weight: 600;
+  font-size: 18px;
   justify-content: start;
   align-items: center;
   text-align: center;
