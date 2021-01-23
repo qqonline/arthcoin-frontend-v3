@@ -18,7 +18,7 @@ import useTokenBalance from '../../hooks/useTokenBalance';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useStabilityFee from '../../hooks/useStabilityFee';
-import BondsIcon from './bonds.png';
+import BondsIcon from '../../assets/svg/Bond.svg';
 import Chart from './components/Chart';
 import { BigNumber } from 'ethers';
 

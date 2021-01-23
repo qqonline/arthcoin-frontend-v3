@@ -7,7 +7,7 @@ import Container from '../../components/Container';
 import StakingCard from './StakingCard';
 import Bank from '../Bank';
 import BankCards from './BankCards';
-import StakingIcon from './staking.png';
+import StakingIcon from '../../assets/svg/Staking.svg';
 import RSRIcon from '../../assets/img/RSR.webp';
 import COMPIcon from '../../assets/img/Staking/COMP.webp';
 import DOTIcon from '../../assets/img/Staking/DOT.webp';
