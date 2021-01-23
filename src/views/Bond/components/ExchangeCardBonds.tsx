@@ -85,7 +85,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           <InfoOutlinedIcon className="margin-left-10 white" />
         </HtmlTooltip>
       </div>
-      <div className="border-bottom width-100 margin-bottom-20" />
+      {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
       <CardContent>
         <StyledCardContentInner>
           <StyledExchanger>

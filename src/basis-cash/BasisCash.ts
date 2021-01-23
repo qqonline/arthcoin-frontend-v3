@@ -217,7 +217,7 @@ export class BasisCash {
     const bondPrice = cashPrice.pow(2).div(decimals);
 
     return {
-      priceInDAI: getDisplayBalance(bondPrice),
+      priceInDAI: "0", //getDisplayBalance(bondPrice),
       totalSupply: await this.ARTHB.displayedTotalSupply(),
     };
   }

@@ -49,7 +49,7 @@ const AccountModal: React.FC<props> = () => {
           <TokenSymbol symbol="MAHA" />
           <Label text="MAHA" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
-            <StyledValue>{displayBacBalance}</StyledValue>
+            <StyledValue>{displayBasBalance}</StyledValue>
             {/* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> */}
           </StyledBalance>
         </StyledBalanceWrapper>
@@ -58,7 +58,7 @@ const AccountModal: React.FC<props> = () => {
           <TokenSymbol symbol="ARTH" />
           <Label text="ARTH" color="rgba(255, 255, 255, 0.64)" />
           <StyledBalance>
-            <StyledValue>{displayBasBalance}</StyledValue>
+            <StyledValue>{displayBacBalance}</StyledValue>
             {/* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> */}
           </StyledBalance>
         </StyledBalanceWrapper>

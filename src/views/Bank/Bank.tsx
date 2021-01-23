@@ -28,7 +28,7 @@ const Bank: React.FC = () => {
         title={bank?.name}
       />
       <Container size="lg">
-        <div className="border-bottom width-100 margin-bottom-20" />
+        {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
         <Grid container spacing={5} justify="center" alignItems="stretch">
           <Grid container item xs={12} md={6} lg={6} xl={6}>
             <StyledCardsWrapper>

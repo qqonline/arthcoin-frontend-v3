@@ -93,7 +93,7 @@ const Bond: React.FC = () => {
             />
           </Route>
           <Container size="lg">
-            <div className="border-bottom width-100 margin-bottom-20" />
+            {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
             <Grid container spacing={5} justify="center">
               <Grid container item xs={12} md={9} lg={9} xl={9}>
                 {false && (

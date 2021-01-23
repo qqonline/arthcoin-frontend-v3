@@ -11,8 +11,9 @@ import useBasisCash from '../../../hooks/useBasisCash';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
+import { Boardrooms } from '../../../basis-cash/config';
 const Boardroom = () => {
-  const { bankId } = useParams<{ bankId: 'arth' | 'arthLiquidity' }>();
+  const { bankId } = useParams<{ bankId: Boardrooms }>();
   const basisCash = useBasisCash();
   const boardroom = basisCash.getBoardroom(bankId);
 
@@ -25,7 +26,7 @@ const Boardroom = () => {
         showEpoch
       />
       <Container size="lg">
-        <div className="border-bottom width-100 margin-bottom-20" />
+        {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
         <Grid container spacing={5} justify="center">
           <Grid item xs={12} md={9} lg={9} xl={9}>
             <Grid container spacing={5} justify="center">
@@ -54,7 +55,7 @@ const Boardroom = () => {
             </Grid>
           </Grid> */}
         </Grid>
-        {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
+        {bankId === 'arthLiquidity' || bankId === 'mahaLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
       </Container>
     </>
   );
@@ -72,7 +73,7 @@ const LPTokenHelpText: React.FC<{ boardroom: BoardroomInfo }> = ({ boardroom }) 
   } else {
     pairName = 'MAHA-WETH pair';
     uniswapUrl =
-      'https://app.uniswap.org/#/add/0xa7ED29B253D8B4E3109ce07c80fc570f81B63696/0x6B175474E89094C44Da98b954EedeAC495271d0F';
+      'https://app.uniswap.org/#/add/ETH/0xB4d930279552397bbA2ee473229f89Ec245bc365';
   }
 
   return (
@@ -104,6 +105,8 @@ const StyledCardsWrapper = styled.div`
 const StyledLink = styled.a`
   font-weight: 700;
   text-decoration: none;
+  text-align: center;
+  display: block;
   color: ${(props) => props.theme.color.primary.main};
 `;
 
