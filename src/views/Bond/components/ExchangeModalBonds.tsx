@@ -16,13 +16,14 @@ interface ExchangeModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   title: string;
+  onCancel?: Function;
   description: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, onCancel }) => {
   const [val, setVal] = useState('');
   const [mahaVal, setMahaVal] = useState('');
-
+  const [openModal, toggleModalState] = useState(true);
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
 
   const handleChange = useCallback(
@@ -47,11 +48,16 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
 
   const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
   const description =
-    'You are going to redeem 0 ARTH by paying 0 ARTHB and a stability fee of 0.00 MAHA';
-
+    'You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA';
+  const handleClose = () => {
+    onCancel();
+  };
   return (
-    <Modal open title="Redeem your ARTH Bonds">
-      <p className="font16 bold-600 row-centered" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
+    <Modal open title="Redeem your ARTH Bonds" handleClose={handleClose}>
+      <p
+        className="font16 bold-600 row-centered"
+        style={{ color: 'rgba(255, 255, 255, 0.88)' }}
+      >
         {description}
       </p>
       <TokenInput
@@ -68,28 +74,43 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm }) 
         max={getDisplayBalance(mahaBalance)}
       />
       {/* <StyledLabel>{description}</StyledLabel> */}
-      <ModalActions>
-        <ButtonTransperant text="Cancel" variant="secondary" />
-
-        <Button
-          text={'Will be enabled after launch'}
-          disabled={true}
-          // onClick={() => onConfirm(val)}
-        />
-        {/* <Button
-          text={!isMahaApproved ? 'MAHA Not Approved' : action}
-          disabled={!isMahaApproved || Number(val) <= 0}
-          onClick={() => onConfirm(val)}
-        /> */}
-      </ModalActions>
+      <ActionButton>
+        <ResponsiveButtonWidth>
+          <ButtonTransperant
+            text="Cancel"
+            variant="secondary"
+            onClick={() => handleClose()}
+          />
+        </ResponsiveButtonWidth>
+        <ResponsiveButtonWidth>
+          <Button
+            text={!isMahaApproved ? 'MAHA Not Approved' : action}
+            disabled={!isMahaApproved || Number(val) <= 0}
+            onClick={() => onConfirm(val)}
+          />
+        </ResponsiveButtonWidth>
+      </ActionButton>
     </Modal>
   );
 };
 
-const StyledLabel = styled.div`
-  color: #fff9;
-  padding: 15px 15px 0;
-  text-align: center;
+const ActionButton = styled.div`
+  align-items: center;
+  background-color: ${(props) => props.theme.color.grey[100]}00;
+  display: flex;
+  height: 96px;
+  justify-content: space-between;
+  margin: ${(props) => props.theme.spacing[4]}px ${(props) => -props.theme.spacing[4]}px
+    ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  } ;
 `;
-
+const ResponsiveButtonWidth = styled.div`
+  width: 250px;
+  @media (max-width: 768px) {
+    width: 100%;
+  } ;
+`;
 export default ExchangeModal;

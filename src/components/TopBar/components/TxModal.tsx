@@ -75,7 +75,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
         </div>
       )}
 
-      <Button text="Close" onClick={handleClose} />
+      {false && <Button text="Close" onClick={handleClose} />}
     </Modal>
   );
 };

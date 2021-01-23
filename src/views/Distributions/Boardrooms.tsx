@@ -11,7 +11,7 @@ import config from '../../config';
 import LaunchCountdown from '../../components/LaunchCountdown';
 // import Notice from '../../components/Notice';
 // import useBoardroomVersion from '../../hooks/useBoardroomVersion';
-import DistributionIcon from './distribution.png';
+import DistributionIcon from '../../assets/svg/Boardroom.svg';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));

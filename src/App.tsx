@@ -143,10 +143,10 @@ const App: React.FC = () => {
 };
 
 const AppContent: React.FC = ({ children }) => {
-  const { account } = useWallet();
+  // const { account } = useWallet();
   const basisCash = useBasisCash();
 
-  if (!!!account) return <UnlockWallet />;
+  // if (!!!account) return <UnlockWallet />;
   if (!basisCash) return <div>Loading</div>;
 
   return (

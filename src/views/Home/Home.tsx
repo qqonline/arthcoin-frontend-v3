@@ -7,7 +7,7 @@ import TranscationSnackbar from '../../components/TopBar/components/TranscationS
 import './styles/index.sass';
 import './footer.css';
 const Home: React.FC = () => {
-  const [openModal, toggleModal] = useState(false);
+  const [openModal, toggleModal] = useState(true);
   const handleClose = () => {
     toggleModal(false);
   };
@@ -27,8 +27,25 @@ const Home: React.FC = () => {
         titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
       >
         <ModalText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci habitant aliquet
-          maecenas congue nisl feugiat tempus netus tempor. Ornare et pulvinar porta vitae.
+          ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
+          all your money. Do not invest you if you are not aware of what you are doing.
+        </ModalText>
+        <ModalText>
+          Participants from countries under whose national legislation this token may be deemed
+          to be a security or a regulated financial instrument are prohibited from participating
+          in any manner in token issuance, including indirectly, such as via a proxy or a name
+          loan.
+        </ModalText>
+        <ModalText>
+          This token may be deemed to be a security or a regulated financial instrument within
+          the meaning of applicable national legislation in China, India, the United States, the
+          European Union and / or its individual member nations, Canada, South Korea, Singapore
+          and other countries.
+        </ModalText>
+        <ModalText>
+          It is your responsibility to determine whether you are from a country under whose
+          national legislation this token may be deemed to be a security or a regulated
+          financial instrument, and, if so, to respect the prohibition specified herein.
         </ModalText>
         <ModalHyperLink>View token contract on Etherscan</ModalHyperLink>
       </Modal>
@@ -146,21 +163,16 @@ const Home: React.FC = () => {
                 data-aos-once="true"
               >
                 <img
-                  src={require('./img/feature-icon/f-icon-3.svg')}
+                  src={require('./img/feature-icon/f-icon-4.svg')}
                   className="img-top"
                   alt="..."
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">
-                  Elastic
-                  <br />
-                  Supply
-                </h5>
+                <h5 className="card-title">Elastic Supply</h5>
                 <p className="card-text">
-                  ARTH is not dependent on depositing any kind of collateral and can
-                  easily scale to meet the organic demand for the coin. Innovating
-                  beyond exisiting algorithmic coins.
+                  Arth has an elastic supply, which means its supply can easily grow or shrink
+                  to meet the current market demand
                 </p>
               </div>
             </div>
@@ -431,7 +443,7 @@ const Home: React.FC = () => {
       <footer>
         <div className="footer-content">
           <div className="row bottom-most">
-            <div className="col-12 col-sm-8">
+            <div className="col-12 col-sm-6">
               <div className="social-items">
                 <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
                   <button className="button3">
@@ -483,10 +495,12 @@ const Home: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="col-12 col-sm-4">
+            <div className="col-12 col-sm-6">
               <div className="footer-end">
+                <StyledLink href="https://docs.arthcoin.com" target="_blank">
+                  Arth GitBook
+                </StyledLink>
                 <span>POWERED BY</span>
-
                 <span>
                   <img src={require('./images/mainlogo.svg')} alt="mahadao-logo" />
                 </span>
@@ -500,22 +514,28 @@ const Home: React.FC = () => {
   );
 };
 
-const CardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
+const StyledLink = styled.a`
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  opacity: 0.64;
+  &:hover {
+    opacity: 0.88;
+    color: #ffffff;
+    text-decoration: none;
   }
 `;
 const ModalText = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  text-align: center;
+  text-align: left;
+  margin-bottom: 15px;
   color: rgba(255, 255, 255, 0.64);
 `;
 const ModalHyperLink = styled.div`
