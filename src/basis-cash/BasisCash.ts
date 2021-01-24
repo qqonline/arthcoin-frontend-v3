@@ -451,6 +451,6 @@ export class BasisCash {
 
     console.log('nextAllocation', nextAllocation, nextEpochTimestamp)
 
-    return { prevAllocation, nextAllocation, currentEpoch: currentEpoch.toNumber() };
+    return { prevAllocation, nextAllocation, currentEpoch: 1 + currentEpoch.toNumber() };
   }
 }
