@@ -1,14 +1,13 @@
 import ARTHContracts from './contracts'
 import * as vfat from './helpers'
 import { getDefaultProvider } from '../utils/provider'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { BaseProvider } from '@ethersproject/providers'
 import * as ethcall from 'ethcall';
-import { resolve } from 'path';
 
 let vfatApp: IVFatApp
 
 export interface IVFatApp {
-    provider: JsonRpcProvider
+    provider: BaseProvider
     YOUR_ADDRESS: string,
     ethcallProvider: ethcall.Provider
 

@@ -1,17 +1,17 @@
 import { Contract } from 'ethers';
 import { ERC20_ABI, UNI_ABI, DSTOKEN_ABI, BALANCER_POOL_ABI, JAR_ABI } from './abis'
-import { JsonRpcProvider } from '@ethersproject/providers';
+import { BaseProvider } from '@ethersproject/providers';
 import * as $ from 'jquery'
 import * as ethcall from 'ethcall';
 
 
 export interface IVFatApp {
-    provider: JsonRpcProvider
+    provider: BaseProvider
     YOUR_ADDRESS: string,
     ethcallProvider: ethcall.Provider
 }
 
-export async function init_ethers(provider: JsonRpcProvider) {
+export async function init_ethers(provider: BaseProvider) {
     const App: IVFatApp = {
         provider,
         YOUR_ADDRESS: '0xb85c544A46Dde4c01705E5Cc722462233296dDD5', //(await provider.listAccounts())[0],

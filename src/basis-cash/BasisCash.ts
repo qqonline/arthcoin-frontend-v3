@@ -17,7 +17,7 @@ import Multicall from './Mulitcall';
  */
 export class BasisCash {
   myAccount: string;
-  provider: ethers.providers.JsonRpcProvider;
+  provider: ethers.providers.BaseProvider;
   signer?: ethers.Signer;
   config: Configuration;
   contracts: { [name: string]: Contract };
