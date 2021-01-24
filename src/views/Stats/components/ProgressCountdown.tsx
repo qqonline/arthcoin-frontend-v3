@@ -30,6 +30,8 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
       </StyledCountdown>
     );
   };
+
+
   return (
     <Card>
       <StyledCardContentInner>
