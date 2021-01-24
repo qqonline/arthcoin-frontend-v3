@@ -12,7 +12,7 @@ const useStabilityFee = () => {
 
   useEffect(() => {
     fetchCashPrice().catch((err) => console.error(`Failed to fetch stability fees: ${err.stack}`));
-  }, [setPrice, basisCash, fetchCashPrice]);
+  }, [fetchCashPrice]);
 
   return price;
 };

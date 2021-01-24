@@ -13,7 +13,7 @@ const useBondStats = () => {
 
   useEffect(() => {
     fetchBondPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchBondPrice, config.refreshInterval);
+    const refreshInterval = setInterval(fetchBondPrice, 60 * 1000);
     return () => clearInterval(refreshInterval);
   }, [setStat, basisCash, fetchBondPrice]);
 

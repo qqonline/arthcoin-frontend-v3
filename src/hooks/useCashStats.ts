@@ -12,8 +12,8 @@ const useCashStats = () => {
   }, [basisCash]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTH price: ${err.stack}`));
+    const refreshInterval = setInterval(fetchCashPrice, 60 * 1000);
     return () => clearInterval(refreshInterval);
   }, [setStat, basisCash, fetchCashPrice]);
 

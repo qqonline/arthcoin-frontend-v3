@@ -3,7 +3,7 @@ import config from '../config';
 import { web3ProviderFrom } from '../basis-cash/ether-utils';
 
 export function getDefaultProvider(): ethers.providers.JsonRpcProvider {
-  return new ethers.providers.JsonRpcProvider(config.defaultProvider
+  return new ethers.providers.WebSocketProvider(config.defaultProvider
   )
 }
 

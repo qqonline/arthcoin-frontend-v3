@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 
 import ERC20 from '../basis-cash/ERC20';
-import config from '../config';
 import { BigNumber } from 'ethers';
 
 
