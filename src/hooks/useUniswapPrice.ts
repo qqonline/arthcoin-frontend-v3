@@ -10,19 +10,18 @@ const useUniswapPrice = (assetA: ERC20, assetB: ERC20) => {
   const [price, setPrice] = useState<string>('-');
   const basisCash = useBasisCash();
 
-  const assetAT = new Token(config.chainId, assetA.address, 18);
-  const assetBT = new Token(config.chainId, assetB.address, 18);
-
-
   const fetchCashPrice = useCallback(async () => {
+    const assetAT = new Token(config.chainId, assetA.address, 18);
+    const assetBT = new Token(config.chainId, assetB.address, 18);
+
     const pair = await Fetcher.fetchPairData(assetAT, assetBT, basisCash.provider);
     const price = new Route([pair], assetBT);
     setPrice(price.midPrice.toSignificant(3));
-  }, [assetAT, assetBT, basisCash.provider]);
+  }, [assetA, assetB, basisCash.provider]);
 
   useEffect(() => {
     fetchCashPrice().catch((err) => console.error(`Failed to fetch uniswap price: ${err.stack}`));
-  }, [setPrice, basisCash, fetchCashPrice]);
+  }, [fetchCashPrice]);
 
   return price;
 };

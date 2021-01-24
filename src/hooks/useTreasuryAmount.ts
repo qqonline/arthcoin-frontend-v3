@@ -9,8 +9,8 @@ const useTreasuryAmount = () => {
 
   useEffect(() => {
     if (basisCash) {
-      // const { Treasury } = basisCash.contracts;
-      // basisCash.ARTH.balanceOf(Treasury.address).then(setAmount);
+      const { Treasury } = basisCash.contracts;
+      basisCash.ARTH.balanceOf(Treasury.address).then(setAmount);
     }
   }, [basisCash]);
   return amount;

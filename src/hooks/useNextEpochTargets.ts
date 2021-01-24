@@ -17,7 +17,7 @@ const useNextEpochTargets = (currentPrice: BigNumber) => {
 
   useEffect(() => {
     fetchCashPrice(currentPrice).catch((err) => console.error(`Failed to fetch uniswap liquidity: ${err.stack}`));
-  }, [basisCash, fetchCashPrice, currentPrice]);
+  }, [fetchCashPrice, currentPrice]);
 
   return { supplyIncrease, debtIncrease, inExpansion};
 };
