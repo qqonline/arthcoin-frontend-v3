@@ -55,7 +55,7 @@ const Boardroom = () => {
             </Grid>
           </Grid> */}
         </Grid>
-        {bankId === 'arthLiquidity' || bankId === 'mahaLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
+        {(bankId === 'arthLiquidity' || bankId === 'mahaLiquidity') && <LPTokenHelpText boardroom={boardroom} />}
       </Container>
     </>
   );
