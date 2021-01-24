@@ -59,21 +59,21 @@ const Bond: React.FC = () => {
     return cash1hrPrice.lt(targetPrice.mul(95).div(100))
   }, [cash1hrPrice, targetPrice]);
 
-  // const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
-  // if (!isLaunched) {
-  //   return (
-  //     <Switch>
-  //       <Page>
-  //         <PageHeader
-  //           icon={<img alt="bonds" src={BondsIcon} width="200px" />}
-  //           title="Buy & Redeem Bonds"
-  //           subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
-  //         />
+  const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
+  if (!isLaunched) {
+    return (
+      <Switch>
+        <Page>
+          <PageHeader
+            icon={<img alt="bonds" src={BondsIcon} width="200px" />}
+            title="Buy &amp; Redeem Bonds"
+            subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
+          />
 
-  //       </Page>
-  //     </Switch>
-  //   );
-  // }
+        </Page>
+      </Switch>
+    );
+  }
 
   if (!basisCash) return <div />;
 

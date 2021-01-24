@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
-import styled from 'styled-components';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import BanksProvider from './contexts/Banks';
@@ -92,17 +91,3 @@ const AppContent: React.FC = ({ children }) => {
 };
 
 export default App;
-
-const Center = styled.div`
-  display: flex;
-  flex: 1;
-  height: 100%;
-  width: 100%;
-  max-width: 300px;
-  color: #fff9;
-  text-align: center;
-  margin: 0 auto;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;

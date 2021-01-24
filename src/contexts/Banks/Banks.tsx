@@ -16,8 +16,7 @@ const Banks: React.FC = ({ children }) => {
       if (!bankInfo.networks.includes(basisCash.config.chainId)) continue
 
       if (bankInfo.finished) {
-        if (!basisCash.isUnlocked) continue;
-
+        // if (!basisCash.isUnlocked) continue;
         // // only show pools staked by user
         // const balance = await basisCash.stakedBalanceOnBank(
         //   bankInfo.contract,

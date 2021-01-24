@@ -8,9 +8,7 @@ import CardContent from '../../components/CardContent';
 import CardIcon from '../../components/CardIcon';
 import useBanks from '../../hooks/useBanks';
 import TokenSymbol from '../../components/TokenSymbol';
-import Notice from '../../components/Notice';
 import { useWallet } from 'use-wallet';
-import { IVFatAPY } from '../../vfat/core';
 
 const APY = require('./apy.json');
 
@@ -20,22 +18,7 @@ const BankCards: React.FC = () => {
   const activeBanks = banks.filter((bank) => !bank.finished);
   const inactiveBanks = banks.filter((bank) => bank.finished);
 
-  let finishedFirstRow = true;
-  const inactiveRows = inactiveBanks.reduce<Bank[][]>(
-    (bankRows, bank) => {
-      const newBankRows = [...bankRows];
-      if (newBankRows[newBankRows.length - 1].length === (finishedFirstRow ? 2 : 3)) {
-        newBankRows.push([bank]);
-        finishedFirstRow = true;
-      } else {
-        newBankRows[newBankRows.length - 1].push(bank);
-      }
-      return newBankRows;
-    },
-    [[]],
-  );
-
-  const activeBankApys: IVFatAPY[] = []; // usePoolAPY(activeBanks.map((b) => b.contract));
+  console.log(banks, activeBanks, inactiveBanks)
 
   return (
     <StyledCards>
@@ -70,7 +53,7 @@ const BankCards: React.FC = () => {
       <StyledRow>
         {activeBanks.map((bank, i) => (
           <React.Fragment key={bank.name}>
-            <BankCard bank={bank} apy={activeBankApys.length > i ? activeBankApys[i] : null} />
+            <BankCard bank={bank} />
             {i < activeBanks.length - 1 && <StyledSpacer />}
           </React.Fragment>
         ))}
@@ -92,7 +75,6 @@ const BankCards: React.FC = () => {
 
 interface BankCardProps {
   bank: Bank;
-  apy?: IVFatAPY;
 }
 
 const BankCard: React.FC<BankCardProps> = ({ bank }) => {
@@ -240,10 +222,6 @@ const StyledSpacer = styled.div`
   width: ${(props) => props.theme.spacing[4]}px;
 `;
 
-const StyledInactiveNoticeContainer = styled.div`
-  width: 598px;
-  margin-bottom: ${(props) => props.theme.spacing[6]}px;
-`;
 
 const StyledInactiveBankTitle = styled.p`
   font-size: 24px;
