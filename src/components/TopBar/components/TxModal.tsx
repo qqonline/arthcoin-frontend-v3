@@ -5,7 +5,7 @@ import Button from '../../Button';
 import { TransactionDetails } from '../../../state/transactions/reducer';
 import styled from 'styled-components';
 import Transaction from './Transaction';
-import ModalActions from '../../ModalActions';
+// import ModalActions from '../../ModalActions';
 import Spacer from '../../Spacer';
 import {
   isTransactionRecent,
