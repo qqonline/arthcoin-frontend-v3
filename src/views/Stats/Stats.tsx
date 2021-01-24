@@ -150,7 +150,7 @@ const Home: React.FC = () => {
           />
           <Stat
             title={cashe12hrPrice ? `$${getDisplayBalance(cashe12hrPrice, 18, 2)}` : '-'}
-            description="ARTH Price (24hr TWAP)"
+            description="ARTH Price (12hr TWAP)"
           />
           <Stat title={arthPrice ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
           <Stat
