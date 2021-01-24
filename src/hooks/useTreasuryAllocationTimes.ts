@@ -8,11 +8,9 @@ const useTreasuryAllocationTimes = () => {
     prevAllocation: new Date(),
     nextAllocation: new Date(),
   });
-  const basisCash = useBasisCash();
 
-  useEffect(() => {
-    basisCash.getTreasuryNextAllocationTime().then(setTime);
-  }, [basisCash]);
+  const basisCash = useBasisCash();
+  useEffect(() => { basisCash.getTreasuryNextAllocationTime().then(setTime) }, [basisCash]);
   return time;
 };
 
