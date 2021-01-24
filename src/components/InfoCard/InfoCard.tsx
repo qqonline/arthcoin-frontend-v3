@@ -13,6 +13,8 @@ const StyledCard = styled.div`
   align-items: center;
   flex: 1;
   // flex-direction: column;
+
+  margin-bottom: 15px;
   position: relative; /*  */
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.02);

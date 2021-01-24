@@ -76,9 +76,9 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           enterTouchDelay={0}
           title={
             <span>
-              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
-              influencing the price on Uniswap. Bond tokens are bought at a discount are
-              redeemed for a profit.
+              When ARTH is above it’s target price; you can sell ARTH bonds and
+              either get back DAI or ARTH in return. When you redeem your ARTHB,
+              you also pay a stability fee in MAHA.
             </span>
           }
         >
@@ -204,7 +204,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff9;
   text-align: center;
 `;
 

@@ -19,7 +19,7 @@ const ExchangeStat: React.FC<ExchangeStatProps> = ({ title, description }) => {
 };
 
 const StyledCardTitle = styled.div`
-  font-size: 24px;
+  font-size: 17px;
   font-weight: 700;
   text-align: center;
   color: #FFFFFF;
@@ -31,7 +31,7 @@ const StyledDesc = styled.span`
   color: #FFFFFF;
   opacity: 0.64;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   font-size: 12px;
 `;
 
@@ -42,7 +42,7 @@ const StyledCardContentInner = styled.div`
   // align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 10px 20px 0;
 `;
 
 export default ExchangeStat;

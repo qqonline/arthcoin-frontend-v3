@@ -134,33 +134,44 @@ const Bond: React.FC = () => {
                       }
                     />
                   </Grid>
-                </Grid>
-              </Grid>
-              <Grid container item xs={12} md={4} lg={4} xl={4}>
-                <Grid container spacing={5} justify="center">
-                  <Grid container item xs={12} md={12} lg={12} xl={12}>
-                    <ExchangeStat
-                      title={`ARTH: $${getDisplayBalance(cash1hrPrice, 18, 2)}`}
-                      description="Last-Hour TWAP Price"
-                    />
-                  </Grid>
-                  {/* <Grid container item xs={12} md={12} lg={12} xl={12}>
-                    <ExchangeStat
-                      title={`ARTHB: $${bondStat?.priceInDAI || '-'}`}
-                      description="Current Price: (ARTH)^2"
-                    />
-                  </Grid> */}
-                  <Grid container item xs={12} md={12} lg={12} xl={12}>
-                    <ExchangeStat
-                      title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
-                      description="Target Price"
-                    />
-                  </Grid>
-                  <Grid container item xs={12} md={12} lg={12} xl={12}>
-                    <ExchangeStat
-                      title={`${stabiltiyFees}%`}
-                      description="Fees paid in $MAHA when redeeming bonds"
-                    />
+
+                  <Grid container spacing={2} item xs={12} md={12} lg={12} xl={12}>
+                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                      <ExchangeStat
+                        title={`ARTH: $${getDisplayBalance(cash1hrPrice, 18, 2)}`}
+                        description="1hr TWAP Price"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                      <ExchangeStat
+                        title={`ARTHB: $${getDisplayBalance(cash1hrPrice.mul(80).div(100), 18, 2)}`}
+                        description="ARTH Bond Price"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                      <ExchangeStat
+                        title={`20%`}
+                        description="Bond Discount"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                      <ExchangeStat
+                        title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
+                        description="Target Price"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
+                        title={`${stabiltiyFees}%`}
+                        description="Fees paid in $MAHA when redeeming bonds"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
+                        title={`0 ARTHB`}
+                        description="Bonds available for redeemtion"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
