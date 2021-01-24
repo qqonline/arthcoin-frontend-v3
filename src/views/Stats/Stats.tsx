@@ -77,13 +77,13 @@ const Home: React.FC = () => {
     [prevAllocation, nextAllocation],
   );
 
-  useEffect(() => {
-    let _tick = 0;
-    const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  // useEffect(() => {
+  //   let _tick = 0;
+  //   const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // });
 
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);

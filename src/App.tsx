@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useWallet, UseWalletProvider } from 'use-wallet';
+import { UseWalletProvider } from 'use-wallet';
 import styled from 'styled-components';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import Modal from './components/NewModal/index';
 import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
@@ -21,80 +20,11 @@ import Updaters from './state/Updaters';
 import Distributions from './views/Distributions';
 import Popups from './components/Popups';
 import config from './config';
-import Button from './components/Button';
 import useBasisCash from './hooks/useBasisCash';
 
-import metaMaskIcon from './assets/img/metamask.png';
-import coinBaseIcon from './assets/img/coinBase.png';
-import ledgerIcon from './assets/img/ledger.png';
-import wallletConnectIcon from './assets/img/walletConnect.png';
-import teZorIcon from './assets/img/tezor.png';
 import './index.css';
 import './App.css';
-const walletOptions = [
-  {
-    id: 'metamask',
-    title: 'Metamask',
-    icon: metaMaskIcon,
-  },
-  // {
-  //   id: 'tezor',
-  //   title: 'Tezor',
-  //   icon: teZorIcon,
-  // },
-  // {
-  //   id: 'ledger',
-  //   title: 'Ledger',
-  //   icon: ledgerIcon,
-  // },
-  // {
-  //   id: 'walletconnect',
-  //   title: 'Wallet Connect',
-  //   icon: wallletConnectIcon,
-  // },
-  // {
-  //   id: 'coinbase',
-  //   title: 'Coinbase',
-  //   icon: coinBaseIcon,
-  // },
-];
 
-const UnlockWallet = () => {
-  const { connect } = useWallet();
-  const [walletId, setWalletId] = useState(null);
-  const [openModal, toggleModal] = useState(false);
-  function setWalletData(walletId: string) {
-    setWalletId(walletId);
-    connect('injected');
-  }
-  return (
-    <Center>
-      {openModal && (
-        <Modal title="Connect Wallet" open={openModal}>
-          <div className="margin-top-bottom-20 dialog-class display-flex-column">
-            {walletOptions &&
-              walletOptions.map((eachWallet) => (
-                <div
-                  className={`dialog-class-1 margin-bottom-10 ${
-                    walletId === eachWallet.id ? 'wallet-option-selcted' : 'wallet-option'
-                  }`}
-                  key={eachWallet.id}
-                  onClick={() => setWalletData(eachWallet.id)}
-                >
-                  <span className="white font15">{eachWallet.title}</span>
-                  <img src={eachWallet.icon} alt={eachWallet.title} width="30px"></img>
-                </div>
-              ))}
-          </div>
-        </Modal>
-      )}
-      <p>
-        To use the ARTH platform, please connect your Metamask Account with the Ethereum network
-      </p>
-      <Button onClick={() => toggleModal(true)} text="Unlock Wallet" />
-    </Center>
-  );
-};
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -113,9 +43,9 @@ const Providers: React.FC = ({ children }) => {
 
 
 const App: React.FC = () => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
+  // init animate on scroll
+  useEffect(() => { AOS.init(); }, []);
+
   return (
     <Providers>
       <Router>
