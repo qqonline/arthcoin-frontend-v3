@@ -158,6 +158,21 @@ const Home: React.FC = () => {
             description="ARTH Price (Target)"
           />
         </StyledHeader>
+
+        <StyledHeader>
+          <Stat
+            title={targetPrice ? `ARTH > $${getDisplayBalance(targetPrice.mul(105).div(100), 18, 2)}` : '-'}
+            description="Expansion happens when"
+          />
+          <Stat
+            title={targetPrice ? `ARTH < $${getDisplayBalance(targetPrice.mul(95).div(100), 18, 2)}` : '-'}
+            description="Contraction happens when"
+          />
+          <Stat
+            title={targetPrice ? `ARTH > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
+            description="Bond Redemption happens when"
+          />
+        </StyledHeader>
         <StyledHeader>
           <Stat
             title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTH` : '-'}
