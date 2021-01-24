@@ -9,6 +9,7 @@ import { getDisplayBalance } from '../utils/formatBalance';
 import { getDefaultProvider } from '../utils/provider';
 import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
+import Multicall from './Mulitcall';
 
 /**
  * An API module of ARTH contracts.
@@ -33,6 +34,8 @@ export class BasisCash {
   ARTHB: ERC20;
   ARTHDAI_UNIV2: ERC20;
 
+  multicall: Multicall
+
   constructor(cfg: Configuration) {
     const { deployments, externalTokens } = cfg;
     const provider = getDefaultProvider();
@@ -51,6 +54,8 @@ export class BasisCash {
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
     this.DAI = this.externalTokens['DAI']
+
+    this.multicall = new Multicall(cfg.defaultProvider)
 
     // Uniswap V2 Pair
 
