@@ -27,8 +27,8 @@ const Home: React.FC = () => {
         titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
       >
         <ModalText>
-          ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
-          all your money. Do not invest you if you are not aware of what you are doing.
+          <b>ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
+          all your money. Do not invest if you are not aware of what you are doing.</b>
         </ModalText>
         <ModalText>
           Participants from countries under whose national legislation this token may be deemed
