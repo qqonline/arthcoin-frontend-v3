@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 import { BigNumber } from 'ethers';
 
-const useBondAvailableForPurchase = () => {
+const useCashAvailableToConvert = () => {
   const [limit, setLimit] = useState<BigNumber>(BigNumber.from(0));
   const basisCash = useBasisCash();
 
@@ -12,9 +12,9 @@ const useBondAvailableForPurchase = () => {
     const cashToBondConversionLimit = await t.cashToBondConversionLimit()
     const accumulatedBonds = await t.accumulatedBonds()
 
-    // setLimit(BigNumber.from(10).pow(18).mul(200000)
-    if (accumulatedBonds.gte(cashToBondConversionLimit)) setLimit(BigNumber.from(0))
-    else setLimit(cashToBondConversionLimit.sub(accumulatedBonds).mul(120).div(100))
+    // setLimit(BigNumber.from(10).pow(18).mul(200000))
+    // if (accumulatedBonds.gte(cashToBondConversionLimit)) setLimit(BigNumber.from(0))
+    // else setLimit(cashToBondConversionLimit.sub(accumulatedBonds))
   }, [basisCash]);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const useBondAvailableForPurchase = () => {
   return limit;
 };
 
-export default useBondAvailableForPurchase;
+export default useCashAvailableToConvert;

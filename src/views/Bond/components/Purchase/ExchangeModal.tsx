@@ -4,18 +4,14 @@ import Modal from '../../../../components/NewModal/index';
 import ModalActions from '../../../../components/ModalActions';
 import ButtonTransperant from '../../../../components/Button/TransperantButton';
 import TokenInput from '../../../../components/TokenInput';
-import {
-  getBalance,
-  getDisplayBalance,
-  getFullDisplayBalance,
-} from '../../../../utils/formatBalance';
+import { getDisplayBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import WarningModal from './WarningModal';
 import useBondStats from '../../../../hooks/useBondStats';
 import useCashTargetPrice from '../../../../hooks/useCashTargetPrice';
-import useBondAvailableForPurchase from '../../../../hooks/useBondAvailableForPurchase';
+import useCashAvailableToConvert from '../../../../hooks/useCashAvailableToConvert';
 
 interface ExchangeModalProps {
   max: BigNumber;
@@ -47,7 +43,10 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
   const decimals = BigNumber.from(10).pow(18);
   const [showModal, toggleModal] = React.useState(false);
-  const bondsAvailableForPurchase = useBondAvailableForPurchase();
+  const cashAvailableToConvert = useCashAvailableToConvert();
+  const bondsAvailableForPurchase = useMemo(() => cashAvailableToConvert.mul(120).div(100), [
+    cashAvailableToConvert,
+  ]);
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => setVal(Math.floor(Number(e.currentTarget.value))),

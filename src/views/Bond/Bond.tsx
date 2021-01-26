@@ -7,7 +7,7 @@ import PurchaseBonds from './components/Purchase';
 import RedeemBonds from './components/Redeem';
 import Container from '../../components/Container';
 import styled from 'styled-components';
-import useBondAvailableForPurchase from '../../hooks/useBondAvailableForPurchase';
+import useCashAvailableToConvert from '../../hooks/useCashAvailableToConvert';
 import useBasisCash from '../../hooks/useBasisCash';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 import { useTransactionAdder } from '../../state/transactions/hooks';
@@ -32,7 +32,10 @@ const Bond: React.FC = () => {
   const targetPrice = useCashTargetPrice();
   const stabiltiyFees = useStabilityFee();
   const cashe12hrPrice = useCashPriceInLastTWAP();
-  const bondsAvailableForPurchase = useBondAvailableForPurchase();
+  const cashAvailableToConvert = useCashAvailableToConvert();
+  const bondsAvailableForPurchase = useMemo(() => cashAvailableToConvert.mul(120).div(100), [
+    cashAvailableToConvert,
+  ]);
 
   const bondBalance = useTokenBalance(basisCash.ARTHB);
 
@@ -117,12 +120,12 @@ const Bond: React.FC = () => {
                       priceDesc={
                         !isBondPurchasable
                           ? 'ARTH is over its target price'
-                          : bondsAvailableForPurchase.eq(0)
+                          : cashAvailableToConvert.eq(0)
                           ? `ARTH is below its target price. However there is no ARTHB available for purchase.`
                           : `ARTH is below its target price and ARTHB can be purchased`
                       }
                       onExchange={handleBuyBonds}
-                      // disabled={!isBondPurchasable || bondsAvailableForPurchase.eq(0)}
+                      disabled={!isBondPurchasable || bondsAvailableForPurchase.eq(0)}
                     />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>
