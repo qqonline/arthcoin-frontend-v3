@@ -145,13 +145,13 @@ const Bond: React.FC = () => {
                   </Grid>
 
                   <Grid container spacing={2} item xs={12} md={12} lg={12} xl={12}>
-                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                    <Grid item xs={12} md={4} lg={4} xl={4}>
                       <ExchangeStat
                         title={`ARTH: $${getDisplayBalance(cash1hrPrice, 18, 2)}`}
                         description="1hr TWAP Price"
                       />
                     </Grid>
-                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                    <Grid item xs={12} md={4} lg={4} xl={4}>
                       <ExchangeStat
                         title={`ARTHB: $${getDisplayBalance(
                           cash1hrPrice.mul(80).div(100),
@@ -161,10 +161,10 @@ const Bond: React.FC = () => {
                         description="Bond Price"
                       />
                     </Grid>
-                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                    <Grid item xs={12} md={4} lg={4} xl={4}>
                       <ExchangeStat title={`20%`} description="Bond Discount" />
                     </Grid>
-                    <Grid item xs={12} md={3} lg={3} xl={3}>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
                         title={`Target: $${getDisplayBalance(targetPrice, 18, 2)}`}
                         description="Target Price"
@@ -173,13 +173,16 @@ const Bond: React.FC = () => {
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
                         title={`12hr TWAP < $0.95`}
-                        description="ARTHB Issued When"
+                        description="ARTHB Allocated When"
                       />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat title={`1hr TWAP < $0.95`} description="ARTHB Sold When" />
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
-                        title={`12hr TWAP >= $1.00`}
+                        title={`1hr TWAP >= $1.00`}
                         description="ARTHB Redeemed When"
                       />
                     </Grid>
