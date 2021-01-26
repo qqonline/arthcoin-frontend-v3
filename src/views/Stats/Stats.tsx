@@ -109,7 +109,7 @@ const Home: React.FC = () => {
             ? `Protocol will expand the supply by approximately ${commify(
                 supplyIncrease,
               )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
-            : `Protocol will buyback the supply at approximately 5% of ARTH supply`
+            : `Protocol will contract the supply by buying back approximately 5% of ARTH supply`
         }
       />
       <Container size="lg">
