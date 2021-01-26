@@ -3,11 +3,11 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
-import ExchangeCard from './components/Purchase/ExchangeCard';
-import ExchangeCardBonds from './components/Redeem/ExchangeCardBonds';
+import PurchaseBonds from './components/Purchase';
+import RedeemBonds from './components/Redeem';
 import Container from '../../components/Container';
 import styled from 'styled-components';
-import useBondStats from '../../hooks/useBondStats';
+import useBondAvailableForPurchase from '../../hooks/useBondAvailableForPurchase';
 import useBasisCash from '../../hooks/useBasisCash';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 import { useTransactionAdder } from '../../state/transactions/hooks';
@@ -32,6 +32,7 @@ const Bond: React.FC = () => {
   const targetPrice = useCashTargetPrice();
   const stabiltiyFees = useStabilityFee();
   const cashe12hrPrice = useCashPriceInLastTWAP();
+  const bondsAvailableForPurchase = useBondAvailableForPurchase();
 
   const bondBalance = useTokenBalance(basisCash.ARTHB);
 
@@ -54,11 +55,15 @@ const Bond: React.FC = () => {
     [basisCash, addTransaction],
   );
 
-  const isBondRedeemable = useMemo(() => cash1hrPrice.gt(targetPrice), [cash1hrPrice, targetPrice]);
+  const isBondRedeemable = useMemo(() => cash1hrPrice.gt(targetPrice), [
+    cash1hrPrice,
+    targetPrice,
+  ]);
 
   const isBondPurchasable = useMemo(() => {
     // 95 % of target price
-    return cash1hrPrice.lt(targetPrice.mul(95).div(100))
+    const cond1 = cash1hrPrice.lt(targetPrice.mul(95).div(100));
+    return cond1 && cond1;
   }, [cash1hrPrice, targetPrice]);
 
   const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
@@ -71,7 +76,6 @@ const Bond: React.FC = () => {
             title="Buy &amp; Redeem Bonds"
             subtitle="Purchasing ARTH Bonds has a direct impact on Uniswap price and is used to help bring the price of ARTH back to its target price"
           />
-
         </Page>
       </Switch>
     );
@@ -102,7 +106,7 @@ const Bond: React.FC = () => {
                 )}
                 <Grid container spacing={3} justify="center">
                   <Grid item xs={12} md={6} lg={6} xl={6}>
-                    <ExchangeCard
+                    <PurchaseBonds
                       action="Purchase"
                       fromToken={basisCash.DAI}
                       fromTokenName="DAI"
@@ -113,14 +117,18 @@ const Bond: React.FC = () => {
                       priceDesc={
                         !isBondPurchasable
                           ? 'ARTH is over its target price'
-                          : `ARTH is below its target price. However no ARTHB has been issued.`
+                          : bondsAvailableForPurchase.eq(0)
+                          ? `ARTH is below its target price. However there is no ARTHB available for purchase.`
+                          : `ARTH is below its target price and ARTHB can be purchased`
                       }
                       onExchange={handleBuyBonds}
-                      disabled={true}
+                      disassssssssssssssssssssssssssssssssssssssssssssssssssssbled={
+                        !isBondPurchasable || bondsAvailableForPurchase.eq(0)
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>
-                    <ExchangeCardBonds
+                    <RedeemBonds
                       action="Redeem ARTHB"
                       fromToken={basisCash.ARTHB}
                       fromTokenName="ARTHB"
@@ -128,7 +136,8 @@ const Bond: React.FC = () => {
                       toTokenName="DAI"
                       priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
                       onExchange={handleRedeemBonds}
-                      disabled={!isBondRedeemable}
+                      // disabled={!isBondRedeemable}
+                      disabled={true}
                       disabledDescription={
                         !isBondRedeemable
                           ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
@@ -146,15 +155,16 @@ const Bond: React.FC = () => {
                     </Grid>
                     <Grid item xs={12} md={3} lg={3} xl={3}>
                       <ExchangeStat
-                        title={`ARTHB: $${getDisplayBalance(cash1hrPrice.mul(80).div(100), 18, 2)}`}
+                        title={`ARTHB: $${getDisplayBalance(
+                          cash1hrPrice.mul(80).div(100),
+                          18,
+                          2,
+                        )}`}
                         description="Bond Price"
                       />
                     </Grid>
                     <Grid item xs={12} md={3} lg={3} xl={3}>
-                      <ExchangeStat
-                        title={`20%`}
-                        description="Bond Discount"
-                      />
+                      <ExchangeStat title={`20%`} description="Bond Discount" />
                     </Grid>
                     <Grid item xs={12} md={3} lg={3} xl={3}>
                       <ExchangeStat
@@ -185,7 +195,7 @@ const Bond: React.FC = () => {
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
                         title={`0 ARTHB`}
-                        description="ARTHB issued for purchase"
+                        description="ARTHB available for purchase"
                       />
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -196,7 +206,7 @@ const Bond: React.FC = () => {
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
-                        title={`0 ARTHB`}
+                        title={`${getDisplayBalance(bondsAvailableForPurchase, 18, 0)} ARTHB`}
                         description="ARTHB available for redeemtion"
                       />
                     </Grid>

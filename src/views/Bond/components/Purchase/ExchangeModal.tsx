@@ -4,13 +4,18 @@ import Modal from '../../../../components/NewModal/index';
 import ModalActions from '../../../../components/ModalActions';
 import ButtonTransperant from '../../../../components/Button/TransperantButton';
 import TokenInput from '../../../../components/TokenInput';
-import { getBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
+import {
+  getBalance,
+  getDisplayBalance,
+  getFullDisplayBalance,
+} from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import useStabilityFee from '../../../../hooks/useStabilityFee';
 import useBondStats from '../../../../hooks/useBondStats';
 import useCashTargetPrice from '../../../../hooks/useCashTargetPrice';
+import useBondAvailableForPurchase from '../../../../hooks/useBondAvailableForPurchase';
 
 interface ExchangeModalProps {
   max: BigNumber;
@@ -22,7 +27,13 @@ interface ExchangeModalProps {
   tokenName: string;
 }
 
-const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, tokenName, onCancel }) => {
+const ExchangeModal: React.FC<ExchangeModalProps> = ({
+  max,
+  onConfirm,
+  action,
+  tokenName,
+  onCancel,
+}) => {
   const [val, setVal] = useState(0);
   const [openModal, toggleModalState] = useState(true);
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
@@ -49,8 +60,8 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
       ]);
 
       // const mul = Math.floor(1 / Number(bondStat?.priceInDAI || 1) - 1);
-      // const artbAmount = arthAmount.mul(mul);
-      setArthBAmount(arthAmount);
+      const artbAmount = arthAmount.mul(120).div(100);
+      setArthBAmount(artbAmount);
     };
 
     job();
@@ -92,9 +103,13 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
     const amountAfterFees = (output * (100 - mahaStabilityFee.toNumber())) / 100;
     return ((100 * (amountAfterFees - input)) / input).toFixed(2);
   }, [arthBAmount, targetPrice, mahaStabilityFee, decimals, val]);
+
   const handleClose = () => {
     onCancel();
   };
+
+  const bondsAvailableForPurchase = useBondAvailableForPurchase();
+
   return (
     <Modal open={openModal} title="Earn ARTH Bonds" handleClose={handleClose}>
       <TokenInput
@@ -112,11 +127,12 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
           {' '}
           ({rorPercentage}% or ${rorAmount} ROR){' '}
         </RorSpan>
-        when ARTH is back to its target price.
+        when ARTH (12hr TWAP) is back to its target price (1$).
       </StyledLabel>
       <StyledLabel>
-        Please note that when you are redeeming your ARTH Bonds, there is 1% stability fee
-        approximately {getFullDisplayBalance(mahaStabilityFeeAmount)} MAHA.
+        Please note that when you are redeeming your ARTH Bonds, there is a 1% stability fee
+        paid in MAHA.
+        {/* approximately {getFullDisplayBalance(mahaStabilityFeeAmount)} MAHA. */}
         {/* or 10$. */}
       </StyledLabel>
 
@@ -126,16 +142,18 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, onConfirm, action, t
         </RorSpan>{' '}
         realisable when ARTH is trading above its target price.
       </StyledLabel>
+
+      <StyledLabel>
+        (There is only {getDisplayBalance(bondsAvailableForPurchase, 18, 3)} ARTHB available for
+        purchase)
+      </StyledLabel>
       <ActionButton>
         <ResponsiveButtonWidth>
-          <ButtonTransperant
-            text="Cancel"
-            variant="secondary"
-            onClick={() => handleClose()}
-          />
+          <ButtonTransperant text="Cancel" variant="secondary" onClick={() => handleClose()} />
         </ResponsiveButtonWidth>
         <ResponsiveButtonWidth>
           <Button
+            // todo consider the min limit price
             disabled={arthBAmount.lte(0)}
             text={action}
             onClick={() => onConfirm(String(val))}

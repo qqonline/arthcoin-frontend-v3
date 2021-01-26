@@ -111,7 +111,7 @@ export class BasisCash {
   getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
     const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom :
       kind === 'mahaLiquidity' ? this.config.deployments.MahaLiquidityBoardroom :
-      this.config.deployments.ArthLiquidityBoardroom
+        this.config.deployments.ArthLiquidityBoardroom
     // const contract = this.config.deployments.ARTH
 
     if (kind === 'arth') return {
@@ -432,6 +432,11 @@ export class BasisCash {
     const { Treasury } = this.contracts;
     const est = await Treasury.estimateSeignorageToMint(price);
     return est
+  }
+
+  async getTreasury() {
+    const { Treasury } = this.contracts;
+    return Treasury
   }
 
   async getTreasuryEstimateSeignorageToMint(price: BigNumber): Promise<BigNumber> {

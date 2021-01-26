@@ -3,18 +3,20 @@ import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
-import { useWallet } from 'use-wallet';
 import Button from '../../../../components/Button';
 import CardContent from '../../../../components/CardContent';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import Label from '../../../../components/Label';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import ExchangeModal from './ExchangeModalBonds';
+import AddIcon from '@material-ui/icons/Add';
+import ExchangeModal from './ExchangeModal';
 import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
+import Spacer from '../../../../components/Spacer';
+import { useWallet } from 'use-wallet';
 
 interface ExchangeCardProps {
   action: string;
@@ -22,6 +24,8 @@ interface ExchangeCardProps {
   fromTokenName: string;
   toToken: ERC20;
   toTokenName: string;
+  addOnTokeName?: string;
+  addOnToken?: string;
   priceDesc: string;
   onExchange: (amount: string) => void;
   disabled?: boolean;
@@ -37,10 +41,12 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
     padding: '20px',
   },
 }))(Tooltip);
-const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
+const PurchaseBonds: React.FC<ExchangeCardProps> = ({
   action,
   fromToken,
   fromTokenName,
+  addOnTokeName,
+  addOnToken,
   toToken,
   toTokenName,
   priceDesc,
@@ -48,14 +54,20 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   disabled = false,
   disabledDescription,
 }) => {
-  const { account, connect } = useWallet();
   const catchError = useCatchError();
   const {
     contracts: { Treasury },
+    ARTH,
+    DAI,
   } = useBasisCash();
-  const [approveStatus, approve] = useApprove(fromToken, Treasury.address);
+
+  const { account, connect } = useWallet();
+  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+  const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
   const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
+  const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
+  const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED;
 
   return (
     <Card>
@@ -67,25 +79,26 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           onConfirm={(value) => {
             onExchange(value);
           }}
+          action={action}
           onCancel={() => toggleModal(false)}
+          tokenName={fromTokenName}
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Redeem ARTHB</StyledCardTitle>
+        <StyledCardTitle>Purchase ARTHB</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
             <span>
-              When ARTH is above it’s target price; you can sell ARTH bonds and
-              either get back DAI or ARTH in return. When you redeem your ARTHB,
-              you also pay a stability fee in MAHA.
+              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
+              influencing the price on Uniswap. Bond tokens are bought at a discount are
+              redeemed for a profit.
             </span>
           }
         >
           <InfoOutlinedIcon className="margin-left-10 white" />
         </HtmlTooltip>
       </div>
-      {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
       <CardContent>
         <StyledCardContentInner>
           <StyledExchanger>
@@ -104,47 +117,68 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               </StyledCardIcon>
               <Label text={toTokenName} variant="normal" />
             </StyledToken>
+            <StyledExchangeArrow>
+              <AddIcon className="font26" />
+            </StyledExchangeArrow>
+            <StyledToken>
+              <StyledCardIcon>
+                <TokenSymbol symbol={addOnToken} size={54} />
+              </StyledCardIcon>
+              <Label text={addOnTokeName} variant="normal" />
+            </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          {(
+          {
             <StyledCardActions>
-              {disabled ? (
-                <>
+              {!account ? (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              ) : disabled ? (
                 <Button
-                    text={disabledDescription || action}
-                    // onClick={onPresent}
-                    disabled={disabled}
-                  />
-                </>
-                ) : !!account ? (
-                  balance.eq(0) ? (
-                    <Button
-                    text={"No ARTHB Balance"}
-                    disabled={true}
-                  />
-                ) :
-                approveStatus !== ApprovalState.APPROVED && !disabled ? (
+                  disabled={disabled}
+                  text="Purchase ARTHB"
+                  onClick={() => toggleModal(true)}
+                />
+              ) : !isDAIApproved || !isARTHApproved ? (
+                <>
                   <Button
                     disabled={
-                      disabled ||
-                      approveStatus === ApprovalState.PENDING ||
-                      approveStatus === ApprovalState.UNKNOWN
+                      diaApproveStatus === ApprovalState.PENDING ||
+                      diaApproveStatus === ApprovalState.UNKNOWN
                     }
-                    onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                    text="Redeem ARTHB"
+                    onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
+                    text={`Approve DAI`}
                   />
-                ) : (
+
+                  <Spacer size="md" />
+
                   <Button
-                    text={disabledDescription || action}
-                    onClick={() => toggleModal(true)}
-                    disabled={disabled}
+                    disabled={
+                      isARTHApproved ||
+                      arthApproveStatus === ApprovalState.PENDING ||
+                      arthApproveStatus === ApprovalState.UNKNOWN
+                    }
+                    onClick={() => catchError(approveArth(), `Unable to approve ARTH`)}
+                    text={
+                      arthApproveStatus === ApprovalState.PENDING
+                        ? 'Approving'
+                        : arthApproveStatus === ApprovalState.APPROVED
+                        ? 'ARTH Approved'
+                        : 'Approve ARTH'
+                    }
                   />
-                )
+                </>
               ) : (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+                <Button
+                  text={disabledDescription || action}
+                  onClick={() => toggleModal(true)}
+                  disabled={disabled}
+                />
               )}
             </StyledCardActions>
-          )}
+          }
+          {/* <StyledCardActions>
+            <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
+          </StyledCardActions> */}
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -161,6 +195,12 @@ const StyledCardTitle = styled.div`
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;
+`;
+
+const StyledCardDesc = styled.div`
+  margin-bottom: 26px;
+  text-align: center;
+  color: #fff9;
 `;
 
 const StyledCardIcon = styled.div`
@@ -216,12 +256,12 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 const Card = styled.div`
+  height: 100%;
   background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
   border-radius: 12px;
   box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
-  height: 100%;
   flex: 1;
   flex-direction: column;
 `;
-export default ExchangeCardBonds;
+export default PurchaseBonds;
