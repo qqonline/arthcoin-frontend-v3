@@ -21,6 +21,7 @@ import useStabilityFee from '../../hooks/useStabilityFee';
 import BondsIcon from '../../assets/svg/Bond.svg';
 import Chart from './components/Chart';
 import { BigNumber } from 'ethers';
+import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -30,6 +31,7 @@ const Bond: React.FC = () => {
   const cash1hrPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
   const stabiltiyFees = useStabilityFee();
+  const cashe12hrPrice = useCashPriceInLastTWAP();
 
   const bondBalance = useTokenBalance(basisCash.ARTHB);
 
@@ -111,10 +113,10 @@ const Bond: React.FC = () => {
                       priceDesc={
                         !isBondPurchasable
                           ? 'ARTH is over its target price'
-                          : `ARTH is below its target price. You can purchase bonds now.`
+                          : `ARTH is below its target price. However no ARTHB has been issued.`
                       }
                       onExchange={handleBuyBonds}
-                      disabled={!isBondPurchasable}
+                      disabled={true}
                     />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -162,6 +164,32 @@ const Bond: React.FC = () => {
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
+                        title={`12hr TWAP < $0.95`}
+                        description="ARTHB Issued When"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
+                        title={`12hr TWAP >= $1.00`}
+                        description="ARTHB Redeemed When"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
+                        title={`ARTH: $${getDisplayBalance(cashe12hrPrice, 18, 3)}`}
+                        description="12hr TWAP Price"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
+                        title={`0 ARTHB`}
+                        description="ARTHB issued for purchase"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} xl={6}>
+                      <ExchangeStat
                         title={`${stabiltiyFees}%`}
                         description="Fees paid in $MAHA when redeeming bonds"
                       />
@@ -169,7 +197,7 @@ const Bond: React.FC = () => {
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
                         title={`0 ARTHB`}
-                        description="Bonds available for redeemtion"
+                        description="ARTHB available for redeemtion"
                       />
                     </Grid>
                   </Grid>
