@@ -49,11 +49,9 @@ export default function Updater(): null {
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {
-        console.log(hash, 'test')
         provider
           .getTransactionReceipt(hash)
           .then((receipt) => {
-            console.log(receipt, 'test receipt')
             if (receipt) {
               dispatch(
                 finalizeTransaction({

@@ -20,7 +20,6 @@ export async function init_ethers(provider: BaseProvider) {
 
     await App.ethcallProvider.init(App.provider);
 
-    console.log('init vfat', App)
     return App
 }
 
@@ -66,7 +65,6 @@ async function loadSynthetixPoolInfo(App: any, tokens: any, prices: any, staking
             prices[key] = newPrices[key];
     }
 
-    console.log('prices', prices)
     var newTokenAddresses = stakeToken.tokens.filter((x: string) =>
         !getParameterCaseInsensitive(tokens, x));
     for (const address of newTokenAddresses) {
@@ -112,12 +110,10 @@ async function loadSynthetixPoolInfo(App: any, tokens: any, prices: any, staking
 }
 
 export async function printSynthetixPool(App: IVFatApp, info: any) {
-    console.log(`${info.rewardTokenTicker} Per Week: ${info.weeklyRewards.toFixed(2)} ($${formatMoney(info.usdPerWeek)})`);
     const weeklyAPY = info.usdPerWeek / info.staked_tvl * 100;
     const dailyAPY = weeklyAPY / 7;
     const yearlyAPY = weeklyAPY * 52;
 
-    console.log(`APY: Day ${dailyAPY.toFixed(2)}% Week ${weeklyAPY.toFixed(2)}% Year ${yearlyAPY.toFixed(2)}%`);
 
     // if (info.userStaked > 0) {
     //     info.poolPrices.print_contained_price(info.userStaked);
@@ -131,7 +127,6 @@ export async function printSynthetixPool(App: IVFatApp, info: any) {
     // }
 
 
-    console.log(`\n`);
 
     return {
         weeklyAPY,

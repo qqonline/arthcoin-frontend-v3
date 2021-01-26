@@ -18,7 +18,6 @@ const Boardroom = () => {
   const basisCash = useBasisCash();
   const boardroom = basisCash.getBoardroom(bankId);
 
-  console.log('hit333');
   return (
     <>
       <PageHeader

@@ -69,7 +69,6 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
 
-  console.log('hitt2');
   return (
     <Card>
       <CardContent>

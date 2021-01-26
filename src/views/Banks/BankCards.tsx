@@ -18,8 +18,6 @@ const BankCards: React.FC = () => {
   const activeBanks = banks.filter((bank) => !bank.finished);
   const inactiveBanks = banks.filter((bank) => bank.finished);
 
-  console.log(banks, activeBanks, inactiveBanks)
-
   return (
     <StyledCards>
       <VFATAnn>
@@ -221,7 +219,6 @@ const StyledSpacer = styled.div`
   height: ${(props) => props.theme.spacing[4]}px;
   width: ${(props) => props.theme.spacing[4]}px;
 `;
-
 
 const StyledInactiveBankTitle = styled.p`
   font-size: 24px;
