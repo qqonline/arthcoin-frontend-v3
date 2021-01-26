@@ -110,7 +110,7 @@ const Bond: React.FC = () => {
                 <Grid container spacing={3} justify="center">
                   <Grid item xs={12} md={6} lg={6} xl={6}>
                     <PurchaseBonds
-                      action="Purchase"
+                      action="Purchase ARTHB"
                       fromToken={basisCash.DAI}
                       fromTokenName="DAI"
                       toToken={basisCash.ARTHB}
@@ -122,10 +122,17 @@ const Bond: React.FC = () => {
                           ? 'ARTH is over its target price'
                           : cashAvailableToConvert.eq(0)
                           ? `ARTH is below its target price. However there is no ARTHB available for purchase.`
-                          : `ARTH is below its target price and ARTHB can be purchased`
+                          : null
+                      }
+                      disabledDescription={
+                        !isBondPurchasable
+                          ? 'Enabled when 1hr TWAP < 0.95$'
+                          : cashAvailableToConvert.eq(0)
+                          ? `No ARTHB Allocated. Wait for next epoch`
+                          : null
                       }
                       onExchange={handleBuyBonds}
-                      disabled={!isBondPurchasable || bondsAvailableForPurchase.eq(0)}
+                      disabled={!isBondPurchasable || cashAvailableToConvert.eq(0)}
                     />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>

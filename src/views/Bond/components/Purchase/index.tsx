@@ -135,7 +135,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
               ) : disabled ? (
                 <Button
                   disabled={disabled}
-                  text="Purchase ARTHB"
+                  text={disabledDescription || action}
                   onClick={() => toggleModal(true)}
                 />
               ) : !isDAIApproved || !isARTHApproved ? (
