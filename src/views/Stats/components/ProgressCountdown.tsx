@@ -31,7 +31,6 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
     );
   };
 
-
   return (
     <Card>
       <StyledCardContentInner>
@@ -54,7 +53,7 @@ const StyledCountdown = styled.p`
 
 const StyledProgressOuter = styled.div`
   width: 100%;
-  height: 15px;
+  height: 5px;
   border-radius: 15px;
   background: ${(props) => props.theme.color.grey[700]};
 `;
@@ -63,7 +62,7 @@ const StyledProgress = styled.div<{ progress: number }>`
   width: ${(props) => props.progress}%;
   height: 100%;
   border-radius: 15px;
-  background: #F7653B;
+  background: #f7653b;
 `;
 
 const StyledDesc = styled.span`

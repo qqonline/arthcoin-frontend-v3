@@ -18,7 +18,7 @@ const useEarningsOnBoardroom = (kind: Boardrooms) => {
       const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshBalance);
     }
-  }, [basisCash.isUnlocked, fetchBalance, setBalance]);
+  }, [basisCash.isUnlocked, fetchBalance]);
 
   return balance;
 };

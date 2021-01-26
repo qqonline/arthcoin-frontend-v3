@@ -12,11 +12,13 @@ import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
 import { Boardrooms } from '../../../basis-cash/config';
+
 const Boardroom = () => {
   const { bankId } = useParams<{ bankId: Boardrooms }>();
   const basisCash = useBasisCash();
   const boardroom = basisCash.getBoardroom(bankId);
 
+  console.log('hit333');
   return (
     <>
       <PageHeader
@@ -26,7 +28,7 @@ const Boardroom = () => {
         showEpoch
       />
       <Container size="lg">
-        {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
+        <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={5} justify="center">
           <Grid item xs={12} md={9} lg={9} xl={9}>
             <Grid container spacing={5} justify="center">
@@ -37,25 +39,25 @@ const Boardroom = () => {
                 <Harvest boardroom={boardroom} />
               </Grid>
             </Grid>
-            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+            <div style={{ marginTop: 20, marginBottom: 20, maxWidth: '200px' }}>
               <Button size="sm" text="Settle & Withdraw" />
             </div>
-          </Grid>
-          {/* <Grid container item xs={12} md={3} lg={3} xl={3}>
-            <Grid container spacing={5} justify="center">
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
+            {/* <Grid container spacing={5} justify="center">
+              <Grid container item xs={12} md={4} lg={4} xl={4}>
+                <ExchangeStat description="Total Tokens Staked" title="1,150,200" />
+              </Grid>
+              <Grid container item xs={12} md={4} lg={4} xl={4}>
+                <ExchangeStat description="Your Pool %" title="0.002%" />
+              </Grid>
+              <Grid container item xs={12} md={4} lg={4} xl={4}>
                 <ExchangeStat description="ARTH Price(1hr TWAP)" title="$1.150" />
               </Grid>
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="Scaling Factor" title="5x" />
-              </Grid>
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="Treasury Amount" title="~$5" />
-              </Grid>
-            </Grid>
-          </Grid> */}
+            </Grid> */}
+          </Grid>
         </Grid>
-        {(bankId === 'arthLiquidity' || bankId === 'mahaLiquidity') && <LPTokenHelpText boardroom={boardroom} />}
+        {(bankId === 'arthLiquidity' || bankId === 'mahaLiquidity') && (
+          <LPTokenHelpText boardroom={boardroom} />
+        )}
       </Container>
     </>
   );
@@ -72,8 +74,7 @@ const LPTokenHelpText: React.FC<{ boardroom: BoardroomInfo }> = ({ boardroom }) 
     uniswapUrl = `https://app.uniswap.org/#/add/${basisCash.ARTH.address}/${basisCash.DAI.address}`;
   } else {
     pairName = 'MAHA-WETH pair';
-    uniswapUrl =
-      'https://app.uniswap.org/#/add/ETH/0xB4d930279552397bbA2ee473229f89Ec245bc365';
+    uniswapUrl = 'https://app.uniswap.org/#/add/ETH/0xB4d930279552397bbA2ee473229f89Ec245bc365';
   }
 
   return (

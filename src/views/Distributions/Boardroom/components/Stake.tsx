@@ -9,9 +9,8 @@ import IconButton from '../../../../components/IconButton';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
-
+import moment from 'moment';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
-
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import useBasisCash from '../../../../hooks/useBasisCash';
@@ -19,8 +18,10 @@ import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoa
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
 import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
+import useBoardroomDepositDate from '../../../../hooks/useBoardroomDepositDate';
 
 import { BoardroomInfo } from '../../../../basis-cash';
+import ProgressCountdown from './ProgressCountdown';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
@@ -30,14 +31,12 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
       ? basisCash.MAHA
       : boardroom.depositTokenName === 'ARTH'
       ? basisCash.ARTH
-      : basisCash.externalTokens[boardroom.depositTokenName]
+      : basisCash.externalTokens[boardroom.depositTokenName];
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
     basisCash.currentBoardroom(boardroom.kind)?.address,
   );
-
-  console.log('stake', basisCash.currentBoardroom(boardroom.kind)?.address,)
 
   const tokenBalance = useTokenBalance(stakingToken);
 
@@ -68,6 +67,9 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     />,
   );
 
+  const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
+
+  console.log('hitt2');
   return (
     <Card>
       <CardContent>
@@ -98,6 +100,13 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
               )}
             </StyledCardActions>
           </StyledCardHeader>
+          {stakedBalance.gt(0) && (
+            <ProgressCountdown
+              base={depositDate}
+              deadline={endDate}
+              description="Bonded Tokens can be withdrawn in"
+            />
+          )}
         </StyledCardContentInner>
       </CardContent>
     </Card>
