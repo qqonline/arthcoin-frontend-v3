@@ -122,7 +122,7 @@ const Bond: React.FC = () => {
                           : `ARTH is below its target price and ARTHB can be purchased`
                       }
                       onExchange={handleBuyBonds}
-                      disabled={!isBondPurchasable || bondsAvailableForPurchase.eq(0)}
+                      // disabled={!isBondPurchasable || bondsAvailableForPurchase.eq(0)}
                     />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} xl={6}>

@@ -12,7 +12,7 @@ import {
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import useBasisCash from '../../../../hooks/useBasisCash';
-import useStabilityFee from '../../../../hooks/useStabilityFee';
+import WarningModal from './WarningModal';
 import useBondStats from '../../../../hooks/useBondStats';
 import useCashTargetPrice from '../../../../hooks/useCashTargetPrice';
 import useBondAvailableForPurchase from '../../../../hooks/useBondAvailableForPurchase';
@@ -37,11 +37,17 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   const [val, setVal] = useState(0);
   const [openModal, toggleModalState] = useState(true);
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
+  const [arthBConverted, setConvertedAmount] = useState<BigNumber>(BigNumber.from(0));
+
+  const [arthAmount, setArthAmount] = useState<BigNumber>(BigNumber.from(0));
+
   const basisCash = useBasisCash();
   const bondStat = useBondStats();
   const targetPrice = useCashTargetPrice();
   const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
   const decimals = BigNumber.from(10).pow(18);
+  const [showModal, toggleModal] = React.useState(false);
+  const bondsAvailableForPurchase = useBondAvailableForPurchase();
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => setVal(Math.floor(Number(e.currentTarget.value))),
@@ -60,12 +66,23 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
       ]);
 
       // const mul = Math.floor(1 / Number(bondStat?.priceInDAI || 1) - 1);
-      const artbAmount = arthAmount.mul(120).div(100);
-      setArthBAmount(artbAmount);
+      setArthAmount(arthAmount);
+      const ARTHtoConvert = arthAmount.gt(bondsAvailableForPurchase)
+        ? bondsAvailableForPurchase
+        : arthAmount;
+
+      if (ARTHtoConvert.eq(0)) {
+        setConvertedAmount(BigNumber.from(0));
+        setArthBAmount(BigNumber.from(0));
+      } else {
+        const artbAmount = ARTHtoConvert.mul(120).div(100);
+        setConvertedAmount(ARTHtoConvert.mul(100).div(arthAmount));
+        setArthBAmount(artbAmount);
+      }
     };
 
     job();
-  }, [basisCash, bondStat, val]);
+  }, [basisCash, bondStat, bondsAvailableForPurchase, val]);
 
   const rorAmount = useMemo(() => {
     const input = Number(val);
@@ -108,10 +125,22 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     onCancel();
   };
 
-  const bondsAvailableForPurchase = useBondAvailableForPurchase();
+  const _onConfirm = () => {
+    if (finalRorPercentage <= 0) toggleModal(true);
+    else onConfirm(String(val));
+  };
 
   return (
     <Modal open={openModal} title="Earn ARTH Bonds" handleClose={handleClose}>
+      {showModal && (
+        <WarningModal
+          onConfirm={() => {
+            onConfirm(String(val));
+          }}
+          onCancel={() => toggleModal(false)}
+        />
+      )}
+
       <TokenInput
         value={String(val)}
         onSelectMax={handleSelectMax}
@@ -132,8 +161,6 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
       <StyledLabel>
         Please note that when you are redeeming your ARTH Bonds, there is a 1% stability fee
         paid in MAHA.
-        {/* approximately {getFullDisplayBalance(mahaStabilityFeeAmount)} MAHA. */}
-        {/* or 10$. */}
       </StyledLabel>
 
       <StyledLabel>
@@ -147,6 +174,13 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         (There is only {getDisplayBalance(bondsAvailableForPurchase, 18, 3)} ARTHB available for
         purchase)
       </StyledLabel>
+
+      <StyledLabel>
+        The protocol will buyback {getFullDisplayBalance(arthAmount)} ARTH for you from Uniswap
+        and will automatically convert {arthBConverted.toNumber().toFixed(2)}% of it for{' '}
+        {getFullDisplayBalance(arthBAmount)} ARTHB for you.
+      </StyledLabel>
+
       <ActionButton>
         <ResponsiveButtonWidth>
           <ButtonTransperant text="Cancel" variant="secondary" onClick={() => handleClose()} />
@@ -156,7 +190,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
             // todo consider the min limit price
             disabled={arthBAmount.lte(0)}
             text={action}
-            onClick={() => onConfirm(String(val))}
+            onClick={_onConfirm}
           />
         </ResponsiveButtonWidth>
       </ActionButton>
