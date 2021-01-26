@@ -36,7 +36,7 @@ const Home: React.FC = () => {
     const [cash, bond, share] = await Promise.all([
       basisCash.getCashStatFromUniswap(),
       basisCash.getBondStat(),
-      basisCash.getShareStat()
+      basisCash.getShareStat(),
     ]);
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
@@ -87,13 +87,15 @@ const Home: React.FC = () => {
 
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
-  const targets = useNextEpochTargets(cash1hrPrice)
+  const targets = useNextEpochTargets(cash1hrPrice);
 
   // @ts-ignore
   const nextEpoch = useMemo(() => moment(prevEpoch).add(12, 'hour').toDate(), [prevEpoch]);
 
-  const supplyIncrease = Number(getDisplayBalance(targets.supplyIncrease, 18, 0))
-  const supplyIncreasePercentage = cash ? (supplyIncrease / Number(cash?.totalSupply)) * 100 : 0
+  const supplyIncrease = Number(getDisplayBalance(targets.supplyIncrease, 18, 0));
+  const supplyIncreasePercentage = cash
+    ? (supplyIncrease / Number(cash?.totalSupply)) * 100
+    : 0;
 
   return (
     <Page>
@@ -103,11 +105,12 @@ const Home: React.FC = () => {
         title="Statistics"
         secondParaTitle="Next Epoch"
         secondParaDescription={
-          cash1hrPrice.gt(targetPrice) ?
-          `Protocol will expand the supply by approximately ${commify(supplyIncrease)} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
-        :
-          `Protocol will buyback the supply at approximately 5% of ARTH supply`
-      }
+          cash1hrPrice.gt(targetPrice)
+            ? `Protocol will expand the supply by approximately ${commify(
+                supplyIncrease,
+              )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
+            : `Protocol will buyback the supply at approximately 5% of ARTH supply`
+        }
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -140,7 +143,10 @@ const Home: React.FC = () => {
           <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
           <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
           <Stat title={'1 %'} description="Stability Fees" />
-          <Stat title={`$${commify(getDisplayBalance(arthLiquidity, 18, 0))}`} description="ARTH Liquidity" />
+          <Stat
+            title={`$${commify(getDisplayBalance(arthLiquidity, 18, 0))}`}
+            description="ARTH Liquidity"
+          />
           {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
@@ -161,15 +167,23 @@ const Home: React.FC = () => {
 
         <StyledHeader>
           <Stat
-            title={targetPrice ? `ARTH > $${getDisplayBalance(targetPrice.mul(105).div(100), 18, 2)}` : '-'}
+            title={
+              targetPrice
+                ? `12hr TWAP > $${getDisplayBalance(targetPrice.mul(105).div(100), 18, 2)}`
+                : '-'
+            }
             description="Expansion happens when"
           />
           <Stat
-            title={targetPrice ? `ARTH < $${getDisplayBalance(targetPrice.mul(95).div(100), 18, 2)}` : '-'}
+            title={
+              targetPrice
+                ? `12hr TWAP < $${getDisplayBalance(targetPrice.mul(95).div(100), 18, 2)}`
+                : '-'
+            }
             description="Contraction happens when"
           />
           <Stat
-            title={targetPrice ? `ARTH > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
+            title={targetPrice ? `12hr TWAP > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
             description="Bond Redemption happens when"
           />
         </StyledHeader>
@@ -179,7 +193,9 @@ const Home: React.FC = () => {
             description="Redeemable for Bonds"
           />
           <Stat
-            title={ecosystemFund ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH` : '-'}
+            title={
+              ecosystemFund ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH` : '-'
+            }
             description="Ecosystem Fund"
           />
           {/* <Stat
