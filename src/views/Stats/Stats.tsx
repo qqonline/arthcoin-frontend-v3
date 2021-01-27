@@ -112,7 +112,7 @@ const Home: React.FC = () => {
             ? `Protocol will contract the supply by buying back approximately ${debtIncrease} ARTH or ${debtIncreasePercentage.toFixed(
                 0,
               )}% of the current supply`
-            : `Protocol will not to anything as price is within the stable range (0.95$-1$)`
+            : `Protocol will not do anything as price is within the safe range (0.95$-1$)`
         }
       />
       <Container size="lg">

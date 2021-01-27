@@ -1,27 +1,27 @@
-import React, { useCallback, useMemo } from 'react';
+import { getDisplayBalance } from '../../utils/formatBalance';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useTransactionAdder } from '../../state/transactions/hooks';
+import BondsIcon from '../../assets/svg/Bond.svg';
+import Chart from './components/Chart';
+import config from '../../config';
+import Container from '../../components/Container';
+import ExchangeStat from './components/ExchangeStat';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import PurchaseBonds from './components/Purchase';
+import React, { useCallback, useMemo } from 'react';
 import RedeemBonds from './components/Redeem';
-import Container from '../../components/Container';
 import styled from 'styled-components';
-import useCashAvailableToConvert from '../../hooks/useCashAvailableToConvert';
 import useBasisCash from '../../hooks/useBasisCash';
-import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
-import { useTransactionAdder } from '../../state/transactions/hooks';
-import config from '../../config';
-import LaunchCountdown from '../../components/LaunchCountdown';
-import ExchangeStat from './components/ExchangeStat';
-import useTokenBalance from '../../hooks/useTokenBalance';
-import useCashTargetPrice from '../../hooks/useCashTargetPrice';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import useStabilityFee from '../../hooks/useStabilityFee';
-import BondsIcon from '../../assets/svg/Bond.svg';
-import Chart from './components/Chart';
-import { BigNumber } from 'ethers';
+import useCashAvailableToConvert from '../../hooks/useCashAvailableToConvert';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
+import useCashTargetPrice from '../../hooks/useCashTargetPrice';
+import useStabilityFee from '../../hooks/useStabilityFee';
+import useTokenBalance from '../../hooks/useTokenBalance';
+import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
+
+import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 
 const Bond: React.FC = () => {
   const { path } = useRouteMatch();
@@ -33,6 +33,7 @@ const Bond: React.FC = () => {
   const stabiltiyFees = useStabilityFee();
   const cashe12hrPrice = useCashPriceInLastTWAP();
   const cashAvailableToConvert = useCashAvailableToConvert();
+  const treasuryAmount = useTreasuryAmount();
   const bondsAvailableForPurchase = useMemo(() => cashAvailableToConvert.mul(120).div(100), [
     cashAvailableToConvert,
   ]);
@@ -142,13 +143,23 @@ const Bond: React.FC = () => {
                       fromTokenName="ARTHB"
                       toToken={basisCash.DAI}
                       toTokenName="DAI"
-                      priceDesc={`${getDisplayBalance(bondBalance)} ARTHB Available`}
+                      // addOnTokeName="ARTH"
+                      // addOnToken="ARTH"
                       onExchange={handleRedeemBonds}
-                      // disabled={!isBondRedeemable}
-                      disabled={true}
+                      disabled={!isBondRedeemable || treasuryAmount.lte(0)}
+                      // disabled={true}
+                      priceDesc={
+                        !isBondRedeemable
+                          ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                          : cashAvailableToConvert.eq(0)
+                          ? `ARTH is above the bond redeemtion price. However there is no ARTH available to be redeemed.`
+                          : `${getDisplayBalance(bondBalance)} ARTHB Available`
+                      }
                       disabledDescription={
                         !isBondRedeemable
                           ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                          : treasuryAmount.lte(0)
+                          ? 'No ARTH available. Wait for next Epoch'
                           : null
                       }
                     />
