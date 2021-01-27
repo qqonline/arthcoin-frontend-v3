@@ -41,7 +41,14 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             <StyledSubtitle>{subtitle}</StyledSubtitle>
             {secondParaTitle && <SecondParaTitle>{secondParaTitle}</SecondParaTitle>}
             {secondParaDescription && (
-              <SecondParaDescription>{secondParaDescription}</SecondParaDescription>
+              <SecondParaDescription>
+                {secondParaDescription}
+                <br />
+                <br />
+                <span style={{ fontSize: 14 }}>
+                  (Note that the 12hr TWAP is used to decide if the supply expands or contracts)
+                </span>
+              </SecondParaDescription>
             )}
             {showEpoch && (
               <Grid

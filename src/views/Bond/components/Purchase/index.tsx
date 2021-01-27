@@ -146,7 +146,13 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       diaApproveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
-                    text={`Approve DAI`}
+                    text={
+                      arthApproveStatus === ApprovalState.PENDING
+                        ? 'Approving'
+                        : arthApproveStatus === ApprovalState.APPROVED
+                        ? 'DAI Approved'
+                        : 'Approve DAI'
+                    }
                   />
 
                   <Spacer size="md" />

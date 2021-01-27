@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import useStabilityFee from '../../../hooks/useStabilityFee';
+import { BigNumber } from 'ethers';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface TokenInputProps {
-  value: any;
+  value: BigNumber;
   max: number | string;
   approve: any;
   isMahaApproved: boolean;
@@ -48,7 +50,7 @@ const AntSwitch = withStyles((theme: Theme) =>
 const MahaFeeCheck: React.FC<TokenInputProps> = ({ max, value, isMahaApproved, approve }) => {
   const symbol = 'MAHA';
   const stabilityFee = useStabilityFee();
-  const [mahaAprroved, toggleCheckbox] = useState(false);
+  const [mahaAprroved, toggleCheckbox] = useState(true);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     toggleCheckbox(event.target.checked);
   };
@@ -62,17 +64,13 @@ const MahaFeeCheck: React.FC<TokenInputProps> = ({ max, value, isMahaApproved, a
       </StyledMaxText>
 
       <StyledInputWrapper style={{ border: mahaAprroved ? 'none' : '1px solid #f09700' }}>
-        <StyledInput
-          disabled
-          placeholder={'0'}
-          value={value * stabilityFee.toNumber() * 0.01}
-        />
+        <StyledInput disabled placeholder={'0'} value={getDisplayBalance(value, 18, 3)} />
         <StyledTokenAdornmentWrapper>
           <StyledTokenSymbol>{symbol}</StyledTokenSymbol>
-          <StyledSpacer />
+          {/* <StyledSpacer /> */}
           <div>
             {/* <Button disabled={isMahaApproved} size="sm" text="Approve" onClick={approve} /> */}
-            <AntSwitch checked={mahaAprroved} onChange={handleChange} name="checkedC" />
+            {/* <AntSwitch checked={mahaAprroved} onChange={handleChange} name="checkedC" /> */}
           </div>
         </StyledTokenAdornmentWrapper>
       </StyledInputWrapper>

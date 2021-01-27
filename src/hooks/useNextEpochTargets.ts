@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers';
 const useNextEpochTargets = (currentPrice: BigNumber) => {
   const [supplyIncrease, setSupplyIncrease] = useState<BigNumber>(BigNumber.from(0));
   const [debtIncrease, setDebtIncrease] = useState<BigNumber>(BigNumber.from(0));
-  const [inExpansion, setExpansion] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async (price: BigNumber) => {
@@ -16,7 +16,7 @@ const useNextEpochTargets = (currentPrice: BigNumber) => {
 
     setSupplyIncrease(_supplyIncrease)
     setDebtIncrease(_debtIncrease)
-    setExpansion(true)
+    setLoading(false)
   }, [basisCash]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const useNextEpochTargets = (currentPrice: BigNumber) => {
     fetchCashPrice(currentPrice).catch((err) => console.error(`Failed to fetch uniswap liquidity: ${err.stack}`));
   }, [fetchCashPrice, currentPrice]);
 
-  return { supplyIncrease, debtIncrease, inExpansion };
+  return { supplyIncrease, debtIncrease, isLoading };
 };
 
 export default useNextEpochTargets;

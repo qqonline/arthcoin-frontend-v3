@@ -104,15 +104,17 @@ const Home: React.FC = () => {
         title="Statistics"
         secondParaTitle="Next Epoch"
         secondParaDescription={
-          targets.supplyIncrease.gt(0)
-            ? `Protocol will expand the supply by approximately ${commify(
+          targets.isLoading
+            ? 'Loading...'
+            : targets.supplyIncrease.gt(0)
+            ? `Based on the 1hr TWAP price, the protocol will expand the supply by approximately ${commify(
                 supplyIncrease,
-              )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
+              )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply.`
             : targets.debtIncrease.gt(0)
-            ? `Protocol will contract the supply by buying back approximately ${debtIncrease} ARTH or ${debtIncreasePercentage.toFixed(
+            ? `Based on the 1hr TWAP price, the protocol will contract the supply by buying back approximately ${debtIncrease} ARTH or ${debtIncreasePercentage.toFixed(
                 0,
               )}% of the current supply`
-            : `Protocol will not do anything as price is within the safe range (0.95$-1$)`
+            : `Based on the 1hr TWAP price, the protocol will not do anything as price is within the safe range (0.95$-1$)`
         }
       />
       <Container size="lg">

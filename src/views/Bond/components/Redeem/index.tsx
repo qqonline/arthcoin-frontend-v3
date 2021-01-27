@@ -110,7 +110,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               <StyledCardIcon>
                 <TokenSymbol symbol={addOnToken.symbol} size={54} />
               </StyledCardIcon>
-              <Label text={toTokenName} variant="normal" />
+              <Label text={addOnTokeName} variant="normal" />
             </StyledToken>
 
             <StyledExchangeArrow>or</StyledExchangeArrow>
@@ -118,7 +118,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               <StyledCardIcon>
                 <TokenSymbol symbol={toToken.symbol} size={54} />
               </StyledCardIcon>
-              <Label text={addOnTokeName} variant="normal" />
+              <Label text={toTokenName} variant="normal" />
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
@@ -127,7 +127,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               {!account ? (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               ) : !disabled ? (
-                balance.eq(0) ? (
+                balance.eq(0) && false ? (
                   <Button text={'No ARTHB Balance'} disabled={true} />
                 ) : approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
@@ -137,7 +137,9 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                       approveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                    text="Redeem ARTHB"
+                    text={
+                      approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve ARTHB'
+                    }
                   />
                 ) : (
                   <Button

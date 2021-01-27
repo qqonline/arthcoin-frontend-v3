@@ -147,12 +147,12 @@ const Bond: React.FC = () => {
                       addOnToken={basisCash.ARTH}
                       onExchange={handleRedeemBonds}
                       disabled={!isBondRedeemable || treasuryAmount.lte(0)}
-                      // disabled={true}
+                      // disabled={false}
                       priceDesc={
                         !isBondRedeemable
-                          ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                          ? `Enabled when 1hr TWAP > $${getDisplayBalance(targetPrice)}`
                           : cashAvailableToConvert.eq(0)
-                          ? `ARTH is above the bond redeemtion price. However there is no ARTH available to be redeemed.`
+                          ? `1hr TWAP is above the bond redeemtion price. However there is no ARTH available to be redeemed.`
                           : `${getDisplayBalance(bondBalance)} ARTHB Available`
                       }
                       disabledDescription={
@@ -229,7 +229,9 @@ const Bond: React.FC = () => {
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} xl={6}>
                       <ExchangeStat
-                        title={`0 ARTHB`}
+                        title={
+                          treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTHB` : '-'
+                        }
                         description="ARTHB available for redeemtion"
                       />
                     </Grid>

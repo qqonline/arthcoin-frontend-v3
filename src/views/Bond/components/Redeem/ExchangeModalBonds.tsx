@@ -9,8 +9,9 @@ import { BigNumber } from 'ethers';
 import MahaFeeCheck from '../MahaFeeCheck';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
-import useTokenBalance from '../../../../hooks/useTokenBalance';
 import styled from 'styled-components';
+import useTokenBalance from '../../../../hooks/useTokenBalance';
+import useARTHMahaPrice from '../../../../hooks/useARTHMahaPrice';
 
 interface ExchangeModalProps {
   max: BigNumber;
@@ -44,11 +45,20 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
   const action = 'Redeem';
   const tokenName = 'ARTHB';
 
+  const arthMahaPrice = useARTHMahaPrice();
   const mahaBalance = useTokenBalance(MAHA);
 
+  const mahaToBurn = useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
+    arthMahaPrice,
+    val,
+  ]);
+
   const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
-  const description =
-    'You are going to redeem 20 ARTH by paying 20 ARTHB and a stability fee of 0.2 MAHA';
+  const description = `You are going to redeem ${val} ARTH by paying ${val} ARTHB and a stability fee of ${getDisplayBalance(
+    mahaToBurn,
+    18,
+    3,
+  )} MAHA`;
   const handleClose = () => {
     onCancel();
   };
@@ -68,19 +78,14 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
         symbol={tokenName}
       />
       <MahaFeeCheck
-        value={val}
+        value={mahaToBurn}
         approve={mahaApprove}
         isMahaApproved={isMahaApproved}
         max={getDisplayBalance(mahaBalance)}
       />
-      {/* <StyledLabel>{description}</StyledLabel> */}
       <ActionButton>
         <ResponsiveButtonWidth>
-          <ButtonTransperant
-            text="Cancel"
-            variant="secondary"
-            onClick={() => handleClose()}
-          />
+          <ButtonTransperant text="Cancel" variant="secondary" onClick={() => handleClose()} />
         </ResponsiveButtonWidth>
         <ResponsiveButtonWidth>
           <Button
