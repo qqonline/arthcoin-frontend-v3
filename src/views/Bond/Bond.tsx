@@ -52,8 +52,8 @@ const Bond: React.FC = () => {
   );
 
   const handleRedeemBonds = useCallback(
-    async (amount: string) => {
-      const tx = await basisCash.redeemBonds(amount);
+    async (amount: string, redeemForDai: boolean) => {
+      const tx = await basisCash.redeemBonds(amount, redeemForDai);
       addTransaction(tx, { summary: `Redeem ${amount} ARTHB` });
     },
     [basisCash, addTransaction],
@@ -147,7 +147,6 @@ const Bond: React.FC = () => {
                       addOnToken={basisCash.ARTH}
                       onExchange={handleRedeemBonds}
                       disabled={!isBondRedeemable || treasuryAmount.lte(0)}
-                      // disabled={false}
                       priceDesc={
                         !isBondRedeemable
                           ? `Enabled when 1hr TWAP > $${getDisplayBalance(targetPrice)}`

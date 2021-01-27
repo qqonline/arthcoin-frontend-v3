@@ -27,7 +27,7 @@ interface ExchangeCardProps {
   addOnTokeName?: string;
   addOnToken?: ERC20;
   priceDesc: string;
-  onExchange: (amount: string) => void;
+  onExchange: (amount: string, redeemForDai: boolean) => void;
   disabled?: boolean;
   disabledDescription?: string;
 }
@@ -72,8 +72,8 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
           title={action}
           description={priceDesc}
           max={balance}
-          onConfirm={(value) => {
-            onExchange(value);
+          onConfirm={(value, redeemForDai) => {
+            onExchange(value, redeemForDai);
           }}
           onCancel={() => toggleModal(false)}
         />
