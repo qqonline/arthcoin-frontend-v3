@@ -96,6 +96,8 @@ const Home: React.FC = () => {
     [cash, debtIncrease],
   );
 
+  console.log(targets);
+
   return (
     <Page>
       <PageHeader
