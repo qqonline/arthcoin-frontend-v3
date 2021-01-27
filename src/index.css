@@ -16,7 +16,9 @@ body {
 code {
   font-family: Inter, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
+a:hover {
+  text-decoration: none !important;
+}
 html,
 #root,
 body {

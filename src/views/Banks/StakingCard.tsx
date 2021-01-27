@@ -109,7 +109,7 @@ const ImageConTainer = styled.div`
 `;
 const CardContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   align-items: center;
   width: 100%;
