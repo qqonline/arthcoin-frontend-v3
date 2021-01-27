@@ -143,8 +143,8 @@ const Bond: React.FC = () => {
                       fromTokenName="ARTHB"
                       toToken={basisCash.DAI}
                       toTokenName="DAI"
-                      // addOnTokeName="ARTH"
-                      // addOnToken="ARTH"
+                      addOnTokeName="ARTH"
+                      addOnToken={basisCash.ARTH}
                       onExchange={handleRedeemBonds}
                       disabled={!isBondRedeemable || treasuryAmount.lte(0)}
                       // disabled={true}

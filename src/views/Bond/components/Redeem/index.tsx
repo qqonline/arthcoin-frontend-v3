@@ -15,6 +15,7 @@ import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
+import AddIcon from '@material-ui/icons/Add';
 
 interface ExchangeCardProps {
   action: string;
@@ -107,9 +108,17 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
-                <TokenSymbol symbol={toToken.symbol} size={54} />
+                <TokenSymbol symbol={addOnToken.symbol} size={54} />
               </StyledCardIcon>
               <Label text={toTokenName} variant="normal" />
+            </StyledToken>
+
+            <StyledExchangeArrow>or</StyledExchangeArrow>
+            <StyledToken>
+              <StyledCardIcon>
+                <TokenSymbol symbol={toToken.symbol} size={54} />
+              </StyledCardIcon>
+              <Label text={addOnTokeName} variant="normal" />
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
