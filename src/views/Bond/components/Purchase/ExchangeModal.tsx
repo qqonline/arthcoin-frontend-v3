@@ -64,7 +64,6 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         basisCash.ARTH,
       ]);
 
-      // const mul = Math.floor(1 / Number(bondStat?.priceInDAI || 1) - 1);
       setArthAmount(arthAmount);
       const ARTHtoConvert = arthAmount.gt(bondsAvailableForPurchase)
         ? bondsAvailableForPurchase

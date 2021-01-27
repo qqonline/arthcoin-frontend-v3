@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Modal from '../../components/NewModal/index';
 import TopBar from '../../components/TopBar';
-import TranscationSnackbar from '../../components/TopBar/components/TranscationSnackbar';
 import './styles/index.sass';
 import './footer.css';
+
 const Home: React.FC = () => {
   const [openModal, toggleModal] = useState(true);
   const handleClose = () => {
@@ -13,13 +13,6 @@ const Home: React.FC = () => {
   };
   return (
     <div>
-      {/* <TranscationSnackbar
-        notificationCount={1}
-        open
-        title="Redeeming 4 ARTH"
-        subtitle="Stability Fee = 4%"
-        isScucess
-      /> */}
       <Modal
         title="Disclaimer"
         open={openModal}
@@ -27,8 +20,10 @@ const Home: React.FC = () => {
         titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
       >
         <ModalText>
-          <b>ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
-          all your money. Do not invest if you are not aware of what you are doing.</b>
+          <b>
+            ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
+            all your money. Do not invest if you are not aware of what you are doing.
+          </b>
         </ModalText>
         <ModalText>
           Participants from countries under whose national legislation this token may be deemed
@@ -76,7 +71,11 @@ const Home: React.FC = () => {
         </div>
 
         <div id="padding-top-30">
-          <a target="_blank"  href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9" id="no-txt-decoration">
+          <a
+            target="_blank"
+            href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9"
+            id="no-txt-decoration"
+          >
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
@@ -103,9 +102,7 @@ const Home: React.FC = () => {
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">
-                  Preserve Wealth
-                </h5>
+                <h5 className="card-title">Preserve Wealth</h5>
                 <p className="card-text">
                   No more erosion of hard-earned wealth due to inflation. ARTH protects and
                   increases your purchasing power shielding your financial life from the effects
@@ -134,9 +131,7 @@ const Home: React.FC = () => {
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">
-                  Value Stable
-                </h5>
+                <h5 className="card-title">Value Stable</h5>
                 <p className="card-text">
                   ARTH is pegged against a Global Measurement Unit consisting of a
                   well-diversified, anti-correlated, carefully curated basket of assets to
@@ -430,7 +425,11 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div id="padding-top-30">
-          <a target="_blank" href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9" id="no-txt-decoration">
+          <a
+            target="_blank"
+            href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9"
+            id="no-txt-decoration"
+          >
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>

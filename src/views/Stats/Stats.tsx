@@ -10,7 +10,6 @@ import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
 import StastIcon from '../../assets/svg/Stats.svg';
 
-import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
@@ -29,7 +28,6 @@ import useNextEpochTargets from '../../hooks/useNextEpochTargets';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
-  const [tick, setTick] = useState(1);
 
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
@@ -38,9 +36,11 @@ const Home: React.FC = () => {
       basisCash.getBondStat(),
       basisCash.getShareStat(),
     ]);
+
     if (Date.now() < config.bondLaunchesAt.getTime()) {
       bond.priceInDAI = '-';
     }
+
     setStats({ cash, bond, share });
   }, [basisCash, setStats]);
 
@@ -54,18 +54,12 @@ const Home: React.FC = () => {
   const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
-  const cashStat = useCashPriceInEstimatedTWAP();
   const cash1hrPrice = useBondOraclePriceInLastTWAP();
   const cashe12hrPrice = useCashPriceInLastTWAP();
   const treasuryAmount = useTreasuryAmount();
   const targetPrice = useCashTargetPrice();
 
   const ecosystemFund = useFundAmount('ecosystem');
-
-  // const scalingFactor = useMemo(
-  //   () => (cashStat ? Number(cashStat.priceInDAI).toFixed(2) : null),
-  //   [cashStat],
-  // );
 
   const { prevAllocation, nextAllocation, currentEpoch } = useTreasuryAllocationTimes();
 
@@ -77,25 +71,21 @@ const Home: React.FC = () => {
     [prevAllocation, nextAllocation],
   );
 
-  useEffect(() => {
-    let _tick = 0;
-    const interval: NodeJS.Timeout = setInterval(() => setTick(_tick++), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
-
   const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
   const targets = useNextEpochTargets(cash1hrPrice);
 
-  // @ts-ignore
   const nextEpoch = useMemo(() => moment(prevEpoch).add(12, 'hour').toDate(), [prevEpoch]);
 
-  const supplyIncrease = Number(getDisplayBalance(targets.supplyIncrease, 18, 0));
-  const supplyIncreasePercentage = cash
-    ? (supplyIncrease / Number(cash?.totalSupply)) * 100
-    : 0;
+  const supplyIncrease = useMemo(
+    () => Number(getDisplayBalance(targets.supplyIncrease, 18, 0)),
+    [targets.supplyIncrease],
+  );
+
+  const supplyIncreasePercentage = useMemo(
+    () => (cash ? (supplyIncrease / Number(cash?.totalSupply)) * 100 : 0),
+    [cash, supplyIncrease],
+  );
 
   return (
     <Page>
@@ -147,7 +137,6 @@ const Home: React.FC = () => {
             title={`$${commify(getDisplayBalance(arthLiquidity, 18, 0))}`}
             description="ARTH Liquidity"
           />
-          {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
           <Stat
@@ -198,10 +187,6 @@ const Home: React.FC = () => {
             }
             description="Ecosystem Fund"
           />
-          {/* <Stat
-          title={cdpFund ? `${getDisplayBalance(cdpFund)} ARTH` : '-'}
-          description="CDP Fund"
-        /> */}
         </StyledHeader>
       </Container>
     </Page>

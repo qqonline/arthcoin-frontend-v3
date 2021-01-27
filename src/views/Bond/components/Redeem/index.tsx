@@ -27,6 +27,7 @@ interface ExchangeCardProps {
   disabled?: boolean;
   disabledDescription?: string;
 }
+
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -37,6 +38,7 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
     padding: '20px',
   },
 }))(Tooltip);
+
 const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   action,
   fromToken,

@@ -12,9 +12,8 @@ const useCashAvailableToConvert = () => {
     const cashToBondConversionLimit = await t.cashToBondConversionLimit()
     const accumulatedBonds = await t.accumulatedBonds()
 
-    // setLimit(BigNumber.from(10).pow(18).mul(200000))
-    // if (accumulatedBonds.gte(cashToBondConversionLimit)) setLimit(BigNumber.from(0))
-    // else setLimit(cashToBondConversionLimit.sub(accumulatedBonds))
+    if (accumulatedBonds.gte(cashToBondConversionLimit)) setLimit(BigNumber.from(0))
+    else setLimit(cashToBondConversionLimit.sub(accumulatedBonds))
   }, [basisCash]);
 
   useEffect(() => {
