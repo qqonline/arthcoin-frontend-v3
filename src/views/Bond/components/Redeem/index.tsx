@@ -22,6 +22,9 @@ interface ExchangeCardProps {
   fromTokenName: string;
   toToken: ERC20;
   toTokenName: string;
+
+  addOnTokeName?: string;
+  addOnToken?: ERC20;
   priceDesc: string;
   onExchange: (amount: string) => void;
   disabled?: boolean;
@@ -45,6 +48,8 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   fromTokenName,
   toToken,
   toTokenName,
+  addOnTokeName,
+  addOnToken,
   priceDesc,
   onExchange,
   disabled = false,

@@ -42,7 +42,13 @@ const Home: React.FC = () => {
           national legislation this token may be deemed to be a security or a regulated
           financial instrument, and, if so, to respect the prohibition specified herein.
         </ModalText>
-        <ModalHyperLink onClick={()=>window.open('https://etherscan.io/')}>View token contract on Etherscan</ModalHyperLink>
+        <ModalHyperLink
+          onClick={() =>
+            window.open('https://etherscan.io/token/0x0E3cC2c4FB9252d17d07C67135E48536071735D9')
+          }
+        >
+          View token contract on Etherscan
+        </ModalHyperLink>
       </Modal>
       <TopBar />
       <div id="header-gradient"></div>

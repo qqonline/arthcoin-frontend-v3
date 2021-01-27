@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Button from '../../../../components/Button';
 import Modal from '../../../../components/NewModal/index';
-import ModalActions from '../../../../components/ModalActions';
 import ButtonTransperant from '../../../../components/Button/TransperantButton';
 import TokenInput from '../../../../components/TokenInput';
 import { getDisplayBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
@@ -31,7 +30,6 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   onCancel,
 }) => {
   const [val, setVal] = useState(0);
-  const [openModal, toggleModalState] = useState(true);
   const [arthBAmount, setArthBAmount] = useState<BigNumber>(BigNumber.from(0));
   const [arthBConverted, setConvertedAmount] = useState<BigNumber>(BigNumber.from(0));
 
@@ -98,10 +96,10 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
 
   const mahaStabilityFee = BigNumber.from(1); // useStabilityFee();
 
-  const mahaStabilityFeeAmount = useMemo(
-    () => arthBAmount.mul(BigNumber.from(mahaStabilityFee)).div(100),
-    [arthBAmount, mahaStabilityFee],
-  );
+  // const mahaStabilityFeeAmount = useMemo(
+  //   () => arthBAmount.mul(BigNumber.from(mahaStabilityFee)).div(100),
+  //   [arthBAmount, mahaStabilityFee],
+  // );
 
   const finalRorAmount = useMemo(() => {
     const input = Number(val);
@@ -129,7 +127,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   };
 
   return (
-    <Modal open={openModal} title="Earn ARTH Bonds" handleClose={handleClose}>
+    <Modal open={true} title="Earn ARTH Bonds" handleClose={handleClose}>
       {showModal && (
         <WarningModal
           onConfirm={() => {
