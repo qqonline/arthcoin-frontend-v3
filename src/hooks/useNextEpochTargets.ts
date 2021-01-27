@@ -10,6 +10,9 @@ const useNextEpochTargets = (currentPrice: BigNumber) => {
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async (price: BigNumber) => {
+    const { Treasury } = basisCash.contracts;
+    const est = await Treasury.estimateSeignorageToMint(price);
+
     setSupplyIncrease(await basisCash.getTreasuryEstimateSeignorageToMint(price))
     setDebtIncrease(await basisCash.getTreasuryEstimateSeignorageToMint(price))
     setExpansion(true)
