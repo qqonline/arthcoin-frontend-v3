@@ -156,7 +156,7 @@ const Bond: React.FC = () => {
                       }
                       disabledDescription={
                         !isBondRedeemable
-                          ? `Enabled when ARTH > $${getDisplayBalance(targetPrice)}`
+                          ? `Enabled when 1hr TWAP > $${getDisplayBalance(targetPrice)}`
                           : treasuryAmount.lte(0)
                           ? 'No ARTH available. Wait for next Epoch'
                           : null
