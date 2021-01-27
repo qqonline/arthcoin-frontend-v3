@@ -188,6 +188,11 @@ const Home: React.FC = () => {
           />
           <Stat
             title={targetPrice ? `12hr TWAP > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
+            description="Bond Issuance happens when"
+          />
+
+          <Stat
+            title={targetPrice ? `1hr TWAP > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
             description="Bond Redemption happens when"
           />
         </StyledHeader>
