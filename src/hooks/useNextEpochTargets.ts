@@ -11,10 +11,11 @@ const useNextEpochTargets = (currentPrice: BigNumber) => {
 
   const fetchCashPrice = useCallback(async (price: BigNumber) => {
     const { Treasury } = basisCash.contracts;
-    const est = await Treasury.estimateSeignorageToMint(price);
+    const _supplyIncrease = await Treasury.estimateSeignorageToMint(price);
+    const _debtIncrease = await Treasury.estimateBondsToIssue(price);
 
-    setSupplyIncrease(await basisCash.getTreasuryEstimateSeignorageToMint(price))
-    setDebtIncrease(await basisCash.getTreasuryEstimateSeignorageToMint(price))
+    setSupplyIncrease(_supplyIncrease)
+    setDebtIncrease(_debtIncrease)
     setExpansion(true)
   }, [basisCash]);
 

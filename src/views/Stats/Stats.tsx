@@ -82,9 +82,18 @@ const Home: React.FC = () => {
     [targets.supplyIncrease],
   );
 
+  const debtIncrease = useMemo(() => Number(getDisplayBalance(targets.debtIncrease, 18, 0)), [
+    targets.debtIncrease,
+  ]);
+
   const supplyIncreasePercentage = useMemo(
     () => (cash ? (supplyIncrease / Number(cash?.totalSupply)) * 100 : 0),
     [cash, supplyIncrease],
+  );
+
+  const debtIncreasePercentage = useMemo(
+    () => (cash ? (debtIncrease / Number(cash?.totalSupply)) * 100 : 0),
+    [cash, debtIncrease],
   );
 
   return (
@@ -95,11 +104,15 @@ const Home: React.FC = () => {
         title="Statistics"
         secondParaTitle="Next Epoch"
         secondParaDescription={
-          cash1hrPrice.gt(targetPrice)
+          targets.supplyIncrease.gt(0)
             ? `Protocol will expand the supply by approximately ${commify(
                 supplyIncrease,
               )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply`
-            : `Protocol will contract the supply by buying back approximately 5% of ARTH supply`
+            : targets.debtIncrease.gt(0)
+            ? `Protocol will contract the supply by buying back approximately ${debtIncrease} ARTH or ${debtIncreasePercentage.toFixed(
+                0,
+              )}% of the current supply`
+            : `Protocol will not to anything as price is within the stable range (0.95$-1$)`
         }
       />
       <Container size="lg">
