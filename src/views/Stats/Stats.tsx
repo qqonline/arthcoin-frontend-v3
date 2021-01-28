@@ -128,21 +128,48 @@ const Home: React.FC = () => {
           />
         </CardWrapper>
         <StyledHeader>
-          <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
-          <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
-          <Stat title={'1 %'} description="Stability Fees" />
-          <Stat title={`$${arthLiquidity}`} description="ARTH Liquidity" />
+          <ProgressCountdown
+            base={prevEpoch}
+            deadline={nextEpoch}
+            description="Next Epoch in"
+            toolTipTitle="Epoch refers to a unit of time interval that the ARTH protocol uses to decide when to make changes to the system. The current starting epoch is set to 12 hours. However, the epoch time is subject to change in the future."
+            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
+          />
+          <Stat
+            title={currentEpoch.toFixed(0)}
+            description="Number of epochs elapsed"
+            toolTipTitle="This refers to the number of epochs that have elapsed."
+            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
+          />
+          <Stat
+            title={'1 %'}
+            description="Stability Fees"
+            toolTipTitle="This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO"
+            toolTipLink="https://docs.arthcoin.com/arth-201/how-does-arth-mitigate-against-stability-risk/stability-fees-in-maha"
+          />
+          <Stat
+            title={`$${arthLiquidity}`}
+            description="ARTH Liquidity"
+            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
+          />
           {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
           <Stat
             title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
             description="ARTH Price (TWAP)"
+            toolTipTitle="TWAP means time weighted average price. Thus, the 1 hr TWAP refers to the 1 hr average price of ARTH. Note that the 1hr TWAP of ARTH is updated every hour"
           />
-          <Stat title={cashStat ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
+          <Stat
+            title={cashStat ? `$${arthPrice}` : '-'}
+            description="ARTH Price (Spot)"
+            toolTipTitle="This refers to the current price of ARTH"
+          />
           <Stat
             title={cashStat ? `$${getDisplayBalance(targetPrice)}` : '-'}
             description="ARTH Price (Target)"
+            toolTipTitle="This refers to the target price or the peg that ARTH should ideally be at. As ARTH is pegged to Global Measurement Unit (GMU), the target price of ARTH is an ever-changing phenomenon. Currently, the target price is at $1."
+            toolTipLink="https://docs.arthcoin.com/arth-201/target-price-of-arth"
           />
         </StyledHeader>
         <StyledHeader>
@@ -153,6 +180,8 @@ const Home: React.FC = () => {
           <Stat
             title={ecosystemFund ? `${getDisplayBalance(ecosystemFund)} ARTH` : '-'}
             description="Ecosystem Fund"
+            toolTipTitle="When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics/seiongrage-distribution"
           />
           {/* <Stat
           title={cdpFund ? `${getDisplayBalance(cdpFund)} ARTH` : '-'}

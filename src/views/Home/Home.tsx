@@ -85,7 +85,7 @@ const Home: React.FC = () => {
         <div className="card-deck row">
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="500"
               data-aos-once="true"
@@ -118,7 +118,7 @@ const Home: React.FC = () => {
           </div>
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-once="true"
@@ -151,7 +151,7 @@ const Home: React.FC = () => {
           </div>
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="1500"
               data-aos-once="true"
