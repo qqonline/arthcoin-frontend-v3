@@ -25,7 +25,8 @@ const configurations: { [env: string]: Configuration } = {
       'RSR': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
 
       'MAHA_ETH-UNI-LPv2': ['0x34c70e2e71bEf6bE2f8E4bA1eaFBC3582D372Fee', 18],
-      'ARTH_DAI-UNI-LPv2': ['0xD72bB5c4B46473aA8e13FF945b2d09eE06C26e70', 18]
+      'ARTH_DAI-UNI-LPv2': ['0xD72bB5c4B46473aA8e13FF945b2d09eE06C26e70', 18],
+      'ARTHB_DAI-UNI-LPv2': ['0xD72bB5c4B46473aA8e13FF945b2d09eE06C26e70', 18]
     },
     uniswapRouter: '0x9090776e9B20caBDaf9Fc8FCBA2BDCE76Ed85E62',
 
@@ -57,7 +58,8 @@ const configurations: { [env: string]: Configuration } = {
       'RSR': ['0x7d764F7BcaAC4E6f994AB9B5E5b78fF8f4156d3C', 18],
 
       'MAHA_ETH-UNI-LPv2': ['0x4f306Bc891F5C0bb12F47312C4F4e409806c7Ba0', 18],
-      'ARTH_DAI-UNI-LPv2': ['0xDAD66B82C711a63065F29B095135b6F84CEBDd0B', 18]
+      'ARTHB_DAI-UNI-LPv2': ['0xDAD66B82C711a63065F29B095135b6F84CEBDd0B', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
     },
     uniswapRouter: '0xBCE393D378e270CC2414570f43A07a9aE7C566c9',
 
@@ -103,7 +105,8 @@ const configurations: { [env: string]: Configuration } = {
       SUSHI: ['0x6b3595068778dd592e39a122f4f5a5cf09c90fe2', 18],
 
       'MAHA_ETH-UNI-LPv2': ['0xc0897d6ba893e31f42f658eead777aa15b8f824d', 18],
-      'ARTH_DAI-UNI-LPv2': ['0x35b6f9e6300aa6c722ea189e096b0b073025806f', 18]
+      'ARTH_DAI-UNI-LPv2': ['0x35b6f9e6300aa6c722ea189e096b0b073025806f', 18],
+      'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
     },
 
     uniswapRouter: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',

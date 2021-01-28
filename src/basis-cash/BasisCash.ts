@@ -216,13 +216,8 @@ export class BasisCash {
   }
 
   async getBondStat(): Promise<TokenStat> {
-    const decimals = BigNumber.from(10).pow(18);
-
-    // const cashPrice: BigNumber = await this.getBondOraclePriceInLastTWAP();
-    // const bondPrice = cashPrice.pow(2).div(decimals);
-
     return {
-      priceInDAI: "0", //getDisplayBalance(bondPrice),
+      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTHB),
       totalSupply: await this.ARTHB.displayedTotalSupply(),
     };
   }
@@ -304,7 +299,7 @@ export class BasisCash {
    */
   async redeemBonds(amount: string, redeemForDai: boolean): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    return await Treasury.redeemBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP(), redeemForDai);
+    return await Treasury.redeemBonds(decimalToBalance(amount), redeemForDai);
   }
 
   async earnedFromBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {

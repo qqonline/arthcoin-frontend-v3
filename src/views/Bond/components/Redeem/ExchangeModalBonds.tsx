@@ -85,7 +85,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
   const mahaBalance = useTokenBalance(MAHA);
   const [sellForDai, toggleCheckbox] = useState(false);
 
-  const mahaToBurn = useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
+  const mahaToBurn = useMemo(() => arthMahaPrice.mul(BigNumber.from(Math.floor(Number(val) || 0))).div(100), [
     arthMahaPrice,
     val,
   ]);
