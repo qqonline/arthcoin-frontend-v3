@@ -4,10 +4,10 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import CloseIcon from '../../assets/img/CloseIcon.svg';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
@@ -41,7 +41,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
       </div>
       {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
+          <img src={CloseIcon} width="24px" alt="" />
         </IconButton>
       ) : null}
     </MuiDialogTitle>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from '../../assets/img/InfoIcon.svg';
 import Modal from '../../components/NewModal/index';
 import TopBar from '../../components/TopBar';
 import TranscationSnackbar from '../../components/TopBar/components/TranscationSnackbar';
@@ -24,7 +24,9 @@ const Home: React.FC = () => {
         title="Disclaimer"
         open={openModal}
         handleClose={handleClose}
-        titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
+        titleLogo={
+          <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+        }
       >
         <ModalText>
           ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
@@ -47,7 +49,9 @@ const Home: React.FC = () => {
           national legislation this token may be deemed to be a security or a regulated
           financial instrument, and, if so, to respect the prohibition specified herein.
         </ModalText>
-        <ModalHyperLink onClick={()=>window.open('https://etherscan.io/')}>View token contract on Etherscan</ModalHyperLink>
+        <ModalHyperLink onClick={() => window.open('https://etherscan.io/')}>
+          View token contract on Etherscan
+        </ModalHyperLink>
       </Modal>
       <TopBar />
       <div id="header-gradient"></div>

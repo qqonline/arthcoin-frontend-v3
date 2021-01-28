@@ -26,7 +26,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
         <StyledTxButton>
           <img
             src={transcationIcon}
-            width="25px"
+            width="24px"
             className="pointer"
             onClick={() => onPresentTransactionModal()}
           />

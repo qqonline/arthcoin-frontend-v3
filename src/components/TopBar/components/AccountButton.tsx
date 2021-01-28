@@ -4,7 +4,7 @@ import { useWallet } from 'use-wallet';
 import Button from '../../Button/TransperantButton';
 import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
-import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import walletIcon from '../../../assets/img/walletIcon.svg';
 interface AccountButtonProps {}
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
@@ -20,7 +20,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
           <Button onClick={() => connect('injected')} size="sm" text="Connect" />
         ) : (
           <ButtonColored onClick={() => toggleModal(true)} size="sm" text="0xf7...a6d3">
-            <AccountBalanceWalletOutlinedIcon className="margin-right-10 font20" />
+            <img src={walletIcon} alt="" className="margin-right-10" width="24px" />
           </ButtonColored>
         )}
       </StyledAccountButton>

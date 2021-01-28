@@ -1,22 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../../components/Button';
 import CardContent from '../../../components/CardContent';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import AddIcon from '@material-ui/icons/Add';
 import ExchangeModal from './ExchangeModal';
 import ERC20 from '../../../basis-cash/ERC20';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useCatchError from '../../../hooks/useCatchError';
 import Spacer from '../../../components/Spacer';
-
+import ArrowRight from '../../../assets/img/ArrowRight.svg';
+import AddIcon from '../../../assets/img/AddIcon.svg';
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
 interface ExchangeCardProps {
   action: string;
   fromToken: ERC20;
@@ -93,7 +92,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
             </span>
           }
         >
-          <InfoOutlinedIcon className="margin-left-10 white" />
+          <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
         </HtmlTooltip>
       </div>
       <div className="border-bottom width-100 margin-bottom-20" />
@@ -114,7 +113,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <ArrowRightAltIcon className="font26" />
+              <img src={ArrowRight} alt="" width="24px" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -123,7 +122,7 @@ const ExchangeCard: React.FC<ExchangeCardProps> = ({
               <Label text={toTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <AddIcon className="font26" />
+              <img src={AddIcon} alt="" width="24px" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
