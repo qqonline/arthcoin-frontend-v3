@@ -6,7 +6,7 @@ import treasury from './treasury/reducer';
 import { createLogger } from 'redux-logger'
 
 
-const PERSISTED_KEYS: string[] = ['transactions'];
+const PERSISTED_KEYS: string[] = ['transactions', 'treasury'];
 
 const store = configureStore({
   reducer: {
