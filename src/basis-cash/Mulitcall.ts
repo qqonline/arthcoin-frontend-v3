@@ -58,6 +58,7 @@ export default class Multicall extends EventEmitter {
             multicallAddress: "0xeefba1e63905ef1d7acba5a8513c70307c1ce441"
         };
 
+        console.log(this.getMutlicallCalls(this.calls))
         this.watcher = multicall.createWatcher(this.getMutlicallCalls(this.calls), config)
         this.watcher.subscribe(this.processUpdates);
 
