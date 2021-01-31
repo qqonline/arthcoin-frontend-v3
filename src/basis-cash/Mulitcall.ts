@@ -1,37 +1,24 @@
-// import { createWatcher } from '@makerdao/multicall';
-// import { EventEmitter } from 'ev';
+import { EventEmitter } from 'events'
+const multicall = require('@makerdao/multicall')
 
 
 interface IMulticallInput {
+    key: string
     target: string
     call: (string | number)[]
-    returns: [string, ((val: any) => void)][]
+    convertResult: (val: any) => any
 }
 
 
-// Contract addresses used in this example
-const MKR_TOKEN = '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd';
-const MKR_WHALE = '0xdb33dfd3d61308c33c63209845dad3e6bfb2c674';
-const MKR_FISH = '0x2dfcedcb401557354d0cf174876ab17bfd6f4efd';
-
-
-export default class Multicall  {
-    calls: IMulticallInput[]
+export default class Multicall extends EventEmitter {
+    calls: IMulticallInput[] = []
     watcher: any
     rpcUrl: string
 
     constructor(rpcUrl: string) {
-        // super()
-
+        super()
         this.rpcUrl = rpcUrl
-        this.calls = [
-            {
-                target: MKR_TOKEN,
-                call: ['balanceOf(address)(uint256)', MKR_WHALE],
-                returns: [['BALANCE_OF_MKR_WHALE', val => val / 10 ** 18]]
-            }
-        ]
-
+        this.calls = []
         this.recreateWatcher()
     }
 
@@ -39,17 +26,43 @@ export default class Multicall  {
     addCall = (data: IMulticallInput): string => {
         this.calls.push(data)
         this.recreateWatcher()
-
-        return ''
+        this.watcher.tap(() => this.getMutlicallCalls([data]))
+        return data.key
     }
 
-    // removeCall
-    recreateWatcher = () => {
+    addCalls = (data: IMulticallInput[]): string[] => {
+        data.forEach(d => this.calls.push(d))
+        this.recreateWatcher()
+        this.watcher.tap(() => this.getMutlicallCalls(data))
+        return data.map(d => d.key)
+    }
+
+    private getMutlicallCalls = (calls: IMulticallInput[]) => {
+        return calls.map(c => ({
+            target: c.target,
+            call: c.call,
+            returns: [[c.key, c.convertResult]]
+        }))
+    }
+
+    private processUpdates = (update: { type: any; value: any; }) => {
+        console.log(`multi Update: ${update.type} = ${update.value}`);
+        this.emit(update.type, update.value)
+    }
+
+    private recreateWatcher = () => {
+        if (this.watcher) this.watcher.stop()
+
         const config = {
             rpcUrl: this.rpcUrl,
-            // multicallAddress: '0xc49ab4d7de648a97592ed3d18720e00356b4a806'
+            multicallAddress: "0xeefba1e63905ef1d7acba5a8513c70307c1ce441"
         };
 
-        // createWatcher(this.calls, config)
+        this.watcher = multicall.createWatcher(this.getMutlicallCalls(this.calls), config)
+        this.watcher.subscribe(this.processUpdates);
+
+        // Start the watcher polling
+        this.watcher.start();
+
     }
 }
