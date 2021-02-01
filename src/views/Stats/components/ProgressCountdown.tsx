@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Card from '../../../components/InfoCard';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
-import InfoIcon from '../../../assets/img/InfoIcon.svg'
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
 import Tooltip from '@material-ui/core/Tooltip';
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
@@ -50,13 +50,14 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
     <Card>
       <StyledCardContentInner>
         <StyledDesc>
-          {description}
+          <StyledLink href={toolTipLink} target="_blank">
+            {description}
+          </StyledLink>
           <HtmlTooltip
             enterTouchDelay={0}
             title={
               <span>
                 {toolTipTitle}
-                {toolTipLink && <a href={toolTipLink}>{toolTipLink}</a>}
               </span>
             }
           >
@@ -78,7 +79,12 @@ const StyledCountdown = styled.p`
   color: ${(props) => props.theme.color.grey[100]};
   margin: 0 0 6px 0;
 `;
-
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.color.grey[400]};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 const StyledProgressOuter = styled.div`
   width: 100%;
   height: 15px;

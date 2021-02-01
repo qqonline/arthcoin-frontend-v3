@@ -111,7 +111,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-weight: 700;
   height: 38px;
   justify-content: center;
-  outline: none;
+  outline: none !important;
   padding: 10px 22px;
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
@@ -120,6 +120,9 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
   &:selected {
     background: linear-gradient(180deg, #F47F57 -11.33%, #FD5656 100%);
+  }
+  &:focus: {
+    outline: none;
   }
   &:disabled {
     background: rgba(255,255,255,0.32);

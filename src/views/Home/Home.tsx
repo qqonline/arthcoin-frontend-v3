@@ -24,9 +24,9 @@ const Home: React.FC = () => {
         title="Disclaimer"
         open={openModal}
         handleClose={handleClose}
-        titleLogo={
-          <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
-        }
+        // titleLogo={
+        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+        // }
       >
         <ModalText>
           ARTH and ARTH Bonds are risky assets and there is a probability that you could lose

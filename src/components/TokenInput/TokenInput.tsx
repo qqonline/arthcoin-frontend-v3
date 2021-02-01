@@ -59,6 +59,7 @@ const Button = styled.button`
   color: #F7653B;
   background: transparent;
   border: none;
+  outline: none !important
   &:hover {
     background: transparent;
     color: #FFA981;
@@ -67,6 +68,7 @@ const Button = styled.button`
   &:focus {
     background: transparent;
     border: none;
+    outline: none;
   }
   &:disabled: {
     color: #ffffff;

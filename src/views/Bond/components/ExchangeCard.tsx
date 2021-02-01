@@ -253,9 +253,9 @@ const StyledCardContentInner = styled.div`
 `;
 const Card = styled.div`
   height: 100%;
-  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(70px);
   border-radius: 12px;
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex: 1;
   flex-direction: column;

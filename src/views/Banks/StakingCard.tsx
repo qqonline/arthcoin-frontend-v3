@@ -1,13 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import ProgressCountdown from './ProgressCountDown';
 import Button from '../../components/Button';
+import InfoIcon from '../../assets/img/InfoIcon.svg';
+import Tooltip from '@material-ui/core/Tooltip';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 interface AccountButtonProps {
   title: string;
   logo: Array<string>;
   subtitle?: string;
   poolSize: string;
   description?: string;
+  toolTipDesciption?: string;
   buttonText: string;
   percentage: number;
   appyPercentage: string;
@@ -24,6 +38,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
   description,
   poolSize,
   percentage,
+  toolTipDesciption,
   buttonText = 'Stake Now',
   appyPercentage,
 }) => {
@@ -54,6 +69,11 @@ const StakingCard: React.FC<AccountButtonProps> = ({
       )}
       <DiscountDiv>
         <TitleText>{`${appyPercentage}%`}</TitleText>APY
+        {toolTipDesciption && (
+          <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipDesciption}</span>}>
+            <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
+          </HtmlTooltip>
+        )}
       </DiscountDiv>
       <PoolSizeDiv>
         <div className="dialog-class margin-top-20">

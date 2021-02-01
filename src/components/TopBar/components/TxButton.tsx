@@ -1,11 +1,23 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../Button/TransperantButton';
 import { useAllTransactions } from '../../../state/transactions/hooks';
 import useModal from '../../../hooks/useModal';
 import TxModal from './TxModal';
 import transcationIcon from '../../../assets/img/transcation.png';
+import Tooltip from '@material-ui/core/Tooltip';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '15px',
+  },
+}))(Tooltip);
 interface TxButtonProps {}
 
 const TxButton: React.FC<TxButtonProps> = () => {
@@ -24,12 +36,14 @@ const TxButton: React.FC<TxButtonProps> = () => {
     <>
       {!!account && (
         <StyledTxButton>
-          <img
-            src={transcationIcon}
-            width="24px"
-            className="pointer"
-            onClick={() => onPresentTransactionModal()}
-          />
+          <HtmlTooltip enterTouchDelay={5000} title="Transaction">
+            <img
+              src={transcationIcon}
+              width="24px"
+              className="pointer"
+              onClick={() => onPresentTransactionModal()}
+            />
+          </HtmlTooltip>
           {/* <Button
             size="sm"
             text={pendingTransactions > 0 ? `${pendingTransactions} Pending` : `Transactions`}

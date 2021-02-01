@@ -151,6 +151,7 @@ const StyledTitle = styled.h1`
   color: ${(props) => props.theme.color.grey[100]};
   font-size: 36px;
   font-weight: 700;
+  z-index: 1;
   margin: 0;
   padding: 0;
 `;

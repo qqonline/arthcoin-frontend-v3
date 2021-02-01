@@ -157,8 +157,13 @@ const Home: React.FC = () => {
         <StyledHeader>
           <Stat
             title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
-            description="ARTH Price (TWAP)"
+            description="ARTH Price (1hr TWAP)"
             toolTipTitle="TWAP means time weighted average price. Thus, the 1 hr TWAP refers to the 1 hr average price of ARTH. Note that the 1hr TWAP of ARTH is updated every hour"
+          />
+          <Stat
+            title={cashStat ? `$${getDisplayBalance(cashOraclePrice, 18, 2)}` : '-'}
+            description="ARTH Price (12hr TWAP)"
+            toolTipTitle="TWAP means time weighted average price. Thus, the 12-hr TWAP refers to the 12 hr average price of ARTH. Note that the 12-hr TWAP of ARTH is always updated at every epoch & is not updated constantly."
           />
           <Stat
             title={cashStat ? `$${arthPrice}` : '-'}
@@ -170,6 +175,31 @@ const Home: React.FC = () => {
             description="ARTH Price (Target)"
             toolTipTitle="This refers to the target price or the peg that ARTH should ideally be at. As ARTH is pegged to Global Measurement Unit (GMU), the target price of ARTH is an ever-changing phenomenon. Currently, the target price is at $1."
             toolTipLink="https://docs.arthcoin.com/arth-201/target-price-of-arth"
+          />
+        </StyledHeader>
+        <StyledHeader>
+          <Stat
+            title="12hr TWAP > $1.05"
+            description="Expansion happens when"
+            toolTipTitle="When the 12hr TWAP of ARTH > $1.05, the system mints more ARTH tokens as seigniorage & distributes it amongst various participants of the protocol. This is known as Expansion."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#expansion-phase-in-arth"
+          />
+          <Stat
+            title="12hr TWAP < $0.95"
+            description="Contraction happens when"
+            toolTipTitle="When the 12hr TWAP  of ARTH < $0.95 , the system issues ARTH Bonds which can be purchased at a discount to the ARTH price to increase demand in the market & decrease the supply through a burning mechanism. This is known as Contraction."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#contraction-phase-in-arth"
+          />
+          <Stat
+            title="1hr TWAP > $1.00"
+            description="Bond Redemption happens when"
+            toolTipTitle="This refers to the condition that should be met for ARTH Bonds to become redeemable. Thus, you can redeem your ARTH Bonds only when the 12hr TWAP > $1.00."
+            toolTipLink="https://docs.arthcoin.com/tutorials/redeeming-bonds"
+          />
+          <Stat
+            title={`$${arthLiquidity}`}
+            description="ARTH Liquidity"
+            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
           />
         </StyledHeader>
         <StyledHeader>

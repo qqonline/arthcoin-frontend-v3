@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Card from '../../../components/InfoCard';
 import { withStyles, Theme } from '@material-ui/core/styles';
-import InfoIcon from '../../../assets/img/InfoIcon.svg';
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
 import Tooltip from '@material-ui/core/Tooltip';
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
@@ -29,16 +29,10 @@ const Stat: React.FC<StatProps> = ({ icon, title, description, toolTipTitle, too
         {icon && <StyledIcon>{icon}</StyledIcon>}
         <StyledTextWrapper>
           <StyledDesc>
-            {description}
-            <HtmlTooltip
-              enterTouchDelay={0}
-              title={
-                <span>
-                  {toolTipTitle}
-                  {toolTipLink && <a href={toolTipLink}>{toolTipLink}</a>}
-                </span>
-              }
-            >
+            <StyledLink href={toolTipLink} target="_blank">
+              {description}
+            </StyledLink>
+            <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipTitle}</span>}>
               <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
             </HtmlTooltip>
           </StyledDesc>
@@ -54,11 +48,16 @@ const StyledCardTitle = styled.div`
   font-size: 18px;
   font-weight: 700;
 `;
-
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.color.grey[400]};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 const StyledDesc = styled.span`
   color: ${(props) => props.theme.color.grey[400]};
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 
