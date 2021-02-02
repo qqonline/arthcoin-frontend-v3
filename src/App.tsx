@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
@@ -20,10 +20,11 @@ import Distributions from './views/Distributions';
 import Popups from './components/Popups';
 import config from './config';
 import useBasisCash from './hooks/useBasisCash';
+import * as Treasury from './state/treasury/controller';
 
 import './index.css';
 import './App.css';
-
+import useTreasuryAmount from './hooks/useTreasuryAmount';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -40,10 +41,11 @@ const Providers: React.FC = ({ children }) => {
   );
 };
 
-
 const App: React.FC = () => {
   // init animate on scroll
-  useEffect(() => { AOS.init(); }, []);
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <Providers>
@@ -74,6 +76,13 @@ const App: React.FC = () => {
 const AppContent: React.FC = ({ children }) => {
   // const { account } = useWallet();
   const basisCash = useBasisCash();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (basisCash) {
+      Treasury.init(basisCash, dispatch);
+    }
+  }, [basisCash, dispatch]);
 
   // if (!!!account) return <UnlockWallet />;
   if (!basisCash) return <div>Loading</div>;
