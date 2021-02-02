@@ -1,6 +1,6 @@
 {
-  "name": "basis.cash",
-  "version": "0.1.0",
+  "name": "arth-frontend",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@ethersproject/providers": "^5.0.9",
