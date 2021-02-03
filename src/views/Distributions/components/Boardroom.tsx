@@ -23,7 +23,7 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
 }))(Tooltip);
 interface BoardroomProps {
   boardroom: 'arth' | 'arthLiquidity' | 'mahaLiquidity';
-  toolTipTitle: string;
+  toolTipTitle?: string;
 }
 
 const ArthBoardroom: React.FC<BoardroomProps> = (props) => {

@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import CloseIcon from '../../assets/img/CloseIcon.svg';
+import CloseIcon from '../../../assets/img/CloseIcon.svg';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { PopupContent } from '../../../state/application/actions';
 interface TxButtonProps {

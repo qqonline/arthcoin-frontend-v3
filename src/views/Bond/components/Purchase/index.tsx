@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
+import { useWallet } from 'use-wallet';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../../../components/Button';
 import CardContent from '../../../../components/CardContent';
@@ -13,9 +14,9 @@ import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
 import Spacer from '../../../../components/Spacer';
-import ArrowRight from '../../../assets/img/ArrowRight.svg';
-import AddIcon from '../../../assets/img/AddIcon.svg';
-import InfoIcon from '../../../assets/img/InfoWarning.svg';
+import ArrowRight from '../../../../assets/img/ArrowRight.svg';
+import AddIcon from '../../../../assets/img/AddIcon.svg';
+import InfoIcon from '../../../../assets/img/InfoWarning.svg';
 interface ExchangeCardProps {
   action: string;
   fromToken: ERC20;
