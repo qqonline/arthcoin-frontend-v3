@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from '../../assets/img/InfoIcon.svg';
 import Modal from '../../components/NewModal/index';
 import TopBar from '../../components/TopBar';
 import './styles/index.sass';
@@ -17,7 +17,9 @@ const Home: React.FC = () => {
         title="Disclaimer"
         open={openModal}
         handleClose={handleClose}
-        titleLogo={<InfoOutlinedIcon style={{ marginRight: '10px' }} />}
+        // titleLogo={
+        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+        // }
       >
         <ModalText>
           <b>
@@ -90,7 +92,7 @@ const Home: React.FC = () => {
         <div className="card-deck row">
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="500"
               data-aos-once="true"
@@ -119,7 +121,7 @@ const Home: React.FC = () => {
           </div>
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-once="true"
@@ -148,7 +150,7 @@ const Home: React.FC = () => {
           </div>
           <div className="col-12 col-md-4">
             <div
-              className="card"
+              className="card height-100"
               data-aos="fade-up"
               data-aos-duration="1500"
               data-aos-once="true"

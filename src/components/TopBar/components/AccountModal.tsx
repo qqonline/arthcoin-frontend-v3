@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
 import styled from 'styled-components';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -10,6 +9,7 @@ import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
 import TextButton from '../../Button/TextButton';
 import metaMaskIcon from '../../../assets/img/metamask.png';
+import copyIcon from '../../../assets/img/copyIcon.svg';
 interface props {
   onCancel?: Function;
 }
@@ -50,7 +50,7 @@ const AccountModal: React.FC<props> = ({ onCancel }) => {
                 0,
                 4,
               )}...${walletAddress.substring(walletAddress.length - 4)}`}</span>
-              <FileCopyIcon className="font15 white pointer" />
+              <img src={copyIcon} className="pointer" width="24px" />
             </div>
           </CopyToClipboard>
         </WalletDetils> */}

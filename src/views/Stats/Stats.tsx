@@ -145,27 +145,78 @@ const Home: React.FC = () => {
           />
         </CardWrapper>
         <StyledHeader>
-          <ProgressCountdown base={prevEpoch} deadline={nextEpoch} description="Next Epoch" />
-          <Stat title={currentEpoch.toFixed(0)} description="Current Epoch" />
-          <Stat title={'1 %'} description="Stability Fees" />
-          <Stat
-            title={`$${commify(getDisplayBalance(arthLiquidity, 18, 0))}`}
-            description="ARTH Liquidity"
+          <ProgressCountdown
+            base={prevEpoch}
+            deadline={nextEpoch}
+            description="Next Epoch in"
+            toolTipTitle="Epoch refers to a unit of time interval that the ARTH protocol uses to decide when to make changes to the system. The current starting epoch is set to 12 hours. However, the epoch time is subject to change in the future."
+            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
           />
+          <Stat
+            title={currentEpoch.toFixed(0)}
+            description="Number of epochs elapsed"
+            toolTipTitle="This refers to the number of epochs that have elapsed."
+            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
+          />
+          <Stat
+            title={'1 %'}
+            description="Stability Fees"
+            toolTipTitle="This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO"
+            toolTipLink="https://docs.arthcoin.com/arth-201/how-does-arth-mitigate-against-stability-risk/stability-fees-in-maha"
+          />
+          <Stat
+            title={`$${arthLiquidity}`}
+            description="ARTH Liquidity"
+            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
+          />
+          {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
           <Stat
             title={cash1hrPrice ? `$${getDisplayBalance(cash1hrPrice, 18, 2)}` : '-'}
             description="ARTH Price (1hr TWAP)"
+            toolTipTitle="TWAP means time weighted average price. Thus, the 1 hr TWAP refers to the 1 hr average price of ARTH. Note that the 1hr TWAP of ARTH is updated every hour"
           />
           <Stat
             title={cashe12hrPrice ? `$${getDisplayBalance(cashe12hrPrice, 18, 2)}` : '-'}
             description="ARTH Price (12hr TWAP)"
+            toolTipTitle="TWAP means time weighted average price. Thus, the 12-hr TWAP refers to the 12 hr average price of ARTH. Note that the 12-hr TWAP of ARTH is always updated at every epoch & is not updated constantly."
           />
-          <Stat title={arthPrice ? `$${arthPrice}` : '-'} description="ARTH Price (Spot)" />
+          <Stat
+            title={arthPrice ? `$${arthPrice}` : '-'}
+            description="ARTH Price (Spot)"
+            toolTipTitle="This refers to the current price of ARTH"
+          />
           <Stat
             title={targetPrice ? `$${getDisplayBalance(targetPrice)}` : '-'}
             description="ARTH Price (Target)"
+            toolTipTitle="This refers to the target price or the peg that ARTH should ideally be at. As ARTH is pegged to Global Measurement Unit (GMU), the target price of ARTH is an ever-changing phenomenon. Currently, the target price is at $1."
+            toolTipLink="https://docs.arthcoin.com/arth-201/target-price-of-arth"
+          />
+        </StyledHeader>
+        <StyledHeader>
+          <Stat
+            title="12hr TWAP > $1.05"
+            description="Expansion happens when"
+            toolTipTitle="When the 12hr TWAP of ARTH > $1.05, the system mints more ARTH tokens as seigniorage & distributes it amongst various participants of the protocol. This is known as Expansion."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#expansion-phase-in-arth"
+          />
+          <Stat
+            title="12hr TWAP < $0.95"
+            description="Contraction happens when"
+            toolTipTitle="When the 12hr TWAP  of ARTH < $0.95 , the system issues ARTH Bonds which can be purchased at a discount to the ARTH price to increase demand in the market & decrease the supply through a burning mechanism. This is known as Contraction."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#contraction-phase-in-arth"
+          />
+          <Stat
+            title="1hr TWAP > $1.00"
+            description="Bond Redemption happens when"
+            toolTipTitle="This refers to the condition that should be met for ARTH Bonds to become redeemable. Thus, you can redeem your ARTH Bonds only when the 12hr TWAP > $1.00."
+            toolTipLink="https://docs.arthcoin.com/tutorials/redeeming-bonds"
+          />
+          <Stat
+            title={`$${arthLiquidity}`}
+            description="ARTH Liquidity"
+            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
           />
         </StyledHeader>
 
@@ -206,6 +257,8 @@ const Home: React.FC = () => {
               ecosystemFund ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH` : '-'
             }
             description="Ecosystem Fund"
+            toolTipTitle="When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development."
+            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics/seiongrage-distribution"
           />
         </StyledHeader>
       </Container>

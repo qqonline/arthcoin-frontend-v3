@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import CloseIcon from '../../assets/img/CloseIcon.svg';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { PopupContent } from '../../../state/application/actions';
 interface TxButtonProps {
@@ -60,7 +60,13 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
             <SnackBarInnerContainer>
               {notificationCount && <NotificationCount>{notificationCount}</NotificationCount>}
               Transcation
-              <CloseIcon className="pointer" onClick={handleClose} />
+              <img
+                src={CloseIcon}
+                width="24px"
+                alt=""
+                className="pointer"
+                onClick={handleClose}
+              />
             </SnackBarInnerContainer>
             {isLoading ? (
               <SnackBarLoading>

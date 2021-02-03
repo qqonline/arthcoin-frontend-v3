@@ -1,20 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../../../components/InfoCard';
-
+import { withStyles, Theme } from '@material-ui/core/styles';
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
+import Tooltip from '@material-ui/core/Tooltip';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 interface StatProps {
   icon?: string;
   title: string;
   description: string;
+  toolTipTitle?: string;
+  toolTipLink?: string;
 }
 
-const Stat: React.FC<StatProps> = ({ icon, title, description }) => {
+const Stat: React.FC<StatProps> = ({ icon, title, description, toolTipTitle, toolTipLink }) => {
   return (
     <Card>
       <StyledCardContentInner>
         {icon && <StyledIcon>{icon}</StyledIcon>}
         <StyledTextWrapper>
-          <StyledDesc>{description}</StyledDesc>
+          <StyledDesc>
+            <StyledLink href={toolTipLink} target="_blank">
+              {description}
+            </StyledLink>
+            <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipTitle}</span>}>
+              <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
+            </HtmlTooltip>
+          </StyledDesc>
           <StyledCardTitle>{title}</StyledCardTitle>
         </StyledTextWrapper>
       </StyledCardContentInner>
@@ -27,9 +48,17 @@ const StyledCardTitle = styled.div`
   font-size: 18px;
   font-weight: 700;
 `;
-
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.color.grey[400]};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 const StyledDesc = styled.span`
   color: ${(props) => props.theme.color.grey[400]};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const StyledIcon = styled.span`

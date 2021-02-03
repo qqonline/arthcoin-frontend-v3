@@ -163,7 +163,6 @@ const Bond: React.FC = () => {
                       }
                     />
                   </Grid>
-
                   <Grid container spacing={2} item xs={12} md={12} lg={12} xl={12}>
                     <Grid item xs={12} md={4} lg={4} xl={4}>
                       <ExchangeStat

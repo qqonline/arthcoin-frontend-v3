@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import Select from '@material-ui/core/Select';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
 import AccountButton from './AccountButton';
+import ExpandMore from '../../../assets/img/ExpandMore.svg';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -69,7 +69,7 @@ const MobileNav: React.FC = () => {
               label="Mainnet"
               onChange={handleChange}
               input={<BootstrapInput />}
-              IconComponent={() => <ExpandMoreIcon className="white" />}
+              IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
             >
               <MenuItem value="mainnet">
                 <ColorIcon colorCode="#11af60" />

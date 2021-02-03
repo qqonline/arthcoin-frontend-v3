@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputBase from '@material-ui/core/InputBase';
 import Select from '@material-ui/core/Select';
@@ -15,7 +12,9 @@ import AccountButton from './components/AccountButton';
 import Nav from './components/Nav';
 import MobileNav from './components/MobileNav';
 import TxButton from './components/TxButton';
-
+import CloseIcon from '../../assets/img/CloseIcon.svg';
+import InfoIcon from '../../assets/img/InfoIcon.svg';
+import ExpandMore from '../../assets/img/ExpandMore.svg';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -72,36 +71,38 @@ const TopBar: React.FC = () => {
                 }}
               >
                 <TxButton />
-                {/* <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={netWrokType}
-                  label="Mainnet"
-                  onChange={handleChange}
-                  input={<BootstrapInput />}
-                  IconComponent={() => <ExpandMoreIcon className="white" />}
-                >
-                  <MenuItem value="mainnet">
-                    <ColorIcon colorCode="#11af60" />
-                    Mainnet
-                  </MenuItem>
-                  <MenuItem value="ropsten">
-                    <ColorIcon colorCode="#FA4C69" />
-                    Ropsten
-                  </MenuItem>
-                  <MenuItem value="kovan">
-                    <ColorIcon colorCode="#7A3CF6" />
-                    Kovan
-                  </MenuItem>
-                  <MenuItem value="rinkeby">
-                    <ColorIcon colorCode="#FCB400" />
-                    Rinkeby
-                  </MenuItem>
-                  <MenuItem value="goerli">
-                    <ColorIcon colorCode="#BD9CFF" />
-                    Goerli
-                  </MenuItem>
-                </Select> */}
+                {false && (
+                  <Select
+                    labelId="demo-customized-select-label"
+                    id="demo-customized-select"
+                    value={netWrokType}
+                    label="Mainnet"
+                    onChange={handleChange}
+                    input={<BootstrapInput />}
+                    IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
+                  >
+                    <MenuItem value="mainnet">
+                      <ColorIcon colorCode="#11af60" />
+                      Mainnet
+                    </MenuItem>
+                    <MenuItem value="ropsten">
+                      <ColorIcon colorCode="#FA4C69" />
+                      Ropsten
+                    </MenuItem>
+                    <MenuItem value="kovan">
+                      <ColorIcon colorCode="#7A3CF6" />
+                      Kovan
+                    </MenuItem>
+                    <MenuItem value="rinkeby">
+                      <ColorIcon colorCode="#FCB400" />
+                      Rinkeby
+                    </MenuItem>
+                    <MenuItem value="goerli">
+                      <ColorIcon colorCode="#BD9CFF" />
+                      Goerli
+                    </MenuItem>
+                  </Select>
+                )}
                 <AccountButton />
               </div>
             </HideonPhone>
@@ -119,8 +120,10 @@ const TopBar: React.FC = () => {
                     onClick={() => toggleMobileMenu(true)}
                   />
                 ) : (
-                  <CloseIcon
-                    style={{ color: 'white' }}
+                  <img
+                    src={CloseIcon}
+                    width="24px"
+                    alt=""
                     className="pointer"
                     onClick={() => toggleMobileMenu(false)}
                   />
@@ -134,9 +137,15 @@ const TopBar: React.FC = () => {
       {showWarning && (
         <ShowWarning>
           <ShowWarningInner>
-            <InfoOutlinedIcon className="margin-right-5" />
+            <img src={InfoIcon} alt="" width="24px" className="margin-right-5" />
             Please make sure that you are connected to matic mumbai TESTnet.
-            <CloseIcon className="pointer" onClick={() => toggleWarning(false)} />
+            <img
+              src={CloseIcon}
+              width="24px"
+              alt=""
+              className="pointer"
+              onClick={() => toggleWarning(false)}
+            />
           </ShowWarningInner>
         </ShowWarning>
       )}

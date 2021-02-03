@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import { useWallet } from 'use-wallet';
 import Button from '../../../../components/Button';
@@ -9,14 +8,14 @@ import CardContent from '../../../../components/CardContent';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import Label from '../../../../components/Label';
 import TokenSymbol from '../../../../components/TokenSymbol';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import ArrowRight from '../../../../assets/img/ArrowRight.svg';
+import useModal from '../../../../hooks/useModal';
 import ExchangeModal from './ExchangeModalBonds';
 import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
-import AddIcon from '@material-ui/icons/Add';
-
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
 interface ExchangeCardProps {
   action: string;
   fromToken: ERC20;
@@ -90,7 +89,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
             </span>
           }
         >
-          <InfoOutlinedIcon className="margin-left-10 white" />
+          <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
         </HtmlTooltip>
       </div>
       {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
@@ -104,7 +103,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <ArrowRightAltIcon className="font26" />
+              <img src={ArrowRight} alt="" width="24px" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -228,9 +227,9 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 const Card = styled.div`
-  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(70px);
   border-radius: 12px;
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   height: 100%;
   flex: 1;

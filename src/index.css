@@ -20,13 +20,60 @@ body {
 code {
   font-family: Inter, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+::-webkit-scrollbar {
+  width: 0px !important;  /* Remove scrollbar space */
+  background: transparent !important;  /* Optional: just make scrollbar invisible */
+}
+.chakra-home {
+  /* animation: chakra-animate 240s infinite linear; */
+  background-image: url('./assets/svg/BG.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  position: absolute;
+  top: 400px;
+  z-index: -2;
+  width: 100%;
+}
+
+.gradient-red-1-home {
+  position: absolute;
+  opacity: 0.1;
+  top: 400px;
+  /* animation: up-down 10s infinite alternate; */
+  background-image: url('./views/Home/images//gradient-circle.png');
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  z-index: -2;
+}
+
+.gradient-red-2-home {
+  position: absolute;
+  opacity: 0.5;
+  top: 400px;
+  /* animation: up-down 10s infinite alternate; */
+  background-image: url('./views/Home/images//gradient-circle.png');
+  background-size: contain;
+  height: 100%;
+  max-width: 1024px;
+  width: 100%;
+  z-index: -2;
+}
 a:hover {
   text-decoration: none !important;
+  color: inherit;
+}
+.height-100 {
+  height: 100%;
 }
 html,
 #root,
 body {
-  height: 100%;
+  overflow-x: hidden;
 }
 .MuiMenu-list {
   background: linear-gradient(180deg, #48423e 0%, #373030 100%);

@@ -8,9 +8,22 @@ import CardIcon from '../../../components/CardIcon';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { useWallet } from 'use-wallet';
 import useBasisCash from '../../../hooks/useBasisCash';
-
+import { withStyles, Theme } from '@material-ui/core/styles';
+import InfoIcon from '../../../assets/img/InfoIcon.svg';
+import Tooltip from '@material-ui/core/Tooltip';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 interface BoardroomProps {
   boardroom: 'arth' | 'arthLiquidity' | 'mahaLiquidity';
+  toolTipTitle: string;
 }
 
 const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
@@ -40,6 +53,11 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               <PercentageContainer>
                 <PercentageTilte>
                   <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seinorage Supply
+                  {props.toolTipTitle && (
+                    <HtmlTooltip enterTouchDelay={0} title={<span>{props.toolTipTitle}</span>}>
+                      <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-5" />
+                    </HtmlTooltip>
+                  )}
                 </PercentageTilte>
               </PercentageContainer>
             </StyledInfoSlots>
@@ -60,7 +78,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
 };
 const ButtonContainer = styled.div`
   max-width: 300px;
-  width: 100%
+  width: 100%;
 `;
 const StyledCardWrapper = styled.div`
   display: flex;

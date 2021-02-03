@@ -1,18 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../../../components/InfoCard';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
-
+import InfoIcon from '../../../assets/img/InfoWarning.svg';
+import Tooltip from '@material-ui/core/Tooltip';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 interface ProgressCountdownProps {
   base: Date;
   deadline: Date;
   description: string;
+  toolTipTitle?: string;
+  toolTipLink?: string;
 }
 
 const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
   base,
   deadline,
   description,
+  toolTipLink,
+  toolTipTitle,
 }) => {
   const percentage =
     Date.now() >= deadline.getTime()
@@ -34,7 +50,21 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
   return (
     <Card>
       <StyledCardContentInner>
-        <StyledDesc>{description}</StyledDesc>
+        <StyledDesc>
+          <StyledLink href={toolTipLink} target="_blank">
+            {description}
+          </StyledLink>
+          <HtmlTooltip
+            enterTouchDelay={0}
+            title={
+              <span>
+                {toolTipTitle}
+              </span>
+            }
+          >
+            <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
+          </HtmlTooltip>
+        </StyledDesc>
         <Countdown date={deadline} renderer={countdownRenderer} />
         <StyledProgressOuter>
           <StyledProgress progress={percentage} />
@@ -50,7 +80,12 @@ const StyledCountdown = styled.p`
   color: ${(props) => props.theme.color.grey[100]};
   margin: 0 0 6px 0;
 `;
-
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.color.grey[400]};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 const StyledProgressOuter = styled.div`
   width: 100%;
   height: 5px;
@@ -70,6 +105,9 @@ const StyledDesc = styled.span`
   font-weight: 400;
   font-size: 12px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledCardContentInner = styled.div`

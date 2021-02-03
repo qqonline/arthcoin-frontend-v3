@@ -1,22 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import farmer from '../../assets/img/basis-cash-logo.svg';
+import farmer from '../../assets/img/arthLogo.svg';
 
 const Logo: React.FC = () => {
   return (
-    <StyledLogo>
-      <img alt="arth" src={farmer} height="40" style={{ marginTop: -3 }} />
-      <Link to="/">
+    <Link to="/">
+      <StyledLogo>
+        <img alt="arth" src={farmer} height="40" style={{ marginTop: -3 }} />
+        {/* <Link to="/">
         <StyledLink>ARTH</StyledLink>
-      </Link>
-    </StyledLogo>
+      </Link> */}
+      </StyledLogo>
+    </Link>
   );
 };
 
 const StyledLogo = styled.div`
   align-items: center;
   display: flex;
+  margin-right: 15px;
 `;
 
 const StyledLink = styled.div`

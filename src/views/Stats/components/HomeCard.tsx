@@ -159,16 +159,13 @@ const StyledSupplyLabel = styled.a`
 const Card = styled.div`
   padding: 5px 0;
   color: #eee;
-  border-radius: 12px;
-  // backdrop-filter: blur(70px);
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   position: relative; /*  */
-  box-sizing: border-box;
-  background: #1a1919;
   background-clip: padding-box;
-  border: solid 1px transparent;
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, rgba(255, 116, 38, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
+  backdrop-filter: blur(70px);
+  border-radius: 12px;
 `;
 
 export default HomeCard;
