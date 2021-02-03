@@ -64,13 +64,17 @@ const MahaFeeCheck: React.FC<TokenInputProps> = ({ max, value, isMahaApproved, a
       </StyledMaxText>
 
       <StyledInputWrapper style={{ border: mahaAprroved ? 'none' : '1px solid #f09700' }}>
-        <StyledInput disabled placeholder={'0'} value={getDisplayBalance(value, 18, 3)} />
+        <StyledInput
+          disabled
+          placeholder={'0'}
+          value={getDisplayBalance(value, 18, 3)}
+        />
         <StyledTokenAdornmentWrapper>
           <StyledTokenSymbol>{symbol}</StyledTokenSymbol>
-          {/* <StyledSpacer /> */}
+          <StyledSpacer />
           <div>
             {/* <Button disabled={isMahaApproved} size="sm" text="Approve" onClick={approve} /> */}
-            {/* <AntSwitch checked={mahaAprroved} onChange={handleChange} name="checkedC" /> */}
+            <AntSwitch checked={mahaAprroved} onChange={handleChange} name="checkedC" />
           </div>
         </StyledTokenAdornmentWrapper>
       </StyledInputWrapper>

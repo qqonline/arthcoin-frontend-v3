@@ -28,9 +28,9 @@ const Boardroom = () => {
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
-        <Grid container spacing={5} justify="center">
-          <Grid item xs={12} md={9} lg={9} xl={9}>
-            <Grid container spacing={5} justify="center">
+        <Grid container spacing={3} justify="center">
+          <Grid item xs={12} md={8} lg={8} xl={8}>
+            <Grid container spacing={2} justify="center">
               <Grid container item xs={12} md={6} lg={6} xl={6}>
                 <Stake boardroom={boardroom} />
               </Grid>
@@ -38,25 +38,25 @@ const Boardroom = () => {
                 <Harvest boardroom={boardroom} />
               </Grid>
             </Grid>
-            <div style={{ marginTop: 20, marginBottom: 20, maxWidth: '200px' }}>
+            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
               <Button size="sm" text="Settle & Withdraw" />
             </div>
-            {/* <Grid container spacing={5} justify="center">
-              <Grid container item xs={12} md={4} lg={4} xl={4}>
-                <ExchangeStat description="Total Tokens Staked" title="1,150,200" />
+          </Grid>
+          <Grid container item xs={12} md={4} lg={4} xl={4}>
+            <Grid container spacing={3} justify="center">
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
               </Grid>
-              <Grid container item xs={12} md={4} lg={4} xl={4}>
-                <ExchangeStat description="Your Pool %" title="0.002%" />
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="Scaling Factor" title="5x" />
               </Grid>
-              <Grid container item xs={12} md={4} lg={4} xl={4}>
-                <ExchangeStat description="ARTH Price(1hr TWAP)" title="$1.150" />
+              <Grid container item xs={12} md={12} lg={12} xl={12}>
+                <ExchangeStat description="Treasury Amount" title="~$5" />
               </Grid>
-            </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
-        {(bankId === 'arthLiquidity' || bankId === 'mahaLiquidity') && (
-          <LPTokenHelpText boardroom={boardroom} />
-        )}
+        {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
       </Container>
     </>
   );
@@ -73,7 +73,8 @@ const LPTokenHelpText: React.FC<{ boardroom: BoardroomInfo }> = ({ boardroom }) 
     uniswapUrl = `https://app.uniswap.org/#/add/${basisCash.ARTH.address}/${basisCash.DAI.address}`;
   } else {
     pairName = 'MAHA-WETH pair';
-    uniswapUrl = 'https://app.uniswap.org/#/add/ETH/0xB4d930279552397bbA2ee473229f89Ec245bc365';
+    uniswapUrl =
+      'https://app.uniswap.org/#/add/0xa7ED29B253D8B4E3109ce07c80fc570f81B63696/0x6B175474E89094C44Da98b954EedeAC495271d0F';
   }
 
   return (
@@ -105,8 +106,6 @@ const StyledCardsWrapper = styled.div`
 const StyledLink = styled.a`
   font-weight: 700;
   text-decoration: none;
-  text-align: center;
-  display: block;
   color: ${(props) => props.theme.color.primary.main};
 `;
 

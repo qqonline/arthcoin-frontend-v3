@@ -48,6 +48,9 @@ const StyledButton = styled.button<StyledButtonProps>`
   &:hover {
     background-color: rgba(255, 255, 255, 0.32);
   }
+  &:focus {
+    outline: none;
+  }
   &:disabled {
     background-color: rgba(255, 255, 255, 0.08);
     cursor: nonde;

@@ -78,21 +78,21 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Redeem ARTHB</StyledCardTitle>
+        <StyledCardTitle>Redeem ARTH</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
             <span>
-              When ARTH is above it’s target price; you can sell ARTH bonds and either get back
-              DAI or ARTH in return. When you redeem your ARTHB, you also pay a stability fee in
-              MAHA.
+              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
+              influencing the price on Uniswap. Bond tokens are bought at a discount are
+              redeemed for a profit.
             </span>
           }
         >
           <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
         </HtmlTooltip>
       </div>
-      {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
+      <div className="border-bottom width-100 margin-bottom-20" />
       <CardContent>
         <StyledCardContentInner>
           <StyledExchanger>
@@ -107,38 +107,26 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
-                <TokenSymbol symbol={addOnToken.symbol} size={54} />
-              </StyledCardIcon>
-              <Label text={addOnTokeName} variant="normal" />
-            </StyledToken>
-
-            <StyledExchangeArrow>or</StyledExchangeArrow>
-            <StyledToken>
-              <StyledCardIcon>
                 <TokenSymbol symbol={toToken.symbol} size={54} />
               </StyledCardIcon>
               <Label text={toTokenName} variant="normal" />
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          {
+          <StyledCardActions>
+            <Button onClick={() => toggleModal(true)} text="Redeem" />
+          </StyledCardActions>
+          {false && (
             <StyledCardActions>
-              {!account ? (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-              ) : !disabled ? (
-                balance.eq(0) && false ? (
-                  <Button text={'No ARTHB Balance'} disabled={true} />
-                ) : approveStatus !== ApprovalState.APPROVED && !disabled ? (
+              {!!account ? (
+                approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
                     disabled={
-                      disabled ||
                       approveStatus === ApprovalState.PENDING ||
                       approveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                    text={
-                      approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve ARTHB'
-                    }
+                    text="Redeem"
                   />
                 ) : (
                   <Button
@@ -148,14 +136,10 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                   />
                 )
               ) : (
-                <Button
-                  text={disabledDescription || action}
-                  // onClick={onPresent}
-                  disabled={disabled}
-                />
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
             </StyledCardActions>
-          }
+          )}
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -172,6 +156,12 @@ const StyledCardTitle = styled.div`
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;
+`;
+
+const StyledCardDesc = styled.div`
+  margin-bottom: 26px;
+  text-align: center;
+  color: #fff9;
 `;
 
 const StyledCardIcon = styled.div`
@@ -215,7 +205,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #fff9;
+  color: #ffffff;
   text-align: center;
 `;
 

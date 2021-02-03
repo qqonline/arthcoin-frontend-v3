@@ -39,7 +39,7 @@ const ExchangeStat: React.FC<ExchangeStatProps> = ({ title, description, toolTip
 };
 
 const StyledCardTitle = styled.div`
-  font-size: 17px;
+  font-size: 24px;
   font-weight: 700;
   text-align: left;
   color: #ffffff;
@@ -65,7 +65,7 @@ const StyledCardContentInner = styled.div`
   // align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10px 20px 0;
+  padding: 10px 20px;
 `;
 
 export default ExchangeStat;

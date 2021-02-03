@@ -25,7 +25,8 @@ import ProgressCountdown from './ProgressCountdown';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
-
+  const [showDepositModal, toggleDepositModal] = React.useState(false);
+  const [showWithdrawModal, toggleWithdrawModal] = React.useState(false);
   const stakingToken =
     boardroom.depositTokenName === 'MAHA'
       ? basisCash.MAHA
@@ -71,41 +72,56 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   return (
     <Card>
+      {showDepositModal && (
+        <DepositModal
+          max={tokenBalance}
+          onConfirm={(value) => {
+            onStake(value);
+            onDismissDeposit();
+          }}
+          onCancel={() => toggleDepositModal(false)}
+          tokenName={boardroom.depositTokenName}
+        />
+      )}
+      {showWithdrawModal && (
+        <WithdrawModal
+          max={stakedBalance}
+          onConfirm={(value) => {
+            onWithdraw(value);
+            onDismissWithdraw();
+          }}
+          onCancel={() => toggleWithdrawModal(false)}
+          tokenName={boardroom.depositTokenName}
+        />
+      )}
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
+          <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
-              {approveStatus !== ApprovalState.APPROVED ? (
+              {approveStatus === ApprovalState.APPROVED ? (
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}
-                  text={`Approve`}
+                  text={`Approve ${boardroom.depositTokenName}`}
                 />
               ) : (
                 <>
-                  <IconButton onClick={onPresentWithdraw}>
+                  <IconButton onClick={() => toggleWithdrawModal(true)}>
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
-                  <IconButton onClick={onPresentDeposit}>
+                  <IconButton onClick={() => toggleDepositModal(true)}>
                     <AddIcon />
                   </IconButton>
                 </>
               )}
             </StyledCardActions>
           </StyledCardHeader>
-          {stakedBalance.gt(0) && (
-            <ProgressCountdown
-              base={depositDate}
-              deadline={endDate}
-              description="Bonded Tokens can be withdrawn in"
-            />
-          )}
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -154,7 +170,6 @@ const Card = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
 `;

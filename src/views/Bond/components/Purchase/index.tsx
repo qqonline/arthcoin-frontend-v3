@@ -67,7 +67,6 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
   const balance = useTokenBalance(fromToken);
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED;
-
   return (
     <Card>
       {showModal && (
@@ -84,7 +83,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Purchase ARTHB</StyledCardTitle>
+        <StyledCardTitle>Earn ARTH Bond</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
@@ -98,8 +97,16 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
           <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
         </HtmlTooltip>
       </div>
+      <div className="border-bottom width-100 margin-bottom-20" />
       <CardContent>
         <StyledCardContentInner>
+          {false && (
+            <StyledCardDesc>
+              When ARTH is below it's target price; you can buy ARTH Bonds with Dai by
+              influencing the price on Uniswap. Bond tokens are bought at a discount and are
+              redeemed for a profit.
+            </StyledCardDesc>
+          )}
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -127,17 +134,9 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          {
+          {false && (
             <StyledCardActions>
-              {!account ? (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-              ) : disabled ? (
-                <Button
-                  disabled={disabled}
-                  text={disabledDescription || action}
-                  onClick={() => toggleModal(true)}
-                />
-              ) : !isDAIApproved || !isARTHApproved ? (
+              {!isDAIApproved || !isARTHApproved ? (
                 <>
                   <Button
                     disabled={
@@ -145,13 +144,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       diaApproveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
-                    text={
-                      arthApproveStatus === ApprovalState.PENDING
-                        ? 'Approving'
-                        : arthApproveStatus === ApprovalState.APPROVED
-                        ? 'DAI Approved'
-                        : 'Approve DAI'
-                    }
+                    text={`Approve DAI`}
                   />
 
                   <Spacer size="md" />
@@ -180,10 +173,10 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                 />
               )}
             </StyledCardActions>
-          }
-          {/* <StyledCardActions>
-            <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
-          </StyledCardActions> */}
+          )}
+          <StyledCardActions>
+            <Button text="Earn" onClick={() => toggleModal(true)} />
+          </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -249,7 +242,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #fff9;
+  color: #ffffff;
   text-align: center;
 `;
 

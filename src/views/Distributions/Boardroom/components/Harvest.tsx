@@ -71,7 +71,6 @@ const Card = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
 `;

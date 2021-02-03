@@ -46,7 +46,6 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <LockinDiv>
               <StyledInfoSlot>
                 <SlotTitle>{boardroom.lockInPeriodDays} day lock-in period</SlotTitle>
-                {/* <SlotTitle>5 minute lock-in period</SlotTitle> */}
               </StyledInfoSlot>
             </LockinDiv>
             <StyledInfoSlots>
@@ -68,7 +67,6 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
               ) : (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
-              {/* <Button disabled text="Bonding starts on 22nd" /> */}
             </ButtonContainer>
           </StyledContent>
         </CardContent>
@@ -150,3 +148,4 @@ const StyledTitle = styled.h3`
 `;
 
 export default ArthBoardroom;
+

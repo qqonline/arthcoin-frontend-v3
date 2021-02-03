@@ -13,9 +13,10 @@ interface DepositModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   tokenName?: string;
+  onCancel?: Function;
 }
 
-const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName = '' }) => {
+const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onCancel, tokenName = '' }) => {
   const [val, setVal] = useState('');
   const [openModal, toggleModal] = useState(true);
   const fullBalance = useMemo(() => {
@@ -30,6 +31,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName =
   );
   const handleClose = () => {
     toggleModal(false);
+    onCancel();
   };
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);

@@ -17,10 +17,12 @@ const Template: React.FC<TemplateProps> = (props) => (
   <Content>
     <Label>{props.title}</Label>
     <Actions>
-      <Icon>
-        <TokenSymbol size={40} symbol={props.symbol} />
-      </Icon>
-      <Amount>{props.amount}</Amount>
+      <IcnonContainer>
+        <Icon>
+          <TokenSymbol size={40} symbol={props.symbol} />
+        </Icon>
+        <Amount>{props.amount}</Amount>
+      </IcnonContainer>
       <ButtonContainer>
         <Button
           onClick={props.buttonOnClick}
@@ -31,7 +33,10 @@ const Template: React.FC<TemplateProps> = (props) => (
     </Actions>
   </Content>
 );
-
+const IcnonContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
 const Content = styled.div`
   color: rgba(255, 255, 255, 0.6);
   display: flex;
@@ -58,6 +63,9 @@ const Actions = styled.div`
   align-items: center;
   flex-direction: row;
   margin: 15px 0 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  } ;
 `;
 
 const Icon = styled.div`
@@ -88,6 +96,10 @@ const Amount = styled.div`
 
 const ButtonContainer = styled.div`
   color: red;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    width: 100%;
+  } ;
 `;
 
 export default Template;

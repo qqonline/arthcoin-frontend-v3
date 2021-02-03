@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import Card from '../../components/Card';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 
 interface ProgressCountdownProps {
@@ -99,9 +98,6 @@ const ParentContainer = styled.div`
   justify-content: center;
   flex-direction: row;
   padding: 0px 20px;
-  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 20px;
@@ -118,4 +114,12 @@ const StyledCardContentInner = styled.div`
   padding: 20px;
 `;
 
+const Card = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
 export default ProgressCountdown;

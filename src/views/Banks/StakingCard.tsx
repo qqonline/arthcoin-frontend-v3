@@ -25,6 +25,7 @@ interface AccountButtonProps {
   buttonText: string;
   percentage: number;
   appyPercentage: string;
+  contract?:string;
 }
 interface ImageConTainerProps {
   marginLeft: number;
@@ -41,6 +42,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
   toolTipDesciption,
   buttonText = 'Stake Now',
   appyPercentage,
+  contract,
 }) => {
   return (
     <CardContainer>
@@ -82,7 +84,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
         <ProgressCountdown percentage={percentage} description="Next Epoch" />
       </PoolSizeDiv>
       <div style={{ width: '300px', marginBottom: '20px', marginTop: '20px' }}>
-        <Button text={buttonText} />
+        <Button text={buttonText} to={`/staking/${contract}`}/>
       </div>
     </CardContainer>
   );

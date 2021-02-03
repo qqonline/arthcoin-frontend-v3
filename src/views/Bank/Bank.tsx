@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { useParams } from 'react-router-dom';
-import Container from '../../components/Container';
 import Button from '../../components/Button/TransperantButton';
+import Container from '../../components/Container';
+import Spacer from '../../components/Spacer';
 import PageHeader from '../../components/PageHeader';
 import Harvest from './components/Harvest';
 import Stake from './components/Stake';
@@ -28,7 +29,7 @@ const Bank: React.FC = () => {
         title={bank?.name}
       />
       <Container size="lg">
-        {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
+        <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={5} justify="center" alignItems="stretch">
           <Grid container item xs={12} md={6} lg={6} xl={6}>
             <StyledCardsWrapper>
@@ -44,9 +45,9 @@ const Bank: React.FC = () => {
           <Grid container item xs={12} md={6} lg={6} xl={6} justify="flex-end">
             <ParentContainer>
               {bank.depositTokenName.includes('LP') && <LPTokenHelpText bank={bank} />}
-              <div style={{ maxWidth: '250px', marginTop: '20px', alignSelf: 'flex-end' }}>
+              <BankButtonContainer>
                 <Button onClick={onRedeem} text="Settle & Withdraw" />
-              </div>
+              </BankButtonContainer>
             </ParentContainer>
           </Grid>
         </Grid>
@@ -116,9 +117,6 @@ const StyledCardWrapper = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  @media (max-width: 768px) {
-    width: 80%;
-  }
 `;
 
 const Center = styled.div`
@@ -126,6 +124,16 @@ const Center = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
+`;
+const BankButtonContainer = styled.div`
+  max-width: 250px;
+  margin-top: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+  } ;
 `;
 
 export default Bank;

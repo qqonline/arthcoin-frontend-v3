@@ -41,14 +41,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             <StyledSubtitle>{subtitle}</StyledSubtitle>
             {secondParaTitle && <SecondParaTitle>{secondParaTitle}</SecondParaTitle>}
             {secondParaDescription && (
-              <SecondParaDescription>
-                {secondParaDescription}
-                <br />
-                <br />
-                <span style={{ fontSize: 14 }}>
-                  (Note that the 12hr TWAP is used to decide if the supply expands or contracts)
-                </span>
-              </SecondParaDescription>
+              <SecondParaDescription>{secondParaDescription}</SecondParaDescription>
             )}
             {showEpoch && (
               <Grid
@@ -58,7 +51,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                 alignItems="flex-start"
                 style={{ marginTop: '20px' }}
               >
-                {/* <Grid item xs={12} md={4} lg={4} xl={4}>
+                <Grid item xs={12} md={4} lg={4} xl={4}>
                   <ProgressCountdown
                     base={prevEpoch}
                     deadline={nextEpoch}
@@ -72,7 +65,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                     description="Next Epoch"
                     showAdvanceButton
                   />
-                </Grid> */}
+                </Grid>
               </Grid>
             )}
           </StyledTextContainer>

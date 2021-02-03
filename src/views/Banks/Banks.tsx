@@ -1,9 +1,14 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
-import Bank from '../Bank';
+import Container from '../../components/Container';
+import StakingCard from './StakingCard';
+import BankPage from '../Bank';
 import BankCards from './BankCards';
+import { Bank } from '../../basis-cash';
+import useBanks from '../../hooks/useBanks';
 import StakingIcon from '../../assets/svg/Staking.svg';
 import RSRIcon from '../../assets/img/RSR.webp';
 import COMPIcon from '../../assets/img/Staking/COMP.webp';
@@ -24,6 +29,7 @@ const stakeCardData = [
     poolSize: '165,518',
     percentage: 10,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'MahaDAO ($MAHA)',
@@ -34,6 +40,7 @@ const stakeCardData = [
     poolSize: 'No limit',
     percentage: 12,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: '$MAHA ETH LP',
@@ -44,6 +51,7 @@ const stakeCardData = [
     poolSize: 'No limit',
     percentage: 8,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Matic Network ($MATIC)',
@@ -52,6 +60,7 @@ const stakeCardData = [
     poolSize: '41,666,667',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Yearn.Finance ($FYI)',
@@ -60,6 +69,7 @@ const stakeCardData = [
     poolSize: '455',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Compound Finance ($COMP)',
@@ -68,6 +78,7 @@ const stakeCardData = [
     poolSize: '80,397',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Curve Finance (CRV)',
@@ -78,6 +89,7 @@ const stakeCardData = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'MakerDAO ($MKR)',
@@ -86,6 +98,7 @@ const stakeCardData = [
     poolSize: '8,334',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Reserve Protocol ($RSR)',
@@ -94,6 +107,7 @@ const stakeCardData = [
     poolSize: '416,666,667',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Dollar Prot Share (PROT)',
@@ -102,6 +116,7 @@ const stakeCardData = [
     poolSize: '21,551,725',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Basis Share ($BAS)',
@@ -110,6 +125,7 @@ const stakeCardData = [
     poolSize: '84,460',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Polkadot ($DOT)',
@@ -118,6 +134,7 @@ const stakeCardData = [
     poolSize: '165,518',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Empty Set Dollar ($ESD)',
@@ -126,6 +143,7 @@ const stakeCardData = [
     poolSize: '19,230,770',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Dynamic Set Dollar ($DSD)',
@@ -134,6 +152,7 @@ const stakeCardData = [
     poolSize: '19,531,250',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'Frax ($FRAX)',
@@ -142,6 +161,7 @@ const stakeCardData = [
     poolSize: '901,226',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
   {
     title: 'SushiSwap ($SUSHI)',
@@ -150,10 +170,15 @@ const stakeCardData = [
     poolSize: '3,881,988',
     percentage: 5,
     buttonText: 'Stake Now',
+    contract: 'MAHAMAHAETHLPTokenPool',
   },
 ];
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
+  const [banks] = useBanks();
+  const activeBanks = banks.filter((bank) => !bank.finished);
+  const inactiveBanks = banks.filter((bank) => bank.finished);
+  console.log({ activeBanks }, { inactiveBanks });
   return (
     <Switch>
       <Page>
@@ -163,10 +188,21 @@ const Banks: React.FC = () => {
             title="Stake and Earn Rewards in MAHA"
             subtitle=""
           />
-          <BankCards />
+          {/* <BankCards /> */}
+          <Container size="lg">
+            <div className="border-bottom width-100 margin-bottom-20" />
+            <Grid container spacing={5} justify="center" alignItems="stretch">
+              {stakeCardData &&
+                stakeCardData.map((eachStake) => (
+                  <Grid container item xs={12} md={6} lg={4} xl={4}>
+                    <StakingCard {...eachStake} />
+                  </Grid>
+                ))}
+            </Grid>
+          </Container>
         </Route>
         <Route path={`${path}/:bankId`}>
-          <Bank />
+          <BankPage />
         </Route>
       </Page>
     </Switch>

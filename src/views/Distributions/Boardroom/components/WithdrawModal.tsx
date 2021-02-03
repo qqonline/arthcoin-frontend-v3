@@ -13,11 +13,13 @@ interface WithdrawModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   tokenName?: string;
+  onCancel?: Function;
 }
 
 const WithdrawModal: React.FC<WithdrawModalProps> = ({
   onConfirm,
   max,
+  onCancel,
   tokenName = '',
 }) => {
   const [val, setVal] = useState('');
@@ -34,6 +36,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   );
   const handleClose = () => {
     toggleModal(false);
+    onCancel();
   };
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);
