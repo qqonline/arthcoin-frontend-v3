@@ -91,10 +91,20 @@ const StakingCard: React.FC<AccountButtonProps> = ({
           {description}
         </span>
       )}*/}
+
+      {bank.finished && (
+        <span
+          className="white font16 bold-200 margin-bottom-15"
+          style={{ textAlign: 'center' }}
+        >
+          Pool is now closed, please withdraw your funds
+        </span>
+      )}
       {/* <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
                       <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
                       <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy> */}
-      <DiscountDivContainer>
+      {apy && (
+        <DiscountDivContainer>
         <DiscountDiv>
           <TitleText>Daily</TitleText>
           {`${apy.dailyAPY.toFixed(2)}%`} APY
@@ -108,6 +118,9 @@ const StakingCard: React.FC<AccountButtonProps> = ({
           {`${apy.dailyAPY.toFixed(2)}%`} APY
         </DiscountDiv>
       </DiscountDivContainer>
+
+      )}
+
         {/* {toolTipDesciption && (
           <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipDesciption}</span>}>
             <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />

@@ -134,10 +134,7 @@ export class BasisCash {
 
 
   getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
-    const contract = kind === 'arth' ? this.config.deployments.ArthBoardroom :
-      kind === 'mahaLiquidity' ? this.config.deployments.MahaLiquidityBoardroom :
-        this.config.deployments.ArthLiquidityBoardroom
-    // const contract = this.config.deployments.ARTH
+    const contract = this.boardroomByVersion(kind, 'v2')
 
     if (kind === 'arth') return {
       kind: 'arth',
@@ -397,13 +394,13 @@ export class BasisCash {
   }
 
   boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroom;
-    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroom;
-    return this.contracts.ArthBoardroom;
+    if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroomV2;
+    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
+    return this.contracts.ArthBoardroomV2;
   }
 
   currentBoardroom(kind: Boardrooms): Contract {
-    return this.boardroomByVersion(kind, this.boardroomVersionOfUser);
+    return this.boardroomByVersion(kind, 'v2');
   }
 
   isOldBoardroomMember(): boolean {
@@ -419,32 +416,32 @@ export class BasisCash {
   }
 
   async getStakedSharesOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
-    const ArthBoardroom = this.currentBoardroom(kind);
-
-    return await ArthBoardroom.balanceOf(this.myAccount);
+    const boardroom = this.currentBoardroom(kind);
+    console.log(boardroom)
+    return await boardroom.balanceOf(this.myAccount);
   }
 
   async getEarningsOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
-    const ArthBoardroom = this.currentBoardroom(kind);
-    return await ArthBoardroom.earned(this.myAccount);
+    const boardroom = this.currentBoardroom(kind);
+    return await boardroom.earned(this.myAccount);
   }
 
   async withdrawShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom(kind);
-    return await ArthBoardroom.unbond(decimalToBalance(amount));
+    const boardroom = this.currentBoardroom(kind);
+    return await boardroom.unbond(decimalToBalance(amount));
   }
 
   async harvestCashFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind);
     if (this.boardroomVersionOfUser === 'v1') {
-      return await ArthBoardroom.claimDividends();
+      return await boardroom.claimDividends();
     }
-    return await ArthBoardroom.claimReward();
+    return await boardroom.claimReward();
   }
 
   async exitFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
-    const ArthBoardroom = this.currentBoardroom(kind);
-    return await ArthBoardroom.exit();
+    const boardroom = this.currentBoardroom(kind);
+    return await boardroom.exit();
   }
 
   async getTreasuryEstimateBondsToIssue(price: BigNumber): Promise<BigNumber> {
