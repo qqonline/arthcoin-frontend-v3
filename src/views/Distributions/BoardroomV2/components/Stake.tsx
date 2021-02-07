@@ -9,9 +9,9 @@ import IconButton from '../../../../components/IconButton';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
- import { getDisplayBalance } from '../../../../utils/formatBalance';
+import { getDisplayBalance } from '../../../../utils/formatBalance';
 import BondModal from './BondModal';
- import useBasisCash from '../../../../hooks/useBasisCash';
+import useBasisCash from '../../../../hooks/useBasisCash';
 import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
@@ -24,8 +24,7 @@ import useUnbondFromBoardroom from '../../../../hooks/useUnbondFromBoardroom';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
-  const [showDepositModal, toggleDepositModal] = React.useState(false);
-  const [showWithdrawModal, toggleWithdrawModal] = React.useState(false);
+
   const stakingToken =
     boardroom.depositTokenName === 'MAHA'
       ? basisCash.MAHA
@@ -53,7 +52,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         onStake(value);
         onDismissBond();
       }}
-      onCancel={() => toggleDepositModal(false)}
+      onCancel={() => onDismissBond()}
       tokenName={boardroom.depositTokenName}
     />,
   );
@@ -65,7 +64,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         onUnbond(value);
         onDismissUnbond();
       }}
-      onCancel={() => toggleWithdrawModal(false)}
+      onCancel={() => onDismissUnbond()}
       tokenName={boardroom.depositTokenName}
     />
   );
@@ -111,7 +110,6 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             ) : (
               <StyledDesc>
                 You can now bond your tokens to start earning inflationary rewards.
-
               </StyledDesc>
             )
           }
