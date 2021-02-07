@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withStyles, Theme } from '@material-ui/core/styles';
-import ProgressCountdown from './ProgressCountDown';
+import ArrowRight from '../../assets/img/ArrowRight.svg';
 import Button from '../../components/Button';
 import InfoIcon from '../../assets/img/InfoIcon.svg';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Bank } from '../../basis-cash';
+import { useWallet } from 'use-wallet';
+import TokenSymbol from '../../components/TokenSymbol';
+
+const APY = require('./apy.json');
+
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -16,39 +22,53 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 interface AccountButtonProps {
-  title: string;
-  logo: Array<string>;
-  subtitle?: string;
-  poolSize: string;
-  description?: string;
-  toolTipDesciption?: string;
-  buttonText: string;
-  percentage: number;
-  appyPercentage: string;
-  contract?:string;
+  bank: Bank
+  // title: string;
+  // logo: Array<string>;
+  // subtitle?: string;
+  // poolSize: string;
+  // description?: string;
+  // toolTipDesciption?: string;
+  // buttonText: string;
+  // percentage: number;
+  // appyPercentage: string;
+  // contract?:string;
 }
+
 interface ImageConTainerProps {
   marginLeft: number;
   zIndex: number;
 }
 
 const StakingCard: React.FC<AccountButtonProps> = ({
-  title,
-  logo,
-  subtitle,
-  description,
-  poolSize,
-  percentage,
-  toolTipDesciption,
-  buttonText = 'Stake Now',
-  appyPercentage,
-  contract,
+  bank
 }) => {
+  const apy: any = APY[bank.contract];
+  const { account, connect } = useWallet();
+
+  const logos = [bank.earnTokenName]
+
+  if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI')
+  else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH')
+  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI')
+  else logos.push(bank.depositTokenName)
+
   return (
     <CardContainer>
-      {logo && logo.length > 0 && (
+      {logos && logos.length > 0 && (
         <LogoContainer>
-          <ImageConTainer marginLeft={0} zIndex={logo.length + 1}>
+          {
+            logos.slice(1).map(logo => (
+              <TokenSymbol symbol={logo} size={54} />
+            ))
+          }
+
+          <img style={{ marginRight: 15, marginLeft: 15 }} src={ArrowRight} alt="" width="24px" />
+
+          <ImageConTainer marginLeft={0} zIndex={logos.length + 1}>
+            <TokenSymbol symbol={logos[0]} size={54} />
+          </ImageConTainer>
+          {/* <ImageConTainer marginLeft={0} zIndex={logo.length + 1}>
             <img src={logo[0]} alt={title} width="46px" style={{ borderRadius: '50%' }} />
           </ImageConTainer>
           {logo.length > 1 &&
@@ -56,11 +76,13 @@ const StakingCard: React.FC<AccountButtonProps> = ({
               <ImageConTainer marginLeft={15} zIndex={logo.length - index}>
                 <img src={eachLogo} alt={title} width="46px" style={{ borderRadius: '50%' }} />
               </ImageConTainer>
-            ))}
+            ))} */}
         </LogoContainer>
       )}
-      <span className="white font24 bold-800 margin-bottom-15 row-centered">{title}</span>
-      {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
+      <PoolTitle>
+        {bank.name}
+      </PoolTitle>
+      {/* {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
       {description && (
         <span
           className="white font16 bold-200 margin-bottom-15"
@@ -68,23 +90,41 @@ const StakingCard: React.FC<AccountButtonProps> = ({
         >
           {description}
         </span>
-      )}
-      <DiscountDiv>
-        <TitleText>{`${appyPercentage}%`}</TitleText>APY
-        {toolTipDesciption && (
+      )}*/}
+      {/* <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
+                      <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
+                      <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy> */}
+      <DiscountDivContainer>
+        <DiscountDiv>
+          <TitleText>Daily</TitleText>
+          {`${apy.dailyAPY.toFixed(2)}%`} APY
+        </DiscountDiv>
+        <DiscountDiv>
+          <TitleText>Weekly</TitleText>
+          {`${apy.dailyAPY.toFixed(2)}%`} APY
+        </DiscountDiv>
+        <DiscountDiv>
+          <TitleText>Annual</TitleText>
+          {`${apy.dailyAPY.toFixed(2)}%`} APY
+        </DiscountDiv>
+      </DiscountDivContainer>
+        {/* {toolTipDesciption && (
           <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipDesciption}</span>}>
             <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
           </HtmlTooltip>
-        )}
-      </DiscountDiv>
+        )} */}
       <PoolSizeDiv>
-        <div className="dialog-class margin-top-20">
-          {poolSize === 'No limit' ? '' : 'Pool Size'} <PoolTitle>{poolSize}</PoolTitle>
-        </div>
-        <ProgressCountdown percentage={percentage} description="Next Epoch" />
+        {/* <div className="dialog-class margin-top-20">
+          {bank.poolSize === Infinity ? 'No-Limit' : 'Pool Size'} <PoolTitle>{bank.poolSize}</PoolTitle>
+        </div> */}
+        {/* <ProgressCountdown percentage={bank.poolSize} description="Next Epoch" /> */}
       </PoolSizeDiv>
       <div style={{ width: '300px', marginBottom: '20px', marginTop: '20px' }}>
-        <Button text={buttonText} to={`/staking/${contract}`}/>
+      {!!account ? (
+              <Button text="Select" to={`/staking/${bank.contract}`} />
+            ) : (
+              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+            )}
       </div>
     </CardContainer>
   );
@@ -109,15 +149,14 @@ const PoolSizeDiv = styled.div`
 `;
 const PoolTitle = styled.div`
   font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 18px;
   text-align: center;
-  margin-left: 5px;
+  padding: 15px;
   color: #ffffff;
 `;
 const ImageConTainer = styled.div`
   border: 2px solid #363130;
-  margin-left: ${(p: ImageConTainerProps) => `-${p.marginLeft}px`};
+  margin-left: ${(p: ImageConTainerProps) => `${p.marginLeft}px`};
   z-index: ${(p: ImageConTainerProps) => p.zIndex};
   width: 56px;
   background: white;
@@ -139,21 +178,31 @@ const CardContainer = styled.div`
   box-shadow: 0px 12px 24px -4px rgba(0, 0, 0, 0.12), 0px 16px 20px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 `;
-const DiscountDiv = styled.div`
+
+const DiscountDivContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+
+const DiscountDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: rgba(255, 255, 255, 0.16);
-  border-radius: 40px;
+  border-radius: 20px;
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
+  flex: 0.5;
   font-weight: 300;
   color: #ffffff;
-  margin-bottom: 20px;
-  padding: 10px 20px;
+  margin: 15px;
+  padding: 10px;
 `;
+
 const TitleText = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   margin-right: 5px;
   font-weight: bold;
 `;

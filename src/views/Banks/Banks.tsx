@@ -6,7 +6,7 @@ import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 import StakingCard from './StakingCard';
 import BankPage from '../Bank';
-import BankCards from './BankCards';
+import BankCards from './BankCardsV2';
 import { Bank } from '../../basis-cash';
 import useBanks from '../../hooks/useBanks';
 import StakingIcon from '../../assets/svg/Staking.svg';
@@ -190,18 +190,18 @@ const Banks: React.FC = () => {
             title="Stake and Earn Rewards in MAHA"
             subtitle=""
           />
-          <BankCards />
-          {/* <Container size="lg">
+          <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
-            <Grid container spacing={5} justify="center" alignItems="stretch">
+          <BankCards />
+            {/* <Grid container spacing={5} justify="center" alignItems="stretch">
               {stakeCardData &&
                 stakeCardData.map((eachStake) => (
                   <Grid container item xs={12} md={6} lg={4} xl={4}>
                     <StakingCard {...eachStake} />
                   </Grid>
                 ))}
-            </Grid>
-          </Container> */}
+            </Grid> */}
+          </Container>
         </Route>
         <Route path={`${path}/:bankId`}>
           <BankPage />

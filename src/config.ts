@@ -304,7 +304,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 
   MAHAMAHAETHLPTokenPool: {
-    name: 'Deposit $MAHA_ETH-UNI-LPv2 and Earn $MAHA',
+    name: 'Deposit MAHA/ETH Uniswap LP tokens and Earn $MAHA',
     contract: 'MAHAMAHAETHLPTokenPool',
     depositTokenName: 'MAHA_ETH-UNI-LPv2',
     earnTokenName: 'MAHA',
@@ -316,7 +316,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolSize: Infinity,
   },
   MAHADAIARTHLPTokenPool: {
-    name: 'Deposit $ARTH_DAI-UNI-LPv2 and Earn $MAHA',
+    name: 'Deposit ARTH/DAI Uniswap LP tokens and Earn $MAHA',
     contract: 'MAHADAIARTHLPTokenPool',
     depositTokenName: 'ARTH_DAI-UNI-LPv2',
     earnTokenName: 'MAHA',

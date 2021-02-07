@@ -12,6 +12,7 @@ import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
 
+import ETH from '../../assets/img/ethereum.png';
 import MKR from '../../assets/img/MAKER.webp';
 import BAS from '../../assets/img/BAS.webp';
 import SHARE from '../../assets/img/SHARE.webp';
@@ -42,6 +43,7 @@ const logosBySymbol: { [title: string]: string } = {
   COMP: COMP,
   ESD: ESD,
   SUSHI: SUSHI,
+  ETH: ETH,
   CURVE: CURVE,
   FRAX: FRAX,
   FXS: FRAX,
