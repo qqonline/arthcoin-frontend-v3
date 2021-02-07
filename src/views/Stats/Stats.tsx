@@ -164,11 +164,11 @@ const Home: React.FC = () => {
             toolTipTitle="This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO"
             toolTipLink="https://docs.arthcoin.com/arth-201/how-does-arth-mitigate-against-stability-risk/stability-fees-in-maha"
           />
-          <Stat
+          {/* <Stat
             title={`$${arthLiquidity}`}
             description="ARTH Liquidity"
             toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
-          />
+          /> */}
           {/* <Stat title={scalingFactor ? `x${scalingFactor}` : '-'} description="Scaling Factor" /> */}
         </StyledHeader>
         <StyledHeader>
@@ -195,7 +195,7 @@ const Home: React.FC = () => {
           />
         </StyledHeader>
         <StyledHeader>
-          <Stat
+          {/* <Stat
             title="12hr TWAP > $1.05"
             description="Expansion happens when"
             toolTipTitle="When the 12hr TWAP of ARTH > $1.05, the system mints more ARTH tokens as seigniorage & distributes it amongst various participants of the protocol. This is known as Expansion."
@@ -212,12 +212,12 @@ const Home: React.FC = () => {
             description="Bond Redemption happens when"
             toolTipTitle="This refers to the condition that should be met for ARTH Bonds to become redeemable. Thus, you can redeem your ARTH Bonds only when the 12hr TWAP > $1.00."
             toolTipLink="https://docs.arthcoin.com/tutorials/redeeming-bonds"
-          />
-          <Stat
+          /> */}
+          {/* <Stat
             title={`$${arthLiquidity}`}
             description="ARTH Liquidity"
             toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
-          />
+          /> */}
         </StyledHeader>
 
         <StyledHeader>
@@ -238,12 +238,12 @@ const Home: React.FC = () => {
             description="Contraction happens when"
           />
           <Stat
-            title={targetPrice ? `12hr TWAP > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
-            description="Bond Issuance happens when"
+            title={targetPrice ? `1hr TWAP < $0.95` : '-'}
+            description="Bond Purchase happens when"
           />
 
           <Stat
-            title={targetPrice ? `1hr TWAP > $${getDisplayBalance(targetPrice, 18, 2)}` : '-'}
+            title={targetPrice ? `1hr TWAP > $1.00` : '-'}
             description="Bond Redemption happens when"
           />
         </StyledHeader>

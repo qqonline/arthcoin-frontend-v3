@@ -19,6 +19,7 @@ import FRAIcon from '../../assets/img/Staking/FRAX SHARE.webp';
 import MaticIcon from '../../assets/img/Staking/Matic.webp';
 import SUSHIIcon from '../../assets/img/Staking/SUSHI.webp';
 import YFIIcon from '../../assets/img/Staking/YFI.webp';
+
 const stakeCardData = [
   {
     title: 'MAHA Stakers',
@@ -173,6 +174,7 @@ const stakeCardData = [
     contract: 'MAHAMAHAETHLPTokenPool',
   },
 ];
+
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
   const [banks] = useBanks();
@@ -188,8 +190,8 @@ const Banks: React.FC = () => {
             title="Stake and Earn Rewards in MAHA"
             subtitle=""
           />
-          {/* <BankCards /> */}
-          <Container size="lg">
+          <BankCards />
+          {/* <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={5} justify="center" alignItems="stretch">
               {stakeCardData &&
@@ -199,7 +201,7 @@ const Banks: React.FC = () => {
                   </Grid>
                 ))}
             </Grid>
-          </Container>
+          </Container> */}
         </Route>
         <Route path={`${path}/:bankId`}>
           <BankPage />
