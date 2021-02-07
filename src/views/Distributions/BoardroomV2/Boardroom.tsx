@@ -28,8 +28,8 @@ const Boardroom = () => {
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={12} md={8} lg={8} xl={8}>
+        {/* <Grid container spacing={3} justify="center"> */}
+          {/* <Grid item xs={12} md={8} lg={8} xl={8}> */}
             <Grid container spacing={2} justify="center">
               <Grid container item xs={12} md={6} lg={6} xl={6}>
                 <Stake boardroom={boardroom} />
@@ -37,12 +37,14 @@ const Boardroom = () => {
               <Grid container item xs={12} md={6} lg={6} xl={6}>
                 <Harvest boardroom={boardroom} />
               </Grid>
+              <Grid container item xs={12} >
+                <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+                  <Button size="sm" text="Settle & Withdraw" />
+                </div>
+              </Grid>
             </Grid>
-            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
-              <Button size="sm" text="Settle & Withdraw" />
-            </div>
-          </Grid>
-          <Grid container item xs={12} md={4} lg={4} xl={4}>
+          {/* </Grid> */}
+          {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Grid container spacing={3} justify="center">
               <Grid container item xs={12} md={12} lg={12} xl={12}>
                 <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
@@ -54,8 +56,8 @@ const Boardroom = () => {
                 <ExchangeStat description="Treasury Amount" title="~$5" />
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </Grid> */}
+        {/* </Grid> */}
         {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
       </Container>
     </>
@@ -84,24 +86,6 @@ const LPTokenHelpText: React.FC<{ boardroom: BoardroomInfo }> = ({ boardroom }) 
   );
 };
 
-const StyledBoardroom = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const StyledCardsWrapper = styled.div`
-  display: flex;
-  width: 600px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
-`;
 
 const StyledLink = styled.a`
   font-weight: 700;

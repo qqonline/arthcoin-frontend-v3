@@ -63,7 +63,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots></StyledInfoSlots>
             <ButtonContainer>
               {!!account ? (
-                <Button text="Select" to={`/distribution/${boardroom.kind}`} />
+                <Button text="Select" to={`/distribution/v2/${boardroom.kind}`} />
               ) : (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
@@ -148,4 +148,3 @@ const StyledTitle = styled.h3`
 `;
 
 export default ArthBoardroom;
-

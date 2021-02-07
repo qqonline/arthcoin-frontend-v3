@@ -24,11 +24,14 @@ const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
               <TokenSymbol symbol="ARTH" />
             </CardIcon>
             <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
-            <StyledCardActions>
-              <Button onClick={onReward} text="Claim Reward" disabled={earnings.eq(0)} />
-            </StyledCardActions>
           </StyledCardHeader>
         </StyledCardContentInner>
+        <p>
+          You currently own 5% of the pool. Expected rewards during next expansion is 0$
+        </p>
+        <StyledCardActions>
+          <Button onClick={onReward} text="Claim Reward" disabled={earnings.eq(0)} />
+        </StyledCardActions>
       </CardContent>
     </Card>
   );
@@ -57,7 +60,7 @@ const StyledCardHeader = styled.div`
 const StyledCardActions = styled.div`
   display: flex;
   justify-content: center;
-  margin-left: ${(props) => props.theme.spacing[4]}px;
+
   width: 100%;
 `;
 
@@ -72,6 +75,8 @@ const Card = styled.div`
   backdrop-filter: blur(21px);
   border-radius: 12px;
   display: flex;
+  width: 100%;
+  max-width: 500px;
   flex-direction: column;
 `;
 export default Harvest;

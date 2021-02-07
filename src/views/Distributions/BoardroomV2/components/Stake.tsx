@@ -18,8 +18,7 @@ import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoa
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
 import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
-import useBoardroomDepositDate from '../../../../hooks/useBoardroomDepositDate';
-
+import useBoardroomUnbondingDetails from '../../../../hooks/useBoardroomUnbondingDetails';
 import { BoardroomInfo } from '../../../../basis-cash';
 import ProgressCountdown from './ProgressCountdown';
 import UnbondModal from './UnBondModal';
@@ -40,7 +39,6 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     basisCash.currentBoardroom(boardroom.kind)?.address,
   );
 
-  console.log('test', approveStatus, ApprovalState.APPROVED, approveStatus === ApprovalState.APPROVED)
   const tokenBalance = useTokenBalance(stakingToken);
 
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
@@ -70,7 +68,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     />,
   );
 
-  const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
+  const [depositDate, endDate, unbondedAmount] = useBoardroomUnbondingDetails(boardroom, stakedBalance);
 
   return (
     <Card>
@@ -122,8 +120,20 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                   </IconButton>
                 </>
               )}
+
             </StyledCardActions>
           </StyledCardHeader>
+          {
+            unbondedAmount.gt(0) && (
+              <>
+                <ProgressCountdown
+                  base={depositDate} deadline={endDate}
+                  description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName} which will be withdrawable in`} />
+                <br />
+                <Button disabled={endDate.getTime() > Date.now()} text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName}`} />
+              </>
+            )
+          }
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -152,7 +162,7 @@ const StyledCardHeader = styled.div`
 `;
 const StyledCardActions = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-left: ${(props) => props.theme.spacing[4]}px;
   width: 100%;
 `;
@@ -173,6 +183,8 @@ const Card = styled.div`
   backdrop-filter: blur(21px);
   border-radius: 12px;
   display: flex;
+  width: 100%;
+  max-width: 500px;
   flex-direction: column;
 `;
 export default Stake;
