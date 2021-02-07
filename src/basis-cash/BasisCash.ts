@@ -53,22 +53,20 @@ export class BasisCash {
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    this.DAI = this.externalTokens['DAI']
+    this.DAI = new ERC20(deployments.DAI.address, provider, 'ARTHB');
 
-    this.multicall = new Multicall(cfg.defaultProvider)
-
-
+    this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
 
     // Uniswap V2 Pair
 
     this.arthDai = new Contract(
-      externalTokens['ARTH_DAI-UNI-LPv2'][0],
+      deployments.ArthDaiLP.address,
       IUniswapV2PairABI,
       provider,
     );
 
     this.mahaEth = new Contract(
-      externalTokens['MAHA_ETH-UNI-LPv2'][0],
+      deployments.MahaEthLP.address,
       IUniswapV2PairABI,
       provider,
     );

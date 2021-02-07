@@ -14,10 +14,12 @@ export default class Multicall extends EventEmitter {
     calls: IMulticallInput[] = []
     watcher: any
     rpcUrl: string
+    address: string
 
-    constructor(rpcUrl: string) {
+    constructor(rpcUrl: string, address: string) {
         super()
         this.rpcUrl = rpcUrl
+        this.address = address
         this.calls = []
         this.recreateWatcher()
     }
@@ -55,7 +57,7 @@ export default class Multicall extends EventEmitter {
 
         const config = {
             rpcUrl: this.rpcUrl,
-            multicallAddress: "0xeefba1e63905ef1d7acba5a8513c70307c1ce441"
+            multicallAddress: this.address
         };
 
         console.log(this.getMutlicallCalls(this.calls))
