@@ -37,9 +37,12 @@ const Boardroom = () => {
               <Grid container item xs={12} md={6} lg={6} xl={6}>
                 <Harvest boardroom={boardroom} />
               </Grid>
-              <Grid container item xs={12} >
-                <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+              <Grid container item xs={6} >
+                <div style={{ marginTop: '20px', marginRight: 20,  maxWidth: '200px' }}>
                   <Button size="sm" text="Settle & Withdraw" />
+                </div>
+                <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+                  <Button size="sm" text="Provide Liquidity" />
                 </div>
               </Grid>
             </Grid>

@@ -103,13 +103,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
-              {approveStatus !== ApprovalState.APPROVED ? (
-                <Button
-                  // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                  onClick={approve}
-                  text={`Approve ${boardroom.depositTokenName}`}
-                />
-              ) : (
+              {approveStatus === ApprovalState.APPROVED && (
                 <>
                   <IconButton onClick={() => toggleWithdrawModal(true)}>
                     <RemoveIcon />
@@ -123,6 +117,24 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
             </StyledCardActions>
           </StyledCardHeader>
+          {
+            approveStatus !== ApprovalState.APPROVED ? (
+              <>
+                <StyledDesc>Approve your tokens for use with this contract.</StyledDesc>
+                <br />
+                <Button
+                  // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                  onClick={approve}
+                  text={`Approve ${boardroom.depositTokenName}`}
+                />
+              </>
+            ) : (
+              <StyledDesc>
+                You can now bond your tokens to start earning inflationary rewards.
+
+              </StyledDesc>
+            )
+          }
           {
             unbondedAmount.gt(0) && (
               <>
@@ -187,4 +199,12 @@ const Card = styled.div`
   max-width: 500px;
   flex-direction: column;
 `;
+
+const StyledDesc = styled.span`
+  color: ${(props) => props.theme.color.grey[500]};
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+`;
+
 export default Stake;

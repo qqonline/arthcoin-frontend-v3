@@ -1,6 +1,6 @@
 {
   "Multicall": {
-    "address": "0x56cD96B62b04594dD3503674D1EEADd41D84eE9b",
+    "address": "0xBfE5c1a12A1D1f579749090f5de113d3778Ef863",
     "abi": [
       {
         "inputs": [],
@@ -789,7 +789,7 @@
     ]
   },
   "UniswapV2Router02": {
-    "address": "0xF8EC287291d7F7757DE2f79B91cFa1556d67C809",
+    "address": "0x3243777A4d86bea8a313a0896C823DB9468cfd51",
     "abi": [
       {
         "inputs": [
@@ -1801,7 +1801,7 @@
     ]
   },
   "UniswapV2Factory": {
-    "address": "0xb64CB95b894285bd2Cc1c260eD8e1AD6d6b7294B",
+    "address": "0x7D8408E457d46Aa9B8d297eB760a130d5F9e084E",
     "abi": [
       {
         "inputs": [
@@ -2006,7 +2006,7 @@
     ]
   },
   "DAI": {
-    "address": "0x2dAb1F5f4505Bd89a9F3D5E3bca6c9530dDAEfd6",
+    "address": "0x35440c208701B6596bFA034FC8d7dF9321E6B957",
     "abi": [
       {
         "inputs": [],
@@ -2484,7 +2484,7 @@
     ]
   },
   "MahaToken": {
-    "address": "0x56cD96B62b04594dD3503674D1EEADd41D84eE9b",
+    "address": "0xBfE5c1a12A1D1f579749090f5de113d3778Ef863",
     "abi": [
       {
         "inputs": [],
@@ -3273,13 +3273,13 @@
     ]
   },
   "ArthDaiLP": {
-    "address": "0x60462921e17CA33Fa76c8Ad72FC1123D8CC5E1B7"
+    "address": "0xb756523613965C79B23d17655a886Db3EB5775a5"
   },
   "MahaEthLP": {
-    "address": "0x43Df1CD58B46d0d0bfB2e4a746ab138BbbaCb8dE"
+    "address": "0x2217c8F01Abae1f894fA78fd786E053EA073D945"
   },
   "ARTH": {
-    "address": "0x70Acc750d03bE94fd27D3D1264B1e450D822F9fC",
+    "address": "0x9bA9f5580dfDd9f90b689BDB4EAefE6C94Faa0e8",
     "abi": [
       {
         "inputs": [],
@@ -3733,7 +3733,7 @@
     ]
   },
   "ARTHB": {
-    "address": "0xdCEAAeF42478f7D1ECce50253Df742Ae8d8d13Db",
+    "address": "0x5bb402595A6202364735c1cb1497bD3239e14e99",
     "abi": [
       {
         "inputs": [],
@@ -4187,7 +4187,7 @@
     ]
   },
   "GMUOracle": {
-    "address": "0xCcCADb5a7a12E296617a60f423E30D38248204e8",
+    "address": "0x329861F2ef6EC03F1656C91e5f883D2074f7B7A1",
     "abi": [
       {
         "inputs": [],
@@ -4324,7 +4324,7 @@
     ]
   },
   "SeigniorageOracle": {
-    "address": "0xb4F447D0cb17a77Da0a1A1EcBA5FA915a020753F",
+    "address": "0xd2C16fb636838170ef4A3B6d09eA93C804186CEE",
     "abi": [
       {
         "inputs": [
@@ -4844,7 +4844,7 @@
     ]
   },
   "ArthMahaOracle": {
-    "address": "0xaB668978Fb74BE910bcDB3a9D7B86deec0cC03a0",
+    "address": "0x7Cf521E6066A146222bF386f47de2876A47EEFDb",
     "abi": [
       {
         "inputs": [],
@@ -4981,7 +4981,7 @@
     ]
   },
   "BondRedemtionOracle": {
-    "address": "0x1737dC472676a512CfE43ed7C2299a683D4c442B",
+    "address": "0x13242091c07f7d3F3Ec89CCb62FE10eFd2975f7B",
     "abi": [
       {
         "inputs": [
@@ -5501,7 +5501,7 @@
     ]
   },
   "ArthLiquidityBoardroomV2": {
-    "address": "0x94b817662568CE53EA54873837bD048C1DFB3B9E",
+    "address": "0x790Cb42Bfc86F7E44FD645a6Acc94ab12ad7Fc7D",
     "abi": [
       {
         "inputs": [
@@ -5712,12 +5712,17 @@
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "date",
+            "name": "deadline",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
             "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "updatedOn",
             "type": "uint256"
           }
         ],
@@ -5944,6 +5949,11 @@
         ],
         "name": "getStakerDetails",
         "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "",
@@ -6194,7 +6204,7 @@
     ]
   },
   "MahaLiquidityBoardroomV2": {
-    "address": "0x2b9C982F1876d05b3Dbb91B40512Da7e77470A0B",
+    "address": "0x0A5a62ddfE131b59BA294971efdeeaa57a94B540",
     "abi": [
       {
         "inputs": [
@@ -6405,12 +6415,17 @@
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "date",
+            "name": "deadline",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
             "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "updatedOn",
             "type": "uint256"
           }
         ],
@@ -6637,6 +6652,11 @@
         ],
         "name": "getStakerDetails",
         "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "",
@@ -6887,7 +6907,7 @@
     ]
   },
   "ArthBoardroomV2": {
-    "address": "0xd5c2C41a55Bf7f696f8043f1413C12b7a3ab4cCf",
+    "address": "0xe03745292D83F55266632C5A4a85161636FbAa59",
     "abi": [
       {
         "inputs": [
@@ -7093,12 +7113,17 @@
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "date",
+            "name": "deadline",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
             "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "updatedOn",
             "type": "uint256"
           }
         ],
@@ -7325,6 +7350,11 @@
         ],
         "name": "getStakerDetails",
         "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "",
@@ -7575,7 +7605,7 @@
     ]
   },
   "Treasury": {
-    "address": "0x03918167622703158F86F70640eaf4522351ee34",
+    "address": "0xdF96bAbCeCA2b6b5525cf37992485E75874a73c5",
     "abi": [
       {
         "inputs": [
@@ -9169,7 +9199,7 @@
     ]
   },
   "DevelopmentFund": {
-    "address": "0x6507d58e24D1007B83893aEAe4A6B7e66E916a38",
+    "address": "0x26533169332484d98B59fB2D1a3D0EF571AD3854",
     "abi": [
       {
         "anonymous": false,
@@ -9346,7 +9376,7 @@
     ]
   },
   "ARTHBASPool": {
-    "address": "0xe688F53C6Ed8A4a3F48f63015f7f5e8905034Faf",
+    "address": "0xc5C17E43ccC28ab92f52e1f7583a6DbE3d9b5432",
     "abi": [
       {
         "inputs": [
@@ -9992,7 +10022,7 @@
     ]
   },
   "MAHAARTHPool": {
-    "address": "0xc8Bf5304D5bD7D808A5e8b6c48167e2cEf2c1A05",
+    "address": "0x798AFD393E97D5c3a437695751d0403Cc0C2993e",
     "abi": [
       {
         "inputs": [
@@ -10633,7 +10663,7 @@
     ]
   },
   "MAHADAIARTHLPTokenPool": {
-    "address": "0x2E8a57fECCD18B81638688AbB31EDF5662543b4a",
+    "address": "0x046d1CCBF4169cBD5222329E9D7D53f183f8c795",
     "abi": [
       {
         "inputs": [
@@ -11274,7 +11304,7 @@
     ]
   },
   "MAHAMAHAETHLPTokenPool": {
-    "address": "0x0BD9F62cC7dae25cb15e93E3E554bBD2E6f105Ce",
+    "address": "0x44403559225A775d1CF484a9c6565A4Fc8b28775",
     "abi": [
       {
         "inputs": [

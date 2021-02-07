@@ -17,14 +17,13 @@ const useBoardroomUnbondingDetails = (boardroom: BoardroomInfo, stakedBalance: B
     const b = await basisCash.currentBoardroom(boardroom.kind);
     const details = await b._stakingDetails(basisCash.myAccount)
 
-    const from = new Date((details.lastStakedOn || details.date).toNumber() * 1000)
-    const to = new Date(from.getTime() + 86400 * 1000 * boardroom.lockInPeriodDays)
+    const from = new Date(details.lastStakedOn * 1000)
+    const to = new Date(details.date * 1000)
 
-    console.log(details, from, to)
-    setStartDate(from)
+     setStartDate(from)
     setEndDate(to)
     setAmount(details.amount)
-  }, [basisCash, boardroom.kind, boardroom.lockInPeriodDays]);
+  }, [basisCash, boardroom.kind]);
 
   useEffect(() => {
     if (basisCash.isUnlocked && stakedBalance.gt(0)) {
