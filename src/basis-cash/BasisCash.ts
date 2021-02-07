@@ -426,7 +426,12 @@ export class BasisCash {
     return await boardroom.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
+  async withdrawShareFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind);
+    return await boardroom.withdraw();
+  }
+
+  async unbondShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
     const boardroom = this.currentBoardroom(kind);
     return await boardroom.unbond(decimalToBalance(amount));
   }

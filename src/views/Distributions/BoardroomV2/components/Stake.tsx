@@ -9,11 +9,9 @@ import IconButton from '../../../../components/IconButton';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
-import moment from 'moment';
-import { getDisplayBalance } from '../../../../utils/formatBalance';
+ import { getDisplayBalance } from '../../../../utils/formatBalance';
 import BondModal from './BondModal';
-import WithdrawModal from './WithdrawModal';
-import useBasisCash from '../../../../hooks/useBasisCash';
+ import useBasisCash from '../../../../hooks/useBasisCash';
 import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
@@ -22,6 +20,7 @@ import useBoardroomUnbondingDetails from '../../../../hooks/useBoardroomUnbondin
 import { BoardroomInfo } from '../../../../basis-cash';
 import ProgressCountdown from './ProgressCountdown';
 import UnbondModal from './UnBondModal';
+import useUnbondFromBoardroom from '../../../../hooks/useUnbondFromBoardroom';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
@@ -45,55 +44,36 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = useWithdrawFromBoardroom(boardroom);
+  const { onUnbond } = useUnbondFromBoardroom(boardroom);
 
-  const [onPresentDeposit, onDismissDeposit] = useModal(
+  const [onPresentBond, onDismissBond] = useModal(
     <BondModal
       max={tokenBalance}
       onConfirm={(value) => {
         onStake(value);
-        onDismissDeposit();
+        onDismissBond();
       }}
+      onCancel={() => toggleDepositModal(false)}
       tokenName={boardroom.depositTokenName}
     />,
   );
 
-  const [onPresentWithdraw, onDismissWithdraw] = useModal(
-    <WithdrawModal
+  const [onPresentUnBond, onDismissUnbond] = useModal(
+    <UnbondModal
       max={stakedBalance}
       onConfirm={(value) => {
-        onWithdraw(value);
-        onDismissWithdraw();
+        onUnbond(value);
+        onDismissUnbond();
       }}
+      onCancel={() => toggleWithdrawModal(false)}
       tokenName={boardroom.depositTokenName}
-    />,
+    />
   );
 
   const [depositDate, endDate, unbondedAmount] = useBoardroomUnbondingDetails(boardroom, stakedBalance);
 
   return (
     <Card>
-      {showDepositModal && (
-        <BondModal
-          max={tokenBalance}
-          onConfirm={(value) => {
-            onStake(value);
-            onDismissDeposit();
-          }}
-          onCancel={() => toggleDepositModal(false)}
-          tokenName={boardroom.depositTokenName}
-        />
-      )}
-      {showWithdrawModal && (
-        <UnbondModal
-          max={stakedBalance}
-          onConfirm={(value) => {
-            onWithdraw(value);
-            onDismissWithdraw();
-          }}
-          onCancel={() => toggleWithdrawModal(false)}
-          tokenName={boardroom.depositTokenName}
-        />
-      )}
       <CardContent>
         <StyledCardContentInner>
           <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
@@ -105,11 +85,11 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             <StyledCardActions>
               {approveStatus === ApprovalState.APPROVED && (
                 <>
-                  <IconButton onClick={() => toggleWithdrawModal(true)}>
+                  <IconButton onClick={onPresentUnBond}>
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
-                  <IconButton onClick={() => toggleDepositModal(true)}>
+                  <IconButton onClick={onPresentBond}>
                     <AddIcon />
                   </IconButton>
                 </>
@@ -142,7 +122,10 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                   base={depositDate} deadline={endDate}
                   description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName} which will be withdrawable in`} />
                 <br />
-                <Button disabled={endDate.getTime() > Date.now()} text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName}`} />
+                <Button
+                  onClick={onWithdraw}
+                  disabled={endDate.getTime() > Date.now()}
+                  text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName}`} />
               </>
             )
           }

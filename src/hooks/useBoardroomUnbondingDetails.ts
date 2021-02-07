@@ -17,8 +17,8 @@ const useBoardroomUnbondingDetails = (boardroom: BoardroomInfo, stakedBalance: B
     const b = await basisCash.currentBoardroom(boardroom.kind);
     const details = await b._stakingDetails(basisCash.myAccount)
 
-    const from = new Date(details.lastStakedOn * 1000)
-    const to = new Date(details.date * 1000)
+    const from = new Date(details.updatedOn * 1000)
+    const to = new Date(details.deadline * 1000)
 
      setStartDate(from)
     setEndDate(to)

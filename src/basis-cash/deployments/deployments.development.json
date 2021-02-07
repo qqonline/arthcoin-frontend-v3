@@ -1,6 +1,6 @@
 {
   "Multicall": {
-    "address": "0xBfE5c1a12A1D1f579749090f5de113d3778Ef863",
+    "address": "0x973831A124b51A2712E6245C242127FB008Eb907",
     "abi": [
       {
         "inputs": [],
@@ -789,7 +789,7 @@
     ]
   },
   "UniswapV2Router02": {
-    "address": "0x3243777A4d86bea8a313a0896C823DB9468cfd51",
+    "address": "0x95981B5B32481f971a1cA222d1054520Ba807530",
     "abi": [
       {
         "inputs": [
@@ -1801,7 +1801,7 @@
     ]
   },
   "UniswapV2Factory": {
-    "address": "0x7D8408E457d46Aa9B8d297eB760a130d5F9e084E",
+    "address": "0xAfc8B90047bb7b883B2b542E6683D688426DbB72",
     "abi": [
       {
         "inputs": [
@@ -2006,7 +2006,7 @@
     ]
   },
   "DAI": {
-    "address": "0x35440c208701B6596bFA034FC8d7dF9321E6B957",
+    "address": "0xcB766E8222e1e959519C244a2E62A5264AF52077",
     "abi": [
       {
         "inputs": [],
@@ -2484,7 +2484,7 @@
     ]
   },
   "MahaToken": {
-    "address": "0xBfE5c1a12A1D1f579749090f5de113d3778Ef863",
+    "address": "0x973831A124b51A2712E6245C242127FB008Eb907",
     "abi": [
       {
         "inputs": [],
@@ -3273,13 +3273,13 @@
     ]
   },
   "ArthDaiLP": {
-    "address": "0xb756523613965C79B23d17655a886Db3EB5775a5"
+    "address": "0x7749e2DAE62e9C6615AE2C23F450f8524fec187b"
   },
   "MahaEthLP": {
-    "address": "0x2217c8F01Abae1f894fA78fd786E053EA073D945"
+    "address": "0xD3fB2CECd2Fe8892C07F955360153Db70db63690"
   },
   "ARTH": {
-    "address": "0x9bA9f5580dfDd9f90b689BDB4EAefE6C94Faa0e8",
+    "address": "0x51A1Bc996585F5B2816374064903C1fb276B93e3",
     "abi": [
       {
         "inputs": [],
@@ -3733,7 +3733,7 @@
     ]
   },
   "ARTHB": {
-    "address": "0x5bb402595A6202364735c1cb1497bD3239e14e99",
+    "address": "0xF74372Ea5A86bF066e122307D905B267e2e95940",
     "abi": [
       {
         "inputs": [],
@@ -4187,7 +4187,7 @@
     ]
   },
   "GMUOracle": {
-    "address": "0x329861F2ef6EC03F1656C91e5f883D2074f7B7A1",
+    "address": "0x400C5Ea44aBf5F73624790bdC82E62f99578f6Db",
     "abi": [
       {
         "inputs": [],
@@ -4324,7 +4324,7 @@
     ]
   },
   "SeigniorageOracle": {
-    "address": "0xd2C16fb636838170ef4A3B6d09eA93C804186CEE",
+    "address": "0x680bac03A057eD00a24a16e5A00bA19092Ded0Ba",
     "abi": [
       {
         "inputs": [
@@ -4844,7 +4844,7 @@
     ]
   },
   "ArthMahaOracle": {
-    "address": "0x7Cf521E6066A146222bF386f47de2876A47EEFDb",
+    "address": "0xC83166C8B63851605A9DA8474D09EfD4dCcE621b",
     "abi": [
       {
         "inputs": [],
@@ -4981,7 +4981,7 @@
     ]
   },
   "BondRedemtionOracle": {
-    "address": "0x13242091c07f7d3F3Ec89CCb62FE10eFd2975f7B",
+    "address": "0x1d9bcd233DEbFdc2D1c72Cb1f512652d896D4E23",
     "abi": [
       {
         "inputs": [
@@ -5501,7 +5501,7 @@
     ]
   },
   "ArthLiquidityBoardroomV2": {
-    "address": "0x790Cb42Bfc86F7E44FD645a6Acc94ab12ad7Fc7D",
+    "address": "0x853D14b192412F2719398FC39A60b610504148CD",
     "abi": [
       {
         "inputs": [
@@ -6204,7 +6204,7 @@
     ]
   },
   "MahaLiquidityBoardroomV2": {
-    "address": "0x0A5a62ddfE131b59BA294971efdeeaa57a94B540",
+    "address": "0x0afcff118Da47bBcAa86458cbF25B0f5B24229c0",
     "abi": [
       {
         "inputs": [
@@ -6907,7 +6907,7 @@
     ]
   },
   "ArthBoardroomV2": {
-    "address": "0xe03745292D83F55266632C5A4a85161636FbAa59",
+    "address": "0xBC0fb4A99178822d3766f802B964E2bD0876A5FB",
     "abi": [
       {
         "inputs": [
@@ -7605,7 +7605,7 @@
     ]
   },
   "Treasury": {
-    "address": "0xdF96bAbCeCA2b6b5525cf37992485E75874a73c5",
+    "address": "0xDF431D4917a6Ddcb6FAA8ea460c06a2da435228B",
     "abi": [
       {
         "inputs": [
@@ -9199,7 +9199,7 @@
     ]
   },
   "DevelopmentFund": {
-    "address": "0x26533169332484d98B59fB2D1a3D0EF571AD3854",
+    "address": "0xef89a79692a35d31BbC67222AC792519904D5287",
     "abi": [
       {
         "anonymous": false,
@@ -9376,7 +9376,7 @@
     ]
   },
   "ARTHBASPool": {
-    "address": "0xc5C17E43ccC28ab92f52e1f7583a6DbE3d9b5432",
+    "address": "0x432a48Bc14e82877e06e2a57f671155aAeFc3A64",
     "abi": [
       {
         "inputs": [
@@ -10022,7 +10022,7 @@
     ]
   },
   "MAHAARTHPool": {
-    "address": "0x798AFD393E97D5c3a437695751d0403Cc0C2993e",
+    "address": "0x60638bAEb54B8921002Bf6B843B15db8ACdB2D6C",
     "abi": [
       {
         "inputs": [
@@ -10663,7 +10663,7 @@
     ]
   },
   "MAHADAIARTHLPTokenPool": {
-    "address": "0x046d1CCBF4169cBD5222329E9D7D53f183f8c795",
+    "address": "0x519A8d7b2851162B0cFC9398724871Bf43fbD4a0",
     "abi": [
       {
         "inputs": [
@@ -11304,7 +11304,7 @@
     ]
   },
   "MAHAMAHAETHLPTokenPool": {
-    "address": "0x44403559225A775d1CF484a9c6565A4Fc8b28775",
+    "address": "0xB214c78B3dDF1fdD8931fA515eaeeB2144Dfe6D9",
     "abi": [
       {
         "inputs": [

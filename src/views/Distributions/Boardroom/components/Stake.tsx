@@ -57,16 +57,6 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     />,
   );
 
-  const [onPresentWithdraw, onDismissWithdraw] = useModal(
-    <WithdrawModal
-      max={stakedBalance}
-      onConfirm={(value) => {
-        onWithdraw(value);
-        onDismissWithdraw();
-      }}
-      tokenName={boardroom.depositTokenName}
-    />,
-  );
 
   const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
 
@@ -87,8 +77,8 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         <WithdrawModal
           max={stakedBalance}
           onConfirm={(value) => {
-            onWithdraw(value);
-            onDismissWithdraw();
+            onWithdraw();
+            // onDismissWithdraw();
           }}
           onCancel={() => toggleWithdrawModal(false)}
           tokenName={boardroom.depositTokenName}
@@ -115,7 +105,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
-                  <IconButton onClick={() => toggleDepositModal(true)}>
+                  <IconButton onClick={() => onPresentDeposit()}>
                     <AddIcon />
                   </IconButton>
                 </>
