@@ -11,7 +11,7 @@ import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import moment from 'moment';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
-import DepositModal from './DepositModal';
+import BondModal from './BondModal';
 import WithdrawModal from './WithdrawModal';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
@@ -22,6 +22,7 @@ import useBoardroomDepositDate from '../../../../hooks/useBoardroomDepositDate';
 
 import { BoardroomInfo } from '../../../../basis-cash';
 import ProgressCountdown from './ProgressCountdown';
+import UnbondModal from './UnBondModal';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
@@ -39,6 +40,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     basisCash.currentBoardroom(boardroom.kind)?.address,
   );
 
+  console.log('test', approveStatus, ApprovalState.APPROVED, approveStatus === ApprovalState.APPROVED)
   const tokenBalance = useTokenBalance(stakingToken);
 
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
@@ -47,7 +49,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const { onWithdraw } = useWithdrawFromBoardroom(boardroom);
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
-    <DepositModal
+    <BondModal
       max={tokenBalance}
       onConfirm={(value) => {
         onStake(value);
@@ -73,7 +75,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   return (
     <Card>
       {showDepositModal && (
-        <DepositModal
+        <BondModal
           max={tokenBalance}
           onConfirm={(value) => {
             onStake(value);
@@ -84,7 +86,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         />
       )}
       {showWithdrawModal && (
-        <WithdrawModal
+        <UnbondModal
           max={stakedBalance}
           onConfirm={(value) => {
             onWithdraw(value);
@@ -96,14 +98,14 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
       )}
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
+          <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
-              {approveStatus === ApprovalState.APPROVED ? (
+              {approveStatus !== ApprovalState.APPROVED ? (
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}

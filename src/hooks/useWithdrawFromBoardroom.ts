@@ -11,7 +11,7 @@ const useWithdrawFromBoardroom = (boardroom: BoardroomInfo) => {
     (amount: string) => {
       handleTransactionReceipt(
         basisCash.withdrawShareFromBoardroom(boardroom.kind, amount),
-        `Withdraw ${amount} ${boardroom.depositTokenName} from the boardroom`,
+        `Unbond ${amount} ${boardroom.depositTokenName}`,
       );
     },
     [basisCash, boardroom.depositTokenName, boardroom.kind, handleTransactionReceipt],

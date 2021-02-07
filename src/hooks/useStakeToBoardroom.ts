@@ -11,7 +11,7 @@ const useStakeToBoardroom = (boardroom: BoardroomInfo) => {
     (amount: string) => {
       handleTransactionReceipt(
         basisCash.stakeShareToBoardroom(boardroom.kind, amount),
-        `Stake ${amount} ${boardroom.depositTokenName} to the boardroom`,
+        `Bond ${amount} ${boardroom.depositTokenName}`,
       );
     },
     [basisCash, boardroom.depositTokenName, boardroom.kind, handleTransactionReceipt],

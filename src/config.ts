@@ -9,26 +9,26 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      'DAI': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'MKR': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'BAS': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'SHARE': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 9],
-      'COMP': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'ESD': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'SUSHI': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'CURVE': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'FRAX': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'MAHA': ['0x40c387Df0b23e2DF9De50F2c32A2384b3B23883a', 18],
-      'YFI': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'DSD': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'MATIC': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
-      'RSR': ['0xf410828d570239BF54d0F2Fec48Cb6f6341d4889', 18],
+      'DAI': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'MKR': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'BAS': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'SHARE': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 9],
+      'COMP': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'ESD': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'SUSHI': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'CURVE': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'FRAX': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'MAHA': ['0x6EaCD5b5F85807dee98782EbDFD7AEd41af37C2b', 18],
+      'YFI': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'DSD': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'MATIC': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
+      'RSR': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
 
-      'MAHA_ETH-UNI-LPv2': ['0x34c70e2e71bEf6bE2f8E4bA1eaFBC3582D372Fee', 18],
-      'ARTH_DAI-UNI-LPv2': ['0xD72bB5c4B46473aA8e13FF945b2d09eE06C26e70', 18],
-      'ARTHB_DAI-UNI-LPv2': ['0xD72bB5c4B46473aA8e13FF945b2d09eE06C26e70', 18]
+      'MAHA_ETH-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
+      'ARTHB_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18]
     },
-    uniswapRouter: '0x9090776e9B20caBDaf9Fc8FCBA2BDCE76Ed85E62',
+    uniswapRouter: '0x9ff5C516e360eb06Ae960b4291c4F5E54Fa4aa8c',
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-21T15:00:00Z'),
@@ -329,4 +329,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
 };
 
 // export default configurations[process.env.NODE_ENV || "production"];
-export default configurations["production"];
+export default configurations["development"];

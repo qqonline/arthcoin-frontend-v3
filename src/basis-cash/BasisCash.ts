@@ -415,9 +415,8 @@ export class BasisCash {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-    const ArthBoardroom = this.currentBoardroom(kind);
-    console.log('stakedd', ArthBoardroom.address)
-    return await ArthBoardroom.stake(decimalToBalance(amount));
+    const boardroom = this.currentBoardroom(kind);
+     return await boardroom.bond(decimalToBalance(amount));
   }
 
   async getStakedSharesOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
@@ -433,7 +432,7 @@ export class BasisCash {
 
   async withdrawShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
     const ArthBoardroom = this.currentBoardroom(kind);
-    return await ArthBoardroom.withdraw(decimalToBalance(amount));
+    return await ArthBoardroom.unbond(decimalToBalance(amount));
   }
 
   async harvestCashFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
