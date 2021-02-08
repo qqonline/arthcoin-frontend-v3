@@ -82,6 +82,19 @@ const StakingCard: React.FC<AccountButtonProps> = ({
       <PoolTitle>
         {bank.name}
       </PoolTitle>
+      <span
+          className="white font16 bold-200 margin-bottom-15"
+          style={{ textAlign: 'center' }}
+        >
+          Pool size: {bank.poolRewards} {bank.earnTokenName}
+        </span>
+
+        <span
+          className="white font16 bold-200 margin-bottom-15"
+          style={{ textAlign: 'center' }}
+        >
+          Pool duration: {bank.poolDurationInDays} days
+        </span>
       {/* {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
       {description && (
         <span
@@ -103,7 +116,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
       {/* <Apy>Daily {apy.dailyAPY.toFixed(2)}%</Apy>
                       <Apy>Weekly {apy.weeklyAPY.toFixed(2)}%</Apy>
                       <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy> */}
-      {apy && (
+      {apy && false && (
         <DiscountDivContainer>
         <DiscountDiv>
           <TitleText>Daily</TitleText>

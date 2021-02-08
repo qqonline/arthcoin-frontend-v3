@@ -315,12 +315,25 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     poolDurationInDays: 30,
     poolSize: Infinity,
   },
-  MAHADAIARTHLPTokenPool: {
+  MAHADAIARTHULPTokenPool: {
     name: 'Deposit ARTH/DAI Uniswap LP tokens and Earn $MAHA',
     contract: 'MAHADAIARTHLPTokenPool',
     depositTokenName: 'ARTH_DAI-UNI-LPv2',
     earnTokenName: 'MAHA',
     poolRewards: 4000,
+    finished: false,
+    sort: 0,
+    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
+    poolDurationInDays: 30,
+    poolSize: Infinity,
+  },
+
+  MAHADAIARTHMLPTokenPool2: {
+    name: 'Deposit ARTH/DAI Mahaswap LP tokens and Earn $MAHA',
+    contract: 'MAHADAIARTHLPTokenPool',
+    depositTokenName: 'ARTH_DAI-UNI-LPv2',
+    earnTokenName: 'MAHA',
+    poolRewards: 8000,
     finished: false,
     sort: 0,
     networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
