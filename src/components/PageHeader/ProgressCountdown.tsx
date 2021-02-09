@@ -42,11 +42,11 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
             <StyledProgress progress={percentage} />
           </StyledProgressOuter>
         </StyledCardContentInner>
-        {showAdvanceButton && (
+        {/* {showAdvanceButton && (
           <ButtonContainer style={{}}>
             <Button text="Advance Epoch" />
           </ButtonContainer>
-        )}
+        )} */}
       </ParentContainer>
     </Card>
   );

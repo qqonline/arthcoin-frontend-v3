@@ -49,6 +49,7 @@ const StakingCard: React.FC<AccountButtonProps> = ({
   const logos = [bank.earnTokenName]
 
   if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI')
+  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv2') logos.push('ARTH', 'DAI')
   else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH')
   else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI')
   else logos.push(bank.depositTokenName)

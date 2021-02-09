@@ -177,7 +177,7 @@ export class BasisCash {
       address: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 5,
+      seionrageSupplyPercentage: 60,
       history7dayAPY: 30,
       lockInPeriodDays: 1,
     }
@@ -409,14 +409,14 @@ export class BasisCash {
   }
 
   boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    if (version === 'v2') {
-      if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV2;
-      if (kind === 'arthMlpLiquidity') return this.contracts.ArthMlpLiquidityBoardroomV2;
-      if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
-      return this.contracts.ArthBoardroomV2;
-    }
+    // if (version === 'v2') {
+    //   if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV2;
+    //   if (kind === 'arthMlpLiquidity') return this.contracts.ArthMlpLiquidityBoardroomV2;
+    //   if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
+    //   return this.contracts.ArthBoardroomV2;
+    // }
 
-    if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV1;
+    if (kind === 'arthUniLiquidity') return this.contracts.ArthLiquidityBoardroomV1;
     if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV1;
     return this.contracts.ArthBoardroomV1;
   }

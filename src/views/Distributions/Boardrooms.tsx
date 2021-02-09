@@ -58,9 +58,9 @@ const Boardrooms: React.FC = () => {
       <Container size="lg">
         {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
         <Grid container spacing={5} justify="center" alignItems="stretch">
-        <Grid container item xs={12} md={4} lg={4} xl={4}>
+          {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom boardroom={'arthMlpLiquidity'} />
-          </Grid>
+          </Grid> */}
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
               boardroom={'arth'}

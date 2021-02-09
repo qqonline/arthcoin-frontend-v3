@@ -76,11 +76,11 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
           <StyledProgress progress={percentage} />
         </StyledProgressOuter>
 
-        {!account ? (
+        {/* {!account ? (
           <Button onClick={() => connect('injected')} size="sm" text="Connect Wallet" />
         ) : (
           <Button onClick={advanceEpoch} disabled={percentage < 100}>Advance Epoch</Button>
-        )}
+        )} */}
       </StyledCardContentInner>
 
     </Card>

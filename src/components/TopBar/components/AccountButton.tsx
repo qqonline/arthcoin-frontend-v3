@@ -34,7 +34,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
         {!account ? (
           <Button onClick={() => connect('injected')} size="sm" text="Connect" />
         ) : (
-          <ButtonColored onClick={() => toggleModal(true)} size="sm" text="0xf7...a6d3">
+          <ButtonColored onClick={() => toggleModal(true)} size="sm" text="Connected">
             <img src={walletIcon} alt="" className="margin-right-10" width="24px" />
           </ButtonColored>
         )}

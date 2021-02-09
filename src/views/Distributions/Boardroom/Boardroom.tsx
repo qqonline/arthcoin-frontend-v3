@@ -42,7 +42,7 @@ const Boardroom = () => {
               <Button size="sm" text="Settle & Withdraw" />
             </div>
           </Grid>
-          <Grid container item xs={12} md={4} lg={4} xl={4}>
+          {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Grid container spacing={3} justify="center">
               <Grid container item xs={12} md={12} lg={12} xl={12}>
                 <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
@@ -54,9 +54,9 @@ const Boardroom = () => {
                 <ExchangeStat description="Treasury Amount" title="~$5" />
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
-        {(bankId === 'arthUniLiquidity' || bankId === 'arthMlpLiquidity') && <LPTokenHelpText boardroom={boardroom} />}
+        {/* {(bankId === 'arthUniLiquidity' || bankId === 'arthMlpLiquidity') && <LPTokenHelpText boardroom={boardroom} />} */}
       </Container>
     </>
   );

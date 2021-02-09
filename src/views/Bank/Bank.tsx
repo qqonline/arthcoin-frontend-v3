@@ -70,7 +70,7 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   }
   return (
     <StyledLink href={uniswapUrl} target="_blank">
-      {`Provide liquidity to ${pairName} on Uniswap`}
+      {/* {`Provide liquidity to ${pairName} on Uniswap`} */}
     </StyledLink>
   );
 };
