@@ -75,7 +75,8 @@ const Home: React.FC = () => {
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
   const targets = useNextEpochTargets(cash1hrPrice);
 
-  const nextEpoch = useMemo(() => moment(prevEpoch).add(12, 'hour').toDate(), [prevEpoch]);
+  console.log(prevAllocation, nextAllocation, currentEpoch)
+  const nextEpoch = useMemo(() => moment(nextAllocation).toDate(), [nextAllocation]);
 
   const supplyIncrease = useMemo(
     () => Number(getDisplayBalance(targets.supplyIncrease, 18, 0)),
@@ -286,7 +287,7 @@ const StyledHeader = styled.div`
 
   > * {
     flex: 1;
-    height: 84px;
+    // height: 84px;
     margin: 0 ${(props) => props.theme.spacing[2]}px;
   }
 

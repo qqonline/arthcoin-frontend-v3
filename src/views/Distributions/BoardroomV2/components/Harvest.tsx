@@ -6,13 +6,13 @@ import TokenSymbol from '../../../../components/TokenSymbol';
 import CardContent from '../../../../components/CardContent';
 import CardIcon from '../../../../components/CardIcon';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
-import useEarningsOnBoardroom from '../../../../hooks/useEarningsOnBoardroom';
+import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { BoardroomInfo } from '../../../../basis-cash';
 
 const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const { onReward } = useHarvestFromBoardroom(boardroom);
-  const earnings = useEarningsOnBoardroom(boardroom.kind);
+  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroom.kind);
 
   return (
     <Card>
@@ -27,10 +27,10 @@ const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
           </StyledCardHeader>
         </StyledCardContentInner>
         <p>
-          You currently own 5% of the pool. Expected rewards during next expansion is 0$
+          Your rewards are vested across 8 hours. If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
         </p>
         <StyledCardActions>
-          <Button onClick={onReward} text="Claim Reward" disabled={earnings.eq(0)} />
+          <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} ARTH Reward`} disabled={earnings.eq(0)} />
         </StyledCardActions>
       </CardContent>
     </Card>

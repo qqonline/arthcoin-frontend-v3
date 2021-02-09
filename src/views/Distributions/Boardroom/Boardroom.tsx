@@ -16,7 +16,7 @@ import { Boardrooms } from '../../../basis-cash/config';
 const Boardroom = () => {
   const { bankId } = useParams<{ bankId: Boardrooms }>();
   const basisCash = useBasisCash();
-  const boardroom = basisCash.getBoardroom(bankId);
+  const boardroom = basisCash.getBoardroom(bankId, 'v1');
 
   return (
     <>
@@ -56,7 +56,7 @@ const Boardroom = () => {
             </Grid>
           </Grid>
         </Grid>
-        {bankId === 'arthLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
+        {(bankId === 'arthUniLiquidity' || bankId === 'arthMlpLiquidity') && <LPTokenHelpText boardroom={boardroom} />}
       </Container>
     </>
   );

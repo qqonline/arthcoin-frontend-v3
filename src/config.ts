@@ -27,14 +27,14 @@ const configurations: { [env: string]: Configuration } = {
 
       'MAHA_ETH-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTH_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
+      'ARTH_DAI-MLP-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTHB_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18]
     },
-    uniswapRouter: '0x9ff5C516e360eb06Ae960b4291c4F5E54Fa4aa8c',
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-21T15:00:00Z'),
     boardroomLaunchesAt: new Date('2021-01-21T15:00:00Z'),
-    refreshInterval: 10000,
+    refreshInterval: 3000,
     gasLimitMultiplier: 1.1,
   },
   staging: {
@@ -62,7 +62,6 @@ const configurations: { [env: string]: Configuration } = {
       'ARTHB_DAI-UNI-LPv2': ['0xDAD66B82C711a63065F29B095135b6F84CEBDd0B', 18],
       'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
     },
-    uniswapRouter: '0xBCE393D378e270CC2414570f43A07a9aE7C566c9',
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-15T14:00:00Z'),
@@ -110,7 +109,6 @@ const configurations: { [env: string]: Configuration } = {
       'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
     },
 
-    uniswapRouter: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-22T15:00:00Z'),

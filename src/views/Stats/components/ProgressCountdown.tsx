@@ -5,6 +5,9 @@ import { withStyles, Theme } from '@material-ui/core/styles';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import InfoIcon from '../../../assets/img/InfoWarning.svg';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '../../../components/Button';
+import useAdvanceEpoch from '../../../hooks/useAdvanceEpoch';
+import { useWallet } from 'use-wallet';
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -30,6 +33,9 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
   toolTipLink,
   toolTipTitle,
 }) => {
+  const advanceEpoch = useAdvanceEpoch()
+  const { account, connect } = useWallet();
+
   const percentage =
     Date.now() >= deadline.getTime()
       ? 100
@@ -69,10 +75,18 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
         <StyledProgressOuter>
           <StyledProgress progress={percentage} />
         </StyledProgressOuter>
+
+        {!account ? (
+          <Button onClick={() => connect('injected')} size="sm" text="Connect Wallet" />
+        ) : (
+          <Button onClick={advanceEpoch} disabled={percentage < 100}>Advance Epoch</Button>
+        )}
       </StyledCardContentInner>
+
     </Card>
   );
 };
+
 
 const StyledCountdown = styled.p`
   font-size: 20px;
@@ -90,6 +104,7 @@ const StyledProgressOuter = styled.div`
   width: 100%;
   height: 5px;
   border-radius: 15px;
+  margin-bottom: 5px;
   background: ${(props) => props.theme.color.grey[700]};
 `;
 
@@ -119,5 +134,6 @@ const StyledCardContentInner = styled.div`
   width: 100%;
   padding: ${(props) => props.theme.spacing[2]}px ${(props) => props.theme.spacing[4]}px;
 `;
+
 
 export default ProgressCountdown;

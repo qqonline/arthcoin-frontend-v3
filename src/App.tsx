@@ -24,7 +24,6 @@ import * as Treasury from './state/treasury/controller';
 
 import './index.css';
 import './App.css';
-import useTreasuryAmount from './hooks/useTreasuryAmount';
 
 const Providers: React.FC = ({ children }) => {
   return (

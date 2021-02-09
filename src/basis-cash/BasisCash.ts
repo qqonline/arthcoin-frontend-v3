@@ -130,15 +130,16 @@ export class BasisCash {
     return !!this.myAccount;
   }
 
-  getBoardrooms: () => ['arth', 'arthLiquidity', 'mahaLiquidity']
+  getBoardrooms: () => ['arth', 'arthUniLiquidity', 'arthMlpLiquidity', 'mahaLiquidity']
 
 
-  getBoardroom(kind: 'arth' | 'arthLiquidity' | 'mahaLiquidity'): BoardroomInfo {
-    const contract = this.boardroomByVersion(kind, 'v2')
+  getBoardroom(kind: Boardrooms, version: string): BoardroomInfo {
+    const contract = this.boardroomByVersion(kind, version)
 
     if (kind === 'arth') return {
       kind: 'arth',
-      contract: contract.address,
+      contract,
+      address: contract.address,
       depositTokenName: 'ARTH',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 20,
@@ -149,7 +150,8 @@ export class BasisCash {
     if (kind === 'mahaLiquidity')
       return {
         kind: 'mahaLiquidity',
-        contract: contract.address,
+        contract,
+        address: contract.address,
         depositTokenName: 'MAHA_ETH-UNI-LPv2',
         earnTokenName: 'ARTH',
         seionrageSupplyPercentage: 10,
@@ -157,12 +159,25 @@ export class BasisCash {
         lockInPeriodDays: 1,
       }
 
+    if (kind === 'arthMlpLiquidity')
+      return {
+        kind: 'arthMlpLiquidity',
+        contract,
+        address: contract.address,
+        depositTokenName: 'ARTH_DAI-MLP-LPv2',
+        earnTokenName: 'ARTH',
+        seionrageSupplyPercentage: 65,
+        history7dayAPY: 30,
+        lockInPeriodDays: 1,
+      }
+
     return {
-      kind: 'arthLiquidity',
-      contract: contract.address,
+      kind: 'arthUniLiquidity',
+      contract,
+      address: contract.address,
       depositTokenName: 'ARTH_DAI-UNI-LPv2',
       earnTokenName: 'ARTH',
-      seionrageSupplyPercentage: 70,
+      seionrageSupplyPercentage: 5,
       history7dayAPY: 30,
       lockInPeriodDays: 1,
     }
@@ -291,7 +306,7 @@ export class BasisCash {
     const adjustedAmount = BigNumber.from(1).mul(denominator1e18)
 
     const UniswapV2Library = new Contract(
-      this.config.uniswapRouter,
+      this.config.deployments.UniswapV2Router02.address,
       UniswapV2Router02ABI,
       this.provider,
     )
@@ -394,9 +409,16 @@ export class BasisCash {
   }
 
   boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    if (kind === 'arthLiquidity') return this.contracts.ArthLiquidityBoardroomV2;
-    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
-    return this.contracts.ArthBoardroomV2;
+    if (version === 'v2') {
+      if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV2;
+      if (kind === 'arthMlpLiquidity') return this.contracts.ArthMlpLiquidityBoardroomV2;
+      if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
+      return this.contracts.ArthBoardroomV2;
+    }
+
+    if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV1;
+    if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV1;
+    return this.contracts.ArthBoardroomV1;
   }
 
   currentBoardroom(kind: Boardrooms): Contract {
@@ -417,13 +439,18 @@ export class BasisCash {
 
   async getStakedSharesOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
     const boardroom = this.currentBoardroom(kind);
-    console.log(boardroom)
     return await boardroom.balanceOf(this.myAccount);
   }
 
   async getEarningsOnBoardroom(kind: Boardrooms): Promise<BigNumber> {
     const boardroom = this.currentBoardroom(kind);
     return await boardroom.earned(this.myAccount);
+  }
+
+
+  async getClaimableEarningsOnBoardroomV2(kind: Boardrooms): Promise<BigNumber> {
+    const boardroom = this.getBoardroom(kind, 'v2');
+    return await boardroom.contract.estimateRewardsToClaim(this.myAccount);
   }
 
   async withdrawShareFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {

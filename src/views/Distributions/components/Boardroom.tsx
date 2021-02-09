@@ -11,6 +11,7 @@ import useBasisCash from '../../../hooks/useBasisCash';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import InfoIcon from '../../../assets/img/InfoIcon.svg';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Boardrooms } from '../../../basis-cash/config';
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -22,7 +23,7 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 interface BoardroomProps {
-  boardroom: 'arth' | 'arthLiquidity' | 'mahaLiquidity';
+  boardroom: Boardrooms
   toolTipTitle?: string;
 }
 
@@ -30,7 +31,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
   const { account, connect } = useWallet();
   const basisCash = useBasisCash();
 
-  const boardroom = basisCash.getBoardroom(props.boardroom);
+  const boardroom = basisCash.getBoardroom(props.boardroom, 'v2');
 
   return (
     <StyledCardWrapper>
@@ -51,7 +52,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots>
               <PercentageContainer>
                 <PercentageTilte>
-                  <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seinorage Supply
+                  <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seigniorage Supply
                   {props.toolTipTitle && (
                     <HtmlTooltip enterTouchDelay={0} title={<span>{props.toolTipTitle}</span>}>
                       <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-5" />

@@ -53,7 +53,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "push": "npm run build; echo 'arthcoin.com' > build/CNAME; gh-pages --dist build",
+    "push": "npm run build && echo 'arthcoin.com' > build/CNAME && gh-pages --dist build",
     "build": "CI= GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

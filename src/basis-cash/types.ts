@@ -1,4 +1,6 @@
 import { ChainId } from '@uniswap/sdk';
+import { Contract } from 'ethers';
+import { Boardrooms } from './config';
 import ERC20 from './ERC20';
 
 export type ContractName = string;
@@ -18,8 +20,9 @@ export interface BankInfo {
 
 
 export interface BoardroomInfo {
-  kind: 'arth' | 'arthLiquidity'  | 'mahaLiquidity'
-  contract: ContractName;
+  kind: Boardrooms
+  contract: Contract
+  address: ContractName;
   depositTokenName: ContractName;
   earnTokenName: ContractName;
   seionrageSupplyPercentage: number

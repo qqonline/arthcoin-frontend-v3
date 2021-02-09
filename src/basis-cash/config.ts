@@ -9,7 +9,6 @@ export type Configuration = {
   externalTokens: { [contractName: string]: [string, number] };
   config?: EthereumConfig,
 
-  uniswapRouter: string
   baseLaunchDate: Date,
   bondLaunchesAt: Date,
   boardroomLaunchesAt: Date,
@@ -18,7 +17,7 @@ export type Configuration = {
   gasLimitMultiplier: number;
 };
 
-export type Boardrooms = 'arthLiquidity' | 'arth'  | 'mahaLiquidity'
+export type Boardrooms = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
 
 export type EthereumConfig = {
   testing: boolean,
