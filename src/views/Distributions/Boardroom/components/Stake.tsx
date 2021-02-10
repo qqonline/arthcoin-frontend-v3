@@ -39,8 +39,6 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const tokenBalance = useTokenBalance(stakingToken);
 
-  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v1');
-
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = withdrawShareFromBoardroomV1(boardroom);
 
@@ -77,7 +75,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
-            <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
+            <StyledValue>{getDisplayBalance(tokenBalance)}</StyledValue>
             <StyledCardActions>
               {approveStatus !== ApprovalState.APPROVED ? (
                 <Button
