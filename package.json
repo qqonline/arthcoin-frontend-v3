@@ -1,6 +1,6 @@
 {
   "name": "arth-frontend",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@ethersproject/providers": "^5.0.9",
