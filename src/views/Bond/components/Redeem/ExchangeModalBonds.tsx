@@ -83,16 +83,11 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
 
   const arthMahaPrice = useARTHMahaPrice();
   const mahaBalance = useTokenBalance(MAHA);
-  const [sellForDai, toggleCheckbox] = useState(false);
 
-  const mahaToBurn = useMemo(() => arthMahaPrice.mul(BigNumber.from(Math.floor(Number(val) || 0))).div(100), [
+  const mahaToBurn = useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
     arthMahaPrice,
     val,
   ]);
-
-  const handleCeckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
-    toggleCheckbox(event.target.checked);
-  };
 
   const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
   const isMahaApproving = mahaApproveStatus === ApprovalState.PENDING;
@@ -107,63 +102,61 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
   };
   return (
     <Modal open title="Redeem your ARTH Bonds" handleClose={handleClose}>
-    <p
-      className="font16 bold-600 row-centered"
-      style={{ color: 'rgba(255, 255, 255, 0.88)' }}
-    >
-      {description}
-    </p>
-    <TokenInput
-      value={val}
-      onSelectMax={handleSelectMax}
-      onChange={handleChange}
-      max={fullBalance}
-      symbol={tokenName}
-    />
-    <MahaFeeCheck
-      value={mahaToBurn}
-      approve={mahaApprove}
-      isMahaApproved={isMahaApproved}
-      max={getDisplayBalance(mahaBalance)}
-    />
-    {/* <StyledLabel>{description}</StyledLabel> */}
-    <ActionButton>
-      <ResponsiveButtonWidth>
-        <ButtonTransperant
-          text="Cancel"
-          variant="secondary"
-          onClick={() => handleClose()}
-        />
-      </ResponsiveButtonWidth>
-      <ResponsiveButtonWidth>
-        <Button
-          text={!isMahaApproved ? 'MAHA Not Approved' : action}
-          disabled={!isMahaApproved || Number(val) <= 0}
-          onClick={() => (!isMahaApproved ? mahaApprove() : onConfirm(val, sellForDai))}
-        />
-      </ResponsiveButtonWidth>
-    </ActionButton>
-  </Modal>
-);
+      <p
+        className="font16 bold-600 row-centered"
+        style={{ color: 'rgba(255, 255, 255, 0.88)' }}
+      >
+        {description}
+      </p>
+      <TokenInput
+        value={val}
+        onSelectMax={handleSelectMax}
+        onChange={handleChange}
+        max={fullBalance}
+        symbol={tokenName}
+      />
+      <MahaFeeCheck
+        value={mahaToBurn}
+        approve={mahaApprove}
+        isMahaApproved={isMahaApproved}
+        max={getDisplayBalance(mahaBalance)}
+      />
+
+      <ActionButton>
+        <ResponsiveButtonWidth>
+          <ButtonTransperant text="Cancel" variant="secondary" onClick={() => handleClose()} />
+        </ResponsiveButtonWidth>
+        <ResponsiveButtonWidth>
+          <Button
+            text={
+              isMahaApproving ? 'Approving MAHA' : !isMahaApproved ? 'Approve Maha' : action
+            }
+            disabled={Number(val) <= 0 || isMahaApproving}
+            onClick={() => (!isMahaApproved ? mahaApprove() : onConfirm(val, false))}
+          />
+        </ResponsiveButtonWidth>
+      </ActionButton>
+    </Modal>
+  );
 };
 
 const ActionButton = styled.div`
-align-items: center;
-background-color: ${(props) => props.theme.color.grey[100]}00;
-display: flex;
-height: 96px;
-justify-content: space-between;
-margin: ${(props) => props.theme.spacing[4]}px ${(props) => -props.theme.spacing[4]}px
-  ${(props) => -props.theme.spacing[4]}px;
-padding: 0 ${(props) => props.theme.spacing[4]}px;
-@media (max-width: 768px) {
-  flex-direction: column;
-} ;
+  align-items: center;
+  background-color: ${(props) => props.theme.color.grey[100]}00;
+  display: flex;
+  height: 96px;
+  justify-content: space-between;
+  margin: ${(props) => props.theme.spacing[4]}px ${(props) => -props.theme.spacing[4]}px
+    ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  } ;
 `;
 const ResponsiveButtonWidth = styled.div`
-width: 250px;
-@media (max-width: 768px) {
-  width: 100%;
-} ;
+  width: 250px;
+  @media (max-width: 768px) {
+    width: 100%;
+  } ;
 `;
 export default ExchangeModal;

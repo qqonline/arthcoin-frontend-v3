@@ -1,22 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useWallet } from 'use-wallet';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../../../components/Button';
 import CardContent from '../../../../components/CardContent';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import Label from '../../../../components/Label';
 import TokenSymbol from '../../../../components/TokenSymbol';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import AddIcon from '@material-ui/icons/Add';
 import ExchangeModal from './ExchangeModal';
 import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
 import Spacer from '../../../../components/Spacer';
-import ArrowRight from '../../../../assets/img/ArrowRight.svg';
-import AddIcon from '../../../../assets/img/AddIcon.svg';
-import InfoIcon from '../../../../assets/img/InfoWarning.svg';
+import { useWallet } from 'use-wallet';
+
 interface ExchangeCardProps {
   action: string;
   fromToken: ERC20;
@@ -67,6 +68,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
   const balance = useTokenBalance(fromToken);
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isDAIApproved = diaApproveStatus === ApprovalState.APPROVED;
+
   return (
     <Card>
       {showModal && (
@@ -83,7 +85,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Earn ARTH Bond</StyledCardTitle>
+        <StyledCardTitle>Purchase ARTHB</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
@@ -94,19 +96,11 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
             </span>
           }
         >
-          <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
+          <InfoOutlinedIcon className="margin-left-10 white" />
         </HtmlTooltip>
       </div>
-      <div className="border-bottom width-100 margin-bottom-20" />
       <CardContent>
         <StyledCardContentInner>
-          {false && (
-            <StyledCardDesc>
-              When ARTH is below it's target price; you can buy ARTH Bonds with Dai by
-              influencing the price on Uniswap. Bond tokens are bought at a discount and are
-              redeemed for a profit.
-            </StyledCardDesc>
-          )}
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
@@ -115,7 +109,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <img src={ArrowRight} alt="" width="24px" />
+              <ArrowRightAltIcon className="font26" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -124,7 +118,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
               <Label text={toTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <img src={AddIcon} alt="" width="24px" />
+              <AddIcon className="font26" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
@@ -134,9 +128,17 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          {false && (
+          {
             <StyledCardActions>
-              {!isDAIApproved || !isARTHApproved ? (
+              {!account ? (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              ) : disabled ? (
+                <Button
+                  disabled={disabled}
+                  text={disabledDescription || action}
+                  onClick={() => toggleModal(true)}
+                />
+              ) : !isDAIApproved || !isARTHApproved ? (
                 <>
                   <Button
                     disabled={
@@ -144,7 +146,13 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       diaApproveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
-                    text={`Approve DAI`}
+                    text={
+                      arthApproveStatus === ApprovalState.PENDING
+                        ? 'Approving'
+                        : arthApproveStatus === ApprovalState.APPROVED
+                        ? 'DAI Approved'
+                        : 'Approve DAI'
+                    }
                   />
 
                   <Spacer size="md" />
@@ -173,10 +181,10 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                 />
               )}
             </StyledCardActions>
-          )}
-          <StyledCardActions>
-            <Button text="Earn" onClick={() => toggleModal(true)} />
-          </StyledCardActions>
+          }
+          {/* <StyledCardActions>
+            <Button disabled={disabled} text="Purchase ARTHB" onClick={() => toggleModal(true)} />
+          </StyledCardActions> */}
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -242,7 +250,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff9;
   text-align: center;
 `;
 
@@ -255,9 +263,9 @@ const StyledCardContentInner = styled.div`
 `;
 const Card = styled.div`
   height: 100%;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
   border-radius: 12px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex: 1;
   flex-direction: column;

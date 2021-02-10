@@ -12,14 +12,14 @@ import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
 import { Boardrooms } from '../../../basis-cash/config';
-import withdrawShareFromBoardroomV2 from '../../../hooks/withdrawShareFromBoardroomV2';
+import useExitFromBoardroom from '../../../hooks/useExitFromBoardroom';
 
 const Boardroom = () => {
   const { bankId } = useParams<{ bankId: Boardrooms }>();
   const basisCash = useBasisCash();
   const boardroom = basisCash.getBoardroom(bankId, 'v1');
 
-  const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
+  const { onRedeem } = useExitFromBoardroom(boardroom);
 
   return (
     <>
@@ -31,6 +31,15 @@ const Boardroom = () => {
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
+        {/* // eslint-disable-next-line jsx-a11y/accessible-emoji */}
+        <Notice>
+          New Upgraded Distribution contracts are coming soon! 🚀🚀 These contracts will stop
+          recieving rewards.
+        </Notice>
+        <Notice>
+          You are advised to withdraw funds from these contracts and deposit into new ones when
+          they go live.
+        </Notice>
         <Grid container spacing={3} justify="center">
           <Grid item xs={12} md={8} lg={8} xl={8}>
             <Grid container spacing={2} justify="center">
@@ -41,9 +50,9 @@ const Boardroom = () => {
                 <Harvest boardroom={boardroom} />
               </Grid>
             </Grid>
-            {/* <div style={{ marginTop: '20px', maxWidth: '200px' }}>
-              <Button onClick={onWithdraw} size="sm" text="Withdraw Tokens" />
-            </div> */}
+            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+              <Button onClick={onRedeem} size="sm" text="Settle & Withdraw" />
+            </div>
           </Grid>
           {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Grid container spacing={3} justify="center">
@@ -93,5 +102,14 @@ const StyledLink = styled.a`
   color: ${(props) => props.theme.color.primary.main};
 `;
 
+const Notice = styled.p`
+  font-size: 18;
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  margin: 15px auto;
+  // text-decoration: none;
+  // color: ${(props) => props.theme.color.primary.main};
+`;
 
 export default Boardroom;

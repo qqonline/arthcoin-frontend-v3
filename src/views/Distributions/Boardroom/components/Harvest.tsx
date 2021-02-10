@@ -12,7 +12,7 @@ import { BoardroomInfo } from '../../../../basis-cash';
 
 const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const { onReward } = useHarvestFromBoardroom(boardroom);
-  const earnings = useEarningsOnBoardroom(boardroom.kind);
+  const earnings = useEarningsOnBoardroom(boardroom.kind, 'v1');
 
   return (
     <Card>

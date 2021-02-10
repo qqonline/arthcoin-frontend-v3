@@ -25,8 +25,6 @@ import ProgressCountdown from './ProgressCountdown';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();
-  const [showDepositModal, toggleDepositModal] = React.useState(false);
-  const [showWithdrawModal, toggleWithdrawModal] = React.useState(false);
   const stakingToken =
     boardroom.depositTokenName === 'MAHA'
       ? basisCash.MAHA
@@ -41,7 +39,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const tokenBalance = useTokenBalance(stakingToken);
 
-  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
+  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v1');
 
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = withdrawShareFromBoardroomV1(boardroom);
@@ -74,7 +72,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
+          <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
@@ -85,7 +83,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}
-                  text={`Approve ${boardroom.depositTokenName}`}
+                  text={`Approve`}
                 />
               ) : (
                 <>
@@ -93,9 +91,11 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
-                  <IconButton onClick={() => onPresentDeposit()}>
-                    <AddIcon />
-                  </IconButton>
+                  <div style={{ opacity: 0.1 }}>
+                    <IconButton disabled={true} onClick={() => onPresentDeposit()}>
+                      <AddIcon />
+                    </IconButton>
+                  </div>
                 </>
               )}
             </StyledCardActions>

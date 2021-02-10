@@ -53,6 +53,8 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
     );
   };
 
+  console.log('hit');
+
   return (
     <Card>
       <StyledCardContentInner>
@@ -64,7 +66,12 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
             <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
           </HtmlTooltip>
         </StyledDesc>
-        <Countdown date={deadline} renderer={countdownRenderer} />
+        <Countdown
+          autoStart={true}
+          key={deadline.toDateString()}
+          date={deadline}
+          renderer={countdownRenderer}
+        />
         <StyledProgressOuter>
           <StyledProgress progress={percentage} />
         </StyledProgressOuter>

@@ -3,15 +3,15 @@ import { BoardroomInfo } from '../basis-cash';
 import useBasisCash from './useBasisCash';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useRedeemOnBoardroom = (boardroom: BoardroomInfo, description?: string) => {
+const useExitFromBoardroom = (boardroom: BoardroomInfo) => {
   const basisCash = useBasisCash();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleRedeem = useCallback(() => {
-    const alertDesc = description || 'Redeem MAHA from Boardroom';
-    handleTransactionReceipt(basisCash.exitFromBoardroom(boardroom.kind), alertDesc);
-  }, [basisCash, boardroom.kind, description, handleTransactionReceipt]);
+    const alertDesc = 'Exit from Distribution Pool';
+    handleTransactionReceipt(basisCash.exitFromBoardroom(boardroom.kind, 'v2'), alertDesc);
+  }, [basisCash, boardroom.kind, handleTransactionReceipt]);
   return { onRedeem: handleRedeem };
 };
 
-export default useRedeemOnBoardroom;
+export default useExitFromBoardroom;

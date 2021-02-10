@@ -39,7 +39,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const tokenBalance = useTokenBalance(stakingToken);
 
-  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
+  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v2');
 
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
@@ -66,10 +66,13 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
       }}
       onCancel={() => onDismissUnbond()}
       tokenName={boardroom.depositTokenName}
-    />
+    />,
   );
 
-  const [depositDate, endDate, unbondedAmount] = useBoardroomUnbondingDetails(boardroom, stakedBalance);
+  const [depositDate, endDate, unbondedAmount] = useBoardroomUnbondingDetails(
+    boardroom,
+    stakedBalance,
+  );
 
   return (
     <Card>
@@ -93,40 +96,42 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                   </IconButton>
                 </>
               )}
-
             </StyledCardActions>
           </StyledCardHeader>
-          {
-            approveStatus !== ApprovalState.APPROVED ? (
-              <>
-                <StyledDesc>Approve your tokens for use with this contract.</StyledDesc>
-                <br />
-                <Button
-                  // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-                  onClick={approve}
-                  text={`Approve ${boardroom.depositTokenName}`}
-                />
-              </>
-            ) : (
-              <StyledDesc>
-                You can now bond your tokens to start earning inflationary rewards.
-              </StyledDesc>
-            )
-          }
-          {
-            unbondedAmount.gt(0) && (
-              <>
-                <ProgressCountdown
-                  base={depositDate} deadline={endDate}
-                  description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName} which will be withdrawable in`} />
-                <br />
-                <Button
-                  onClick={onWithdraw}
-                  disabled={endDate.getTime() > Date.now()}
-                  text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${boardroom.depositTokenName}`} />
-              </>
-            )
-          }
+          {approveStatus !== ApprovalState.APPROVED ? (
+            <>
+              <StyledDesc>Approve your tokens for use with this contract.</StyledDesc>
+              <br />
+              <Button
+                // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                onClick={approve}
+                text={`Approve ${boardroom.depositTokenName}`}
+              />
+            </>
+          ) : (
+            <StyledDesc>
+              You can now bond your tokens to start earning inflationary rewards.
+            </StyledDesc>
+          )}
+          {unbondedAmount.gt(0) && (
+            <>
+              <ProgressCountdown
+                base={depositDate}
+                deadline={endDate}
+                description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${
+                  boardroom.depositTokenName
+                } which will be withdrawable in`}
+              />
+              <br />
+              <Button
+                onClick={onWithdraw}
+                disabled={endDate.getTime() > Date.now()}
+                text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${
+                  boardroom.depositTokenName
+                }`}
+              />
+            </>
+          )}
         </StyledCardContentInner>
       </CardContent>
     </Card>

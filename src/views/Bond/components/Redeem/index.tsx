@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import { useWallet } from 'use-wallet';
 import Button from '../../../../components/Button';
@@ -8,14 +9,14 @@ import CardContent from '../../../../components/CardContent';
 import useBasisCash from '../../../../hooks/useBasisCash';
 import Label from '../../../../components/Label';
 import TokenSymbol from '../../../../components/TokenSymbol';
-import ArrowRight from '../../../../assets/img/ArrowRight.svg';
-import useModal from '../../../../hooks/useModal';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import ExchangeModal from './ExchangeModalBonds';
 import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
-import InfoIcon from '../../../../assets/img/InfoWarning.svg';
+import AddIcon from '@material-ui/icons/Add';
+
 interface ExchangeCardProps {
   action: string;
   fromToken: ERC20;
@@ -78,21 +79,21 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
         />
       )}
       <div className="dialog-class">
-        <StyledCardTitle>Redeem ARTH</StyledCardTitle>
+        <StyledCardTitle>Redeem ARTHB</StyledCardTitle>
         <HtmlTooltip
           enterTouchDelay={0}
           title={
             <span>
-              When ARTH is below it’s target price; you can buy ARTH bonds with DAI by
-              influencing the price on Uniswap. Bond tokens are bought at a discount are
-              redeemed for a profit.
+              When ARTH is above it’s target price; you can sell ARTH bonds and either get back
+              DAI or ARTH in return. When you redeem your ARTHB, you also pay a stability fee in
+              MAHA.
             </span>
           }
         >
-          <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-10" />
+          <InfoOutlinedIcon className="margin-left-10 white" />
         </HtmlTooltip>
       </div>
-      <div className="border-bottom width-100 margin-bottom-20" />
+      {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
       <CardContent>
         <StyledCardContentInner>
           <StyledExchanger>
@@ -103,30 +104,34 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
             <StyledExchangeArrow>
-              <img src={ArrowRight} alt="" width="24px" />
+              <ArrowRightAltIcon className="font26" />
             </StyledExchangeArrow>
             <StyledToken>
               <StyledCardIcon>
-                <TokenSymbol symbol={toToken.symbol} size={54} />
+                <TokenSymbol symbol={addOnToken.symbol} size={54} />
               </StyledCardIcon>
-              <Label text={toTokenName} variant="normal" />
+              <Label text={addOnTokeName} variant="normal" />
             </StyledToken>
           </StyledExchanger>
           <StyledDesc>{priceDesc}</StyledDesc>
-          <StyledCardActions>
-            <Button onClick={() => toggleModal(true)} text="Redeem" />
-          </StyledCardActions>
-          {false && (
+          {
             <StyledCardActions>
-              {!!account ? (
-                approveStatus !== ApprovalState.APPROVED && !disabled ? (
+              {!account ? (
+                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+              ) : !disabled ? (
+                balance.eq(0) && false ? (
+                  <Button text={'No ARTHB Balance'} disabled={true} />
+                ) : approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
                     disabled={
+                      disabled ||
                       approveStatus === ApprovalState.PENDING ||
                       approveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approve(), `Unable to approve ${fromTokenName}`)}
-                    text="Redeem"
+                    text={
+                      approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve ARTHB'
+                    }
                   />
                 ) : (
                   <Button
@@ -136,10 +141,14 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                   />
                 )
               ) : (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+                <Button
+                  text={disabledDescription || action}
+                  // onClick={onPresent}
+                  disabled={disabled}
+                />
               )}
             </StyledCardActions>
-          )}
+          }
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -156,12 +165,6 @@ const StyledCardTitle = styled.div`
   height: 64px;
   justify-content: center;
   margin-top: ${(props) => -props.theme.spacing[3]}px;
-`;
-
-const StyledCardDesc = styled.div`
-  margin-bottom: 26px;
-  text-align: center;
-  color: #fff9;
 `;
 
 const StyledCardIcon = styled.div`
@@ -205,7 +208,7 @@ const StyledCardActions = styled.div`
 const StyledDesc = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: #fff9;
   text-align: center;
 `;
 
@@ -217,9 +220,9 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 const Card = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
+  background: linear-gradient(180deg, #1f1a1a 0%, #251c1d 100%);
   border-radius: 12px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   height: 100%;
   flex: 1;

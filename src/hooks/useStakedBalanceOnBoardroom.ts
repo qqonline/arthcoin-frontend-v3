@@ -4,13 +4,14 @@ import useBasisCash from './useBasisCash';
 import config from '../config';
 import { Boardrooms } from '../basis-cash/config';
 
-const useStakedBalanceOnBoardroom = (kind: Boardrooms) => {
+const useStakedBalanceOnBoardroom = (kind: Boardrooms, version: string) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getStakedSharesOnBoardroom(kind));
-  }, [basisCash.isUnlocked, kind]);
+    console.log('fuck', await basisCash.getStakedSharesOnBoardroom(kind, version))
+    setBalance(await basisCash.getStakedSharesOnBoardroom(kind, version));
+  }, [basisCash, kind, version]);
 
   useEffect(() => {
     if (basisCash.isUnlocked) {

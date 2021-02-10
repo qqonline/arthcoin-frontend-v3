@@ -10,8 +10,8 @@ const useEarningsOnBoardroom = (kind: Boardrooms) => {
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getEarningsOnBoardroom(kind));
-    setClaimableBalance(await basisCash.getClaimableEarningsOnBoardroomV2(kind));
+    setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
+    setClaimableBalance(await basisCash.getClaimableEarningsOnBoardroomV2(kind, 'v2'));
   }, [basisCash, kind]);
 
   useEffect(() => {

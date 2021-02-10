@@ -4,13 +4,13 @@ import useBasisCash from './useBasisCash';
 import config from '../config';
 import { Boardrooms } from '../basis-cash/config';
 
-const useEarningsOnBoardroom = (kind: Boardrooms) => {
+const useEarningsOnBoardroom = (kind: Boardrooms, version: string) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getEarningsOnBoardroom(kind));
-  }, [basisCash, kind]);
+    setBalance(await basisCash.getEarningsOnBoardroom(kind, version));
+  }, [basisCash, kind, version]);
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
