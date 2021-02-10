@@ -73,7 +73,7 @@ const configurations: { [env: string]: Configuration } = {
   production: {
     chainId: ChainId.MAINNET,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'wss://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
+    defaultProvider: 'https://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
     deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
     externalTokens: {
       DAI: ['0x6b175474e89094c44da98b954eedeac495271d0f', 18],

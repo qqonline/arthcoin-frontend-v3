@@ -33,7 +33,7 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
   toolTipLink,
   toolTipTitle,
 }) => {
-  const advanceEpoch = useAdvanceEpoch()
+  const advanceEpoch = useAdvanceEpoch();
   const { account, connect } = useWallet();
 
   const percentage =
@@ -60,14 +60,7 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
           <StyledLink href={toolTipLink} target="_blank">
             {description}
           </StyledLink>
-          <HtmlTooltip
-            enterTouchDelay={0}
-            title={
-              <span>
-                {toolTipTitle}
-              </span>
-            }
-          >
+          <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipTitle}</span>}>
             <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
           </HtmlTooltip>
         </StyledDesc>
@@ -76,17 +69,17 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
           <StyledProgress progress={percentage} />
         </StyledProgressOuter>
 
-        {/* {!account ? (
+        {!account ? (
           <Button onClick={() => connect('injected')} size="sm" text="Connect Wallet" />
         ) : (
-          <Button onClick={advanceEpoch} disabled={percentage < 100}>Advance Epoch</Button>
-        )} */}
+          <Button onClick={advanceEpoch} disabled={percentage < 100}>
+            Advance Epoch
+          </Button>
+        )}
       </StyledCardContentInner>
-
     </Card>
   );
 };
-
 
 const StyledCountdown = styled.p`
   font-size: 20px;
@@ -134,6 +127,5 @@ const StyledCardContentInner = styled.div`
   width: 100%;
   padding: ${(props) => props.theme.spacing[2]}px ${(props) => props.theme.spacing[4]}px;
 `;
-
 
 export default ProgressCountdown;

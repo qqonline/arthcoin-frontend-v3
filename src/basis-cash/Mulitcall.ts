@@ -35,6 +35,8 @@ export default class Multicall extends EventEmitter {
     addCalls = (data: IMulticallInput[]): string[] => {
         data.forEach(d => this.calls.push(d))
         this.recreateWatcher()
+
+        console.log('multi', this.watcher, this)
         this.watcher.tap(() => this.getMutlicallCalls(data))
         return data.map(d => d.key)
     }
@@ -48,7 +50,6 @@ export default class Multicall extends EventEmitter {
     }
 
     private processUpdates = (update: { type: any; value: any; }) => {
-        console.log(`multi Update: ${update.type} = ${update.value}`);
         this.emit(update.type, update.value)
     }
 
@@ -60,7 +61,6 @@ export default class Multicall extends EventEmitter {
             multicallAddress: this.address
         };
 
-        console.log(this.getMutlicallCalls(this.calls))
         this.watcher = multicall.createWatcher(this.getMutlicallCalls(this.calls), config)
         this.watcher.subscribe(this.processUpdates);
 
