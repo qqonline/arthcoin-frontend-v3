@@ -13,6 +13,7 @@ interface HomeCardProps {
   symbol: string;
   supplyLabel?: string;
   address: string;
+  liquidity?: string;
   uniswapInputAddress: string;
   stat?: TokenStat;
 }
@@ -22,6 +23,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   symbol,
   uniswapInputAddress,
   address,
+  liquidity,
   supplyLabel = 'Total Supply',
   stat,
 }) => {
@@ -31,15 +33,20 @@ const HomeCard: React.FC<HomeCardProps> = ({
       <Card>
         <CardHeader>
           <TokenSymbol size={60} symbol={symbol} />
-          <span className="margin-left-20">{title}</span>
+          <div
+            className="margin-left-20"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}
+          >
+            <span className="margin-bottom-5">{title}</span>
+            <SubTitle>{`${title} on Etherscan`}</SubTitle>
+          </div>
         </CardHeader>
 
         <CardContent>
           <CardSection>
-            <div
-              style={{ color: 'rgba(255, 255, 255, 0.64)' }}
-              className="font15"
-            >Price</div>
+            <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
+              Price
+            </div>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
@@ -48,8 +55,13 @@ const HomeCard: React.FC<HomeCardProps> = ({
               '-'
             )}
           </CardSection>
-
-          <CardSection className="right">
+          <CardSection>
+            <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
+              {`${title} Liquidity`}
+            </div>
+            {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
+          </CardSection>
+          <CardSection>
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
               {supplyLabel}
             </StyledSupplyLabel>
@@ -71,7 +83,6 @@ const HomeCard: React.FC<HomeCardProps> = ({
 const Wrapper = styled.div`
   min-width: 200px;
   width: 100%;
-  margin: 0px 8px;
   border-radius: 12px;
   height: 100%;
   width: 100%;
@@ -90,25 +101,39 @@ const Wrapper = styled.div`
 
 const UniswapLink = styled.a`
   color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
   display: flex;
   width: 100%;
   justify-content: center;
   text-decoration: none;
-  margin-bottom: 15px;
+  padding: 20px;
 `;
 
 const LinkText = styled.span`
   text-align: center;
   margin: 0 15px 5px;
-  border-bottom: 1px solid #999;
-  color: rgba(255, 255, 255, 0.64);
+  color: #f7653b;
   font-size: 16px;
+  padding: 20px;
+  &:hover {
+    background: #2a2827;
+    border-radius: 6px;
+    padding: 20px;
+  }
+  &:focus {
+    background: #423b38;
+    border-radius: 6px;
+    padding: 20px;
+  }
 `;
 
 const CardContent = styled.div`
   display: flex;
+  padding: 0px 20px 20px 20px;
+  align-items: self-start;
   margin: 0 15px 15px;
+  flex-direction: column;
 `;
 
 const CardHeader = styled.h2`
@@ -119,9 +144,7 @@ const CardHeader = styled.h2`
   justify-content: start;
   align-items: center;
   text-align: center;
-  padding-bottom: 15px;
-  padding-left: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px;
 `;
 
 const StyledCards = styled.div`
@@ -140,8 +163,10 @@ const StyledValue = styled.span`
 `;
 
 const CardSection = styled.div`
-  flex: 1;
-
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   &:last-child {
     margin-bottom: 0;
   }
@@ -155,6 +180,9 @@ const StyledSupplyLabel = styled.a`
   display: block;
   color: rgba(255, 255, 255, 0.64);
   font-size: 15px;
+  &:hover {
+    color: #f7653b;
+  }
 `;
 const Card = styled.div`
   padding: 5px 0;
@@ -162,10 +190,20 @@ const Card = styled.div`
   position: relative; /*  */
   background-clip: padding-box;
   border: 1px solid;
-  border-image-source: linear-gradient(180deg, rgba(255, 116, 38, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  border-image-source: linear-gradient(
+    180deg,
+    rgba(255, 116, 38, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(70px);
   border-radius: 12px;
 `;
-
+const SubTitle = styled.div`
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.64);
+`;
 export default HomeCard;
