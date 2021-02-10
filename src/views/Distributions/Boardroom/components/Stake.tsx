@@ -39,6 +39,8 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const tokenBalance = useTokenBalance(stakingToken);
 
+  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v1');
+
   const { onStake } = useStakeToBoardroom(boardroom);
   const { onWithdraw } = withdrawShareFromBoardroomV1(boardroom);
 
@@ -55,7 +57,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const [onPresentWithdraw, onDismissWithdraw] = useModal(
     <WithdrawModal
-      max={tokenBalance}
+      max={stakedBalance}
       onConfirm={(value) => {
         onWithdraw(value);
         onDismissWithdraw();
@@ -75,7 +77,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             <CardIcon>
               <TokenSymbol symbol={boardroom.depositTokenName} />
             </CardIcon>
-            <StyledValue>{getDisplayBalance(tokenBalance)}</StyledValue>
+            <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
               {approveStatus !== ApprovalState.APPROVED ? (
                 <Button
