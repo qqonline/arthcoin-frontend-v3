@@ -17,7 +17,7 @@ import useBasisCash from '../../../../hooks/useBasisCash';
 import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
-import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
+import withdrawShareFromBoardroomV1 from '../../../../hooks/withdrawShareFromBoardroom';
 import useBoardroomDepositDate from '../../../../hooks/useBoardroomDepositDate';
 
 import { BoardroomInfo } from '../../../../basis-cash';
@@ -44,7 +44,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
 
   const { onStake } = useStakeToBoardroom(boardroom);
-  const { onWithdraw } = useWithdrawFromBoardroom(boardroom);
+  const { onWithdraw } = withdrawShareFromBoardroomV1(boardroom);
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal
@@ -57,33 +57,21 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     />,
   );
 
+  const [onPresentWithdraw, onDismissWithdraw] = useModal(
+    <WithdrawModal
+      max={tokenBalance}
+      onConfirm={(value) => {
+        onWithdraw(value);
+        onDismissWithdraw();
+      }}
+      tokenName={boardroom.depositTokenName}
+    />,
+  );
 
-  const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
+  // const [depositDate, endDate] = useBoardroomDepositDate(boardroom, stakedBalance);
 
   return (
     <Card>
-      {showDepositModal && (
-        <DepositModal
-          max={tokenBalance}
-          onConfirm={(value) => {
-            onStake(value);
-            onDismissDeposit();
-          }}
-          onCancel={() => toggleDepositModal(false)}
-          tokenName={boardroom.depositTokenName}
-        />
-      )}
-      {showWithdrawModal && (
-        <WithdrawModal
-          max={stakedBalance}
-          onConfirm={(value) => {
-            onWithdraw();
-            // onDismissWithdraw();
-          }}
-          onCancel={() => toggleWithdrawModal(false)}
-          tokenName={boardroom.depositTokenName}
-        />
-      )}
       <CardContent>
         <StyledCardContentInner>
           <StyleLabel>{`${boardroom.depositTokenName} Staked`} </StyleLabel>
@@ -93,7 +81,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
-              {approveStatus === ApprovalState.APPROVED ? (
+              {approveStatus !== ApprovalState.APPROVED ? (
                 <Button
                   // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                   onClick={approve}
@@ -101,7 +89,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                 />
               ) : (
                 <>
-                  <IconButton onClick={() => toggleWithdrawModal(true)}>
+                  <IconButton onClick={() => onPresentWithdraw()}>
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />

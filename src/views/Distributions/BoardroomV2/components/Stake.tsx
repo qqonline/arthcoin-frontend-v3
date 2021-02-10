@@ -15,7 +15,7 @@ import useBasisCash from '../../../../hooks/useBasisCash';
 import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
-import useWithdrawFromBoardroom from '../../../../hooks/useWithdrawFromBoardroom';
+import withdrawShareFromBoardroomV2 from '../../../../hooks/withdrawShareFromBoardroomV2';
 import useBoardroomUnbondingDetails from '../../../../hooks/useBoardroomUnbondingDetails';
 import { BoardroomInfo } from '../../../../basis-cash';
 import ProgressCountdown from './ProgressCountdown';
@@ -42,7 +42,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind);
 
   const { onStake } = useStakeToBoardroom(boardroom);
-  const { onWithdraw } = useWithdrawFromBoardroom(boardroom);
+  const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
   const { onUnbond } = useUnbondFromBoardroom(boardroom);
 
   const [onPresentBond, onDismissBond] = useModal(

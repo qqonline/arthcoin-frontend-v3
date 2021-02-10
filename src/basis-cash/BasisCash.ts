@@ -354,6 +354,7 @@ export class BasisCash {
     account = this.myAccount,
   ): Promise<BigNumber> {
     const pool = this.contracts[poolName];
+    console.log(pool, account)
     try {
       return await pool.balanceOf(account);
     } catch (err) {
@@ -453,9 +454,14 @@ export class BasisCash {
     return await boardroom.contract.estimateRewardsToClaim(this.myAccount);
   }
 
-  async withdrawShareFromBoardroom(kind: Boardrooms): Promise<TransactionResponse> {
+  async withdrawShareFromBoardroomV2(kind: Boardrooms): Promise<TransactionResponse> {
     const boardroom = this.currentBoardroom(kind);
     return await boardroom.withdraw();
+  }
+
+  async withdrawShareFromBoardroomV1(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind);
+    return await boardroom.withdraw(decimalToBalance(amount));
   }
 
   async unbondShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {

@@ -6,6 +6,7 @@ import TokenSymbol from '../../../components/TokenSymbol';
 
 interface TemplateProps {
   title: string;
+  action?: any
   symbol: string;
   amount: string;
   buttonLabel: string;
@@ -16,23 +17,28 @@ interface TemplateProps {
 const Template: React.FC<TemplateProps> = (props) => (
   <Content>
     <Label>{props.title}</Label>
-    <Actions>
-      <IcnonContainer>
-        <Icon>
-          <TokenSymbol size={40} symbol={props.symbol} />
-        </Icon>
-        <Amount>{props.amount}</Amount>
-      </IcnonContainer>
-      <ButtonContainer>
-        <Button
-          onClick={props.buttonOnClick}
-          disabled={props.buttonDisabled}
-          text={props.buttonLabel}
-        />
-      </ButtonContainer>
-    </Actions>
+
+        <Actions>
+          <IcnonContainer>
+            <Icon>
+              <TokenSymbol size={40} symbol={props.symbol} />
+            </Icon>
+            <Amount>{props.amount}</Amount>
+          </IcnonContainer>
+          {
+            props.action || (
+              <ButtonContainer>
+                <Button
+                  onClick={props.buttonOnClick}
+                  disabled={props.buttonDisabled}
+                  text={props.buttonLabel}
+                />
+              </ButtonContainer>
+          )}
+        </Actions>
   </Content>
 );
+
 const IcnonContainer = styled.div`
   display: flex;
   width: 100%;

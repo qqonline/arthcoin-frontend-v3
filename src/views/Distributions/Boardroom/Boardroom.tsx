@@ -12,11 +12,14 @@ import Harvest from './components/Harvest';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
 import { Boardrooms } from '../../../basis-cash/config';
+import withdrawShareFromBoardroomV2 from '../../../hooks/withdrawShareFromBoardroomV2';
 
 const Boardroom = () => {
   const { bankId } = useParams<{ bankId: Boardrooms }>();
   const basisCash = useBasisCash();
   const boardroom = basisCash.getBoardroom(bankId, 'v1');
+
+  const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
 
   return (
     <>
@@ -31,16 +34,16 @@ const Boardroom = () => {
         <Grid container spacing={3} justify="center">
           <Grid item xs={12} md={8} lg={8} xl={8}>
             <Grid container spacing={2} justify="center">
-              <Grid container item xs={12} md={6} lg={6} xl={6}>
+              <Grid container item xs={12} md={12} lg={6} xl={6}>
                 <Stake boardroom={boardroom} />
               </Grid>
-              <Grid container item xs={12} md={6} lg={6} xl={6}>
+              <Grid container item xs={12} md={12} lg={6} xl={6}>
                 <Harvest boardroom={boardroom} />
               </Grid>
             </Grid>
-            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
-              <Button size="sm" text="Settle & Withdraw" />
-            </div>
+            {/* <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+              <Button onClick={onWithdraw} size="sm" text="Withdraw Tokens" />
+            </div> */}
           </Grid>
           {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Grid container spacing={3} justify="center">
