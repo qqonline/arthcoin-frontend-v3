@@ -12,6 +12,7 @@ const job = async () => {
         'MAHAMAHAETHLPTokenPool',
         'MAHADAIARTHLPTokenPool',
         'MAHAARTHPool',
+        'MAHADAIARTHMLPTokenPool',
     ]
 
     const result: any = {}

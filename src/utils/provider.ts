@@ -26,7 +26,6 @@ export function getDefaultProvider(): ethers.providers.BaseProvider {
   }
 
   // If no injected web3 instance is detected, fall back to backup node
-  console.log(config.defaultProvider)
   return new ethers.providers.JsonRpcProvider(config.defaultProvider)
 }
 

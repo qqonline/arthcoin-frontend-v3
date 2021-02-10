@@ -33,8 +33,8 @@ const Boardroom = () => {
         <div className="border-bottom width-100 margin-bottom-20" />
         {/* // eslint-disable-next-line jsx-a11y/accessible-emoji */}
         <Notice>
-          New Upgraded Distribution contracts are coming soon! 🚀🚀 These contracts will stop
-          recieving rewards.
+          New Upgraded Distribution contracts are coming soon and will replace this contract!
+          🚀🚀 These contracts will stop receiving rewards.
         </Notice>
         <Notice>
           You are advised to withdraw funds from these contracts and deposit into new ones when

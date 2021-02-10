@@ -114,15 +114,15 @@ const StakingCard: React.FC<AccountButtonProps> = ({ bank }) => {
         <DiscountDivContainer>
           <DiscountDiv>
             <TitleText>Daily</TitleText>
-            {`${apy.dailyAPY.toFixed(2)}%`} APY
+            {`${apy.dailyAPY.toFixed(2)}%`}
           </DiscountDiv>
           <DiscountDiv>
             <TitleText>Weekly</TitleText>
-            {`${apy.dailyAPY.toFixed(2)}%`} APY
+            {`${apy.weeklyAPY.toFixed(2)}%`}
           </DiscountDiv>
           <DiscountDiv>
             <TitleText>Annual</TitleText>
-            {`${apy.dailyAPY.toFixed(2)}%`} APY
+            {`${apy.yearlyAPY.toFixed(2)}%`}
           </DiscountDiv>
         </DiscountDivContainer>
       )}

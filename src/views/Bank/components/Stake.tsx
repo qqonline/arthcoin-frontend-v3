@@ -31,7 +31,6 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
 
   const { account, connect } = useWallet();
 
-
   const { onStake } = useStake(bank);
   const { onWithdraw } = useWithdraw(bank);
 
@@ -61,17 +60,16 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
 
   const actions = (
     <Actions>
-        {!account ? (
-          <Button onClick={() => connect('injected')} size="sm" text="Connect" />
-        ) : approveStatus !== ApprovalState.APPROVED && !bank.finished? (
+      {!account ? (
+        <Button onClick={() => connect('injected')} size="sm" text="Connect" />
+      ) : approveStatus !== ApprovalState.APPROVED ? (
         <Button
           disabled={
-            bank.finished ||
-            approveStatus === ApprovalState.PENDING ||
-            approveStatus === ApprovalState.UNKNOWN
+            // bank.finished ||
+            approveStatus === ApprovalState.PENDING
           }
           onClick={approve}
-          text={`Approve ${bank.depositTokenName}`}
+          text={`Approve `}
         />
       ) : (
         <>
@@ -81,13 +79,14 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
           <StyledActionSpacer />
           <IconButton
             disabled={bank.finished}
-            onClick={() => (bank.finished ? null : onPresentDeposit())}>
+            onClick={() => (bank.finished ? null : onPresentDeposit())}
+          >
             <AddIcon />
           </IconButton>
         </>
       )}
     </Actions>
-  )
+  );
 
   return (
     <Template
@@ -106,7 +105,6 @@ const Stake: React.FC<StakeProps> = ({ bank }) => {
 /*  */
 
 export default Stake;
-
 
 const IcnonContainer = styled.div`
   display: flex;

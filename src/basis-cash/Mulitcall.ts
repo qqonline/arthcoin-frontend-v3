@@ -36,7 +36,6 @@ export default class Multicall extends EventEmitter {
         data.forEach(d => this.calls.push(d))
         this.recreateWatcher()
 
-        console.log('multi', this.watcher, this)
         this.watcher.tap(() => this.getMutlicallCalls(data))
         return data.map(d => d.key)
     }

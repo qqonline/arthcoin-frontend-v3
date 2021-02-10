@@ -53,8 +53,6 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
     );
   };
 
-  console.log('hit');
-
   return (
     <Card>
       <StyledCardContentInner>

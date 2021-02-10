@@ -8,7 +8,6 @@ const useStake = (bank: Bank) => {
   const basisCash = useBasisCash();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
-  console.log('bank', bank)
   const handleStake = useCallback(
     (amount: string) => {
       const amountBn = parseUnits(amount, bank.depositToken.decimal);

@@ -75,7 +75,6 @@ const Home: React.FC = () => {
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
   const targets = useNextEpochTargets(cash1hrPrice);
 
-  console.log(prevAllocation, nextAllocation, currentEpoch)
   const nextEpoch = useMemo(() => moment(nextAllocation).toDate(), [nextAllocation]);
 
   const supplyIncrease = useMemo(

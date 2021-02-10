@@ -354,7 +354,6 @@ export class BasisCash {
     account = this.myAccount,
   ): Promise<BigNumber> {
     const pool = this.contracts[poolName];
-    console.log(pool, account)
     try {
       return await pool.balanceOf(account);
     } catch (err) {
