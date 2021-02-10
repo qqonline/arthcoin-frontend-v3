@@ -106,7 +106,7 @@ const configurations: { [env: string]: Configuration } = {
 
       'MAHA_ETH-UNI-LPv2': ['0xc0897d6ba893e31f42f658eead777aa15b8f824d', 18],
       'ARTH_DAI-UNI-LPv2': ['0x35b6f9e6300aa6c722ea189e096b0b073025806f', 18],
-      'ARTH_DAI-MAHA-LPv2': ['0x1c36d9e60cac6893652b74e357f3829a0f5095e0', 18],
+      'ARTH_DAI-MAHA-LPv1': ['0x1c36d9e60cac6893652b74e357f3829a0f5095e0', 18],
       'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
     },
 
@@ -330,7 +330,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   MAHADAIARTHMLPTokenPool2: {
     name: 'Deposit ARTH/DAI Mahaswap LP tokens and Earn $MAHA',
     contract: 'MAHADAIARTHMLPTokenPool',
-    depositTokenName: 'ARTH_DAI-MAHA-LPv2',
+    depositTokenName: 'ARTH_DAI-MAHA-LPv1',
     earnTokenName: 'MAHA',
     poolRewards: 8000,
     finished: false,

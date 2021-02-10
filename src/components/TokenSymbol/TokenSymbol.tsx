@@ -26,7 +26,6 @@ import DSD from '../../assets/img/DSD.webp';
 import MATIC from '../../assets/img/Matic.webp';
 import RSR from '../../assets/img/RSR.webp';
 
-
 const logosBySymbol: { [title: string]: string } = {
   ARTH: arthLogo,
   MAHA: mahaLogo,
@@ -53,7 +52,7 @@ const logosBySymbol: { [title: string]: string } = {
   RSR: RSR,
 
   'ARTH_DAI-UNI-LPv2': bacLogo,
-  'ARTH_DAI-MAHA-LPv2': bacLogo,
+  'ARTH_DAI-MAHA-LPv1': bacLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'MAHA_ETH-UNI-LPv2': mahaLogo,
   'BAS_DAI-UNI-LPv2': basLogo,
@@ -69,7 +68,15 @@ const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
     // throw new Error(`Invalid BasisLogo symbol: ${symbol}`);
     return <img src={logosBySymbol['DAI']} alt={`${symbol} Logo`} width={size} height={size} />;
   }
-  return <img src={logosBySymbol[symbol]} alt={`${symbol} Logo`} style={{ borderRadius: '100%'}} width={size} height={size} />;
+  return (
+    <img
+      src={logosBySymbol[symbol]}
+      alt={`${symbol} Logo`}
+      style={{ borderRadius: '100%' }}
+      width={size}
+      height={size}
+    />
+  );
 };
 
 export default TokenSymbol;

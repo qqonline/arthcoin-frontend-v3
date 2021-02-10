@@ -22,7 +22,7 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 interface AccountButtonProps {
-  bank: Bank
+  bank: Bank;
   // title: string;
   // logo: Array<string>;
   // subtitle?: string;
@@ -40,31 +40,32 @@ interface ImageConTainerProps {
   zIndex: number;
 }
 
-const StakingCard: React.FC<AccountButtonProps> = ({
-  bank
-}) => {
+const StakingCard: React.FC<AccountButtonProps> = ({ bank }) => {
   const apy: any = APY[bank.contract];
   const { account, connect } = useWallet();
 
-  const logos = [bank.earnTokenName]
+  const logos = [bank.earnTokenName];
 
-  if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI')
-  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv2') logos.push('ARTH', 'DAI')
-  else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH')
-  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI')
-  else logos.push(bank.depositTokenName)
+  if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
+  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
+  else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
+  else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');
+  else logos.push(bank.depositTokenName);
 
   return (
     <CardContainer>
       {logos && logos.length > 0 && (
         <LogoContainer>
-          {
-            logos.slice(1).map(logo => (
-              <TokenSymbol symbol={logo} size={54} />
-            ))
-          }
+          {logos.slice(1).map((logo) => (
+            <TokenSymbol symbol={logo} size={54} />
+          ))}
 
-          <img style={{ marginRight: 15, marginLeft: 15 }} src={ArrowRight} alt="" width="24px" />
+          <img
+            style={{ marginRight: 15, marginLeft: 15 }}
+            src={ArrowRight}
+            alt=""
+            width="24px"
+          />
 
           <ImageConTainer marginLeft={0} zIndex={logos.length + 1}>
             <TokenSymbol symbol={logos[0]} size={54} />
@@ -80,22 +81,14 @@ const StakingCard: React.FC<AccountButtonProps> = ({
             ))} */}
         </LogoContainer>
       )}
-      <PoolTitle>
-        {bank.name}
-      </PoolTitle>
-      <span
-          className="white font16 bold-200 margin-bottom-15"
-          style={{ textAlign: 'center' }}
-        >
-          Pool size: {bank.poolRewards} {bank.earnTokenName}
-        </span>
+      <PoolTitle>{bank.name}</PoolTitle>
+      <span className="white font16 bold-200 margin-bottom-15" style={{ textAlign: 'center' }}>
+        Pool size: {bank.poolRewards} {bank.earnTokenName}
+      </span>
 
-        <span
-          className="white font16 bold-200 margin-bottom-15"
-          style={{ textAlign: 'center' }}
-        >
-          Pool duration: {bank.poolDurationInDays} days
-        </span>
+      <span className="white font16 bold-200 margin-bottom-15" style={{ textAlign: 'center' }}>
+        Pool duration: {bank.poolDurationInDays} days
+      </span>
       {/* {subtitle && <span className="white font16 bold-600 margin-bottom-15">{subtitle}</span>}
       {description && (
         <span
@@ -119,23 +112,22 @@ const StakingCard: React.FC<AccountButtonProps> = ({
                       <Apy>Annual {apy.yearlyAPY.toFixed(2)}%</Apy> */}
       {apy && false && (
         <DiscountDivContainer>
-        <DiscountDiv>
-          <TitleText>Daily</TitleText>
-          {`${apy.dailyAPY.toFixed(2)}%`} APY
-        </DiscountDiv>
-        <DiscountDiv>
-          <TitleText>Weekly</TitleText>
-          {`${apy.dailyAPY.toFixed(2)}%`} APY
-        </DiscountDiv>
-        <DiscountDiv>
-          <TitleText>Annual</TitleText>
-          {`${apy.dailyAPY.toFixed(2)}%`} APY
-        </DiscountDiv>
-      </DiscountDivContainer>
-
+          <DiscountDiv>
+            <TitleText>Daily</TitleText>
+            {`${apy.dailyAPY.toFixed(2)}%`} APY
+          </DiscountDiv>
+          <DiscountDiv>
+            <TitleText>Weekly</TitleText>
+            {`${apy.dailyAPY.toFixed(2)}%`} APY
+          </DiscountDiv>
+          <DiscountDiv>
+            <TitleText>Annual</TitleText>
+            {`${apy.dailyAPY.toFixed(2)}%`} APY
+          </DiscountDiv>
+        </DiscountDivContainer>
       )}
 
-        {/* {toolTipDesciption && (
+      {/* {toolTipDesciption && (
           <HtmlTooltip enterTouchDelay={0} title={<span>{toolTipDesciption}</span>}>
             <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
           </HtmlTooltip>
@@ -147,11 +139,11 @@ const StakingCard: React.FC<AccountButtonProps> = ({
         {/* <ProgressCountdown percentage={bank.poolSize} description="Next Epoch" /> */}
       </PoolSizeDiv>
       <div style={{ width: '300px', marginBottom: '20px', marginTop: '20px' }}>
-      {!!account ? (
-              <Button text="Select" to={`/staking/${bank.contract}`} />
-            ) : (
-              <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-            )}
+        {!!account ? (
+          <Button text="Select" to={`/staking/${bank.contract}`} />
+        ) : (
+          <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+        )}
       </div>
     </CardContainer>
   );
@@ -211,7 +203,6 @@ const DiscountDivContainer = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-
 
 const DiscountDiv = styled.div`
   display: flex;
