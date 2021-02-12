@@ -10517,6 +10517,19 @@ lz-string@^1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
+mahaswap-sdk@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/mahaswap-sdk/-/mahaswap-sdk-3.0.11.tgz#4c98ff0649bafeda772dbb80964110f268a078cb"
+  integrity sha512-1Stix7SEar+pflOfhU4S4cHV7gduVtfQPb9cGJOcynrdBYE6PeOo86OSCi8oWQxTgg6kiirTZD0ozVWNLUemwQ==
+  dependencies:
+    "@uniswap/v2-core" "^1.0.0"
+    big.js "^5.2.2"
+    decimal.js-light "^2.5.0"
+    jsbi "^3.1.1"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    toformat "^2.0.0"
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"

@@ -33,7 +33,7 @@ const Home: React.FC = () => {
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
-      basisCash.getCashStatFromUniswap(),
+      basisCash.getCashStatFromMahaswap(),
       basisCash.getBondStat(),
       basisCash.getShareStat(),
     ]);

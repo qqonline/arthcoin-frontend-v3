@@ -1,3 +1,4 @@
+import { Fetcher as MFetcher, Route as MRoute, Token as MToken } from 'mahaswap-sdk';
 import { Fetcher, Route, Token } from '@uniswap/sdk';
 import { Boardrooms, Configuration } from './config';
 import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
@@ -203,6 +204,14 @@ export class BasisCash {
     };
   }
 
+  async getCashStatFromMahaswap(): Promise<TokenStat> {
+    const supply = await this.ARTH.displayedTotalSupply();
+    return {
+      priceInDAI: await this.getTokenPriceFromMahaswap(this.ARTH),
+      totalSupply: supply,
+    };
+  }
+
   /**
    * @returns Estimated ARTH (ARTH) price data,
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
@@ -284,6 +293,23 @@ export class BasisCash {
     }
   }
 
+  async getTokenPriceFromMahaswap(tokenContract: ERC20): Promise<string> {
+    await this.provider.ready;
+
+    const { chainId } = this.config;
+    const { DAI } = this.config.externalTokens;
+
+    const dai = new MToken(chainId, DAI[0], 18);
+    const token = new MToken(chainId, tokenContract.address, 18);
+
+    try {
+      const daiToToken = await MFetcher.fetchPairData(dai, token, this.provider);
+      const priceInDAI = new MRoute([daiToToken], token);
+      return priceInDAI.midPrice.toSignificant(3);
+    } catch (err) {
+      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
+    }
+  }
 
   async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<string> {
     await this.provider.ready;
@@ -439,7 +465,6 @@ export class BasisCash {
 
   async getStakedSharesOnBoardroom(kind: Boardrooms, version: string): Promise<BigNumber> {
     const boardroom = this.currentBoardroom(kind);
-    console.log(boardroom, this.myAccount, 'hit')
     return await boardroom.balanceOf(this.myAccount);
   }
 
