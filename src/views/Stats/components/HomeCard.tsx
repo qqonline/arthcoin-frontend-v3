@@ -57,12 +57,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
           </CardSection>
         </CardContent>
 
-        <UniswapLink
+        {/* <UniswapLink
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
           <LinkText>Buy {symbol} from Uniswap </LinkText>
-        </UniswapLink>
+        </UniswapLink> */}
       </Card>
     </Wrapper>
   );

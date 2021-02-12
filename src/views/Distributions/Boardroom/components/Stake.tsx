@@ -9,8 +9,7 @@ import IconButton from '../../../../components/IconButton';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
-import moment from 'moment';
-import { getDisplayBalance } from '../../../../utils/formatBalance';
+ import { getDisplayBalance } from '../../../../utils/formatBalance';
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import useBasisCash from '../../../../hooks/useBasisCash';
@@ -18,10 +17,8 @@ import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoa
 import TokenSymbol from '../../../../components/TokenSymbol';
 import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
 import withdrawShareFromBoardroomV1 from '../../../../hooks/withdrawShareFromBoardroom';
-import useBoardroomDepositDate from '../../../../hooks/useBoardroomDepositDate';
 
 import { BoardroomInfo } from '../../../../basis-cash';
-import ProgressCountdown from './ProgressCountdown';
 
 const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const basisCash = useBasisCash();

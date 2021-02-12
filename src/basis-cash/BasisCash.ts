@@ -334,9 +334,9 @@ export class BasisCash {
    * Redeem bonds for ARTH.
    * @param amount amount of bonds to redeem.
    */
-  async redeemBonds(amount: string, redeemForDai: boolean): Promise<TransactionResponse> {
+  async redeemBonds(amount: string): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    return await Treasury.redeemBonds(decimalToBalance(amount), redeemForDai);
+    return await Treasury.redeemBonds(decimalToBalance(amount));
   }
 
   async earnedFromBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {

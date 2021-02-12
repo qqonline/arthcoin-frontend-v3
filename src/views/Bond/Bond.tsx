@@ -52,8 +52,8 @@ const Bond: React.FC = () => {
   );
 
   const handleRedeemBonds = useCallback(
-    async (amount: string, redeemForDai: boolean) => {
-      const tx = await basisCash.redeemBonds(amount, redeemForDai);
+    async (amount: string) => {
+      const tx = await basisCash.redeemBonds(amount);
       addTransaction(tx, { summary: `Redeem ${amount} ARTHB` });
     },
     [basisCash, addTransaction],

@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import {
+ import {
   LineChart,
   Line,
   XAxis,
@@ -81,5 +80,4 @@ const Chart: React.FC<ChartProps> = () => {
   );
 };
 
-const StyledPageContent = styled.div``;
-export default Chart;
+ export default Chart;
