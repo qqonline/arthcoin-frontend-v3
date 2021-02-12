@@ -40,6 +40,7 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
       return;
     }
 
+    console.log(token.address, spender, APPROVE_AMOUNT)
     const response = await token.approve(spender, APPROVE_AMOUNT);
     addTransaction(response, {
       summary: `Approve ${token.symbol}`,
