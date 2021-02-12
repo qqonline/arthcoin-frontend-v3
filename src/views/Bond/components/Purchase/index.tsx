@@ -104,7 +104,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
           <StyledExchanger>
             <StyledToken>
               <StyledCardIcon>
-                <TokenSymbol symbol={fromToken.symbol} size={54} />
+                <TokenSymbol symbol={'DAI'} size={54} />
               </StyledCardIcon>
               <Label text={fromTokenName} variant="normal" />
             </StyledToken>
