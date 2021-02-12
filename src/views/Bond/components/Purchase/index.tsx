@@ -62,8 +62,9 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
   } = useBasisCash();
 
   const { account, connect } = useWallet();
-  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
+  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
   const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
@@ -142,14 +143,15 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                 <>
                   <Button
                     disabled={
+                      isDAIApproved ||
                       diaApproveStatus === ApprovalState.PENDING ||
                       diaApproveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
                     text={
-                      arthApproveStatus === ApprovalState.PENDING
+                      diaApproveStatus === ApprovalState.PENDING
                         ? 'Approving'
-                        : arthApproveStatus === ApprovalState.APPROVED
+                        : diaApproveStatus === ApprovalState.APPROVED
                         ? 'DAI Approved'
                         : 'Approve DAI'
                     }

@@ -55,7 +55,7 @@ export class BasisCash {
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    this.DAI = new ERC20(deployments.DAI.address, provider, 'ARTHB');
+    this.DAI = new ERC20(externalTokens['DAI'][0], provider, 'DAI');
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
 
@@ -89,7 +89,7 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHB, ...Object.values(this.externalTokens)];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -532,8 +532,6 @@ export class BasisCash {
 
     const nextAllocation = new Date(nextEpochTimestamp.mul(1000).toNumber());
     const prevAllocation = new Date(nextAllocation.getTime() - period.toNumber() * 1000);
-
-    console.log('nextAllocation', nextAllocation, nextEpochTimestamp)
 
     return { prevAllocation, nextAllocation, currentEpoch: 1 + currentEpoch.toNumber() };
   }

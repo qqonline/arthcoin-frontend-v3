@@ -238,36 +238,6 @@ const Bond: React.FC = () => {
   );
 };
 
-const StyledBond = styled.div`
-  display: flex;
-  width: 900px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
-`;
-
-const StyledCardWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 80%;
-  }
-`;
-
-const LaunchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
-  border-radius: 12px;
-  padding: 20px;
-  width: 100%;
-  margin-bottom: 30px;
-`;
 
 const ChartContainer = styled.div`
   background: rgba(255, 255, 255, 0.02);
