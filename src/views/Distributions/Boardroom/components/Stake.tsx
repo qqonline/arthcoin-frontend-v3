@@ -54,7 +54,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const [onPresentWithdraw, onDismissWithdraw] = useModal(
     <WithdrawModal
-      max={tokenBalance}
+      max={stakedBalance}
       onConfirm={(value) => {
         onWithdraw(value);
         onDismissWithdraw();

@@ -29,25 +29,25 @@ const Boardroom = () => {
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
         {/* <Grid container spacing={3} justify="center"> */}
-          {/* <Grid item xs={12} md={8} lg={8} xl={8}> */}
-            <Grid container spacing={2} justify="center">
-              <Grid container item xs={12} md={6} lg={6} xl={6}>
-                <Stake boardroom={boardroom} />
-              </Grid>
-              <Grid container item xs={12} md={6} lg={6} xl={6}>
-                <Harvest boardroom={boardroom} />
-              </Grid>
-              <Grid container item xs={6} >
-                <div style={{ marginTop: '20px', marginRight: 20,  maxWidth: '200px' }}>
-                  <Button size="sm" text="Settle & Withdraw" />
-                </div>
-                <div style={{ marginTop: '20px', maxWidth: '200px' }}>
-                  <Button size="sm" text="Provide Liquidity" />
-                </div>
-              </Grid>
-            </Grid>
-          {/* </Grid> */}
-          {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
+        {/* <Grid item xs={12} md={8} lg={8} xl={8}> */}
+        <Grid container spacing={2} justify="center">
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <Stake boardroom={boardroom} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <Harvest boardroom={boardroom} />
+          </Grid>
+          <Grid container item xs={6}>
+            <div style={{ marginTop: '20px', marginRight: 20, maxWidth: '200px' }}>
+              <Button size="sm" text="Settle & Withdraw" />
+            </div>
+            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
+              <Button size="sm" text="Provide Liquidity" />
+            </div>
+          </Grid>
+        </Grid>
+        {/* </Grid> */}
+        {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Grid container spacing={3} justify="center">
               <Grid container item xs={12} md={12} lg={12} xl={12}>
                 <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
@@ -84,11 +84,10 @@ const LPTokenHelpText: React.FC<{ boardroom: BoardroomInfo }> = ({ boardroom }) 
 
   return (
     <StyledLink href={uniswapUrl} target="_blank">
-      {`🦄  Provide liquidity to ${pairName} on Uniswap  🦄`}
+      {/* {`🦄  Provide liquidity to ${pairName} on Uniswap  🦄`} */}
     </StyledLink>
   );
 };
-
 
 const StyledLink = styled.a`
   font-weight: 700;

@@ -79,11 +79,7 @@ const Home: React.FC = () => {
         </div>
 
         <div id="padding-top-30">
-          <a
-            target="_blank"
-            href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9"
-            id="no-txt-decoration"
-          >
+          <a target="_blank" href="https://mahaswap.com/" id="no-txt-decoration">
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
@@ -433,11 +429,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div id="padding-top-30">
-          <a
-            target="_blank"
-            href="https://app.uniswap.org/#/swap?outputCurrency=0x0e3cc2c4fb9252d17d07c67135e48536071735d9"
-            id="no-txt-decoration"
-          >
+          <a target="_blank" href="https://mahaswap.com/" id="no-txt-decoration">
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
