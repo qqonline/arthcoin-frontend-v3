@@ -25,6 +25,7 @@ import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import useNextEpochTargets from '../../hooks/useNextEpochTargets';
+import useMahaswapPrice from '../../hooks/useMahaswapPrice';
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -71,7 +72,7 @@ const Home: React.FC = () => {
     [prevAllocation, nextAllocation],
   );
 
-  const arthPrice = useUniswapPrice(basisCash.DAI, basisCash.ARTH);
+  const arthPrice = useMahaswapPrice(basisCash.DAI, basisCash.ARTH);
   const arthLiquidity = useUniswapLiquidity(basisCash.DAI, basisCash.ARTH);
   const targets = useNextEpochTargets(cash1hrPrice);
 
