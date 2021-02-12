@@ -36,10 +36,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
 
         <CardContent>
           <CardSection>
-            <div
-              style={{ color: 'rgba(255, 255, 255, 0.64)' }}
-              className="font15"
-            >Price</div>
+            <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
+              Price
+            </div>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
@@ -162,7 +161,11 @@ const Card = styled.div`
   position: relative; /*  */
   background-clip: padding-box;
   border: 1px solid;
-  border-image-source: linear-gradient(180deg, rgba(255, 116, 38, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  border-image-source: linear-gradient(
+    180deg,
+    rgba(255, 116, 38, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(70px);
   border-radius: 12px;
