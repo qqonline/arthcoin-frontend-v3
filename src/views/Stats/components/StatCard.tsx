@@ -26,7 +26,7 @@ const StatCard: React.FC<StatProps> = ({ statData }) => {
       {statData &&
         statData.length > 0 &&
         statData.map((eachStat: stats) => (
-          <SubTitleContainer>
+          <SubTitleContainer key={eachStat.title}>
             <SubTitle>
               {eachStat.subTitle}
               <HtmlTooltip enterTouchDelay={0} title={<span>dqlkndlkqwndkq</span>}>

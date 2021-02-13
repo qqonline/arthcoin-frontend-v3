@@ -2,7 +2,7 @@ import { EventEmitter } from 'events'
 const multicall = require('@makerdao/multicall')
 
 
-interface IMulticallInput {
+export interface IMulticallInput {
     key: string
     target: string
     call: (string | number)[]
@@ -37,6 +37,8 @@ export default class Multicall extends EventEmitter {
         this.recreateWatcher()
 
         this.watcher.tap(() => this.getMutlicallCalls(data))
+
+        console.log(data.map(d => d.key))
         return data.map(d => d.key)
     }
 
@@ -49,6 +51,7 @@ export default class Multicall extends EventEmitter {
     }
 
     private processUpdates = (update: { type: any; value: any; }) => {
+        console.log(update)
         this.emit(update.type, update.value)
     }
 

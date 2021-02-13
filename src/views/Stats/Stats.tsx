@@ -32,6 +32,7 @@ import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTW
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import useNextEpochTargets from '../../hooks/useNextEpochTargets';
 import FAQCard from './components/FAQCard';
+import useMahaswapPrice from '../../hooks/useMahaswapPrice';
 const FaqData = [
   {
     question: 'Do I need $MAHA to buy/redeem ARTH bonds?',
@@ -265,7 +266,7 @@ const Home: React.FC = () => {
               <StatContainer>
                 <div style={{ padding: '30px' }}>
                   <StyledTitle>ARTH Price</StyledTitle>
-                  <TitleBold>$0.98</TitleBold>
+                  <TitleBold>{arthPrice ? `$${arthPrice}` : '-'}</TitleBold>
                   <IncreasedText>+0.15%</IncreasedText>
                 </div>
                 <LinearProgressDiv>
@@ -358,7 +359,7 @@ const Home: React.FC = () => {
               <StatCard
                 statData={[
                   {
-                    title: '54,634 ARTHB',
+                    title: `${123} ARTHB`,
                     subTitle: 'Debt Available for Purchase',
                   },
                   {
@@ -506,7 +507,7 @@ const Home: React.FC = () => {
             title={`$${arthLiquidity}`}
             description="ARTH Liquidity"
             toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
-          /> */}
+          />
         </StyledHeader>
 
         <StyledHeader>
@@ -549,9 +550,9 @@ const Home: React.FC = () => {
             toolTipTitle="When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development."
             toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics/seiongrage-distribution"
           />
-        </StyledHeader> */}
+        </StyledHeader>*/}
         <FaqTitle>FAQs</FaqTitle>
-        {FaqData && FaqData.map((eachFaq) => <FAQCard {...eachFaq} />)}
+        {FaqData && FaqData.map((eachFaq) => <FAQCard key={eachFaq.question} {...eachFaq} />)}
       </Container>
     </Page>
   );

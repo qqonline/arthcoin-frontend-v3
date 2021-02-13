@@ -57,7 +57,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
           </CardSection>
           <CardSection>
             <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
-              {`${title} Liquidity`}
+            Liquidity
             </div>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
           </CardSection>

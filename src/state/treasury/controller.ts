@@ -1,32 +1,45 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import { BasisCash } from '../../basis-cash/BasisCash'
-import { updateNextEpochPoint, updateCurrentEpoch, updatePeriod } from './actions'
+import * as Actions from './actions'
+import { IMulticallInput } from '../../basis-cash/Mulitcall'
 
 
 export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
-    basisCash.multicall.on("TREASURY_NEXT_EPOCH_POINT", val => dispatch(updateNextEpochPoint(val)))
-    basisCash.multicall.on("TREASURY_PERIOD", val => dispatch(updatePeriod(val)))
-    basisCash.multicall.on("TREASURY_CURRENT_EPOCH", val => dispatch(updateCurrentEpoch(val)))
+    const registerVariable = (fn: string, reduxAction: any) => {
+        const input: IMulticallInput = {
+            key: `TREASURY:${fn}`,
+            target: basisCash.contracts.Treasury.address,
+            call: [`${fn}(uint256)`],
+            convertResult: val => val.toNumber()
+        }
 
+        basisCash.multicall.on(input.key, val => dispatch(reduxAction(val)))
 
-    basisCash.multicall.addCalls([
-        {
-            key: 'TREASURY_NEXT_EPOCH_POINT',
-            target: basisCash.contracts.Treasury.address,
-            call: ['nextEpochPoint()(uint256)'],
-            convertResult: val => val.toNumber()
-        },
-        {
-            key: 'TREASURY_PERIOD',
-            target: basisCash.contracts.Treasury.address,
-            call: ['getPeriod()(uint256)'],
-            convertResult: val => val.toNumber()
-        },
-        {
-            key: 'TREASURY_CURRENT_EPOCH',
-            target: basisCash.contracts.Treasury.address,
-            call: ['getCurrentEpoch()(uint256)'],
-            convertResult: val => val.toNumber()
-        },
-    ])
+        return input
+    }
+
+    const calls = [
+        registerVariable('nextEpochPoint()', Actions.updateNextEpochPoint),
+        registerVariable('getPeriod()', Actions.updatePeriod),
+        registerVariable('getCurrentEpoch()', Actions.updateCurrentEpoch),
+
+        registerVariable('cashTargetPrice()', Actions.updateCashTargetPrice),
+        registerVariable('cashToBondConversionLimit()', Actions.updateCashToBondConversionLimit),
+        registerVariable('accumulatedBonds()', Actions.updateAccumulatedBonds),
+        registerVariable('accumulatedSeigniorage()', Actions.updateAccumulatedSeigniorage),
+        registerVariable('maxDebtIncreasePerEpoch()', Actions.updateMaxDebtIncreasePerEpoch),
+        registerVariable('bondDiscount()', Actions.updateBondDiscount),
+        registerVariable('safetyRegion()', Actions.updateSafetyRegion),
+        registerVariable('maxSupplyIncreasePerEpoch()', Actions.updateMaxSupplyIncreasePerEpoch),
+        registerVariable('ecosystemFundAllocationRate()', Actions.updateEcosystemFundAllocationRate),
+        registerVariable('rainyDayFundAllocationRate()', Actions.updateRainyDayFundAllocationRate),
+        registerVariable('bondSeigniorageRate()', Actions.updateBondSeigniorageRate),
+        registerVariable('arthLiquidityUniAllocationRate()', Actions.updateArthLiquidityUniAllocationRate),
+        registerVariable('arthLiquidityMlpAllocationRate()', Actions.updateArthLiquidityMlpAllocationRate),
+        registerVariable('arthBoardroomAllocationRate()', Actions.updateArthBoardroomAllocationRate),
+        registerVariable('mahaLiquidityBoardroomAllocationRate()', Actions.updateMahaLiquidityBoardroomAllocationRate),
+        registerVariable('stabilityFee()', Actions.updateStabilityFee),
+    ]
+
+    basisCash.multicall.addCalls(calls)
 }
