@@ -22,6 +22,20 @@ export interface TreasuryState {
   arthBoardroomAllocationRate: number
   mahaLiquidityBoardroomAllocationRate: number
   stabilityFee: number
+
+  getReserve: number
+  getStabilityFee: number
+  getBondOraclePrice: number
+  getGMUOraclePrice: number
+  getArthMahaOraclePrice: number
+  getSeigniorageOraclePrice: number
+  arthCirculatingSupply: number
+  bondCirculatingSupply: number
+  getBondRedemtionPrice: number
+  getExpansionLimitPrice: number
+  getBondPurchasePrice: number
+  getCashSupplyInLiquidity: number
+  get1hourEpoch: number
 }
 
 export const initialState: TreasuryState = {
@@ -44,6 +58,20 @@ export const initialState: TreasuryState = {
   arthBoardroomAllocationRate: 0,
   mahaLiquidityBoardroomAllocationRate: 0,
   stabilityFee: 0,
+
+  getReserve: 0,
+  getStabilityFee: 0,
+  getBondOraclePrice: 0,
+  getGMUOraclePrice: 0,
+  getArthMahaOraclePrice: 0,
+  getSeigniorageOraclePrice: 0,
+  arthCirculatingSupply: 0,
+  bondCirculatingSupply: 0,
+  getBondRedemtionPrice: 0,
+  getExpansionLimitPrice: 0,
+  getBondPurchasePrice: 0,
+  getCashSupplyInLiquidity: 0,
+  get1hourEpoch: 0,
 };
 
 export default createReducer(initialState, (builder) =>
@@ -67,4 +95,18 @@ export default createReducer(initialState, (builder) =>
     .addCase(Actions.updateArthBoardroomAllocationRate, (t, {payload}) => { t.arthBoardroomAllocationRate = payload })
     .addCase(Actions.updateMahaLiquidityBoardroomAllocationRate, (t, {payload}) => { t.mahaLiquidityBoardroomAllocationRate = payload })
     .addCase(Actions.updateStabilityFee, (t, {payload}) => { t.stabilityFee = payload })
+
+    .addCase(Actions.updateGetReserve, (t, {payload}) => { t.getReserve = payload })
+    .addCase(Actions.updateGetStabilityFee, (t, {payload}) => { t.getStabilityFee = payload })
+    .addCase(Actions.updateGetBondOraclePrice, (t, {payload}) => { t.getBondOraclePrice = payload })
+    .addCase(Actions.updateGetGMUOraclePrice, (t, {payload}) => { t.getGMUOraclePrice = payload })
+    .addCase(Actions.updateGetArthMahaOraclePrice, (t, {payload}) => { t.getArthMahaOraclePrice = payload })
+    .addCase(Actions.updateGetSeigniorageOraclePrice, (t, {payload}) => { t.getSeigniorageOraclePrice = payload })
+    .addCase(Actions.updateArthCirculatingSupply, (t, {payload}) => { t.arthCirculatingSupply = payload })
+    .addCase(Actions.updateBondCirculatingSupply, (t, {payload}) => { t.bondCirculatingSupply = payload })
+    .addCase(Actions.updateGetBondRedemtionPrice, (t, {payload}) => { t.getBondRedemtionPrice = payload })
+    .addCase(Actions.updateGetExpansionLimitPrice, (t, {payload}) => { t.getExpansionLimitPrice = payload })
+    .addCase(Actions.updateGetBondPurchasePrice, (t, {payload}) => { t.getBondPurchasePrice = payload })
+    .addCase(Actions.updateGetCashSupplyInLiquidity, (t, {payload}) => { t.getCashSupplyInLiquidity = payload })
+    .addCase(Actions.updateGet1hourEpoch, (t, {payload}) => { t.get1hourEpoch = payload })
 );

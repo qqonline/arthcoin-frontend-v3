@@ -21,28 +21,26 @@ export default class Multicall extends EventEmitter {
         this.rpcUrl = rpcUrl
         this.address = address
         this.calls = []
-        this.recreateWatcher()
+        this._recreateWatcher()
     }
 
 
     addCall = (data: IMulticallInput): string => {
         this.calls.push(data)
-        this.recreateWatcher()
-        this.watcher.tap(() => this.getMutlicallCalls([data]))
+        this._recreateWatcher()
+        this.watcher.tap(() => this._getMutlicallCalls([data]))
         return data.key
     }
 
     addCalls = (data: IMulticallInput[]): string[] => {
         data.forEach(d => this.calls.push(d))
-        this.recreateWatcher()
-
-        this.watcher.tap(() => this.getMutlicallCalls(data))
-
-        console.log(data.map(d => d.key))
+        this._recreateWatcher()
+        this.watcher.tap(() => this._getMutlicallCalls(data))
+        console.log(this._getMutlicallCalls(data))
         return data.map(d => d.key)
     }
 
-    private getMutlicallCalls = (calls: IMulticallInput[]) => {
+    private _getMutlicallCalls = (calls: IMulticallInput[]) => {
         return calls.map(c => ({
             target: c.target,
             call: c.call,
@@ -50,12 +48,11 @@ export default class Multicall extends EventEmitter {
         }))
     }
 
-    private processUpdates = (update: { type: any; value: any; }) => {
-        console.log(update)
+    private _processUpdates = (update: { type: any; value: any; }) => {
         this.emit(update.type, update.value)
     }
 
-    private recreateWatcher = () => {
+    private _recreateWatcher = () => {
         if (this.watcher) this.watcher.stop()
 
         const config = {
@@ -63,11 +60,10 @@ export default class Multicall extends EventEmitter {
             multicallAddress: this.address
         };
 
-        this.watcher = multicall.createWatcher(this.getMutlicallCalls(this.calls), config)
-        this.watcher.subscribe(this.processUpdates);
+        this.watcher = multicall.createWatcher(this._getMutlicallCalls(this.calls), config)
+        this.watcher.subscribe(this._processUpdates);
 
         // Start the watcher polling
         this.watcher.start();
-
     }
 }

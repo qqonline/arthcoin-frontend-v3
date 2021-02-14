@@ -10,7 +10,7 @@ const useRedeem = (bank?: Bank) => {
 
   const handleRedeem = useCallback(() => {
     if (bank?.contract) handleTransactionReceipt(basisCash.exit(bank.contract), `Redeem ${bank.contract}`);
-  }, [bank?.contract, basisCash, handleTransactionReceipt]);
+  }, [bank, basisCash, handleTransactionReceipt]);
 
   return { onRedeem: handleRedeem };
 };

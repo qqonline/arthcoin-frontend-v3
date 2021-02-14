@@ -1,26 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withStyles, Theme } from '@material-ui/core/styles';
 import ArrowRight from '../../assets/img/ArrowRight.svg';
 import Button from '../../components/Button';
-import InfoIcon from '../../assets/img/InfoIcon.svg';
-import Tooltip from '@material-ui/core/Tooltip';
+
 import { Bank } from '../../basis-cash';
 import { useWallet } from 'use-wallet';
 import TokenSymbol from '../../components/TokenSymbol';
 
 const APY = require('./apy.json');
 
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#2A2827',
-    color: 'white',
-    fontWeight: 300,
-    fontSize: '13px',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-}))(Tooltip);
+
 interface AccountButtonProps {
   bank: Bank;
   // title: string;

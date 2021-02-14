@@ -15,7 +15,6 @@ import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
-import AddIcon from '@material-ui/icons/Add';
 
 interface ExchangeCardProps {
   action: string;

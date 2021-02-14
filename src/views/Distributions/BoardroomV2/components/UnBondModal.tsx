@@ -3,8 +3,7 @@ import ButtonTransperant from '../../../../components/Button/TransperantButton';
 import Button from '../../../../components/Button';
 import Modal from '../../../../components/NewModal/index';
 import ModalActions from '../../../../components/ModalActions';
-import ModalTitle from '../../../../components/ModalTitle';
-import TokenInput from '../../../../components/TokenInput';
+ import TokenInput from '../../../../components/TokenInput';
 
 import { getFullDisplayBalance } from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
