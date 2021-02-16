@@ -51,7 +51,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots>
               <PercentageContainer>
                 <PercentageTilte>
-                  <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seinorage Supply
+                  <BoldText>{boardroom.seionrageSupplyPercentage}% </BoldText>Seigniorage Supply
                   {props.toolTipTitle && (
                     <HtmlTooltip enterTouchDelay={0} title={<span>{props.toolTipTitle}</span>}>
                       <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-5" />

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Label from '../../../components/Label';
+import UniswapArrowIcon from '../../../assets/img/uniswapArrow.svg';
 import { TokenStat } from '../../../basis-cash/types';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
@@ -73,7 +73,15 @@ const HomeCard: React.FC<HomeCardProps> = ({
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
-          <LinkText>Buy {symbol} from Uniswap </LinkText>
+          <LinkText>
+            Buy {symbol} from Mahaswap
+            <img
+              src={UniswapArrowIcon}
+              alt="Mahaswap"
+              width="20px"
+              style={{ marginLeft: '5px' }}
+            />
+          </LinkText>
         </UniswapLink>
       </Card>
     </Wrapper>

@@ -59,7 +59,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
           <SnackBarParent>
             <SnackBarInnerContainer>
               {notificationCount && <NotificationCount>{notificationCount}</NotificationCount>}
-              Transcation
+              Transaction
               <img
                 src={CloseIcon}
                 width="24px"

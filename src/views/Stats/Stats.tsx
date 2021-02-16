@@ -25,7 +25,7 @@ import Box from '@material-ui/core/Box';
 import moment from 'moment';
 import Stat from './components/Stat';
 import PurchacseCard from './components/PurchaseCard';
-import ProgressCountdown from './components/ProgressCountdown';
+import Button from '../../components/Button/TransperantButton';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
@@ -243,7 +243,7 @@ const Home: React.FC = () => {
                     <CircularProgress
                       variant="determinate"
                       className={classes.bottom}
-                      size={190}
+                      size={130}
                       thickness={1}
                       value={100}
                     />
@@ -251,7 +251,7 @@ const Home: React.FC = () => {
                       variant="determinate"
                       value={percentage}
                       disableShrink
-                      size={190}
+                      size={130}
                       thickness={1}
                       className={classes.top}
                       classes={{
@@ -272,6 +272,11 @@ const Home: React.FC = () => {
                       <Countdown date={nextEpoch} renderer={countdownRenderer} />
                     </Box>
                   </Box>
+                </div>
+              </div>
+              <div className="dialog-class">
+                <div className="margin-top-30" style={{ width: '170px' }}>
+                  <Button text="Advance Epoch" />
                 </div>
               </div>
             </Card>
@@ -376,7 +381,7 @@ const Home: React.FC = () => {
                       <ChartIconColor color="#178A50" />
                       <div>
                         <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>70% (70,0000 ARTH-DAI)</ChartLabelTitleBold>
+                        <ChartLabelTitleBold>65% (65,0000 ARTH-DAI)</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                     <PieChartLables>
@@ -391,6 +396,13 @@ const Home: React.FC = () => {
                       <div>
                         <ChartLabelTitle>MAHA-ETH Uniswap LP</ChartLabelTitle>
                         <ChartLabelTitleBold>10% (10,000 MAHA-ETH)</ChartLabelTitleBold>
+                      </div>
+                    </PieChartLables>
+                    <PieChartLables>
+                      <ChartIconColor color="#88E0B4" />
+                      <div>
+                        <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
+                        <ChartLabelTitleBold>5% (5,000 ARTH)</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                   </div>
@@ -702,7 +714,7 @@ const StyledTitle = styled.div`
 `;
 const CurrenTimeTitle = styled.div`
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 32px;
   text-align: center;
   color: #ffffff;

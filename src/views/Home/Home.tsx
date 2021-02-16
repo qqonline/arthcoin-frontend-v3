@@ -499,15 +499,15 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className="col-12 col-sm-6">
-              <div className="footer-end">
+              <FooterEnd>
                 <StyledLink href="https://docs.arthcoin.com" target="_blank">
                   Arth GitBook
                 </StyledLink>
-                <span>POWERED BY</span>
-                <span>
-                  <img src={require('./images/mainlogo.svg')} alt="mahadao-logo" />
-                </span>
-              </div>
+                <div className="dialog-class">
+                  <span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>
+                  <img src={require('./images/mainlogo.svg')} alt="mahadao-logo" width="140px" />
+                </div>
+              </FooterEnd>
             </div>
           </div>
           <div id="footer-gradient"></div>
@@ -516,14 +516,29 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
+const FooterEnd = styled.div`
+  font-family: 'Syne', sans-serif;
+  text-align: center;
+  font-weight: 700;
+  float: right;
+  color: #ababab;
+  font-size: 18px;
+  padding-top: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
 const StyledLink = styled.a`
   font-weight: bold;
   text-decoration: none;
   font-size: 18px;
   line-height: 22px;
   color: #ffffff;
-  margin-right: 10px;
+  margin-right: 32px;
   cursor: pointer;
   color: #ffffff;
   opacity: 0.64;
@@ -531,6 +546,11 @@ const StyledLink = styled.a`
     opacity: 0.88;
     color: #ffffff;
     text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    margin-top: 0px;
   }
 `;
 const ModalText = styled.div`
