@@ -58,10 +58,11 @@ const configurations: { [env: string]: Configuration } = {
       'MATIC': ['0x7d764F7BcaAC4E6f994AB9B5E5b78fF8f4156d3C', 18],
       'RSR': ['0x7d764F7BcaAC4E6f994AB9B5E5b78fF8f4156d3C', 18],
 
-      'MAHA_ETH-UNI-LPv2': ['0x4f306Bc891F5C0bb12F47312C4F4e409806c7Ba0', 18],
-      'ARTHB_DAI-UNI-LPv2': ['0xDAD66B82C711a63065F29B095135b6F84CEBDd0B', 18],
-      'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
-    },
+      'MAHA_ETH-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTH_DAI-MLP-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+     },
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-15T14:00:00Z'),
@@ -341,4 +342,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-export default configurations["production"];
+export default configurations["staging"];
