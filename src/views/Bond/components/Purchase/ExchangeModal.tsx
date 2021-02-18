@@ -94,7 +94,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     return ((100 * (output - input)) / input).toFixed(2);
   }, [arthBAmount, targetPrice, decimals, val]);
 
-  const mahaStabilityFee = BigNumber.from(1); // useStabilityFee();
+  const mahaStabilityFee = BigNumber.from(0); // useStabilityFee();
 
   // const mahaStabilityFeeAmount = useMemo(
   //   () => arthBAmount.mul(BigNumber.from(mahaStabilityFee)).div(100),
