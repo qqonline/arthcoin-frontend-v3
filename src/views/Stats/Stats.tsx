@@ -13,18 +13,19 @@ import { OverviewData } from './types';
 import StatCard from './components/StatCard';
 import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
-import StastIcon from '../../assets/svg/Stats.svg';
+// import StastIcon from '../../assets/svg/Stats.svg';
 import PieChart from './components/PieChart';
 import useTreasuryAmount from '../../hooks/useTreasuryAmount';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import useFundAmount from '../../hooks/useFundAmount';
+import InfoIcon from '../../assets/img/ToolTipColored.svg';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import moment from 'moment';
 import Stat from './components/Stat';
 import PurchacseCard from './components/PurchaseCard';
-import ProgressCountdown from './components/ProgressCountdown';
+import Button from '../../components/Button/TransperantButton';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
 import useUniswapPrice from '../../hooks/useUniswapPrice';
 import useUniswapLiquidity from '../../hooks/useUniswapLiquidity';
@@ -32,7 +33,18 @@ import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTW
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import useNextEpochTargets from '../../hooks/useNextEpochTargets';
 import FAQCard from './components/FAQCard';
+import Tooltip from '@material-ui/core/Tooltip';
 import useMahaswapPrice from '../../hooks/useMahaswapPrice';
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: '#2A2827',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '13px',
+    borderRadius: '6px',
+    padding: '20px',
+  },
+}))(Tooltip);
 const FaqData = [
   {
     question: 'Do I need $MAHA to buy/redeem ARTH bonds?',
@@ -64,6 +76,10 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
       borderRadius: 2,
       minWidth: 220,
       margin: '0px 10px',
+      '@media (max-width: 768px)': {
+        minWidth: 190,
+        margin: '0px 5px',
+      },
     },
     colorPrimary: {
       backgroundColor: '#2A2827',
@@ -182,7 +198,7 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon={<img alt="stats" src={StastIcon} width="200px" />}
+        icon={<div style={{ width: '200px', height: '200px' }} />}
         subtitle="View information about the current ARTH protocol"
         title="Statistics"
         // secondParaTitle="Next Epoch"
@@ -228,7 +244,7 @@ const Home: React.FC = () => {
                     <CircularProgress
                       variant="determinate"
                       className={classes.bottom}
-                      size={190}
+                      size={130}
                       thickness={1}
                       value={100}
                     />
@@ -236,7 +252,7 @@ const Home: React.FC = () => {
                       variant="determinate"
                       value={percentage}
                       disableShrink
-                      size={190}
+                      size={130}
                       thickness={1}
                       className={classes.top}
                       classes={{
@@ -259,6 +275,11 @@ const Home: React.FC = () => {
                   </Box>
                 </div>
               </div>
+              <div className="dialog-class">
+                <div className="margin-top-30" style={{ width: '170px' }}>
+                  <Button text="Advance Epoch" />
+                </div>
+              </div>
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
@@ -272,7 +293,7 @@ const Home: React.FC = () => {
                 <LinearProgressDiv>
                   <TimeComponent>24 h</TimeComponent>
                   <ResponsiveLabelContainer>
-                    <LabelComponentLite>Low</LabelComponentLite>
+                    <LabelComponentLite noMargin>Low</LabelComponentLite>
                     <LabelComponentBold>$0.96</LabelComponentBold>
                   </ResponsiveLabelContainer>
                   <div style={{ position: 'relative' }}>
@@ -287,7 +308,7 @@ const Home: React.FC = () => {
                     </div>
                   </div>
                   <ResponsiveLabelContainer>
-                    <LabelComponentLite>High</LabelComponentLite>
+                    <LabelComponentLite noMargin>High</LabelComponentLite>
                     <LabelComponentBold>$1.6</LabelComponentBold>
                   </ResponsiveLabelContainer>
                 </LinearProgressDiv>
@@ -301,10 +322,16 @@ const Home: React.FC = () => {
                     price={
                       cashe12hrPrice ? `$${getDisplayBalance(cashe12hrPrice, 18, 2)}` : '-'
                     }
+                    priceToCompare12Twap={
+                      cashe12hrPrice ? parseFloat(getDisplayBalance(cashe12hrPrice, 18, 2)) : 0
+                    }
+                    priceToCompare1Twap={
+                      cash1hrPrice ? parseFloat(getDisplayBalance(cash1hrPrice, 18, 2)) : 0
+                    }
                     timeRemaining="00:23:22"
                     toolTipTitle="dwdmwkemfwefmwkefm"
                     percenTageIncreaseText="+0.15%"
-                    timeRemainingToolTip="fnenfioer"
+                    timeRemainingToolTip="Time  left for next 12 hr twap updation."
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
@@ -313,9 +340,15 @@ const Home: React.FC = () => {
                     isPurchase={false}
                     timeRemaining="00:23:22"
                     price={cash1hrPrice ? `$${getDisplayBalance(cash1hrPrice, 18, 2)}` : '-'}
+                    priceToCompare1Twap={
+                      cash1hrPrice ? parseFloat(getDisplayBalance(cash1hrPrice, 18, 2)) : 0
+                    }
+                    priceToCompare12Twap={
+                      cashe12hrPrice ? parseFloat(getDisplayBalance(cashe12hrPrice, 18, 2)) : 0
+                    }
                     toolTipTitle="dwdmwkemfwefmwkefm"
                     percenTageIncreaseText="+0.15%"
-                    timeRemainingToolTip="fnenfioer"
+                    timeRemainingToolTip="Time  left for next 1 hr twap updation."
                   />
                 </Grid>
               </Grid>
@@ -326,7 +359,22 @@ const Home: React.FC = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Card>
-                <TitleString>ARTH Seigniorage Distribution</TitleString>
+                <TitleString>
+                  ARTH Seigniorage Distribution
+                  <HtmlTooltip
+                    enterTouchDelay={0}
+                    title={
+                      <span>
+                        When the system is in expansion mode (12hr TWAP price above $1.05), new
+                        ARTH coins are minted as seigniorage and are added back into the
+                        circulation as a way of increasing the coin supply. What you see below
+                        is the seigniorage distribution for various pools.
+                      </span>
+                    }
+                  >
+                    <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
+                  </HtmlTooltip>
+                </TitleString>
                 <PieChartCard>
                   <PieChart />
                   <div className="margin-left-20">
@@ -334,7 +382,7 @@ const Home: React.FC = () => {
                       <ChartIconColor color="#178A50" />
                       <div>
                         <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>70% (70,0000 ARTH-DAI)</ChartLabelTitleBold>
+                        <ChartLabelTitleBold>65% (65,0000 ARTH-DAI)</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                     <PieChartLables>
@@ -351,6 +399,13 @@ const Home: React.FC = () => {
                         <ChartLabelTitleBold>10% (10,000 MAHA-ETH)</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
+                    <PieChartLables>
+                      <ChartIconColor color="#88E0B4" />
+                      <div>
+                        <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
+                        <ChartLabelTitleBold>5% (5,000 ARTH)</ChartLabelTitleBold>
+                      </div>
+                    </PieChartLables>
                   </div>
                 </PieChartCard>
               </Card>
@@ -361,14 +416,20 @@ const Home: React.FC = () => {
                   {
                     title: `${123} ARTHB`,
                     subTitle: 'Debt Available for Purchase',
+                    tooltipHtml:
+                      'The total number of ARTH Bonds available for purchase from the protocol at a 20% discount.',
                   },
                   {
                     title: '78,654 ARTH',
                     subTitle: 'Redeemable Debt',
+                    tooltipHtml:
+                      'The number of ARTH that can be redeemed depending on the number of ARTH Bonds available (Note: ARTH Bonds are always redeemed at a 1:1 ratio with ARTH tokens).',
                   },
                   {
                     title: '500 ARTH',
                     subTitle: 'Outstanding Debt',
+                    tooltipHtml:
+                      'The number of ARTH that can be redeemed depending on the number of ARTH Bonds available(Note: ARTH Bonds are always redeemed at a 1:1 ratio with ARTH tokens)',
                   },
                 ]}
               />
@@ -381,6 +442,8 @@ const Home: React.FC = () => {
                       {
                         title: '1%',
                         subTitle: 'Stability Fees',
+                        tooltipHtml:
+                          'This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO',
                       },
                     ]}
                   />
@@ -393,6 +456,8 @@ const Home: React.FC = () => {
                           ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH`
                           : '-',
                         subTitle: 'Ecosystem Fund',
+                        tooltipHtml:
+                          'When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development. ',
                       },
                     ]}
                   />
@@ -650,7 +715,7 @@ const StyledTitle = styled.div`
 `;
 const CurrenTimeTitle = styled.div`
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 32px;
   text-align: center;
   color: #ffffff;
@@ -699,7 +764,7 @@ const TimeComponent = styled.div`
   font-size: 12px;
   color: #ffffff;
   opacity: 0.6;
-  padding: 2px 7px;
+  padding: 2px 5px;
   margin: 0px 4px;
 `;
 const LabelComponentLite = styled.div`
@@ -711,6 +776,9 @@ const LabelComponentLite = styled.div`
   text-align: center;
   color: #ffffff;
   opacity: 0.6;
+  @media (max-width: 768px) {
+    margin-right: ${(props: { noMargin?: boolean }) => (props.noMargin ? '0px' : '5px')};
+  }
 `;
 const LabelComponentBold = styled.div`
   font-style: normal;

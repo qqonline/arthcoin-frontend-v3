@@ -136,6 +136,9 @@ const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     border-radius: 6px;
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StyledLink = styled(Link)`

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Label from '../../../components/Label';
+import UniswapArrowIcon from '../../../assets/img/uniswapArrow.svg';
 import { TokenStat } from '../../../basis-cash/types';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';

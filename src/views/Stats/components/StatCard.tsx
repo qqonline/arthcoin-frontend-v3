@@ -14,11 +14,12 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 interface StatProps {
-  statData: Array<{ title: string; subTitle: string }>;
+  statData: Array<{ title: string; subTitle: string, tooltipHtml: string, }>;
 }
 export interface stats {
   title: string;
   subTitle: string;
+  tooltipHtml?: string;
 }
 const StatCard: React.FC<StatProps> = ({ statData }) => {
   return (
@@ -29,9 +30,9 @@ const StatCard: React.FC<StatProps> = ({ statData }) => {
           <SubTitleContainer key={eachStat.title}>
             <SubTitle>
               {eachStat.subTitle}
-              <HtmlTooltip enterTouchDelay={0} title={<span>dqlkndlkqwndkq</span>}>
+              {eachStat.tooltipHtml && <HtmlTooltip enterTouchDelay={0} title={<span>{eachStat.tooltipHtml}</span>}>
                 <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
-              </HtmlTooltip>
+              </HtmlTooltip>}
             </SubTitle>
             <Title>{eachStat.title}</Title>
           </SubTitleContainer>

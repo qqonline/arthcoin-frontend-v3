@@ -342,4 +342,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-export default configurations["staging"];
+export default configurations["production"];

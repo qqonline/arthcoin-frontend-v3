@@ -16,6 +16,8 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
 }))(Tooltip);
 interface StatProps {
   timeRemaining?: string;
+  priceToCompare12Twap?: number;
+  priceToCompare1Twap?: number;
   timeRemainingToolTip?: string;
   title: string;
   price: string;
@@ -28,11 +30,85 @@ const PurchaseCard: React.FC<StatProps> = ({
   isPurchase,
   timeRemaining,
   price,
+  priceToCompare12Twap,
+  priceToCompare1Twap,
   percenTageIncreaseText,
   title,
   toolTipTitle,
   timeRemainingToolTip,
 }) => {
+  let buttonText = 'Purchase ARTHB at 20% Discount';
+  let buttonTopDesc = 'ARTH Bonds ($ARTHB) can be purchased at 20% discount';
+  let buttonBottomDesc = 'Enable until 12hr TWAP < $0.95 ';
+  let buttonDisabled = false;
+  if (isPurchase) {
+    if (priceToCompare12Twap < 0.95) {
+      buttonText = 'Purchase ARTHB at 20% Discount';
+      buttonTopDesc = 'ARTH Bonds ($ARTHB) can be purchased at 20% discount';
+      buttonBottomDesc = 'Enable until 12hr TWAP < $0.95';
+      buttonDisabled = false;
+    } else if (priceToCompare12Twap > 1.05) {
+      buttonText = 'Claim ARTH Distribution';
+      buttonDisabled = false;
+      buttonTopDesc =
+        'New $ARTH seigniorage is minted and distributed into the system if 12HR TWAP > $1.05';
+      buttonBottomDesc = 'Enable until 12hr TWAP > $1.05';
+    } else if (priceToCompare12Twap > 1.0) {
+      buttonText = 'Approve ARTH ';
+      buttonTopDesc = 'Bond issuance is now available';
+      buttonBottomDesc = '[Amount] of $ARTH seigniorage distributed';
+      buttonDisabled = false;
+    } else if (priceToCompare1Twap > 0.95 && priceToCompare1Twap < 1) {
+      buttonText = 'Approve ARTH ';
+      buttonTopDesc = 'Neither new $ARTH seigniorage is minted, nor can $ARTH be purchased';
+      buttonBottomDesc = '[Amount] of $ARTH seigniorage distributed';
+      buttonDisabled = true;
+    } else if (priceToCompare1Twap > 1) {
+      buttonText = 'Claim ARTH Distribution';
+      buttonTopDesc =
+        'New $ARTH seigniorage is minted and distributed into the system if 12HR TWAP > $1.05';
+      buttonBottomDesc = '[Amount] of $ARTH seigniorage distributed';
+      buttonDisabled = false;
+    } else if (priceToCompare1Twap < 1) {
+      buttonText = 'Claim ARTH Distribution';
+      buttonTopDesc =
+        'New $ARTH seigniorage is minted and distributed into the system if 12HR TWAP > $1.05';
+      buttonBottomDesc = '[Amount] of $ARTH seigniorage distributed';
+      buttonDisabled = false;
+    }
+  } else {
+    if (priceToCompare12Twap < 0.95) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = false;
+    } else if (priceToCompare12Twap > 1.05) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = true;
+    } else if (priceToCompare12Twap > 1.0) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = true;
+    } else if (priceToCompare1Twap > 0.95 && priceToCompare1Twap < 1) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = true;
+    } else if (priceToCompare1Twap > 1) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = false;
+    } else if (priceToCompare1Twap < 1) {
+      buttonText = 'Redeem Bond';
+      buttonTopDesc = 'Bond redemption avaialble 123.22 ARTHB available to redeem';
+      buttonBottomDesc = 'Enable until 1hr TWAP > $1.00 ';
+      buttonDisabled = true;
+    }
+  }
   return (
     <PurChaseCardPadding isPurchase={isPurchase}>
       <InfoContent>
@@ -53,9 +129,9 @@ const PurchaseCard: React.FC<StatProps> = ({
           </HtmlTooltip>
         </div>
       </InfoContent>
-      <StyledDesc>ARTH Bonds ($ARTHB) can be purchased at 20% discount</StyledDesc>
-      <Button text="Purchase ARTHB at 20% Discount" />
-      <ConditionText>{'Enable until 12hr TWAP < $0.95'}</ConditionText>
+      <StyledDesc>{buttonTopDesc}</StyledDesc>
+      <Button disabled={buttonDisabled} text={buttonText} />
+      <ConditionText>{buttonBottomDesc}</ConditionText>
     </PurChaseCardPadding>
   );
 };
