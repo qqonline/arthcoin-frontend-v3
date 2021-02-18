@@ -121,7 +121,7 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
               ) : !disabled ? (
                 balance.eq(0) && false ? (
                   <Button text={'No ARTHB Balance'} disabled={true} />
-                ) : false && approveStatus !== ApprovalState.APPROVED && !disabled ? (
+                ) : approveStatus !== ApprovalState.APPROVED && !disabled ? (
                   <Button
                     disabled={
                       disabled ||
