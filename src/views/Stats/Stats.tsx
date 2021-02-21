@@ -67,14 +67,10 @@ const Home: React.FC = () => {
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
-      basisCash.getCashStatFromMahaswap(),
+      basisCash.getCashStat(),
       basisCash.getBondStat(),
       basisCash.getShareStat(),
     ]);
-
-    if (Date.now() < config.bondLaunchesAt.getTime()) {
-      bond.priceInDAI = '-';
-    }
 
     setStats({ cash, bond, share });
   }, [basisCash, setStats]);
@@ -108,7 +104,7 @@ const Home: React.FC = () => {
             <EpochTimer />
           </Grid>
           <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
-            <PriceInformation />
+            <PriceInformation stat={cash} />
           </Grid>
         </Grid>
         <div className="margin-top-bottom-20">

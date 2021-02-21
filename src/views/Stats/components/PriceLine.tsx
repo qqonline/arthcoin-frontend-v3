@@ -7,7 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import React from 'react';
 import styled from 'styled-components';
 import useBasisCash from '../../../hooks/useBasisCash';
-import useMahaswapPrice from '../../../hooks/useMahaswapPrice';
+import { TokenStat } from '../../../basis-cash/types';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -32,21 +32,25 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 
-const PriceLine: React.FC = () => {
+interface IProps {
+  stat?: TokenStat
+}
+
+const PriceLine: React.FC<IProps> = (props) => {
   const basisCash = useBasisCash();
 
   const cashTargetPrice = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashTargetPrice)
-  const arthPrice = useMahaswapPrice(basisCash.DAI, basisCash.ARTH);
+  const arthPrice = props.stat?.priceInDAI
 
   return (
     <StatContainer>
       <div style={{ padding: '30px' }}>
         <StyledTitle>ARTH Price</StyledTitle>
-        <TitleBold>{arthPrice ? `$${arthPrice}` : '-'}</TitleBold>
-        <IncreasedText>+0.15%</IncreasedText>
+        <TitleBold>{arthPrice && arthPrice.gt(0) ? `$${getDisplayBalance(arthPrice)}` : '-'}</TitleBold>
+        {/* <IncreasedText>+0.15%</IncreasedText> */}
       </div>
-      <LinearProgressDiv>
-        <TimeComponent>24 h</TimeComponent>
+      {false && (<LinearProgressDiv>
+        <TimeComponent>24hr</TimeComponent>
         <ResponsiveLabelContainer>
           <LabelComponentLite noMargin>Low</LabelComponentLite>
           <LabelComponentBold>$0.96</LabelComponentBold>
@@ -66,7 +70,7 @@ const PriceLine: React.FC = () => {
           <LabelComponentLite noMargin>High</LabelComponentLite>
           <LabelComponentBold>$1.6</LabelComponentBold>
         </ResponsiveLabelContainer>
-      </LinearProgressDiv>
+      </LinearProgressDiv>)}
     </StatContainer>
   );
 };

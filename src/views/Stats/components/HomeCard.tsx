@@ -7,6 +7,7 @@ import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
 // import Card from '../../../components/InfoCard';
 import Spacer from '../../../components/Spacer';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface HomeCardProps {
   title: string;
@@ -49,15 +50,15 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </div>
             {stat ? (
               <StyledValue>
-                {(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}
+                {(stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`)}
               </StyledValue>
             ) : (
-              '-'
-            )}
+                '-'
+              )}
           </CardSection>
           <CardSection>
             <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
-            Liquidity
+              Liquidity
             </div>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
           </CardSection>

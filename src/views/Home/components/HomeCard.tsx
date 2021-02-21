@@ -6,6 +6,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface HomeCardProps {
   title: string;
@@ -32,10 +33,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
         <TokenSymbol symbol={symbol} />
         <CardSection>
           {stat ? (
-            <StyledValue>{(stat.priceInDAI !== '-' ? '$' : '') + stat.priceInDAI}</StyledValue>
+            <StyledValue>{stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}</StyledValue>
           ) : (
-            <ValueSkeleton />
-          )}
+              <ValueSkeleton />
+            )}
           <Label text="Current Price" color={color} />
         </CardSection>
 

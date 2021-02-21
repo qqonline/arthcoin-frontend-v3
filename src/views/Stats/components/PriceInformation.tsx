@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TokenStat } from '../../../basis-cash/types';
 import PriceLine from './PriceLine';
 import TWAPInformation from './TWAPInformation';
 
+interface IProps {
+  stat?: TokenStat;
+}
 
-const PriceInformation: React.FC = () => {
+
+const PriceInformation: React.FC<IProps> = (props) => {
   return (
     <CardTyep2>
-      <PriceLine />
+      <PriceLine stat={props.stat} />
       <div className="border-bottom width-100" />
-      <TWAPInformation />
+      <TWAPInformation stat={props.stat} />
     </CardTyep2>
   );
 };

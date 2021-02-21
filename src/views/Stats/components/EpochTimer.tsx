@@ -1,4 +1,4 @@
-import React, { useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import moment from 'moment';
 import Button from '../../../components/Button/TransperantButton';
+import useAdvanceEpoch from '../../../hooks/useAdvanceEpoch';
 
 const useStylesFacebook = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,7 +47,7 @@ const EpochTimer: React.FC = () => {
     Date.now() >= nextEpoch.getTime()
       ? 100
       : ((Date.now() - prevEpoch.getTime()) / (nextEpoch.getTime() - prevEpoch.getTime())) *
-        100;
+      100;
 
   const countdownRenderer = (countdownProps: CountdownRenderProps) => {
     const { days, hours, minutes, seconds } = countdownProps;
@@ -59,6 +60,8 @@ const EpochTimer: React.FC = () => {
       </CurrenTimeTitle>
     );
   };
+
+  const advanceEpoch = useAdvanceEpoch()
 
   return (
     <Card>
@@ -110,7 +113,6 @@ const EpochTimer: React.FC = () => {
               alignItems="center"
               justifyContent="center"
             >
-              {/* <CurrenTimeTitle>{NextDeadline}</CurrenTimeTitle> */}
               <Countdown date={nextEpoch} renderer={countdownRenderer} />
             </Box>
           </Box>
@@ -118,7 +120,7 @@ const EpochTimer: React.FC = () => {
       </div>
       <div className="dialog-class">
         <div className="margin-top-30" style={{ width: '170px' }}>
-          <Button text="Advance Epoch" />
+          <Button onClick={advanceEpoch} text="Advance Epoch" />
         </div>
       </div>
     </Card>

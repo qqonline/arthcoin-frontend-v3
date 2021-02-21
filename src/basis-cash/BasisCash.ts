@@ -1,17 +1,14 @@
-import { Fetcher as MFetcher, Route as MRoute, Token as MToken } from 'mahaswap-sdk';
-import { Fetcher, Route, Token } from '@uniswap/sdk';
-import { Boardrooms, BoardroomsV1, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
+import { Boardrooms, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
 import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime, VaultInfo } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
 import ERC20 from './ERC20';
-import { getDisplayBalance } from '../utils/formatBalance';
 import { getDefaultProvider } from '../utils/provider';
-import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 import Multicall from './Mulitcall';
-import  ABIS from './deployments/abi';
+import UniswapPair from './UniswapPair';
+import ABIS from './deployments/abi';
 
 /**
  * An API module of ARTH contracts.
@@ -26,9 +23,8 @@ export class BasisCash {
   externalTokens: { [name: string]: ERC20 };
   boardroomVersionOfUser?: string;
 
-  bacDai: Contract;
-  arthDai: Contract;
-  mahaEth: Contract;
+  arthDai: UniswapPair;
+  mahaEth: UniswapPair;
 
   DAI: ERC20;
   ARTH: ERC20;
@@ -61,16 +57,16 @@ export class BasisCash {
 
     // Uniswap V2 Pair
 
-    this.arthDai = new Contract(
+    this.arthDai = new UniswapPair(
       deployments.ArthDaiLP.address,
-      IUniswapV2PairABI,
       provider,
+      'ARTH-DAI-LP'
     );
 
-    this.mahaEth = new Contract(
+    this.mahaEth = new UniswapPair(
       deployments.MahaEthLP.address,
-      IUniswapV2PairABI,
       provider,
+      'MAHA-ETH'
     );
 
     this.config = cfg;
@@ -89,11 +85,11 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, ...Object.values(this.externalTokens)];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, this.arthDai, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
-    this.arthDai = this.arthDai.connect(this.signer);
+
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
     this.fetchBoardroomVersionOfUser()
       .then((version) => (this.boardroomVersionOfUser = version))
@@ -239,19 +235,10 @@ export class BasisCash {
    * @returns ARTH (ARTH) stats from Uniswap.
    * It may differ from the ARTH price used on Treasury (which is calculated in TWAP)
    */
-  async getCashStatFromUniswap(): Promise<TokenStat> {
-    const supply = await this.ARTH.displayedTotalSupply();
+  async getCashStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTH),
-      totalSupply: supply,
-    };
-  }
-
-  async getCashStatFromMahaswap(): Promise<TokenStat> {
-    const supply = await this.ARTH.displayedTotalSupply();
-    return {
-      priceInDAI: await this.getTokenPriceFromMahaswap(this.ARTH),
-      totalSupply: supply,
+      priceInDAI: await this.getTokenPriceFromPair(this.arthDai),
+      totalSupply: await this.ARTH.displayedTotalSupply(),
     };
   }
 
@@ -278,7 +265,7 @@ export class BasisCash {
 
     const totalSupply = await this.ARTH.displayedTotalSupply();
     return {
-      priceInDAI: getDisplayBalance(cashPriceTWAP),
+      priceInDAI: cashPriceTWAP,
       totalSupply,
     };
   }
@@ -306,52 +293,26 @@ export class BasisCash {
 
   async getBondStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTHB),
+      priceInDAI: BigNumber.from(0), // await this.getTokenPriceFromUniswap(this.ARTHB),
       totalSupply: await this.ARTHB.displayedTotalSupply(),
     };
   }
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromCoingecko(this.MAHA),
+      priceInDAI: BigNumber.from(0), // await this.getTokenPriceFromCoingecko(this.MAHA),
       totalSupply: '783601', // await this.MAHA.displayedTotalSupply(),
     };
   }
 
-  async getTokenPriceFromUniswap(tokenContract: ERC20): Promise<string> {
+  async getTokenPriceFromPair(pair: UniswapPair): Promise<BigNumber> {
     await this.provider.ready;
 
-    const { chainId } = this.config;
-    const { DAI } = this.config.externalTokens;
+    const [r0, r1] = await pair.reserves()
 
-    const dai = new Token(chainId, DAI[0], 18);
-    const token = new Token(chainId, tokenContract.address, 18);
-
-    try {
-      const daiToToken = await Fetcher.fetchPairData(dai, token, this.provider);
-      const priceInDAI = new Route([daiToToken], token);
-      return priceInDAI.midPrice.toSignificant(3);
-    } catch (err) {
-      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
-    }
-  }
-
-  async getTokenPriceFromMahaswap(tokenContract: ERC20): Promise<string> {
-    await this.provider.ready;
-
-    const { chainId } = this.config;
-    const { DAI } = this.config.externalTokens;
-
-    const dai = new MToken(chainId, DAI[0], 18);
-    const token = new MToken(chainId, tokenContract.address, 18);
-
-    try {
-      const daiToToken = await MFetcher.fetchPairData(dai, token, this.provider);
-      const priceInDAI = new MRoute([daiToToken], token);
-      return priceInDAI.midPrice.toSignificant(3);
-    } catch (err) {
-      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
-    }
+    const decimals = BigNumber.from(10).pow(18);
+    console.log('sdf', r0.mul(decimals).div(r1))
+    return r0.mul(decimals).div(r1)
   }
 
   async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<string> {

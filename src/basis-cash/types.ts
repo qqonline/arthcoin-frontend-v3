@@ -54,7 +54,7 @@ export interface Bank extends BankInfo {
 }
 
 export type TokenStat = {
-  priceInDAI: string;
+  priceInDAI: BigNumber;
   totalSupply: string;
 };
 

@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
 import { TokenStat } from '../basis-cash/types';
-import config from '../config';
 
 const useCashStats = () => {
   const [stat, setStat] = useState<TokenStat>();
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-    setStat(await basisCash.getCashStatFromUniswap());
+    setStat(await basisCash.getCashStat());
   }, [basisCash]);
 
   useEffect(() => {

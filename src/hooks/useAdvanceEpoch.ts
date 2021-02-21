@@ -1,6 +1,5 @@
-import { BigNumber, ethers } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { useHasPendingApproval, useTransactionAdder } from '../state/transactions/hooks';
+import { useCallback } from 'react';
+import { useTransactionAdder } from '../state/transactions/hooks';
 import useBasisCash from './useBasisCash'
 
 
@@ -12,11 +11,10 @@ function useAdvanceEpoch()  {
 
   const approve = useCallback(async (): Promise<void> => {
     const treasury = basisCash.contracts.Treasury
-
+    console.log(await treasury.checkOperator());
     const response = await treasury.allocateSeigniorage();
     addTransaction(response, { summary: `Advancing Epoch` });
   }, [addTransaction, basisCash]);
-
 
   return approve;
 }
