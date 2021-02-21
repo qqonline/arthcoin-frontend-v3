@@ -11,6 +11,7 @@ import { getDefaultProvider } from '../utils/provider';
 import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 import Multicall from './Mulitcall';
+import  ABIS from './deployments/abi';
 
 /**
  * An API module of ARTH contracts.
@@ -33,7 +34,6 @@ export class BasisCash {
   ARTH: ERC20;
   MAHA: ERC20;
   ARTHB: ERC20;
-  ARTHDAI_UNIV2: ERC20;
 
   multicall: Multicall
 
@@ -45,7 +45,7 @@ export class BasisCash {
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue
-      this.contracts[name] = new Contract(deployment.address, deployment.abi, provider);
+      this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
     this.externalTokens = {};
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
@@ -75,6 +75,8 @@ export class BasisCash {
 
     this.config = cfg;
     this.provider = provider;
+
+    console.log(this)
   }
 
   /**
@@ -435,12 +437,11 @@ export class BasisCash {
   }
 
   boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    // if (version === 'v2') {
-    //   if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV2;
-    //   if (kind === 'arthMlpLiquidity') return this.contracts.ArthMlpLiquidityBoardroomV2;
-    //   if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
-    //   return this.contracts.ArthBoardroomV2;
-    // }
+    if (version === 'v2') {
+      if (kind === 'arth') return this.contracts.VaultArth;
+      if (kind === 'arthMlpLiquidity') return this.contracts.VaultArthMlp;
+      return this.contracts.VaultMaha;
+    }
 
     if (kind === 'arthUniLiquidity') return this.contracts.ArthLiquidityBoardroomV1;
     if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV1;

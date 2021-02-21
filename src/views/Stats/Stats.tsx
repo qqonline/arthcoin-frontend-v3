@@ -381,29 +381,22 @@ const Home: React.FC = () => {
                     <PieChartLables>
                       <ChartIconColor color="#178A50" />
                       <div>
-                        <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>65% (65,0000 ARTH-DAI)</ChartLabelTitleBold>
+                        <ChartLabelTitle>ARTH-DAI MahaSwap LP</ChartLabelTitle>
+                        <ChartLabelTitleBold>70% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                     <PieChartLables>
                       <ChartIconColor color="#20C974" />
                       <div>
                         <ChartLabelTitle>ARTH</ChartLabelTitle>
-                        <ChartLabelTitleBold>20% (20,000 ARTH)</ChartLabelTitleBold>
+                        <ChartLabelTitleBold>20% {/* (20,000 ARTH) */}</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                     <PieChartLables>
                       <ChartIconColor color="#C4F7DD" />
                       <div>
-                        <ChartLabelTitle>MAHA-ETH Uniswap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>10% (10,000 MAHA-ETH)</ChartLabelTitleBold>
-                      </div>
-                    </PieChartLables>
-                    <PieChartLables>
-                      <ChartIconColor color="#88E0B4" />
-                      <div>
-                        <ChartLabelTitle>ARTH-DAI Uniswap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>5% (5,000 ARTH)</ChartLabelTitleBold>
+                        <ChartLabelTitle>MAHA</ChartLabelTitle>
+                        <ChartLabelTitleBold>10% {/* (10,000 MAHA) */}</ChartLabelTitleBold>
                       </div>
                     </PieChartLables>
                   </div>

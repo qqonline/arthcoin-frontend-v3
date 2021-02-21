@@ -17,7 +17,9 @@ export type Configuration = {
   gasLimitMultiplier: number;
 };
 
-export type Boardrooms = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
+export type BoardroomsV1 = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
+export type BoardroomsV2 = 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
+export type Boardrooms = BoardroomsV1 | BoardroomsV2
 
 export type EthereumConfig = {
   testing: boolean,

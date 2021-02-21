@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
 const data = [
-  { name: 'MAHA-ETH Uniswap LP', value: 10 },
+  { name: 'MAHA', value: 10 },
   { name: 'ARTH', value: 20 },
-  { name: 'ARTH-DAI Uniswap LP', value: 65 },
-  { name: 'ARTH-DAI Uniswap LP', value: 5 },
+  { name: 'ARTH-DAI Mahaswap LP', value: 70 }
 ];
 const COLORS = ['#C4F7DD', '#20C974', '#178A50', '#88E0B4'];
 export default class Example extends PureComponent {
