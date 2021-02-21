@@ -14,6 +14,7 @@ const Banks: React.FC = ({ children }) => {
 
     for (const bankInfo of Object.values(bankDefinitions)) {
       if (!bankInfo.networks.includes(basisCash.config.chainId)) continue
+      if (!config.deployments[bankInfo.contract]) return
 
       if (bankInfo.finished) {
         // if (!basisCash.isUnlocked) continue;
@@ -26,6 +27,7 @@ const Banks: React.FC = ({ children }) => {
         //   continue;
         // }
       }
+
 
       banks.push({
         ...bankInfo,

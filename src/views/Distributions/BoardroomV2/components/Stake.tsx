@@ -22,6 +22,13 @@ import ProgressCountdown from './ProgressCountdown';
 import UnbondModal from './UnBondModal';
 import useUnbondFromVault from '../../../../hooks/useUnbondFromVault';
 
+
+interface ImageConTainerProps {
+  marginLeft: number;
+  zIndex: number;
+}
+
+
 const Stake = ({ vault }: { vault: VaultInfo }) => {
   const basisCash = useBasisCash();
 
@@ -29,16 +36,25 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     vault.depositTokenName === 'MAHA'
       ? basisCash.MAHA
       : vault.depositTokenName === 'ARTH'
-      ? basisCash.ARTH
-      : basisCash.externalTokens[vault.depositTokenName];
+        ? basisCash.ARTH
+        : vault.depositTokenName === 'ARTH_DAI-MLP-LPv1'
+          ? basisCash.arthDai
+          : basisCash.externalTokens[vault.depositTokenName];
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
     basisCash.getBoardroomVault(vault.kind)?.address,
   );
 
-  const tokenBalance = useTokenBalance(stakingToken);
+  const logos = [];
+  if (vault.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
+  else if (vault.depositTokenName === 'ARTH_DAI-MLP-LPv1') logos.push('ARTH', 'DAI');
+  else if (vault.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
+  else if (vault.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');
+  else logos.push(stakingToken.symbol);
 
+
+  const tokenBalance = useTokenBalance(stakingToken);
   const stakedBalance = useStakedBalanceOnVault(vault.kind);
 
   const { onBond } = useStakeToVault(vault);
@@ -80,9 +96,13 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
         <StyledCardContentInner>
           <StyleLabel>{`${vault.depositTokenName} Deposited`} </StyleLabel>
           <StyledCardHeader>
-            <CardIcon>
-              <TokenSymbol symbol={vault.depositTokenName} />
-            </CardIcon>
+            <StyledCardIcon>
+              {logos && logos.length > 0 && (
+                <LogoContainer>
+                  {logos.map((l) => <TokenSymbol symbol={l} size={54} />)}
+                </LogoContainer>
+              )}
+            </StyledCardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
               {approveStatus === ApprovalState.APPROVED && (
@@ -109,26 +129,24 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               />
             </>
           ) : (
-            <StyledDesc>
-              You can now deposit your tokens to start earning inflationary rewards.
-            </StyledDesc>
-          )}
+              <StyledDesc>
+                You can now deposit your tokens to start earning inflationary rewards.
+              </StyledDesc>
+            )}
           {unbondedAmount.gt(0) && (
             <>
               <ProgressCountdown
                 base={depositDate}
                 deadline={endDate}
-                description={`You have requested to withdraw ${getDisplayBalance(unbondedAmount, 18)} ${
-                  vault.depositTokenName
-                } which will be made available in`}
+                description={`You have requested to withdraw ${getDisplayBalance(unbondedAmount, 18)} ${vault.depositTokenName
+                  } which will be made available in`}
               />
               <br />
               <Button
                 onClick={onWithdraw}
                 disabled={endDate.getTime() > Date.now()}
-                text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${
-                  vault.depositTokenName
-                }`}
+                text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${vault.depositTokenName
+                  }`}
               />
             </>
           )}
@@ -137,6 +155,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     </Card>
   );
 };
+
 const StyleLabel = styled.div`
   font-weight: 600;
   font-size: 16px;
@@ -146,6 +165,7 @@ const StyleLabel = styled.div`
   color: #ffffff;
   opacity: 0.64;
 `;
+
 const StyledValue = styled.div`
   color: rgba(255, 255, 255, 0.88);
   font-size: 24px;
@@ -191,6 +211,24 @@ const StyledDesc = styled.span`
   font-weight: 400;
   font-size: 12px;
   text-align: center;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+
+const StyledCardIcon = styled.div`
+  background-color: ${(props) => props.theme.color.grey[900]};
+  // width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ${(props) => props.theme.spacing[2]}px;
 `;
 
 export default Stake;

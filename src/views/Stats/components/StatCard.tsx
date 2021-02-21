@@ -26,8 +26,8 @@ const StatCard: React.FC<StatProps> = ({ statData }) => {
     <Card>
       {statData &&
         statData.length > 0 &&
-        statData.map((eachStat: stats) => (
-          <SubTitleContainer key={eachStat.title}>
+        statData.map((eachStat: stats, index) => (
+          <SubTitleContainer key={index}>
             <SubTitle>
               {eachStat.subTitle}
               {eachStat.tooltipHtml && <HtmlTooltip enterTouchDelay={0} title={<span>{eachStat.tooltipHtml}</span>}>
@@ -49,6 +49,10 @@ const Card = styled.div`
 `;
 const SubTitleContainer = styled.div`
   margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0
+  }
 `;
 const SubTitle = styled.div`
   font-style: normal;

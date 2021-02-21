@@ -6,7 +6,6 @@ import ABI from './deployments/abi/IUniswapV2Pair.json'
 
 class UniswapPair extends ERC20 {
   constructor(address: string, provider: Signer | Provider, symbol: string) {
-    console.log('abi', ABI)
     super(address, provider, symbol, 18)
     this.contract = new Contract(address, ABI, provider);
   }

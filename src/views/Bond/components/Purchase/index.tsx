@@ -65,6 +65,7 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
 
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
   const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+
   const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
@@ -152,8 +153,8 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       diaApproveStatus === ApprovalState.PENDING
                         ? 'Approving'
                         : diaApproveStatus === ApprovalState.APPROVED
-                        ? 'DAI Approved'
-                        : 'Approve DAI'
+                          ? 'DAI Approved'
+                          : 'Approve DAI'
                     }
                   />
 
@@ -170,18 +171,18 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       arthApproveStatus === ApprovalState.PENDING
                         ? 'Approving'
                         : arthApproveStatus === ApprovalState.APPROVED
-                        ? 'ARTH Approved'
-                        : 'Approve ARTH'
+                          ? 'ARTH Approved'
+                          : 'Approve ARTH'
                     }
                   />
                 </>
               ) : (
-                <Button
-                  text={disabledDescription || action}
-                  onClick={() => toggleModal(true)}
-                  disabled={disabled}
-                />
-              )}
+                      <Button
+                        text={disabledDescription || action}
+                        onClick={() => toggleModal(true)}
+                        disabled={disabled}
+                      />
+                    )}
             </StyledCardActions>
           }
           {/* <StyledCardActions>

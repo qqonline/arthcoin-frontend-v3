@@ -51,7 +51,7 @@ export class BasisCash {
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    this.DAI = new ERC20(externalTokens['DAI'][0], provider, 'DAI');
+    this.DAI = new ERC20(deployments.DAI.address, provider, 'DAI');
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
 
@@ -246,14 +246,14 @@ export class BasisCash {
    * @returns Estimated ARTH (ARTH) price data,
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
    */
-  async getCashStatInEstimatedTWAP(): Promise<TokenStat> {
-    const { SeigniorageOracle } = this.contracts;
+  async getCashPriceInEstimatedTWAP(): Promise<BigNumber> {
+    const { TWAP12hrOracle } = this.contracts;
 
     // estimate current TWAP price
     const cumulativePrice: BigNumber = await this.arthDai.price0CumulativeLast();
-    const cumulativePriceLast = await SeigniorageOracle.price0CumulativeLast();
+    const cumulativePriceLast = await TWAP12hrOracle.price0CumulativeLast();
 
-    const elapsedSec = Math.floor(Date.now() / 1000 - (await SeigniorageOracle.blockTimestampLast()));
+    const elapsedSec = Math.floor(Date.now() / 1000 - (await TWAP12hrOracle.blockTimestampLast()));
 
     const denominator112 = BigNumber.from(2).pow(112);
     const denominator1e18 = BigNumber.from(10).pow(18);
@@ -263,23 +263,13 @@ export class BasisCash {
       .div(elapsedSec)
       .div(denominator112);
 
-    const totalSupply = await this.ARTH.displayedTotalSupply();
-    return {
-      priceInDAI: cashPriceTWAP,
-      totalSupply,
-    };
+    return cashPriceTWAP
   }
 
   async getTargetPrice(): Promise<BigNumber> {
     const { GMUOracle } = this.contracts;
     return GMUOracle.getPrice();
   }
-
-  async getStabilityFees(): Promise<BigNumber> {
-    const { Treasury } = this.contracts;
-    return Treasury.stabilityFee()
-  }
-
 
   async getCashPriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
@@ -307,11 +297,8 @@ export class BasisCash {
 
   async getTokenPriceFromPair(pair: UniswapPair): Promise<BigNumber> {
     await this.provider.ready;
-
     const [r0, r1] = await pair.reserves()
-
     const decimals = BigNumber.from(10).pow(18);
-    console.log('sdf', r0.mul(decimals).div(r1))
     return r0.mul(decimals).div(r1)
   }
 

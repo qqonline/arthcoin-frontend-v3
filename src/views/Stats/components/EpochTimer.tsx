@@ -8,6 +8,10 @@ import Box from '@material-ui/core/Box';
 import moment from 'moment';
 import Button from '../../../components/Button/TransperantButton';
 import useAdvanceEpoch from '../../../hooks/useAdvanceEpoch';
+import { useWallet } from 'use-wallet';
+import useBasisCash from '../../../hooks/useBasisCash';
+import useCashPriceInEstimatedTWAP from '../../../hooks/useCashPriceInEstimatedTWAP';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 const useStylesFacebook = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +36,10 @@ const useStylesFacebook = makeStyles((theme: Theme) =>
 const EpochTimer: React.FC = () => {
   const classes = useStylesFacebook();
   const { prevAllocation, nextAllocation, currentEpoch } = useTreasuryAllocationTimes();
+  const { account, connect } = useWallet();
+  const basisCash = useBasisCash();
+
+
 
   const prevEpoch = useMemo(
     () =>
@@ -63,6 +71,8 @@ const EpochTimer: React.FC = () => {
 
   const advanceEpoch = useAdvanceEpoch()
 
+  const estimatedPrice = useCashPriceInEstimatedTWAP()
+
   return (
     <Card>
       <div
@@ -73,11 +83,9 @@ const EpochTimer: React.FC = () => {
         <CurrentEpoch>{`Current Epoch: ${currentEpoch.toFixed(0)}`}</CurrentEpoch>
       </div>
       <Desc>
-        Based on the 1hr TWAP price, the protocol will not do anything as price is
+        The 12hr TWAP will get updated to ${getDisplayBalance(estimatedPrice)}.
+        Based on this price, the protocol will not do anything as price is
         within the safe range.
-      </Desc>
-      <Desc>
-        Note that the 12hr TWAP is used to decide if the supply expands or contracts.
       </Desc>
       <LearnMore href="https://docs.arthcoin.com/arth-201/dynamic-epochs" target="">
         Learn more about Epoch
@@ -95,7 +103,6 @@ const EpochTimer: React.FC = () => {
             <CircularProgress
               variant="determinate"
               value={percentage}
-              disableShrink
               size={130}
               thickness={1}
               className={classes.top}
@@ -120,7 +127,13 @@ const EpochTimer: React.FC = () => {
       </div>
       <div className="dialog-class">
         <div className="margin-top-30" style={{ width: '170px' }}>
-          <Button onClick={advanceEpoch} text="Advance Epoch" />
+          {!account ? (
+            <Button onClick={() => connect('injected')} size="sm" text="Connect Wallet" />
+          ) : (
+              <Button onClick={advanceEpoch} disabled={percentage < 100}>
+                Advance Epoch
+              </Button>
+            )}
         </div>
       </div>
     </Card>
@@ -137,6 +150,7 @@ const Desc = styled.div`
   opacity: 0.64;
   margin-bottom: 5px;
 `;
+
 const CurrentEpoch = styled.div`
   background: #423b38;
   border-radius: 4px;

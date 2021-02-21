@@ -9,7 +9,6 @@ const useStakedBalanceOnBoardroom = (kind: Boardrooms, version: BoardroomVersion
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    console.log('fuck', await basisCash.getStakedSharesOnBoardroom(kind, version))
     setBalance(await basisCash.getStakedSharesOnBoardroom(kind, version));
   }, [basisCash, kind, version]);
 

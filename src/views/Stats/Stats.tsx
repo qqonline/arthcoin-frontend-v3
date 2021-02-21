@@ -1,39 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Theme, withStyles } from '@material-ui/core/styles';
-import styled from 'styled-components';
-import Page from '../../components/Page';
-import PageHeader from '../../components/PageHeader';
-import { commify } from 'ethers/lib/utils';
-import Container from '../../components/Container';
-import HomeCard from './components/HomeCard';
-import { OverviewData } from './types';
-import StatCard from './components/StatCard';
-import useBasisCash from '../../hooks/useBasisCash';
-import config from '../../config';
-// import StastIcon from '../../assets/svg/Stats.svg';
-import DistributonSection from './components/DistributonSection';
-import PriceInformation from './components/PriceInformation';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import useFundAmount from '../../hooks/useFundAmount';
-import InfoIcon from '../../assets/img/ToolTipColored.svg';
-import EpochTimer from './components/EpochTimer';
-import FAQCard from './components/FAQCard';
-import Tooltip from '@material-ui/core/Tooltip';
-import { useSelector } from 'react-redux';
 import { AppState } from '../../state';
 import { BigNumber } from 'ethers';
+import { commify } from 'ethers/lib/utils';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import { OverviewData } from './types';
+import { useSelector } from 'react-redux';
+import Container from '../../components/Container';
+import DistributonSection from './components/DistributonSection';
+import EpochTimer from './components/EpochTimer';
+import FAQCard from './components/FAQCard';
+import Grid from '@material-ui/core/Grid';
+import HomeCard from './components/HomeCard';
+import Page from '../../components/Page';
+import PageHeader from '../../components/PageHeader';
+import PriceInformation from './components/PriceInformation';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import StatCard from './components/StatCard';
+import styled from 'styled-components';
+import useBasisCash from '../../hooks/useBasisCash';
+import useFundAmount from '../../hooks/useFundAmount';
 
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#2A2827',
-    color: 'white',
-    fontWeight: 300,
-    fontSize: '13px',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-}))(Tooltip);
 
 const FaqData = [
   {
@@ -83,13 +68,14 @@ const Home: React.FC = () => {
 
   const accumulatedSeigniorage = useSelector<AppState, BigNumber>(s => s.treasury.coreState.accumulatedSeigniorage)
   const cashToBondConversionLimit = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashToBondConversionLimit)
-  const price1hr = useSelector<AppState, BigNumber>(s => s.treasury.get1hrTWAPOraclePrice)
+  const bondCirculatingSupply = useSelector<AppState, BigNumber>(s => s.treasury.bondCirculatingSupply)
 
   const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
   const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   const ecosystemFund = useFundAmount('ecosystem');
+  const rainyDayFund = useFundAmount('ecosystem');
 
   return (
     <Page>
@@ -116,36 +102,38 @@ const Home: React.FC = () => {
               <StatCard
                 statData={[
                   {
-                    title: `${getDisplayBalance(cashToBondConversionLimit)} ARTHB`,
+                    title: `${getDisplayBalance(cashToBondConversionLimit)} ARTH`,
                     subTitle: 'Debt Available for Purchase',
                     tooltipHtml:
-                      'The total number of ARTH Bonds available for purchase from the protocol at a 20% discount.',
+                      'The amount of debt issued by the protocol that is available for purchase.',
                   },
                   {
                     title: `${getDisplayBalance(accumulatedSeigniorage)} ARTH`,
                     subTitle: 'Redeemable Debt',
                     tooltipHtml:
-                      'The number of ARTH that can be redeemed depending on the number of ARTH Bonds available (Note: ARTH Bonds are always redeemed at a 1:1 ratio with ARTH tokens).',
+                      'The amount of debt that can currently be paid off by the protocol. This is redeemable by ARTHB holders at a 1:1 ratio.',
                   },
                   {
-                    title: '500 ARTHB',
+                    title: `${getDisplayBalance(bondCirculatingSupply)} ARTHB`,
                     subTitle: 'Outstanding Debt',
                     tooltipHtml:
-                      'The number of ARTH that can be redeemed depending on the number of ARTH Bonds available(Note: ARTH Bonds are always redeemed at a 1:1 ratio with ARTH tokens)',
+                      'The amount of debt that the protocol has to pay off.',
                   },
                 ]}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              <Grid container spacing={4}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                   <StatCard
                     statData={[
                       {
-                        title: '1%',
-                        subTitle: 'Stability Fees',
+                        title: rainyDayFund
+                          ? `${commify(getDisplayBalance(rainyDayFund, 18, 0))} ARTH`
+                          : '-',
+                        subTitle: 'Rainy Day Fund',
                         tooltipHtml:
-                          'This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO',
+                          'A fund that\'ll be used during a black friday event. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the rainy day fund. ',
                       },
                     ]}
                   />
@@ -159,7 +147,7 @@ const Home: React.FC = () => {
                           : '-',
                         subTitle: 'Ecosystem Fund',
                         tooltipHtml:
-                          'When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development. ',
+                          'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
                       },
                     ]}
                   />
@@ -202,122 +190,6 @@ const Home: React.FC = () => {
             />
           </Grid>
         </Grid>
-        {/* <StyledHeader>
-          <ProgressCountdown
-            base={prevEpoch}
-            deadline={nextEpoch}
-            description="Next Epoch in"
-            toolTipTitle="Epoch refers to a unit of time interval that the ARTH protocol uses to decide when to make changes to the system. The current starting epoch is set to 12 hours. However, the epoch time is subject to change in the future."
-            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
-          />
-          <Stat
-            title={currentEpoch.toFixed(0)}
-            description="Number of epochs elapsed"
-            toolTipTitle="This refers to the number of epochs that have elapsed."
-            toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
-          />
-          <Stat
-            title={'0 %'}
-            description="Stability Fees"
-            toolTipTitle="This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO"
-            toolTipLink="https://docs.arthcoin.com/arth-201/how-does-arth-mitigate-against-stability-risk/stability-fees-in-maha"
-          />
-          {/* <Stat
-            title={`$${arthLiquidity}`}
-            description="ARTH Liquidity"
-            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
-          />
-        </StyledHeader>
-        <StyledHeader>
-          <Stat
-            title={cash1hrPrice ? `$${getDisplayBalance(cash1hrPrice, 18, 2)}` : '-'}
-            description="ARTH Price (1hr TWAP)"
-            toolTipTitle="TWAP means time weighted average price. Thus, the 1 hr TWAP refers to the 1 hr average price of ARTH. Note that the 1hr TWAP of ARTH is updated every hour"
-          />
-          <Stat
-            title={cashe12hrPrice ? `$${getDisplayBalance(cashe12hrPrice, 18, 2)}` : '-'}
-            description="ARTH Price (12hr TWAP)"
-            toolTipTitle="TWAP means time weighted average price. Thus, the 12-hr TWAP refers to the 12 hr average price of ARTH. Note that the 12-hr TWAP of ARTH is always updated at every epoch & is not updated constantly."
-          />
-          <Stat
-            title={arthPrice ? `$${arthPrice}` : '-'}
-            description="ARTH Price (Spot)"
-            toolTipTitle="This refers to the current price of ARTH"
-          />
-          <Stat
-            title={targetPrice ? `$${getDisplayBalance(targetPrice)}` : '-'}
-            description="ARTH Price (Target)"
-            toolTipTitle="This refers to the target price or the peg that ARTH should ideally be at. As ARTH is pegged to Global Measurement Unit (GMU), the target price of ARTH is an ever-changing phenomenon. Currently, the target price is at $1."
-            toolTipLink="https://docs.arthcoin.com/arth-201/target-price-of-arth"
-          />
-        </StyledHeader>
-        <StyledHeader>
-          {/* <Stat
-            title="12hr TWAP > $1.05"
-            description="Expansion happens when"
-            toolTipTitle="When the 12hr TWAP of ARTH > $1.05, the system mints more ARTH tokens as seigniorage & distributes it amongst various participants of the protocol. This is known as Expansion."
-            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#expansion-phase-in-arth"
-          />
-          <Stat
-            title="12hr TWAP < $0.95"
-            description="Contraction happens when"
-            toolTipTitle="When the 12hr TWAP  of ARTH < $0.95 , the system issues ARTH Bonds which can be purchased at a discount to the ARTH price to increase demand in the market & decrease the supply through a burning mechanism. This is known as Contraction."
-            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics#contraction-phase-in-arth"
-          />
-          <Stat
-            title="1hr TWAP > $1.00"
-            description="Bond Redemption happens when"
-            toolTipTitle="This refers to the condition that should be met for ARTH Bonds to become redeemable. Thus, you can redeem your ARTH Bonds only when the 12hr TWAP > $1.00."
-            toolTipLink="https://docs.arthcoin.com/tutorials/redeeming-bonds"
-          /> */}
-        {/* <Stat
-            title={`$${arthLiquidity}`}
-            description="ARTH Liquidity"
-            toolTipTitle="This refers to the amount of liquidity available in the market for the ARTH-DAI pair"
-          />
-        </StyledHeader>
-
-        <StyledHeader>
-          <Stat
-            title={
-              targetPrice
-                ? `12hr TWAP > $${getDisplayBalance(targetPrice.mul(105).div(100), 18, 2)}`
-                : '-'
-            }
-            description="Expansion happens when"
-          />
-          <Stat
-            title={
-              targetPrice
-                ? `12hr TWAP < $${getDisplayBalance(targetPrice.mul(95).div(100), 18, 2)}`
-                : '-'
-            }
-            description="Contraction happens when"
-          />
-          <Stat
-            title={targetPrice ? `1hr TWAP < $0.95` : '-'}
-            description="Bond Purchase happens when"
-          />
-
-          <Stat
-            title={targetPrice ? `1hr TWAP > $1.00` : '-'}
-            description="Bond Redemption happens when"
-          />
-        </StyledHeader>
-        <StyledHeader>
-          <Stat
-            title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTH` : '-'}
-            description="Redeemable for Bonds"
-          />
-          <Stat
-            title={
-              ecosystemFund ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH` : '-'
-            }
-            description="Ecosystem Fund"
-            toolTipTitle="When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the ecosystem fund that’ll be used purely for ecosystem development."
-            toolTipLink="https://docs.arthcoin.com/arth-201/expansion-mechanics/seiongrage-distribution"
-          />
-        </StyledHeader>*/}
         <FaqTitle>FAQs</FaqTitle>
         {FaqData && FaqData.map((eachFaq) => <FAQCard key={eachFaq.question} {...eachFaq} />)}
       </Container>
@@ -335,101 +207,4 @@ const FaqTitle = styled.div`
   margin-bottom: 20px;
 `;
 
-const PieChartCard = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 25px;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const Desc = styled.div`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 140%;
-  color: #d9d5d3;
-  opacity: 0.64;
-  margin-bottom: 5px;
-`;
-const CurrentEpoch = styled.div`
-  background: #423b38;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 140%;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fcb400;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  padding: 3px 10px;
-  margin: 0px 10px;
-`;
-const TitleString = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #ffffff;
-  opacity: 0.88;
-`;
-const Card = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
-  border-radius: 12px;
-  padding: 20px;
-  height: 100%;
-`;
-
-const LearnMore = styled.a`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 140%;
-  margin-top: 10px;
-  cursor: pointer;
-  color: #f7653b;
-  opacity: 0.88;
-  &:hover {
-    color: #f7653b;
-    opacity: 0.88;
-  }
-`;
-
-const CurrenTimeTitle = styled.div`
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 32px;
-  text-align: center;
-  color: #ffffff;
-`;
-
-const ChartLabelTitle = styled.div`
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  color: #ffffff;
-  opacity: 0.64;
-`;
-const ChartLabelTitleBold = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-`;
-const PieChartLables = styled.div`
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 12px;
-`;
-const ChartIconColor = styled.div`
-  width: 14px;
-  margin-right: 10px;
-  height: 14px;
-  border-radius: 50%;
-  background: ${(props) => (props.color ? props.color : '#ffffff')};
-`;
 export default Home;

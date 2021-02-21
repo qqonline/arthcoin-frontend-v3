@@ -12,7 +12,7 @@ import CardIcon from '../../components/CardIcon';
 import useBanks from '../../hooks/useBanks';
 import TokenSymbol from '../../components/TokenSymbol';
 import { useWallet } from 'use-wallet';
- import styled from 'styled-components';
+import styled from 'styled-components';
 
 
 const BankCardsV2: React.FC = () => {
@@ -22,7 +22,7 @@ const BankCardsV2: React.FC = () => {
   const inactiveBanks = banks.filter((bank) => bank.finished);
 
   return (
-<StyledCards>
+    <StyledCards>
       <VFATAnn>
         <span role="img" aria-label="farming">
           🌾
@@ -53,12 +53,12 @@ const BankCardsV2: React.FC = () => {
 
 
       <Grid container spacing={5} justify="center" alignItems="stretch">
-      {activeBanks.map((item, j) => (
-        <Grid key={j} container item xs={12} md={6} lg={4} xl={4}>
-          <StakingCard bank={item} />
-        </Grid>
-      ))}
-    </Grid>
+        {activeBanks.map((item, j) => (
+          <Grid key={j} container item xs={12} md={6} lg={4} xl={4}>
+            <StakingCard bank={item} />
+          </Grid>
+        ))}
+      </Grid>
 
       <StyledInactiveBankTitle>Closed Pools</StyledInactiveBankTitle>
       <Grid container spacing={5} justify="center" alignItems="stretch">
@@ -69,7 +69,7 @@ const BankCardsV2: React.FC = () => {
             {j < inactiveBanks.length - 1 && <StyledSpacer />}
           </Grid>
         ))}
-        </Grid>
+      </Grid>
     </StyledCards>
   );
 };

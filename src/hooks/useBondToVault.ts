@@ -8,8 +8,7 @@ export default (vault: VaultInfo) => {
 
   const handleStake = useCallback(
     async (amount: string) => {
-      console.log(amount)
-       handleTransactionReceipt(
+        handleTransactionReceipt(
         vault.contract.bond(decimalToBalance(amount)),
         `Bond ${amount} ${vault.depositTokenName}`,
       );

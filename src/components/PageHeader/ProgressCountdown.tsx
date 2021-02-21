@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../Button/Button';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 
 interface ProgressCountdownProps {
   base: Date;
   deadline: Date;
   description: string;
-  showAdvanceButton?: boolean;
 }
 
 const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
   base,
   deadline,
   description,
-  showAdvanceButton,
 }) => {
   const percentage =
     Date.now() >= deadline.getTime()
@@ -42,11 +39,6 @@ const ProgressCountdown: React.FC<ProgressCountdownProps> = ({
             <StyledProgress progress={percentage} />
           </StyledProgressOuter>
         </StyledCardContentInner>
-        {/* {showAdvanceButton && (
-          <ButtonContainer style={{}}>
-            <Button text="Advance Epoch" />
-          </ButtonContainer>
-        )} */}
       </ParentContainer>
     </Card>
   );
@@ -58,13 +50,7 @@ const StyledCountdown = styled.p`
   color: ${(props) => props.theme.color.grey[100]};
   margin: 0 0 6px 0;
 `;
-const ButtonContainer = styled.div`
-  max-width: '200px';
-  margin: '0px 20px';
-  @media (max-width: 768px) {
-    width: 100%;
-  } ;
-`;
+
 const StyledProgressOuter = styled.div`
   width: 100%;
   height: 16px;

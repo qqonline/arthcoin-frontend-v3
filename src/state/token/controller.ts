@@ -18,7 +18,7 @@ export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
     return input
   }
 
-  const calls = [
+  const calls: any[] = [
     // registerVariable('nextEpochPoint()(uint256)', Actions.updateNextEpochPoint),
     // registerVariable('getPeriod()(uint256)', Actions.updatePeriod),
     // registerVariable('getCurrentEpoch()(uint256)', Actions.updateCurrentEpoch),

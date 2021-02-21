@@ -63,7 +63,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                     base={prevEpoch}
                     deadline={nextEpoch}
                     description="Next Epoch"
-                    showAdvanceButton
                   />
                 </Grid>
               </Grid>

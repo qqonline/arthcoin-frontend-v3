@@ -126,8 +126,6 @@ export async function printSynthetixPool(App: IVFatApp, info: any) {
     //         + ` Year ${userYearlyRewards.toFixed(2)} ($${formatMoney(userYearlyRewards * info.rewardTokenPrice)})`);
     // }
 
-
-
     return {
         weeklyAPY,
         dailyAPY,

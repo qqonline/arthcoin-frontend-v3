@@ -9,7 +9,6 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      'DAI': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'MKR': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'BAS': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'SHARE': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 9],

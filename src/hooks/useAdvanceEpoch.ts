@@ -11,7 +11,6 @@ function useAdvanceEpoch()  {
 
   const approve = useCallback(async (): Promise<void> => {
     const treasury = basisCash.contracts.Treasury
-    console.log(await treasury.checkOperator());
     const response = await treasury.allocateSeigniorage();
     addTransaction(response, { summary: `Advancing Epoch` });
   }, [addTransaction, basisCash]);
