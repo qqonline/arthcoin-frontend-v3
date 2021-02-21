@@ -1,70 +1,70 @@
 {
   "Treasury": {
-    "address": "0x622Ae9602AFB30E787E44B47232fe6798f323993",
+    "address": "0x685bB6fF0a05025436a0C100D31e37e0C1f3636d",
     "abi": "Treasury"
   },
   "DevelopmentFund": {
-    "address": "0x9890B9D891E98B167EDf23d9997c2D49452eA931",
+    "address": "0x8A7AeB9ad89DebB144B4e4947e36d2afC32FEfFa",
     "abi": "SimpleERCFund"
   },
   "RainyDayFund": {
-    "address": "0x62E8E099a24e53f66a4Bcf78c3d40C5346f3913F",
+    "address": "0xAE48526E1601bD9F3e4b49e7191c0a99260AC3eF",
     "abi": "SimpleERCFund"
   },
   "ARTHB": {
-    "address": "0xD86bc367bE169d50675A0401CF514d3A438E712e",
+    "address": "0x1003eA80fe2a05faA67E77f13d151d139165e2e8",
     "abi": "BaseToken"
   },
   "ARTH": {
-    "address": "0xecB769Ea698453EcEbBaBa27b7dEAaFC022C9B0B",
+    "address": "0xfc64De370C3E406467BD493f73EdDEAddbc7c725",
     "abi": "BaseToken"
   },
   "GMUOracle": {
-    "address": "0x678a32a66e341E50C3fA94c2a28da3b76d07ae24",
+    "address": "0x438D635110085a29f6Ee81F1A5E52083D8a1e574",
     "abi": "SimpleOracle"
   },
   "TWAP12hrOracle": {
-    "address": "0x8AbD0Cc5319fcbDcEbBFcc018f458a75B6300ff2",
+    "address": "0x490279b587b7be0AFba0882FAC20a435DD79601C",
     "abi": "UniswapOracle"
   },
   "TWAP1hrOracle": {
-    "address": "0x0c0C3f8ffC8524C5507450DF9Cd97a0E899351D7",
+    "address": "0xec52785C51b4FC6592c66f9De82767Bf4e3E76E8",
     "abi": "UniswapOracle"
   },
   "ArthArthBoardroomV2": {
-    "address": "0xAeA337C905bB43D66661d9c196D185bc04940923",
+    "address": "0xBE25AC50CBcf8124FE5377A062470e5E83372Eb8",
     "abi": "VestedVaultBoardroom"
   },
   "ArthArthMlpLiquidityBoardroomV2": {
-    "address": "0xCF3A8d0419343a8Ba39D8561C7DD5Db0c4d878F8",
+    "address": "0x8F8cC492C6D1D4F82baE9d91A38C3fcf801Da685",
     "abi": "VestedVaultBoardroom"
   },
   "ArthMahaBoardroomV2": {
-    "address": "0xe308de452A3F230e1A94aB4830F44390DaBF3A17",
+    "address": "0x16785085d7826D7f7c193EeaC2AA208306e3fe23",
     "abi": "VestedVaultBoardroom"
   },
   "MahaArthBoardroomV2": {
-    "address": "0xcA9aC66755BB439D5a0230EAB720db30e76ce6b6",
+    "address": "0xd60C2bEe3E4a48AD6C3E86c927437A3E578F06D3",
     "abi": "VestedVaultBoardroom"
   },
   "MahaArthMlpLiquidityBoardroomV2": {
-    "address": "0x6eA1b5853d9dceDCFf7687aC42E7b7F5bfAB35E8",
+    "address": "0xE3d6ca4ec99e5f0D617e473f397D33128a87d238",
     "abi": "VestedVaultBoardroom"
   },
   "MahaMahaBoardroomV2": {
-    "address": "0xADB3C9CAaF2Cc2d28124Cc1Db326162bF0DD2950",
+    "address": "0x019216a8032D72A451CB39532C209B6c1FA1c9ba",
     "abi": "VestedVaultBoardroom"
   },
   "VaultArth": {
-    "address": "0x3A38ec3cC3564e710fa5b2D60c9eeCF5574099af",
+    "address": "0x0044159ce2A4B835d0F74c652f98BFD9D52366eb",
     "abi": "Vault"
   },
   "VaultArthMlp": {
-    "address": "0xe05B5D7827D1c9Bc6d2693a957ad05cE1b3365BE",
+    "address": "0x541481d633a5D7de1Bc2Be01B30bf15d5f9E3121",
     "abi": "Vault"
   },
   "VaultMaha": {
-    "address": "0xA88D348fa8aFf2185644DD87E268C7e567C2fD4F",
+    "address": "0x61156E6B79bd822b6b4e54f19913AD246582BAB8",
     "abi": "Vault"
   },
   "UniswapV2Factory": {
@@ -84,11 +84,11 @@
     "abi": "MahaToken"
   },
   "Multicall": {
-    "address": "0xd26b1aF80C90624a0cFcC85e9615283594429853",
+    "address": "0xB7167d0a9e99a610152187AA682B42dD032cA752",
     "abi": "Multicall"
   },
   "ArthDaiLP": {
-    "address": "0x35de03dFb4453FCC65B3482a63ADCB812Cb99FFE",
+    "address": "0xA6A20877BD5fe66d8a1b7cB8d6cC0191f1eA6Dd0",
     "abi": "IUniswapV2Pair"
   },
   "MahaEthLP": {

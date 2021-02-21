@@ -15,12 +15,12 @@ const useBoardroomUnbondingDetails = (boardroom: VaultInfo, stakedBalance: BigNu
 
   const fetchDepositTime = useCallback(async () => {
     const b = boardroom.contract;
-    const details = await b._stakingDetails(basisCash.myAccount)
+    const details = await b.stakingDetails(basisCash.myAccount)
 
     const from = new Date(details.updatedOn * 1000)
     const to = new Date(details.deadline * 1000)
 
-     setStartDate(from)
+    setStartDate(from)
     setEndDate(to)
     setAmount(details.amount)
   }, [basisCash.myAccount, boardroom.contract]);

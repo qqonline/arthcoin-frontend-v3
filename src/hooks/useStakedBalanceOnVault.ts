@@ -10,7 +10,7 @@ const useStakedBalanceOnVault = (kind: Vaults) => {
 
   const fetchBalance = useCallback(async () => {
     const vault = await basisCash.getBoardroomVault(kind)
-    setBalance(await vault.contract.balanceOf(basisCash.myAccount));
+    setBalance(await vault.contract.balanceWithoutBonded(basisCash.myAccount));
   }, [basisCash, kind]);
 
   useEffect(() => {
