@@ -59,6 +59,9 @@ const App: React.FC = () => {
           <Route path="/staking">
             <Banks />
           </Route>
+          <Route path="/farming">
+            <Banks />
+          </Route>
           <Route path="/bonds">
             <Bond />
           </Route>

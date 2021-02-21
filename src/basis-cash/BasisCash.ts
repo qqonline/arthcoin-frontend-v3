@@ -296,12 +296,12 @@ export class BasisCash {
 
   async getCashPriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getSeigniorageOraclePrice();
+    return Treasury.get12hrTWAPOraclePrice();
   }
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getBondOraclePrice();
+    return Treasury.get1hrTWAPOraclePrice();
   }
 
   async getBondStat(): Promise<TokenStat> {

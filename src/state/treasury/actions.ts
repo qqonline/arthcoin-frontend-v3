@@ -2,42 +2,42 @@ import { createAction } from '@reduxjs/toolkit';
 import { TreasuryBoardroomState, TreasuryCoreState, TreasuryOracleState } from '../../basis-cash/types';
 
 
-export const updateNextEpochPoint = createAction<number>('tx/updateNextEpochPoint');
-export const updatePeriod = createAction<number>('tx/updatePeriod');
-export const updateCurrentEpoch = createAction<number>('tx/updateCurrentEpoch');
+export const updateNextEpochPoint = createAction<number>('treasury/updateNextEpochPoint');
+export const updatePeriod = createAction<number>('treasury/updatePeriod');
+export const updateCurrentEpoch = createAction<number>('treasury/updateCurrentEpoch');
 
 type TreasuryGetState = {
     s: TreasuryCoreState
     o: TreasuryOracleState
     b: TreasuryBoardroomState
 }
-export const updateState = createAction<TreasuryGetState>('tx/updateState')
-// export const updateCashToBondConversionLimit = createAction<number>('tx/updateCashToBondConversionLimit')
-// export const updateAccumulatedBonds = createAction<number>('tx/updateAccumulatedBonds')
-// export const updateAccumulatedSeigniorage = createAction<number>('tx/updateAccumulatedSeigniorage')
-// export const updateMaxDebtIncreasePerEpoch = createAction<number>('tx/updateMaxDebtIncreasePerEpoch')
-// export const updateBondDiscount = createAction<number>('tx/updateBondDiscount')
-// export const updateSafetyRegion = createAction<number>('tx/updateSafetyRegion')
-// export const updateMaxSupplyIncreasePerEpoch = createAction<number>('tx/updateMaxSupplyIncreasePerEpoch')
-// export const updateEcosystemFundAllocationRate = createAction<number>('tx/updateEcosystemFundAllocationRate')
-// export const updateRainyDayFundAllocationRate = createAction<number>('tx/updateRainyDayFundAllocationRate')
-// export const updateBondSeigniorageRate = createAction<number>('tx/updateBondSeigniorageRate')
-// export const updateArthLiquidityUniAllocationRate = createAction<number>('tx/updateArthLiquidityUniAllocationRate')
-// export const updateArthLiquidityMlpAllocationRate = createAction<number>('tx/updateArthLiquidityMlpAllocationRate')
-// export const updateArthBoardroomAllocationRate = createAction<number>('tx/updateArthBoardroomAllocationRate')
-// export const updateMahaLiquidityBoardroomAllocationRate = createAction<number>('tx/updateMahaLiquidityBoardroomAllocationRate')
-// export const updateStabilityFee = createAction<number>('tx/updateStabilityFee')
+export const updateState = createAction<TreasuryGetState>('treasury/updateState')
+// export const updateCashToBondConversionLimit = createAction<number>('treasury/updateCashToBondConversionLimit')
+// export const updateAccumulatedBonds = createAction<number>('treasury/updateAccumulatedBonds')
+// export const updateAccumulatedSeigniorage = createAction<number>('treasury/updateAccumulatedSeigniorage')
+// export const updateMaxDebtIncreasePerEpoch = createAction<number>('treasury/updateMaxDebtIncreasePerEpoch')
+// export const updateBondDiscount = createAction<number>('treasury/updateBondDiscount')
+// export const updateSafetyRegion = createAction<number>('treasury/updateSafetyRegion')
+// export const updateMaxSupplyIncreasePerEpoch = createAction<number>('treasury/updateMaxSupplyIncreasePerEpoch')
+// export const updateEcosystemFundAllocationRate = createAction<number>('treasury/updateEcosystemFundAllocationRate')
+// export const updateRainyDayFundAllocationRate = createAction<number>('treasury/updateRainyDayFundAllocationRate')
+// export const updateBondSeigniorageRate = createAction<number>('treasury/updateBondSeigniorageRate')
+// export const updateArthLiquidityUniAllocationRate = createAction<number>('treasury/updateArthLiquidityUniAllocationRate')
+// export const updateArthLiquidityMlpAllocationRate = createAction<number>('treasury/updateArthLiquidityMlpAllocationRate')
+// export const updateArthBoardroomAllocationRate = createAction<number>('treasury/updateArthBoardroomAllocationRate')
+// export const updateMahaLiquidityBoardroomAllocationRate = createAction<number>('treasury/updateMahaLiquidityBoardroomAllocationRate')
+// export const updateStabilityFee = createAction<number>('treasury/updateStabilityFee')
 
-// export const updateGetReserve = createAction<number>('tx/updateGetReserve')
-// export const updateGetStabilityFee = createAction<number>('tx/updateGetStabilityFee')
-// export const updateGetBondOraclePrice = createAction<number>('tx/updateGetBondOraclePrice')
-// export const updateGetGMUOraclePrice = createAction<number>('tx/updateGetGMUOraclePrice')
-// export const updateGetArthMahaOraclePrice = createAction<number>('tx/updateGetArthMahaOraclePrice')
-// export const updateGetSeigniorageOraclePrice = createAction<number>('tx/updateGetSeigniorageOraclePrice')
-// export const updateArthCirculatingSupply = createAction<number>('tx/updateArthCirculatingSupply')
-// export const updateBondCirculatingSupply = createAction<number>('tx/updateBondCirculatingSupply')
-// export const updateGetBondRedemtionPrice = createAction<number>('tx/updateGetBondRedemtionPrice')
-// export const updateGetExpansionLimitPrice = createAction<number>('tx/updateGetExpansionLimitPrice')
-// export const updateGetBondPurchasePrice = createAction<number>('tx/updateGetBondPurchasePrice')
-// export const updateGetCashSupplyInLiquidity = createAction<number>('tx/updateGetCashSupplyInLiquidity')
-// export const updateGet1hourEpoch = createAction<number>('tx/updateGet1hourEpoch')
+// export const updateGetReserve = createAction<number>('treasury/updateGetReserve')
+// export const updateGetStabilityFee = createAction<number>('treasury/updateGetStabilityFee')
+// export const updateGetBondOraclePrice = createAction<number>('treasury/updateGetBondOraclePrice')
+// export const updateGetGMUOraclePrice = createAction<number>('treasury/updateGetGMUOraclePrice')
+// export const updateGetArthMahaOraclePrice = createAction<number>('treasury/updateGetArthMahaOraclePrice')
+// export const updateGetSeigniorageOraclePrice = createAction<number>('treasury/updateGetSeigniorageOraclePrice')
+// export const updateArthCirculatingSupply = createAction<number>('treasury/updateArthCirculatingSupply')
+// export const updateBondCirculatingSupply = createAction<number>('treasury/updateBondCirculatingSupply')
+// export const updateGetBondRedemtionPrice = createAction<number>('treasury/updateGetBondRedemtionPrice')
+// export const updateGetExpansionLimitPrice = createAction<number>('treasury/updateGetExpansionLimitPrice')
+// export const updateGetBondPurchasePrice = createAction<number>('treasury/updateGetBondPurchasePrice')
+// export const updateGetCashSupplyInLiquidity = createAction<number>('treasury/updateGetCashSupplyInLiquidity')
+// export const updateGet1hourEpoch = createAction<number>('treasury/updateGet1hourEpoch')
