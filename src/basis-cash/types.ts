@@ -1,5 +1,5 @@
 import { ChainId } from '@uniswap/sdk';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { Boardrooms, BoardroomsV2, Vaults } from './config';
 import ERC20 from './ERC20';
 
@@ -62,4 +62,37 @@ export type TreasuryAllocationTime = {
   currentEpoch: Number
   prevAllocation: Date;
   nextAllocation: Date;
+}
+
+
+export type TreasuryCoreState = {
+  uniswapRouter: string
+  uniswapLiquidityPair: string
+  cashTargetPrice: BigNumber
+  cashToBondConversionLimit: BigNumber
+  accumulatedBonds: BigNumber
+  accumulatedSeigniorage: BigNumber
+  contractionRewardPerEpoch: BigNumber
+}
+
+export type TreasuryOracleState = {
+  oracle1hrTWAP: string
+  oracle12hrTWAP: string
+  gmuOracle: string
+}
+
+export type TreasuryBoardroomState = {
+  arthArthLiquidityMlpBoardroom: string
+  arthMahaBoardroom: string
+  arthArthBoardroom: string
+  mahaArthLiquidityMlpBoardroom: string
+  mahaMahaBoardroom: string
+  mahaArthBoardroom: string
+  ecosystemFund: string
+  rainyDayFund: string
+  arthLiquidityMlpAllocationRate: BigNumber
+  arthAllocationRate: BigNumber
+  mahaAllocationRate: BigNumber
+  ecosystemFundAllocationRate: BigNumber
+  rainyDayFundAllocationRate: BigNumber
 }
