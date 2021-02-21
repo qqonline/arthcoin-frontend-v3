@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PageHeader from '../../components/PageHeader';
 
-import Boardroom from './components/Boardroom';
+import Boardroom from './components/Vault';
 import { Switch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
@@ -63,21 +63,19 @@ const Boardrooms: React.FC = () => {
           </Grid> */}
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
-              version="v2"
-              boardroom={'arth'}
+              vault={'arthMlpLiquidity'}
               // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
-              version="v2"
-              boardroom={'arthMlpLiquidity'}
+              vault={'arth'}
               // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
 
           <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom version="v2" boardroom={'mahaLiquidity'} />
+            <Boardroom vault={'maha'} />
           </Grid>
         </Grid>
       </Container>

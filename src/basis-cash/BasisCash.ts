@@ -208,9 +208,9 @@ export class BasisCash {
         kind: 'maha',
         contract,
         address: contract.address,
-        depositTokenName: 'MAHA_ETH-UNI-LPv2',
+        depositTokenName: 'MAHA',
         seionrageSupplyPercentage: 10,
-        lockInPeriodDays: 1,
+        lockInPeriodDays: 5,
         arthBoardroom: 'arthMaha',
         mahaBoardroom: 'mahaMaha',
       }

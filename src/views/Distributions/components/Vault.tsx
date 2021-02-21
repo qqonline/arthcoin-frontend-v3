@@ -11,7 +11,7 @@ import useBasisCash from '../../../hooks/useBasisCash';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import InfoIcon from '../../../assets/img/InfoIcon.svg';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Boardrooms } from '../../../basis-cash/config';
+import {  Vaults } from '../../../basis-cash/config';
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -25,16 +25,15 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
 
 
 interface BoardroomProps {
-  boardroom: Boardrooms
-  version: 'v1' | 'v2'
+  vault: Vaults
   toolTipTitle?: string;
 }
 
-const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
+const Vault: React.FC<BoardroomProps> = (props) => {
   const { account, connect } = useWallet();
   const basisCash = useBasisCash();
 
-  const boardroom = basisCash.getBoardroom(props.boardroom, props.version);
+  const boardroom = basisCash.getBoardroomVault(props.vault);
 
   return (
     <StyledCardWrapper>
@@ -67,7 +66,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots></StyledInfoSlots>
             <ButtonContainer>
               {!!account ? (
-                <Button text="Select" to={`/distribution/${props.version}/${boardroom.kind}`} />
+                <Button text="Select" to={`/distribution/v2/${boardroom.kind}`} />
               ) : (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}
@@ -151,4 +150,4 @@ const StyledTitle = styled.h3`
   padding: 0;
 `;
 
-export default ArthBoardroom;
+export default Vault;
