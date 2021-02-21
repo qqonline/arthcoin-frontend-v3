@@ -1,6 +1,6 @@
 import { ChainId } from '@uniswap/sdk';
 import { Contract } from 'ethers';
-import { Boardrooms } from './config';
+import { Boardrooms, BoardroomsV2, Vaults } from './config';
 import ERC20 from './ERC20';
 
 export type ContractName = string;
@@ -28,6 +28,18 @@ export interface BoardroomInfo {
   seionrageSupplyPercentage: number
   history7dayAPY: number
   lockInPeriodDays: number
+}
+
+export interface VaultInfo {
+  kind: Vaults
+  contract: Contract
+  address: ContractName;
+  depositTokenName: ContractName;
+  seionrageSupplyPercentage: number
+  lockInPeriodDays: number
+
+  mahaBoardroom: BoardroomsV2
+  arthBoardroom: BoardroomsV2
 }
 
 export interface Bank extends BankInfo {

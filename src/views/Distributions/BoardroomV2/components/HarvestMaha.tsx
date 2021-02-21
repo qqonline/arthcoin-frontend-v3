@@ -8,29 +8,32 @@ import CardIcon from '../../../../components/CardIcon';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
-import { BoardroomInfo } from '../../../../basis-cash';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import { BoardroomsV2 } from '../../../../basis-cash/config';
 
-const HarvestMaha = ({ boardroom }: { boardroom: BoardroomInfo }) => {
+const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
+  const basisCash = useBasisCash()
+  const boardroom = basisCash.getBoardroom(boardroomId, 'v2')
   const { onReward } = useHarvestFromBoardroom(boardroom);
-  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroom.kind);
+  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 
   return (
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>Maha Earned </StyleLabel>
+          <StyleLabel>MAHA Earned </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="ARTH" />
+              <TokenSymbol symbol="MAHA" />
             </CardIcon>
             <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
           </StyledCardHeader>
         </StyledCardContentInner>
         <p>
-          Your rewards are vested across 8 hours. If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
+          Your rewards are vested across 8 hours. If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} MAHA
         </p>
         <StyledCardActions>
-          <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} ARTH Reward`} disabled={earnings.eq(0)} />
+          <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} MAHA`} disabled={earnings.eq(0)} />
         </StyledCardActions>
       </CardContent>
     </Card>

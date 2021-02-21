@@ -12,38 +12,38 @@ import useTokenBalance from '../../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 import BondModal from './BondModal';
 import useBasisCash from '../../../../hooks/useBasisCash';
-import useStakedBalanceOnBoardroom from '../../../../hooks/useStakedBalanceOnBoardroom';
+import { VaultInfo } from '../../../../basis-cash/types';
+import useStakedBalanceOnVault from '../../../../hooks/useStakedBalanceOnVault';
 import TokenSymbol from '../../../../components/TokenSymbol';
-import useStakeToBoardroom from '../../../../hooks/useStakeToBoardroom';
-import withdrawShareFromBoardroomV2 from '../../../../hooks/withdrawShareFromBoardroomV2';
+import useStakeToVault from '../../../../hooks/useStakeToVault';
+import WithdrawShareFromVault from '../../../../hooks/withdrawShareFromVault';
 import useBoardroomUnbondingDetails from '../../../../hooks/useBoardroomUnbondingDetails';
-import { BoardroomInfo } from '../../../../basis-cash';
 import ProgressCountdown from './ProgressCountdown';
 import UnbondModal from './UnBondModal';
-import useUnbondFromBoardroom from '../../../../hooks/useUnbondFromBoardroom';
+import useUnbondFromVault from '../../../../hooks/useUnbondFromVault';
 
-const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
+const Stake = ({ vault }: { vault: VaultInfo }) => {
   const basisCash = useBasisCash();
 
   const stakingToken =
-    boardroom.depositTokenName === 'MAHA'
+    vault.depositTokenName === 'MAHA'
       ? basisCash.MAHA
-      : boardroom.depositTokenName === 'ARTH'
+      : vault.depositTokenName === 'ARTH'
       ? basisCash.ARTH
-      : basisCash.externalTokens[boardroom.depositTokenName];
+      : basisCash.externalTokens[vault.depositTokenName];
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
-    basisCash.currentBoardroom(boardroom.kind, 'v2')?.address,
+    basisCash.getBoardroomVault(vault.kind)?.address,
   );
 
   const tokenBalance = useTokenBalance(stakingToken);
 
-  const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v2');
+  const stakedBalance = useStakedBalanceOnVault(vault.kind);
 
-  const { onStake } = useStakeToBoardroom(boardroom, 'v2');
-  const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
-  const { onUnbond } = useUnbondFromBoardroom(boardroom);
+  const { onStake } = useStakeToVault(vault);
+  const { onWithdraw } = WithdrawShareFromVault(vault);
+  const { onUnbond } = useUnbondFromVault(vault);
 
   const [onPresentBond, onDismissBond] = useModal(
     <BondModal
@@ -53,7 +53,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         onDismissBond();
       }}
       onCancel={() => onDismissBond()}
-      tokenName={boardroom.depositTokenName}
+      tokenName={vault.depositTokenName}
     />,
   );
 
@@ -65,12 +65,12 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
         onDismissUnbond();
       }}
       onCancel={() => onDismissUnbond()}
-      tokenName={boardroom.depositTokenName}
+      tokenName={vault.depositTokenName}
     />,
   );
 
   const [depositDate, endDate, unbondedAmount] = useBoardroomUnbondingDetails(
-    boardroom,
+    vault,
     stakedBalance,
   );
 
@@ -78,10 +78,10 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${boardroom.depositTokenName} Bonded`} </StyleLabel>
+          <StyleLabel>{`${vault.depositTokenName} Bonded`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol={boardroom.depositTokenName} />
+              <TokenSymbol symbol={vault.depositTokenName} />
             </CardIcon>
             <StyledValue>{getDisplayBalance(stakedBalance)}</StyledValue>
             <StyledCardActions>
@@ -105,7 +105,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
               <Button
                 // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
                 onClick={approve}
-                text={`Approve ${boardroom.depositTokenName}`}
+                text={`Approve ${vault.depositTokenName}`}
               />
             </>
           ) : (
@@ -119,7 +119,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                 base={depositDate}
                 deadline={endDate}
                 description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${
-                  boardroom.depositTokenName
+                  vault.depositTokenName
                 } which will be withdrawable in`}
               />
               <br />
@@ -127,7 +127,7 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
                 onClick={onWithdraw}
                 disabled={endDate.getTime() > Date.now()}
                 text={`Withdraw ${getDisplayBalance(unbondedAmount, 18)} ${
-                  boardroom.depositTokenName
+                  vault.depositTokenName
                 }`}
               />
             </>

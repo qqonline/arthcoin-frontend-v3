@@ -2,16 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
-import { BoardroomsV2  } from '../basis-cash/config';
+import { Vaults } from '../basis-cash/config';
 
-const useEarningsOnBoardroom = (kind: BoardroomsV2) => {
+const useStakedBalanceOnVault = (kind: Vaults) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const [claimableBalance, setClaimableBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
-    setClaimableBalance(await basisCash.getClaimableEarningsOnBoardroomV2(kind, 'v2'));
+    const vault = await basisCash.getBoardroomVault(kind)
+    setBalance(await vault.contract.balanceOf(basisCash.myAccount));
   }, [basisCash, kind]);
 
   useEffect(() => {
@@ -20,9 +19,9 @@ const useEarningsOnBoardroom = (kind: BoardroomsV2) => {
       const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshBalance);
     }
-  }, [basisCash.isUnlocked, fetchBalance]);
+  }, [setBalance, basisCash.isUnlocked, fetchBalance]);
 
-  return [balance, claimableBalance];
+  return balance;
 };
 
-export default useEarningsOnBoardroom;
+export default useStakedBalanceOnVault;

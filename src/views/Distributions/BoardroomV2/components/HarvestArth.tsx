@@ -8,11 +8,15 @@ import CardIcon from '../../../../components/CardIcon';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
-import { BoardroomInfo } from '../../../../basis-cash';
+import { BoardroomsV2 } from '../../../../basis-cash/config';
+import useBasisCash from '../../../../hooks/useBasisCash';
 
-const HarvestArth = ({ boardroom }: { boardroom: BoardroomInfo }) => {
+const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
+  const basisCash = useBasisCash()
+  const boardroom = basisCash.getBoardroom(boardroomId, 'v2')
+
   const { onReward } = useHarvestFromBoardroom(boardroom);
-  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroom.kind);
+  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 
   return (
     <Card>

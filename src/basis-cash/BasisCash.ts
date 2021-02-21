@@ -1,7 +1,7 @@
 import { Fetcher as MFetcher, Route as MRoute, Token as MToken } from 'mahaswap-sdk';
 import { Fetcher, Route, Token } from '@uniswap/sdk';
-import { Boardrooms, BoardroomVersion, Configuration } from './config';
-import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
+import { Boardrooms, BoardroomsV1, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
+import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime, VaultInfo } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
@@ -75,8 +75,6 @@ export class BasisCash {
 
     this.config = cfg;
     this.provider = provider;
-
-    console.log(this)
   }
 
   /**
@@ -136,7 +134,7 @@ export class BasisCash {
   getBoardrooms: () => ['arth', 'arthUniLiquidity', 'arthMlpLiquidity', 'mahaLiquidity']
 
 
-  getBoardroom(kind: Boardrooms, version: string): BoardroomInfo {
+  getBoardroom(kind: Boardrooms, version: BoardroomVersion): BoardroomInfo {
     const contract = this.boardroomByVersion(kind, version)
 
     if (kind === 'arth') return {
@@ -183,6 +181,49 @@ export class BasisCash {
       seionrageSupplyPercentage: 60,
       history7dayAPY: 30,
       lockInPeriodDays: 1,
+    }
+  }
+
+  getBoardroomVault(kind: Vaults): VaultInfo {
+    const contract = (() => {
+      if (kind === 'arth') return this.contracts.VaultArth;
+      if (kind === 'arthMlpLiquidity') return this.contracts.VaultArthMlp;
+      return this.contracts.VaultMaha;
+    })()
+
+    if (kind === 'arth') return {
+      kind: 'arth',
+      contract,
+      address: contract.address,
+      depositTokenName: 'ARTH',
+      seionrageSupplyPercentage: 20,
+      lockInPeriodDays: 5,
+
+      arthBoardroom: 'arthArth',
+      mahaBoardroom: 'mahaArth',
+    }
+
+    if (kind === 'maha')
+      return {
+        kind: 'maha',
+        contract,
+        address: contract.address,
+        depositTokenName: 'MAHA_ETH-UNI-LPv2',
+        seionrageSupplyPercentage: 10,
+        lockInPeriodDays: 1,
+        arthBoardroom: 'arthMaha',
+        mahaBoardroom: 'mahaMaha',
+      }
+
+    return {
+      kind: 'arthMlpLiquidity',
+      contract,
+      address: contract.address,
+      depositTokenName: 'ARTH_DAI-MLP-LPv1',
+      seionrageSupplyPercentage: 70,
+      lockInPeriodDays: 1,
+      arthBoardroom: 'arthArthMlpLiquidity',
+      mahaBoardroom: 'mahaArthMlpLiquidity',
     }
   }
 
@@ -436,11 +477,14 @@ export class BasisCash {
     return 'latest';
   }
 
-  boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    if (version === 'v2') {
-      if (kind === 'arth') return this.contracts.VaultArth;
-      if (kind === 'arthMlpLiquidity') return this.contracts.VaultArthMlp;
-      return this.contracts.VaultMaha;
+  boardroomByVersion(kind: Boardrooms, version: BoardroomVersion): Contract {
+     if (version === 'v2') {
+      if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
+      if (kind === 'arthMaha') return this.contracts.ArthMahaBoardroomV2;
+      if (kind === 'mahaArth') return this.contracts.MahaArthBoardroomV2;
+      if (kind === 'mahaMaha') return this.contracts.MahaMahaBoardroomV2;
+      if (kind === 'mahaArthMlpLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
+      return this.contracts.ArthArthMlpLiquidityBoardroomV2;
     }
 
     if (kind === 'arthUniLiquidity') return this.contracts.ArthLiquidityBoardroomV1;
@@ -449,7 +493,7 @@ export class BasisCash {
   }
 
   currentBoardroom(kind: Boardrooms, version: BoardroomVersion): Contract {
-    return this.boardroomByVersion(kind, 'v1');
+    return this.boardroomByVersion(kind, version);
   }
 
   isOldBoardroomMember(): boolean {
@@ -476,12 +520,12 @@ export class BasisCash {
   }
 
 
-  async getClaimableEarningsOnBoardroomV2(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+  async getClaimableEarningsOnBoardroomV2(kind: BoardroomsV2, version: BoardroomVersion): Promise<BigNumber> {
     const boardroom = this.getBoardroom(kind, version);
-    return await boardroom.contract.estimateRewardsToClaim(this.myAccount);
+    return await boardroom.contract.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroomV2(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
+  async withdrawShareFromBoardroomV2(kind: BoardroomsV2, version: BoardroomVersion): Promise<TransactionResponse> {
     const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.withdraw();
   }
