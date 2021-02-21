@@ -74,6 +74,13 @@ export default createReducer(initialState, (builder) =>
     .addCase(Actions.updateNextEpochPoint, (t, { payload }) => { t.nextEpochPoint = payload })
     .addCase(Actions.updatePeriod, (t, { payload }) => { t.period = payload })
     .addCase(Actions.updateCurrentEpoch, (t, { payload }) => { t.currentEpoch = payload })
+
+    .addCase(Actions.updateGetGMUOraclePrice, (t, { payload }) => { t.getGMUOraclePrice = payload })
+    .addCase(Actions.updateGet12hrTWAPOraclePrice, (t, { payload }) => { t.get12hrTWAPOraclePrice = payload })
+    .addCase(Actions.updateGet1hrTWAPOraclePrice, (t, { payload }) => { t.get1hrTWAPOraclePrice = payload })
+    .addCase(Actions.updateBondCirculatingSupply, (t, { payload }) => { t.bondCirculatingSupply = payload })
+    .addCase(Actions.updateArthCirculatingSupply, (t, { payload }) => { t.arthCirculatingSupply = payload })
+
     .addCase(Actions.updateState, (t, {payload}) => {
       t.coreState = {
         uniswapRouter: payload.s.uniswapRouter,

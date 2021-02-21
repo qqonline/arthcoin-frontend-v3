@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { BigNumber } from 'ethers';
 import { TreasuryBoardroomState, TreasuryCoreState, TreasuryOracleState } from '../../basis-cash/types';
 
 
@@ -6,11 +7,18 @@ export const updateNextEpochPoint = createAction<number>('treasury/updateNextEpo
 export const updatePeriod = createAction<number>('treasury/updatePeriod');
 export const updateCurrentEpoch = createAction<number>('treasury/updateCurrentEpoch');
 
+export const updateGetGMUOraclePrice = createAction<BigNumber>('treasury/updateGetGMUOraclePrice')
+export const updateGet12hrTWAPOraclePrice = createAction<BigNumber>('treasury/updateGet12hrTWAPOraclePrice')
+export const updateGet1hrTWAPOraclePrice = createAction<BigNumber>('treasury/updateGet1hrTWAPOraclePrice')
+export const updateBondCirculatingSupply = createAction<BigNumber>('treasury/updateBondCirculatingSupply')
+export const updateArthCirculatingSupply = createAction<BigNumber>('treasury/updateArthCirculatingSupply')
+
 type TreasuryGetState = {
-    s: TreasuryCoreState
-    o: TreasuryOracleState
-    b: TreasuryBoardroomState
+  s: TreasuryCoreState
+  o: TreasuryOracleState
+  b: TreasuryBoardroomState
 }
+
 export const updateState = createAction<TreasuryGetState>('treasury/updateState')
 // export const updateCashToBondConversionLimit = createAction<number>('treasury/updateCashToBondConversionLimit')
 // export const updateAccumulatedBonds = createAction<number>('treasury/updateAccumulatedBonds')

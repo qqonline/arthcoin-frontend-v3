@@ -12,7 +12,7 @@ import StatCard from './components/StatCard';
 import useBasisCash from '../../hooks/useBasisCash';
 import config from '../../config';
 // import StastIcon from '../../assets/svg/Stats.svg';
-import PieChart from './components/PieChart';
+import DistributonSection from './components/DistributonSection';
 import PriceInformation from './components/PriceInformation';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useFundAmount from '../../hooks/useFundAmount';
@@ -100,22 +100,7 @@ const Home: React.FC = () => {
       <PageHeader
         icon={<div style={{ width: '200px', height: '200px' }} />}
         subtitle="View information about the current ARTH protocol"
-        title="Statistics"
-      // secondParaTitle="Next Epoch"
-      // secondParaDescription={
-      //   targets.isLoading
-      //     ? 'Loading...'
-      //     : targets.supplyIncrease.gt(0)
-      //     ? `Based on the 1hr TWAP price, the protocol will expand the supply by approximately ${commify(
-      //         supplyIncrease,
-      //       )} ARTH or ${supplyIncreasePercentage.toFixed(0)}% of the current supply.`
-      //     : targets.debtIncrease.gt(0)
-      //     ? `Based on the 1hr TWAP price, the protocol will contract the supply by buying back approximately ${debtIncrease} ARTH or ${debtIncreasePercentage.toFixed(
-      //         0,
-      //       )}% of the current supply`
-      //     : `Based on the 1hr TWAP price, the protocol will not do anything as price is within the safe range (0.95$-1$)`
-      // }
-      />
+        title="Statistics" />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={2}>
@@ -129,50 +114,7 @@ const Home: React.FC = () => {
         <div className="margin-top-bottom-20">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <Card>
-                <TitleString>
-                  ARTH Seigniorage Distribution
-                  <HtmlTooltip
-                    enterTouchDelay={0}
-                    title={
-                      <span>
-                        When the system is in expansion mode (12hr TWAP price above $1.05), new
-                        ARTH coins are minted as seigniorage and are added back into the
-                        circulation as a way of increasing the coin supply. What you see below
-                        is the seigniorage distribution for various pools.
-                      </span>
-                    }
-                  >
-                    <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
-                  </HtmlTooltip>
-                </TitleString>
-                <PieChartCard>
-                  <PieChart />
-                  <div className="margin-left-20">
-                    <PieChartLables>
-                      <ChartIconColor color="#178A50" />
-                      <div>
-                        <ChartLabelTitle>ARTH-DAI MahaSwap LP</ChartLabelTitle>
-                        <ChartLabelTitleBold>70% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
-                      </div>
-                    </PieChartLables>
-                    <PieChartLables>
-                      <ChartIconColor color="#20C974" />
-                      <div>
-                        <ChartLabelTitle>ARTH</ChartLabelTitle>
-                        <ChartLabelTitleBold>20% {/* (20,000 ARTH) */}</ChartLabelTitleBold>
-                      </div>
-                    </PieChartLables>
-                    <PieChartLables>
-                      <ChartIconColor color="#C4F7DD" />
-                      <div>
-                        <ChartLabelTitle>MAHA</ChartLabelTitle>
-                        <ChartLabelTitleBold>10% {/* (10,000 MAHA) */}</ChartLabelTitleBold>
-                      </div>
-                    </PieChartLables>
-                  </div>
-                </PieChartCard>
-              </Card>
+              <DistributonSection />
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <StatCard

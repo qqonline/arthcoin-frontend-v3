@@ -3,18 +3,20 @@ import { save, load } from 'redux-localstorage-simple';
 import transactions from './transactions/reducer';
 import application from './application/reducer';
 import treasury from './treasury/reducer';
+import token from './token/reducer';
 import { createLogger } from 'redux-logger'
 
 
-const PERSISTED_KEYS: string[] = ['transactions'];
+const PERSISTED_KEYS: string[] = ['transactions', 'token'];
 
 const store = configureStore({
   reducer: {
     application,
     transactions,
-    treasury
+    treasury,
+    token
   },
-  middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS }), createLogger()],
+  middleware: [...getDefaultMiddleware({ serializableCheck: false, thunk: false }), save({ states: PERSISTED_KEYS }), createLogger()],
   preloadedState: load({ states: PERSISTED_KEYS }),
 });
 

@@ -12,11 +12,10 @@ const TWAPInformation: React.FC = () => {
   const price12hr = useSelector<AppState, BigNumber>(s => s.treasury.get12hrTWAPOraclePrice)
 
   return (
-
     <Grid container>
       <Grid item xs={12} sm={6} md={6} lg={6} xl={6} className="dynamicStatBorder">
         <PurchacseCard
-          title="12 hr TWAP"
+          title="12hr TWAP"
           isPurchase
           price={
             price12hr ? `$${getDisplayBalance(price12hr, 18, 2)}` : '-'
