@@ -221,7 +221,7 @@ const Home: React.FC = () => {
             toolTipLink="https://docs.arthcoin.com/arth-201/dynamic-epochs"
           />
           <Stat
-            title={'1 %'}
+            title={'0 %'}
             description="Stability Fees"
             toolTipTitle="This refers to the stability fees that the ARTH protocol charges while redemption of ARTH Bonds. Current stability fees is 1% which is charged in $MAHA(MahaDAO) tokens. Please note, stability fees is subject to change depending on the governance model of MahaDAO"
             toolTipLink="https://docs.arthcoin.com/arth-201/how-does-arth-mitigate-against-stability-risk/stability-fees-in-maha"

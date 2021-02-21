@@ -84,12 +84,13 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
   const arthMahaPrice = useARTHMahaPrice();
   const mahaBalance = useTokenBalance(MAHA);
 
-  const mahaToBurn = useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
-    arthMahaPrice,
-    val,
-  ]);
+  const mahaToBurn = BigNumber.from(0)
+  // useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
+  //   arthMahaPrice,
+  //   val,
+  // ]);
 
-  const isMahaApproved = mahaApproveStatus === ApprovalState.APPROVED;
+  const isMahaApproved = true // mahaApproveStatus === ApprovalState.APPROVED;
   const isMahaApproving = mahaApproveStatus === ApprovalState.PENDING;
 
   const description = `You are going to redeem ${val} ARTH by paying ${val} ARTHB and a stability fee of ${getDisplayBalance(
@@ -115,12 +116,12 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
         max={fullBalance}
         symbol={tokenName}
       />
-      <MahaFeeCheck
+      {/* <MahaFeeCheck
         value={mahaToBurn}
         approve={mahaApprove}
         isMahaApproved={isMahaApproved}
         max={getDisplayBalance(mahaBalance)}
-      />
+      /> */}
 
       <ActionButton>
         <ResponsiveButtonWidth>
