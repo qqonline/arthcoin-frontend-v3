@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { decimalToBalance } from '../basis-cash/ether-utils';
 import { VaultInfo } from '../basis-cash/types';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
@@ -8,7 +9,7 @@ const useUnbondFromVault = (vault: VaultInfo) => {
   const handleWithdraw = useCallback(
     async (amount: string) => {
       handleTransactionReceipt(
-        vault.contract.unbond(amount),
+        vault.contract.unbond(decimalToBalance(amount)),
         `Unbond ${amount} ${vault.depositTokenName}`,
       );
     },

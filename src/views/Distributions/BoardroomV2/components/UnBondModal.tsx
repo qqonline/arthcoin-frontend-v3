@@ -44,7 +44,7 @@ const UnbondModal: React.FC<WithdrawModalProps> = ({
   let modalJsx = <div />;
   if (openModal) {
     modalJsx = (
-      <Modal title={`Unbond ${tokenName}`} open={openModal} handleClose={handleClose}>
+      <Modal title={`Withdraw ${tokenName}`} open={openModal} handleClose={handleClose}>
         <TokenInput
           onSelectMax={handleSelectMax}
           onChange={handleChange}

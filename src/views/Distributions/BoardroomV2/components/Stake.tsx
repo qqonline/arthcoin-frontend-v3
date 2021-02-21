@@ -15,7 +15,7 @@ import useBasisCash from '../../../../hooks/useBasisCash';
 import { VaultInfo } from '../../../../basis-cash/types';
 import useStakedBalanceOnVault from '../../../../hooks/useStakedBalanceOnVault';
 import TokenSymbol from '../../../../components/TokenSymbol';
-import useStakeToVault from '../../../../hooks/useStakeToVault';
+import useStakeToVault from '../../../../hooks/useBondToVault';
 import WithdrawShareFromVault from '../../../../hooks/withdrawShareFromVault';
 import useBoardroomUnbondingDetails from '../../../../hooks/useBoardroomUnbondingDetails';
 import ProgressCountdown from './ProgressCountdown';
@@ -41,7 +41,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
 
   const stakedBalance = useStakedBalanceOnVault(vault.kind);
 
-  const { onStake } = useStakeToVault(vault);
+  const { onBond } = useStakeToVault(vault);
   const { onWithdraw } = WithdrawShareFromVault(vault);
   const { onUnbond } = useUnbondFromVault(vault);
 
@@ -49,7 +49,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     <BondModal
       max={tokenBalance}
       onConfirm={(value) => {
-        onStake(value);
+        onBond(value);
         onDismissBond();
       }}
       onCancel={() => onDismissBond()}
@@ -78,7 +78,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>{`${vault.depositTokenName} Bonded`} </StyleLabel>
+          <StyleLabel>{`${vault.depositTokenName} Deposited`} </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol={vault.depositTokenName} />
@@ -110,7 +110,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
             </>
           ) : (
             <StyledDesc>
-              You can now bond your tokens to start earning inflationary rewards.
+              You can now deposit your tokens to start earning inflationary rewards.
             </StyledDesc>
           )}
           {unbondedAmount.gt(0) && (
@@ -118,9 +118,9 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               <ProgressCountdown
                 base={depositDate}
                 deadline={endDate}
-                description={`You have unbonded ${getDisplayBalance(unbondedAmount, 18)} ${
+                description={`You have requested to withdraw ${getDisplayBalance(unbondedAmount, 18)} ${
                   vault.depositTokenName
-                } which will be withdrawable in`}
+                } which will be made available in`}
               />
               <br />
               <Button
