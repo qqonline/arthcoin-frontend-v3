@@ -1,6 +1,6 @@
 import { Fetcher as MFetcher, Route as MRoute, Token as MToken } from 'mahaswap-sdk';
 import { Fetcher, Route, Token } from '@uniswap/sdk';
-import { Boardrooms, Configuration } from './config';
+import { Boardrooms, BoardroomVersion, Configuration } from './config';
 import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
@@ -167,9 +167,9 @@ export class BasisCash {
         kind: 'arthMlpLiquidity',
         contract,
         address: contract.address,
-        depositTokenName: 'ARTH_DAI-MLP-LPv2',
+        depositTokenName: 'ARTH_DAI-MLP-LPv1',
         earnTokenName: 'ARTH',
-        seionrageSupplyPercentage: 65,
+        seionrageSupplyPercentage: 70,
         history7dayAPY: 30,
         lockInPeriodDays: 1,
       }
@@ -448,7 +448,7 @@ export class BasisCash {
     return this.contracts.ArthBoardroomV1;
   }
 
-  currentBoardroom(kind: Boardrooms): Contract {
+  currentBoardroom(kind: Boardrooms, version: BoardroomVersion): Contract {
     return this.boardroomByVersion(kind, 'v1');
   }
 
@@ -456,55 +456,56 @@ export class BasisCash {
     return this.boardroomVersionOfUser !== 'latest';
   }
 
-  async stakeShareToBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
+  async stakeShareToBoardroom(kind: Boardrooms, amount: string, version: BoardroomVersion): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-    const boardroom = this.currentBoardroom(kind);
+
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.bond(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnBoardroom(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.currentBoardroom(kind);
+  async getStakedSharesOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnBoardroom(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.currentBoardroom(kind);
+  async getEarningsOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.earned(this.myAccount);
   }
 
 
-  async getClaimableEarningsOnBoardroomV2(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.getBoardroom(kind, 'v2');
+  async getClaimableEarningsOnBoardroomV2(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.getBoardroom(kind, version);
     return await boardroom.contract.estimateRewardsToClaim(this.myAccount);
   }
 
-  async withdrawShareFromBoardroomV2(kind: Boardrooms): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+  async withdrawShareFromBoardroomV2(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.withdraw();
   }
 
   async withdrawShareFromBoardroomV1(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind, 'v1');
     return await boardroom.withdraw(decimalToBalance(amount));
   }
 
   async unbondShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind, 'v2');
     return await boardroom.unbond(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: Boardrooms, version: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+  async harvestCashFromBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind, version);
     if (this.boardroomVersionOfUser === 'v1') {
       return await boardroom.claimDividends();
     }
     return await boardroom.claimReward();
   }
 
-  async exitFromBoardroom(kind: Boardrooms, version: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+  async exitFromBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.exit();
   }
 

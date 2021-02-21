@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Container from '../../../components/Container';
-import ExchangeStat from '../../Bond/components/ExchangeStat';
 import { BoardroomInfo } from '../../../basis-cash';
 import PageHeader from '../../../components/PageHeader';
 import Button from '../../../components/Button/TransperantButton';
 import useBasisCash from '../../../hooks/useBasisCash';
-import Harvest from './components/Harvest';
+import HarvestMaha from './components/HarvestMaha';
+import HarvestArth from './components/HarvestArth';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
 import { Boardrooms } from '../../../basis-cash/config';
@@ -35,7 +35,10 @@ const Boardroom = () => {
             <Stake boardroom={boardroom} />
           </Grid>
           <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <Harvest boardroom={boardroom} />
+            <HarvestMaha boardroom={boardroom} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <HarvestArth boardroom={boardroom} />
           </Grid>
           <Grid container item xs={6}>
             <div style={{ marginTop: '20px', marginRight: 20, maxWidth: '200px' }}>

@@ -53,6 +53,7 @@ const logosBySymbol: { [title: string]: string } = {
 
   'ARTH_DAI-UNI-LPv2': bacLogo,
   'ARTH_DAI-MAHA-LPv1': bacLogo,
+  'ARTH_DAI-MLP-LPv1': bacLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'MAHA_ETH-UNI-LPv2': mahaLogo,
   'BAS_DAI-UNI-LPv2': basLogo,

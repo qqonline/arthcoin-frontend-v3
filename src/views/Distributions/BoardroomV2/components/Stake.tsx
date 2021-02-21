@@ -34,14 +34,14 @@ const Stake = ({ boardroom }: { boardroom: BoardroomInfo }) => {
 
   const [approveStatus, approve] = useApprove(
     stakingToken,
-    basisCash.currentBoardroom(boardroom.kind)?.address,
+    basisCash.currentBoardroom(boardroom.kind, 'v2')?.address,
   );
 
   const tokenBalance = useTokenBalance(stakingToken);
 
   const stakedBalance = useStakedBalanceOnBoardroom(boardroom.kind, 'v2');
 
-  const { onStake } = useStakeToBoardroom(boardroom);
+  const { onStake } = useStakeToBoardroom(boardroom, 'v2');
   const { onWithdraw } = withdrawShareFromBoardroomV2(boardroom);
   const { onUnbond } = useUnbondFromBoardroom(boardroom);
 

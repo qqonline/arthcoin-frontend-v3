@@ -10,7 +10,7 @@ import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { BoardroomInfo } from '../../../../basis-cash';
 
-const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
+const HarvestMaha = ({ boardroom }: { boardroom: BoardroomInfo }) => {
   const { onReward } = useHarvestFromBoardroom(boardroom);
   const [earnings, claimable] = useEarningsOnBoardroomV2(boardroom.kind);
 
@@ -18,7 +18,7 @@ const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>ARTH Earned </StyleLabel>
+          <StyleLabel>Maha Earned </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
               <TokenSymbol symbol="ARTH" />
@@ -79,4 +79,4 @@ const Card = styled.div`
   max-width: 500px;
   flex-direction: column;
 `;
-export default Harvest;
+export default HarvestMaha;

@@ -22,8 +22,11 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
     padding: '20px',
   },
 }))(Tooltip);
+
+
 interface BoardroomProps {
   boardroom: Boardrooms
+  version: 'v1' | 'v2'
   toolTipTitle?: string;
 }
 
@@ -31,7 +34,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
   const { account, connect } = useWallet();
   const basisCash = useBasisCash();
 
-  const boardroom = basisCash.getBoardroom(props.boardroom, 'v2');
+  const boardroom = basisCash.getBoardroom(props.boardroom, props.version);
 
   return (
     <StyledCardWrapper>
@@ -64,7 +67,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <StyledInfoSlots></StyledInfoSlots>
             <ButtonContainer>
               {!!account ? (
-                <Button text="Select" to={`/distribution/v1/${boardroom.kind}`} />
+                <Button text="Select" to={`/distribution/${props.version}/${boardroom.kind}`} />
               ) : (
                 <Button onClick={() => connect('injected')} text="Unlock Wallet" />
               )}

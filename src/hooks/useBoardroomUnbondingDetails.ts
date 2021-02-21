@@ -14,7 +14,7 @@ const useBoardroomUnbondingDetails = (boardroom: BoardroomInfo, stakedBalance: B
   const basisCash = useBasisCash();
 
   const fetchDepositTime = useCallback(async () => {
-    const b = await basisCash.currentBoardroom(boardroom.kind);
+    const b = await basisCash.currentBoardroom(boardroom.kind, 'v2');
     const details = await b._stakingDetails(basisCash.myAccount)
 
     const from = new Date(details.updatedOn * 1000)

@@ -27,7 +27,7 @@ const configurations: { [env: string]: Configuration } = {
 
       'MAHA_ETH-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTH_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
-      'ARTH_DAI-MLP-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
+      'ARTH_DAI-MLP-LPv1': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTHB_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18]
     },
 
@@ -61,7 +61,7 @@ const configurations: { [env: string]: Configuration } = {
       'MAHA_ETH-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
       'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
       'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
-      'ARTH_DAI-MLP-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTH_DAI-MLP-LPv1': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
      },
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
@@ -342,4 +342,4 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   },
 };
 
-export default configurations["production"];
+export default configurations["development"];
