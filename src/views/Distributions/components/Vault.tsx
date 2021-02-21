@@ -11,7 +11,8 @@ import useBasisCash from '../../../hooks/useBasisCash';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import InfoIcon from '../../../assets/img/InfoIcon.svg';
 import Tooltip from '@material-ui/core/Tooltip';
-import {  Vaults } from '../../../basis-cash/config';
+import { Vaults } from '../../../basis-cash/config';
+
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: '#2A2827',
@@ -44,7 +45,7 @@ const Vault: React.FC<BoardroomProps> = (props) => {
               <TokenSymbol symbol={boardroom.depositTokenName} size={54} />
             </CardIcon>
             <StyledTitle>
-              Bond {boardroom.depositTokenName}
+              Deposit {boardroom.depositTokenName}
             </StyledTitle>
             <LockinDiv>
               <StyledInfoSlot>
@@ -68,8 +69,8 @@ const Vault: React.FC<BoardroomProps> = (props) => {
               {!!account ? (
                 <Button text="Select" to={`/distribution/v2/${boardroom.kind}`} />
               ) : (
-                <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-              )}
+                  <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+                )}
             </ButtonContainer>
           </StyledContent>
         </CardContent>
