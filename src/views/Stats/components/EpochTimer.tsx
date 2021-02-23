@@ -82,11 +82,11 @@ const EpochTimer: React.FC = () => {
         <TitleString>Next Epoch</TitleString>
         <CurrentEpoch>{`Current Epoch: ${currentEpoch.toFixed(0)}`}</CurrentEpoch>
       </div>
-      <Desc>
+      {/* <Desc>
         The 12hr TWAP will get updated to ${getDisplayBalance(estimatedPrice)}.
         Based on this price, the protocol will not do anything as price is
         within the safe range.
-      </Desc>
+      </Desc> */}
       <LearnMore href="https://docs.arthcoin.com/arth-201/dynamic-epochs" target="">
         Learn more about Epoch
       </LearnMore>

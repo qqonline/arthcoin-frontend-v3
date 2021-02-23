@@ -17,6 +17,7 @@ const useTokenBalance = (token: ERC20) => {
       fetchBalance().catch((err) =>
         console.error(`Failed to fetch token balance: ${err.stack}`),
       );
+
       let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshInterval);
     }
