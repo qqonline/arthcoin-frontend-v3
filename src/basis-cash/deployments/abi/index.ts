@@ -12,6 +12,8 @@ export const UniswapV2Factory = require('./UniswapV2Factory.json');
 export const UniswapV2Router02 = require('./UniswapV2Router02.json');
 export const Vault = require('./Vault.json');
 export const VestedVaultBoardroom = require('./VestedVaultBoardroom.json');
+export const ARTHTokenPool = require('./ARTHTokenPool.json');
+export const SimpleBoardroom = require('./SimpleBoardroom.json');
 
 type IABIS = {
     [key: string]: any[]
@@ -28,6 +30,8 @@ const ret: IABIS = {
     Treasury,
     TreasuryOld,
     UniswapOracle,
+    SimpleBoardroom,
+    ARTHTokenPool,
     UniswapV2Factory,
     UniswapV2Router02,
     Vault,
