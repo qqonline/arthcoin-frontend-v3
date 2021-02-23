@@ -58,7 +58,7 @@ export class BasisCash {
     // Uniswap V2 Pair
 
     this.arthDai = new UniswapPair(
-      deployments.ArthDaiLP.address,
+      deployments.ArthDaiMLP.address,
       provider,
       'ARTH-DAI-LP'
     );
@@ -237,7 +237,7 @@ export class BasisCash {
    */
   async getCashStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromPair(this.arthDai),
+      priceInDAI: await this.getTokenPriceFromPair(this.arthDai, this.ARTH),
       totalSupply: await this.ARTH.displayedTotalSupply(),
     };
   }
@@ -250,8 +250,16 @@ export class BasisCash {
     const { TWAP12hrOracle } = this.contracts;
 
     // estimate current TWAP price
-    const cumulativePrice: BigNumber = await this.arthDai.price0CumulativeLast();
-    const cumulativePriceLast = await TWAP12hrOracle.price0CumulativeLast();
+    let cumulativePrice: BigNumber
+    let cumulativePriceLast: BigNumber
+
+    if ((await this.arthDai.token0()).toLowerCase() !== this.ARTH.address.toLowerCase()) {
+      cumulativePrice = await this.arthDai.price1CumulativeLast();
+      cumulativePriceLast = await TWAP12hrOracle.price1CumulativeLast();
+    } else {
+      cumulativePrice = await this.arthDai.price0CumulativeLast();
+      cumulativePriceLast = await TWAP12hrOracle.price0CumulativeLast();
+    }
 
     const elapsedSec = Math.floor(Date.now() / 1000 - (await TWAP12hrOracle.blockTimestampLast()));
 
@@ -273,12 +281,14 @@ export class BasisCash {
 
   async getCashPriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.get12hrTWAPOraclePrice();
+    const fn = Treasury.get12hrTWAPOraclePrice || Treasury.getSeigniorageOraclePrice
+    return fn();
   }
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.get1hrTWAPOraclePrice();
+    const fn = Treasury.get1hrTWAPOraclePrice || Treasury.getBondOraclePrice
+    return fn();
   }
 
   async getBondStat(): Promise<TokenStat> {
@@ -290,28 +300,36 @@ export class BasisCash {
 
   async getShareStat(): Promise<TokenStat> {
     return {
-      priceInDAI: BigNumber.from(0), // await this.getTokenPriceFromCoingecko(this.MAHA),
+      priceInDAI: await this.getTokenPriceFromCoingecko(this.MAHA),
       totalSupply: '783601', // await this.MAHA.displayedTotalSupply(),
     };
   }
 
-  async getTokenPriceFromPair(pair: UniswapPair): Promise<BigNumber> {
+  async getTokenPriceFromPair(pair: UniswapPair, forToken: ERC20): Promise<BigNumber> {
     await this.provider.ready;
+
+    const token0 = await pair.token0()
     const [r0, r1] = await pair.reserves()
     const decimals = BigNumber.from(10).pow(18);
+
+    if (token0.toLowerCase() === forToken.address.toLowerCase()) return r1.mul(decimals).div(r0)
     return r0.mul(decimals).div(r1)
   }
 
-  async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<string> {
+  async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<BigNumber> {
     await this.provider.ready;
+
+    const decimals = BigNumber.from(10).pow(18);
 
     try {
       const result = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
       const json = await result.json()
-      return (json[tokenContract.address.toLowerCase()].usd).toFixed(3)
+      return BigNumber.from(json[tokenContract.address.toLowerCase()].usd).mul(decimals)
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }
+
+    return BigNumber.from(0)
   }
 
   async estimateAmountOutFromUniswap(amountIn: number, path: ERC20[]): Promise<BigNumber> {
@@ -452,8 +470,9 @@ export class BasisCash {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-
     const boardroom = this.currentBoardroom(kind, version);
+
+    if (version === 'v1') return await boardroom.stake(decimalToBalance(amount));
     return await boardroom.bond(decimalToBalance(amount));
   }
 

@@ -18,24 +18,24 @@ const Template: React.FC<TemplateProps> = (props) => (
   <Content>
     <Label>{props.title}</Label>
 
-        <Actions>
-          <IcnonContainer>
-            <Icon>
-              <TokenSymbol size={40} symbol={props.symbol} />
-            </Icon>
-            <Amount>{props.amount}</Amount>
-          </IcnonContainer>
-          {
-            props.action || (
-              <ButtonContainer>
-                <Button
-                  onClick={props.buttonOnClick}
-                  disabled={props.buttonDisabled}
-                  text={props.buttonLabel}
-                />
-              </ButtonContainer>
-          )}
-        </Actions>
+    <Actions>
+      <IcnonContainer>
+        <Icon>
+          <TokenSymbol size={40} symbol={props.symbol} />
+        </Icon>
+        <Amount>{props.amount}</Amount>
+      </IcnonContainer>
+      {
+        props.action || (
+          <ButtonContainer>
+            <Button
+              onClick={props.buttonOnClick}
+              disabled={props.buttonDisabled}
+              text={props.buttonLabel}
+            />
+          </ButtonContainer>
+        )}
+    </Actions>
   </Content>
 );
 

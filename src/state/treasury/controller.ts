@@ -35,8 +35,8 @@ export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
 
   const updateJob =  async () => {
     const t = await basisCash.getTreasury()
-    const state = await t.getState();
-    dispatch(Actions.updateState(state))
+    // const state = await t.getState();
+    // dispatch(Actions.updateState(state))
   }
 
   updateJob()
@@ -49,11 +49,17 @@ export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
 
 
     registerVariableBN('getGMUOraclePrice()(uint256)', Actions.updateGetGMUOraclePrice),
-    registerVariableBN('get12hrTWAPOraclePrice()(uint256)', Actions.updateGet12hrTWAPOraclePrice),
-    registerVariableBN('get1hrTWAPOraclePrice()(uint256)', Actions.updateGet1hrTWAPOraclePrice),
+    registerVariableBN('getSeigniorageOraclePrice()(uint256)', Actions.updateGet12hrTWAPOraclePrice),
+    registerVariableBN('getBondOraclePrice()(uint256)', Actions.updateGet1hrTWAPOraclePrice),
     registerVariableBN('bondCirculatingSupply()(uint256)', Actions.updateBondCirculatingSupply),
     registerVariableBN('arthCirculatingSupply()(uint256)', Actions.updateArthCirculatingSupply),
 
+
+    // registerVariableBN('getGMUOraclePrice()(uint256)', Actions.updateGetGMUOraclePrice),
+    // registerVariableBN('get12hrTWAPOraclePrice()(uint256)', Actions.updateGet12hrTWAPOraclePrice),
+    // registerVariableBN('get1hrTWAPOraclePrice()(uint256)', Actions.updateGet1hrTWAPOraclePrice),
+    // registerVariableBN('bondCirculatingSupply()(uint256)', Actions.updateBondCirculatingSupply),
+    // registerVariableBN('arthCirculatingSupply()(uint256)', Actions.updateArthCirculatingSupply),
 
     // // registerVariable('getReserve()(uint256)', Actions.updateGetReserve),
     // // registerVariable('getBondOraclePrice()(uint256)', Actions.updateGetBondOraclePrice),

@@ -3,7 +3,6 @@ import Context from './context';
 import useBasisCash from '../../hooks/useBasisCash';
 import { Bank } from '../../basis-cash';
 import config, { bankDefinitions } from '../../config';
-import { ControlPointSharp } from '@material-ui/icons';
 
 const Banks: React.FC = ({ children }) => {
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -17,15 +16,15 @@ const Banks: React.FC = ({ children }) => {
       if (!config.deployments[bankInfo.contract]) return
 
       if (bankInfo.finished) {
-        // if (!basisCash.isUnlocked) continue;
-        // // only show pools staked by user
-        // const balance = await basisCash.stakedBalanceOnBank(
-        //   bankInfo.contract,
-        //   basisCash.myAccount,
-        // );
-        // if (balance.lte(0)) {
-        //   continue;
-        // }
+        if (!basisCash.isUnlocked) continue;
+        // only show pools staked by user
+        const balance = await basisCash.stakedBalanceOnBank(
+          bankInfo.contract,
+          basisCash.myAccount,
+        );
+        if (balance.lte(0)) {
+          continue;
+        }
       }
 
 

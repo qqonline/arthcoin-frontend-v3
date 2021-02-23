@@ -95,10 +95,10 @@ const Home: React.FC = () => {
         </Grid>
         <div className="margin-top-bottom-20">
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <DistributonSection />
             </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+            {/* <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <StatCard
                 statData={[
                   {
@@ -121,10 +121,10 @@ const Home: React.FC = () => {
                   },
                 ]}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                   <StatCard
                     statData={[
                       {
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
                       },
                     ]}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                   <StatCard
                     statData={[
