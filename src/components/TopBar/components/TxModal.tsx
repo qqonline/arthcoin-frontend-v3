@@ -18,6 +18,7 @@ const MAX_TRANSACTION_HISTORY = 10;
 interface props {
   onDismiss?: Function;
 }
+
 const TxModal: React.FC<props> = ({ onDismiss }) => {
   const allTransactions = useAllTransactions();
   const [openModal, toggleModal] = useState(true);
@@ -40,7 +41,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
   };
 
   return (
-    <Modal title="Transactions" open handleClose={handleClose}>
+    <Modal title="Transactions" open={openModal} handleClose={handleClose}>
       <StyledTitleArea>
         {confirmed?.length > 0 && (
           <StyledClearIconWrapper>

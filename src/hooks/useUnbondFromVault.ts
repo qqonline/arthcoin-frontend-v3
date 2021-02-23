@@ -10,7 +10,7 @@ const useUnbondFromVault = (vault: VaultInfo) => {
     async (amount: string) => {
       handleTransactionReceipt(
         vault.contract.unbond(decimalToBalance(amount)),
-        `Unbond ${amount} ${vault.depositTokenName}`,
+        `Request to withdraw ${amount} ${vault.depositTokenName}`,
       );
     },
     [handleTransactionReceipt, vault.contract, vault.depositTokenName],

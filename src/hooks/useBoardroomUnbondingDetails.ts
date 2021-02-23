@@ -26,7 +26,7 @@ const useBoardroomUnbondingDetails = (boardroom: VaultInfo, stakedBalance: BigNu
   }, [basisCash.myAccount, boardroom.contract]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked && stakedBalance.gt(0)) {
+    if (basisCash.isUnlocked) {
       fetchDepositTime().catch(err => console.error(err.stack));
     }
   }, [basisCash.isUnlocked, fetchDepositTime, stakedBalance]);

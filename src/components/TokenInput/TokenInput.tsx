@@ -22,8 +22,10 @@ const TokenInput: React.FC<TokenInputProps> = ({
   return (
     <StyledTokenInput>
       <StyledMaxText>
-        {label ? label : `${max.toLocaleString()} ${symbol} Available`}
+        {`${max.toLocaleString()} ${symbol} Available`}
       </StyledMaxText>
+      {label && (<StyledMaxText>{label}</StyledMaxText>)}
+      <br />
       <Input
         type={type}
         endAdornment={
@@ -90,6 +92,7 @@ const StyledMaxText = styled.div`
   display: flex;
   font-size: 14px;
   font-weight: 700;
+  // margin-bottom: 15px;
   height: 44px;
   justify-content: flex-start;
 `;

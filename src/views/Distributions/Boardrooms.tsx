@@ -52,8 +52,8 @@ const Boardrooms: React.FC = () => {
     <>
       <PageHeader
         icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
-        title="ARTH Distribution"
-        subtitle="Bond/Stake tokens and earn inflationary rewards when the ARTH supply expands. Rewards are redeemable only if the protocol is in expansion mode."
+        title="ARTH/MAHA Distribution"
+        subtitle="Deposit tokens and earn rewards when the protocol supply expands/contracts. You will earn ARTH rewards when the protocol expands and MAHA rewards when the protocol contracts"
       />
       <Container size="lg">
         {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
@@ -64,13 +64,13 @@ const Boardrooms: React.FC = () => {
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
               vault={'arthMlpLiquidity'}
-              // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
               vault={'arth'}
-              // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
 

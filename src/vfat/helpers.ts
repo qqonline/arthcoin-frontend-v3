@@ -135,24 +135,6 @@ export async function printSynthetixPool(App: IVFatApp, info: any) {
 }
 
 
-function formatMoney(amount: any, decimalCount = 2, decimal = ".", thousands = ",") {
-    try {
-        decimalCount = Math.abs(decimalCount);
-        decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
-
-        const negativeSign = amount < 0 ? "-" : "";
-
-        let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
-        let j = (i.length > 3) ? i.length % 3 : 0;
-
-        return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j)
-            .replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
-            (decimalCount ? decimal + Math.abs(amount - Number(i)).toFixed(decimalCount).slice(2) : "");
-    } catch (e) {
-        console.log(e)
-    }
-}
-
 function getParameterCaseInsensitive(object: any, key: string) {
     return object[Object.keys(object)
         .find(k => k.toLowerCase() === key.toLowerCase())
@@ -305,8 +287,7 @@ async function getToken(app: any, tokenAddress: any, stakingAddress: any) {
     }
     try {
         const jar = new Contract(tokenAddress, JAR_ABI, app.provider);
-        const _token = await jar.token();
-        return await getJar(app, jar, tokenAddress, stakingAddress);
+         return await getJar(app, jar, tokenAddress, stakingAddress);
     }
     catch (err) {
     }
@@ -415,6 +396,7 @@ function getBalancerPrices(tokens: any, prices: any, pool: any) {
     var quantities = poolTokens.map((t: { decimals: number; }, i: string | number) => pool.poolTokens[i].balance / 10 ** t.decimals);
     var missing = poolPrices.filter((x: any) => !x);
     if (missing.length == poolPrices.length) {
+        // eslint-disable-next-line no-throw-literal
         throw 'Every price is missing';
     }
     var notMissing = poolPrices.findIndex((p: any) => p);

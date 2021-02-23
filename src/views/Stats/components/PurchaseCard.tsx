@@ -167,13 +167,13 @@ const TimeComponent = styled.div`
   opacity: 0.6;
   padding: 5px 10px;
 `;
-const IncreasedText = styled.div`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  color: #178a50;
-`;
+// const IncreasedText = styled.div`
+//   font-style: normal;
+//   font-weight: 300;
+//   font-size: 12px;
+//   line-height: 130%;
+//   color: #178a50;
+// `;
 const TitleBold = styled.div`
   font-style: normal;
   margin-top: 13px;

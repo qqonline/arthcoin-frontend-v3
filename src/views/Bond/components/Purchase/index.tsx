@@ -206,11 +206,11 @@ const StyledCardTitle = styled.div`
   margin-top: ${(props) => -props.theme.spacing[3]}px;
 `;
 
-const StyledCardDesc = styled.div`
-  margin-bottom: 26px;
-  text-align: center;
-  color: #fff9;
-`;
+// const StyledCardDesc = styled.div`
+//   margin-bottom: 26px;
+//   text-align: center;
+//   color: #fff9;
+// `;
 
 const StyledCardIcon = styled.div`
   width: 72px;

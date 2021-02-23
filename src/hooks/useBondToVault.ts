@@ -10,7 +10,7 @@ export default (vault: VaultInfo) => {
     async (amount: string) => {
         handleTransactionReceipt(
         vault.contract.bond(decimalToBalance(amount)),
-        `Bond ${amount} ${vault.depositTokenName}`,
+        `Deposit ${amount} ${vault.depositTokenName}`,
       );
     },
     [handleTransactionReceipt, vault.contract, vault.depositTokenName],
