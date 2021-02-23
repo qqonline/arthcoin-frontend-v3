@@ -24,7 +24,7 @@ const Boardroom = () => {
         title="ARTH Distribution"
         icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
         subtitle={`Deposit ${vault.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
-        // showEpoch
+      // showEpoch
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -34,11 +34,13 @@ const Boardroom = () => {
           <Grid container item xs={12} md={6} lg={6} xl={6}>
             <Stake vault={vault} />
           </Grid>
-          <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <HarvestMaha boardroomId={vault.mahaBoardroom} />
-          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="center">
           <Grid container item xs={12} md={6} lg={6} xl={6}>
             <HarvestArth boardroomId={vault.arthBoardroom} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <HarvestMaha boardroomId={vault.mahaBoardroom} />
           </Grid>
           {/* <Grid container item xs={6}>
             <div style={{ marginTop: '20px', marginRight: 20, maxWidth: '200px' }}>

@@ -23,7 +23,7 @@ const BankCardsV2: React.FC = () => {
 
   return (
     <StyledCards>
-      <VFATAnn>
+      {/* <VFATAnn>
         <span role="img" aria-label="farming">
           🌾
         </span>{' '}
@@ -39,7 +39,7 @@ const BankCardsV2: React.FC = () => {
         <span role="img" aria-label="farming">
           🌾
         </span>
-      </VFATAnn>
+      </VFATAnn> */}
 
       {/* {inactiveRows[0].length > 0 && (
         <StyledInactiveNoticeContainer>
@@ -60,7 +60,7 @@ const BankCardsV2: React.FC = () => {
         ))}
       </Grid>
 
-      <StyledInactiveBankTitle>Closed Pools</StyledInactiveBankTitle>
+      {inactiveBanks.length > 0 && (<StyledInactiveBankTitle>Closed Pools</StyledInactiveBankTitle>)}
       <Grid container spacing={5} justify="center" alignItems="stretch">
 
         {inactiveBanks.map((bank, j) => (

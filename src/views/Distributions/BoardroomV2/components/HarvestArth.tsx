@@ -30,7 +30,10 @@ const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
             <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
           </StyledCardHeader>
         </StyledCardContentInner>
-        <p>
+        <p style={{ color: '#fff9' }}>
+          You earn ARTH rewards when the protocol is in expansion
+        </p>
+        <p style={{ color: '#fff9' }}>
           Your rewards are vested across 8 hours. If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
         </p>
         <StyledCardActions>
@@ -41,7 +44,7 @@ const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   );
 };
 const StyledValue = styled.div`
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 24px;
   margin-left: 20px;
   font-weight: bold;

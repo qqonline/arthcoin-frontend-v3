@@ -130,16 +130,16 @@ const PurchaseCard: React.FC<StatProps> = ({
           <TitleBold>{getDisplayBalance(price)}</TitleBold>
           {/* <IncreasedText>{percenTageIncreaseText}</IncreasedText> */}
         </div>
-        <div className="dialog-class">
+        {/* <div className="dialog-class">
           <TimeComponent>{timeRemaining}</TimeComponent>
           <HtmlTooltip enterTouchDelay={0} title={<span>{timeRemainingToolTip}</span>}>
             <img src={InfoIcon} alt="Inof" width="16px" />
           </HtmlTooltip>
-        </div>
+        </div> */}
       </InfoContent>
-      <StyledDesc>{buttonTopDesc}</StyledDesc>
+      {/* <StyledDesc>{buttonTopDesc}</StyledDesc>
       <Button disabled={buttonDisabled} text={buttonText} />
-      <ConditionText>{buttonBottomDesc}</ConditionText>
+      <ConditionText>{buttonBottomDesc}</ConditionText> */}
     </PurChaseCardPadding>
   );
 };

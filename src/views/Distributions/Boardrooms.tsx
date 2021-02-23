@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PageHeader from '../../components/PageHeader';
 
 import Boardroom from './components/Vault';
-import { Switch } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Page from '../../components/Page';
 import Container from '../../components/Container';
@@ -48,6 +48,25 @@ const Boardrooms: React.FC = () => {
 
   if (!basisCash) return <div />;
 
+  const OldBalance = (
+    <div style={{
+      color: '#fff',
+      fontSize: 14,
+      backgroundColor: '#fff2', padding: 15, textAlign: 'center', borderRadius: 3, marginBottom: 15
+    }}>
+      <p>
+        If have deposits in the old distribution contracts. Please withdraw your funds
+        and deposit them into the new distribution contracts.
+      </p>
+
+      <ul>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/arth">View Old ARTH Distribution contract</Link></li>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/arthLiquidity">View Old ARTH/DAI UNI-LP Distribution contract</Link></li>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/mahaLiquidity">View Old MAHA/ETH UNI-LP Distribution contract</Link></li>
+      </ul>
+    </div>
+  )
+
   return (
     <>
       <PageHeader
@@ -58,9 +77,6 @@ const Boardrooms: React.FC = () => {
       <Container size="lg">
         {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
         <Grid container spacing={5} justify="center" alignItems="stretch">
-          {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom boardroom={'arthMlpLiquidity'} />
-          </Grid> */}
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
               vault={'arthMlpLiquidity'}
@@ -78,6 +94,8 @@ const Boardrooms: React.FC = () => {
             <Boardroom vault={'maha'} />
           </Grid>
         </Grid>
+
+        {OldBalance}
       </Container>
     </>
   );

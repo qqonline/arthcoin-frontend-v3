@@ -56,12 +56,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
                 '-'
               )}
           </CardSection>
-          <CardSection>
+          {/* <CardSection>
             <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
               Liquidity
             </div>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
-          </CardSection>
+          </CardSection> */}
           <CardSection>
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
               {supplyLabel}

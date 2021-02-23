@@ -118,6 +118,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               )}
             </StyledCardActions>
           </StyledCardHeader>
+          <StyledDesc>There is a {vault.lockInPeriodDays} day withdrawal delay with this distribution contract.</StyledDesc>
           {approveStatus !== ApprovalState.APPROVED ? (
             <>
               <StyledDesc>Approve your tokens for use with this contract.</StyledDesc>
