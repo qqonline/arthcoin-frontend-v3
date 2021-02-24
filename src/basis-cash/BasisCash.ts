@@ -137,6 +137,17 @@ export class BasisCash {
   getBoardroom(kind: Boardrooms, version: string): BoardroomInfo {
     const contract = this.boardroomByVersion(kind, version)
 
+    // if (kind === 'arthDai') return {
+    //   kind: 'arthDai',
+    //   contract,
+    //   address: contract.address,
+    //   depositTokenName: 'ARTH+DAI',
+    //   earnTokenName: 'ARTH',
+    //   seionrageSupplyPercentage: 20,
+    //   history7dayAPY: 30,
+    //   lockInPeriodDays: 5,
+    // }
+
     if (kind === 'arth') return {
       kind: 'arth',
       contract,
@@ -147,6 +158,17 @@ export class BasisCash {
       history7dayAPY: 30,
       lockInPeriodDays: 5,
     }
+
+    // if (kind === 'maha') return {
+    //   kind: 'maha',
+    //   contract,
+    //   address: contract.address,
+    //   depositTokenName: 'MAHA',
+    //   earnTokenName: 'ARTH',
+    //   seionrageSupplyPercentage: 20,
+    //   history7dayAPY: 30,
+    //   lockInPeriodDays: 5,
+    // }
 
     if (kind === 'mahaLiquidity')
       return {
