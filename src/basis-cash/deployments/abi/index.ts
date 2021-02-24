@@ -6,6 +6,7 @@ export const Multicall = require('./Multicall.json');
 export const SimpleERCFund = require('./SimpleERCFund.json');
 export const SimpleOracle = require('./SimpleOracle.json');
 export const Treasury = require('./Treasury.json');
+export const Maharaja = require('./Maharaja.json');
 export const TreasuryOld = require('./TreasuryOld.json');
 export const UniswapOracle = require('./UniswapOracle.json');
 export const UniswapV2Factory = require('./UniswapV2Factory.json');
@@ -16,26 +17,27 @@ export const ARTHTokenPool = require('./ARTHTokenPool.json');
 export const SimpleBoardroom = require('./SimpleBoardroom.json');
 
 type IABIS = {
-    [key: string]: any[]
+  [key: string]: any[]
 }
 
 const ret: IABIS = {
-    BaseToken,
-    IERC20,
-    MahaToken,
-    Multicall,
-    SimpleERCFund,
-    SimpleOracle,
-    IUniswapV2Pair,
-    Treasury,
-    TreasuryOld,
-    UniswapOracle,
-    SimpleBoardroom,
-    ARTHTokenPool,
-    UniswapV2Factory,
-    UniswapV2Router02,
-    Vault,
-    VestedVaultBoardroom,
+  BaseToken,
+  IERC20,
+  MahaToken,
+  Maharaja,
+  Multicall,
+  SimpleERCFund,
+  SimpleOracle,
+  IUniswapV2Pair,
+  Treasury,
+  TreasuryOld,
+  UniswapOracle,
+  SimpleBoardroom,
+  ARTHTokenPool,
+  UniswapV2Factory,
+  UniswapV2Router02,
+  Vault,
+  VestedVaultBoardroom,
 }
 
 export default ret
