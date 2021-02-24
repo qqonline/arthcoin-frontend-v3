@@ -12,6 +12,7 @@ import InfoIcon from '@material-ui/icons/Info';
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
+  
 
   const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;

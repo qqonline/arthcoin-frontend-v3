@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { useWallet } from 'use-wallet';
@@ -30,11 +31,13 @@ interface StyledCardProps {
 
 const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
   const { account, connect } = useWallet();
-  const basisCash = useBasisCash();
+  const basisCash = useBasisCash();  
+  const history = useHistory();
 
   const boardroom = basisCash.getBoardroom(props.boardroom, 'v2');
-  const hasDetail = boardroom.depositTokenName === "ARTH+DAI";
+  const hasDetail = boardroom.depositTokenName === "ARTH";
   const handleCardClick = () => {
+    history.push(`/distribution/v2/${boardroom.kind}`)
   }
 
   return (
@@ -44,7 +47,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
           <Grid container justify="space-between" alignItems="center">
             <Grid container item alignItems="center" direction="row" lg={4} style={{height: 'fitContent'}}>
               <Grid item>
-                <TokenSymbol symbol={boardroom.depositTokenName === "ARTH+DAI" ? "ARTH_DAI" : boardroom.depositTokenName} size={36} />
+                <TokenSymbol symbol={boardroom.depositTokenName === "ARTH" ? "ARTH_DAI" : boardroom.depositTokenName} size={36} />
               </Grid>
               <span style={{width: 20}} />
               <Grid container item xs={8} lg={9}>
