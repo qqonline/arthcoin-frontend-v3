@@ -42,7 +42,7 @@ code {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 170vh;
+  height: 100%;
   position: absolute;
   top: 0;
   z-index: -2;
