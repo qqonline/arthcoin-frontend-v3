@@ -58,7 +58,7 @@ export class BasisCash {
     // Uniswap V2 Pair
 
     this.arthDai = new UniswapPair(
-      deployments.ArthDaiLP.address,
+      deployments.ArthDaiMLP.address,
       provider,
       'ARTH-DAI-LP'
     );
