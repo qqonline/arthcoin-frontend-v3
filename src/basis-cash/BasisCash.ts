@@ -321,7 +321,7 @@ export class BasisCash {
   async getShareStat(): Promise<TokenStat> {
     return {
       priceInDAI: await this.getTokenPriceFromCoingecko(this.MAHA),
-      totalSupply: '783601', // await this.MAHA.displayedTotalSupply(),
+      totalSupply: '1007483', // await this.MAHA.displayedTotalSupply(),
     };
   }
 
@@ -344,7 +344,7 @@ export class BasisCash {
     try {
       const result = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
       const json = await result.json()
-      return BigNumber.from(json[tokenContract.address.toLowerCase()].usd).mul(decimals)
+      return BigNumber.from(Number(json[tokenContract.address.toLowerCase()].usd)).mul(decimals)
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }
