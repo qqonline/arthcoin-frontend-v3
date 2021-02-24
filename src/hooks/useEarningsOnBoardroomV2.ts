@@ -10,9 +10,14 @@ const useEarningsOnBoardroomV2 = (kind: BoardroomsV2) => {
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    // setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
-    // setClaimableBalance(await basisCash.getClaimableEarningsOnBoardroomV2(kind, 'v2'));
-  }, []);
+    const boardroom = basisCash.getBoardroomV2(kind)
+
+    const director = await boardroom.contract.getDirector(basisCash.myAccount)
+
+    const earned: BigNumber = await boardroom.contract.estimateEarned(basisCash.myAccount)
+    setBalance(earned.sub(director.rewardClaimedCurrEpoch));
+    // setClaimableBalance(earned.);
+  }, [basisCash, kind]);
 
   useEffect(() => {
     if (basisCash.isUnlocked) {

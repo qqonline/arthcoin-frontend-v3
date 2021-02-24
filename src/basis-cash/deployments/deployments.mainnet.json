@@ -24,15 +24,15 @@
     "abi": "Vault"
   },
   "ArthArthBoardroomV2": {
-    "address": "0xBd0baC8A4Bc5e737A1Ea325aDBbBb6Ef213B01f5",
+    "address": "0xDd15E72441F3C28fb5528E62640DC233C5a0439D",
     "abi": "VestedVaultBoardroom"
   },
   "ArthArthMlpLiquidityBoardroomV2": {
-    "address": "0x04C4e4Ff349d2C350e6f1B193391e229d21798B2",
+    "address": "0x3178fcCeA39C32983750C6C5b9B9E41BDB72F466",
     "abi": "VestedVaultBoardroom"
   },
   "ArthMahaBoardroomV2": {
-    "address": "0x30e20C60563dbd9BA3F2365EeB4cf5E035494D0C",
+    "address": "0x6A7cd1CeF2D28512779ad81A53d2Ab74F08AcF6b",
     "abi": "VestedVaultBoardroom"
   },
   "MahaArthBoardroomV2": {

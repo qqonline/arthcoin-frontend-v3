@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
- import { BoardroomInfoV2 } from '../basis-cash/types';
+import { BoardroomInfoV2 } from '../basis-cash/types';
 import useBasisCash from './useBasisCash';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
