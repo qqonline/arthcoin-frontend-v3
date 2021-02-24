@@ -20,8 +20,8 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/bonds">
         Bonds
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/staking">
-        Staking
+      <StyledLink exact activeClassName="active" to="/farming">
+        Farming
       </StyledLink>
 
       <StyledALink target="_blank" href="https://mahaswap.com/">

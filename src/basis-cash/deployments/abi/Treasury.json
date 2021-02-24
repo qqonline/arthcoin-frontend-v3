@@ -1,0 +1,1487 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract Maharaja",
+        "name": "_maharaja",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_dai",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBasisAsset",
+        "name": "_cash",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBasisAsset",
+        "name": "_bond",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_share",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "val",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_period",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startEpoch",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      }
+    ],
+    "name": "AdvanceEpoch",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "BondsAllocated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountDaiIn",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountBurnt",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bondsIssued",
+        "type": "uint256"
+      }
+    ],
+    "name": "BoughtBonds",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "executor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "at",
+        "type": "uint256"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "Migration",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOperator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOperator",
+        "type": "address"
+      }
+    ],
+    "name": "OperatorTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "seigniorage",
+        "type": "uint256"
+      }
+    ],
+    "name": "PoolFunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RedeemedBonds",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "seigniorage",
+        "type": "uint256"
+      }
+    ],
+    "name": "SeigniorageMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "StabilityFeesCharged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "seigniorage",
+        "type": "uint256"
+      }
+    ],
+    "name": "TreasuryFunded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "arthCirculatingSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "boardroomState",
+    "outputs": [
+      {
+        "internalType": "contract IBoardroom",
+        "name": "arthArthLiquidityMlpBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "arthMahaBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "arthArthBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "mahaArthLiquidityMlpBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "mahaMahaBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "mahaArthBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "ecosystemFund",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "rainyDayFund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "arthLiquidityMlpAllocationRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "arthAllocationRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mahaAllocationRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ecosystemFundAllocationRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rainyDayFundAllocationRate",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "bond",
+    "outputs": [
+      {
+        "internalType": "contract IBasisAsset",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "bondCirculatingSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "callable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "cash",
+    "outputs": [
+      {
+        "internalType": "contract IBasisAsset",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "checkOperator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "dai",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "name": "estimateBondsToIssue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "name": "estimateSeignorageToMint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "flags",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "migrated",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "initialized",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "enableSurprise",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "considerUniswapLiquidity",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "get12hrTWAPOraclePrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "get1hrTWAPOraclePrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getBondPurchasePrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getBondRedemtionPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getCashSupplyInLiquidity",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getCurrentEpoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getExpansionLimitPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getGMUOraclePrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getLastEpoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getNextEpoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getPeriod",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getStartTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getState",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uniswapRouter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "uniswapLiquidityPair",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cashTargetPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cashToBondConversionLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accumulatedBonds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accumulatedSeigniorage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDebtIncreasePerEpoch",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondDiscount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "safetyRegion",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxSupplyIncreasePerEpoch",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bondSeigniorageRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "contractionRewardPerEpoch",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct TreasuryLibrary.State",
+        "name": "s",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract IUniswapOracle",
+            "name": "oracle1hrTWAP",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IUniswapOracle",
+            "name": "oracle12hrTWAP",
+            "type": "address"
+          },
+          {
+            "internalType": "contract ISimpleOracle",
+            "name": "gmuOracle",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct TreasuryLibrary.OracleState",
+        "name": "o",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract IBoardroom",
+            "name": "arthArthLiquidityMlpBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IBoardroom",
+            "name": "arthMahaBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IBoardroom",
+            "name": "arthArthBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IBoardroom",
+            "name": "mahaArthLiquidityMlpBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IBoardroom",
+            "name": "mahaMahaBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IBoardroom",
+            "name": "mahaArthBoardroom",
+            "type": "address"
+          },
+          {
+            "internalType": "contract ISimpleERCFund",
+            "name": "ecosystemFund",
+            "type": "address"
+          },
+          {
+            "internalType": "contract ISimpleERCFund",
+            "name": "rainyDayFund",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "arthLiquidityMlpAllocationRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "arthAllocationRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mahaAllocationRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ecosystemFundAllocationRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rainyDayFundAllocationRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct TreasuryLibrary.BoardroomState",
+        "name": "b",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "isOperator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "lastExecutedAt",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "maharaja",
+    "outputs": [
+      {
+        "internalType": "contract Maharaja",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "nextEpochPoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "operator",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "oracleState",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapOracle",
+        "name": "oracle1hrTWAP",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IUniswapOracle",
+        "name": "oracle12hrTWAP",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleOracle",
+        "name": "gmuOracle",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "period",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_arthArthLiquidityMlpBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_arthMahaBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_arthArthBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_mahaArthLiquidityMlpBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_mahaMahaBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "_mahaArthBoardroom",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "_fund",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "_rainyDayFund",
+        "type": "address"
+      }
+    ],
+    "name": "setAllFunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBoardroom",
+        "name": "expansionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "contractionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setArthBoardroom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBoardroom",
+        "name": "expansionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "contractionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setArthLiquidityMlpBoardroom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBondDiscount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBondSeigniorageRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "val",
+        "type": "bool"
+      }
+    ],
+    "name": "setConsiderUniswapLiquidity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setContractionRewardPerMonth",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "fund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setEcosystemFund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBoardroom",
+        "name": "expansionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IBoardroom",
+        "name": "contractionFund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMahaBoardroom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxDebtIncreasePerEpoch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxSupplyIncreasePerEpoch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IUniswapOracle",
+        "name": "_oracle1hrTWAP",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IUniswapOracle",
+        "name": "_oracle12hrTWAP",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISimpleOracle",
+        "name": "_gmuOracle",
+        "type": "address"
+      }
+    ],
+    "name": "setOracles",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_period",
+        "type": "uint256"
+      }
+    ],
+    "name": "setPeriod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISimpleERCFund",
+        "name": "fund",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRainyDayFund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setSafetyRegion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "val",
+        "type": "bool"
+      }
+    ],
+    "name": "setSurprise",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "val",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      }
+    ],
+    "name": "setUniswapRouter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "share",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "startTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "state",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uniswapRouter",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "uniswapLiquidityPair",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cashTargetPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cashToBondConversionLimit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "accumulatedBonds",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "accumulatedSeigniorage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxDebtIncreasePerEpoch",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bondDiscount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "safetyRegion",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxSupplyIncreasePerEpoch",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bondSeigniorageRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "contractionRewardPerEpoch",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOperator_",
+        "type": "address"
+      }
+    ],
+    "name": "transferOperator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountInDai",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "targetPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyBonds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemBonds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "allocateSeigniorage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "refundShares",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "migrate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

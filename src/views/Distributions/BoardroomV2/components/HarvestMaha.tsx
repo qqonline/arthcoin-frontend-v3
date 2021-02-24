@@ -8,29 +8,40 @@ import CardIcon from '../../../../components/CardIcon';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
-import { BoardroomInfo } from '../../../../basis-cash';
+import useBasisCash from '../../../../hooks/useBasisCash';
+import { BoardroomsV2 } from '../../../../basis-cash/config';
 
-const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
-  const { onReward } = useHarvestFromBoardroom(boardroom);
-  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroom.kind);
+const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
+  const basisCash = useBasisCash()
+  const boardroom = basisCash.getBoardroomV2(boardroomId)
+  // const { onReward } = useHarvestFromBoardroom(boardroom);
+  // const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 
   return (
     <Card>
       <CardContent>
         <StyledCardContentInner>
-          <StyleLabel>ARTH Earned </StyleLabel>
+          <StyleLabel>MAHA Earned </StyleLabel>
           <StyledCardHeader>
             <CardIcon>
-              <TokenSymbol symbol="ARTH" />
+              <TokenSymbol symbol="MAHA" />
             </CardIcon>
-            <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
+            {/* <StyledValue>{getDisplayBalance(earnings)}</StyledValue> */}
+            <StyledValue>0.00</StyledValue>
           </StyledCardHeader>
         </StyledCardContentInner>
-        <p>
-          Your rewards are vested across 8 hours. If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
+        <p style={{ color: '#fff9' }}>
+          You earn MAHA rewards when the protocol is in contraction.
         </p>
+        <p style={{ color: '#fff9' }}>
+          Your rewards are vested linearly across 8 hours from the last epoch.
+          {/* If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} MAHA */}
+        </p>
+        <br />
         <StyledCardActions>
-          <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} ARTH Reward`} disabled={earnings.eq(0)} />
+          {/* <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} MAHA`} disabled={earnings.eq(0)} /> */}
+          {/* <Button onClick={onReward} text={`Claim   MAHA`} disabled={earnings.eq(0)} /> */}
+          <Button text={`Claim   MAHA`} disabled={true} />
         </StyledCardActions>
       </CardContent>
     </Card>
@@ -79,4 +90,4 @@ const Card = styled.div`
   max-width: 500px;
   flex-direction: column;
 `;
-export default Harvest;
+export default HarvestMaha;

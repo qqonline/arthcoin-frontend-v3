@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import { BoardroomInfo } from '../basis-cash';
+import { BoardroomInfoV2 } from '../basis-cash/types';
 import useBasisCash from './useBasisCash';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useHarvestFromBoardroom = (boardroom: BoardroomInfo) => {
+const useHarvestFromBoardroom = (boardroom: BoardroomInfoV2) => {
   const basisCash = useBasisCash();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 

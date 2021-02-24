@@ -3,10 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import moment from 'moment';
-import { BoardroomInfo } from '../basis-cash';
+import { VaultInfo } from '../basis-cash/types';
 
 
-const useBoardroomUnbondingDetails = (boardroom: BoardroomInfo, stakedBalance: BigNumber): [Date, Date, BigNumber] => {
+const useBoardroomUnbondingDetails = (boardroom: VaultInfo, stakedBalance: BigNumber): [Date, Date, BigNumber] => {
   const [startDate, setStartDate] = useState(moment().utc().startOf('day').toDate());
   const [endDate, setEndDate] = useState(moment().utc().startOf('day').toDate());
   const [amount, setAmount] = useState(BigNumber.from(0));
@@ -14,19 +14,19 @@ const useBoardroomUnbondingDetails = (boardroom: BoardroomInfo, stakedBalance: B
   const basisCash = useBasisCash();
 
   const fetchDepositTime = useCallback(async () => {
-    const b = await basisCash.currentBoardroom(boardroom.kind);
-    const details = await b._stakingDetails(basisCash.myAccount)
+    const b = boardroom.contract;
+    const details = await b.stakingDetails(basisCash.myAccount)
 
     const from = new Date(details.updatedOn * 1000)
     const to = new Date(details.deadline * 1000)
 
-     setStartDate(from)
+    setStartDate(from)
     setEndDate(to)
     setAmount(details.amount)
-  }, [basisCash, boardroom.kind]);
+  }, [basisCash.myAccount, boardroom.contract]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked && stakedBalance.gt(0)) {
+    if (basisCash.isUnlocked) {
       fetchDepositTime().catch(err => console.error(err.stack));
     }
   }, [basisCash.isUnlocked, fetchDepositTime, stakedBalance]);

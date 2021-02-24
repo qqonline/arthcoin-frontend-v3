@@ -62,8 +62,10 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
   } = useBasisCash();
 
   const { account, connect } = useWallet();
-  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+
   const [arthApproveStatus, approveArth] = useApprove(ARTH, Treasury.address);
+  const [diaApproveStatus, approveDai] = useApprove(DAI, Treasury.address);
+
   const [showModal, toggleModal] = React.useState(false);
   const balance = useTokenBalance(fromToken);
   const isARTHApproved = arthApproveStatus === ApprovalState.APPROVED;
@@ -142,16 +144,17 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                 <>
                   <Button
                     disabled={
+                      isDAIApproved ||
                       diaApproveStatus === ApprovalState.PENDING ||
                       diaApproveStatus === ApprovalState.UNKNOWN
                     }
                     onClick={() => catchError(approveDai(), `Unable to approve DAI`)}
                     text={
-                      arthApproveStatus === ApprovalState.PENDING
+                      diaApproveStatus === ApprovalState.PENDING
                         ? 'Approving'
-                        : arthApproveStatus === ApprovalState.APPROVED
-                        ? 'DAI Approved'
-                        : 'Approve DAI'
+                        : diaApproveStatus === ApprovalState.APPROVED
+                          ? 'DAI Approved'
+                          : 'Approve DAI'
                     }
                   />
 
@@ -168,18 +171,18 @@ const PurchaseBonds: React.FC<ExchangeCardProps> = ({
                       arthApproveStatus === ApprovalState.PENDING
                         ? 'Approving'
                         : arthApproveStatus === ApprovalState.APPROVED
-                        ? 'ARTH Approved'
-                        : 'Approve ARTH'
+                          ? 'ARTH Approved'
+                          : 'Approve ARTH'
                     }
                   />
                 </>
               ) : (
-                <Button
-                  text={disabledDescription || action}
-                  onClick={() => toggleModal(true)}
-                  disabled={disabled}
-                />
-              )}
+                      <Button
+                        text={disabledDescription || action}
+                        onClick={() => toggleModal(true)}
+                        disabled={disabled}
+                      />
+                    )}
             </StyledCardActions>
           }
           {/* <StyledCardActions>
@@ -203,11 +206,11 @@ const StyledCardTitle = styled.div`
   margin-top: ${(props) => -props.theme.spacing[3]}px;
 `;
 
-const StyledCardDesc = styled.div`
-  margin-bottom: 26px;
-  text-align: center;
-  color: #fff9;
-`;
+// const StyledCardDesc = styled.div`
+//   margin-bottom: 26px;
+//   text-align: center;
+//   color: #fff9;
+// `;
 
 const StyledCardIcon = styled.div`
   width: 72px;

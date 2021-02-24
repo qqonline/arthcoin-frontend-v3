@@ -3,7 +3,7 @@ import { BoardroomInfo } from '../basis-cash';
 import useBasisCash from './useBasisCash';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const WithdrawShareFromBoardroomV2 = (boardroom: BoardroomInfo) => {
+export default (boardroom: BoardroomInfo) => {
   const basisCash = useBasisCash();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
@@ -18,5 +18,3 @@ const WithdrawShareFromBoardroomV2 = (boardroom: BoardroomInfo) => {
   );
   return { onWithdraw: handleWithdraw };
 };
-
-export default WithdrawShareFromBoardroomV2;

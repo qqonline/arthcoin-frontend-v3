@@ -56,6 +56,7 @@ const DialogContent = withStyles((theme: Theme) => ({
     border: '1px solid rgba(255, 255, 255, 0.08)',
   },
 }))(MuiDialogContent);
+
 interface props {
   children: React.ReactNode;
   title?: string;
@@ -63,6 +64,7 @@ interface props {
   open?: boolean;
   titleLogo?: React.ReactNode;
 }
+
 const CustomizedDialogs: React.FC<props> = ({
   children,
   title,
@@ -74,9 +76,7 @@ const CustomizedDialogs: React.FC<props> = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [openModal, setOpen] = React.useState(open);
   const [isCloseClicked, toggleCloseClicked] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
   const handleCloseModal = () => {
     setOpen(false);
     toggleCloseClicked(true);

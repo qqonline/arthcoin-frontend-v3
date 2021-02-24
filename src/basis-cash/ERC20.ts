@@ -5,7 +5,7 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { formatUnits } from 'ethers/lib/utils';
 
 class ERC20 {
-  private contract: Contract;
+  protected contract: Contract;
 
   address: string;
   symbol: string;

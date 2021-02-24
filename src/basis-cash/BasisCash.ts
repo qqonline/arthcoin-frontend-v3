@@ -1,16 +1,14 @@
-import { Fetcher as MFetcher, Route as MRoute, Token as MToken } from 'mahaswap-sdk';
-import { Fetcher, Route, Token } from '@uniswap/sdk';
-import { Boardrooms, Configuration } from './config';
-import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime } from './types';
+import { Boardrooms, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
+import { BoardroomInfo, BoardroomInfoV2, ContractName, TokenStat, TreasuryAllocationTime, VaultInfo } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
 import ERC20 from './ERC20';
-import { getDisplayBalance } from '../utils/formatBalance';
 import { getDefaultProvider } from '../utils/provider';
-import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 import Multicall from './Mulitcall';
+import UniswapPair from './UniswapPair';
+import ABIS from './deployments/abi';
 
 /**
  * An API module of ARTH contracts.
@@ -25,15 +23,13 @@ export class BasisCash {
   externalTokens: { [name: string]: ERC20 };
   boardroomVersionOfUser?: string;
 
-  bacDai: Contract;
-  arthDai: Contract;
-  mahaEth: Contract;
+  arthDai: UniswapPair;
+  mahaEth: UniswapPair;
 
   DAI: ERC20;
   ARTH: ERC20;
   MAHA: ERC20;
   ARTHB: ERC20;
-  ARTHDAI_UNIV2: ERC20;
 
   multicall: Multicall
 
@@ -45,7 +41,7 @@ export class BasisCash {
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue
-      this.contracts[name] = new Contract(deployment.address, deployment.abi, provider);
+      this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
     this.externalTokens = {};
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
@@ -55,22 +51,22 @@ export class BasisCash {
     this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
-    this.DAI = new ERC20(deployments.DAI.address, provider, 'ARTHB');
+    this.DAI = new ERC20(deployments.DAI.address, provider, 'DAI');
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
 
     // Uniswap V2 Pair
 
-    this.arthDai = new Contract(
+    this.arthDai = new UniswapPair(
       deployments.ArthDaiLP.address,
-      IUniswapV2PairABI,
       provider,
+      'ARTH-DAI-LP'
     );
 
-    this.mahaEth = new Contract(
+    this.mahaEth = new UniswapPair(
       deployments.MahaEthLP.address,
-      IUniswapV2PairABI,
       provider,
+      'MAHA-ETH'
     );
 
     this.config = cfg;
@@ -89,11 +85,11 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHB, ...Object.values(this.externalTokens)];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, this.arthDai, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
-    this.arthDai = this.arthDai.connect(this.signer);
+
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
     this.fetchBoardroomVersionOfUser()
       .then((version) => (this.boardroomVersionOfUser = version))
@@ -134,22 +130,11 @@ export class BasisCash {
   getBoardrooms: () => ['arth', 'arthUniLiquidity', 'arthMlpLiquidity', 'mahaLiquidity']
 
 
-  getBoardroom(kind: Boardrooms, version: string): BoardroomInfo {
+  getBoardroom(kind: Boardrooms, version: BoardroomVersion): BoardroomInfo {
     const contract = this.boardroomByVersion(kind, version)
 
-    // if (kind === 'arthDai') return {
-    //   kind: 'arthDai',
-    //   contract,
-    //   address: contract.address,
-    //   depositTokenName: 'ARTH+DAI',
-    //   earnTokenName: 'ARTH',
-    //   seionrageSupplyPercentage: 20,
-    //   history7dayAPY: 30,
-    //   lockInPeriodDays: 5,
-    // }
-
-    if (kind === 'arth') return {
-      kind: 'arth',
+    if (kind === 'arth' || kind === 'arthArth' || kind == 'arthMaha') return {
+      kind,
       contract,
       address: contract.address,
       depositTokenName: 'ARTH',
@@ -172,7 +157,7 @@ export class BasisCash {
 
     if (kind === 'mahaLiquidity')
       return {
-        kind: 'mahaLiquidity',
+        kind,
         contract,
         address: contract.address,
         depositTokenName: 'MAHA_ETH-UNI-LPv2',
@@ -184,12 +169,12 @@ export class BasisCash {
 
     if (kind === 'arthMlpLiquidity')
       return {
-        kind: 'arthMlpLiquidity',
+        kind,
         contract,
         address: contract.address,
-        depositTokenName: 'ARTH_DAI-MLP-LPv2',
+        depositTokenName: 'ARTH_DAI-MLP-LPv1',
         earnTokenName: 'ARTH',
-        seionrageSupplyPercentage: 65,
+        seionrageSupplyPercentage: 70,
         history7dayAPY: 30,
         lockInPeriodDays: 1,
       }
@@ -206,6 +191,69 @@ export class BasisCash {
     }
   }
 
+  getBoardroomV2(kind: BoardroomsV2): BoardroomInfoV2 {
+    const contract = this.boardroomByVersion(kind, 'v2')
+
+    if (kind === 'arthArth' || kind === 'arthMaha' || kind === 'arthArthMlpLiquidity') return {
+      kind,
+      contract,
+      address: contract.address,
+      earnTokenName: 'ARTH',
+      vestingPeriodHours: 8
+    }
+
+    return {
+      kind,
+      contract,
+      address: contract.address,
+      earnTokenName: 'MAHA',
+      vestingPeriodHours: 8
+    }
+  }
+
+  getBoardroomVault(kind: Vaults): VaultInfo {
+    const contract = (() => {
+      if (kind === 'arth') return this.contracts.VaultArth;
+      if (kind === 'arthMlpLiquidity') return this.contracts.VaultArthMlp;
+      return this.contracts.VaultMaha;
+    })()
+
+    if (kind === 'arth') return {
+      kind: 'arth',
+      contract,
+      address: contract.address,
+      depositTokenName: 'ARTH',
+      seionrageSupplyPercentage: 20,
+      lockInPeriodDays: 5,
+
+      arthBoardroom: 'arthArth',
+      mahaBoardroom: 'mahaArth',
+    }
+
+    if (kind === 'maha')
+      return {
+        kind: 'maha',
+        contract,
+        address: contract.address,
+        depositTokenName: 'MAHA',
+        seionrageSupplyPercentage: 10,
+        lockInPeriodDays: 5,
+        arthBoardroom: 'arthMaha',
+        mahaBoardroom: 'mahaMaha',
+      }
+
+    return {
+      kind: 'arthMlpLiquidity',
+      contract,
+      address: contract.address,
+      depositTokenName: 'ARTH_DAI-MLP-LPv1',
+      seionrageSupplyPercentage: 70,
+      lockInPeriodDays: 1,
+      arthBoardroom: 'arthArthMlpLiquidity',
+      mahaBoardroom: 'mahaArthMlpLiquidity',
+    }
+  }
+
   gasOptions(gas: BigNumber): Overrides {
     const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
     console.log(`⛽️ Gas multiplied: ${gas} -> ${multiplied}`);
@@ -218,19 +266,10 @@ export class BasisCash {
    * @returns ARTH (ARTH) stats from Uniswap.
    * It may differ from the ARTH price used on Treasury (which is calculated in TWAP)
    */
-  async getCashStatFromUniswap(): Promise<TokenStat> {
-    const supply = await this.ARTH.displayedTotalSupply();
+  async getCashStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTH),
-      totalSupply: supply,
-    };
-  }
-
-  async getCashStatFromMahaswap(): Promise<TokenStat> {
-    const supply = await this.ARTH.displayedTotalSupply();
-    return {
-      priceInDAI: await this.getTokenPriceFromMahaswap(this.ARTH),
-      totalSupply: supply,
+      priceInDAI: await this.getTokenPriceFromPair(this.arthDai, this.ARTH),
+      totalSupply: await this.ARTH.displayedTotalSupply(),
     };
   }
 
@@ -238,14 +277,22 @@ export class BasisCash {
    * @returns Estimated ARTH (ARTH) price data,
    * calculated by 1-day Time-Weight Averaged Price (TWAP).
    */
-  async getCashStatInEstimatedTWAP(): Promise<TokenStat> {
-    const { SeigniorageOracle } = this.contracts;
+  async getCashPriceInEstimatedTWAP(): Promise<BigNumber> {
+    const { TWAP12hrOracle } = this.contracts;
 
     // estimate current TWAP price
-    const cumulativePrice: BigNumber = await this.arthDai.price0CumulativeLast();
-    const cumulativePriceLast = await SeigniorageOracle.price0CumulativeLast();
+    let cumulativePrice: BigNumber
+    let cumulativePriceLast: BigNumber
 
-    const elapsedSec = Math.floor(Date.now() / 1000 - (await SeigniorageOracle.blockTimestampLast()));
+    if ((await this.arthDai.token0()).toLowerCase() !== this.ARTH.address.toLowerCase()) {
+      cumulativePrice = await this.arthDai.price1CumulativeLast();
+      cumulativePriceLast = await TWAP12hrOracle.price1CumulativeLast();
+    } else {
+      cumulativePrice = await this.arthDai.price0CumulativeLast();
+      cumulativePriceLast = await TWAP12hrOracle.price0CumulativeLast();
+    }
+
+    const elapsedSec = Math.floor(Date.now() / 1000 - (await TWAP12hrOracle.blockTimestampLast()));
 
     const denominator112 = BigNumber.from(2).pow(112);
     const denominator1e18 = BigNumber.from(10).pow(18);
@@ -255,11 +302,7 @@ export class BasisCash {
       .div(elapsedSec)
       .div(denominator112);
 
-    const totalSupply = await this.ARTH.displayedTotalSupply();
-    return {
-      priceInDAI: getDisplayBalance(cashPriceTWAP),
-      totalSupply,
-    };
+    return cashPriceTWAP
   }
 
   async getTargetPrice(): Promise<BigNumber> {
@@ -267,25 +310,21 @@ export class BasisCash {
     return GMUOracle.getPrice();
   }
 
-  async getStabilityFees(): Promise<BigNumber> {
-    const { Treasury } = this.contracts;
-    return Treasury.stabilityFee()
-  }
-
-
   async getCashPriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getSeigniorageOraclePrice();
+    const fn = Treasury.get12hrTWAPOraclePrice || Treasury.getSeigniorageOraclePrice
+    return fn();
   }
 
   async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getBondOraclePrice();
+    const fn = Treasury.get1hrTWAPOraclePrice || Treasury.getBondOraclePrice
+    return fn();
   }
 
   async getBondStat(): Promise<TokenStat> {
     return {
-      priceInDAI: await this.getTokenPriceFromUniswap(this.ARTHB),
+      priceInDAI: BigNumber.from(0), // await this.getTokenPriceFromUniswap(this.ARTHB),
       totalSupply: await this.ARTHB.displayedTotalSupply(),
     };
   }
@@ -297,52 +336,31 @@ export class BasisCash {
     };
   }
 
-  async getTokenPriceFromUniswap(tokenContract: ERC20): Promise<string> {
+  async getTokenPriceFromPair(pair: UniswapPair, forToken: ERC20): Promise<BigNumber> {
     await this.provider.ready;
 
-    const { chainId } = this.config;
-    const { DAI } = this.config.externalTokens;
+    const token0 = await pair.token0()
+    const [r0, r1] = await pair.reserves()
+    const decimals = BigNumber.from(10).pow(18);
 
-    const dai = new Token(chainId, DAI[0], 18);
-    const token = new Token(chainId, tokenContract.address, 18);
-
-    try {
-      const daiToToken = await Fetcher.fetchPairData(dai, token, this.provider);
-      const priceInDAI = new Route([daiToToken], token);
-      return priceInDAI.midPrice.toSignificant(3);
-    } catch (err) {
-      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
-    }
+    if (token0.toLowerCase() === forToken.address.toLowerCase()) return r1.mul(decimals).div(r0)
+    return r0.mul(decimals).div(r1)
   }
 
-  async getTokenPriceFromMahaswap(tokenContract: ERC20): Promise<string> {
+  async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<BigNumber> {
     await this.provider.ready;
 
-    const { chainId } = this.config;
-    const { DAI } = this.config.externalTokens;
-
-    const dai = new MToken(chainId, DAI[0], 18);
-    const token = new MToken(chainId, tokenContract.address, 18);
-
-    try {
-      const daiToToken = await MFetcher.fetchPairData(dai, token, this.provider);
-      const priceInDAI = new MRoute([daiToToken], token);
-      return priceInDAI.midPrice.toSignificant(3);
-    } catch (err) {
-      console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
-    }
-  }
-
-  async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<string> {
-    await this.provider.ready;
+    const decimals = BigNumber.from(10).pow(18);
 
     try {
       const result = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
       const json = await result.json()
-      return (json[tokenContract.address.toLowerCase()].usd).toFixed(3)
+      return BigNumber.from(json[tokenContract.address.toLowerCase()].usd).mul(decimals)
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }
+
+    return BigNumber.from(0)
   }
 
   async estimateAmountOutFromUniswap(amountIn: number, path: ERC20[]): Promise<BigNumber> {
@@ -456,76 +474,77 @@ export class BasisCash {
     return 'latest';
   }
 
-  boardroomByVersion(kind: Boardrooms, version: string): Contract {
-    // if (version === 'v2') {
-    //   if (kind === 'arthUniLiquidity') return this.contracts.ArthUniLiquidityBoardroomV2;
-    //   if (kind === 'arthMlpLiquidity') return this.contracts.ArthMlpLiquidityBoardroomV2;
-    //   if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV2;
-    //   return this.contracts.ArthBoardroomV2;
-    // }
+  boardroomByVersion(kind: Boardrooms, version: BoardroomVersion): Contract {
+     if (version === 'v2') {
+       if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
+      if (kind === 'arthMaha') return this.contracts.ArthMahaBoardroomV2;
+      if (kind === 'mahaArth') return this.contracts.MahaArthBoardroomV2;
+      if (kind === 'mahaMaha') return this.contracts.MahaMahaBoardroomV2;
+      if (kind === 'mahaArthMlpLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
+      return this.contracts.ArthArthMlpLiquidityBoardroomV2;
+    }
 
     if (kind === 'arthUniLiquidity') return this.contracts.ArthLiquidityBoardroomV1;
     if (kind === 'mahaLiquidity') return this.contracts.MahaLiquidityBoardroomV1;
     return this.contracts.ArthBoardroomV1;
   }
 
-  currentBoardroom(kind: Boardrooms): Contract {
-    return this.boardroomByVersion(kind, 'v1');
+  currentBoardroom(kind: Boardrooms, version: BoardroomVersion): Contract {
+    return this.boardroomByVersion(kind, version);
   }
 
   isOldBoardroomMember(): boolean {
     return this.boardroomVersionOfUser !== 'latest';
   }
 
-  async stakeShareToBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
+  async stakeShareToBoardroom(kind: Boardrooms, amount: string, version: BoardroomVersion): Promise<TransactionResponse> {
     if (this.isOldBoardroomMember()) {
       throw new Error("you're using old ArthBoardroom. please withdraw and deposit the MAHA again.");
     }
-    const boardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind, version);
+
+    if (version === 'v1') return await boardroom.stake(decimalToBalance(amount));
     return await boardroom.bond(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnBoardroom(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.currentBoardroom(kind);
+  async getStakedSharesOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.balanceOf(this.myAccount);
   }
 
-  async getEarningsOnBoardroom(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.currentBoardroom(kind);
+  async getEarningsOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.earned(this.myAccount);
   }
 
 
-  async getClaimableEarningsOnBoardroomV2(kind: Boardrooms, version: string): Promise<BigNumber> {
-    const boardroom = this.getBoardroom(kind, 'v2');
-    return await boardroom.contract.estimateRewardsToClaim(this.myAccount);
+  async getClaimableEarningsOnBoardroomV2(kind: BoardroomsV2, version: BoardroomVersion): Promise<BigNumber> {
+    const boardroom = this.getBoardroom(kind, version);
+    return await boardroom.contract.earned(this.myAccount);
   }
 
-  async withdrawShareFromBoardroomV2(kind: Boardrooms): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+  async withdrawShareFromBoardroomV2(kind: BoardroomsV2, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.withdraw();
   }
 
   async withdrawShareFromBoardroomV1(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind, 'v1');
     return await boardroom.withdraw(decimalToBalance(amount));
   }
 
   async unbondShareFromBoardroom(kind: Boardrooms, amount: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+    const boardroom = this.currentBoardroom(kind, 'v2');
     return await boardroom.unbond(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: Boardrooms, version: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await boardroom.claimDividends();
-    }
-    return await boardroom.claimReward();
+  async harvestCashFromBoardroom(kind: BoardroomsV2, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.getBoardroomV2(kind);
+    return await boardroom.contract.claimReward();
   }
 
-  async exitFromBoardroom(kind: Boardrooms, version: string): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind);
+  async exitFromBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.currentBoardroom(kind, version);
     return await boardroom.exit();
   }
 
@@ -554,8 +573,6 @@ export class BasisCash {
 
     const nextAllocation = new Date(nextEpochTimestamp.mul(1000).toNumber());
     const prevAllocation = new Date(nextAllocation.getTime() - period.toNumber() * 1000);
-
-    console.log('nextAllocation', nextAllocation, nextEpochTimestamp)
 
     return { prevAllocation, nextAllocation, currentEpoch: 1 + currentEpoch.toNumber() };
   }

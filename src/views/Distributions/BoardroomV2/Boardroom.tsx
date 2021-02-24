@@ -3,28 +3,28 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Container from '../../../components/Container';
-import ExchangeStat from '../../Bond/components/ExchangeStat';
 import { BoardroomInfo } from '../../../basis-cash';
 import PageHeader from '../../../components/PageHeader';
 import Button from '../../../components/Button/TransperantButton';
 import useBasisCash from '../../../hooks/useBasisCash';
-import Harvest from './components/Harvest';
+import HarvestMaha from './components/HarvestMaha';
+import HarvestArth from './components/HarvestArth';
 import Stake from './components/Stake';
 import DistributionIcon from '../distribution.png';
-import { Boardrooms } from '../../../basis-cash/config';
+import { Vaults } from '../../../basis-cash/config';
 
 const Boardroom = () => {
-  const { bankId } = useParams<{ bankId: Boardrooms }>();
+  const { bankId } = useParams<{ bankId: Vaults }>();
   const basisCash = useBasisCash();
-  const boardroom = basisCash.getBoardroom(bankId, 'v2');
+  const vault = basisCash.getBoardroomVault(bankId);
 
   return (
     <>
       <PageHeader
         title="ARTH Distribution"
         icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
-        subtitle={`Deposit ${boardroom.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
-        // showEpoch
+        subtitle={`Deposit ${vault.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
+      // showEpoch
       />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
@@ -32,19 +32,24 @@ const Boardroom = () => {
         {/* <Grid item xs={12} md={8} lg={8} xl={8}> */}
         <Grid container spacing={2} justify="center">
           <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <Stake boardroom={boardroom} />
+            <Stake vault={vault} />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="center">
+          <Grid container item xs={12} md={6} lg={6} xl={6}>
+            <HarvestArth boardroomId={vault.arthBoardroom} />
           </Grid>
           <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <Harvest boardroom={boardroom} />
+            <HarvestMaha boardroomId={vault.mahaBoardroom} />
           </Grid>
-          <Grid container item xs={6}>
+          {/* <Grid container item xs={6}>
             <div style={{ marginTop: '20px', marginRight: 20, maxWidth: '200px' }}>
               <Button size="sm" text="Settle & Withdraw" />
             </div>
             <div style={{ marginTop: '20px', maxWidth: '200px' }}>
               <Button size="sm" text="Provide Liquidity" />
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
         {/* </Grid> */}
         {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
@@ -61,7 +66,7 @@ const Boardroom = () => {
             </Grid>
           </Grid> */}
         {/* </Grid> */}
-        {bankId === 'arthMlpLiquidity' && <LPTokenHelpText boardroom={boardroom} />}
+        {/* {bankId === 'arthMlpLiquidity' && <LPTokenHelpText boardroom={vault} />} */}
       </Container>
     </>
   );

@@ -17,7 +17,6 @@ import useBasisCash from '../../hooks/useBasisCash';
 import useCashAvailableToConvert from '../../hooks/useCashAvailableToConvert';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import useCashTargetPrice from '../../hooks/useCashTargetPrice';
-import useStabilityFee from '../../hooks/useStabilityFee';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useBondOraclePriceInLastTWAP from '../../hooks/useBondOraclePriceInLastTWAP';
 
@@ -30,7 +29,6 @@ const Bond: React.FC = () => {
   // const bondStat = useBondStats();
   const cash1hrPrice = useBondOraclePriceInLastTWAP();
   const targetPrice = useCashTargetPrice();
-  const stabiltiyFees = useStabilityFee();
   const cashe12hrPrice = useCashPriceInLastTWAP();
   const cashAvailableToConvert = useCashAvailableToConvert();
   const treasuryAmount = useTreasuryAmount();
@@ -122,15 +120,15 @@ const Bond: React.FC = () => {
                         !isBondPurchasable
                           ? 'ARTH is over its target price'
                           : cashAvailableToConvert.eq(0)
-                          ? `ARTH is below its target price. However there is no ARTHB available for purchase.`
-                          : null
+                            ? `ARTH is below its target price. However there is no ARTHB available for purchase.`
+                            : null
                       }
                       disabledDescription={
                         !isBondPurchasable
                           ? 'Enabled when 1hr TWAP < 0.95$'
                           : cashAvailableToConvert.eq(0)
-                          ? `No ARTHB Allocated. Wait for next epoch`
-                          : null
+                            ? `No ARTHB Allocated. Wait for next epoch`
+                            : null
                       }
                       onExchange={handleBuyBonds}
                       disabled={!isBondPurchasable || cashAvailableToConvert.eq(0)}
@@ -151,15 +149,15 @@ const Bond: React.FC = () => {
                         !isBondRedeemable
                           ? `Enabled when 1hr TWAP > $${getDisplayBalance(targetPrice)}`
                           : cashAvailableToConvert.eq(0)
-                          ? `1hr TWAP is above the bond redeemtion price. However there is no ARTH available to be redeemed.`
-                          : `${getDisplayBalance(bondBalance)} ARTHB Available`
+                            ? `1hr TWAP is above the bond redeemtion price. However there is no ARTH available to be redeemed.`
+                            : `${getDisplayBalance(bondBalance)} ARTHB Available`
                       }
                       disabledDescription={
                         !isBondRedeemable
                           ? `Enabled when 1hr TWAP > $${getDisplayBalance(targetPrice)}`
                           : treasuryAmount.lte(0)
-                          ? 'No ARTH available. Wait for next Epoch'
-                          : null
+                            ? 'No ARTH available. Wait for next Epoch'
+                            : null
                       }
                     />
                   </Grid>
@@ -219,12 +217,6 @@ const Bond: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6} lg={6} xl={6}>
                   <ExchangeStat
-                    title={`${stabiltiyFees}%`}
-                    description="Fees paid in $MAHA when redeeming bonds"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} lg={6} xl={6}>
-                  <ExchangeStat
                     title={treasuryAmount ? `${getDisplayBalance(treasuryAmount)} ARTHB` : '-'}
                     description="ARTHB available for redeemtion"
                   />
@@ -238,36 +230,6 @@ const Bond: React.FC = () => {
   );
 };
 
-const StyledBond = styled.div`
-  display: flex;
-  width: 900px;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-  }
-`;
-
-const StyledCardWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    width: 80%;
-  }
-`;
-
-const LaunchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
-  border-radius: 12px;
-  padding: 20px;
-  width: 100%;
-  margin-bottom: 30px;
-`;
 
 const ChartContainer = styled.div`
   background: rgba(255, 255, 255, 0.02);

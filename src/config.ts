@@ -9,7 +9,6 @@ const configurations: { [env: string]: Configuration } = {
     defaultProvider: 'http://127.0.0.1:7545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     externalTokens: {
-      'DAI': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'MKR': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'BAS': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 18],
       'SHARE': ['0x3b49697b07625D9e1bE6F8861293416FB80E55fc', 9],
@@ -27,7 +26,7 @@ const configurations: { [env: string]: Configuration } = {
 
       'MAHA_ETH-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTH_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
-      'ARTH_DAI-MLP-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
+      'ARTH_DAI-MLP-LPv1': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18],
       'ARTHB_DAI-UNI-LPv2': ['0xc32Ac984C74fbC08bc7b237a422120E80E1F2329', 18]
     },
 
@@ -58,10 +57,11 @@ const configurations: { [env: string]: Configuration } = {
       'MATIC': ['0x7d764F7BcaAC4E6f994AB9B5E5b78fF8f4156d3C', 18],
       'RSR': ['0x7d764F7BcaAC4E6f994AB9B5E5b78fF8f4156d3C', 18],
 
-      'MAHA_ETH-UNI-LPv2': ['0x4f306Bc891F5C0bb12F47312C4F4e409806c7Ba0', 18],
-      'ARTHB_DAI-UNI-LPv2': ['0xDAD66B82C711a63065F29B095135b6F84CEBDd0B', 18],
-      'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18]
-    },
+      'MAHA_ETH-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTHB_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTH_DAI-UNI-LPv2': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+      'ARTH_DAI-MLP-LPv1': ['0xa3d0e590cf468f41dae22a2be88c51bd3243cb87', 18],
+     },
 
     baseLaunchDate: new Date('2021-01-15T14:00:00Z'),
     bondLaunchesAt: new Date('2021-01-15T14:00:00Z'),

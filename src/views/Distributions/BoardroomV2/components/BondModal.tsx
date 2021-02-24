@@ -13,15 +13,12 @@ interface DepositModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   tokenName?: string;
-  onCancel?: Function;
+  onCancel?: () => void;
 }
 
 const BondModal: React.FC<DepositModalProps> = ({ max, onConfirm, onCancel, tokenName = '' }) => {
   const [val, setVal] = useState('');
-  const [openModal, toggleModal] = useState(true);
-  const fullBalance = useMemo(() => {
-    return getFullDisplayBalance(max, tokenName === 'USDC' ? 6 : 18);
-  }, [max, tokenName]);
+  const fullBalance = useMemo(() => getFullDisplayBalance(max, tokenName === 'USDC' ? 6 : 18), [max, tokenName]);
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -29,37 +26,31 @@ const BondModal: React.FC<DepositModalProps> = ({ max, onConfirm, onCancel, toke
     },
     [setVal],
   );
-  const handleClose = () => {
-    toggleModal(false);
-    onCancel();
-  };
+
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);
   }, [fullBalance, setVal]);
-  let modalJsx = <div />;
-  if (openModal) {
-    modalJsx = (
-      <Modal title={`Bond ${tokenName}`} open={openModal} handleClose={handleClose}>
-        <TokenInput
-          value={val}
-          // label="How much would you like to deposit?"
-          onSelectMax={handleSelectMax}
-          onChange={handleChange}
-          max={fullBalance}
-          symbol={tokenName}
+
+  return (
+    <Modal title={`Deposit ${tokenName}`} open={true} handleClose={onCancel}>
+      <TokenInput
+        value={val}
+        // label="How much would you like to deposit?"
+        onSelectMax={handleSelectMax}
+        onChange={handleChange}
+        max={fullBalance}
+        symbol={tokenName}
+      />
+      <ModalActions>
+        <ButtonTransperant
+          text="Cancel"
+          variant="secondary"
+          onClick={onCancel}
         />
-        <ModalActions>
-          <ButtonTransperant
-            text="Cancel"
-            variant="secondary"
-            onClick={() => toggleModal(false)}
-          />
-          <Button text="Confirm" onClick={() => onConfirm(val)} />
-        </ModalActions>
-      </Modal>
-    );
-  }
-  return modalJsx;
+        <Button text="Confirm" onClick={() => onConfirm(val)} />
+      </ModalActions>
+    </Modal>
+  );
 };
 
 export default BondModal;

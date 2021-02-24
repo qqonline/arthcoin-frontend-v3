@@ -1,21 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 import useBasisCash from './useBasisCash';
-import { TokenStat } from '../basis-cash/types';
-import config from '../config';
+ import { BigNumber } from 'ethers';
 
 const useCashPriceInEstimatedTWAP = () => {
-  const [stat, setStat] = useState<TokenStat>();
+  const [stat, price] = useState<BigNumber>();
   const basisCash = useBasisCash();
 
   const fetchCashPrice = useCallback(async () => {
-    setStat(await basisCash.getCashStatInEstimatedTWAP());
+    price(await basisCash.getCashPriceInEstimatedTWAP());
   }, [basisCash]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-    const refreshInterval = setInterval(fetchCashPrice, 60 * 60 * 1000);
-    return () => clearInterval(refreshInterval);
-  }, [setStat, basisCash, fetchCashPrice]);
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch estimated 12hr twao ARTH price: ${err.stack}`));
+  }, [price, basisCash, fetchCashPrice]);
 
   return stat;
 };

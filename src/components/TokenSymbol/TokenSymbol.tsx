@@ -56,6 +56,7 @@ const logosBySymbol: { [title: string]: string } = {
 
   'ARTH_DAI-UNI-LPv2': bacLogo,
   'ARTH_DAI-MAHA-LPv1': bacLogo,
+  'ARTH_DAI-MLP-LPv1': bacLogo,
   'BAC_DAI-UNI-LPv2': bacLogo,
   'MAHA_ETH-UNI-LPv2': mahaLogo,
   'BAS_DAI-UNI-LPv2': basLogo,
@@ -73,6 +74,7 @@ const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
     // throw new Error(`Invalid BasisLogo symbol: ${symbol}`);
     return <img src={logosBySymbol['DAI']} alt={`${symbol} Logo`} height={size} />;
   }
+
   return (
     <img
       src={logosBySymbol[symbol]}

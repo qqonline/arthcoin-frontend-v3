@@ -76,7 +76,7 @@ const StyledCardContentInner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding: ${(props) => props.theme.spacing[2]}px ${(props) => props.theme.spacing[4]}px;
+  padding: ${(props) => props.theme.spacing[2]}px; ${(props) => props.theme.spacing[4]}px;
 `;
 
 export default Stat;

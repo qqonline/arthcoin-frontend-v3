@@ -2,16 +2,21 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
-import { Boardrooms } from '../basis-cash/config';
+import { BoardroomsV2  } from '../basis-cash/config';
 
-const useEarningsOnBoardroom = (kind: Boardrooms) => {
-  const [balance, setBalance] = useState(BigNumber.from(0));
-  const [claimableBalance, setClaimableBalance] = useState(BigNumber.from(0));
+const useEarningsOnBoardroomV2 = (kind: BoardroomsV2) => {
+  const [balance, setBalance] = useState(BigNumber.from(1000));
+  const [claimableBalance, setClaimableBalance] = useState(BigNumber.from(10));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
-    setClaimableBalance(await basisCash.getClaimableEarningsOnBoardroomV2(kind, 'v2'));
+    const boardroom = basisCash.getBoardroomV2(kind)
+
+    const director = await boardroom.contract.getDirector(basisCash.myAccount)
+
+    const earned: BigNumber = await boardroom.contract.estimateEarned(basisCash.myAccount)
+    setBalance(earned.sub(director.rewardClaimedCurrEpoch));
+    // setClaimableBalance(earned.);
   }, [basisCash, kind]);
 
   useEffect(() => {
@@ -25,4 +30,4 @@ const useEarningsOnBoardroom = (kind: Boardrooms) => {
   return [balance, claimableBalance];
 };
 
-export default useEarningsOnBoardroom;
+export default useEarningsOnBoardroomV2;

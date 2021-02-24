@@ -2,17 +2,10 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Button from '../../../../components/Button';
 import Modal from '../../../../components/NewModal/index';
 import ButtonTransperant from '../../../../components/Button/TransperantButton';
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TokenInput from '../../../../components/TokenInput';
-import { getDisplayBalance, getFullDisplayBalance } from '../../../../utils/formatBalance';
+import { getFullDisplayBalance } from '../../../../utils/formatBalance';
 import { BigNumber } from 'ethers';
-import MahaFeeCheck from '../MahaFeeCheck';
-import useBasisCash from '../../../../hooks/useBasisCash';
-import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import styled from 'styled-components';
-import useTokenBalance from '../../../../hooks/useTokenBalance';
-import useARTHMahaPrice from '../../../../hooks/useARTHMahaPrice';
-import { Switch } from '@material-ui/core';
 
 interface ExchangeModalProps {
   max: BigNumber;
@@ -22,42 +15,6 @@ interface ExchangeModalProps {
   description: string;
 }
 
-const AntSwitch = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: 35,
-      height: 19,
-      padding: 0,
-      margin: 15,
-      display: 'flex',
-    },
-    switchBase: {
-      padding: 2,
-      color: theme.palette.grey[500],
-      '&$checked': {
-        transform: 'translateX(15px)',
-        color: theme.palette.common.white,
-        '& + $track': {
-          opacity: 1,
-          backgroundColor: '#F7653B',
-          borderColor: '#F7653B',
-        },
-      },
-    },
-    thumb: {
-      width: 15,
-      height: 15,
-      boxShadow: 'none',
-      color: 'white',
-    },
-    track: {
-      borderRadius: 18 / 2,
-      opacity: 1,
-      backgroundColor: '#363130',
-    },
-    checked: {},
-  }),
-)(Switch);
 
 const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, onCancel }) => {
   const [val, setVal] = useState('');
@@ -68,12 +25,6 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
     [setVal],
   );
 
-  const {
-    MAHA,
-    contracts: { Treasury },
-  } = useBasisCash();
-  const [mahaApproveStatus, mahaApprove] = useApprove(MAHA, Treasury.address);
-
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);
   }, [fullBalance, setVal]);
@@ -81,23 +32,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
   const action = 'Redeem';
   const tokenName = 'ARTHB';
 
-  const arthMahaPrice = useARTHMahaPrice();
-  const mahaBalance = useTokenBalance(MAHA);
-
-  const mahaToBurn = BigNumber.from(0)
-  // useMemo(() => arthMahaPrice.mul(Number(val || 0)).div(100), [
-  //   arthMahaPrice,
-  //   val,
-  // ]);
-
-  const isMahaApproved = true // mahaApproveStatus === ApprovalState.APPROVED;
-  const isMahaApproving = mahaApproveStatus === ApprovalState.PENDING;
-
-  const description = `You are going to redeem ${val} ARTH by paying ${val} ARTHB and a stability fee of ${getDisplayBalance(
-    mahaToBurn,
-    18,
-    3,
-  )} MAHA`;
+  const description = `You are going to redeem ${val} ARTH by paying ${val} ARTHB`;
   const handleClose = () => {
     onCancel();
   };
@@ -116,24 +51,15 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({ max, title, onConfirm, on
         max={fullBalance}
         symbol={tokenName}
       />
-      {/* <MahaFeeCheck
-        value={mahaToBurn}
-        approve={mahaApprove}
-        isMahaApproved={isMahaApproved}
-        max={getDisplayBalance(mahaBalance)}
-      /> */}
-
       <ActionButton>
         <ResponsiveButtonWidth>
           <ButtonTransperant text="Cancel" variant="secondary" onClick={() => handleClose()} />
         </ResponsiveButtonWidth>
         <ResponsiveButtonWidth>
           <Button
-            text={
-              isMahaApproving ? 'Approving MAHA' : !isMahaApproved ? 'Approve Maha' : action
-            }
-            disabled={Number(val) <= 0 || isMahaApproving}
-            onClick={() => (!isMahaApproved ? mahaApprove() : onConfirm(val, false))}
+            text={action}
+            disabled={Number(val) <= 0}
+            onClick={() => onConfirm(val, false)}
           />
         </ResponsiveButtonWidth>
       </ActionButton>

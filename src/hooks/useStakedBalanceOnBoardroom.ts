@@ -2,14 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
-import { Boardrooms } from '../basis-cash/config';
+import { Boardrooms, BoardroomVersion } from '../basis-cash/config';
 
-const useStakedBalanceOnBoardroom = (kind: Boardrooms, version: string) => {
+const useStakedBalanceOnBoardroom = (kind: Boardrooms, version: BoardroomVersion) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    console.log('fuck', await basisCash.getStakedSharesOnBoardroom(kind, version))
     setBalance(await basisCash.getStakedSharesOnBoardroom(kind, version));
   }, [basisCash, kind, version]);
 

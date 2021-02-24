@@ -1,17 +1,12 @@
-import React, { useMemo } from 'react';
-import moment from 'moment';
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
 import styled from 'styled-components';
-import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
 import Container from '../../components/Container';
-import ProgressCountdown from './ProgressCountdown';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
   subtitle?: string;
   title?: string;
   secondParaTitle?: string;
-  showEpoch?: boolean;
   secondParaDescription?: string;
 }
 
@@ -20,18 +15,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   subtitle,
   title,
   secondParaTitle,
-  secondParaDescription,
-  showEpoch = false,
+  secondParaDescription
 }) => {
-  const { prevAllocation, nextAllocation, currentEpoch } = useTreasuryAllocationTimes();
-  const prevEpoch = useMemo(
-    () =>
-      nextAllocation.getTime() <= Date.now()
-        ? moment().utc().startOf('day').toDate()
-        : prevAllocation,
-    [prevAllocation, nextAllocation],
-  );
-  const nextEpoch = useMemo(() => moment(prevEpoch).add(1, 'hour').toDate(), [prevEpoch]);
+
   return (
     <StyledPageHeader>
       <Container size="lg">
@@ -43,31 +29,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             {secondParaDescription && (
               <SecondParaDescription>{secondParaDescription}</SecondParaDescription>
             )}
-            {showEpoch && (
-              <Grid
-                container
-                spacing={5}
-                justify="flex-start"
-                alignItems="flex-start"
-                style={{ marginTop: '20px' }}
-              >
-                <Grid item xs={12} md={4} lg={4} xl={4}>
-                  <ProgressCountdown
-                    base={prevEpoch}
-                    deadline={nextEpoch}
-                    description="Lock in period ends in"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} lg={6} xl={6}>
-                  <ProgressCountdown
-                    base={prevEpoch}
-                    deadline={nextEpoch}
-                    description="Next Epoch"
-                    showAdvanceButton
-                  />
-                </Grid>
-              </Grid>
-            )}
+
           </StyledTextContainer>
           <ALignRightOnMobile>{icon}</ALignRightOnMobile>
         </StyledPageContent>

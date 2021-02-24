@@ -15,7 +15,6 @@ import ERC20 from '../../../../basis-cash/ERC20';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 import useCatchError from '../../../../hooks/useCatchError';
-import AddIcon from '@material-ui/icons/Add';
 
 interface ExchangeCardProps {
   action: string;
@@ -47,8 +46,6 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
   action,
   fromToken,
   fromTokenName,
-  toToken,
-  toTokenName,
   addOnTokeName,
   addOnToken,
   priceDesc,
@@ -134,19 +131,19 @@ const ExchangeCardBonds: React.FC<ExchangeCardProps> = ({
                     }
                   />
                 ) : (
-                  <Button
-                    text={disabledDescription || action}
-                    onClick={() => toggleModal(true)}
-                    disabled={disabled}
-                  />
-                )
+                      <Button
+                        text={disabledDescription || action}
+                        onClick={() => toggleModal(true)}
+                        disabled={disabled}
+                      />
+                    )
               ) : (
-                <Button
-                  text={disabledDescription || action}
-                  // onClick={onPresent}
-                  disabled={disabled}
-                />
-              )}
+                    <Button
+                      text={disabledDescription || action}
+                      // onClick={onPresent}
+                      disabled={disabled}
+                    />
+                  )}
             </StyledCardActions>
           }
         </StyledCardContentInner>

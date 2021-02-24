@@ -17,7 +17,13 @@ export type Configuration = {
   gasLimitMultiplier: number;
 };
 
-export type Boardrooms = 'arthDai' | 'maha' | 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
+export type BoardroomsV1 = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
+export type BoardroomsV2 = 'arthArthMlpLiquidity' | 'arthArth'  | 'arthMaha' |
+  'mahaArthMlpLiquidity' | 'mahaArth'  | 'mahaMaha'
+
+export type Boardrooms = BoardroomsV1 | BoardroomsV2
+export type Vaults = 'arthMlpLiquidity' | 'arth'  | 'maha'
+export type BoardroomVersion = 'v1' | 'v2'
 
 export type EthereumConfig = {
   testing: boolean,

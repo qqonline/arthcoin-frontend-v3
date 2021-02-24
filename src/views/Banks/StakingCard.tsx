@@ -1,26 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withStyles, Theme } from '@material-ui/core/styles';
 import ArrowRight from '../../assets/img/ArrowRight.svg';
 import Button from '../../components/Button';
-import InfoIcon from '../../assets/img/InfoIcon.svg';
-import Tooltip from '@material-ui/core/Tooltip';
+
 import { Bank } from '../../basis-cash';
 import { useWallet } from 'use-wallet';
 import TokenSymbol from '../../components/TokenSymbol';
 
 const APY = require('./apy.json');
 
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#2A2827',
-    color: 'white',
-    fontWeight: 300,
-    fontSize: '13px',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-}))(Tooltip);
+
 interface AccountButtonProps {
   bank: Bank;
   // title: string;
@@ -70,15 +59,6 @@ const StakingCard: React.FC<AccountButtonProps> = ({ bank }) => {
           <ImageConTainer marginLeft={0} zIndex={logos.length + 1}>
             <TokenSymbol symbol={logos[0]} size={54} />
           </ImageConTainer>
-          {/* <ImageConTainer marginLeft={0} zIndex={logo.length + 1}>
-            <img src={logo[0]} alt={title} width="46px" style={{ borderRadius: '50%' }} />
-          </ImageConTainer>
-          {logo.length > 1 &&
-            logo.slice(1).map((eachLogo, index) => (
-              <ImageConTainer marginLeft={15} zIndex={logo.length - index}>
-                <img src={eachLogo} alt={title} width="46px" style={{ borderRadius: '50%' }} />
-              </ImageConTainer>
-            ))} */}
         </LogoContainer>
       )}
       <PoolTitle>{bank.name}</PoolTitle>
@@ -142,8 +122,8 @@ const StakingCard: React.FC<AccountButtonProps> = ({ bank }) => {
         {!!account ? (
           <Button text="Select" to={`/staking/${bank.contract}`} />
         ) : (
-          <Button onClick={() => connect('injected')} text="Unlock Wallet" />
-        )}
+            <Button onClick={() => connect('injected')} text="Unlock Wallet" />
+          )}
       </div>
     </CardContainer>
   );

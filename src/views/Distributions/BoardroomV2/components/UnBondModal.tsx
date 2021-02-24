@@ -3,7 +3,6 @@ import ButtonTransperant from '../../../../components/Button/TransperantButton';
 import Button from '../../../../components/Button';
 import Modal from '../../../../components/NewModal/index';
 import ModalActions from '../../../../components/ModalActions';
-import ModalTitle from '../../../../components/ModalTitle';
 import TokenInput from '../../../../components/TokenInput';
 
 import { getFullDisplayBalance } from '../../../../utils/formatBalance';
@@ -13,7 +12,7 @@ interface WithdrawModalProps {
   max: BigNumber;
   onConfirm: (amount: string) => void;
   tokenName?: string;
-  onCancel?: Function;
+  onCancel?: () => void;
 }
 
 const UnbondModal: React.FC<WithdrawModalProps> = ({
@@ -23,10 +22,7 @@ const UnbondModal: React.FC<WithdrawModalProps> = ({
   tokenName = '',
 }) => {
   const [val, setVal] = useState('');
-  const [openModal, toggleModal] = useState(true);
-  const fullBalance = useMemo(() => {
-    return getFullDisplayBalance(max);
-  }, [max]);
+  const fullBalance = useMemo(() => getFullDisplayBalance(max), [max]);
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -34,37 +30,31 @@ const UnbondModal: React.FC<WithdrawModalProps> = ({
     },
     [setVal],
   );
-  const handleClose = () => {
-    toggleModal(false);
-    onCancel();
-  };
+
   const handleSelectMax = useCallback(() => {
     setVal(fullBalance);
   }, [fullBalance, setVal]);
 
-  let modalJsx = <div />;
-  if (openModal) {
-    modalJsx = (
-      <Modal title={`Unbond ${tokenName}`} open={openModal} handleClose={handleClose}>
-        <TokenInput
-          onSelectMax={handleSelectMax}
-          onChange={handleChange}
-          value={val}
-          max={fullBalance}
-          symbol={tokenName}
+  return (
+    <Modal title={`Request to Withdraw ${tokenName}`} open={true} handleClose={onCancel}>
+      <TokenInput
+        label="You are making a request to withdraw your tokens. They can be claimed after the withdrawal period is over."
+        onSelectMax={handleSelectMax}
+        onChange={handleChange}
+        value={val}
+        max={fullBalance}
+        symbol={tokenName}
+      />
+      <ModalActions>
+        <ButtonTransperant
+          text="Cancel"
+          variant="secondary"
+          onClick={onCancel}
         />
-        <ModalActions>
-          <ButtonTransperant
-            text="Cancel"
-            variant="secondary"
-            onClick={() => toggleModal(false)}
-          />
-          <Button text="Confirm" onClick={() => onConfirm(val)} />
-        </ModalActions>
-      </Modal>
-    );
-  }
-  return modalJsx;
+        <Button text="Confirm" onClick={() => onConfirm(val)} />
+      </ModalActions>
+    </Modal>
+  )
 };
 
 export default UnbondModal;

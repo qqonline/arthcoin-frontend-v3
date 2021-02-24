@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -7,9 +6,7 @@ import Modal from '../../NewModal/index';
 import Label from '../../Label';
 import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
-import TextButton from '../../Button/TextButton';
-import metaMaskIcon from '../../../assets/img/metamask.png';
-import copyIcon from '../../../assets/img/copyIcon.svg';
+
 interface props {
   onCancel?: Function;
 }
@@ -24,15 +21,14 @@ const AccountModal: React.FC<props> = ({ onCancel }) => {
 
   const babBalance = useTokenBalance(basisCash.ARTHB);
   const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
-  const walletAddress = '0xf7dDfwefbefbefbfkaD62';
   const handleClose = () => {
     onCancel();
   };
   return (
     <Modal title="My Wallet" open handleClose={handleClose}>
       <div
-        // className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
-        // style={{ minWidth: '300px' }}
+      // className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
+      // style={{ minWidth: '300px' }}
       >
         {/* <div className="dialog-class-1 width-100">
           <span className="white font18">Connected with Metamask</span>
@@ -115,11 +111,11 @@ const StyledBalanceWrapper = styled.div`
   flex-direction: row;
   margin: 10px ${(props) => props.theme.spacing[3]}px;
 `;
-const WalletDetils = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  margin: 20px 0px;
-`;
+// const WalletDetils = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start;
+//   width: 100%;
+//   margin: 20px 0px;
+// `;
 export default AccountModal;
