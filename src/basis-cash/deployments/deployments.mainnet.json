@@ -24,11 +24,11 @@
     "abi": "Vault"
   },
   "ArthArthBoardroomV2": {
-    "address": "0x677d54d7DEf7Da25addE1827e000b81A65b1F408",
+    "address": "0xBd0baC8A4Bc5e737A1Ea325aDBbBb6Ef213B01f5",
     "abi": "VestedVaultBoardroom"
   },
   "ArthArthMlpLiquidityBoardroomV2": {
-    "address": "0x677d54d7DEf7Da25addE1827e000b81A65b1F408",
+    "address": "0x04C4e4Ff349d2C350e6f1B193391e229d21798B2",
     "abi": "VestedVaultBoardroom"
   },
   "ArthMahaBoardroomV2": {
