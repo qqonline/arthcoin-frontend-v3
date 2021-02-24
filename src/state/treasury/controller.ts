@@ -49,8 +49,8 @@ export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
 
 
     registerVariableBN('getGMUOraclePrice()(uint256)', Actions.updateGetGMUOraclePrice),
-    registerVariableBN('getSeigniorageOraclePrice()(uint256)', Actions.updateGet12hrTWAPOraclePrice),
-    registerVariableBN('getBondOraclePrice()(uint256)', Actions.updateGet1hrTWAPOraclePrice),
+    // registerVariableBN('getSeigniorageOraclePrice()(uint256)', Actions.updateGet12hrTWAPOraclePrice),
+    // registerVariableBN('getBondOraclePrice()(uint256)', Actions.updateGet1hrTWAPOraclePrice),
     registerVariableBN('bondCirculatingSupply()(uint256)', Actions.updateBondCirculatingSupply),
     registerVariableBN('arthCirculatingSupply()(uint256)', Actions.updateArthCirculatingSupply),
 

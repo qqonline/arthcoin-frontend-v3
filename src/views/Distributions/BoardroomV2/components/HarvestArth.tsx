@@ -13,8 +13,9 @@ import useBasisCash from '../../../../hooks/useBasisCash';
 
 const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   const basisCash = useBasisCash()
-  const boardroom = basisCash.getBoardroom(boardroomId, 'v2')
+  const boardroom = basisCash.getBoardroomV2(boardroomId)
 
+  console.log('te', boardroom, boardroomId)
   const { onReward } = useHarvestFromBoardroom(boardroom);
   const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 

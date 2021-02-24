@@ -30,6 +30,14 @@ export interface BoardroomInfo {
   lockInPeriodDays: number
 }
 
+export interface BoardroomInfoV2 {
+  kind: BoardroomsV2
+  contract: Contract
+  address: ContractName;
+  earnTokenName: ContractName;
+  vestingPeriodHours: number
+}
+
 export interface VaultInfo {
   kind: Vaults
   contract: Contract

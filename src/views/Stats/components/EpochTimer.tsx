@@ -9,9 +9,6 @@ import moment from 'moment';
 import Button from '../../../components/Button/TransperantButton';
 import useAdvanceEpoch from '../../../hooks/useAdvanceEpoch';
 import { useWallet } from 'use-wallet';
-import useBasisCash from '../../../hooks/useBasisCash';
-import useCashPriceInEstimatedTWAP from '../../../hooks/useCashPriceInEstimatedTWAP';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 
 const useStylesFacebook = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,9 +34,6 @@ const EpochTimer: React.FC = () => {
   const classes = useStylesFacebook();
   const { prevAllocation, nextAllocation, currentEpoch } = useTreasuryAllocationTimes();
   const { account, connect } = useWallet();
-  const basisCash = useBasisCash();
-
-
 
   const prevEpoch = useMemo(
     () =>
@@ -70,8 +64,6 @@ const EpochTimer: React.FC = () => {
   };
 
   const advanceEpoch = useAdvanceEpoch()
-
-  const estimatedPrice = useCashPriceInEstimatedTWAP()
 
   return (
     <Card>
@@ -141,15 +133,15 @@ const EpochTimer: React.FC = () => {
 };
 
 
-const Desc = styled.div`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 140%;
-  color: #d9d5d3;
-  opacity: 0.64;
-  margin-bottom: 5px;
-`;
+// const Desc = styled.div`
+//   font-style: normal;
+//   font-weight: 300;
+//   font-size: 14px;
+//   line-height: 140%;
+//   color: #d9d5d3;
+//   opacity: 0.64;
+//   margin-bottom: 5px;
+// `;
 
 const CurrentEpoch = styled.div`
   background: #423b38;

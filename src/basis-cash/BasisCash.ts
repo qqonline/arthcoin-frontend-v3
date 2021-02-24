@@ -1,5 +1,5 @@
 import { Boardrooms, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
-import { BoardroomInfo, ContractName, TokenStat, TreasuryAllocationTime, VaultInfo } from './types';
+import { BoardroomInfo, BoardroomInfoV2, ContractName, TokenStat, TreasuryAllocationTime, VaultInfo } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
@@ -58,7 +58,7 @@ export class BasisCash {
     // Uniswap V2 Pair
 
     this.arthDai = new UniswapPair(
-      deployments.ArthDaiMLP.address,
+      deployments.ArthDaiLP.address,
       provider,
       'ARTH-DAI-LP'
     );
@@ -133,8 +133,8 @@ export class BasisCash {
   getBoardroom(kind: Boardrooms, version: BoardroomVersion): BoardroomInfo {
     const contract = this.boardroomByVersion(kind, version)
 
-    if (kind === 'arth') return {
-      kind: 'arth',
+    if (kind === 'arth' || kind === 'arthArth' || kind == 'arthMaha') return {
+      kind,
       contract,
       address: contract.address,
       depositTokenName: 'ARTH',
@@ -146,7 +146,7 @@ export class BasisCash {
 
     if (kind === 'mahaLiquidity')
       return {
-        kind: 'mahaLiquidity',
+        kind,
         contract,
         address: contract.address,
         depositTokenName: 'MAHA_ETH-UNI-LPv2',
@@ -158,7 +158,7 @@ export class BasisCash {
 
     if (kind === 'arthMlpLiquidity')
       return {
-        kind: 'arthMlpLiquidity',
+        kind,
         contract,
         address: contract.address,
         depositTokenName: 'ARTH_DAI-MLP-LPv1',
@@ -177,6 +177,26 @@ export class BasisCash {
       seionrageSupplyPercentage: 60,
       history7dayAPY: 30,
       lockInPeriodDays: 1,
+    }
+  }
+
+  getBoardroomV2(kind: BoardroomsV2): BoardroomInfoV2 {
+    const contract = this.boardroomByVersion(kind, 'v2')
+
+    if (kind === 'arthArth' || kind === 'arthMaha' || kind === 'arthArthMlpLiquidity') return {
+      kind,
+      contract,
+      address: contract.address,
+      earnTokenName: 'ARTH',
+      vestingPeriodHours: 8
+    }
+
+    return {
+      kind,
+      contract,
+      address: contract.address,
+      earnTokenName: 'MAHA',
+      vestingPeriodHours: 8
     }
   }
 
@@ -445,7 +465,7 @@ export class BasisCash {
 
   boardroomByVersion(kind: Boardrooms, version: BoardroomVersion): Contract {
      if (version === 'v2') {
-      if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
+       if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
       if (kind === 'arthMaha') return this.contracts.ArthMahaBoardroomV2;
       if (kind === 'mahaArth') return this.contracts.MahaArthBoardroomV2;
       if (kind === 'mahaMaha') return this.contracts.MahaMahaBoardroomV2;
@@ -507,12 +527,9 @@ export class BasisCash {
     return await boardroom.unbond(decimalToBalance(amount));
   }
 
-  async harvestCashFromBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {
-    const boardroom = this.currentBoardroom(kind, version);
-    if (this.boardroomVersionOfUser === 'v1') {
-      return await boardroom.claimDividends();
-    }
-    return await boardroom.claimReward();
+  async harvestCashFromBoardroom(kind: BoardroomsV2, version: BoardroomVersion): Promise<TransactionResponse> {
+    const boardroom = this.getBoardroomV2(kind);
+    return await boardroom.contract.claimReward();
   }
 
   async exitFromBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<TransactionResponse> {

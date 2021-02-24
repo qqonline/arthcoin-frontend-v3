@@ -11,7 +11,7 @@ import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { BoardroomInfo } from '../../../../basis-cash';
 
 const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
-  const { onReward } = useHarvestFromBoardroom(boardroom);
+  // const { onReward } = useHarvestFromBoardroom(boardroom);
   const earnings = useEarningsOnBoardroom(boardroom.kind, 'v1');
 
   return (
@@ -24,9 +24,9 @@ const Harvest = ({ boardroom }: { boardroom: BoardroomInfo }) => {
               <TokenSymbol symbol="ARTH" />
             </CardIcon>
             <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
-            <StyledCardActions>
+            {/* <StyledCardActions>
               <Button onClick={onReward} text="Claim Reward" disabled={earnings.eq(0)} />
-            </StyledCardActions>
+            </StyledCardActions> */}
           </StyledCardHeader>
         </StyledCardContentInner>
       </CardContent>

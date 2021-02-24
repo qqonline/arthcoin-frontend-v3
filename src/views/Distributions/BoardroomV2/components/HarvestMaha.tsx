@@ -13,7 +13,7 @@ import { BoardroomsV2 } from '../../../../basis-cash/config';
 
 const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   const basisCash = useBasisCash()
-  const boardroom = basisCash.getBoardroom(boardroomId, 'v2')
+  const boardroom = basisCash.getBoardroomV2(boardroomId)
   const { onReward } = useHarvestFromBoardroom(boardroom);
   const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 
