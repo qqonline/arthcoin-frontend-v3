@@ -14,8 +14,8 @@ import { BoardroomsV2 } from '../../../../basis-cash/config';
 const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   const basisCash = useBasisCash()
   const boardroom = basisCash.getBoardroomV2(boardroomId)
-  const { onReward } = useHarvestFromBoardroom(boardroom);
-  const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
+  // const { onReward } = useHarvestFromBoardroom(boardroom);
+  // const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
 
   return (
     <Card>
@@ -26,7 +26,8 @@ const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
             <CardIcon>
               <TokenSymbol symbol="MAHA" />
             </CardIcon>
-            <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
+            {/* <StyledValue>{getDisplayBalance(earnings)}</StyledValue> */}
+            <StyledValue>0.00</StyledValue>
           </StyledCardHeader>
         </StyledCardContentInner>
         <p style={{ color: '#fff9' }}>
@@ -39,7 +40,8 @@ const HarvestMaha = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
         <br />
         <StyledCardActions>
           {/* <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} MAHA`} disabled={earnings.eq(0)} /> */}
-          <Button onClick={onReward} text={`Claim   MAHA`} disabled={earnings.eq(0)} />
+          {/* <Button onClick={onReward} text={`Claim   MAHA`} disabled={earnings.eq(0)} /> */}
+          <Button text={`Claim   MAHA`} disabled={true} />
         </StyledCardActions>
       </CardContent>
     </Card>
