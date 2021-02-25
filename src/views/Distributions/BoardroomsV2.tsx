@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import DistributionIcon from '../../assets/svg/Boardroom.svg';
+import CardWithTitle from '../../components/CardWithTitle';
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 import config from '../../config';
@@ -25,10 +25,7 @@ const Boardrooms: React.FC = () => {
         subtitle="Bond/Stake tokens and earn inflationary rewards when the ARTH supply expands. Rewards are redeemable only if the protocol is in expansion mode."
       />
       <Container size="lg">
-        <StyledTableContainer>
-          <StyledHeader>
-            <StyledHeaderText>Bonding Pools</StyledHeaderText>
-          </StyledHeader>
+        <CardWithTitle title="Bonding Pools">
           <Grid container>
             <Grid container item direction="row" justify="space-between" style={{padding: 10}}>
               <Grid item xs={12} lg={4}>
@@ -60,7 +57,7 @@ const Boardrooms: React.FC = () => {
               <Boardroom boardroom={"mahaLiquidity"}/>
             </Grid>
           </Grid>
-        </StyledTableContainer>
+        </CardWithTitle>
       </Container>
     </>
   );
