@@ -144,6 +144,17 @@ export class BasisCash {
       lockInPeriodDays: 5,
     }
 
+    // if (kind === 'maha') return {
+    //   kind: 'maha',
+    //   contract,
+    //   address: contract.address,
+    //   depositTokenName: 'MAHA',
+    //   earnTokenName: 'ARTH',
+    //   seionrageSupplyPercentage: 20,
+    //   history7dayAPY: 30,
+    //   lockInPeriodDays: 5,
+    // }
+
     if (kind === 'mahaLiquidity')
       return {
         kind,
