@@ -16,7 +16,7 @@ const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   const boardroom = basisCash.getBoardroomV2(boardroomId)
 
   const { onReward } = useHarvestFromBoardroom(boardroom);
-  const earnings = useEarningsOnBoardroomV2(boardroomId);
+  const earnings = useEarningsOnBoardroomV2(boardroomId, 'v2');
 
   return (
     <Card>

@@ -2,15 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
-import { BoardroomsV2 } from '../basis-cash/config';
+import { Boardrooms, BoardroomVersion } from '../basis-cash/config';
 
-const useEarningsOnBoardroom = (kind: BoardroomsV2) => {
+const useEarningsOnBoardroomV2 = (kind: Boardrooms, version: BoardroomVersion) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
-  }, [basisCash, kind]);
+    setBalance(await basisCash.getEarningsOnBoardroom(kind, version));
+  }, [basisCash, kind, version]);
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
@@ -23,4 +23,4 @@ const useEarningsOnBoardroom = (kind: BoardroomsV2) => {
   return balance;
 };
 
-export default useEarningsOnBoardroom;
+export default useEarningsOnBoardroomV2;
