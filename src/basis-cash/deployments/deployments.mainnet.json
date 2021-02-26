@@ -24,28 +24,28 @@
     "abi": "Vault"
   },
   "ArthArthBoardroomV2": {
-    "address": "0x0daeC081773e4Df0731165198E3446C471542a19",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x40436065DFed8eb07F8ea26E2a47114a82B58d80",
+    "abi": "VaultBoardroom"
   },
   "ArthArthMlpLiquidityBoardroomV2": {
-    "address": "0x3178fcCeA39C32983750C6C5b9B9E41BDB72F466",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x5b0C55212b77617Bb50bd7F832Df2c72a0e46Bb7",
+    "abi": "VaultBoardroom"
   },
   "ArthMahaBoardroomV2": {
-    "address": "0x6A7cd1CeF2D28512779ad81A53d2Ab74F08AcF6b",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x8a143266c8ddbedd360be9402e04d8d4ba103470",
+    "abi": "VaultBoardroom"
   },
   "MahaArthBoardroomV2": {
-    "address": "0x677d54d7DEf7Da25addE1827e000b81A65b1F408",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x40436065DFed8eb07F8ea26E2a47114a82B58d80",
+    "abi": "VaultBoardroom"
   },
   "MahaArthMlpLiquidityBoardroomV2": {
-    "address": "0x677d54d7DEf7Da25addE1827e000b81A65b1F408",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x5b0C55212b77617Bb50bd7F832Df2c72a0e46Bb7",
+    "abi": "VaultBoardroom"
   },
   "MahaMahaBoardroomV2": {
-    "address": "0x677d54d7DEf7Da25addE1827e000b81A65b1F408",
-    "abi": "VestedVaultBoardroom"
+    "address": "0x8a143266c8ddbedd360be9402e04d8d4ba103470",
+    "abi": "VaultBoardroom"
   },
   "ArthDaiLP": {
     "address": "0x35b6f9e6300aa6c722ea189e096b0b073025806f",
