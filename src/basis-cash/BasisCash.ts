@@ -503,7 +503,7 @@ export class BasisCash {
 
   async getEarningsOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
     const boardroom = this.currentBoardroom(kind, version);
-    return await boardroom.earned(this.myAccount);
+     return await boardroom.earned(this.myAccount);
   }
 
 

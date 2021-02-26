@@ -2,21 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import useBasisCash from './useBasisCash';
 import config from '../config';
-import { BoardroomsV2  } from '../basis-cash/config';
+import { BoardroomsV2 } from '../basis-cash/config';
 
-const useEarningsOnBoardroomV2 = (kind: BoardroomsV2) => {
-  const [balance, setBalance] = useState(BigNumber.from(1000));
-  const [claimableBalance, setClaimableBalance] = useState(BigNumber.from(10));
+const useEarningsOnBoardroom = (kind: BoardroomsV2) => {
+  const [balance, setBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
-    const boardroom = basisCash.getBoardroomV2(kind)
-
-    const director = await boardroom.contract.getDirector(basisCash.myAccount)
-
-    const earned: BigNumber = await boardroom.contract.estimateEarned(basisCash.myAccount)
-    setBalance(earned.sub(director.rewardClaimedCurrEpoch));
-    // setClaimableBalance(earned.);
+    setBalance(await basisCash.getEarningsOnBoardroom(kind, 'v2'));
   }, [basisCash, kind]);
 
   useEffect(() => {
@@ -27,7 +20,7 @@ const useEarningsOnBoardroomV2 = (kind: BoardroomsV2) => {
     }
   }, [basisCash.isUnlocked, fetchBalance]);
 
-  return [balance, claimableBalance];
+  return balance;
 };
 
-export default useEarningsOnBoardroomV2;
+export default useEarningsOnBoardroom;
