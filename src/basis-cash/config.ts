@@ -22,7 +22,11 @@ export type BoardroomsV2 = 'arthArthMlpLiquidity' | 'arthArth'  | 'arthMaha' |
   'mahaArthMlpLiquidity' | 'mahaArth'  | 'mahaMaha'
 
 export type Boardrooms = BoardroomsV1 | BoardroomsV2
-export type Vaults = 'arthMlpLiquidity' | 'arth'  | 'maha'
+export enum Vaults {
+  arthMlpLiquidity = 'arthMlpLiquidity',
+  arth = 'arth',
+  maha = 'maha'
+}
 export type BoardroomVersion = 'v1' | 'v2'
 
 export type EthereumConfig = {

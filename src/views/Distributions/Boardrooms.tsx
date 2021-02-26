@@ -12,6 +12,7 @@ import LaunchCountdown from '../../components/LaunchCountdown';
 // import Notice from '../../components/Notice';
 // import useBoardroomVersion from '../../hooks/useBoardroomVersion';
 import DistributionIcon from '../../assets/svg/Boardroom.svg';
+import { Vaults } from '../../basis-cash/config';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -79,19 +80,19 @@ const Boardrooms: React.FC = () => {
         <Grid container spacing={5} justify="center" alignItems="stretch">
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
-              vault={'arthMlpLiquidity'}
+              vault={Vaults.arthMlpLiquidity}
             // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
           <Grid container item xs={12} md={4} lg={4} xl={4}>
             <Boardroom
-              vault={'arth'}
+              vault={Vaults.arth}
             // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             />
           </Grid>
 
           <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom vault={'maha'} />
+            <Boardroom vault={Vaults.maha} />
           </Grid>
         </Grid>
 

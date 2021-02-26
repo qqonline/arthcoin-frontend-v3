@@ -10,6 +10,7 @@ import Multicall from './Mulitcall';
 import UniswapPair from './UniswapPair';
 import ABIS from './deployments/abi';
 
+
 /**
  * An API module of ARTH contracts.
  * All contract-interacting domain logic should be defined in here.
@@ -98,29 +99,29 @@ export class BasisCash {
         this.boardroomVersionOfUser = 'latest';
       });
 
-    this.multicall.addCalls([
-      {
-        key: 'BALANCE_OF_ARTH',
-        target: this.ARTH.address,
-        call: ['balanceOf(address)(uint256)', this.myAccount],
-        convertResult: val => val / 10 ** 18
-      }, {
-        key: 'BALANCE_OF_ARTHB',
-        target: this.ARTHB.address,
-        call: ['balanceOf(address)(uint256)', this.myAccount],
-        convertResult: val => val / 10 ** 18
-      }, {
-        key: 'BALANCE_OF_MAHA',
-        target: this.MAHA.address,
-        call: ['balanceOf(address)(uint256)', this.myAccount],
-        convertResult: val => val / 10 ** 18
-      }, {
-        key: 'BALANCE_OF_DAI',
-        target: this.DAI.address,
-        call: ['balanceOf(address)(uint256)', this.myAccount],
-        convertResult: val => val / 10 ** 18
-      }
-    ])
+    // this.multicall.addCalls([
+    //   {
+    //     key: 'BALANCE_OF_ARTH',
+    //     target: this.ARTH.address,
+    //     call: ['balanceOf(address)(uint256)', this.myAccount],
+    //     convertResult: val => val / 10 ** 18
+    //   }, {
+    //     key: 'BALANCE_OF_ARTHB',
+    //     target: this.ARTHB.address,
+    //     call: ['balanceOf(address)(uint256)', this.myAccount],
+    //     convertResult: val => val / 10 ** 18
+    //   }, {
+    //     key: 'BALANCE_OF_MAHA',
+    //     target: this.MAHA.address,
+    //     call: ['balanceOf(address)(uint256)', this.myAccount],
+    //     convertResult: val => val / 10 ** 18
+    //   }, {
+    //     key: 'BALANCE_OF_DAI',
+    //     target: this.DAI.address,
+    //     call: ['balanceOf(address)(uint256)', this.myAccount],
+    //     convertResult: val => val / 10 ** 18
+    //   }
+    // ])
   }
 
   get isUnlocked(): boolean {
@@ -208,7 +209,7 @@ export class BasisCash {
     })()
 
     if (kind === 'arth') return {
-      kind: 'arth',
+      kind: Vaults.arth,
       contract,
       address: contract.address,
       depositTokenName: 'ARTH',
@@ -221,7 +222,7 @@ export class BasisCash {
 
     if (kind === 'maha')
       return {
-        kind: 'maha',
+        kind: Vaults.maha,
         contract,
         address: contract.address,
         depositTokenName: 'MAHA',
@@ -232,7 +233,7 @@ export class BasisCash {
       }
 
     return {
-      kind: 'arthMlpLiquidity',
+      kind: Vaults.arthMlpLiquidity,
       contract,
       address: contract.address,
       depositTokenName: 'ARTH_DAI-MLP-LPv1',
