@@ -137,7 +137,7 @@ export class BasisCash {
       kind,
       contract,
       address: contract.address,
-      depositTokenName: 'ARTH',
+      depositTokenName: 'ARTH_DAI',
       earnTokenName: 'ARTH',
       seionrageSupplyPercentage: 20,
       history7dayAPY: 30,

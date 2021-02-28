@@ -9,7 +9,9 @@ import Button from '../../../components/Button/TransperantButton';
 import useBasisCash from '../../../hooks/useBasisCash';
 import HarvestMaha from './components/HarvestMaha';
 import HarvestArth from './components/HarvestArth';
-import BoardroomCard from './components/BoardroomStaked';
+import BoardroomStaked from './components/BoardroomStaked';
+import BoardroomEarned from './components/BoardroomEarned';
+import HarvestMahaCard from './components/HarvestMahaCard';
 import DistributionIcon from '../distribution.png';
 import { Vaults } from '../../../basis-cash/config';
 
@@ -21,53 +23,24 @@ const Boardroom = () => {
   return (
     <>
       <PageHeader
-        title="ARTH Distribution"
-        subtitle={`Deposit ${vault.depositTokenName} tokens and earn inflationary rewards from an increase in $ARTH supply.`}
+        title={`${vault.depositTokenName === 'ARTH' ? 'ARTH-DAI' : vault.depositTokenName}`}
+        subtitle={`Deposit ${vault.depositTokenName} tokens and earn inflationary rewards from an increase in ${vault.depositTokenName} supply.`}
         parentLink="../"
         parentLinkTitle="ARTH-MAHA Distribution"
       // showEpoch
       />
       <Container size="lg">
-        <div className="border-bottom width-100 margin-bottom-20" />
-        {/* <Grid container spacing={3} justify="center"> */}
-        {/* <Grid item xs={12} md={8} lg={8} xl={8}> */}
         <Grid container spacing={2} justify="center">
-          <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <BoardroomCard vault={vault} />
+          <Grid container item xs={12} md={6} lg={4} xl={4}>
+            <BoardroomStaked vault={vault} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={4} xl={4}>
+            <BoardroomEarned boardroomId={vault.arthBoardroom} />
+          </Grid>
+          <Grid container item xs={12} md={6} lg={4} xl={4}>
+            <BoardroomEarned boardroomId={vault.mahaBoardroom} />
           </Grid>
         </Grid>
-        <Grid container spacing={2} justify="center">
-          <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <HarvestArth boardroomId={vault.arthBoardroom} />
-          </Grid>
-          <Grid container item xs={12} md={6} lg={6} xl={6}>
-            <HarvestMaha boardroomId={vault.mahaBoardroom} />
-          </Grid>
-          {/* <Grid container item xs={6}>
-            <div style={{ marginTop: '20px', marginRight: 20, maxWidth: '200px' }}>
-              <Button size="sm" text="Settle & Withdraw" />
-            </div>
-            <div style={{ marginTop: '20px', maxWidth: '200px' }}>
-              <Button size="sm" text="Provide Liquidity" />
-            </div>
-          </Grid> */}
-        </Grid>
-        {/* </Grid> */}
-        {/* <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Grid container spacing={3} justify="center">
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="MAHA Price(TWAP)" title="$1.150" />
-              </Grid>
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="Scaling Factor" title="5x" />
-              </Grid>
-              <Grid container item xs={12} md={12} lg={12} xl={12}>
-                <ExchangeStat description="Treasury Amount" title="~$5" />
-              </Grid>
-            </Grid>
-          </Grid> */}
-        {/* </Grid> */}
-        {/* {bankId === 'arthMlpLiquidity' && <LPTokenHelpText boardroom={vault} />} */}
       </Container>
     </>
   );

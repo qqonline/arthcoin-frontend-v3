@@ -11,7 +11,7 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   text?: string;
   to?: string;
-  variant?: 'default' | 'secondary' | 'tertiary';
+  variant?: 'default' | 'secondary' | 'tertiary' | 'outlined' | 'rounded';
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -81,6 +81,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       padding={buttonPadding}
       size={buttonSize}
+      outlined={variant==='outlined'}
+      rounded={variant==='rounded'}
     >
       {children}
       {ButtonChild}
@@ -95,20 +97,22 @@ interface StyledButtonProps {
   fontSize: number;
   padding: number;
   size: number;
+  outlined: boolean;
+  rounded: boolean;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   white-space: nowrap;
-  background: linear-gradient(38.44deg, #F47F57 15.81%, #FD5656 87.57%);
-  border: 0;
-  border-radius: 6px;
+  background: ${(props) => props.rounded ? 'rgba(255, 255, 255, 0.08)' : (props.outlined ? 'transparent' : 'linear-gradient(38.44deg, #F47F57 15.81%, #FD5656 87.57%)')};
+  border: ${(props) => props.outlined ? '1px solid rgba(255, 255, 255, 0.32)' : '0'};
+  border-radius: ${(props) => props.rounded ? '19px' : '6px'};
   box-shadow: ${(props) => props.boxShadow};
-  color: #fff;
+  color: ${(props) => props.rounded ? '#FF7F57' : (props.outlined ? '#F5F5F5' : '#fff')};
   cursor: pointer;
   display: flex;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   height: 38px;
   justify-content: center;
   outline: none !important;
@@ -116,7 +120,9 @@ const StyledButton = styled.button<StyledButtonProps>`
   pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
   &:hover {
-    background: #FF7F57;
+    background: ${(props) => props.outlined ? 'transparent' : '#FF7F57'};
+    border: ${(props) => props.outlined ? '1px solid rgba(255, 255, 255, 0.64)' : '0'};
+    color: ${(props) => props.outlined ? '#F5F5F5' : '#fff'};
   }
   &:selected {
     background: linear-gradient(180deg, #F47F57 -11.33%, #FD5656 100%);
@@ -125,8 +131,8 @@ const StyledButton = styled.button<StyledButtonProps>`
     outline: none;
   }
   &:disabled {
-    background: rgba(255,255,255,0.32);
-    color: rgba(255, 255, 255, 0.88);
+    background: ${(props) => props.outlined ? 'transparent' : 'rgba(255,255,255,0.32)'};
+    color: rgba(255, 255, 255, 0.32);
     cursor: not-allowed;
   }
 `;

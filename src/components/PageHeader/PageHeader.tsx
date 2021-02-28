@@ -1,6 +1,9 @@
+import { ChevronRight, KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../../components/Container';
+import { useMediaQuery } from 'react-responsive';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
@@ -8,6 +11,8 @@ interface PageHeaderProps {
   title?: string;
   secondParaTitle?: string;
   secondParaDescription?: string;
+  parentLink?: string;
+  parentLinkTitle?: string;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -15,14 +20,25 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   subtitle,
   title,
   secondParaTitle,
-  secondParaDescription
+  secondParaDescription,
+  parentLink,
+  parentLinkTitle
 }) => {
+
+  const isDesktopOrLaptop = useMediaQuery({query: '(min-device-width: 800px)'});
 
   return (
     <StyledPageHeader>
       <Container size="lg">
         <StyledPageContent>
-          <StyledTextContainer>
+          <StyledTextContainer>            
+          {(isDesktopOrLaptop && parentLink) && (
+            <StyledNav>
+              <StyledNavLink to={parentLink}>{parentLinkTitle}</StyledNavLink>
+              <KeyboardArrowRight style={{color: '#9e9e9e'}} />
+              <StyledNavTitle>{title}</StyledNavTitle>
+            </StyledNav>
+          )}
             <StyledTitle>{title}</StyledTitle>
             <StyledSubtitle>{subtitle}</StyledSubtitle>
             {secondParaTitle && <SecondParaTitle>{secondParaTitle}</SecondParaTitle>}
@@ -57,13 +73,34 @@ const StyledPageContent = styled.div`
   } ;
 `;
 
+const StyledNav = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: -30px;
+  margin-bottom: 20px;
+`;
+
+const StyledNavLink = styled(Link)`
+  color: ${props => props.theme.color.grey[400]};
+  font-size: 14px;
+  margin-right: -4px;
+  &:hover {
+    color: white !important;
+  }
+`;
+
+const StyledNavTitle = styled.span`
+  color: white;
+  font-size: 14px;
+`;
+
 const StyledTextContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  @media (max-width: 768px) {
-    margin-top: -100px;
-  } ;
+  // @media (max-width: 768px) {
+  //   margin-top: -100px;
+  // } ;
 `;
 
 const StyledPageHeader = styled.div`

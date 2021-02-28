@@ -47,12 +47,14 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
           <Grid container justify="space-between" alignItems="center">
             <Grid container item alignItems="center" direction="row" lg={4} style={{height: 'fitContent'}}>
               <Grid item>
-                <TokenSymbol symbol={boardroom.depositTokenName === "ARTH" ? "ARTH_DAI" : boardroom.depositTokenName} size={36} />
+                {boardroom.depositTokenName.split("_").map((token, idx) => (
+                  <TokenSymbol symbol={token} size={36} left={idx>0 ? -5 : 0} />
+                ))}
               </Grid>
-              <span style={{width: 20}} />
+              <span style={{width: 10}} />
               <Grid container item xs={8} lg={9}>
                 <Grid item xs={12}>
-                  <StyledTitle>Deposit {boardroom.depositTokenName}</StyledTitle>
+                  <StyledTitle>Deposit {boardroom.depositTokenName.replace("_", "+")}</StyledTitle>
                 </Grid>
                 <Grid item xs={12}>
                   <StyledTitleSmall>EARN {boardroom.earnTokenName}</StyledTitleSmall>

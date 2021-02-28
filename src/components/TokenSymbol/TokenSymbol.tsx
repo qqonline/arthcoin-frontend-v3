@@ -10,6 +10,7 @@ import mahaSwapLogo from '../../assets/img/MahaSwap.png';
 import arthBLogo from '../../assets/img/ARTHB.png';
 import yCRVLogo from '../../assets/img/ycrv.png';
 import DAILogo from '../../assets/img/DAI.png';
+import DAI2Logo from '../../assets/img/DAI2.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
@@ -34,7 +35,7 @@ const logosBySymbol: { [title: string]: string } = {
   MAHA: mahaLogo,
   ARTHB: arthBLogo,
   yCRV: yCRVLogo,
-  DAI: DAILogo,
+  DAI: DAI2Logo,
   SUSD: sUSDLogo,
   USDC: USDCLogo,
   USDT: USDTLogo,
@@ -67,12 +68,14 @@ const logosBySymbol: { [title: string]: string } = {
 type BasisLogoProps = {
   symbol: string;
   size?: number;
+  left?: number;
 };
 
-const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
+const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, left = null, size = 64 }) => {
   if (!logosBySymbol[symbol]) {
     // throw new Error(`Invalid BasisLogo symbol: ${symbol}`);
-    return <img src={logosBySymbol['DAI']} alt={`${symbol} Logo`} height={size} />;
+    // return <img src={logosBySymbol['DAI']} alt={`${symbol} Logo`} height={size} />;
+    return null;
   }
 
   return (
@@ -80,6 +83,7 @@ const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64 }) => {
       src={logosBySymbol[symbol]}
       alt={`${symbol} Logo`}
       height={size}
+      style={left ? {marginLeft: left, zIndex: 10+left, position: 'relative'} : {zIndex: 10, position: 'relative'}}
     />
   );
 };
