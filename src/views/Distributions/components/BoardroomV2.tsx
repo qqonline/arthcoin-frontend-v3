@@ -2,23 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { useWallet } from 'use-wallet';
 import useBasisCash from '../../../hooks/useBasisCash';
-import { withStyles, Theme } from '@material-ui/core/styles';
 import InfoIcon from '../../../assets/img/InfoIcon.svg';
-import Tooltip from '@material-ui/core/Tooltip';
 import { Boardrooms } from '../../../basis-cash/config';
 import Grid from '@material-ui/core/Grid';
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#2A2827',
-    color: 'white',
-    fontWeight: 300,
-    fontSize: '13px',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-}))(Tooltip);
+import HtmlTooltip from '../../../components/HtmlTooltip';
 interface BoardroomProps {
   boardroom: Boardrooms;
   toolTipTitle?: string;
@@ -30,7 +18,6 @@ interface StyledCardProps {
 }
 
 const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
-  const { account, connect } = useWallet();
   const basisCash = useBasisCash();  
   const history = useHistory();
 
@@ -48,7 +35,7 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
             <Grid container item alignItems="center" direction="row" lg={4} style={{height: 'fitContent'}}>
               <Grid item>
                 {boardroom.depositTokenName.split("_").map((token, idx) => (
-                  <TokenSymbol symbol={token} size={36} left={idx>0 ? -5 : 0} />
+                  <TokenSymbol key={idx} symbol={token} size={36} left={idx>0 ? -5 : 0} />
                 ))}
               </Grid>
               <span style={{width: 10}} />
@@ -125,7 +112,7 @@ const StyledCardWrapper = styled.div<StyledCardProps>`
 `;
 
 const StyledCard = styled.div`
-  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
+  background: ${(props) => props.theme.color.gradients.dark_linear};
   border-radius: 12px;
   box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.16);

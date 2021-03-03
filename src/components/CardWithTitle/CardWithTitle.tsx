@@ -30,7 +30,7 @@ const StyledCard = styled.div`
 `;
 
 const StyledHeader = styled.header`
-  border-bottom: 1px solid rgb(255, 255, 255, 0.08);
+  border-bottom: 1px solid ${(props) => props.theme.color.alpha[8]};
   padding: 20px 24px;
   margin-bottom: 10px;
 `;

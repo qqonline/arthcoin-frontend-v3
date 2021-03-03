@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Page from '../../components/Page';
 import Boardroom from './Boardroom';
-import Boardrooms_Desktop from './BoardroomsV2';
-import Boardrooms_Mobile from './Boardrooms';
+import BoardroomsDesktop from './BoardroomsV2';
+import BoardroomsMobile from './Boardrooms';
 import BoardroomsV2 from './BoardroomV2';
 import { useMediaQuery } from 'react-responsive';
 
@@ -16,8 +16,8 @@ const Distribution: React.FC = () => {
     <Switch>
       <Page>
         <Route exact path={path}>
-          {isDesktopOrLaptop && <Boardrooms_Desktop />}
-          {isTabletOrMobile && <Boardrooms_Mobile />}
+          {isDesktopOrLaptop && <BoardroomsDesktop />}
+          {isTabletOrMobile && <BoardroomsMobile />}
         </Route>
         <Route path={`${path}/v1/:bankId`}>
           <Boardroom />

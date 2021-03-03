@@ -133,7 +133,7 @@ export class BasisCash {
   getBoardroom(kind: Boardrooms, version: BoardroomVersion): BoardroomInfo {
     const contract = this.boardroomByVersion(kind, version)
 
-    if (kind === 'arth' || kind === 'arthArth' || kind == 'arthMaha') return {
+    if (kind === 'arth' || kind === 'arthArth' || kind === 'arthMaha') return {
       kind,
       contract,
       address: contract.address,

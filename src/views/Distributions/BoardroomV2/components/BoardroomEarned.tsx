@@ -3,13 +3,11 @@ import styled from 'styled-components';
 
 import TokenSymbol from '../../../../components/TokenSymbol';
 import CardWithTitle from '../../../../components/CardWithTitle';
-import CardIcon from '../../../../components/CardIcon';
 import useHarvestFromBoardroom from '../../../../hooks/useHarvestFromBoardroom';
 import useEarningsOnBoardroomV2 from '../../../../hooks/useEarningsOnBoardroomV2';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { BoardroomsV2 } from '../../../../basis-cash/config';
 import useBasisCash from '../../../../hooks/useBasisCash';
-import TextButton from '../../../../components/Button/TextButton';
 import Button from '../../../../components/Button';
 import ProgressCountdown from './ProgressCountdown';
 import { Info } from '@material-ui/icons';
@@ -19,7 +17,7 @@ const HarvestArth = ({ boardroomId }: { boardroomId: BoardroomsV2 }) => {
   const boardroom = basisCash.getBoardroomV2(boardroomId)
 
   const {onReward} = useHarvestFromBoardroom(boardroom);
-  //const [earnings, claimable] = useEarningsOnBoardroomV2(boardroomId);
+  // eslint-disable-next-line
   const [earnings, claimable] = useEarningsOnBoardroomV2('arthArth');
   const tokenName = boardroom.earnTokenName;
 
@@ -95,11 +93,6 @@ const StyleLabel = styled.div`
   font-size: 16px;
   margin-left: 15px;  
   color: #ffffff;
-`;
-const StyledValue = styled.div`
-  color: rgba(255, 255, 255, 0.64);
-  font-size: 18px;
-  font-weight: 600;
 `;
 
 const StyledCardActions = styled.div`

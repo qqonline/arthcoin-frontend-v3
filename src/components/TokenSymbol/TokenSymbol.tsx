@@ -10,7 +10,6 @@ import mahaSwapLogo from '../../assets/img/MahaSwap.png';
 import arthBLogo from '../../assets/img/ARTHB.png';
 import yCRVLogo from '../../assets/img/ycrv.png';
 import DAILogo from '../../assets/img/DAI.png';
-import DAI2Logo from '../../assets/img/DAI2.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
 import USDCLogo from '../../assets/img/USDC.png';
 import USDTLogo from '../../assets/img/USDT.png';
@@ -35,7 +34,7 @@ const logosBySymbol: { [title: string]: string } = {
   MAHA: mahaLogo,
   ARTHB: arthBLogo,
   yCRV: yCRVLogo,
-  DAI: DAI2Logo,
+  DAI: DAILogo,
   SUSD: sUSDLogo,
   USDC: USDCLogo,
   USDT: USDTLogo,
