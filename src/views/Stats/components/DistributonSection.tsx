@@ -38,7 +38,7 @@ const DistributonSection: React.FC = () => {
           <PieChartLables>
             <ChartIconColor color="#178A50" />
             <div>
-              <ChartLabelTitle>ARTH-DAI MahaSwap LP</ChartLabelTitle>
+              <ChartLabelTitle>ARTH-ETH MahaSwap LP</ChartLabelTitle>
               <ChartLabelTitleBold>10% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
             </div>
           </PieChartLables>
