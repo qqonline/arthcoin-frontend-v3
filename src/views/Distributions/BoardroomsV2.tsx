@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import CardWithTitle from '../../components/CardWithTitle';
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
-import config from '../../config';
 import useBasisCash from '../../hooks/useBasisCash';
 import Boardroom from './components/BoardroomV2';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +13,7 @@ const Boardrooms: React.FC = () => {
   const basisCash = useBasisCash();
   
 
-  const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
+  // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
   
   return (
@@ -63,30 +62,6 @@ const Boardrooms: React.FC = () => {
   );
 };
 
-const StyledTableContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(255, 255, 255, 0.02);
-  border-radius: 12px;
-  border-top: 1px solid rgba(255, 116, 38, 0.1);
-  border-left: 1px solid rgba(255, 116, 38, 0.08);
-  border-right: 1px solid rgba(255, 116, 38, 0.08);
-  border-bottom: 1px solid rgba(255, 116, 38, 0.01);
-  backdrop-filter: blur(70px);
-`;
-
-const StyledHeader = styled.header`
-  border-bottom: 1px solid rgb(255, 255, 255, 0.08);
-  padding: 20px 24px;
-  margin-bottom: 10px;
-`;
-
-const StyledHeaderText = styled.h6`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[300]};
-  margin: 0;
-`;
 
 const StyledTableHeaderTextCenter = styled.h6`
   font-size: 12px;
@@ -117,8 +92,5 @@ const StyledTableHeaderTextRight = styled.h6`
   margin: 10px 10px;
 `;
 
-const StyledToolTip = styled.div`
-  transform: scale(0.5);
-`;
 
 export default Boardrooms;

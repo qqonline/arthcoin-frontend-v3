@@ -1,9 +1,10 @@
-import { ChevronRight, KeyboardArrowRight } from '@material-ui/icons';
+import { KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import { useMediaQuery } from 'react-responsive';
+import theme from '../../theme';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
@@ -35,7 +36,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           {(isDesktopOrLaptop && parentLink) && (
             <StyledNav>
               <StyledNavLink to={parentLink}>{parentLinkTitle}</StyledNavLink>
-              <KeyboardArrowRight style={{color: '#9e9e9e'}} />
+              <KeyboardArrowRight style={{color: theme.color.grey[500]}} />
               <StyledNavTitle>{title}</StyledNavTitle>
             </StyledNav>
           )}
@@ -108,7 +109,7 @@ const StyledPageHeader = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
+  background: linear-gradient(180deg, #${(props) => props.theme.color.dark[200]} 0%, rgba(42, 40, 39, 0) 100%);
   padding-bottom: ${(props) => props.theme.spacing[6]}px;
   padding-top: ${(props) => props.theme.spacing[6]}px;
   padding-left: 15px;

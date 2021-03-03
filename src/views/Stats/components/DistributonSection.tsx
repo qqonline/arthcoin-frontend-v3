@@ -1,22 +1,9 @@
 import React from 'react';
-import { Theme, withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
 import PieChart from '../components/PieChart';
 import InfoIcon from '../../../assets/img/ToolTipColored.svg';
-import Tooltip from '@material-ui/core/Tooltip';
-
-
-const HtmlTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: '#2A2827',
-    color: 'white',
-    fontWeight: 300,
-    fontSize: '13px',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-}))(Tooltip);
+import HtmlTooltip from '../../../components/HtmlTooltip';
 
 
 const DistributonSection: React.FC = () => {

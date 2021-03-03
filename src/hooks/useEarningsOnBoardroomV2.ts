@@ -6,6 +6,7 @@ import { BoardroomsV2  } from '../basis-cash/config';
 
 const useEarningsOnBoardroomV2 = (kind: BoardroomsV2) => {
   const [balance, setBalance] = useState(BigNumber.from(1000));
+  // eslint-disable-next-line
   const [claimableBalance, setClaimableBalance] = useState(BigNumber.from(10));
   const basisCash = useBasisCash();
 

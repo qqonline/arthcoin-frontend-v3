@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../../../../components/Button';
-import CardContent from '../../../../components/CardContent';
 import CardWithTitle from '../../../../components/CardWithTitle';
-import { AddIcon, RemoveIcon } from '../../../../components/icons';
-import IconButton from '../../../../components/IconButton';
-import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
+import useApprove from '../../../../hooks/useApprove';
 import useModal from '../../../../hooks/useModal';
 import useTokenBalance from '../../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
@@ -39,6 +36,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               ? basisCash.arthDai
               : basisCash.externalTokens[vault.depositTokenName];
 
+  // eslint-disable-next-line
   const [approveStatus, approve] = useApprove(
     stakingToken,
     basisCash.getBoardroomVault(vault.kind)?.address,
@@ -60,7 +58,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
   const { onBond } = useStakeToVault(vault);
   const { onWithdraw } = WithdrawShareFromVault(vault);
   const { onUnbond } = useUnbondFromVault(vault);
-
+  // eslint-disable-next-line
   const [onPresentBond, onDismissBond] = useModal(
     <BondModal
       max={tokenBalance}
@@ -73,6 +71,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     />,
   );
 
+  // eslint-disable-next-line
   const [onPresentUnBond, onDismissUnbond] = useModal(
     <UnbondModal
       max={stakedBalance}
@@ -96,7 +95,9 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
         <StyledCardIcon>
           {logos && logos.length > 0 && (
             <LogoContainer>
-              {logos.map((l: any, idx: number) => <TokenSymbol symbol={l} size={36} left={idx>0?-5:0} />)}
+              {logos.map((l: any, idx: number) => (
+                <TokenSymbol key={idx} symbol={l} size={36} left={idx>0?-5:0} />
+              ))}
             </LogoContainer>
           )}
         </StyledCardIcon>
@@ -213,10 +214,6 @@ const StyledFieldLabel = styled.div`
   color: rgba(255, 255, 255, 0.64);
 `;
 
-const StyledActionSpacer = styled.div`
-  height: ${(props) => props.theme.spacing[4]}px;
-  width: ${(props) => props.theme.spacing[4]}px;
-`;
 
 const StyledCardContent = styled.div`
   display: flex;
@@ -235,11 +232,5 @@ const StyledCardContentInner = styled.div`
   flex: 1;
 `;
 
-const StyledDesc = styled.span`
-  color: ${(props) => props.theme.color.grey[500]};
-  font-weight: 400;
-  font-size: 12px;
-  text-align: center;
-`;
 
 export default Stake;
