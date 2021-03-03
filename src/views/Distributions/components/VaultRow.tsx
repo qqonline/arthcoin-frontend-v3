@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
 import useBasisCash from '../../../hooks/useBasisCash';
 import InfoIcon from '../../../assets/img/InfoIcon.svg';
-import { Boardrooms } from '../../../basis-cash/config';
+import { Vaults } from '../../../basis-cash/config';
 import Grid from '@material-ui/core/Grid';
 import HtmlTooltip from '../../../components/HtmlTooltip';
+
 interface BoardroomProps {
-  boardroom: Boardrooms;
+  vault: Vaults;
   toolTipTitle?: string;
   history?: any;
 }
@@ -17,14 +18,14 @@ interface StyledCardProps {
   hasDetail?: boolean;
 }
 
-const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
-  const basisCash = useBasisCash();  
+const VaultRow: React.FC<BoardroomProps> = (props) => {
+  const basisCash = useBasisCash();
   const history = useHistory();
 
-  const boardroom = basisCash.getBoardroom(props.boardroom, 'v2');
-  const hasDetail = boardroom.depositTokenName === "ARTH";
+  const vault = basisCash.getBoardroomVault(props.vault);
+  const hasDetail = vault.depositTokenName === "ARTH";
   const handleCardClick = () => {
-    history.push(`/distribution/v2/${boardroom.kind}`)
+    history.push(`/distribution/v2/${vault.kind}`)
   }
 
   return (
@@ -32,36 +33,36 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
       <StyledCard onClick={handleCardClick}>
         <StyledCardContent>
           <Grid container justify="space-between" alignItems="center">
-            <Grid container item alignItems="center" direction="row" lg={4} style={{height: 'fitContent'}}>
+            <Grid container item alignItems="center" direction="row" lg={4} style={{ height: 'fitContent' }}>
               <Grid item>
-                {boardroom.depositTokenName.split("_").map((token, idx) => (
-                  <TokenSymbol key={idx} symbol={token} size={36} left={idx>0 ? -5 : 0} />
+                {vault.depositTokenName.split("_").map((token, idx) => (
+                  <TokenSymbol key={idx} symbol={token} size={36} left={idx > 0 ? -5 : 0} />
                 ))}
               </Grid>
-              <span style={{width: 10}} />
+              <span style={{ width: 10 }} />
               <Grid container item xs={8} lg={9}>
                 <Grid item xs={12}>
-                  <StyledTitle>Deposit {boardroom.depositTokenName.replace("_", "+")}</StyledTitle>
+                  <StyledTitle>Deposit {vault.depositTokenName.replace("_", "+")}</StyledTitle>
                 </Grid>
-                <Grid item xs={12}>
-                  <StyledTitleSmall>EARN {boardroom.earnTokenName}</StyledTitleSmall>
-                </Grid>
+                {/* <Grid item xs={12}>
+                  <StyledTitleSmall>EARN {vault.d}</StyledTitleSmall>
+                </Grid> */}
               </Grid>
             </Grid>
-            <Grid item xs={6} lg={2} style={{height: 'fitContent'}}>
+            <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
               <StyledCell>
-                {boardroom.depositTokenName === "ARTH+DAI" && (
+                {vault.depositTokenName === "ARTH+DAI" && (
                   <>
                     <TokenSymbol symbol={"MahaSwap"} size={36} />
-                    <span style={{width: 10}} />
+                    <span style={{ width: 10 }} />
                   </>
                 )}
-                <StyledTitleSmall>{boardroom.depositTokenName === "ARTH+DAI" ? "MahaSwap" : "-"}</StyledTitleSmall>
+                <StyledTitleSmall>{vault.depositTokenName === "ARTH+DAI" ? "MahaSwap" : "-"}</StyledTitleSmall>
               </StyledCell>
             </Grid>
-            <Grid item xs={6} lg={2} style={{height: 'fitContent'}}>
+            <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
               <StyledCell>
-                <BoldText>{boardroom.seionrageSupplyPercentage}%</BoldText>
+                <BoldText>{vault.seionrageSupplyPercentage}%</BoldText>
                 {props.toolTipTitle && (
                   <HtmlTooltip enterTouchDelay={0} title={<span>{props.toolTipTitle}</span>}>
                     <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-5" />
@@ -69,27 +70,27 @@ const ArthBoardroom: React.FC<BoardroomProps> = (props) => {
                 )}
               </StyledCell>
             </Grid>
-            
-            <Grid item xs={6} lg={2} style={{height: 'fitContent'}}>
+
+            {/* <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
               <StyledCellLeft>
-                <BoldText>{boardroom.history7dayAPY}% Yearly</BoldText>
+                <BoldText>{vault.history7dayAPY}% Yearly</BoldText>
                 {props.toolTipTitle && (
                   <HtmlTooltip enterTouchDelay={0} title={<span>{props.toolTipTitle}</span>}>
                     <img src={InfoIcon} alt="Inof" width="24px" className="margin-left-5" />
                   </HtmlTooltip>
                 )}
               </StyledCellLeft>
-            </Grid>
-            
-            <Grid item xs={6} lg={2}>            
+            </Grid> */}
+
+            <Grid item xs={6} lg={2}>
               <StyledCellRight>
-                <SlotTitle>{boardroom.lockInPeriodDays} day</SlotTitle>
+                <SlotTitle>{vault.lockInPeriodDays} day</SlotTitle>
               </StyledCellRight>
             </Grid>
           </Grid>
         </StyledCardContent>
 
-        {hasDetail &&
+        {false && hasDetail &&
           <StyledCardDetail>
             <Grid container justify="space-between" alignItems="center">
               <StyledText>500.086 MAHASWAP L2-V1</StyledText>
@@ -193,4 +194,4 @@ const StyledCardDetail = styled.div`
   border-top: 1px solid gray;
 `
 
-export default ArthBoardroom;
+export default VaultRow;

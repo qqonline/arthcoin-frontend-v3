@@ -32,9 +32,9 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
         ? basisCash.ARTH
         : vault.depositTokenName === 'ARTH_DAI-MLP-LPv1'
           ? basisCash.arthDai
-            : vault.depositTokenName === 'ARTH_DAI'
-              ? basisCash.arthDai
-              : basisCash.externalTokens[vault.depositTokenName];
+          : vault.depositTokenName === 'ARTH_DAI'
+            ? basisCash.arthDai
+            : basisCash.externalTokens[vault.depositTokenName];
 
   // eslint-disable-next-line
   const [approveStatus, approve] = useApprove(
@@ -91,12 +91,12 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
 
   return (
     <CardWithTitle titleComponent fullWidth>
-      <StyledCardHeader>        
+      <StyledCardHeader>
         <StyledCardIcon>
           {logos && logos.length > 0 && (
             <LogoContainer>
               {logos.map((l: any, idx: number) => (
-                <TokenSymbol key={idx} symbol={l} size={36} left={idx>0?-5:0} />
+                <TokenSymbol key={idx} symbol={l} size={36} left={idx > 0 ? -5 : 0} />
               ))}
             </LogoContainer>
           )}
@@ -108,18 +108,18 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
           <StyledFieldLabel>Your liquidity</StyledFieldLabel>
           <StyledValue>
             <Bolded>
-            {getDisplayBalance(stakedBalance)}
+              {getDisplayBalance(stakedBalance)}
             </Bolded>
-            <Darked>MAHASWAP L2-V1</Darked>
+            <Darked>{vault.depositTokenName}</Darked>
           </StyledValue>
-          <StyledFieldLabel>
+          {/* <StyledFieldLabel>
             {`${tokenBalance} ${logos[0]} + 0 DAI `} Staked
-          </StyledFieldLabel>
+          </StyledFieldLabel> */}
 
           <StyledRow>
             <Button to={''} variant="rounded">
-            Provide liquidity on MahaSwap
-            <CallMade fontSize='small' style={{transform: "scale(0.7)", marginLeft: 3}} />
+              Provide liquidity on MahaSwap
+            <CallMade fontSize='small' style={{ transform: "scale(0.7)", marginLeft: 3 }} />
             </Button>
           </StyledRow>
         </StyledCardContentInner>
@@ -146,7 +146,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               disabled={endDate.getTime() > Date.now()}
               text="Withdraw"
             />
-          </Grid>            
+          </Grid>
           <Grid item md={6} lg={6}>
             <Button
               // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
@@ -205,7 +205,7 @@ const LogoContainer = styled.div`
 const StyleLabel = styled.div`
   font-weight: 600;
   font-size: 16px;
-  margin-left: 20px;  
+  margin-left: 20px;
   color: #ffffff;
 `;
 

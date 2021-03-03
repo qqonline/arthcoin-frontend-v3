@@ -5,7 +5,7 @@ import Container from '../../../components/Container';
 import PageHeader from '../../../components/PageHeader';
 import useBasisCash from '../../../hooks/useBasisCash';
 import BoardroomStaked from './components/BoardroomStaked';
-import BoardroomEarned from './components/BoardroomEarned';
+import BoardroomEarned from './components/HarvestMaha';
 import { Vaults } from '../../../basis-cash/config';
 
 const Boardroom = () => {
@@ -16,7 +16,7 @@ const Boardroom = () => {
   return (
     <>
       <PageHeader
-        title={`${vault.depositTokenName === 'ARTH' ? 'ARTH-DAI' : vault.depositTokenName}`}
+        title={`${vault.depositTokenName}`}
         subtitle={`Deposit ${vault.depositTokenName} tokens and earn inflationary rewards from an increase in ${vault.depositTokenName} supply.`}
         parentLink="../"
         parentLinkTitle="ARTH-MAHA Distribution"
