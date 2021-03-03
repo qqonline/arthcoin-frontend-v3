@@ -63,7 +63,7 @@
     "address": "0xe34edfBcEe71454017d38CDeB5e13393d3753e0B",
     "abi": "Vault"
   },
-  "VaultArthMlp": {
+  "VaultArthDaiMlp": {
     "address": "0xE38C949c116a197f58EE44334eCc6B28CA11dcF8",
     "abi": "Vault"
   },

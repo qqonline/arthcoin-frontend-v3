@@ -18,12 +18,13 @@ export type Configuration = {
 };
 
 export type BoardroomsV1 = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
-export type BoardroomsV2 = 'arthArthMlpLiquidity' | 'arthArth'  | 'arthMaha' |
-  'mahaArthMlpLiquidity' | 'mahaArth'  | 'mahaMaha'
+export type BoardroomsV2 = 'arthArthDaiLiquidity' | 'arthArth'  | 'arthMaha' |
+  'mahaArthDaiLiquidity' | 'mahaArth'  | 'mahaMaha' | 'arthArthEthLiquidity' | 'mahaArthEthLiquidity'
 
 export type Boardrooms = BoardroomsV1 | BoardroomsV2
 export enum Vaults {
-  arthMlpLiquidity = 'arthMlpLiquidity',
+  arthEthLiquidity = 'arthEthLiquidity',
+  arthDaiLiquidity = 'arthDaiLiquidity',
   arth = 'arth',
   maha = 'maha'
 }

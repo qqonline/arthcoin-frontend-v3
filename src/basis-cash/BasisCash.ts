@@ -24,6 +24,7 @@ export class BasisCash {
   externalTokens: { [name: string]: ERC20 };
   boardroomVersionOfUser?: string;
 
+  arthEth: UniswapPair;
   arthDai: UniswapPair;
   mahaEth: UniswapPair;
 
@@ -62,6 +63,12 @@ export class BasisCash {
       deployments.ArthDaiMLP.address,
       provider,
       'ARTH-DAI-LP'
+    );
+
+    this.arthEth = new UniswapPair(
+      deployments.ArthEthMLP.address,
+      provider,
+      'ARTH-ETH-LP'
     );
 
     this.mahaEth = new UniswapPair(
@@ -195,7 +202,7 @@ export class BasisCash {
   getBoardroomV2(kind: BoardroomsV2): BoardroomInfoV2 {
     const contract = this.boardroomByVersion(kind, 'v2')
 
-    if (kind === 'arthArth' || kind === 'arthMaha' || kind === 'arthArthMlpLiquidity') return {
+    if (kind === 'arthArth' || kind === 'arthMaha' || kind === 'arthArthDaiLiquidity' || kind === 'arthArthEthLiquidity') return {
       kind,
       contract,
       address: contract.address,
@@ -215,7 +222,8 @@ export class BasisCash {
   getBoardroomVault(kind: Vaults): VaultInfo {
     const contract = (() => {
       if (kind === 'arth') return this.contracts.VaultArth;
-      if (kind === 'arthMlpLiquidity') return this.contracts.VaultArthMlp;
+      if (kind === 'arthDaiLiquidity') return this.contracts.VaultArthDaiMlp;
+      if (kind === 'arthEthLiquidity') return this.contracts.VaultArthEthMlp;
       return this.contracts.VaultMaha;
     })()
 
@@ -237,21 +245,33 @@ export class BasisCash {
         contract,
         address: contract.address,
         depositTokenName: 'MAHA',
-        seionrageSupplyPercentage: 10,
+        seionrageSupplyPercentage: 20,
         lockInPeriodDays: 5,
         arthBoardroom: 'arthMaha',
         mahaBoardroom: 'mahaMaha',
       }
 
+    if (kind === 'arthEthLiquidity')
+      return {
+        kind: Vaults.arthEthLiquidity,
+        contract,
+        address: contract.address,
+        depositTokenName: 'ARTH_ETH-MLP-LPv1',
+        seionrageSupplyPercentage: 10,
+        lockInPeriodDays: 1,
+        arthBoardroom: 'arthArthEthLiquidity',
+        mahaBoardroom: 'mahaArthEthLiquidity',
+      }
+
     return {
-      kind: Vaults.arthMlpLiquidity,
+      kind: Vaults.arthDaiLiquidity,
       contract,
       address: contract.address,
       depositTokenName: 'ARTH_DAI-MLP-LPv1',
-      seionrageSupplyPercentage: 70,
+      seionrageSupplyPercentage: 50,
       lockInPeriodDays: 1,
-      arthBoardroom: 'arthArthMlpLiquidity',
-      mahaBoardroom: 'mahaArthMlpLiquidity',
+      arthBoardroom: 'arthArthDaiLiquidity',
+      mahaBoardroom: 'mahaArthDaiLiquidity',
     }
   }
 
@@ -477,11 +497,14 @@ export class BasisCash {
 
   boardroomByVersion(kind: Boardrooms, version: BoardroomVersion): Contract {
      if (version === 'v2') {
-       if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
+      if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
       if (kind === 'arthMaha') return this.contracts.ArthMahaBoardroomV2;
       if (kind === 'mahaArth') return this.contracts.MahaArthBoardroomV2;
       if (kind === 'mahaMaha') return this.contracts.MahaMahaBoardroomV2;
-      if (kind === 'mahaArthMlpLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
+      if (kind === 'mahaArthDaiLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
+      if (kind === 'arthArthDaiLiquidity') return this.contracts.ArthArthMlpLiquidityBoardroomV2;
+      if (kind === 'mahaArthEthLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
+      if (kind === 'arthArthEthLiquidity') return this.contracts.ArthArthMlpLiquidityBoardroomV2;
       return this.contracts.ArthArthMlpLiquidityBoardroomV2;
     }
 

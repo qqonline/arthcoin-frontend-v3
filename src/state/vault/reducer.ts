@@ -17,7 +17,8 @@ export interface VaultState {
 export const initialState: VaultState = {
   vaults: {
     [Vaults.arth]: BigNumber.from(0),
-    [Vaults.arthMlpLiquidity]: BigNumber.from(0),
+    [Vaults.arthDaiLiquidity]: BigNumber.from(0),
+    [Vaults.arthEthLiquidity]: BigNumber.from(0),
     [Vaults.maha]: BigNumber.from(0),
   },
 
@@ -34,7 +35,7 @@ export const initialState: VaultState = {
 export default createReducer(initialState, (builder) =>
   builder
     .addCase(Actions.updateVaultArthBalance, (t, { payload }) => { t.vaults.arth = payload })
-    .addCase(Actions.updateVaultArthMlpBalance, (t, { payload }) => { t.vaults.arthMlpLiquidity = payload })
+    .addCase(Actions.updateVaultArthDaiBalance, (t, { payload }) => { t.vaults.arthDaiLiquidity = payload })
     .addCase(Actions.updateVaultMahaBalance, (t, { payload }) => { t.vaults.maha = payload })
 
     // .addCase(Actions.updateArthArthEarnings, (t, { payload }) => { t.boardrooms.arthArth = payload })

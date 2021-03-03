@@ -29,11 +29,13 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     vault.depositTokenName === 'MAHA' ? basisCash.MAHA
       : vault.depositTokenName === 'ARTH' ? basisCash.ARTH
         : vault.depositTokenName === 'ARTH_DAI-MLP-LPv1' ? basisCash.arthDai
-          : basisCash.externalTokens[vault.depositTokenName];
+          : vault.depositTokenName === 'ARTH_ETH-MLP-LPv1' ? basisCash.arthEth
+            : basisCash.externalTokens[vault.depositTokenName];
 
   const logos = [];
 
   if (vault.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
+  else if (vault.depositTokenName === 'ARTH_ETH-MLP-LPv1') logos.push('ARTH', 'ETH');
   else if (vault.depositTokenName === 'ARTH_DAI-MLP-LPv1') logos.push('ARTH', 'DAI');
   else if (vault.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
   else if (vault.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');

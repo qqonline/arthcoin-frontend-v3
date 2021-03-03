@@ -25,11 +25,13 @@ export const init = (account: string, basisCash: BasisCash, dispatch: Dispatch) 
 
   const calls = [
     registerVariableBN(contracts.VaultArth, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultArthBalance),
-    registerVariableBN(contracts.VaultArthMlp, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultArthMlpBalance),
+    registerVariableBN(contracts.VaultArthDaiMlp, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultArthDaiBalance),
     registerVariableBN(contracts.VaultMaha, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultMahaBalance),
+    registerVariableBN(contracts.VaultArthEthMlp, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultArthEthBalance),
 
     registerVariableBN(contracts.ArthArthBoardroomV2, 'earned(address)(uint256)', account, Actions.updateArthArthEarnings),
     registerVariableBN(contracts.ArthArthMlpLiquidityBoardroomV2, 'earned(address)(uint256)', account, Actions.updateArthArthMLPEarnings),
+    registerVariableBN(contracts.ArthMahaBoardroomV2, 'earned(address)(uint256)', account, Actions.updateArthMahaEarnings),
     registerVariableBN(contracts.ArthMahaBoardroomV2, 'earned(address)(uint256)', account, Actions.updateArthMahaEarnings),
     // registerVariableBN(contracts.VaultMaha, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultMahaBalance),
     // registerVariableBN(contracts.VaultMaha, 'balanceWithoutBonded(address)(uint256)', account, Actions.updateVaultMahaBalance),

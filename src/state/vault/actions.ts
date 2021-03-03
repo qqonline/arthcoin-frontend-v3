@@ -3,7 +3,8 @@ import { BigNumber } from 'ethers';
 
 export const updateVaultArthBalance = createAction<BigNumber>('vault/updateVaultArthBalance')
 export const updateVaultMahaBalance = createAction<BigNumber>('vault/updateVaultMahaBalance')
-export const updateVaultArthMlpBalance = createAction<BigNumber>('vault/updateVaultArthMlpBalance')
+export const updateVaultArthDaiBalance = createAction<BigNumber>('vault/updateVaultArthMlpBalance')
+export const updateVaultArthEthBalance = createAction<BigNumber>('vault/updateVaultArthEthBalance')
 
 
 export const updateArthArthEarnings = createAction<BigNumber>('vault/updateArthArthEarnings')

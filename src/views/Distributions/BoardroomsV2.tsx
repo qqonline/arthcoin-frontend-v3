@@ -52,7 +52,8 @@ const Boardrooms: React.FC = () => {
               {/* <Boardroom boardroom={"arthDai"}/>
               <Boardroom boardroom={"arth"}/>
               <Boardroom boardroom={"maha"}/> */}
-              <Boardroom vault={Vaults.arthMlpLiquidity} />
+              <Boardroom vault={Vaults.arthDaiLiquidity} />
+              <Boardroom vault={Vaults.arthEthLiquidity} />
               <Boardroom vault={Vaults.arth} />
               <Boardroom vault={Vaults.maha} />
             </Grid>
