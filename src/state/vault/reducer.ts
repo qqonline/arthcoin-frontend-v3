@@ -37,6 +37,7 @@ export default createReducer(initialState, (builder) =>
     .addCase(Actions.updateVaultArthBalance, (t, { payload }) => { t.vaults.arth = payload })
     .addCase(Actions.updateVaultArthDaiBalance, (t, { payload }) => { t.vaults.arthDaiLiquidity = payload })
     .addCase(Actions.updateVaultMahaBalance, (t, { payload }) => { t.vaults.maha = payload })
+    .addCase(Actions.updateVaultArthEthBalance, (t, { payload }) => { t.vaults.arthEthLiquidity = payload })
 
     // .addCase(Actions.updateArthArthEarnings, (t, { payload }) => { t.boardrooms.arthArth = payload })
     // .addCase(Actions.updateArthArthMLPEarnings, (t, { payload }) => { t.boardrooms.arthArthMlpLiquidity = payload })
