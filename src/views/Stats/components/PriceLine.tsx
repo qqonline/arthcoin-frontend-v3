@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import React from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
 import { TokenStat } from '../../../basis-cash/types';
+import theme from '../../../theme';
 
-const BorderLinearProgress = withStyles((theme: Theme) =>
+const BorderLinearProgress = withStyles((theme1: Theme) =>
   createStyles({
     root: {
       height: 4,
@@ -22,7 +22,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
       },
     },
     colorPrimary: {
-      backgroundColor: '#2A2827',
+      backgroundColor: theme.color.dark[200],
     },
     bar: {
       borderRadius: 2,
@@ -37,8 +37,6 @@ interface IProps {
 }
 
 const PriceLine: React.FC<IProps> = (props) => {
-  const basisCash = useBasisCash();
-
   const cashTargetPrice = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashTargetPrice)
   const arthPrice = props.stat?.priceInDAI
 
@@ -91,14 +89,6 @@ const StyledTitle = styled.div`
   line-height: 150%;
   color: #ffffff;
   opacity: 0.64;
-`;
-
-const IncreasedText = styled.div`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  color: #178a50;
 `;
 
 const TitleBold = styled.div`

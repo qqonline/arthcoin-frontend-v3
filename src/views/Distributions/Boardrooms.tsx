@@ -2,50 +2,16 @@ import React, { useEffect } from 'react';
 import PageHeader from '../../components/PageHeader';
 
 import Boardroom from './components/Vault';
-import { Link, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Page from '../../components/Page';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
-import config from '../../config';
-import LaunchCountdown from '../../components/LaunchCountdown';
-// import Notice from '../../components/Notice';
-// import useBoardroomVersion from '../../hooks/useBoardroomVersion';
 import DistributionIcon from '../../assets/svg/Boardroom.svg';
 import { Vaults } from '../../basis-cash/config';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
-
-  // const boardroomVersion = useBoardroomVersion('arth');
-  // const migrateNotice = useMemo(() => {
-  //   if (boardroomVersion === 'v2') {
-  //     return (
-  //       <StyledNoticeWrapper>
-  //         <Notice color="green">
-  //           <b>Please Migrate into New Boardroom</b>
-  //           <br />
-  //           The boardroom upgrade was successful. Please settle and withdraw your stake from the
-  //           legacy boardroom, then stake again on the new boardroom contract{' '}
-  //           <b>to continue earning ARTH seigniorage.</b>
-  //         </Notice>
-  //       </StyledNoticeWrapper>
-  //     );
-  //   }
-  //   return <></>;
-  // }, [boardroomVersion]);
-
-  const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  // if (!isLaunched) {
-  //   return (
-  //     <LaunchCountdown
-  //       deadline={config.boardroomLaunchesAt}
-  //       description="How does the boardroom work?"
-  //       descriptionLink="https://docs.basis.cash/mechanisms/stabilization-mechanism#expansionary-policy"
-  //     />
-  //   );
-  // }
 
   if (!basisCash) return <div />;
 
