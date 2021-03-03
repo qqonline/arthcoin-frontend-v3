@@ -11,7 +11,7 @@ const DistributonSection: React.FC = () => {
     <Card>
       <TitleString>
         ARTH Seigniorage Distribution
-                  <HtmlTooltip
+        <HtmlTooltip
           enterTouchDelay={0}
           title={
             <span>
@@ -32,7 +32,14 @@ const DistributonSection: React.FC = () => {
             <ChartIconColor color="#178A50" />
             <div>
               <ChartLabelTitle>ARTH-DAI MahaSwap LP</ChartLabelTitle>
-              <ChartLabelTitleBold>70% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
+              <ChartLabelTitleBold>50% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
+            </div>
+          </PieChartLables>
+          <PieChartLables>
+            <ChartIconColor color="#178A50" />
+            <div>
+              <ChartLabelTitle>ARTH-DAI MahaSwap LP</ChartLabelTitle>
+              <ChartLabelTitleBold>10% {/* (65,0000 ARTH) */}</ChartLabelTitleBold>
             </div>
           </PieChartLables>
           <PieChartLables>
@@ -46,9 +53,10 @@ const DistributonSection: React.FC = () => {
             <ChartIconColor color="#C4F7DD" />
             <div>
               <ChartLabelTitle>MAHA</ChartLabelTitle>
-              <ChartLabelTitleBold>10% {/* (10,000 MAHA) */}</ChartLabelTitleBold>
+              <ChartLabelTitleBold>20% {/* (10,000 MAHA) */}</ChartLabelTitleBold>
             </div>
           </PieChartLables>
+
         </div>
       </PieChartCard>
     </Card>

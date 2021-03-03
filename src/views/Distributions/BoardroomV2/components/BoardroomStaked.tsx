@@ -20,6 +20,7 @@ import UnbondModal from './UnBondModal';
 import useUnbondFromVault from '../../../../hooks/useUnbondFromVault';
 import { Grid } from '@material-ui/core';
 import { CallMade } from '@material-ui/icons';
+import useApprove, { ApprovalState } from '../../../../hooks/useApprove';
 
 
 const Stake = ({ vault }: { vault: VaultInfo }) => {
@@ -51,6 +52,10 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
     return `${depositTokenName} ${pool}`
   }, [vault.depositTokenName])
 
+  const [approveStatus, approve] = useApprove(
+    stakingToken,
+    vault.contract.address,
+  );
 
   const tokenBalance = useTokenBalance(stakingToken);
   const stakedBalance = useStakedBalanceOnVault(vault.kind);
@@ -116,9 +121,19 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
           </StyledFieldLabel> */}
 
           {
-            vault.depositTokenName.includes('MLP') && (
+            vault.depositTokenName === 'ARTH_DAI-MLP-LPv1' && (
               <StyledRow>
                 <LinkButton href={'https://mahaswap.com/#/add/0x0E3cC2c4FB9252d17d07C67135E48536071735D9/0x6B175474E89094C44Da98b954EedeAC495271d0F'} variant="rounded">
+                  Earn LP tokens from MahaSwap
+                  <CallMade fontSize='small' style={{ transform: "scale(0.7)", marginLeft: 3 }} />
+                </LinkButton>
+              </StyledRow>
+            )
+          }
+          {
+            vault.depositTokenName === 'ARTH_ETH-MLP-LPv1' && (
+              <StyledRow>
+                <LinkButton href={'https://mahaswap.com/#/add/0x0E3cC2c4FB9252d17d07C67135E48536071735D9/eth'} variant="rounded">
                   Earn LP tokens from MahaSwap
                   <CallMade fontSize='small' style={{ transform: "scale(0.7)", marginLeft: 3 }} />
                 </LinkButton>
@@ -146,35 +161,43 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
           )
         }
 
-        <Grid container spacing={2} justify="center">
-          <Grid item md={6} lg={6}>
-            <Button
-              onClick={onPresentUnBond}
-              variant="outlined"
-              disabled={endDate.getTime() > Date.now()}
-              text="Withdraw"
-            />
-          </Grid>
-          <Grid item md={6} lg={6}>
-            <Button
-              // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
-              onClick={onPresentBond}
-              text="Deposit"
-            />
-          </Grid>
-          {
-            unbondedAmount.gt(0) && (
-              <Grid item md={12}>
+        {approveStatus !== ApprovalState.APPROVED ? (
+          <Button
+            // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+            onClick={approve}
+            text={`Approve`}
+          />
+        ) : (
+            <Grid container spacing={2} justify="center">
+              <Grid item md={6} lg={6}>
                 <Button
-                  onClick={onWithdraw}
+                  onClick={onPresentUnBond}
                   variant="outlined"
                   disabled={endDate.getTime() > Date.now()}
-                  text="Process Withdrawal"
+                  text="Withdraw"
                 />
               </Grid>
-            )
-          }
-        </Grid>
+              <Grid item md={6} lg={6}>
+                <Button
+                  // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
+                  onClick={onPresentBond}
+                  text="Deposit"
+                />
+              </Grid>
+              {
+                unbondedAmount.gt(0) && (
+                  <Grid item md={12}>
+                    <Button
+                      onClick={onWithdraw}
+                      variant="outlined"
+                      disabled={endDate.getTime() > Date.now()}
+                      text="Process Withdrawal"
+                    />
+                  </Grid>
+                )
+              }
+            </Grid>
+          )}
       </StyledCardContent>
     </CardWithTitle>
   );

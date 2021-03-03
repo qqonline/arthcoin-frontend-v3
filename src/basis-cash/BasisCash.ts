@@ -93,7 +93,7 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, this.arthDai, ...Object.values(this.externalTokens)];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, this.arthDai, this.arthEth, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -503,8 +503,8 @@ export class BasisCash {
       if (kind === 'mahaMaha') return this.contracts.MahaMahaBoardroomV2;
       if (kind === 'mahaArthDaiLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
       if (kind === 'arthArthDaiLiquidity') return this.contracts.ArthArthMlpLiquidityBoardroomV2;
-      if (kind === 'mahaArthEthLiquidity') return this.contracts.MahaArthMlpLiquidityBoardroomV2;
-      if (kind === 'arthArthEthLiquidity') return this.contracts.ArthArthMlpLiquidityBoardroomV2;
+      if (kind === 'mahaArthEthLiquidity') return this.contracts.MahaArthEthLiquidityBoardroomV2;
+      if (kind === 'arthArthEthLiquidity') return this.contracts.ArthArthEthLiquidityBoardroomV2;
       return this.contracts.ArthArthMlpLiquidityBoardroomV2;
     }
 

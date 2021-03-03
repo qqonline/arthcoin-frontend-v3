@@ -24,7 +24,7 @@
     "abi": "Vault"
   },
   "VaultArthEthMlp": {
-    "address": "0xBC2199F9e42239C1003ADA698571b181aEa09f64",
+    "address": "0x4A3201A61a998E8f43C942532a72B9c80708Aa58",
     "abi": "Vault"
   },
   "ArthArthBoardroomV2": {
@@ -41,6 +41,14 @@
   },
   "MahaArthBoardroomV2": {
     "address": "0x40436065DFed8eb07F8ea26E2a47114a82B58d80",
+    "abi": "VaultBoardroom"
+  },
+  "ArthArthEthLiquidityBoardroomV2": {
+    "address": "0xc7B70b9a5D1BcBf3623e02E33c7C4A672DdCb995",
+    "abi": "VaultBoardroom"
+  },
+  "MahaArthEthLiquidityBoardroomV2": {
+    "address": "0xc7B70b9a5D1BcBf3623e02E33c7C4A672DdCb995",
     "abi": "VaultBoardroom"
   },
   "MahaArthMlpLiquidityBoardroomV2": {
@@ -64,7 +72,7 @@
     "abi": "IUniswapV2Pair"
   },
   "ArthEthMLP": {
-    "address": "0x4A3201A61a998E8f43C942532a72B9c80708Aa58",
+    "address": "0xe207492fad13324b3b80b1a4324a203b61fc11a6",
     "abi": "IUniswapV2Pair"
   },
   "DAI": {
