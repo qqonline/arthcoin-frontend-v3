@@ -8,47 +8,52 @@ import CardIcon from '../../../../components/CardIcon';
 import useEarningsFromSnapshot from '../../../../hooks/useEarningsFromSnapshot';
 import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { VaultInfo } from '../../../../basis-cash/types';
+import { Grid } from '@material-ui/core';
 
 const HarvestArthSnapshot = ({ vault }: { vault: VaultInfo }) => {
   const [earnings, contractBalance, claimRewards, reinvestRewards] = useEarningsFromSnapshot(vault);
 
   const canClaim = earnings.lte(contractBalance) && !earnings.eq(0)
 
+  if (earnings.eq(0)) return <div />
+
   return (
-    <Card>
-      <CardContent>
-        <StyledCardContentInner>
-          <StyleLabel>ARTH Earned </StyleLabel>
-          <StyledCardHeader>
-            <CardIcon>
-              <TokenSymbol symbol="ARTH" />
-            </CardIcon>
-            <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
-          </StyledCardHeader>
-        </StyledCardContentInner>
-        <p style={{ color: '#fff9' }}>
-          You earn ARTH rewards when the protocol is in expansion
-        </p>
-        {/* <br /> */}
-        {
-          earnings.gt(contractBalance) && earnings.gt(0) && (
-            <p style={{ color: '#fff9' }}>
-              The contract's claimable balance
-              is {getDisplayBalance(contractBalance)} ARTH. But that is
-              not sufficient for your claimable reward. By the next
-              epoch your rewards will be claimable.
-            </p>
-          )
-        }
-        <StyledCardActions>
-          <Button onClick={reinvestRewards} text={`Compound Rewards`} disabled={!canClaim} />
-        </StyledCardActions>
-        <br />
-        <StyledCardActions>
-          <Button onClick={claimRewards} text={`Claim Rewards`} disabled={!canClaim} />
-        </StyledCardActions>
-      </CardContent>
-    </Card>
+    <Grid container item xs={12} md={6} lg={4} xl={4}>
+      <Card>
+        <CardContent>
+          <StyledCardContentInner>
+            <StyleLabel>ARTH Earned (Old Rewards)</StyleLabel>
+            <StyledCardHeader>
+              <CardIcon>
+                <TokenSymbol symbol="ARTH" />
+              </CardIcon>
+              <StyledValue>{getDisplayBalance(earnings)}</StyledValue>
+            </StyledCardHeader>
+          </StyledCardContentInner>
+          <p style={{ color: '#fff9' }}>
+            These are the rewards you've earned from the previous rewards contracts.
+          </p>
+          {/* <br /> */}
+          {
+            earnings.gt(contractBalance) && earnings.gt(0) && (
+              <p style={{ color: '#fff9' }}>
+                The contract's claimable balance
+                is {getDisplayBalance(contractBalance)} ARTH. But that is
+                not sufficient for your claimable reward. By the next
+                epoch your rewards will be claimable.
+              </p>
+            )
+          }
+          <StyledCardActions>
+            <Button onClick={reinvestRewards} text={`Compound Rewards`} disabled={!canClaim} />
+          </StyledCardActions>
+          <br />
+          <StyledCardActions>
+            <Button onClick={claimRewards} text={`Claim Rewards`} disabled={!canClaim} />
+          </StyledCardActions>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 const StyledValue = styled.div`

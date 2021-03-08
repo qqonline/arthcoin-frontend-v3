@@ -30,13 +30,11 @@ const Boardroom = () => {
             <BoardroomStaked vault={vault} />
           </Grid>
           <Grid container item xs={12} md={6} lg={4} xl={4}>
-            <HarvestArth boardroomId={vault.arthBoardroom} />
+            <HarvestArth vault={vault} />
           </Grid>
+          <HarvestArthSnapshot vault={vault} />
           <Grid container item xs={12} md={6} lg={4} xl={4}>
-            <HarvestArthSnapshot vault={vault} />
-          </Grid>
-          <Grid container item xs={12} md={6} lg={4} xl={4}>
-            <HarvestMaha boardroomId={vault.mahaBoardroom} />
+            <HarvestMaha vault={vault} />
           </Grid>
         </Grid>
       </Container>
