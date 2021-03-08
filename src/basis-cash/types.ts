@@ -48,6 +48,8 @@ export interface VaultInfo {
 
   arthSnapshotBoardroom: Contract
 
+  reinvestVault: Vaults
+
   mahaBoardroom: BoardroomsV2
   arthBoardroom: BoardroomsV2
 }
