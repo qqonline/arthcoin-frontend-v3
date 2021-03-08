@@ -35,8 +35,8 @@ const HarvestArthSnapshot = ({ vault }: { vault: VaultInfo }) => {
             <p style={{ color: '#fff9' }}>
               The contract's claimable balance
               is {getDisplayBalance(contractBalance)} ARTH. But that is
-              not sufficient for your claimable reward. Please wait
-              for the next epoch to have the rewards allocated.
+              not sufficient for your claimable reward. By the next
+              epoch your rewards will be claimable.
             </p>
           )
         }
