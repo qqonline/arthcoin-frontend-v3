@@ -13,6 +13,8 @@ const HarvestMaha = ({ vault }: { vault: VaultInfo }) => {
   const [earnings, contractBalance, claimRewards, reinvestRewards] =
     useEarningsOnBoardroomV2(vault, vault.arthBoardroom);
 
+  const canClaim = false // earnings.lte(contractBalance) && !earnings.eq(0)
+
   return (
     <Card>
       <CardContent>
@@ -35,9 +37,13 @@ const HarvestMaha = ({ vault }: { vault: VaultInfo }) => {
         </p> */}
         {/* <br /> */}
         <StyledCardActions>
+          <Button onClick={reinvestRewards} text={`Compound Rewards to MAHA Pool`} disabled={!canClaim} />
+        </StyledCardActions>
+        <br />
+        <StyledCardActions>
           {/* <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} MAHA`} disabled={earnings.eq(0)} /> */}
           {/* <Button onClick={onReward} text={`Claim   MAHA`} disabled={earnings.eq(0)} /> */}
-          <Button text={`Claim  MAHA`} disabled={true} />
+          <Button text={`Claim MAHA Rewards`} disabled={true} />
         </StyledCardActions>
       </CardContent>
     </Card>

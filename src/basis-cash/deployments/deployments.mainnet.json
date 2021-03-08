@@ -28,19 +28,19 @@
     "abi": "Vault"
   },
   "ArthArthBoardroomV2": {
-    "address": "0x40436065DFed8eb07F8ea26E2a47114a82B58d80",
+    "address": "0xe51c19223e86a4e1fe1d803fe7b5727793ef158c",
     "abi": "VaultBoardroom"
   },
   "ArthArthDaiLiquidityBoardroomV2": {
-    "address": "0x5b0C55212b77617Bb50bd7F832Df2c72a0e46Bb7",
+    "address": "0xbcaed83d4a0ebe601c59f9a2fec1ca52b952dd96",
     "abi": "VaultBoardroom"
   },
   "ArthArthEthLiquidityBoardroomV2": {
-    "address": "0xc7B70b9a5D1BcBf3623e02E33c7C4A672DdCb995",
+    "address": "0xe5c846709B4468BD59D550CD7473EBe6a62544a4",
     "abi": "VaultBoardroom"
   },
   "ArthMahaBoardroomV2": {
-    "address": "0x8a143266c8ddbedd360be9402e04d8d4ba103470",
+    "address": "0x57265c75dad805f9372943eb115d821ae03d8d9f",
     "abi": "VaultBoardroom"
   },
   "ArthArthSnapshotBoardoom": {

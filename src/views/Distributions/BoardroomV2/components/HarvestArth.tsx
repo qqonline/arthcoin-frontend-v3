@@ -13,6 +13,10 @@ const HarvestArth = ({ vault }: { vault: VaultInfo }) => {
   const [earnings, contractBalance, claimRewards, reinvestRewards] =
     useEarningsOnBoardroomV2(vault, vault.arthBoardroom);
 
+  const canClaim = earnings.lte(contractBalance) && !earnings.eq(0)
+
+  // if (earnings.eq(0)) return <div />
+
   return (
     <Card>
       <CardContent>
@@ -28,13 +32,22 @@ const HarvestArth = ({ vault }: { vault: VaultInfo }) => {
         <p style={{ color: '#fff9' }}>
           You earn ARTH rewards when the protocol is in expansion
         </p>
-        {/* <p style={{ color: '#fff9' }}>
-          Your rewards are vested linearly across 8 hours from the last epoch.
-          If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
-        </p> */}
-        {/* <br /> */}
+        {
+          earnings.gt(contractBalance) && earnings.gt(0) && (
+            <p style={{ color: '#fff9' }}>
+              However the contract's claimable balance
+                is {getDisplayBalance(contractBalance)} ARTH. Which
+                is not sufficient for your rewards to get claimed.
+                By the next epoch rewards will be allocated for you to claim.
+            </p>
+          )
+        }
         <StyledCardActions>
-          <Button onClick={claimRewards} text={`Claim ARTH Reward`} disabled={earnings.eq(0)} />
+          <Button onClick={reinvestRewards} text={`Compound Rewards to ARTH Pool`} disabled={!canClaim} />
+        </StyledCardActions>
+        <br />
+        <StyledCardActions>
+          <Button onClick={claimRewards} text={`Claim ARTH Rewards`} disabled={!canClaim} />
         </StyledCardActions>
       </CardContent>
     </Card>

@@ -31,21 +31,21 @@ const HarvestArthSnapshot = ({ vault }: { vault: VaultInfo }) => {
             </StyledCardHeader>
           </StyledCardContentInner>
           <p style={{ color: '#fff9' }}>
-            These are the rewards you've earned from the previous rewards contracts.
+            These are the rewards you've earned from the previous reward contract.
           </p>
           {/* <br /> */}
           {
             earnings.gt(contractBalance) && earnings.gt(0) && (
               <p style={{ color: '#fff9' }}>
-                The contract's claimable balance
-                is {getDisplayBalance(contractBalance)} ARTH. But that is
-                not sufficient for your claimable reward. By the next
-                epoch your rewards will be claimable.
+                However the contract's claimable balance
+                is {getDisplayBalance(contractBalance)} ARTH. Which
+                is not sufficient for your rewards to get claimed.
+                By the next epoch rewards will be allocated for you to claim.
               </p>
             )
           }
           <StyledCardActions>
-            <Button onClick={reinvestRewards} text={`Compound Rewards`} disabled={!canClaim} />
+            <Button onClick={reinvestRewards} text={`Compound Rewards to ARTH Pool`} disabled={!canClaim} />
           </StyledCardActions>
           <br />
           <StyledCardActions>

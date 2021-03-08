@@ -29,7 +29,7 @@ const VaultRow: React.FC<BoardroomProps> = (props) => {
   }
 
   return (
-    <StyledCardWrapper hasDetail={hasDetail}>
+    <StyledCardWrapper hasDetail={false}>
       <StyledCard onClick={handleCardClick}>
         <StyledCardContent>
           <Grid container justify="space-between" alignItems="center">
