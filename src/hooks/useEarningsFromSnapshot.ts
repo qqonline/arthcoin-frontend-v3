@@ -4,14 +4,16 @@ import useBasisCash from './useBasisCash';
 import config from '../config';
 import { VaultInfo } from '../basis-cash/types';
 
-type Return = [BigNumber, () => Promise<void>, () => Promise<void>]
+type Return = [BigNumber, BigNumber, () => Promise<void>, () => Promise<void>]
 const useEarningsFromSnapshot = (vault: VaultInfo): Return => {
   const [balance, setBalance] = useState(BigNumber.from(0));
+  const [contractBalance, setContractBalance] = useState(BigNumber.from(0));
   const basisCash = useBasisCash();
 
   const fetchBalance = useCallback(async () => {
+    setContractBalance(await basisCash.ARTH.balanceOf(vault.contract.address));
     setBalance(await vault.arthSnapshotBoardroom.earned(basisCash.myAccount));
-  }, [basisCash.myAccount, vault.arthSnapshotBoardroom]);
+  }, [basisCash.ARTH, basisCash.myAccount, vault.arthSnapshotBoardroom, vault.contract.address]);
 
   const claimRewards = useCallback(async () => {
     await vault.contract.claimReward()
@@ -19,8 +21,9 @@ const useEarningsFromSnapshot = (vault: VaultInfo): Return => {
 
 
   const reinvestRewards = useCallback(async () => {
-    await vault.arthSnapshotBoardroom.claimReward(vault.reinvestVault)
-  }, [vault.arthSnapshotBoardroom, vault.reinvestVault])
+    const reinvestVault = basisCash.getBoardroomVault(vault.reinvestVault)
+    await vault.arthSnapshotBoardroom.claimAndReinvestReward(reinvestVault.contract.address)
+  }, [basisCash, vault.arthSnapshotBoardroom, vault.reinvestVault])
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
@@ -30,7 +33,7 @@ const useEarningsFromSnapshot = (vault: VaultInfo): Return => {
     }
   }, [setBalance, basisCash.isUnlocked, fetchBalance]);
 
-  return [balance, claimRewards, reinvestRewards];
+  return [balance, contractBalance, claimRewards, reinvestRewards];
 };
 
 export default useEarningsFromSnapshot;

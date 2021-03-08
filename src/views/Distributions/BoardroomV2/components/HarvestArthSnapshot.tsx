@@ -10,7 +10,9 @@ import { getDisplayBalance } from '../../../../utils/formatBalance';
 import { VaultInfo } from '../../../../basis-cash/types';
 
 const HarvestArthSnapshot = ({ vault }: { vault: VaultInfo }) => {
-  const [earnings, claimRewards, reinvestRewards] = useEarningsFromSnapshot(vault);
+  const [earnings, contractBalance, claimRewards, reinvestRewards] = useEarningsFromSnapshot(vault);
+
+  const canClaim = earnings.lte(contractBalance) && !earnings.eq(0)
 
   return (
     <Card>
@@ -27,13 +29,23 @@ const HarvestArthSnapshot = ({ vault }: { vault: VaultInfo }) => {
         <p style={{ color: '#fff9' }}>
           You earn ARTH rewards when the protocol is in expansion
         </p>
-        {/* <p style={{ color: '#fff9' }}>
-          Your rewards are vested linearly across 8 hours from the last epoch.
-          If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} ARTH
-        </p> */}
         {/* <br /> */}
+        {
+          earnings.gt(contractBalance) && earnings.gt(0) && (
+            <p style={{ color: '#fff9' }}>
+              The contract's claimable balance
+              is {getDisplayBalance(contractBalance)} ARTH. But that is
+              not sufficient for your claimable reward. Please wait
+              for the next epoch to have the rewards allocated.
+            </p>
+          )
+        }
         <StyledCardActions>
-          <Button onClick={claimRewards} text={`Claim ARTH Reward`} disabled={earnings.eq(0)} />
+          <Button onClick={reinvestRewards} text={`Compound Rewards`} disabled={!canClaim} />
+        </StyledCardActions>
+        <br />
+        <StyledCardActions>
+          <Button onClick={claimRewards} text={`Claim Rewards`} disabled={!canClaim} />
         </StyledCardActions>
       </CardContent>
     </Card>
