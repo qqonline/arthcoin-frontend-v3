@@ -49,7 +49,7 @@ const VaultRow: React.FC<BoardroomProps> = (props) => {
                 </Grid> */}
               </Grid>
             </Grid>
-            <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
+            {/* <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
               <StyledCell>
                 {vault.depositTokenName === "ARTH+DAI" && (
                   <>
@@ -59,7 +59,7 @@ const VaultRow: React.FC<BoardroomProps> = (props) => {
                 )}
                 <StyledTitleSmall>{vault.depositTokenName === "ARTH+DAI" ? "MahaSwap" : "-"}</StyledTitleSmall>
               </StyledCell>
-            </Grid>
+            </Grid> */}
             <Grid item xs={6} lg={2} style={{ height: 'fitContent' }}>
               <StyledCell>
                 <BoldText>{vault.seionrageSupplyPercentage}%</BoldText>
