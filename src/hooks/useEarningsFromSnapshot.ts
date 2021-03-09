@@ -16,8 +16,8 @@ const useEarningsFromSnapshot = (vault: VaultInfo): Return => {
   }, [basisCash.ARTH, basisCash.myAccount, vault.arthSnapshotBoardroom]);
 
   const claimRewards = useCallback(async () => {
-    await vault.contract.claimReward()
-  }, [vault.contract])
+    await vault.arthSnapshotBoardroom.claimReward()
+  }, [vault.arthSnapshotBoardroom])
 
   const reinvestRewards = useCallback(async () => {
     const reinvestVault = basisCash.getBoardroomVault(vault.reinvestVault)

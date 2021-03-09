@@ -89,7 +89,7 @@ export class BasisCash {
     const newProvider = new ethers.providers.Web3Provider(provider, this.config.chainId);
 
     this.signer = newProvider.getSigner(0);
-    this.myAccount = '0xa6F1c5B8602F38016493261ccFD84ff0f488f533' // account;
+    this.myAccount = account;
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
