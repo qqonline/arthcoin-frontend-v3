@@ -18,13 +18,15 @@ const useEarningsOnBoardroomV2 = (vault: VaultInfo, boardroom: BoardroomsV2): Re
   }, [basisCash, boardroom]);
 
   const claimRewards = useCallback(async () => {
-    await vault.contract.claimReward()
-  }, [vault.contract])
+    const { contract } = basisCash.getBoardroomV2(boardroom)
+    await contract.claimReward()
+  }, [basisCash, boardroom])
 
   const reinvestRewards = useCallback(async () => {
     const reinvestVault = basisCash.getBoardroomVault(vault.reinvestVault)
-    await vault.arthSnapshotBoardroom.claimAndReinvestReward(reinvestVault.contract.address)
-  }, [basisCash, vault.arthSnapshotBoardroom, vault.reinvestVault])
+    const { contract } = basisCash.getBoardroomV2(boardroom)
+    await contract.claimAndReinvestReward(reinvestVault.contract.address)
+  }, [basisCash, boardroom, vault.reinvestVault])
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
