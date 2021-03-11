@@ -161,6 +161,23 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
           )
         }
 
+        {
+          unbondedAmount.gt(0) && (
+            <Grid item md={12}>
+              <Button
+                onClick={onWithdraw}
+                variant="outlined"
+                disabled={endDate.getTime() > Date.now()}
+                text={
+                  "Process Withdrawal"
+                }
+              />
+              <br />
+            </Grid>
+          )
+        }
+
+
         {approveStatus !== ApprovalState.APPROVED ? (
           <Button
             // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
@@ -173,7 +190,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
               <Button
                 onClick={onPresentUnBond}
                 variant="outlined"
-                disabled={endDate.getTime() > Date.now()}
+                // disabled={endDate.getTime() > Date.now()}
                 text="Withdraw"
               />
             </Grid>
@@ -184,18 +201,7 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
                 text="Deposit"
               />
             </Grid>
-            {
-              unbondedAmount.gt(0) && (
-                <Grid item md={12}>
-                  <Button
-                    onClick={onWithdraw}
-                    variant="outlined"
-                    disabled={endDate.getTime() > Date.now()}
-                    text="Process Withdrawal"
-                  />
-                </Grid>
-              )
-            }
+
           </Grid>
         )}
       </StyledCardContent>
