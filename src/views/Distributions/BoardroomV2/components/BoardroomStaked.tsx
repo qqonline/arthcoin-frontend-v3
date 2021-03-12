@@ -177,7 +177,6 @@ const Stake = ({ vault }: { vault: VaultInfo }) => {
           )
         }
 
-
         {approveStatus !== ApprovalState.APPROVED ? (
           <Button
             // disabled={approveStatus !== ApprovalState.NOT_APPROVED}
