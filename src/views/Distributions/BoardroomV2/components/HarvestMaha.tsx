@@ -36,14 +36,14 @@ const HarvestMaha = ({ vault }: { vault: VaultInfo }) => {
           If you claim your rewards now you will be able to claim {getDisplayBalance(claimable)} MAHA
         </p> */}
         {/* <br /> */}
-        {/* <StyledCardActions>
-          <Button onClick={reinvestRewards} text={`Compound Rewards to MAHA Pool`} disabled={!canClaim} />
-        </StyledCardActions> */}
+        <StyledCardActions>
+          <Button text={`Compound Rewards (Coming Soon)`} disabled={true} />
+        </StyledCardActions>
         <br />
         <StyledCardActions>
           {/* <Button onClick={onReward} text={`Claim ${getDisplayBalance(claimable)} MAHA`} disabled={earnings.eq(0)} /> */}
           {/* <Button onClick={onReward} text={`Claim   MAHA`} disabled={earnings.eq(0)} /> */}
-          <Button text={`Claim MAHA Rewards`} disabled={true} />
+          <Button text={`Claim MAHA Rewards`} disabled={earnings.eq(0)} />
         </StyledCardActions>
       </CardContent>
     </Card>
