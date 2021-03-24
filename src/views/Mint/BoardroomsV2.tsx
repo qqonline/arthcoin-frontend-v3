@@ -8,6 +8,7 @@ import Boardroom from './components/VaultRow';
 import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import { Vaults } from '../../basis-cash/config';
+import InputContainer from './components/InputContainer';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -19,46 +20,58 @@ const Boardrooms: React.FC = () => {
 
   return (
     <>
-      <PageHeader
-
-        title="ARTH Distribution"
-        subtitle="Bond/Stake tokens and earn inflationary rewards when the ARTH supply expands. Rewards are redeemable only if the protocol is in expansion mode."
-      />
       <Container size="lg">
-        <CardWithTitle title="Bonding Pools">
-          <Grid container>
-            <Grid container item direction="row" justify="space-between" style={{ padding: 10 }}>
-              <Grid item xs={12} lg={6}>
-                <StyledTableHeaderTextLeft>PAIR</StyledTableHeaderTextLeft>
-              </Grid>
-              {/* <Grid item lg={2}>
-                <StyledTableHeaderTextCenter>POOL</StyledTableHeaderTextCenter>
-              </Grid> */}
-              <Grid item lg={2}>
-                <StyledTableHeaderTextRight>Seigniorage Supply</StyledTableHeaderTextRight>
-              </Grid>
-              {/* <Grid item lg={2}>
-                <StyledTableHeaderText>APY</StyledTableHeaderText>
-              </Grid> */}
-              <Grid item lg={2}>
-                <StyledTableHeaderTextRight>
-                  Withdrawal Period
-                  <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-                </StyledTableHeaderTextRight>
-              </Grid>
-            </Grid>
-
-            <Grid container item direction="column" justify="space-around">
-              {/* <Boardroom boardroom={"arthDai"}/>
-              <Boardroom boardroom={"arth"}/>
-              <Boardroom boardroom={"maha"}/> */}
-              <Boardroom vault={Vaults.arthDaiLiquidity} />
-              <Boardroom vault={Vaults.arthEthLiquidity} />
-              <Boardroom vault={Vaults.arth} />
-              <Boardroom vault={Vaults.maha} />
-            </Grid>
+        <Grid container style={{marginTop: '24px'}}>
+          <Grid item lg={6} style={{paddingRight: '24px'}}>
+            <LeftTopCard>
+              <LeftTopCardHeader>
+                <ActiveTab></ActiveTab>
+                <TabContainer>
+                  <TabText>Mint</TabText>
+                </TabContainer>
+                <TabContainer>
+                  <TabText>Redeem</TabText>
+                </TabContainer>
+              </LeftTopCardHeader>
+              <LeftTopCardContainer>
+                <InputContainer
+                  ILabelValue={'Enter Collateral'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={''}
+                  DefaultValue= {'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={true}
+                  SymbolText={'USDT'}
+                />
+                <InputContainer
+                  ILabelValue={'Enter ARTHX Share'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={'How can i get it?'}
+                  DefaultValue= {'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={false}
+                  SymbolText={'ARTHX'}
+                />
+                <InputContainer
+                  ILabelValue={'You will receive'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={''}
+                  DefaultValue= {'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={false}
+                  SymbolText={'ARTH'}
+                />
+              </LeftTopCardContainer>
+            </LeftTopCard>
           </Grid>
-        </CardWithTitle>
+          <Grid item lg={5} style={{paddingRight: '24px'}}>
+            <RightTopCard>
+
+            </RightTopCard>
+          </Grid>
+
+        </Grid>
+
       </Container>
     </>
   );
@@ -73,26 +86,57 @@ const StyledTableHeaderTextCenter = styled.h6`
   text-align: center;
 `;
 
-const StyledTableHeaderTextLeft = styled.h6`
-  font-size: 12px;
+const LeftTopCard = styled.div`
+  min-height: 50vh;
+  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  border-radius: 12px;
+`
+
+const RightTopCard = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  min-height: 50vh;
+`
+
+const LeftTopCardHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-right: 32px;
+  padding-left: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+`
+const LeftTopCardContainer = styled.div`
+  padding: 24px 32px;
+  
+`
+const TabContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 12px;
+  width: 100px;
+  height: 80px;
+  z-index: 1;
+`
+
+const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
   font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 40px;
-`;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`
 
-const StyledTableHeaderText = styled.h6`
-  font-size: 12px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 30px;
-`;
-
-const StyledTableHeaderTextRight = styled.h6`
-  font-size: 12px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 10px;
-`;
-
-
+const ActiveTab = styled.div`
+  position: absolute;
+  width: 100px;
+  padding: 32px 12px;
+  background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, #FD565620);
+  height: 80px;
+  z-index: 0;
+  border-bottom: 2px solid #FD5656;
+`
 export default Boardrooms;
