@@ -53,7 +53,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 
 const DialogContent = withStyles((theme: Theme) => ({
     root: {
-        minWidth: 320,
+        minWidth: 350,
     },
     dividers: {
         borderTop: `1px solid rgba(255, 255, 255, 0.08)`,
@@ -75,7 +75,7 @@ interface props {
 
 const useStyles = makeStyles({
     halfScreen: {
-        height: '41%',
+        height: '50%',
         width: '100%',
         alignItems: 'flex-end',
         alignSelf: 'flex-end',
@@ -127,7 +127,7 @@ const CustomizedDialogs: React.FC<props> = ({
                     paperFullScreen: mobile && modalStyles.halfScreen
                 }}
             >
-                <div style={modalContainerStyle}>
+                {/* <div style={modalContainerStyle}> */}
                     <DialogTitle
                         closeButton={closeButton}
                         modalTitleStyle={modalTitleStyle}
@@ -140,7 +140,7 @@ const CustomizedDialogs: React.FC<props> = ({
                     <DialogContent style={modalBodyStyle} dividers>
                         <div style={{}}>{children}</div>
                     </DialogContent>
-                </div>
+                {/* </div> */}
             </Dialog>
         );
     }

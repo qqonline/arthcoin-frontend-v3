@@ -99,6 +99,33 @@ const Boardrooms: React.FC = () => {
                 <div style={{ marginInline: 5 }}>ARTH</div>
               </CurrencyTag>
             </InfoDiv>
+            <div style={{ marginTop: 10 }} />
+
+            <LabelDiv>
+              <LabelInfo>Price</LabelInfo>
+              <LabelInfoData>
+                1.00
+            <LabelInfoDataChip>
+                  USDT
+            </LabelInfoDataChip>
+            /
+            <LabelInfoDataChip>
+                  ARTH
+            </LabelInfoDataChip>
+              </LabelInfoData>
+            </LabelDiv>
+            <LabelDiv>
+              <LabelInfo>
+                Minting Fee
+            <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
+              </LabelInfo>
+              <LabelInfoData>
+                1.00
+            <LabelInfoDataChip>
+                  USDT
+            </LabelInfoDataChip>
+              </LabelInfoData>
+            </LabelDiv>
             <div style={{
               flexDirection: 'row',
               display: 'flex',
@@ -125,31 +152,7 @@ const Boardrooms: React.FC = () => {
                 />
               </div>
             </div>
-            <LabelDiv>
-              <LabelInfo>Price</LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-            /
-            <LabelInfoDataChip>
-                  ARTH
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <LabelDiv>
-              <LabelInfo>
-                Minting Fee
-            <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-              </LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
+
           </> :
           <>
             <InfoDiv>
@@ -205,34 +208,8 @@ const Boardrooms: React.FC = () => {
                 <div style={{ marginInline: 5 }}>ARTHX</div>
               </CurrencyTag>
             </InfoDiv>
+            <div style={{ marginTop: 10 }} />
 
-
-            <div style={{
-              flexDirection: 'row',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8
-            }}
-            >
-              <div style={{ flex: 1, marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                // onClick={handleClose}
-                />
-              </div>
-              <div style={{ flex: 1, marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Redeem'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                />
-              </div>
-            </div>
             <LabelDiv>
               <LabelInfo>Price</LabelInfo>
               <LabelInfoData>
@@ -258,6 +235,34 @@ const Boardrooms: React.FC = () => {
           </LabelInfoDataChip>
               </LabelInfoData>
             </LabelDiv>
+
+            <div style={{
+              flexDirection: 'row',
+              display: 'flex',
+              width: '100%',
+              marginTop: '10%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8
+            }}
+            >
+              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                <Button
+                  variant={'transparent'}
+                  text="Cancel"
+                  size={'lg'}
+                // onClick={handleClose}
+                />
+              </div>
+              <div style={{ width: '50%', marginLeft: 10 }}>
+                <Button
+                  text={'Confirm Redeem'}
+                  // textStyles={{ color: '#F5F5F5' }}
+                  size={'lg'}
+                />
+              </div>
+            </div>
+
           </>
         }
       </Modal>
