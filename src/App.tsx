@@ -26,6 +26,7 @@ import * as Vaults from './state/vault/controller';
 
 import './index.css';
 import './App.css';
+import Mint from './views/Mint';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -67,8 +68,8 @@ const App: React.FC = () => {
           <Route path="/bonds">
             <Bond />
           </Route>
-          <Route path="/distribution">
-            <Distributions />
+          <Route path="/mint">
+            <Mint />
           </Route>
           <Redirect to="/staking" />
         </Switch>
