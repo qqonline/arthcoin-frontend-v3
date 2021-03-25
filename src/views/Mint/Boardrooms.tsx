@@ -15,7 +15,7 @@ import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
-import InputContainer from './components/InputContainer';
+import InputContainer from './Boardroom/components/InputContainer';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -94,7 +94,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{paddingRight: '24px'}}>
+        <Grid item lg={5} sm={12} style={{marginTop: '24px'}}>
           <RightTopCard>
             <div style={{marginBottom: '12px'}}>
               <OneLineInput>
@@ -176,7 +176,7 @@ const Boardrooms: React.FC = () => {
   const redeemTabContent = () => {
     return (
       <Grid container style={{marginTop: '24px'}}>
-        <Grid item lg={6} style={{paddingRight: '24px'}}>
+        <Grid item lg={6} sm={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType('Mint')}>
@@ -251,7 +251,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{paddingRight: '24px'}}>
+        <Grid item lg={5} sm={12} style={{marginTop: '24px'}}>
           <RightTopCard>
             <div style={{marginBottom: '12px'}}>
               <OneLineInput>
@@ -636,12 +636,12 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding-right: 24px;
-  padding-left: 24px;
+  padding-right: 12px;
+  padding-left: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 24px;
+  padding: 12px 12px;
 
 `
 const TabContainer = styled.div`
