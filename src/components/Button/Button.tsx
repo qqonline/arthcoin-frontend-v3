@@ -28,7 +28,7 @@ function variantToStyle(variant: string = 'default', color: any) {
       border: {
         normal: `1px solid ${color.alpha[88]}`,
         hover: `1px solid ${color.white}`,
-        radius: '8px',
+        radius: '6px',
         radiusHover: '6px'
       }
     }
