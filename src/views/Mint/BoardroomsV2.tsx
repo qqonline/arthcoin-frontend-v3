@@ -7,6 +7,7 @@ import useBasisCash from '../../hooks/useBasisCash';
 import Boardroom from './components/VaultRow';
 import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
+import InfoOutlined from '@material-ui/icons/InfoOutlined'
 import { Vaults } from '../../basis-cash/config';
 import Button from '../../components/Button';
 import Modal from './components/modal';
@@ -21,14 +22,317 @@ const Boardrooms: React.FC = () => {
   const [collateralValue, setCollateralValue] = useState<number>(98.12)
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
-  const [type, setType] = useState<'Mint' | 'Redeem'>('Redeem')
+  const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
+  const [openModal, setOpenModal] = useState<boolean>(false);
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
+
+  const mintTabContent = () => {
+    return (
+      <Grid container style={{marginTop: '24px'}}>
+        <Grid item lg={6} style={{paddingRight: '24px'}}>
+          <LeftTopCard>
+            <LeftTopCardHeader>
+              <ActiveTab></ActiveTab>
+              <TabContainer>
+                <TabText>Mint</TabText>
+              </TabContainer>
+              <TabContainer onClick={() => setType('Redeem')}>
+                <TabText>Redeem</TabText>
+              </TabContainer>
+            </LeftTopCardHeader>
+            <LeftTopCardContainer>
+              <InputContainer
+                ILabelValue={'Enter Collateral'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={true}
+                SymbolText={'USDT'}
+              />
+              <PlusMinusArrow>
+                <img src={plus} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'Enter ARTHX Share'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={'How can i get it?'}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+              />
+              <PlusMinusArrow>
+                <img src={arrowDown} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You will receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTH'}
+              />
+              <div style={{marginTop: '24px'}}>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>1.08</BeforeChip>
+                    <TagChips>ARTH/ETH</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Confirm Mint'} size={'lg'} onClick={() => setOpenModal(true)}/>
+              </div>
+            </LeftTopCardContainer>
+          </LeftTopCard>
+        </Grid>
+        <Grid item lg={5} style={{paddingRight: '24px'}}>
+          <RightTopCard>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>86%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Pool Balance
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Avaiable to Mint
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Stability Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>2%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Trading Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>2%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+          </RightTopCard>
+          <RightBottomCard>
+            <RightBottomCardTitle>
+              Farming pools are greate way to earn higher APY by staking your $ARTH
+            </RightBottomCardTitle>
+            <Grid container style={{marginTop: '16px'}}>
+              <Grid item lg={4}>
+                <Button text={'Earn Rewards'} size={'sm'} />
+              </Grid>
+            </Grid>
+          </RightBottomCard>
+        </Grid>
+      </Grid>
+    )
+  };
+
+  const redeemTabContent = () => {
+    return (
+      <Grid container style={{marginTop: '24px'}}>
+        <Grid item lg={6} style={{paddingRight: '24px'}}>
+          <LeftTopCard>
+            <LeftTopCardHeader>
+              <TabContainer onClick={() => setType('Mint')}>
+                <TabText>Mint</TabText>
+              </TabContainer>
+              <TabContainer>
+                <ActiveTab></ActiveTab>
+                <TabText>Redeem</TabText>
+              </TabContainer>
+            </LeftTopCardHeader>
+            <LeftTopCardContainer>
+              <InputContainer
+                ILabelValue={'Enter Redeem Amount'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTH'}
+              />
+              <PlusMinusArrow>
+                <img src={arrowDown} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={'How can i get it?'}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={true}
+                SymbolText={'USDT'}
+              />
+              <PlusMinusArrow>
+                <img src={plus} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+              />
+              <div style={{marginTop: '24px'}}>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>USDT</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Stability Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>MAHA</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(true)}/>
+              </div>
+            </LeftTopCardContainer>
+          </LeftTopCard>
+        </Grid>
+        <Grid item lg={5} style={{paddingRight: '24px'}}>
+          <RightTopCard>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>86%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Pool Balance
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Avaiable to Mint
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Stability Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Trading Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+          </RightTopCard>
+          <RightBottomCard>
+            <RightBottomCardTitle>
+              Farming pools are greate way to earn higher APY by staking your $ARTH
+            </RightBottomCardTitle>
+            <Grid container style={{marginTop: '16px'}}>
+              <Grid item lg={4}>
+                <Button text={'Earn Rewards'} size={'sm'} />
+              </Grid>
+            </Grid>
+          </RightBottomCard>
+        </Grid>
+      </Grid>
+    )
+  };
 
   return (
     <>
       <Modal
-        open={true}
+        open={openModal}
         modalTitleStyle={{
           color: 'rgba(255, 255, 255, 0.88)',
           alignItems: 'center',
@@ -142,6 +446,7 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
+                  onClick={() => setOpenModal(false)}
                 // onClick={handleClose}
                 />
               </div>
@@ -150,6 +455,10 @@ const Boardrooms: React.FC = () => {
                   text={'Confirm Mint'}
                   // textStyles={{ color: '#F5F5F5' }}
                   size={'lg'}
+                  onClick={() => {
+                    setType('Redeem')
+                    setOpenModal(false)
+                  }}
                 />
               </div>
             </div>
@@ -252,6 +561,7 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
+                  onClick={() => setOpenModal(false)}
                 // onClick={handleClose}
                 />
               </div>
@@ -260,6 +570,7 @@ const Boardrooms: React.FC = () => {
                   text={'Confirm Redeem'}
                   // textStyles={{ color: '#F5F5F5' }}
                   size={'lg'}
+                  onClick={() => setOpenModal(false)}
                 />
               </div>
             </div>
@@ -267,63 +578,9 @@ const Boardrooms: React.FC = () => {
           </>
         }
       </Modal>
-      <PageHeader
-
-        title="ARTH Distribution"
-        subtitle="Bond/Stake tokens and earn inflationary rewards when the ARTH supply expands. Rewards are redeemable only if the protocol is in expansion mode."
-      />
       <Container size="lg">
-        <Grid container style={{marginTop: '24px'}}>
-          <Grid item lg={6} style={{paddingRight: '24px'}}>
-            <LeftTopCard>
-              <LeftTopCardHeader>
-                <ActiveTab></ActiveTab>
-                <TabContainer>
-                  <TabText>Mint</TabText>
-                </TabContainer>
-                <TabContainer>
-                  <TabText>Redeem</TabText>
-                </TabContainer>
-              </LeftTopCardHeader>
-              <LeftTopCardContainer>
-                <InputContainer
-                  ILabelValue={'Enter Collateral'}
-                  IBalanceValue={'Balance 500.00'}
-                  ILabelInfoValue={''}
-                  DefaultValue= {'0.00'}
-                  LogoSymbol={'MAHA'}
-                  hasDropDown={true}
-                  SymbolText={'USDT'}
-                />
-                <InputContainer
-                  ILabelValue={'Enter ARTHX Share'}
-                  IBalanceValue={'Balance 500.00'}
-                  ILabelInfoValue={'How can i get it?'}
-                  DefaultValue= {'0.00'}
-                  LogoSymbol={'MAHA'}
-                  hasDropDown={false}
-                  SymbolText={'ARTHX'}
-                />
-                <InputContainer
-                  ILabelValue={'You will receive'}
-                  IBalanceValue={'Balance 500.00'}
-                  ILabelInfoValue={''}
-                  DefaultValue= {'0.00'}
-                  LogoSymbol={'MAHA'}
-                  hasDropDown={false}
-                  SymbolText={'ARTH'}
-                />
-              </LeftTopCardContainer>
-            </LeftTopCard>
-          </Grid>
-          <Grid item lg={5} style={{paddingRight: '24px'}}>
-            <RightTopCard>
-
-            </RightTopCard>
-          </Grid>
-
-        </Grid>
-
+        {type === 'Mint' && mintTabContent()}
+        {type === 'Redeem' && redeemTabContent()}
       </Container>
     </>
   );
@@ -339,7 +596,6 @@ const StyledTableHeaderTextCenter = styled.h6`
 `;
 
 const LeftTopCard = styled.div`
-  min-height: 50vh;
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
 `
@@ -348,7 +604,27 @@ const RightTopCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
-  min-height: 50vh;
+  padding: 32px;
+`
+
+const RightBottomCard = styled.div`
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  padding: 32px;
+`
+
+const RightBottomCardTitle = styled.div`
+  padding: 0px;
+  margin: 0px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.88);
+
 `
 
 const LeftTopCardHeader = styled.div`
@@ -360,7 +636,7 @@ const LeftTopCardHeader = styled.div`
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
-  
+
 `
 const TabContainer = styled.div`
   display: flex;
@@ -370,6 +646,7 @@ const TabContainer = styled.div`
   width: 100px;
   height: 80px;
   z-index: 1;
+  cursor: pointer;
 `
 
 const TabText = styled.span`
@@ -391,6 +668,76 @@ const ActiveTab = styled.div`
   z-index: 0;
   border-bottom: 2px solid #FD5656;
 `
+
+const PlusMinusArrow = styled.div`
+  width: 100%;
+  height: 32px;
+  border-radius: 1.33px;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+`
+
+const OneLineInput = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+`
+
+const TextWithIcon = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.88);
+`
+
+const TextForInfoTitle = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+  opacity: 0.64;
+`
+
+const BeforeChip = styled.span`
+  ont-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.64);
+  margin-right: 5px;
+`
+
+const TagChips = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.64);
+`
+
+const InputLabelSpanRight = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  margin-right: 5px;
+`
+
+
 const StyledTableHeaderTextRight = styled.h6`
   font-size: 12px;
   font-weight: 600;

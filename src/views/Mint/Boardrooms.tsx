@@ -15,6 +15,7 @@ import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
+import InputContainer from './components/InputContainer';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -23,8 +24,311 @@ const Boardrooms: React.FC = () => {
   const [collateralValue, setCollateralValue] = useState<number>(98.12)
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
-  const [type, setType] = useState<'Mint' | 'Redeem'>('Redeem')
+  const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
+  const [openModal, setOpenModal] = useState<boolean>(false);
   if (!basisCash) return <div />;
+
+  const mintTabContent = () => {
+    return (
+      <Grid container style={{marginTop: '24px'}}>
+        <Grid item lg={6} sm={12}>
+          <LeftTopCard>
+            <LeftTopCardHeader>
+              <ActiveTab></ActiveTab>
+              <TabContainer>
+                <TabText>Mint</TabText>
+              </TabContainer>
+              <TabContainer onClick={() => setType('Redeem')}>
+                <TabText>Redeem</TabText>
+              </TabContainer>
+            </LeftTopCardHeader>
+            <LeftTopCardContainer>
+              <InputContainer
+                ILabelValue={'Enter Collateral'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={true}
+                SymbolText={'USDT'}
+              />
+              <PlusMinusArrow>
+                <img src={plus} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'Enter ARTHX Share'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={'How can i get it?'}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+              />
+              <PlusMinusArrow>
+                <img src={arrowDown} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You will receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTH'}
+              />
+              <div style={{marginTop: '24px'}}>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>1.08</BeforeChip>
+                    <TagChips>ARTH/ETH</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Confirm Mint'} size={'lg'} onClick={() => setOpenModal(true)}/>
+              </div>
+            </LeftTopCardContainer>
+          </LeftTopCard>
+        </Grid>
+        <Grid item lg={5} style={{paddingRight: '24px'}}>
+          <RightTopCard>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>86%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Pool Balance
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Avaiable to Mint
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Stability Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>2%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Trading Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>2%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+          </RightTopCard>
+          <RightBottomCard>
+            <RightBottomCardTitle>
+              Farming pools are greate way to earn higher APY by staking your $ARTH
+            </RightBottomCardTitle>
+            <Grid container style={{marginTop: '16px'}}>
+              <Grid item lg={4}>
+                <Button text={'Earn Rewards'} size={'sm'} />
+              </Grid>
+            </Grid>
+          </RightBottomCard>
+        </Grid>
+      </Grid>
+    )
+  };
+
+  const redeemTabContent = () => {
+    return (
+      <Grid container style={{marginTop: '24px'}}>
+        <Grid item lg={6} style={{paddingRight: '24px'}}>
+          <LeftTopCard>
+            <LeftTopCardHeader>
+              <TabContainer onClick={() => setType('Mint')}>
+                <TabText>Mint</TabText>
+              </TabContainer>
+              <TabContainer>
+                <ActiveTab></ActiveTab>
+                <TabText>Redeem</TabText>
+              </TabContainer>
+            </LeftTopCardHeader>
+            <LeftTopCardContainer>
+              <InputContainer
+                ILabelValue={'Enter Redeem Amount'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTH'}
+              />
+              <PlusMinusArrow>
+                <img src={arrowDown} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={'How can i get it?'}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={true}
+                SymbolText={'USDT'}
+              />
+              <PlusMinusArrow>
+                <img src={plus} />
+              </PlusMinusArrow>
+              <InputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={'Balance 500.00'}
+                ILabelInfoValue={''}
+                DefaultValue= {'0.00'}
+                LogoSymbol={'MAHA'}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+              />
+              <div style={{marginTop: '24px'}}>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>USDT</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <OneLineInput>
+                  <div style={{flex: 1}}>
+                    <TextWithIcon>
+                      Stability Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>MAHA</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(true)}/>
+              </div>
+            </LeftTopCardContainer>
+          </LeftTopCard>
+        </Grid>
+        <Grid item lg={5} style={{paddingRight: '24px'}}>
+          <RightTopCard>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>86%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Pool Balance
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Avaiable to Mint
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Stability Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{marginBottom: '12px'}}>
+              <OneLineInput>
+                <div style={{flex: 1}}>
+                  <TextForInfoTitle>
+                    Trading Fee
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+          </RightTopCard>
+          <RightBottomCard>
+            <RightBottomCardTitle>
+              Farming pools are greate way to earn higher APY by staking your $ARTH
+            </RightBottomCardTitle>
+            <Grid container style={{marginTop: '16px'}}>
+              <Grid item lg={4}>
+                <Button text={'Earn Rewards'} size={'sm'} />
+              </Grid>
+            </Grid>
+          </RightBottomCard>
+        </Grid>
+      </Grid>
+    )
+  };
 
   const OldBalance = (
     <div style={{
@@ -49,7 +353,7 @@ const Boardrooms: React.FC = () => {
     <>
       <Modal
         mobile
-        open={true}
+        open={openModal}
         modalContainerStyle={{
           width: '100%',
           alignItems: 'center',
@@ -288,37 +592,157 @@ const Boardrooms: React.FC = () => {
           </>
         }
       </Modal>
-      <PageHeader
-        icon={<img alt="distribution" src={DistributionIcon} width="200px" />}
-        title="ARTH/MAHA Distribution"
-        subtitle="Deposit tokens and earn rewards when the protocol supply expands/contracts. You will earn ARTH rewards when the protocol expands and MAHA rewards when the protocol contracts"
-      />
       <Container size="lg">
-        {/* <div className="border-bottom width-100 margin-bottom-20" /> */}
-        <Grid container spacing={5} justify="center" alignItems="stretch">
-          <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom
-              vault={Vaults.arthDaiLiquidity}
-            // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            />
-          </Grid>
-          <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom
-              vault={Vaults.arth}
-            // toolTipTitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            />
-          </Grid>
-
-          <Grid container item xs={12} md={4} lg={4} xl={4}>
-            <Boardroom vault={Vaults.maha} />
-          </Grid>
-        </Grid>
-
-        {OldBalance}
+        {type === 'Mint' && mintTabContent()}
+        {type === 'Redeem' && redeemTabContent()}
       </Container>
     </>
   );
 };
+
+
+const LeftTopCard = styled.div`
+  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  border-radius: 12px;
+`
+
+const RightTopCard = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  padding: 24px;
+`
+
+const RightBottomCard = styled.div`
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  padding: 24px;
+`
+
+const RightBottomCardTitle = styled.div`
+  padding: 0px;
+  margin: 0px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.88);
+
+`
+
+const LeftTopCardHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-right: 24px;
+  padding-left: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+`
+const LeftTopCardContainer = styled.div`
+  padding: 24px 24px;
+
+`
+const TabContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 12px;
+  width: 100px;
+  height: 80px;
+  z-index: 1;
+  cursor: pointer;
+`
+
+const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`
+
+const ActiveTab = styled.div`
+  position: absolute;
+  width: 100px;
+  padding: 32px 12px;
+  background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, #FD565620);
+  height: 80px;
+  z-index: 0;
+  border-bottom: 2px solid #FD5656;
+`
+
+const PlusMinusArrow = styled.div`
+  width: 100%;
+  height: 32px;
+  border-radius: 1.33px;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+`
+
+const OneLineInput = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+`
+
+const TextWithIcon = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.88);
+`
+
+const TextForInfoTitle = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+  opacity: 0.64;
+`
+
+const BeforeChip = styled.span`
+  ont-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.64);
+  margin-right: 5px;
+`
+
+const TagChips = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.64);
+`
+
+const InputLabelSpanRight = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  margin-right: 5px;
+`
+
 
 
 const LabelDiv = styled.div`
