@@ -110,19 +110,19 @@ const InputContainer: React.FC<props> = (props) => {
           {modalOpen && hasDropDown && <CustomDropDown>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+              <CustomDropDownLiText>MAHA</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+              <CustomDropDownLiText>USDC</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+            <CustomDropDownLiText>ETH</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+              <CustomDropDownLiText>WBTC</CustomDropDownLiText>
             </CustomDropDownLi>
           </CustomDropDown>}
         </IFieldRightContainer>
