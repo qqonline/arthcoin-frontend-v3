@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
@@ -16,6 +16,8 @@ type props = {
 
 const InputContainer: React.FC<props> = (props) => {
   const {ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText} = props;
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   return(
     <IConatiner>
       <ILabelContainer>
@@ -33,7 +35,9 @@ const InputContainer: React.FC<props> = (props) => {
           inputProps={{ 'aria-label': 'naked' }}
           style={{padding: '8px 12px', color: '#FFFFFF65', flex: 1}}
         />
-        <IFieldRightContainer>
+        <IFieldRightContainer onClick={() => {
+          if (hasDropDown) setModalOpen(!modalOpen)
+        }}>
           <IFieldRightContainerLogo>
             <TokenSymbol symbol={LogoSymbol} size={25}/>
           </IFieldRightContainerLogo>
@@ -43,6 +47,25 @@ const InputContainer: React.FC<props> = (props) => {
           {hasDropDown && <IFieldRightContainerDropDown>
             <KeyboardArrowDown fontSize='default' />
           </IFieldRightContainerDropDown>}
+
+          {modalOpen && hasDropDown && <CustomDropDown>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={LogoSymbol} size={25} />
+              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+            </CustomDropDownLi>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={LogoSymbol} size={25} />
+              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+            </CustomDropDownLi>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={LogoSymbol} size={25} />
+              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+            </CustomDropDownLi>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={LogoSymbol} size={25} />
+              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+            </CustomDropDownLi>
+          </CustomDropDown>}
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>
@@ -117,6 +140,8 @@ const IFieldRightContainer = styled.div`
   border-radius: 0px 6px 6px 0px;
   display: flex;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 `
 
 const IFieldRightContainerLogo = styled.span`
@@ -136,3 +161,36 @@ const IFieldRightContainerText = styled.span`
 const IFieldRightContainerDropDown = styled.span`
   margin-left: 5px;
 `
+
+const CustomDropDown = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  z-index: 12;
+  background: #1F1E1E;
+  border-radius: 6px;
+  min-width: 125px;
+`
+
+const CustomDropDownLi = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  padding: 0px 12px;
+  align-items: center;
+  &:hover {
+    background: rgba(62, 62, 62, 0.31);
+  }
+`
+
+const CustomDropDownLiText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.64);
+  margin-left: 5px;
+  
+`
+
