@@ -182,7 +182,7 @@ const Boardrooms: React.FC = () => {
                     <TagChips>ARTH/ETH</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Confirm Mint'} size={'lg'} onClick={() => setOpenModal(1)} />
+                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={true} onClick={() => setOpenModal(1)}/>
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
