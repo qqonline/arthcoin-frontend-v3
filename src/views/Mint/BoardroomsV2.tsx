@@ -1,20 +1,110 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CardWithTitle from '../../components/CardWithTitle';
-import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
-import Boardroom from './components/VaultRow';
 import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
-import InfoOutlined from '@material-ui/icons/InfoOutlined'
-import { Vaults } from '../../basis-cash/config';
 import Button from '../../components/Button';
 import Modal from './components/modal';
-import TokenSymbol from '../../components/TokenSymbol';
 import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
 import InputContainer from './components/InputContainer';
+import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+import TransparentInfoDiv from './components/InfoDiv';
+import CheckIcon from '@material-ui/icons/Check';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
+const OrangeCheckBox = withStyles({
+  root: {
+    color: 'rgba(255, 255, 255, 0.32)',
+    '&$checked': {
+      color: '#FF7F57',
+    },
+  },
+  checked: {
+    color: 'white'
+  },
+})((props: CheckboxProps) => <Checkbox {...props} />);
+
+const useSliderStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      color: 'white'
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
+);
+
+
+function valuetext(value: number) {
+  return `${value}`;
+}
+
+// function valueLabelFormat(value: number) {
+//   return marks.findIndex((mark: any) => mark.value === value) + 1;
+// }
+
+const PrettoRestrictSlider = withStyles({
+  root: {
+    color: 'white',
+    height: 15,
+    width: '95%'
+  },
+  thumb: {
+    height: 10,
+    width: 10,
+    // backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    color: '#FFA981',
+    marginTop: -3.5,
+    marginLeft: -3,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-100% - 5px)',
+    color: '#FF7F57',
+  },
+  marked: {
+    // background: 'red'
+  },
+  markLabel: {
+    // color: 'green'
+  },
+  track: {
+    height: 3,
+    borderRadius: 3,
+    color: '#FFA981'
+    // top: '2%'
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    color: '#D74D26'
+    // background:'red'
+    // border: '1px solid'
+  },
+  markLabelActive: {
+    fontStyle: 'normal',
+    fontWeight: 300,
+    fontSize: '12px',
+    lineHeight: '130%',
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.88)',
+  },
+  mark: {
+    height: '3px',
+    width: '3px',
+    borderRadius: '50%',
+    color: '#F7653B'
+  },
+
+})(Slider);
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -23,14 +113,18 @@ const Boardrooms: React.FC = () => {
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [checked, setChecked] = React.useState(false);
+  const sliderClasses = useSliderStyles();
+  const [sliderValue, setSliderValue] = React.useState(1);
+
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
   const mintTabContent = () => {
     return (
-      <Grid container style={{marginTop: '24px'}}>
-        <Grid item lg={6} style={{paddingRight: '24px'}}>
+      <Grid container style={{ marginTop: '24px' }}>
+        <Grid item lg={6} style={{ paddingRight: '24px' }}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <ActiveTab></ActiveTab>
@@ -46,7 +140,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
@@ -58,7 +152,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -70,14 +164,14 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You will receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
               />
-              <div style={{marginTop: '24px'}}>
+              <div style={{ marginTop: '24px' }}>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Trading Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -88,24 +182,24 @@ const Boardrooms: React.FC = () => {
                     <TagChips>ARTH/ETH</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Confirm Mint'} size={'lg'} onClick={() => setOpenModal(true)}/>
+                <Button text={'Confirm Mint'} size={'lg'} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{paddingRight: '24px'}}>
+        <Grid item lg={5} style={{ paddingRight: '24px' }}>
           <RightTopCard>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$5.4</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -114,9 +208,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Pool Balance
                   </TextForInfoTitle>
@@ -124,9 +218,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>154.6M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Avaiable to Mint
                   </TextForInfoTitle>
@@ -134,9 +228,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -145,9 +239,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -161,7 +255,7 @@ const Boardrooms: React.FC = () => {
             <RightBottomCardTitle>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
-            <Grid container style={{marginTop: '16px'}}>
+            <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
                 <Button text={'Earn Rewards'} size={'sm'} />
               </Grid>
@@ -172,10 +266,18 @@ const Boardrooms: React.FC = () => {
     )
   };
 
+  const handleCheck = (event: any) => {
+    // console.log('check trig', event.target.checked)
+    setChecked(event.target.checked);
+  };
+  const handleSliderChange = (event: any, value: any) => {
+    console.log('check trig', value)
+    setSliderValue(value);
+  };
   const redeemTabContent = () => {
     return (
-      <Grid container style={{marginTop: '24px'}}>
-        <Grid item lg={6} style={{paddingRight: '24px'}}>
+      <Grid container style={{ marginTop: '24px' }}>
+        <Grid item lg={6} style={{ paddingRight: '24px' }}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType('Mint')}>
@@ -191,7 +293,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -203,7 +305,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
@@ -215,14 +317,14 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
               />
-              <div style={{marginTop: '24px'}}>
+              <div style={{ marginTop: '24px' }}>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Trading Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -234,7 +336,7 @@ const Boardrooms: React.FC = () => {
                   </OneLineInput>
                 </OneLineInput>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Stability Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -245,24 +347,24 @@ const Boardrooms: React.FC = () => {
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(true)}/>
+                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{paddingRight: '24px'}}>
+        <Grid item lg={5} style={{ paddingRight: '24px' }}>
           <RightTopCard>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$5.4</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -271,9 +373,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Pool Balance
                   </TextForInfoTitle>
@@ -281,9 +383,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>154.6M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Avaiable to Mint
                   </TextForInfoTitle>
@@ -291,9 +393,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -302,9 +404,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -318,7 +420,7 @@ const Boardrooms: React.FC = () => {
             <RightBottomCardTitle>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
-            <Grid container style={{marginTop: '16px'}}>
+            <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
                 <Button text={'Earn Rewards'} size={'sm'} />
               </Grid>
@@ -332,7 +434,7 @@ const Boardrooms: React.FC = () => {
   return (
     <>
       <Modal
-        open={openModal}
+        open={openModal === 1}
         modalTitleStyle={{
           color: 'rgba(255, 255, 255, 0.88)',
           alignItems: 'center',
@@ -351,231 +453,264 @@ const Boardrooms: React.FC = () => {
         }}
         title={`Confirm ${type} ARTH`}
       >
-        {type === 'Mint' ?
-          <>
-            <InfoDiv>
-              <InfoTitle>
-                Collateral : {collateralValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'USDT'} size={20} />
-                <div style={{ marginInline: 5 }}>USDT</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={plus} style={{ color: 'white' }} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                Algorithmic : {algorithmicValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={arrowDown} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                {`  ` + finalValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTH</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{ marginTop: 10 }} />
+        {
+          type === 'Mint' ?
+            <>
+              <TransparentInfoDiv
+                labelData={`Your collateral supply`}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'1500.00'}
+              />
 
-            <LabelDiv>
-              <LabelInfo>Price</LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-            /
-            <LabelInfoDataChip>
-                  ARTH
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <LabelDiv>
-              <LabelInfo>
-                Minting Fee
-            <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-              </LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <div style={{
-              flexDirection: 'row',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8
-            }}
-            >
-              <div style={{ flex: 1, marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => setOpenModal(false)}
-                // onClick={handleClose}
+              <TransparentInfoDiv
+                labelData={`Your share supply`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTHX'}
+                rightLabelValue={'1000.00'}
+              />
+
+
+              <TransparentInfoDiv
+                labelData={`Trading Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <Divider
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  margin: '15px 0px'
+                }}
+              // variant={'middle'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You receive`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTH'}
+                rightLabelValue={'1000.00'}
+              />
+
+              {/* <TransparentInfoDiv
+                labelData={`You will receive share`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTHX'}
+                rightLabelValue={'1000.00'}
+              /> */}
+              <CheckboxDiv>
+                <FormControlLabel
+                  value=""
+                  checked={checked}
+                  control={
+                    <OrangeCheckBox
+                      icon={<CheckBoxOutlineBlankIcon fontSize={'inherit'} />}
+                      checkedIcon={
+                        <CheckIcon
+                          style={{
+                            background: '#FF7F57',
+                            color: 'white',
+                            borderRadius: '6px'
+                          }}
+                          fontSize={'inherit'}
+                        />
+                      }
+                      size={'medium'}
+                    />
+                  }
+                  label="Deposit $ARTH in staking pool to earn reward APY"
+                  labelPlacement="end"
+                  onChange={handleCheck}
                 />
+              </CheckboxDiv>
+              {checked &&
+                <StakingDiv>
+                  <div>
+                    <OneLineInput>
+                      <div>
+                        <InputLabel>Select how long would you like to stake</InputLabel>
+                      </div>
+                      <InputNoDisplay>
+                        <InternalSpan>
+                          1 year
+                        </InternalSpan>
+                      </InputNoDisplay>
+                    </OneLineInput>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'white',
+                      flexDirection: 'row',
+                      width: '100%',
+                      paddingLeft: '16px',
+                      // marginTop: '10px'
+                    }}
+                  >
+                    <div className={sliderClasses.root}>
+                      <PrettoRestrictSlider
+                        // defaultValue={sliderValue ?? 1}
+                        // onChange={handleSliderChange}
+                        // // valueLabelFormat={valueLabelFormat}
+                        // getAriaValueText={valuetext}
+                        // aria-labelledby="discrete-slider-small-steps"
+                        // step={1}
+                        // min={1}
+                        // max={36}
+                        // valueLabelDisplay="on"
+                        // // marks={marks}
+                        // ValueLabelComponent={"strong"}
+                        defaultValue={1}
+                        getAriaValueText={valuetext}
+                        valueLabelFormat={valuetext}
+                        // ValueLabelComponent={'span'}
+                        // value={sliderValue}
+                        aria-labelledby="discrete-slider"
+                        step={1}
+                        marks
+                        min={1}
+                        max={36}
+                        valueLabelDisplay="auto"
+                      />
+                      <div style={{ marginTop: -15, marginLeft: -15, marginBottom: 15, display: 'flex', justifyContent: 'space-between' }}>
+                        <TimeSpan>1 month</TimeSpan>
+                        <TimeSpan>3 Years</TimeSpan>
+                      </div>
+                    </div>
+
+                  </div>
+                  <TransparentInfoDiv
+                    labelData={`Estimated earning`}
+                    // labelToolTipData={'testing'}
+                    rightLabelUnit={'MAHA'}
+                    rightLabelValue={'1000.00'}
+                  />
+
+                  <TransparentInfoDiv
+                    labelData={`ROR`}
+                    // labelToolTipData={'testing'}
+                    // rightLabelUnit={''}
+                    rightLabelValue={'88%'}
+                  />
+
+                  <TransparentInfoDiv
+                    labelData={`APY`}
+                    // labelToolTipData={'testing'}
+                    // rightLabelUnit={'MAHA'}
+                    rightLabelValue={'66%'}
+                  />
+                </StakingDiv>
+              }
+              <div style={{
+                flexDirection: 'row',
+                display: 'flex',
+                width: '100%',
+                marginTop: '10%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 8
+              }}
+              >
+                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                  <Button
+                    variant={'transparent'}
+                    text="Cancel"
+                    size={'lg'}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
+                  />
+                </div>
+                <div style={{ width: '50%', marginLeft: 10 }}>
+                  <Button
+                    text={'Confirm Mint'}
+                    // textStyles={{ color: '#F5F5F5' }}
+                    size={'lg'}
+                    onClick={() => {
+                      setOpenModal(2)
+                    }}
+                  />
+                </div>
               </div>
-              <div style={{ flex: 1, marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Mint'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setType('Redeem')
-                    setOpenModal(false)
-                  }}
-                />
+            </> :
+            <>
+              <TransparentInfoDiv
+                labelData={`Your ${type.toLocaleLowerCase()} amount`}
+                rightLabelUnit={'ARTH'}
+                rightLabelValue={'1500.00'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`Trading Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <TransparentInfoDiv
+                labelData={`Stability Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'MAHA'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <Divider
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  margin: '15px 0px'
+                }}
+              // variant={'middle'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You will receive collateral`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'1000.00'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You will receive share`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTHX'}
+                rightLabelValue={'1000.00'}
+              />
+
+              <div style={{
+                flexDirection: 'row',
+                display: 'flex',
+                width: '100%',
+                marginTop: '10%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 8
+              }}
+              >
+                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                  <Button
+                    variant={'transparent'}
+                    text="Cancel"
+                    size={'lg'}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
+                  />
+                </div>
+                <div style={{ width: '50%', marginLeft: 10 }}>
+                  <Button
+                    text={'Redeem ARTH'}
+                    // textStyles={{ color: '#F5F5F5' }}
+                    size={'lg'}
+                    onClick={() => {
+                      // setType('Redeem')
+                      setOpenModal(0)
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-
-          </> :
-          <>
-            <InfoDiv>
-              <InfoTitle>
-                {`  ` + finalValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={arrowDown} />
-            </div>
-
-            <InfoDiv>
-              <InfoTitle>
-                Collateral : {collateralValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'USDT'} size={20} />
-                <div style={{ marginInline: 5 }}>USDT</div>
-              </CurrencyTag>
-            </InfoDiv>
-
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={plus} style={{ color: 'white' }} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                Algorithmic : {algorithmicValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{ marginTop: 10 }} />
-
-            <LabelDiv>
-              <LabelInfo>Price</LabelInfo>
-              <LabelInfoData>
-                1.00
-          <LabelInfoDataChip>
-                  USDT
-          </LabelInfoDataChip>
-          /
-          <LabelInfoDataChip>
-                  ARTH
-          </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <LabelDiv>
-              <LabelInfo>
-                Redemption Fee
-          <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-              </LabelInfo>
-              <LabelInfoData>
-                1.00
-          <LabelInfoDataChip>
-                  USDT
-          </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-
-            <div style={{
-              flexDirection: 'row',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8
-            }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => setOpenModal(false)}
-                // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Redeem'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => setOpenModal(false)}
-                />
-              </div>
-            </div>
-
-          </>
+            </>
         }
       </Modal>
       <Container size="lg">
@@ -593,6 +728,17 @@ const StyledTableHeaderTextCenter = styled.h6`
   color: ${(props) => props.theme.color.grey[600]};
   margin: 10px 30px;
   text-align: center;
+`;
+
+const InfoSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.64);
+// margin: 10px 30px;
+text-align: center;
 `;
 
 const LeftTopCard = styled.div`
@@ -658,6 +804,11 @@ const TabText = styled.span`
   text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `
+const StakingDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0px 0px 0px;
+`;
 
 const ActiveTab = styled.div`
   position: absolute;
@@ -686,6 +837,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
+  margin: 15px 0px 0px 0px;
 `
 
 const TextWithIcon = styled.div`
@@ -737,13 +889,42 @@ const InputLabelSpanRight = styled.span`
   margin-right: 5px;
 `
 
-
+const InputLabel = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.64);
+  margin: 0px;
+`
 const StyledTableHeaderTextRight = styled.h6`
   font-size: 12px;
   font-weight: 600;
   color: ${(props) => props.theme.color.grey[600]};
   margin: 10px 10px;
 `;
+
+const InternalSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: #FFFFFF;
+`
+
+const InputNoDisplay = styled.span`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 10px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 0px 8px;
+`
 
 const LabelDiv = styled.div`
 // background: rgba(255, 255, 255, 0.08);
@@ -764,6 +945,25 @@ height: fit-content;
 // justify-content: space-between;
 display: flex;
 align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const LabelInfoText = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: right;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const TimeSpan = styled.div`
 font-family: Inter;
 font-style: normal;
 font-weight: 300;
@@ -806,6 +1006,17 @@ margin: 0px 2px;
 color: rgba(255, 255, 255, 0.64);
 `;
 
+const LabelInfoDataChipText = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: rgba(255, 255, 255, 0.64);
+`;
+
 const InfoDiv = styled.div`
 background: rgba(255, 255, 255, 0.08);
 border-radius: 6px;
@@ -815,6 +1026,16 @@ justify-content: space-between;
 display: flex;
 align-items: center;
 `;
+
+// const TransparentInfoDiv = styled.div`
+// // background: rgba(255, 255, 255, 0.08);
+// // border-radius: 6px;
+// // padding: 6px 4px;
+// height: fit-content;
+// justify-content: space-between;
+// display: flex;
+// align-items: center;
+// `;
 
 const InfoTitle = styled.div`
 padding: 6px 4px;
@@ -827,6 +1048,23 @@ font-weight: 600;
 font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.88);
+`;
+
+const CheckboxDiv = styled.div`
+background: rgba(255, 255, 255, 0.08);
+border-radius: 6px;
+padding: 5px 0px 0px 0px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+color: rgba(255, 255, 255, 0.88);
+margin: 15px 0px 0px 0px;
 `;
 
 const CurrencyTag = styled.div`

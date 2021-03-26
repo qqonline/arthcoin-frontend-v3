@@ -16,6 +16,101 @@ import plus from '../../assets/svg/plus.svg'
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import InputContainer from './Boardroom/components/InputContainer';
+import TransparentInfoDiv from './components/InfoDiv';
+import CheckIcon from '@material-ui/icons/Check';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+const OrangeCheckBox = withStyles({
+  root: {
+    color: 'rgba(255, 255, 255, 0.32)',
+    '&$checked': {
+      color: '#FF7F57',
+    },
+  },
+  checked: {
+    color: 'white'
+  },
+})((props: CheckboxProps) => <Checkbox {...props} />);
+
+const useSliderStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      color: 'white'
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
+);
+
+
+function valuetext(value: number) {
+  return `${value}`;
+}
+
+// function valueLabelFormat(value: number) {
+//   return marks.findIndex((mark: any) => mark.value === value) + 1;
+// }
+
+const PrettoRestrictSlider = withStyles({
+  root: {
+    color: 'white',
+    height: 15,
+    width: '95%'
+  },
+  thumb: {
+    height: 10,
+    width: 10,
+    // backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    color: '#FFA981',
+    marginTop: -3.5,
+    marginLeft: -3,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-100% - 5px)',
+    color: '#FF7F57',
+  },
+  marked: {
+    // background: 'red'
+  },
+  markLabel: {
+    // color: 'green'
+  },
+  track: {
+    height: 3,
+    borderRadius: 3,
+    color: '#FFA981'
+    // top: '2%'
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    color: '#D74D26'
+    // background:'red'
+    // border: '1px solid'
+  },
+  markLabelActive: {
+    fontStyle: 'normal',
+    fontWeight: 300,
+    fontSize: '12px',
+    lineHeight: '130%',
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.88)',
+  },
+  mark: {
+    height: '3px',
+    width: '3px',
+    borderRadius: '50%',
+    color: '#F7653B'
+  },
+
+})(Slider);
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
@@ -25,7 +120,19 @@ const Boardrooms: React.FC = () => {
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [checked, setChecked] = React.useState(false);
+  const sliderClasses = useSliderStyles();
+  const [sliderValue, setSliderValue] = React.useState(1);
+
+  const handleCheck = (event: any) => {
+    // console.log('check trig', event.target.checked)
+    setChecked(event.target.checked);
+  };
+  const handleSliderChange = (event: any, value: any) => {
+    console.log('check trig', value)
+    setSliderValue(value);
+  };
   if (!basisCash) return <div />;
 
   const mintTabContent = () => {
@@ -91,7 +198,7 @@ const Boardrooms: React.FC = () => {
                 </OneLineInput>
                 <Button text={'Confirm Mint'} size={'lg'} onClick={() => {
                   setType('Mint')
-                  setOpenModal(true)
+                  setOpenModal(1)
                 }} />
               </div>
             </LeftTopCardContainer>
@@ -251,7 +358,7 @@ const Boardrooms: React.FC = () => {
                 </OneLineInput>
                 <Button text={'Redeem'} size={'lg'} onClick={() => {
                   setType('Redeem')
-                  setOpenModal(true)
+                  setOpenModal(1)
                 }} />
               </div>
             </LeftTopCardContainer>
@@ -359,7 +466,7 @@ const Boardrooms: React.FC = () => {
     <>
       <Modal
         mobile
-        open={openModal}
+        open={openModal === 1}
         modalContainerStyle={{
           width: '100%',
           alignItems: 'center',
@@ -374,241 +481,270 @@ const Boardrooms: React.FC = () => {
         modalBodyStyle={{
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px',
+          padding: '24px 20px',
           width: '100%',
-          minWidth: '350px'
-          // height: '100%'
+          minWidth: '350px',
+          height: '60%'
         }}
         title={`Confirm ${type} ARTH`}
       >
-        {type === 'Mint' ?
-          <>
-            <InfoDiv>
-              <InfoTitle>
-                Collateral : {collateralValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'USDT'} size={20} />
-                <div style={{ marginInline: 5 }}>USDT</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={plus} style={{ color: 'white' }} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                Algorithmic : {algorithmicValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={arrowDown} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                {`  ` + finalValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTH</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{ marginTop: 10 }} />
-            <LabelDiv>
-              <LabelInfo>Price</LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-            /
-            <LabelInfoDataChip>
-                  ARTH
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <LabelDiv>
-              <LabelInfo>
-                Minting Fee
-            <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-              </LabelInfo>
-              <LabelInfoData>
-                1.00
-            <LabelInfoDataChip>
-                  USDT
-            </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
+        {
+          type === 'Mint' ?
+            <>
+              <TransparentInfoDiv
+                labelData={`Your collateral supply`}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'1500.00'}
+              />
 
-            <div style={{
-              flexDirection: 'column',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}
-            >
-              <div style={{ width: '100%', marginBottom: 10 }}>
-                <Button
-                  text={'Confirm Mint'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(false)
-                  }}
+              <TransparentInfoDiv
+                labelData={`Your share supply`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTHX'}
+                rightLabelValue={'1000.00'}
+              />
+
+
+              <TransparentInfoDiv
+                labelData={`Trading Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <Divider
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  margin: '15px 0px'
+                }}
+              // variant={'middle'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You receive`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTH'}
+                rightLabelValue={'1000.00'}
+              />
+
+              <CheckboxDiv>
+                <FormControlLabel
+                  value=""
+                  checked={checked}
+                  control={
+                    <OrangeCheckBox
+                      icon={<CheckBoxOutlineBlankIcon fontSize={'inherit'} />}
+                      checkedIcon={
+                        <CheckIcon
+                          style={{
+                            background: '#FF7F57',
+                            color: 'white',
+                            borderRadius: '6px'
+                          }}
+                          fontSize={'inherit'}
+                        />
+                      }
+                      size={'medium'}
+                    />
+                  }
+                  label={
+                    <LabelSpan>
+                      Deposit $ARTH in staking pool to earn reward APY
+                  </LabelSpan>
+                  }
+                  labelPlacement="end"
+                  onChange={handleCheck}
+
                 />
+              </CheckboxDiv>
+              {checked &&
+                <StakingDiv>
+                  <div>
+                    <OneLineInput>
+                      <div>
+                        <InputLabel>Select how long would you like to stake</InputLabel>
+                      </div>
+                      <InputNoDisplay>
+                        <InternalSpan>
+                          1 year
+                        </InternalSpan>
+                      </InputNoDisplay>
+                    </OneLineInput>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'white',
+                      flexDirection: 'row',
+                      width: '100%',
+                      paddingLeft: '16px',
+                      // marginTop: '10px'
+                    }}
+                  >
+                    <div className={sliderClasses.root}>
+                      <PrettoRestrictSlider
+                        // defaultValue={sliderValue ?? 1}
+                        // onChange={handleSliderChange}
+                        // // valueLabelFormat={valueLabelFormat}
+                        // getAriaValueText={valuetext}
+                        // aria-labelledby="discrete-slider-small-steps"
+                        // step={1}
+                        // min={1}
+                        // max={36}
+                        // valueLabelDisplay="on"
+                        // // marks={marks}
+                        // ValueLabelComponent={"strong"}
+                        defaultValue={1}
+                        getAriaValueText={valuetext}
+                        valueLabelFormat={valuetext}
+                        // ValueLabelComponent={'span'}
+                        // value={sliderValue}
+                        aria-labelledby="discrete-slider"
+                        step={1}
+                        marks
+                        min={1}
+                        max={36}
+                        valueLabelDisplay="auto"
+                      />
+                      <div style={{ marginTop: -15, marginLeft: -15, marginBottom: 15, display: 'flex', justifyContent: 'space-between' }}>
+                        <TimeSpan>1 month</TimeSpan>
+                        <TimeSpan>3 Years</TimeSpan>
+                      </div>
+                    </div>
+
+                  </div>
+                  <TransparentInfoDiv
+                    labelData={`Estimated earning`}
+                    // labelToolTipData={'testing'}
+                    rightLabelUnit={'MAHA'}
+                    rightLabelValue={'1000.00'}
+                  />
+
+                  <TransparentInfoDiv
+                    labelData={`ROR`}
+                    // labelToolTipData={'testing'}
+                    // rightLabelUnit={''}
+                    rightLabelValue={'88%'}
+                  />
+
+                  <TransparentInfoDiv
+                    labelData={`APY`}
+                    // labelToolTipData={'testing'}
+                    // rightLabelUnit={'MAHA'}
+                    rightLabelValue={'66%'}
+                  />
+                </StakingDiv>
+              }
+              <div style={{
+                flexDirection: 'row',
+                display: 'flex',
+                width: '100%',
+                marginTop: '10%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 8
+              }}
+              >
+                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                  <Button
+                    variant={'transparent'}
+                    text="Cancel"
+                    size={'lg'}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
+                  />
+                </div>
+                <div style={{ width: '50%', marginLeft: 10 }}>
+                  <Button
+                    text={'Confirm Mint'}
+                    // textStyles={{ color: '#F5F5F5' }}
+                    size={'lg'}
+                    onClick={() => {
+                      setOpenModal(0)
+                    }}
+                  />
+                </div>
               </div>
-              <div style={{ width: '100%', marginBottom: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(false)
-                  }}
-                // onClick={handleClose}
-                />
+            </> :
+            <>
+              <TransparentInfoDiv
+                labelData={`Your ${type.toLocaleLowerCase()} amount`}
+                rightLabelUnit={'ARTH'}
+                rightLabelValue={'1500.00'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`Trading Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <TransparentInfoDiv
+                labelData={`Stability Fee`}
+                labelToolTipData={'testing'}
+                rightLabelUnit={'MAHA'}
+                rightLabelValue={'0.05'}
+              />
+
+
+              <Divider
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  margin: '15px 0px'
+                }}
+              // variant={'middle'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You will receive collateral`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'USDT'}
+                rightLabelValue={'1000.00'}
+              />
+
+              <TransparentInfoDiv
+                labelData={`You will receive share`}
+                // labelToolTipData={'testing'}
+                rightLabelUnit={'ARTHX'}
+                rightLabelValue={'1000.00'}
+              />
+
+              <div style={{
+                flexDirection: 'row',
+                display: 'flex',
+                width: '100%',
+                marginTop: '10%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 8
+              }}
+              >
+                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                  <Button
+                    variant={'transparent'}
+                    text="Cancel"
+                    size={'lg'}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
+                  />
+                </div>
+                <div style={{ width: '50%', marginLeft: 10 }}>
+                  <Button
+                    text={'Redeem ARTH'}
+                    // textStyles={{ color: '#F5F5F5' }}
+                    size={'lg'}
+                    onClick={() => {
+                      // setType('Redeem')
+                      setOpenModal(0)
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          </> :
-          <>
-            <InfoDiv>
-              <InfoTitle>
-                {`  ` + finalValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={arrowDown} />
-            </div>
-
-            <InfoDiv>
-              <InfoTitle>
-                Collateral : {collateralValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'USDT'} size={20} />
-                <div style={{ marginInline: 5 }}>USDT</div>
-              </CurrencyTag>
-            </InfoDiv>
-
-            <div style={{
-              width: '100%',
-              height: '32px',
-              borderRadius: '1.33px',
-              color: '#ffffff',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-              fontSize: 20
-            }}>
-              <img src={plus} style={{ color: 'white' }} />
-            </div>
-            <InfoDiv>
-              <InfoTitle>
-                Algorithmic : {algorithmicValue}
-              </InfoTitle>
-              <CurrencyTag>
-                <TokenSymbol symbol={'ARTH'} size={20} />
-                <div style={{ marginInline: 5 }}>ARTHX</div>
-              </CurrencyTag>
-            </InfoDiv>
-            <div style={{ marginTop: 10 }} />
-
-            <LabelDiv>
-              <LabelInfo>Price</LabelInfo>
-              <LabelInfoData>
-                1.00
-          <LabelInfoDataChip>
-                  USDT
-          </LabelInfoDataChip>
-          /
-          <LabelInfoDataChip>
-                  ARTH
-          </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-            <LabelDiv>
-              <LabelInfo>
-                Redemption Fee
-          <InfoIcon fontSize="small" style={{ transform: 'scale(0.6)' }} />
-              </LabelInfo>
-              <LabelInfoData>
-                1.00
-          <LabelInfoDataChip>
-                  USDT
-          </LabelInfoDataChip>
-              </LabelInfoData>
-            </LabelDiv>
-
-
-            <div style={{
-              flexDirection: 'column',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}
-            >
-              <div style={{ width: '100%', marginBottom: 10 }}>
-                <Button
-                  text={'Confirm Redeem'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(false)
-                  }}
-                />
-              </div>
-              <div style={{ width: '100%', marginBottom: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(false)
-                  }}
-                // onClick={handleClose}
-                />
-              </div>
-
-            </div>
-          </>
+            </>
         }
       </Modal>
       <Container size="lg">
@@ -862,4 +998,116 @@ font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.64);
 `;
+
+const CheckboxDiv = styled.div`
+background: rgba(255, 255, 255, 0.08);
+border-radius: 6px;
+padding: 10px 5px 5px 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: left;
+color: rgba(255, 255, 255, 0.88);
+margin: 15px 0px 0px 0px;
+`;
+
+const InfoSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.64);
+// margin: 10px 30px;
+text-align: center;
+`;
+
+const StakingDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0px 0px 0px;
+`;
+
+
+const InputLabel = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.64);
+  margin: 0px;
+`
+const LabelSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.88);
+text-align: left;
+`
+
+const LabelInfoDataChipText = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: rgba(255, 255, 255, 0.64);
+`;
+
+
+const LabelInfoText = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: right;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const TimeSpan = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const InternalSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+text-align: center;
+display: flex;
+align-items: center;
+color: #FFFFFF;
+min-width: 30%;
+height: fit-content;
+// padding: 10px
+`
+
+const InputNoDisplay = styled.span`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 10px;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 0px 8px;
+`
 export default Boardrooms;

@@ -75,7 +75,8 @@ interface props {
 
 const useStyles = makeStyles({
     halfScreen: {
-        height: '50%',
+        minHeight: '30%',
+        height: '40%',
         width: '100%',
         alignItems: 'flex-end',
         alignSelf: 'flex-end',
