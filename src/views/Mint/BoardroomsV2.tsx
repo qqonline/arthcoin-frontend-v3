@@ -340,7 +340,7 @@ const Boardrooms: React.FC = () => {
           width: '100%'
         }}
         modalContainerStyle={{
-          width: '400px',
+          width: '600px',
           alignItems: 'center',
           justifyContent: 'center'
         }}

@@ -30,7 +30,7 @@ const Boardrooms: React.FC = () => {
 
   const mintTabContent = () => {
     return (
-      <Grid container style={{marginTop: '24px'}}>
+      <Grid container style={{ marginTop: '24px' }}>
         <Grid item lg={6} sm={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
@@ -47,7 +47,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
@@ -59,7 +59,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -71,14 +71,14 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You will receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
               />
-              <div style={{marginTop: '24px'}}>
+              <div style={{ marginTop: '24px' }}>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Trading Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -89,24 +89,27 @@ const Boardrooms: React.FC = () => {
                     <TagChips>ARTH/ETH</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={true} onClick={() => setOpenModal(true)}/>
+                <Button text={'Confirm Mint'} size={'lg'} onClick={() => {
+                  setType('Mint')
+                  setOpenModal(true)
+                }} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} sm={12} style={{marginTop: '24px'}}>
+        <Grid item lg={5} sm={12} style={{ marginTop: '24px' }}>
           <RightTopCard>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$5.4</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -115,9 +118,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Pool Balance
                   </TextForInfoTitle>
@@ -125,9 +128,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>154.6M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Avaiable to Mint
                   </TextForInfoTitle>
@@ -135,9 +138,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -146,9 +149,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -162,7 +165,7 @@ const Boardrooms: React.FC = () => {
             <RightBottomCardTitle>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
-            <Grid container style={{marginTop: '16px'}}>
+            <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
                 <Button text={'Earn Rewards'} size={'sm'} />
               </Grid>
@@ -175,7 +178,7 @@ const Boardrooms: React.FC = () => {
 
   const redeemTabContent = () => {
     return (
-      <Grid container style={{marginTop: '24px'}}>
+      <Grid container style={{ marginTop: '24px' }}>
         <Grid item lg={6} sm={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
@@ -192,7 +195,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -204,7 +207,7 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
@@ -216,14 +219,14 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue= {'0.00'}
+                DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
               />
-              <div style={{marginTop: '24px'}}>
+              <div style={{ marginTop: '24px' }}>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Trading Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -235,7 +238,7 @@ const Boardrooms: React.FC = () => {
                   </OneLineInput>
                 </OneLineInput>
                 <OneLineInput>
-                  <div style={{flex: 1}}>
+                  <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Stability Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -246,24 +249,27 @@ const Boardrooms: React.FC = () => {
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(true)}/>
+                <Button text={'Redeem'} size={'lg'} onClick={() => {
+                  setType('Redeem')
+                  setOpenModal(true)
+                }} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} sm={12} style={{marginTop: '24px'}}>
+        <Grid item lg={5} sm={12} style={{ marginTop: '24px' }}>
           <RightTopCard>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$5.4</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -272,9 +278,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Pool Balance
                   </TextForInfoTitle>
@@ -282,9 +288,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>154.6M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Avaiable to Mint
                   </TextForInfoTitle>
@@ -292,9 +298,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -303,9 +309,9 @@ const Boardrooms: React.FC = () => {
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -319,7 +325,7 @@ const Boardrooms: React.FC = () => {
             <RightBottomCardTitle>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
-            <Grid container style={{marginTop: '16px'}}>
+            <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
                 <Button text={'Earn Rewards'} size={'sm'} />
               </Grid>
@@ -370,6 +376,7 @@ const Boardrooms: React.FC = () => {
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '24px 32px',
           width: '100%',
+          minWidth: '350px'
           // height: '100%'
         }}
         title={`Confirm ${type} ARTH`}
@@ -427,7 +434,7 @@ const Boardrooms: React.FC = () => {
                 <div style={{ marginInline: 5 }}>ARTH</div>
               </CurrencyTag>
             </InfoDiv>
-            <div style={{marginTop: 10}}/>
+            <div style={{ marginTop: 10 }} />
             <LabelDiv>
               <LabelInfo>Price</LabelInfo>
               <LabelInfoData>
@@ -468,6 +475,9 @@ const Boardrooms: React.FC = () => {
                   text={'Confirm Mint'}
                   // textStyles={{ color: '#F5F5F5' }}
                   size={'lg'}
+                  onClick={() => {
+                    setOpenModal(false)
+                  }}
                 />
               </div>
               <div style={{ width: '100%', marginBottom: 10 }}>
@@ -475,6 +485,9 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
+                  onClick={() => {
+                    setOpenModal(false)
+                  }}
                 // onClick={handleClose}
                 />
               </div>
@@ -534,7 +547,7 @@ const Boardrooms: React.FC = () => {
                 <div style={{ marginInline: 5 }}>ARTHX</div>
               </CurrencyTag>
             </InfoDiv>
-            <div style={{marginTop: 10}}/>
+            <div style={{ marginTop: 10 }} />
 
             <LabelDiv>
               <LabelInfo>Price</LabelInfo>
@@ -577,6 +590,9 @@ const Boardrooms: React.FC = () => {
                   text={'Confirm Redeem'}
                   // textStyles={{ color: '#F5F5F5' }}
                   size={'lg'}
+                  onClick={() => {
+                    setOpenModal(false)
+                  }}
                 />
               </div>
               <div style={{ width: '100%', marginBottom: 10 }}>
@@ -584,6 +600,9 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
+                  onClick={() => {
+                    setOpenModal(false)
+                  }}
                 // onClick={handleClose}
                 />
               </div>

@@ -3,6 +3,52 @@ import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../../../components/TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
+// @ts-ignore
+import Select, { components, provided, state } from "react-select";
+
+const options = [
+  {
+    value: "MAHA",
+    label: "MAHA",
+  },
+  {
+    value: "USDT",
+    label: "USDT",
+  }, {
+    value: "USDC",
+    label: "USDC",
+  }, {
+    value: "ETH",
+    label: "ETH",
+  }, {
+    value: "WBTC",
+    label: "WBTC",
+  }
+];
+
+
+const { Option } = components;
+const IconOption = (props: any) => (
+  <Option {...props}>
+    <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '5em' }}>
+      <img
+        src={require('../../../assets/svg/' + props.data?.label?.toLowerCase() + '.svg')}
+        style={{ width: 36 }}
+        alt={props.data.label}
+      />
+      <div>
+        {props.data.label}
+      </div>
+
+    </div>
+  </Option>
+);
+
+const Menu = (props: any) => (
+  <components.Menu style={{background: 'green'}} {...props}>
+    {props.children}
+  </components.Menu>
+);
 
 type props = {
   ILabelValue: string;
@@ -15,8 +61,8 @@ type props = {
 };
 
 const InputContainer: React.FC<props> = (props) => {
-  const {ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText} = props;
-  return(
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText } = props;
+  return (
     <IConatiner>
       <ILabelContainer>
         <ILabelLeft>
@@ -31,10 +77,22 @@ const InputContainer: React.FC<props> = (props) => {
         <InputBase
           defaultValue={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{padding: '8px 12px', color: '#FFFFFF65', flex: 1}}
+          style={{ padding: '8px 12px', color: '#FFFFFF65', flex: 1 }}
         />
         <IFieldRightContainer>
-          <IFieldRightContainerLogo>
+          <Select
+            width='500px'
+            style={{
+
+              background: 'red'
+            }}
+            options={options}
+            defaultValue={options[0]}
+            components={{ Option: IconOption, Menu }}
+            menuColor='red'
+
+          />
+          {/* <IFieldRightContainerLogo>
             <TokenSymbol symbol={LogoSymbol} size={25}/>
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>
@@ -42,7 +100,7 @@ const InputContainer: React.FC<props> = (props) => {
           </IFieldRightContainerText>
           {hasDropDown && <IFieldRightContainerDropDown>
             <KeyboardArrowDown fontSize='default' />
-          </IFieldRightContainerDropDown>}
+          </IFieldRightContainerDropDown>} */}
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>
