@@ -109,20 +109,20 @@ const InputContainer: React.FC<props> = (props) => {
 
           {modalOpen && hasDropDown && <CustomDropDown>
             <CustomDropDownLi>
-              <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+              <TokenSymbol symbol={'MAHA'} size={25} />
+              <CustomDropDownLiText>MAHA</CustomDropDownLiText>
+            </CustomDropDownLi>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={'USDC'} size={25} />
+              <CustomDropDownLiText>USDC</CustomDropDownLiText>
+            </CustomDropDownLi>
+            <CustomDropDownLi>
+              <TokenSymbol symbol={'ETH'} size={25} />
+            <CustomDropDownLiText>ETH</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
-            </CustomDropDownLi>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
-            </CustomDropDownLi>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={LogoSymbol} size={25} />
-              <CustomDropDownLiText>ARTH</CustomDropDownLiText>
+              <CustomDropDownLiText>WBTC</CustomDropDownLiText>
             </CustomDropDownLi>
           </CustomDropDown>}
         </IFieldRightContainer>
