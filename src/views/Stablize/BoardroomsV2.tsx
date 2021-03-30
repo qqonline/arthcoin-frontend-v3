@@ -184,7 +184,7 @@ const Boardrooms: React.FC = () => {
                     <TagChips>ARTH/ETH</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)}/>
+                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -786,69 +786,67 @@ const Boardrooms: React.FC = () => {
             </LeftTopCard>
           </Grid>
           <Grid item lg={4} >
-            <RightTopCard>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>$5.4</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      Collateral Ratio
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>86%</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      Pool Balance
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>154.6M</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      Avaiable to Mint
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      Stability Fee
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      Trading Fee
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-            </RightTopCard>
+            <LeftTopCard>
+              <LeftTopCardHeader>
+                <HeaderTitle>
+                  Recollatateralize
+                  <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                </HeaderTitle>
+                <HeaderSubtitle>
+                  <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
+                </HeaderSubtitle>
+              </LeftTopCardHeader>
+              <LeftTopCardContainer>
+                {/* <InputContainer
+                  ILabelValue={'Enter Redeem Amount'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={''}
+                  DefaultValue={'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={false}
+                  SymbolText={'ARTH'}
+                />
+                <PlusMinusArrow>
+                  <img src={arrowDown} />
+                </PlusMinusArrow>
+                <MinorInputContainer
+                  ILabelValue={'Enter Redeem Amount'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={''}
+                  DefaultValue={'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={true}
+                  SymbolText={'ARTH'}
+                />
+                <div style={{ marginTop: '24px' }}>
+                  <OneLineInputwomargin>
+                    <div style={{ flex: 1 }}>
+                      <TextWithIcon>
+                        Trading Fee
+                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      </TextWithIcon>
+                    </div>
+                    <OneLineInput>
+                      <BeforeChip>0.05</BeforeChip>
+                      <TagChips>USDT</TagChips>
+                    </OneLineInput>
+                  </OneLineInputwomargin>
+                  <OneLineInputwomargin>
+                    <div style={{ flex: 1 }}>
+                      <TextWithIcon>
+                        Stability Fee
+                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      </TextWithIcon>
+                    </div>
+                    <OneLineInput>
+                      <BeforeChip>0.05</BeforeChip>
+                      <TagChips>MAHA</TagChips>
+                    </OneLineInput>
+                  </OneLineInputwomargin>
+                  <Button text={'Buyback'} size={'lg'} onClick={() => setOpenModal(1)} />
+                </div> */}
+              </LeftTopCardContainer>
+            </LeftTopCard>
           </Grid>
           <Grid item lg={4}>
             <RightTopCard>
