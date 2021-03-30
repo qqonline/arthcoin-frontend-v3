@@ -203,13 +203,13 @@ const Boardrooms: React.FC = () => {
       />
       <Container size="lg">
         <Grid direction={'column'}>
-          <Grid item sm={12} style={{marginTop: '5px'}}>
+          <Grid item sm={12} style={{ marginTop: '5px' }}>
             {buyBackContainer()}
           </Grid>
-          <Grid item sm={12} style={{marginTop: '15px'}}>
+          <Grid item sm={12} style={{ marginTop: '15px' }}>
             {recollatateralizeConatiner()}
           </Grid>
-          <Grid item sm={12} style={{marginTop: '15px'}}>
+          <Grid item sm={12} style={{ marginTop: '15px' }}>
             <RightTopCard>
               <div style={{ marginBottom: '12px' }}>
                 <OneLineInput>
@@ -362,10 +362,10 @@ const OneLineInputwomargin = styled.div`
 
 
 const LeftTopCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   padding: 5px 0px;
-  height: 500px;
+  min-height: 500px;
 `
 
 const RightTopCard = styled.div`
