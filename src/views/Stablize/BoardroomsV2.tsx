@@ -720,8 +720,8 @@ const Boardrooms: React.FC = () => {
         subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       />
       <Container size="lg">
-        <Grid container>
-          <Grid item lg={4} style={{ paddingRight: '24px' }}>
+        <Grid container spacing={2}>
+          <Grid item lg={4} >
             <LeftTopCard>
               <LeftTopCardHeader>
                 <HeaderTitle>
@@ -775,7 +775,7 @@ const Boardrooms: React.FC = () => {
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>
-          <Grid item lg={4} style={{ paddingRight: '24px' }}>
+          <Grid item lg={4} >
             <RightTopCard>
               <div style={{ marginBottom: '12px' }}>
                 <OneLineInput>
