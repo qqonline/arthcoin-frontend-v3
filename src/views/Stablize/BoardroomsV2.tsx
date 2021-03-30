@@ -14,6 +14,7 @@ import TransparentInfoDiv from './components/InfoDiv';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import PageHeader from '../../components/PageHeader';
+import MinorInputContainer from './components/MinorInputContainer';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -745,6 +746,15 @@ const Boardrooms: React.FC = () => {
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
+                <MinorInputContainer
+                  ILabelValue={'Enter Redeem Amount'}
+                  IBalanceValue={'Balance 500.00'}
+                  ILabelInfoValue={''}
+                  DefaultValue={'0.00'}
+                  LogoSymbol={'MAHA'}
+                  hasDropDown={true}
+                  SymbolText={'ARTH'}
+                />
                 <div style={{ marginTop: '24px' }}>
                   <OneLineInputwomargin>
                     <div style={{ flex: 1 }}>
