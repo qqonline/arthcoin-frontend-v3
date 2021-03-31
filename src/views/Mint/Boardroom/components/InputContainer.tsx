@@ -33,7 +33,7 @@ const InputContainer: React.FC<props> = (props) => {
         <InputBase
           defaultValue={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{padding: '8px 12px', color: '#FFFFFF65', flex: 1}}
+          style={{padding: '8px 12px', color: '#FFFFFF', flex: 1}}
         />
         <IFieldRightContainer onClick={() => {
           if (hasDropDown) setModalOpen(!modalOpen)

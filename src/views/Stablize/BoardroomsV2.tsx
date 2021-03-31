@@ -122,7 +122,7 @@ const Boardrooms: React.FC = () => {
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
   const [buyback, setBuyback] = useState<boolean>(true);
-  const [recollatateralize, setRecollatateralize] = useState<boolean>(true);
+  const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -168,31 +168,33 @@ const Boardrooms: React.FC = () => {
             hasDropDown={true}
             SymbolText={'ARTH'}
           />
-          <div style={{ marginTop: '24px' }}>
-            <OneLineInputwomargin style={{ marginBottom: '-14px' }}>
-              <div style={{ flex: 1 }}>
-                <TextWithIcon>
-                  Trading Fee
-                  <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
-                </TextWithIcon>
-              </div>
-              <OneLineInput>
-                <BeforeChip>0.05</BeforeChip>
-                <TagChips>USDT</TagChips>
-              </OneLineInput>
-            </OneLineInputwomargin>
-            <OneLineInputwomargin>
-              <div style={{ flex: 1 }}>
-                <TextWithIcon>
-                  Stability Fee
-                  <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
-                </TextWithIcon>
-              </div>
-              <OneLineInput>
-                <BeforeChip>0.05</BeforeChip>
-                <TagChips>MAHA</TagChips>
-              </OneLineInput>
-            </OneLineInputwomargin>
+          <div>
+            <TcContainer>
+              <OneLineInputwomargin style={{marginBottom: '5px'}}>
+                <div style={{ flex: 1 }}>
+                  <TextWithIcon>
+                    Trading Fee
+                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                  </TextWithIcon>
+                </div>
+                <OneLineInputwomargin>
+                  <BeforeChip>0.05</BeforeChip>
+                  <TagChips>USDT</TagChips>
+                </OneLineInputwomargin>
+              </OneLineInputwomargin>
+              <OneLineInputwomargin>
+                <div style={{ flex: 1 }}>
+                  <TextWithIcon>
+                    Stability Fee
+                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                  </TextWithIcon>
+                </div>
+                <OneLineInputwomargin>
+                  <BeforeChip>0.05</BeforeChip>
+                  <TagChips>MAHA</TagChips>
+                </OneLineInputwomargin>
+              </OneLineInputwomargin>
+            </TcContainer>
             <Button text={'Buyback'} size={'lg'} onClick={() => {
               setBuyback(false)
               setRecollatateralize(true)
@@ -207,7 +209,7 @@ const Boardrooms: React.FC = () => {
         }
       </LeftTopCard>
     )
-  }
+  };
 
   const recollatateralizeConatiner = () => {
     return (
@@ -219,13 +221,13 @@ const Boardrooms: React.FC = () => {
           </HeaderTitle>
           {recollatateralize ?
             <HeaderSubtitle>
-              <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
-            </HeaderSubtitle> :
+              342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Amount Required</TextForInfoTitle>
+            </HeaderSubtitle>  :
             <HeaderSubtitle>
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
-        {!recollatateralize ?
+        {recollatateralize ?
           <LeftTopCardContainer>
             <InputContainer
               ILabelValue={'Enter collateral'}
@@ -256,19 +258,21 @@ const Boardrooms: React.FC = () => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </ReYouReceiveContain>
-            <div style={{ marginTop: '24px' }}>
-              <OneLineInputwomargin>
-                <div style={{ flex: 1 }}>
-                  <TextWithIcon>
-                    Bonus
-                  <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
-                  </TextWithIcon>
-                </div>
-                <OneLineInput>
-                  <BeforeChip>1.06</BeforeChip>
-                  <TagChips>ARTHX</TagChips>
-                </OneLineInput>
-              </OneLineInputwomargin>
+            <div>
+              <TcContainer>
+                <OneLineInputwomargin>
+                  <div style={{ flex: 1 }}>
+                    <TextWithIcon>
+                      Bonus
+                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInputwomargin>
+                    <BeforeChip>1.06</BeforeChip>
+                    <TagChips>ARTHX</TagChips>
+                  </OneLineInputwomargin>
+                </OneLineInputwomargin>
+              </TcContainer>
               <Button text={'Recollatateralize'} size={'lg'} onClick={() => {
                 setBuyback(true)
                 setRecollatateralize(false)
@@ -280,7 +284,7 @@ const Boardrooms: React.FC = () => {
         }
       </LeftTopCard>
     )
-  }
+  };
 
   return (
     <>
@@ -369,6 +373,11 @@ const Boardrooms: React.FC = () => {
     </>
   );
 };
+
+const TcContainer = styled.div`
+  margin-top: 18px;
+  margin-bottom: 18px;
+`
 
 const PrimaryText = styled.p`
   font-family: Inter;
