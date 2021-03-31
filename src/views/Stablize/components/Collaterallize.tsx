@@ -13,12 +13,12 @@ import { Boardrooms } from '../../../basis-cash/config';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import checkmark from '../../../assets/svg/checkmark.svg'
 
-interface IProps{
+interface IProps {
     subText: string;
 }
 const CollaterallizeCheckmark = (props: IProps) => {
     return (
-        <div style={{ height: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ height: 450, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
             <img
                 src={checkmark}
                 height={112}

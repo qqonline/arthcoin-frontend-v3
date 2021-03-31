@@ -26,15 +26,7 @@ import MinorInputContainer from './components/MinorInputContainer';
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
-  const basisCash = useBasisCash();
 
-  const [collateralValue, setCollateralValue] = useState<number>(98.12)
-  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
-  const [finalValue, setFinalValue] = useState<number>(100)
-  const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [checked, setChecked] = React.useState(false);
-  const [sliderValue, setSliderValue] = React.useState(1);
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(true);
 
@@ -113,7 +105,9 @@ const Boardrooms: React.FC = () => {
             </div>
           </LeftTopCardContainer>
           :
-          <CollaterallizeCheckmark subText={'Buyback is not needed for now'} />
+          <LeftTopCardContainer2>
+            <CollaterallizeCheckmark subText={'Buyback is not needed for now'} />
+          </LeftTopCardContainer2>
         }
       </LeftTopCard>
     )
@@ -366,6 +360,8 @@ const LeftTopCard = styled.div`
   border-radius: 12px;
   padding: 5px 0px;
   min-height: 500px;
+  align-items: center;
+  justify-content: center;
 `
 
 const RightTopCard = styled.div`
@@ -404,8 +400,19 @@ const LeftTopCardHeader = styled.div`
 `
 const LeftTopCardContainer = styled.div`
   padding: 12px 12px;
-
+  // display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
+const LeftTopCardContainer2 = styled.div`
+  padding: 12px 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
