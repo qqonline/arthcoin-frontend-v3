@@ -18,7 +18,7 @@ import MinorInputContainer from './components/MinorInputContainer';
 import checkmark from '../../assets/svg/checkmark.svg'
 import CollaterallizeCheckmark from './components/Collaterallize';
 
-const OrangeCheckBox = withStyles({
+const OrangeCheckBox = withStyles({ 
   root: {
     color: 'rgba(255, 255, 255, 0.32)',
     '&$checked': {

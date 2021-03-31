@@ -7,12 +7,18 @@ import InfoOutlined from '@material-ui/icons/InfoOutlined'
 import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
 import { Divider } from '@material-ui/core';
+import CountUp from 'react-countup';
 
 interface IProps {
   labelData: string;
   labelToolTipData?: string;
   rightLabelValue?: string;
   rightLabelUnit?: string;
+  countUp?: boolean;
+  cStart?: number;
+  cEnd?: number;
+  cDuration?: number;
+  cDelay?: number;
 }
 
 const TransparentInfoDiv = (props: IProps) => {
@@ -22,12 +28,29 @@ const TransparentInfoDiv = (props: IProps) => {
         {props.labelData}
         {props.labelToolTipData && <InfoIcon fontSize="small" style={{ marginLeft: 2, marginTop: -2, transform: 'scale(0.8)' }} />}
       </InfoSpan>
-      <LabelInfoData>
-        {props.rightLabelValue && <LabelInfoText>{props.rightLabelValue}</LabelInfoText>}
-        {props.rightLabelUnit && <LabelInfoDataChip>
-          <LabelInfoDataChipText>{props.rightLabelUnit}</LabelInfoDataChipText>
-        </LabelInfoDataChip>}
-      </LabelInfoData>
+
+        <LabelInfoData>
+          {props.rightLabelValue &&
+            <LabelInfoText>
+              {
+                props.countUp ?
+                  <CountUp
+                    start={props?.cStart}
+                    end={props.cEnd}
+                    delay={0}
+                    duration={props.cDuration}
+                    preserveValue={true}
+                    onUpdate={() => { console.log('test') }}
+                  />
+                  :
+                  props.rightLabelValue
+              }
+            </LabelInfoText>}
+          {props.rightLabelUnit &&
+            <LabelInfoDataChip>
+              <LabelInfoDataChipText>{props.rightLabelUnit}</LabelInfoDataChipText>
+            </LabelInfoDataChip>}
+        </LabelInfoData>
     </TransInfoDiv>
   )
 }

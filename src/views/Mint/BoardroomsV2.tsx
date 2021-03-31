@@ -105,13 +105,17 @@ const PrettoRestrictSlider = withStyles({
   },
 
 })(Slider);
-
+const DEFAULT_CALC = 50000;
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
-  const [collateralValue, setCollateralValue] = useState<number>(98.12)
-  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
+  const [mintColl, setCollateralValue] = useState<number>(0.00)
+  const [mintArthxShare, setArthxShare] = useState<number>(0.00)
+  const [balance, setBalance] = useState<number>(0)
+  const [mintReceive, setReceive] = useState<number>(0)
   const [finalValue, setFinalValue] = useState<number>(100)
+  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
+  const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
@@ -138,9 +142,9 @@ const Boardrooms: React.FC = () => {
             <LeftTopCardContainer>
               <InputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={mintColl.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
@@ -150,9 +154,9 @@ const Boardrooms: React.FC = () => {
               </PlusMinusArrow>
               <InputContainer
                 ILabelValue={'Enter ARTHX Share'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue={'0.00'}
+                DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -162,9 +166,9 @@ const Boardrooms: React.FC = () => {
               </PlusMinusArrow>
               <InputContainer
                 ILabelValue={'You will receive'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={mintReceive.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -184,7 +188,7 @@ const Boardrooms: React.FC = () => {
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
-                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)}/>
+                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -275,6 +279,7 @@ const Boardrooms: React.FC = () => {
   const handleSliderChange = (event: any, value: any) => {
     console.log('check trig', value)
     setSliderValue(value);
+    setDuration(DEFAULT_CALC - value * 1000)
   };
   const redeemTabContent = () => {
     return (
@@ -465,14 +470,14 @@ const Boardrooms: React.FC = () => {
               <TransparentInfoDiv
                 labelData={`Your collateral supply`}
                 rightLabelUnit={'USDT'}
-                rightLabelValue={'1500.00'}
+                rightLabelValue={mintColl.toString()}
               />
 
               <TransparentInfoDiv
                 labelData={`Your share supply`}
                 // labelToolTipData={'testing'}
                 rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
+                rightLabelValue={mintArthxShare.toString()}
               />
 
 
@@ -593,20 +598,27 @@ const Boardrooms: React.FC = () => {
                     // labelToolTipData={'testing'}
                     rightLabelUnit={'MAHA'}
                     rightLabelValue={'1000.00'}
+                    countUp
+                    cEnd={99999}
+                    cDuration={calcDuration}
+                    cStart={currentCounter}
+                    // updateCounter={(val: number)=>{
+                    //   setCurrentCounter(val)
+                    // }}
                   />
 
                   <TransparentInfoDiv
                     labelData={`ROR`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={''}
-                    rightLabelValue={'88%'}
+                    rightLabelValue={String(10 * sliderValue)+'%'}
                   />
 
                   <TransparentInfoDiv
                     labelData={`APY`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={'MAHA'}
-                    rightLabelValue={'66%'}
+                    rightLabelValue={String(10 * sliderValue)+'%'}
                   />
                 </StakingDiv>
               }
