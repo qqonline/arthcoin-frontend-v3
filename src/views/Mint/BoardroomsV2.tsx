@@ -30,7 +30,7 @@ const useSliderStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-      color: 'white'
+      // color: 'white'
     },
     margin: {
       height: theme.spacing(3),
@@ -49,7 +49,7 @@ function valuetext(value: number) {
 
 const PrettoRestrictSlider = withStyles({
   root: {
-    color: 'white',
+    // color: 'white',
     height: 15,
     width: '95%'
   },
@@ -68,10 +68,10 @@ const PrettoRestrictSlider = withStyles({
   active: {},
   valueLabel: {
     left: 'calc(-100% - 5px)',
-    color: '#FF7F57',
+    // color: '#FF7F57',
   },
   marked: {
-    // background: 'red'
+    color: 'red'
   },
   markLabel: {
     // color: 'green'
@@ -98,10 +98,10 @@ const PrettoRestrictSlider = withStyles({
     color: 'rgba(255, 255, 255, 0.88)',
   },
   mark: {
-    height: '3px',
-    width: '3px',
-    borderRadius: '50%',
-    color: '#F7653B'
+    // height: '3px',
+    // width: '3px',
+    // borderRadius: '50%',
+    color: 'transparent'
   },
 
 })(Slider);
@@ -182,7 +182,7 @@ const Boardrooms: React.FC = () => {
                     <TagChips>ARTH/ETH</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)}/>
+                <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -222,7 +222,7 @@ const Boardrooms: React.FC = () => {
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
-                    Avaiable to Mint
+                    Available to Mint
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
@@ -253,7 +253,7 @@ const Boardrooms: React.FC = () => {
           </RightTopCard>
           <RightBottomCard>
             <RightBottomCardTitle>
-              Farming pools are greate way to earn higher APY by staking your $ARTH
+              Farming pools are great way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
@@ -387,7 +387,7 @@ const Boardrooms: React.FC = () => {
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
-                    Avaiable to Mint
+                    Available to Mint
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
@@ -434,6 +434,8 @@ const Boardrooms: React.FC = () => {
   return (
     <>
       <Modal
+        closeButton
+        handleClose={() => setOpenModal(0)}
         open={openModal === 1}
         modalTitleStyle={{
           color: 'rgba(255, 255, 255, 0.88)',
@@ -533,7 +535,7 @@ const Boardrooms: React.FC = () => {
                       </div>
                       <InputNoDisplay>
                         <InternalSpan>
-                          1 year
+                          {sliderValue} month(s)
                         </InternalSpan>
                       </InputNoDisplay>
                     </OneLineInput>
@@ -567,12 +569,13 @@ const Boardrooms: React.FC = () => {
                         valueLabelFormat={valuetext}
                         // ValueLabelComponent={'span'}
                         // value={sliderValue}
-                        aria-labelledby="discrete-slider"
+                        onChange={handleSliderChange}
+                        aria-label="pretto slider"
                         step={1}
                         marks
                         min={1}
                         max={36}
-                        valueLabelDisplay="auto"
+                        valueLabelDisplay="off"
                       />
                       <div style={{ marginTop: -15, marginLeft: -15, marginBottom: 15, display: 'flex', justifyContent: 'space-between' }}>
                         <TimeSpan>1 month</TimeSpan>
@@ -624,7 +627,7 @@ const Boardrooms: React.FC = () => {
                 </div>
                 <div style={{ width: '50%', marginLeft: 10 }}>
                   <Button
-                    text={'Confirm Mint'}
+                    text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                     // textStyles={{ color: '#F5F5F5' }}
                     size={'lg'}
                     onClick={() => {

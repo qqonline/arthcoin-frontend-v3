@@ -103,8 +103,8 @@ const CustomizedDialogs: React.FC<props> = ({
     const [isCloseClicked, toggleCloseClicked] = React.useState(false);
 
     const handleCloseModal = () => {
-        setOpen(false);
-        toggleCloseClicked(true);
+        // setOpen(false);
+        // toggleCloseClicked(true);
         if (handleClose) {
             handleClose();
         }
