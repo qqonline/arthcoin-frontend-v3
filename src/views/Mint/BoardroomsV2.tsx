@@ -169,19 +169,21 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
               />
-              <div style={{ marginTop: '24px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextWithIcon>
-                      Trading Fee
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInput>
-                    <BeforeChip>1.08</BeforeChip>
-                    <TagChips>ARTH/ETH</TagChips>
-                  </OneLineInput>
-                </OneLineInput>
+              <div>
+                <TcContainer>
+                  <OneLineInputwomargin>
+                    <div style={{ flex: 1 }}>
+                      <TextWithIcon>
+                        Trading Fee
+                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      </TextWithIcon>
+                    </div>
+                    <OneLineInputwomargin>
+                      <BeforeChip>1.08</BeforeChip>
+                      <TagChips>ARTH/ETH</TagChips>
+                    </OneLineInputwomargin>
+                  </OneLineInputwomargin>
+                </TcContainer>
                 <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)}/>
               </div>
             </LeftTopCardContainer>
@@ -322,19 +324,21 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
               />
-              <div style={{ marginTop: '24px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextWithIcon>
-                      Trading Fee
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInput>
-                    <BeforeChip>0.05</BeforeChip>
-                    <TagChips>USDT</TagChips>
-                  </OneLineInput>
-                </OneLineInput>
+              <div>
+                <TcContainer>
+                  <OneLineInputwomargin>
+                    <div style={{ flex: 1 }}>
+                      <TextWithIcon>
+                        Trading Fee
+                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      </TextWithIcon>
+                    </div>
+                    <OneLineInputwomargin>
+                      <BeforeChip>0.05</BeforeChip>
+                      <TagChips>USDT</TagChips>
+                    </OneLineInputwomargin>
+                  </OneLineInputwomargin>
+                </TcContainer>
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextWithIcon>
@@ -721,6 +725,17 @@ const Boardrooms: React.FC = () => {
   );
 };
 
+const TcContainer = styled.div`
+  margin-top: 18px;
+  margin-bottom: 18px;
+`
+
+const OneLineInputwomargin = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+`
 
 const StyledTableHeaderTextCenter = styled.h6`
   font-size: 12px;
