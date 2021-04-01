@@ -45,7 +45,7 @@ const IconOption = (props: any) => (
 );
 
 const Menu = (props: any) => (
-  <components.Menu style={{background: 'green'}} {...props}>
+  <components.Menu style={{ background: 'green' }} {...props}>
     {props.children}
   </components.Menu>
 );
@@ -57,7 +57,8 @@ type props = {
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
-  SymbolText: string
+  SymbolText: string;
+  setText?: (val: string) => void;
 };
 
 const InputContainer: React.FC<props> = (props) => {
@@ -78,9 +79,14 @@ const InputContainer: React.FC<props> = (props) => {
       </ILabelContainer>
       <IFieldConatiner>
         <InputBase
-          defaultValue={DefaultValue}
+          placeholder={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
+          onChange={(event) => {
+            if (props?.setText) {
+              props.setText(event.target.value)
+            }
+          }}
         />
         <IFieldRightContainer onClick={() => {
           if (hasDropDown) setModalOpen(!modalOpen)
@@ -98,7 +104,7 @@ const InputContainer: React.FC<props> = (props) => {
 
           />*/}
           <IFieldRightContainerLogo>
-            <TokenSymbol symbol={LogoSymbol} size={25}/>
+            <TokenSymbol symbol={LogoSymbol} size={25} />
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>
             {SymbolText}
@@ -118,7 +124,7 @@ const InputContainer: React.FC<props> = (props) => {
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={'ETH'} size={25} />
-            <CustomDropDownLiText>ETH</CustomDropDownLiText>
+              <CustomDropDownLiText>ETH</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
               <TokenSymbol symbol={LogoSymbol} size={25} />

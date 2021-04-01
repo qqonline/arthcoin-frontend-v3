@@ -11,7 +11,8 @@ type props = {
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
-  SymbolText: string
+  SymbolText: string;
+  setText?: (val: string) => void;
 };
 
 const InputContainer: React.FC<props> = (props) => {
@@ -30,10 +31,15 @@ const InputContainer: React.FC<props> = (props) => {
         </ILabelRight>
       </ILabelContainer>
       <IFieldConatiner>
-        <InputBase
-          defaultValue={DefaultValue}
+      <InputBase
+          placeholder={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{padding: '8px 12px', color: '#FFFFFF', flex: 1}}
+          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
+          onChange={(event) => {
+            if (props?.setText) {
+              props.setText(event.target.value)
+            }
+          }}
         />
         <IFieldRightContainer onClick={() => {
           if (hasDropDown) setModalOpen(!modalOpen)

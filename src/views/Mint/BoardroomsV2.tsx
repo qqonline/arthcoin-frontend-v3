@@ -98,14 +98,14 @@ const PrettoRestrictSlider = withStyles({
     color: 'rgba(255, 255, 255, 0.88)',
   },
   mark: {
-    height: '3px',
-    width: '3px',
-    borderRadius: '50%',
-    color: '#F7653B'
+    // height: '3px',
+    // width: '3px',
+    // borderRadius: '50%',
+    color: 'transparent'
   },
 
 })(Slider);
-const DEFAULT_CALC = 50000;
+const DEFAULT_CALC = 1440;
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
@@ -113,6 +113,7 @@ const Boardrooms: React.FC = () => {
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
   const [balance, setBalance] = useState<number>(0)
   const [mintReceive, setReceive] = useState<number>(0)
+  const [redeemAmount, setRedeemAmount] = useState<number>(0)
   const [finalValue, setFinalValue] = useState<number>(100)
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
   const [currentCounter, setCurrentCounter] = useState<number>(1000)
@@ -148,6 +149,7 @@ const Boardrooms: React.FC = () => {
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
+                setText={(val: string)=> setCollateralValue(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -160,6 +162,7 @@ const Boardrooms: React.FC = () => {
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
+                setText={(val: string)=> setArthxShare(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -188,7 +191,7 @@ const Boardrooms: React.FC = () => {
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
-                <Button text={'Confirm Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
+                <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -279,7 +282,7 @@ const Boardrooms: React.FC = () => {
   const handleSliderChange = (event: any, value: any) => {
     console.log('check trig', value)
     setSliderValue(value);
-    setDuration(DEFAULT_CALC - value * 1000)
+    setDuration(DEFAULT_CALC - value * value)
   };
   const redeemTabContent = () => {
     return (
@@ -300,10 +303,11 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={redeemAmount.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
+                setText={(val: string)=> setRedeemAmount(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -597,9 +601,9 @@ const Boardrooms: React.FC = () => {
                     labelData={`Estimated earning`}
                     // labelToolTipData={'testing'}
                     rightLabelUnit={'MAHA'}
-                    rightLabelValue={'1000.00'}
+                    rightLabelValue={'100.0'}
                     countUp
-                    cEnd={99999}
+                    cEnd={9999}
                     cDuration={calcDuration}
                     cStart={currentCounter}
                     // updateCounter={(val: number)=>{
@@ -657,7 +661,7 @@ const Boardrooms: React.FC = () => {
               <TransparentInfoDiv
                 labelData={`Your ${type.toLocaleLowerCase()} amount`}
                 rightLabelUnit={'ARTH'}
-                rightLabelValue={'1500.00'}
+                rightLabelValue={redeemAmount.toString()}
               />
 
               <TransparentInfoDiv

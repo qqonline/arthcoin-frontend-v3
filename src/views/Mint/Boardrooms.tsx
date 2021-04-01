@@ -111,14 +111,20 @@ const PrettoRestrictSlider = withStyles({
   },
 
 })(Slider);
+const DEFAULT_CALC = 1440;
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
 
-  const [collateralValue, setCollateralValue] = useState<number>(98.12)
-  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
+  const [mintColl, setCollateralValue] = useState<number>(0.00)
+  const [mintArthxShare, setArthxShare] = useState<number>(0.00)
+  const [balance, setBalance] = useState<number>(0)
+  const [mintReceive, setReceive] = useState<number>(0)
+  const [redeemAmount, setRedeemAmount] = useState<number>(0)
   const [finalValue, setFinalValue] = useState<number>(100)
+  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
+  const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
@@ -132,7 +138,9 @@ const Boardrooms: React.FC = () => {
   const handleSliderChange = (event: any, value: any) => {
     console.log('check trig', value)
     setSliderValue(value);
+    setDuration(DEFAULT_CALC - value * value)
   };
+
   if (!basisCash) return <div />;
 
   const mintTabContent = () => {
@@ -152,33 +160,35 @@ const Boardrooms: React.FC = () => {
             <LeftTopCardContainer>
               <InputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={mintColl.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
+                setText={(val: string) => setCollateralValue(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
               </PlusMinusArrow>
               <InputContainer
                 ILabelValue={'Enter ARTHX Share'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
-                DefaultValue={'0.00'}
+                DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
+                setText={(val: string) => setArthxShare(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
               <InputContainer
                 ILabelValue={'You will receive'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={mintReceive.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -302,10 +312,11 @@ const Boardrooms: React.FC = () => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={redeemAmount.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
+                setText={(val: string) => setRedeemAmount(Number(val))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -496,14 +507,14 @@ const Boardrooms: React.FC = () => {
               <TransparentInfoDiv
                 labelData={`Your collateral supply`}
                 rightLabelUnit={'USDT'}
-                rightLabelValue={'1500.00'}
+                rightLabelValue={mintColl.toString()}
               />
 
               <TransparentInfoDiv
                 labelData={`Your share supply`}
                 // labelToolTipData={'testing'}
                 rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
+                rightLabelValue={mintArthxShare.toString()}
               />
 
 
@@ -587,22 +598,9 @@ const Boardrooms: React.FC = () => {
                   >
                     <div className={sliderClasses.root}>
                       <PrettoRestrictSlider
-                        // defaultValue={sliderValue ?? 1}
-                        // onChange={handleSliderChange}
-                        // // valueLabelFormat={valueLabelFormat}
-                        // getAriaValueText={valuetext}
-                        // aria-labelledby="discrete-slider-small-steps"
-                        // step={1}
-                        // min={1}
-                        // max={36}
-                        // valueLabelDisplay="on"
-                        // // marks={marks}
-                        // ValueLabelComponent={"strong"}
                         defaultValue={1}
                         getAriaValueText={valuetext}
                         valueLabelFormat={valuetext}
-                        // ValueLabelComponent={'span'}
-                        // value={sliderValue}
                         onChange={handleSliderChange}
                         aria-label="pretto slider"
                         step={1}
@@ -620,23 +618,26 @@ const Boardrooms: React.FC = () => {
                   </div>
                   <TransparentInfoDiv
                     labelData={`Estimated earning`}
-                    // labelToolTipData={'testing'}
                     rightLabelUnit={'MAHA'}
-                    rightLabelValue={'1000.00'}
+                    rightLabelValue={'100.0'}
+                    countUp
+                    cEnd={9999}
+                    cDuration={calcDuration}
+                    cStart={currentCounter}
                   />
 
                   <TransparentInfoDiv
                     labelData={`ROR`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={''}
-                    rightLabelValue={'88%'}
+                    rightLabelValue={String(10 * sliderValue) + '%'}
                   />
 
                   <TransparentInfoDiv
                     labelData={`APY`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={'MAHA'}
-                    rightLabelValue={'66%'}
+                    rightLabelValue={String(10 * sliderValue) + '%'}
                   />
                 </StakingDiv>
               }
@@ -675,7 +676,7 @@ const Boardrooms: React.FC = () => {
               <TransparentInfoDiv
                 labelData={`Your ${type.toLocaleLowerCase()} amount`}
                 rightLabelUnit={'ARTH'}
-                rightLabelValue={'1500.00'}
+                rightLabelValue={redeemAmount.toString()}
               />
 
               <TransparentInfoDiv
