@@ -645,7 +645,7 @@ const Boardrooms: React.FC = () => {
                 </StakingDiv>
               }
               <div style={{
-                flexDirection: 'row',
+                flexDirection: 'column-reverse',
                 display: 'flex',
                 width: '100%',
                 marginTop: '10%',
@@ -654,7 +654,7 @@ const Boardrooms: React.FC = () => {
                 marginBottom: 8
               }}
               >
-                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
                   <Button
                     variant={'transparent'}
                     text="Cancel"
@@ -663,7 +663,7 @@ const Boardrooms: React.FC = () => {
                   // onClick={handleClose}
                   />
                 </div>
-                <div style={{ width: '50%', marginLeft: 10 }}>
+                <div style={{ width: '100%', }}>
                   <Button
                     text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                     // textStyles={{ color: '#F5F5F5' }}
@@ -721,7 +721,7 @@ const Boardrooms: React.FC = () => {
               />
 
               <div style={{
-                flexDirection: 'row',
+                flexDirection: 'column-reverse',
                 display: 'flex',
                 width: '100%',
                 marginTop: '10%',
@@ -730,7 +730,7 @@ const Boardrooms: React.FC = () => {
                 marginBottom: 8
               }}
               >
-                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
                   <Button
                     variant={'transparent'}
                     text="Cancel"
@@ -739,7 +739,7 @@ const Boardrooms: React.FC = () => {
                   // onClick={handleClose}
                   />
                 </div>
-                <div style={{ width: '50%', marginLeft: 10 }}>
+                <div style={{ width: '100%' }}>
                   <Button
                     text={'Redeem ARTH'}
                     // textStyles={{ color: '#F5F5F5' }}

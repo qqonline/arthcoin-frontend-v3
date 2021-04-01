@@ -29,7 +29,15 @@ const Boardrooms: React.FC = () => {
 
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(true);
-
+  const [shareAmount, setShareAmount] = useState<number>(1500)
+  const [collateralAmount, setCollateralAmount] = useState<number>(1500)
+  const [receiveShare, setReceiveShare] = useState<number>(1500)
+  const [receiveMAHA, setReceiveMAHA] = useState<number>(1500)
+  const [receiveBonus, setReceiveBonus] = useState<number>(1500)
+  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
+  const [finalValue, setFinalValue] = useState<number>(100)
+  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback')
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
 
   const buyBackContainer = () => {
     return (
@@ -98,8 +106,10 @@ const Boardrooms: React.FC = () => {
               </OneLineInputwomargin>
               <div style={{ flex: 1, marginTop: 10 }}>
                 <Button text={'Buyback'} size={'lg'} onClick={() => {
-                  setBuyback(false)
-                  setRecollatateralize(true)
+                  // setBuyback(false)
+                  // setRecollatateralize(true)
+                  setType('Buyback')
+                  setOpenModal(1)
                 }} />
               </div>
             </div>
@@ -175,8 +185,10 @@ const Boardrooms: React.FC = () => {
               </OneLineInputwomargin>
               <div style={{ flex: 1, marginTop: 10 }}>
                 <Button text={'Recollatateralize'} size={'lg'} onClick={() => {
-                  setBuyback(true)
-                  setRecollatateralize(false)
+                  // setBuyback(true)
+                  // setRecollatateralize(false)
+                  setType('Recollateralize')
+                  setOpenModal(1)
                 }} />
               </div>
             </div>
@@ -190,6 +202,179 @@ const Boardrooms: React.FC = () => {
 
   return (
     <>
+      <Modal
+        mobile
+        closeButton
+        handleClose={() => setOpenModal(0)}
+        open={openModal === 1}
+        modalContainerStyle={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        modalTitleStyle={{
+          color: 'rgba(255, 255, 255, 0.88)',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%'
+        }}
+        modalBodyStyle={{
+          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+          padding: '24px 20px',
+          width: '100%',
+          minWidth: '350px',
+          height: '60%'
+        }}
+        title={`Confirm ${type} ARTH`}
+      >
+        {type === 'Buyback' ?
+          <>
+            <TransparentInfoDiv
+              labelData={`Your share amount`}
+              rightLabelUnit={'ARTH'}
+              rightLabelValue={shareAmount.toString()}
+            />
+
+            <TransparentInfoDiv
+              labelData={`Trading Fee`}
+              labelToolTipData={'testing'}
+              rightLabelUnit={'USDT'}
+              rightLabelValue={'0.05'}
+            />
+
+
+            <TransparentInfoDiv
+              labelData={`Stability Fee`}
+              labelToolTipData={'testing'}
+              rightLabelUnit={'MAHA'}
+              rightLabelValue={'0.05'}
+            />
+
+
+            <Divider
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                margin: '15px 0px'
+              }}
+            // variant={'middle'}
+            />
+
+            <TransparentInfoDiv
+              labelData={`You will receive collateral`}
+              // labelToolTipData={'testing'}
+              rightLabelUnit={'USDT'}
+              rightLabelValue={'1000.00'}
+            />
+
+            <div style={{
+              flexDirection: 'column-reverse',
+              display: 'flex',
+              width: '100%',
+              marginTop: '10%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8
+            }}
+            >
+              <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
+                <Button
+                  variant={'transparent'}
+                  text="Cancel"
+                  size={'lg'}
+                  onClick={() => setOpenModal(0)}
+                // onClick={handleClose}
+                />
+              </div>
+              <div style={{ width: '100%', }}>
+                <Button
+                  text={'Buyback'}
+                  // textStyles={{ color: '#F5F5F5' }}
+                  size={'lg'}
+                  onClick={() => {
+                    // setType('Redeem')
+                    setBuyback(false)
+                    setRecollatateralize(true)
+                    setOpenModal(0)
+                  }}
+                />
+              </div>
+            </div>
+          </>
+          :
+          <>
+            <TransparentInfoDiv
+              labelData={`Your collateral amount`}
+              rightLabelUnit={'ARTH'}
+              rightLabelValue={collateralAmount.toString()}
+            />
+
+            <Divider
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                margin: '15px 0px'
+              }}
+            // variant={'middle'}
+            />
+
+            <TransparentInfoDiv
+              labelData={`You will receive share`}
+              // labelToolTipData={'testing'}
+              rightLabelUnit={'ARTHX'}
+              rightLabelValue={receiveShare.toString()}
+            />
+
+            <TransparentInfoDiv
+              labelData={`You will receive MAHA`}
+              // labelToolTipData={'testing'}
+              rightLabelUnit={'MAHA'}
+              rightLabelValue={receiveMAHA.toString()}
+            />
+
+            <TransparentInfoDiv
+              labelData={`You will receive bonus`}
+              // labelToolTipData={'testing'}
+              rightLabelUnit={'ARTHX'}
+              rightLabelValue={receiveBonus.toString()}
+            />
+
+            <div style={{
+              flexDirection: 'column-reverse',
+              display: 'flex',
+              width: '100%',
+              marginTop: '10%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8
+            }}
+            >
+              <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
+                <Button
+                  variant={'transparent'}
+                  text="Cancel"
+                  size={'lg'}
+                  onClick={() => setOpenModal(0)}
+                // onClick={handleClose}
+                />
+              </div>
+              <div style={{ width: '100%', }}>
+                <Button
+                  text={'Recollateralize'}
+                  // textStyles={{ color: '#F5F5F5' }}
+                  size={'lg'}
+                  onClick={() => {
+                    // setType('Redeem')
+                    setBuyback(true)
+                    setRecollatateralize(false)
+                    setOpenModal(0)
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        }
+
+      </Modal>
       <PageHeader
 
         title="Stablize"
