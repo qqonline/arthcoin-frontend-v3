@@ -13,13 +13,19 @@ type props = {
   hasDropDown: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
+  inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 };
 
 const InputContainer: React.FC<props> = (props) => {
-  const {ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText} = props;
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-  return(
+  function allowOnlyNumberAndDecimals(e: string) {
+    let str = e
+    const regExp = /^(0|[1-9]\d*)(\.\d+)?$/
+    let status = regExp.test(str) ? true : false;
+    return status
+  }
+  return (
     <IConatiner>
       <ILabelContainer>
         <ILabelLeft>
@@ -31,12 +37,15 @@ const InputContainer: React.FC<props> = (props) => {
         </ILabelRight>
       </ILabelContainer>
       <IFieldConatiner>
-      <InputBase
-          placeholder={DefaultValue}
+        <InputBase
+          inputMode={props?.inputMode}
+          placeholder={'0'}
+          defaultValue={0}
+          value={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           onChange={(event) => {
-            if (props?.setText) {
+            if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value)
             }
           }}
@@ -45,7 +54,7 @@ const InputContainer: React.FC<props> = (props) => {
           if (hasDropDown) setModalOpen(!modalOpen)
         }}>
           <IFieldRightContainerLogo>
-            <TokenSymbol symbol={LogoSymbol} size={25}/>
+            <TokenSymbol symbol={LogoSymbol} size={25} />
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>
             {SymbolText}

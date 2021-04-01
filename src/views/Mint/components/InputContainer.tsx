@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { InputBase } from '@material-ui/core';
+import { InputBase, InputBaseComponentProps } from '@material-ui/core';
 import TokenSymbol from '../../../components/TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 // @ts-ignore
@@ -59,6 +59,7 @@ type props = {
   hasDropDown: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
+  inputMode?:  'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 };
 
 const InputContainer: React.FC<props> = (props) => {
@@ -79,11 +80,12 @@ const InputContainer: React.FC<props> = (props) => {
       </ILabelContainer>
       <IFieldConatiner>
         <InputBase
+          inputMode={props?.inputMode}
           placeholder={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           onChange={(event) => {
-            if (props?.setText) {
+            if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value)
             }
           }}

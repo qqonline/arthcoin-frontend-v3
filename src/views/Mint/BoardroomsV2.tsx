@@ -149,7 +149,8 @@ const Boardrooms: React.FC = () => {
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
-                setText={(val: string)=> setCollateralValue(Number(val))}
+                inputMode={'decimal'}
+                setText={(val: string)=> setCollateralValue(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -162,7 +163,8 @@ const Boardrooms: React.FC = () => {
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
-                setText={(val: string)=> setArthxShare(Number(val))}
+                inputMode={'decimal'}
+                setText={(val: string)=> setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -307,7 +309,8 @@ const Boardrooms: React.FC = () => {
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
-                setText={(val: string)=> setRedeemAmount(Number(val))}
+                inputMode={'decimal'}
+                setText={(val: string)=> setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
