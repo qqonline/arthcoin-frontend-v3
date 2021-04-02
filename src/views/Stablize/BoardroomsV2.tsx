@@ -236,7 +236,7 @@ const Boardrooms: React.FC = () => {
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
               LogoSymbol={'MAHA'}
-              hasDropDown={false}
+              hasDropDown={true}
               SymbolText={'ARTH'}
             />
             <PlusMinusArrow>
@@ -244,7 +244,7 @@ const Boardrooms: React.FC = () => {
             </PlusMinusArrow>
             <PrimaryText>You receive</PrimaryText>
             <ReYouReceiveContain>
-              <OneLineInputwomargin style={{ marginBottom: '2px' }}>
+              <OneLineInputwomargin style={{ marginBottom: '10px' }}>
                 <PrimaryText>ARTH Share</PrimaryText>
                 <OneLineInputwomargin>
                   <BeforeHardChip>1.08</BeforeHardChip>
@@ -274,12 +274,28 @@ const Boardrooms: React.FC = () => {
                   </OneLineInputwomargin>
                 </OneLineInputwomargin>
               </TcContainer>
-              <Button text={'Recollatateralize'} size={'lg'} onClick={() => {
-                // setBuyback(true)
-                // setRecollatateralize(false)
-                setType('Recollateralize')
-                setOpenModal(1)
-              }} />
+              <TcContainer>
+                <OneLineInputwomargin>
+                  <div style={{ flex: 1 }}>
+                    <TextWithIcon>
+                      {/* Bonus */}
+                      {/* <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} /> */}
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInputwomargin>
+                    {/* <BeforeChip>1.06</BeforeChip> */}
+                    {/* <TagChips>ARTHX</TagChips> */}
+                  </OneLineInputwomargin>
+                </OneLineInputwomargin>
+              </TcContainer>
+              <div style={{flex:1, marginTop: 15}}>
+                <Button text={'Recollatateralize'} size={'lg'} onClick={() => {
+                  // setBuyback(true)
+                  // setRecollatateralize(false)
+                  setType('Recollateralize')
+                  setOpenModal(1)
+                }} />
+              </div>
             </div>
           </LeftTopCardContainer>
           :
@@ -548,7 +564,7 @@ const Boardrooms: React.FC = () => {
 
 const TcContainer = styled.div`
   margin-top: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 `
 
 const PrimaryText = styled.p`
@@ -576,6 +592,7 @@ const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
+  margin: 10px 0px;
 `
 
 const HeaderTitle = styled.div`
@@ -605,6 +622,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
+  margin: 8px 0px 0px 0px
 `
 
 const HardChip = styled.div`
@@ -644,6 +662,7 @@ const LeftTopCard = styled.div`
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   height: 560px;
+  // padding: 32px;
 `
 
 const RightTopCard = styled.div`
@@ -719,7 +738,7 @@ const ActiveTab = styled.div`
 
 const PlusMinusArrow = styled.div`
   width: 100%;
-  height: 32px;
+  height: 20px;
   border-radius: 1.33px;
   color: #ffffff;
   align-items: center;

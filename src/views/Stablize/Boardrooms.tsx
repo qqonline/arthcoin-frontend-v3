@@ -147,7 +147,7 @@ const Boardrooms: React.FC = () => {
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
               LogoSymbol={'MAHA'}
-              hasDropDown={false}
+              hasDropDown={true}
               SymbolText={'ARTH'}
             />
             <PlusMinusArrow>
@@ -155,7 +155,7 @@ const Boardrooms: React.FC = () => {
             </PlusMinusArrow>
             <PrimaryText>You receive</PrimaryText>
             <ReYouReceiveContain>
-              <OneLineInputwomargin style={{ marginBottom: '2px' }}>
+              <OneLineInputwomargin style={{ marginBottom: '10px' }}>
                 <PrimaryText>ARTH Share</PrimaryText>
                 <OneLineInputwomargin>
                   <BeforeHardChip>1.08</BeforeHardChip>
@@ -476,6 +476,7 @@ const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
+  margin: 10px 0px;
 `
 
 const HeaderTitle = styled.div`
@@ -504,6 +505,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
+  margin: 8px 0px 0px 0px
 `
 
 

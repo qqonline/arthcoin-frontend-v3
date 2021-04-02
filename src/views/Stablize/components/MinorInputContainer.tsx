@@ -212,7 +212,7 @@ const IFieldRightContainerText = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-  margin-left: 5px;
+  margin-left: 9px;
 `
 
 const IFieldRightContainerDropDown = styled.span`
