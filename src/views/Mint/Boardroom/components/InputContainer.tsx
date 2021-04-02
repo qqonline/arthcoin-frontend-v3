@@ -7,7 +7,7 @@ import TokenSymbol from '../../../../components/TokenSymbol';
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
-  ILabelInfoValue: string;
+  ILabelInfoValue?: string;
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
@@ -147,6 +147,7 @@ const IFieldConatiner = styled.div`
   flex-direction: row;
   background: #151414;
   border-radius: 6px;
+  max-height: 44px;
 `
 
 const IFieldRightContainer = styled.div`

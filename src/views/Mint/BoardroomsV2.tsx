@@ -150,7 +150,7 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={true}
                 SymbolText={'USDT'}
                 inputMode={'decimal'}
-                setText={(val: string)=> setCollateralValue(Number(val.replace(/[^0-9]/g, '')))}
+                setText={(val: string) => setCollateralValue(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -158,13 +158,13 @@ const Boardrooms: React.FC = () => {
               <InputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
-                ILabelInfoValue={'How can i get it?'}
+                // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
-                setText={(val: string)=> setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
+                setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -310,7 +310,7 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string)=> setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
+                setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -318,7 +318,7 @@ const Boardrooms: React.FC = () => {
               <InputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
-                ILabelInfoValue={'How can i get it?'}
+                // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
@@ -337,20 +337,20 @@ const Boardrooms: React.FC = () => {
                 SymbolText={'ARTHX'}
               />
               <div>
-                <TcContainer>
-                  <OneLineInputwomargin>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>
-                        Trading Fee
+                {/* <TcContainer> */}
+                <OneLineInputwomargin>
+                  <div style={{ flex: 1, marginTop: 10 }}>
+                    <TextWithIcon>
+                      Trading Fee
                         <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                      </TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>0.05</BeforeChip>
-                      <TagChips>USDT</TagChips>
-                    </OneLineInputwomargin>
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInputwomargin>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>USDT</TagChips>
                   </OneLineInputwomargin>
-                </TcContainer>
+                </OneLineInputwomargin>
+                {/* </TcContainer> */}
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextWithIcon>
@@ -609,23 +609,23 @@ const Boardrooms: React.FC = () => {
                     cEnd={9999}
                     cDuration={calcDuration}
                     cStart={currentCounter}
-                    // updateCounter={(val: number)=>{
-                    //   setCurrentCounter(val)
-                    // }}
+                  // updateCounter={(val: number)=>{
+                  //   setCurrentCounter(val)
+                  // }}
                   />
 
                   <TransparentInfoDiv
                     labelData={`ROR`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={''}
-                    rightLabelValue={String(10 * sliderValue)+'%'}
+                    rightLabelValue={String(10 * sliderValue) + '%'}
                   />
 
                   <TransparentInfoDiv
                     labelData={`APY`}
                     // labelToolTipData={'testing'}
                     // rightLabelUnit={'MAHA'}
-                    rightLabelValue={String(10 * sliderValue)+'%'}
+                    rightLabelValue={String(10 * sliderValue) + '%'}
                   />
                 </StakingDiv>
               }
@@ -874,7 +874,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 15px 0px 0px 0px;
+  margin: 5px 0px 10px 0px;
 `
 
 const TextWithIcon = styled.div`

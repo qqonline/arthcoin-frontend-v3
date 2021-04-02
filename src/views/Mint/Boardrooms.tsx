@@ -175,7 +175,7 @@ const Boardrooms: React.FC = () => {
               <InputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
-                ILabelInfoValue={'How can i get it?'}
+                // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'MAHA'}
                 hasDropDown={false}
@@ -327,7 +327,7 @@ const Boardrooms: React.FC = () => {
               <InputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
-                ILabelInfoValue={'How can i get it?'}
+                // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={'0.00'}
                 LogoSymbol={'MAHA'}
                 hasDropDown={true}
@@ -358,8 +358,8 @@ const Boardrooms: React.FC = () => {
                     <TagChips>USDT</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
+                <OneLineInput style={{ marginTop: -5 }}>
+                  <div style={{ flex: 1,}}>
                     <TextWithIcon>
                       Stability Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -854,6 +854,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
+  margin: 0px 0px 10px 0px;
 `
 
 const TextWithIcon = styled.div`
