@@ -156,9 +156,9 @@ const Boardrooms: React.FC = () => {
             IBalanceValue={'Balance 500.00'}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            LogoSymbol={'ARTHX'}
             hasDropDown={false}
-            SymbolText={'ARTH'}
+            SymbolText={'ARTHX'}
           />
           <PlusMinusArrow>
             <img src={arrowDown} />
@@ -168,9 +168,9 @@ const Boardrooms: React.FC = () => {
             IBalanceValue={''}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            LogoSymbol={'USDT'}
             hasDropDown={true}
-            SymbolText={'ARTH'}
+            SymbolText={'USDT'}
           />
           <div>
             <TcContainer>
@@ -235,9 +235,9 @@ const Boardrooms: React.FC = () => {
               IBalanceValue={'Balance 500.00'}
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
-              LogoSymbol={'MAHA'}
+              LogoSymbol={'USDT'}
               hasDropDown={true}
-              SymbolText={'ARTH'}
+              SymbolText={'USDT'}
             />
             <PlusMinusArrow>
               <img src={arrowDown} />
@@ -252,10 +252,10 @@ const Boardrooms: React.FC = () => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
               <OneLineInputwomargin>
-                <PrimaryText>ARTH Share</PrimaryText>
+                <PrimaryText>MAHA Reward</PrimaryText>
                 <OneLineInputwomargin>
                   <BeforeHardChip>1.08</BeforeHardChip>
-                  <HardChip>ARTHX</HardChip>
+                  <HardChip>MAHA</HardChip>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </ReYouReceiveContain>

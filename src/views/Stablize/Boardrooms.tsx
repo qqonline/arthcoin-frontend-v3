@@ -28,7 +28,7 @@ const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
 
   const [buyback, setBuyback] = useState<boolean>(true);
-  const [recollatateralize, setRecollatateralize] = useState<boolean>(true);
+  const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
   const [shareAmount, setShareAmount] = useState<number>(1500)
   const [collateralAmount, setCollateralAmount] = useState<number>(1500)
   const [receiveShare, setReceiveShare] = useState<number>(1500)
@@ -63,9 +63,9 @@ const Boardrooms: React.FC = () => {
               IBalanceValue={'Balance 500.00'}
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
-              LogoSymbol={'MAHA'}
+              LogoSymbol={'ARTHX'}
               hasDropDown={false}
-              SymbolText={'ARTH'}
+              SymbolText={'ARTHX'}
             />
             <PlusMinusArrow>
               <img src={arrowDown} />
@@ -75,9 +75,9 @@ const Boardrooms: React.FC = () => {
               IBalanceValue={''}
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
-              LogoSymbol={'MAHA'}
+              LogoSymbol={'USDT'}
               hasDropDown={true}
-              SymbolText={'ARTH'}
+              SymbolText={'USDT'}
             />
             <div style={{ marginTop: '24px' }}>
               <OneLineInputwomargin style={{ marginBottom: '0px' }}>
@@ -146,9 +146,9 @@ const Boardrooms: React.FC = () => {
               IBalanceValue={'Balance 500.00'}
               ILabelInfoValue={''}
               DefaultValue={'0.00'}
-              LogoSymbol={'MAHA'}
+              LogoSymbol={'USDT'}
               hasDropDown={true}
-              SymbolText={'ARTH'}
+              SymbolText={'USDT'}
             />
             <PlusMinusArrow>
               <img src={arrowDown} />
@@ -163,10 +163,10 @@ const Boardrooms: React.FC = () => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
               <OneLineInputwomargin>
-                <PrimaryText>ARTH Share</PrimaryText>
+                <PrimaryText>MAHA Reward</PrimaryText>
                 <OneLineInputwomargin>
                   <BeforeHardChip>1.08</BeforeHardChip>
-                  <HardChip>ARTHX</HardChip>
+                  <HardChip>MAHA</HardChip>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </ReYouReceiveContain>
@@ -194,7 +194,9 @@ const Boardrooms: React.FC = () => {
             </div>
           </LeftTopCardContainer>
           :
-          <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
+          <LeftTopCardContainer2>
+            <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
+          </LeftTopCardContainer2>
         }
       </LeftTopCard>
     )

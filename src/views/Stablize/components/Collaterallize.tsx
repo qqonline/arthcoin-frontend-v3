@@ -25,7 +25,7 @@ const CollaterallizeCheckmark = (props: IProps) => {
             // style={{ alignSelf: 'center', justifyContent: 'center', display: 'flex' }}
             />
             <HeaderSubtitle
-                style={{ alignSelf: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', margin: '10px 0px' }}
+                style={{ alignSelf: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', margin: '10px 0px', textAlign: 'center' }}
             >
                 <TextForInfoTitle >{props.subText}</TextForInfoTitle>
                 <LearnMore>Learn More</LearnMore>
