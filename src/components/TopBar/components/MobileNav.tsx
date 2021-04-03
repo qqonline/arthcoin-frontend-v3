@@ -49,14 +49,14 @@ const MobileNav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/stats">
         Stats
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/staking">
-        Staking
+      <StyledLink exact activeClassName="active" to="/mint">
+        Mint/Redeem
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/bonds">
-        Bonds
+      <StyledLink exact activeClassName="active" to="/stabilize">
+        Stabilize
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/distribution">
-        Distribution
+      <StyledLink exact activeClassName="active" to="/farming">
+        Farming
       </StyledLink>
       {false && (
         <StyledButton>
