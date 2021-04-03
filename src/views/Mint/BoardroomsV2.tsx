@@ -13,6 +13,20 @@ import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeS
 import TransparentInfoDiv from './components/InfoDiv';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import Tooltip from '@material-ui/core/Tooltip';
+import theme from '../../theme';
+import HtmlTooltip from '../../components/HtmlTooltip';
+
+// const HtmlTooltip = withStyles((theme1: Theme) => ({
+//   tooltip: {
+//     backgroundColor: theme.color.dark[200],
+//     color: 'white',
+//     fontWeight: 300,
+//     fontSize: '13px',
+//     borderRadius: '6px',
+//     padding: '20px',
+//   },
+// }))(Tooltip);
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -106,6 +120,19 @@ const PrettoRestrictSlider = withStyles({
 
 })(Slider);
 const DEFAULT_CALC = 1440;
+
+// const HtmlTooltip = withStyles((theme) => ({
+//   tooltip: {
+//     backgroundColor: '#f5f5f9',
+//     color: 'rgba(0, 0, 0, 0.87)',
+//     maxWidth: 220,
+//     fontSize: theme.typography.pxToRem(12),
+//     border: '1px solid #dadde9',
+//   },
+// }))(Tooltip);
+
+
+
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
@@ -383,7 +410,14 @@ const Boardrooms: React.FC = () => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
+                        </React.Fragment>
+                      }>
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </HtmlTooltip>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
@@ -746,6 +780,11 @@ const Boardrooms: React.FC = () => {
     </>
   );
 };
+
+const ToolTipFont = styled.p`
+  padding: 0px;
+  margin: 0px;
+`
 
 const TcContainer = styled.div`
   margin-top: 18px;
