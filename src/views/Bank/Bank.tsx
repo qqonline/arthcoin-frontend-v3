@@ -10,7 +10,7 @@ import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
 import useRedeem from '../../hooks/useRedeem';
 import { Bank as BankEntity } from '../../basis-cash';
-import StakingIcon from '../Banks/staking.png';
+import StakingIcon from '../Farming/staking.png';
 
 const Bank: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0));
