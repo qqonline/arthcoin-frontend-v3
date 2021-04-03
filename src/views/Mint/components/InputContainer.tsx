@@ -129,7 +129,7 @@ const InputContainer: React.FC<props> = (props) => {
               <CustomDropDownLiText>ETH</CustomDropDownLiText>
             </CustomDropDownLi>
             <CustomDropDownLi>
-              <TokenSymbol symbol={LogoSymbol} size={25} />
+              <TokenSymbol symbol={'WBTC'} size={25} />
               <CustomDropDownLiText>WBTC</CustomDropDownLiText>
             </CustomDropDownLi>
           </CustomDropDown>}

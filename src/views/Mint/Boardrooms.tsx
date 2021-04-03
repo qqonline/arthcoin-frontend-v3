@@ -163,7 +163,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
                 DefaultValue={mintColl.toString()}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'USDT'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
                 inputMode={'decimal'}
@@ -177,7 +177,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={`Balance ${balance}`}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
@@ -191,7 +191,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
                 DefaultValue={mintReceive.toString()}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
               />
@@ -315,7 +315,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
                 DefaultValue={redeemAmount.toString()}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
@@ -329,7 +329,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={'0.00'}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'USDT'}
                 hasDropDown={true}
                 SymbolText={'USDT'}
               />
@@ -341,7 +341,7 @@ const Boardrooms: React.FC = () => {
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
                 DefaultValue={'0.00'}
-                LogoSymbol={'MAHA'}
+                LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
               />

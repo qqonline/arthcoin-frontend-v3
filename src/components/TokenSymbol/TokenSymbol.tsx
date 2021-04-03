@@ -11,10 +11,10 @@ import arthBLogo from '../../assets/img/ARTHB.png';
 import yCRVLogo from '../../assets/img/ycrv.png';
 import DAILogo from '../../assets/img/DAI.png';
 import sUSDLogo from '../../assets/img/sUSD.png';
-import USDCLogo from '../../assets/img/USDC.png';
-import USDTLogo from '../../assets/img/USDT.png';
+import USDCLogo from '../../assets/img/USDC.svg';
+import USDTLogo from '../../assets/img/USDT.svg';
 
-import ETH from '../../assets/img/ethereum.png';
+import ETH from '../../assets/img/ETH.svg';
 import MKR from '../../assets/img/MAKER.webp';
 import BAS from '../../assets/img/BAS.webp';
 import SHARE from '../../assets/img/SHARE.webp';
@@ -27,6 +27,8 @@ import YFI from '../../assets/img/YFI.webp';
 import DSD from '../../assets/img/DSD.webp';
 import MATIC from '../../assets/img/Matic.webp';
 import RSR from '../../assets/img/RSR.webp';
+import WBTC from '../../assets/img/WBTC.svg';
+import ARTHX from '../../assets/img/ARTHX.svg';
 
 const logosBySymbol: { [title: string]: string } = {
   ARTH_DAI: arthDaiLogo,
@@ -53,6 +55,8 @@ const logosBySymbol: { [title: string]: string } = {
   DSD: DSD,
   MATIC: MATIC,
   RSR: RSR,
+  WBTC: WBTC,
+  ARTHX: ARTHX,
 
   'ARTH_DAI-UNI-LPv2': bacLogo,
   'ARTH_DAI-MAHA-LPv1': bacLogo,
