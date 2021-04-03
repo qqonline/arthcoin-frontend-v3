@@ -8,7 +8,7 @@ import 'aos/dist/aos.css';
 import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
-import Banks from './views/Banks';
+import Farming from './views/Farming';
 import Home from './views/Home';
 import Bond from './views/Bond';
 import Stats from './views/Stats';
@@ -60,11 +60,8 @@ const App: React.FC = () => {
           <Route path="/stats">
             <Stats />
           </Route>
-          <Route path="/staking">
-            <Banks />
-          </Route>
           <Route path="/farming">
-            <Banks />
+            <Farming />
           </Route>
           <Route path="/stabilize">
             <Stablize />
@@ -72,7 +69,7 @@ const App: React.FC = () => {
           <Route path="/mint">
             <Mint />
           </Route>
-          <Redirect to="/staking" />
+          {/* <Redirect to="/staking" /> */}
         </Switch>
       </Router>
     </Providers>
