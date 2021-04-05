@@ -28,6 +28,7 @@ import './index.css';
 import './App.css';
 import Mint from './views/Mint';
 import Stablize from './views/Stablize';
+import Trade from './views/Trade';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -68,6 +69,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/mint">
             <Mint />
+          </Route>
+          <Route path="/trade">
+            <Trade />
           </Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>
