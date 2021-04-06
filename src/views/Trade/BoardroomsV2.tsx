@@ -151,6 +151,7 @@ const Boardrooms: React.FC = () => {
   const [checked, setChecked] = React.useState(false);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
+  const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -350,17 +351,17 @@ const Boardrooms: React.FC = () => {
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '24px 32px'
         }}
-        title={`Confirm ${type} ARTH`}
+        title={`Confirm ${type}`}
       >
         {
           type === "Buy" ?
             <>
               <TransparentInfoDiv
                 labelData={`Your collateral supply`}
-                rightLabelUnit={'USDT'}
+                rightLabelUnit={'ETH'}
                 rightLabelValue={mintColl.toString()}
               />
-
+{/*
               <TransparentInfoDiv
                 labelData={`Your share supply`}
                 // labelToolTipData={'testing'}
@@ -374,7 +375,7 @@ const Boardrooms: React.FC = () => {
                 labelToolTipData={'testing'}
                 rightLabelUnit={'USDT'}
                 rightLabelValue={'0.05'}
-              />
+              />*/}
 
 
               <Divider
@@ -398,118 +399,6 @@ const Boardrooms: React.FC = () => {
                 rightLabelUnit={'ARTHX'}
                 rightLabelValue={'1000.00'}
               /> */}
-              <CheckboxDiv>
-                <FormControlLabel
-                  value=""
-                  checked={checked}
-                  control={
-                    <OrangeCheckBox
-                      icon={<CheckBoxOutlineBlankIcon fontSize={'inherit'} />}
-                      checkedIcon={
-                        <CheckIcon
-                          style={{
-                            background: '#FF7F57',
-                            color: 'white',
-                            borderRadius: '6px'
-                          }}
-                          fontSize={'inherit'}
-                        />
-                      }
-                      size={'medium'}
-                    />
-                  }
-                  label="Deposit $ARTH in staking pool to earn reward APY"
-                  labelPlacement="end"
-                  onChange={handleCheck}
-                />
-              </CheckboxDiv>
-              {checked &&
-                <StakingDiv>
-                  <div>
-                    <OneLineInput>
-                      <div>
-                        <InputLabel>Select how long would you like to stake</InputLabel>
-                      </div>
-                      <InputNoDisplay>
-                        <InternalSpan>
-                          {sliderValue} month(s)
-                        </InternalSpan>
-                      </InputNoDisplay>
-                    </OneLineInput>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      color: 'white',
-                      flexDirection: 'row',
-                      width: '100%',
-                      paddingLeft: '16px',
-                      // marginTop: '10px'
-                    }}
-                  >
-                    <div className={sliderClasses.root}>
-                      <PrettoRestrictSlider
-                        // defaultValue={sliderValue ?? 1}
-                        // onChange={handleSliderChange}
-                        // // valueLabelFormat={valueLabelFormat}
-                        // getAriaValueText={valuetext}
-                        // aria-labelledby="discrete-slider-small-steps"
-                        // step={1}
-                        // min={1}
-                        // max={36}
-                        // valueLabelDisplay="on"
-                        // // marks={marks}
-                        // ValueLabelComponent={"strong"}
-                        defaultValue={1}
-                        getAriaValueText={valuetext}
-                        valueLabelFormat={valuetext}
-                        // ValueLabelComponent={'span'}
-                        // value={sliderValue}
-                        onChange={handleSliderChange}
-                        aria-label="pretto slider"
-                        step={1}
-                        marks
-                        min={1}
-                        max={36}
-                        valueLabelDisplay="off"
-                      />
-                      <div style={{ marginTop: -15, marginLeft: -15, marginBottom: 15, display: 'flex', justifyContent: 'space-between' }}>
-                        <TimeSpan>1 month</TimeSpan>
-                        <TimeSpan>3 Years</TimeSpan>
-                      </div>
-                    </div>
-
-                  </div>
-                  <TransparentInfoDiv
-                    labelData={`Estimated earning`}
-                    // labelToolTipData={'testing'}
-                    rightLabelUnit={'MAHA'}
-                    rightLabelValue={'100.0'}
-                    countUp
-                    cEnd={9999}
-                    cDuration={calcDuration}
-                    cStart={currentCounter}
-                  // updateCounter={(val: number)=>{
-                  //   setCurrentCounter(val)
-                  // }}
-                  />
-
-                  <TransparentInfoDiv
-                    labelData={`ROR`}
-                    // labelToolTipData={'testing'}
-                    // rightLabelUnit={''}
-                    rightLabelValue={String(10 * sliderValue) + '%'}
-                  />
-
-                  <TransparentInfoDiv
-                    labelData={`APY`}
-                    // labelToolTipData={'testing'}
-                    // rightLabelUnit={'MAHA'}
-                    rightLabelValue={String(10 * sliderValue) + '%'}
-                  />
-                </StakingDiv>
-              }
               <div style={{
                 flexDirection: 'row',
                 display: 'flex',
@@ -531,11 +420,12 @@ const Boardrooms: React.FC = () => {
                 </div>
                 <div style={{ width: '50%', marginLeft: 10 }}>
                   <Button
-                    text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
+                    text={'Confirm Buy'}
                     // textStyles={{ color: '#F5F5F5' }}
                     size={'lg'}
                     onClick={() => {
-                      setOpenModal(2)
+                      setOpenModal(0)
+                      setType('Sell')
                     }}
                   />
                 </div>
@@ -543,25 +433,24 @@ const Boardrooms: React.FC = () => {
             </> :
             <>
               <TransparentInfoDiv
-                labelData={`Your ${type.toLocaleLowerCase()} amount`}
+                labelData={`Your amount`}
                 rightLabelUnit={'ARTH'}
-                rightLabelValue={redeemAmount.toString()}
+                rightLabelValue={'1500.00'}
               />
 
               <TransparentInfoDiv
                 labelData={`Trading Fee`}
-                labelToolTipData={'testing'}
-                rightLabelUnit={'USDT'}
-                rightLabelValue={'0.05'}
+                rightLabelUnit={'5.87'}
+                rightLabelValue={'ARTH'}
               />
-
+{/*
 
               <TransparentInfoDiv
                 labelData={`Stability Fee`}
                 labelToolTipData={'testing'}
                 rightLabelUnit={'MAHA'}
                 rightLabelValue={'0.05'}
-              />
+              />*/}
 
 
               <Divider
@@ -573,18 +462,18 @@ const Boardrooms: React.FC = () => {
               />
 
               <TransparentInfoDiv
-                labelData={`You will receive collateral`}
+                labelData={`You will receive`}
                 // labelToolTipData={'testing'}
-                rightLabelUnit={'USDT'}
-                rightLabelValue={'1000.00'}
+                rightLabelUnit={'ETH'}
+                rightLabelValue={'5.00'}
               />
 
-              <TransparentInfoDiv
+              {/*<TransparentInfoDiv
                 labelData={`You will receive share`}
                 // labelToolTipData={'testing'}
                 rightLabelUnit={'ARTHX'}
                 rightLabelValue={'1000.00'}
-              />
+              />*/}
 
               <div style={{
                 flexDirection: 'row',
@@ -607,11 +496,10 @@ const Boardrooms: React.FC = () => {
                 </div>
                 <div style={{ width: '50%', marginLeft: 10 }}>
                   <Button
-                    text={'Redeem ARTH'}
+                    text={'Confirm Sell'}
                     // textStyles={{ color: '#F5F5F5' }}
                     size={'lg'}
                     onClick={() => {
-                      // setType('Redeem')
                       setOpenModal(0)
                     }}
                   />
@@ -621,12 +509,24 @@ const Boardrooms: React.FC = () => {
         }
       </Modal>
       <Container size="lg">
+        <div>
+          <PageHeading>
+            TRADE
+          </PageHeading>
+          <PageSubHeading>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </PageSubHeading>
+        </div>
         <Grid container>
           <Grid item lg={3}></Grid>
           <Grid item lg={6}>
             <RadioSelectionConatiner>
-              <RadioSubConatiner>
-                <ActiveRadio/>
+              <RadioSubConatiner onClick={() => {
+                if(selectedSwap === 'Sushiswap'){
+                  setSelectedSwap('Uniswap')
+                }
+              }}>
+                {selectedSwap === 'Uniswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
                     <img src={uniswapLogo} style={{marginTop: '-6px'}}/>
@@ -634,7 +534,12 @@ const Boardrooms: React.FC = () => {
                   Uniswap
                 </RadioText>
               </RadioSubConatiner>
-              <RadioSubConatiner>
+              <RadioSubConatiner onClick={() => {
+                if(selectedSwap === 'Uniswap'){
+                  setSelectedSwap('Sushiswap')
+                }
+              }}>
+                {selectedSwap === 'Sushiswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
                     <img src={shushiswap}/>
@@ -651,8 +556,32 @@ const Boardrooms: React.FC = () => {
       </Container>
     </>
   );
-};
+}
 
+const PageHeading = styled.p`
+  font-family: Syne;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: 40px;
+`
+
+const PageSubHeading = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.64);
+  text-align: center;
+  margin-bottom: 40px;
+
+`
 
 const RadioSelectionConatiner = styled.div`
   background: #2A2827;
