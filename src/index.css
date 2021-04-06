@@ -57,6 +57,10 @@ code {
   min-width: 100px !important;
 }
 
+.jFiaaq{
+  padding: 0px 12px !important;
+}
+
 .chakra-home {
   /* animation: chakra-animate 240s infinite linear; */
   background-image: url('./assets/svg/BG.svg');
