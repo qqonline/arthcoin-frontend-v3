@@ -18,6 +18,7 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import Tooltip from '@material-ui/core/Tooltip';
 import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
+import CustomInputContainer from '../../components/CustomInputContainer';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -152,9 +153,19 @@ const Boardrooms: React.FC = () => {
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
+  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH')
+  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
+  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  let arr: string[];
+  useEffect(() => {
+    arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
+    setDropDownValues(arr);
+  }, [selectedAmountCoin])
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
+
+
 
   const buyTabContent = () => {
     return (
@@ -172,14 +183,18 @@ const Boardrooms: React.FC = () => {
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'Enter Amount'}
                 IBalanceValue={`Balance ${balance}`}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
-                LogoSymbol={'ETH'}
+                LogoSymbol={selectedAmountCoin}
                 hasDropDown={true}
-                SymbolText={'ETH'}
+                dropDownValues={dropDownValues}
+                ondropDownValueChange={(data) => {
+                  setSelectedAmountCoin(data);
+                }}
+                SymbolText={selectedAmountCoin}
                 inputMode={'decimal'}
                 setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
                 showMaxTag={true}
@@ -187,7 +202,7 @@ const Boardrooms: React.FC = () => {
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
@@ -257,7 +272,7 @@ const Boardrooms: React.FC = () => {
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'Enter Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
@@ -272,14 +287,18 @@ const Boardrooms: React.FC = () => {
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={redeemAmount.toString()}
-                LogoSymbol={'ETH'}
+                LogoSymbol={selectedAmountCoin}
+                dropDownValues={dropDownValues}
+                ondropDownValueChange={(data) => {
+                  setSelectedAmountCoin(data);
+                }}
                 hasDropDown={true}
-                SymbolText={'ETH'}
+                SymbolText={selectedAmountCoin}
               />
               <div>
                 <TcContainer>

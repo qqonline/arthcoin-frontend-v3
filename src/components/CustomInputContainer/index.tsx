@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { InputBase, InputBaseComponentProps } from '@material-ui/core';
-import TokenSymbol from '../../../components/TokenSymbol';
+import { InputBase } from '@material-ui/core';
+import TokenSymbol from '../TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 // @ts-ignore
 import Select, { components, provided, state } from "react-select";
-import CustomDropDown from '../../../components/CustomDropDown';
+import CustomDropDown from '../CustomDropDown';
 
 type props = {
   ILabelValue: string;
@@ -22,7 +22,7 @@ type props = {
   ondropDownValueChange?: (data: string) => void;
 };
 
-const InputContainer: React.FC<props> = (props) => {
+const CustomInputContainer: React.FC<props> = (props) => {
   const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, showMaxTag, dropDownValues, ondropDownValueChange } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -78,7 +78,7 @@ const InputContainer: React.FC<props> = (props) => {
             <KeyboardArrowDown fontSize='default' />
           </IFieldRightContainerDropDown>}
 
-          {modalOpen && hasDropDown &&
+          {modalOpen && hasDropDown && ondropDownValueChange &&
           <CustomDropDown
             dropDownValues={dropDownValues}
             ondropDownValueChange={ondropDownValueChange}
@@ -89,7 +89,7 @@ const InputContainer: React.FC<props> = (props) => {
   )
 }
 
-export default InputContainer
+export default CustomInputContainer
 
 const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
