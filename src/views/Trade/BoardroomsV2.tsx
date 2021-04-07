@@ -197,7 +197,7 @@ const Boardrooms: React.FC = () => {
                 SymbolText={selectedAmountCoin}
                 inputMode={'decimal'}
                 setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
-                showMaxTag={true}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -281,7 +281,7 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                showMaxTag={true}
+                tagText={'MAX'}
                 setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
