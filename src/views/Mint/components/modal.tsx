@@ -58,6 +58,13 @@ const DialogContent = withStyles((theme: Theme) => ({
     dividers: {
         borderTop: `1px solid rgba(255, 255, 255, 0.08)`,
     },
+    '@media (max-width: 600px)': {
+      root: {
+        width: '100%',
+        minWidth: '350px',
+        maxHeight: '60%',
+      },
+    },
 }))(MuiDialogContent);
 
 interface props {
@@ -75,13 +82,21 @@ interface props {
 
 const useStyles = makeStyles({
     halfScreen: {
-        minHeight: '40%',
-        height: '55%',
+
+    },
+    customPaper: {
+
+    },
+    '@media (max-width: 600px)': {
+      halfScreen: {
+        height: 'auto',
+        maxHeight: '70%',
         width: '100%',
+      },
+      customPaper: {
         alignItems: 'flex-end',
-        alignSelf: 'flex-end',
-        justifyContent: 'flex-end'
-    }
+      },
+    },
 });
 
 const CustomizedDialogs: React.FC<props> = ({
@@ -125,7 +140,8 @@ const CustomizedDialogs: React.FC<props> = ({
                 onBackdropClick={handleCloseModal}
                 classes={{
                     paper: 'custom-dialog-class',
-                    paperFullScreen: mobile && modalStyles.halfScreen
+                    paperFullScreen: modalStyles.halfScreen,
+                    scrollPaper: modalStyles.customPaper,
                 }}
             >
                 {/* <div
