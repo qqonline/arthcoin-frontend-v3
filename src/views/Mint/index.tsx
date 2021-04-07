@@ -16,8 +16,9 @@ const Mint: React.FC = () => {
     <Switch>
       <Page>
         <Route exact path={path}>
-          {isDesktopOrLaptop && <BoardroomsDesktop />}
-          {isTabletOrMobile && <BoardroomsMobile />}
+          <BoardroomsDesktop />
+          {/*{isDesktopOrLaptop && <BoardroomsDesktop />}*/}
+          {/*{isTabletOrMobile && <BoardroomsMobile />}*/}
         </Route>
         <Route path={`${path}/v1/:bankId`}>
           <Boardroom />

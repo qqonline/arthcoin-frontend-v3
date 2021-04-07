@@ -19,6 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -350,27 +351,13 @@ const Boardrooms: React.FC = () => {
 
   return (
     <>
-      <Modal
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          // width: '100%'
-        }}
-        modalContainerStyle={{
-          width: '600px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px',
-
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type}`}
       >
         {
@@ -527,7 +514,7 @@ const Boardrooms: React.FC = () => {
               </div>
             </>
         }
-      </Modal>
+      </CustomModal>
       <Container size="lg">
         <div>
           <PageHeading>
