@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -341,8 +342,9 @@ const Boardrooms: React.FC = () => {
   };
   const redeemTabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={6} style={{ paddingRight: '24px' }}>
+      <Grid container style={{ marginTop: '24px' }} spacing={2}>
+        <Grid item lg={1}/>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType('Mint')}>
@@ -425,7 +427,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{ paddingRight: '24px' }}>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <RightTopCard>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
@@ -507,33 +509,20 @@ const Boardrooms: React.FC = () => {
             </Grid>
           </RightBottomCard>
         </Grid>
+        <Grid item lg={1}/>
       </Grid>
     )
   };
 
   return (
     <>
-      <Modal
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          // width: '100%'
-        }}
-        modalContainerStyle={{
-          width: '600px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px',
-
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type} ARTH`}
       >
         {
@@ -803,7 +792,7 @@ const Boardrooms: React.FC = () => {
               </div>
             </>
         }
-      </Modal>
+      </CustomModal>
       <Container size="lg">
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
