@@ -16,6 +16,8 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import Tooltip from '@material-ui/core/Tooltip';
 import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
+import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -134,7 +136,7 @@ const DEFAULT_CALC = 1440;
 
 
 const Boardrooms: React.FC = () => {
-  useEffect(() => window.scrollTo(0, 0));
+  useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0.00)
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
@@ -150,13 +152,33 @@ const Boardrooms: React.FC = () => {
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
 
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('USDT')
+  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
+  const defaultCollateralDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  let arr: string[];
+  useEffect(() => {
+    arr = defaultCollateralDropdownValues.filter(e => e !== selectedCollateralCoin);
+    setCollateralDropDownValues(arr);
+  }, [selectedCollateralCoin])
+
+  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('USDT')
+  const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>([]);
+  const defaultReceiveRedeemDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  let temp: string[];
+  useEffect(() => {
+    temp = defaultReceiveRedeemDropdownValues.filter(e => e !== selectedReceiveRedeemCoin);
+    setReceiveRedeemDropDownValues(temp);
+  }, [selectedReceiveRedeemCoin])
+
+
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
   const mintTabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={6} style={{ paddingRight: '24px' }}>
+      <Grid container style={{ marginTop: '24px' }} spacing={2}>
+        <Grid item lg={1}/>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <ActiveTab></ActiveTab>
@@ -168,21 +190,25 @@ const Boardrooms: React.FC = () => {
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
                 DefaultValue={mintColl.toString()}
-                LogoSymbol={'USDT'}
+                LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
-                SymbolText={'USDT'}
+                dropDownValues={CollateraldropDownValues}
+                ondropDownValueChange={(data: string) => {
+                  setSelectedCollateralCoin(data);
+                }}
+                SymbolText={selectedCollateralCoin}
                 inputMode={'decimal'}
                 setText={(val: string) => setCollateralValue(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
                 // ILabelInfoValue={'How can i get it?'}
@@ -196,7 +222,7 @@ const Boardrooms: React.FC = () => {
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
@@ -225,7 +251,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{ paddingRight: '24px' }}>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <RightTopCard>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
@@ -300,6 +326,7 @@ const Boardrooms: React.FC = () => {
             </Grid>
           </RightBottomCard>
         </Grid>
+        <Grid item lg={1}/>
       </Grid>
     )
   };
@@ -315,8 +342,9 @@ const Boardrooms: React.FC = () => {
   };
   const redeemTabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={6} style={{ paddingRight: '24px' }}>
+      <Grid container style={{ marginTop: '24px' }} spacing={2}>
+        <Grid item lg={1}/>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType('Mint')}>
@@ -328,7 +356,7 @@ const Boardrooms: React.FC = () => {
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
@@ -342,19 +370,23 @@ const Boardrooms: React.FC = () => {
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={'0.00'}
-                LogoSymbol={'USDT'}
+                LogoSymbol={selectedReceiveRedeemCoin}
                 hasDropDown={true}
-                SymbolText={'USDT'}
+                dropDownValues={ReceiveRedeemdropDownValues}
+                ondropDownValueChange={(data: string) => {
+                  setSelectedReceiveRedeemCoin(data);
+                }}
+                SymbolText={selectedReceiveRedeemCoin}
               />
               <PlusMinusArrow>
                 <img src={plus} />
               </PlusMinusArrow>
-              <InputContainer
+              <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
@@ -395,7 +427,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} style={{ paddingRight: '24px' }}>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
           <RightTopCard>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
@@ -477,32 +509,20 @@ const Boardrooms: React.FC = () => {
             </Grid>
           </RightBottomCard>
         </Grid>
+        <Grid item lg={1}/>
       </Grid>
     )
   };
 
   return (
     <>
-      <Modal
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%'
-        }}
-        modalContainerStyle={{
-          width: '600px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px'
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type} ARTH`}
       >
         {
@@ -772,7 +792,7 @@ const Boardrooms: React.FC = () => {
               </div>
             </>
         }
-      </Modal>
+      </CustomModal>
       <Container size="lg">
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
@@ -846,7 +866,7 @@ const RightBottomCardTitle = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: rgba(255, 255, 255, 0.88);
-
+  
 `
 
 const LeftTopCardHeader = styled.div`
@@ -855,9 +875,16 @@ const LeftTopCardHeader = styled.div`
   padding-right: 32px;
   padding-left: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  @media (max-width: 600px) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
+  @media (max-width: 600px) {
+    padding: 12px 16px;
+  }
 
 `
 const TabContainer = styled.div`
