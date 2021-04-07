@@ -23,6 +23,7 @@ import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, Linea
 import CollaterallizeCheckmark from './components/Collaterallize';
 import MinorInputContainer from './components/MinorInputContainer';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
+import CustomInputContainer from '../../components/CustomInputContainer';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -40,19 +41,29 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 const Boardrooms: React.FC = () => {
-  useEffect(() => window.scrollTo(0, 0));
 
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
+  const [collateralAmount, setCollateralAmount] = useState<number>(0)
+  const [redeemAmount, setRedeemAmount] = useState<number>(0)
   const [shareAmount, setShareAmount] = useState<number>(1500)
-  const [collateralAmount, setCollateralAmount] = useState<number>(1500)
   const [receiveShare, setReceiveShare] = useState<number>(1500)
   const [receiveMAHA, setReceiveMAHA] = useState<number>(1500)
+  const [balance, setBalance] = useState<number>(0)
   const [receiveBonus, setReceiveBonus] = useState<number>(1500)
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback')
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH')
+  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
+  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  let arr: string[];
+  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+    arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
+    setDropDownValues(arr);
+  }, [selectedAmountCoin])
 
   const buyBackContainer = () => {
     if (buyback) return (
@@ -70,14 +81,20 @@ const Boardrooms: React.FC = () => {
             </HeaderSubtitle>}
         </LeftTopCardHeader>
         <LeftTopCardContainer>
-          <InputContainer
+          <CustomInputContainer
             ILabelValue={'Enter Redeem Amount'}
-            IBalanceValue={'Balance 500.00'}
+            IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
-            DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
-            hasDropDown={false}
-            SymbolText={'ARTH'}
+            DefaultValue={redeemAmount.toString()}
+            hasDropDown={true}
+            LogoSymbol={selectedAmountCoin}
+            dropDownValues={dropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedAmountCoin(data);
+            }}
+            SymbolText={selectedAmountCoin}
+            inputMode={'decimal'}
+            setText={(val: string) => { setRedeemAmount(Number(val.replace(/[^0-9]/g, ''))) }}
           />
           <PlusMinusArrow>
             <img src={arrowDown} />
@@ -165,14 +182,20 @@ const Boardrooms: React.FC = () => {
             </HeaderSubtitle>}
         </LeftTopCardHeader>
         <LeftTopCardContainer>
-          <InputContainer
-            ILabelValue={'Enter collateral'}
-            IBalanceValue={'Balance 500.00'}
+          <CustomInputContainer
+            ILabelValue={'Enter Collateral'}
+            IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
-            DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            SymbolText={'ARTH'}
+            LogoSymbol={selectedAmountCoin}
+            dropDownValues={dropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedAmountCoin(data);
+            }}
+            SymbolText={selectedAmountCoin}
+            setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
+            inputMode={'decimal'}
           />
           <PlusMinusArrow>
             <img src={arrowDown} />
@@ -284,7 +307,7 @@ const Boardrooms: React.FC = () => {
             <TransparentInfoDiv
               labelData={`Your share amount`}
               rightLabelUnit={'ARTH'}
-              rightLabelValue={shareAmount.toString()}
+              rightLabelValue={redeemAmount.toString()}
             />
 
             <TransparentInfoDiv
