@@ -137,7 +137,7 @@ const DEFAULT_CALC = 1440;
 
 
 const Boardrooms: React.FC = () => {
-  useEffect(() => window.scrollTo(0, 0));
+  useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0.00)
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
@@ -170,8 +170,8 @@ const Boardrooms: React.FC = () => {
   const buyTabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={3}></Grid>
-        <Grid item lg={6}>
+        <Grid item lg={3} sm={'auto'}></Grid>
+        <Grid item lg={6} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer>
@@ -197,7 +197,7 @@ const Boardrooms: React.FC = () => {
                 SymbolText={selectedAmountCoin}
                 inputMode={'decimal'}
                 setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
-                showMaxTag={true}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -242,7 +242,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={3}></Grid>
+        <Grid item lg={3} sm={'auto'}></Grid>
       </Grid>
     )
   };
@@ -259,8 +259,8 @@ const Boardrooms: React.FC = () => {
   const sellTabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={3}></Grid>
-        <Grid item lg={6}>
+        <Grid item lg={3} sm={'auto'}></Grid>
+        <Grid item lg={6} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType("Buy")}>
@@ -281,7 +281,7 @@ const Boardrooms: React.FC = () => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                showMaxTag={true}
+                tagText={'MAX'}
                 setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
               />
               <PlusMinusArrow>
@@ -343,7 +343,7 @@ const Boardrooms: React.FC = () => {
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={3}></Grid>
+        <Grid item lg={3} sm={'auto'}></Grid>
       </Grid>
     )
   };
@@ -358,7 +358,7 @@ const Boardrooms: React.FC = () => {
           color: 'rgba(255, 255, 255, 0.88)',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '100%'
+          // width: '100%'
         }}
         modalContainerStyle={{
           width: '600px',
@@ -368,7 +368,8 @@ const Boardrooms: React.FC = () => {
         modalBodyStyle={{
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px'
+          padding: '24px 32px',
+
         }}
         title={`Confirm ${type}`}
       >
@@ -538,7 +539,7 @@ const Boardrooms: React.FC = () => {
         </div>
         <Grid container>
           <Grid item lg={3}></Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={12} sm={12} xs={12} >
             <RadioSelectionConatiner>
               <RadioSubConatiner onClick={() => {
                 if(selectedSwap === 'Sushiswap'){
@@ -720,9 +721,16 @@ const LeftTopCardHeader = styled.div`
   padding-right: 32px;
   padding-left: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  @media (max-width: 600px) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
+  @media (max-width: 600px) {
+    padding: 12px 16px;
+  }
 
 `
 const TabContainer = styled.div`

@@ -17,13 +17,13 @@ type props = {
   SymbolText: string;
   setText?: (val: string) => void;
   inputMode?:  'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-  showMaxTag?: boolean;
+  tagText?: string;
   dropDownValues?:string[];
   ondropDownValueChange?: (data: string) => void;
 };
 
 const CustomInputContainer: React.FC<props> = (props) => {
-  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, showMaxTag, dropDownValues, ondropDownValueChange } = props;
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, tagText, dropDownValues, ondropDownValueChange } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 
@@ -50,8 +50,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             }
           }}
         />
-        {showMaxTag && <MaxTagConatiner>
-          MAX
+        {tagText !== '' && <MaxTagConatiner>
+          {tagText}
         </MaxTagConatiner>}
         <IFieldRightContainer onClick={() => {
           if (hasDropDown) setModalOpen(!modalOpen)

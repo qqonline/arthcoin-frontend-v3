@@ -174,9 +174,9 @@ const Boardrooms: React.FC = () => {
             IBalanceValue={'Balance 500.00'}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'ARTHX'}
+            LogoSymbol={'MAHA'}
             hasDropDown={false}
-            SymbolText={'ARTHX'}
+            SymbolText={'ARTH'}
           />
           <PlusMinusArrow>
             <img src={arrowDown} />
@@ -186,9 +186,9 @@ const Boardrooms: React.FC = () => {
             IBalanceValue={''}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'USDT'}
+            LogoSymbol={'MAHA'}
             hasDropDown={true}
-            SymbolText={'USDT'}
+            SymbolText={'ARTH'}
           />
           <div>
             <TcContainer>
