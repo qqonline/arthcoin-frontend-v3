@@ -162,7 +162,7 @@ const Boardrooms: React.FC = () => {
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
           </HeaderTitle>
           {buyback ? <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>available in protocol</TextForInfoTitle>
+            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
           </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
@@ -235,7 +235,7 @@ const Boardrooms: React.FC = () => {
         <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
           </HeaderTitle>
           {buyback ? <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>available in protocol</TextForInfoTitle>
+            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
           </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
@@ -276,7 +276,7 @@ const Boardrooms: React.FC = () => {
           <PlusMinusArrow>
             <img src={arrowDown} />
           </PlusMinusArrow>
-          <PrimaryText>You receive</PrimaryText>
+          <PrimaryText>You Receive</PrimaryText>
           <ReYouReceiveContain>
             <OneLineInputwomargin style={{ marginBottom: '10px' }}>
               <PrimaryText>ARTH Share</PrimaryText>
@@ -340,7 +340,7 @@ const Boardrooms: React.FC = () => {
           </HeaderTitle>
           {recollatateralize ?
             <HeaderSubtitle>
-              342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+              342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Remaining to Generate</TextForInfoTitle>
             </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
@@ -378,7 +378,7 @@ const Boardrooms: React.FC = () => {
         {type === 'Buyback' ?
           <>
             <TransparentInfoDiv
-              labelData={`Your share amount`}
+              labelData={`Your Share Amount`}
               rightLabelUnit={'ARTH'}
               rightLabelValue={shareAmount.toString()}
             />
@@ -408,7 +408,7 @@ const Boardrooms: React.FC = () => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive collateral`}
+              labelData={`You will Receive Collateral`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'1000.00'}
@@ -451,7 +451,7 @@ const Boardrooms: React.FC = () => {
           :
           <>
             <TransparentInfoDiv
-              labelData={`Your collateral amount`}
+              labelData={`Your Collateral Amount`}
               rightLabelUnit={'ARTH'}
               rightLabelValue={collateralAmount.toString()}
             />
@@ -472,14 +472,14 @@ const Boardrooms: React.FC = () => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive MAHA`}
+              labelData={`You will Receive MAHA`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'MAHA'}
               rightLabelValue={receiveMAHA.toString()}
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive bonus`}
+              labelData={`You will Receive Bonus`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'ARTHX'}
               rightLabelValue={receiveBonus.toString()}
@@ -597,7 +597,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          Estimated discount 1 hour later
+                          Estimated Discount 1 hour later
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                         </TextForInfoTitle>
                       </div>
@@ -622,7 +622,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          Bonus rate
+                          Bonus Rate
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                         </TextForInfoTitle>
                       </div>
@@ -633,7 +633,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          MAHA reward
+                          MAHA Reward
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                         </TextForInfoTitle>
                       </div>
