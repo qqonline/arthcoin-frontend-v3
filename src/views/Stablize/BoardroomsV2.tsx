@@ -20,6 +20,7 @@ import CollaterallizeCheckmark from './components/Collaterallize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -377,26 +378,13 @@ const Boardrooms: React.FC = () => {
 
   return (
     <>
-      <Modal
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%'
-        }}
-        modalContainerStyle={{
-          width: '600px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px'
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type} ARTH`}
       >
         {type === 'Buyback' ?
@@ -545,7 +533,7 @@ const Boardrooms: React.FC = () => {
           </>
         }
 
-      </Modal>
+      </CustomModal>
       <StabilizePageHeader
         title="Stablize"
         subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"

@@ -24,6 +24,7 @@ import CollaterallizeCheckmark from './components/Collaterallize';
 import MinorInputContainer from './components/MinorInputContainer';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -276,30 +277,13 @@ const Boardrooms: React.FC = () => {
   };
   return (
     <>
-      <Modal
-        mobile
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalContainerStyle={{
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 20px',
-          width: '100%',
-          minWidth: '350px',
-          height: '60%'
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type} ARTH`}
       >
         {type === 'Buyback' ?
@@ -448,7 +432,7 @@ const Boardrooms: React.FC = () => {
           </>
         }
 
-      </Modal>
+      </CustomModal>
       <StabilizePageHeader
         mobile
         title="Stablize"
