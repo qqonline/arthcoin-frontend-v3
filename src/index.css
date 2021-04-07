@@ -31,9 +31,19 @@ code {
   font-family: Inter, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+/*::-webkit-scrollbar {
+  width: 0px !important; !* Remove scrollbar space *!
+  background: transparent !important; !* Optional: just make scrollbar invisible *!
+}*/
+
 ::-webkit-scrollbar {
-  width: 0px !important; /* Remove scrollbar space */
-  background: transparent !important; /* Optional: just make scrollbar invisible */
+  -webkit-appearance: none !important;
+  width: 4px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
 }
 
 /*IMPORTANT*/

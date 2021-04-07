@@ -137,7 +137,7 @@ const DEFAULT_CALC = 1440;
 
 
 const Boardrooms: React.FC = () => {
-  useEffect(() => window.scrollTo(0, 0));
+  useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0.00)
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
@@ -369,9 +369,7 @@ const Boardrooms: React.FC = () => {
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '24px 32px',
-          width: '100%',
-          minWidth: '350px',
-          height: '60%'
+
         }}
         title={`Confirm ${type}`}
       >
