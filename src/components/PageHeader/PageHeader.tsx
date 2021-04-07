@@ -156,11 +156,18 @@ const SecondParaDescription = styled.h3`
 `;
 const StyledTitle = styled.h1`
   color: ${(props) => props.theme.color.grey[100]};
-  font-size: 36px;
-  font-weight: 700;
+  font-family: Syne;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.88;
   z-index: 1;
   margin: 0;
   padding: 0;
+
 `;
 
 const LearnMore = styled.a`
