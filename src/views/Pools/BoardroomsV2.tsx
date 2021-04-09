@@ -60,6 +60,13 @@ const Boardrooms: React.FC = () => {
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
+        <Grid container>
+          <Grid item lg={3}></Grid>
+          <Grid item lg={6} md={12} sm={12} xs={12} >
+            {/*main middle container here*/}
+          </Grid>
+          <Grid item lg={3}></Grid>
+        </Grid>
       </Container>
     </>
   );
