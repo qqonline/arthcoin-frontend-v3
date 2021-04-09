@@ -89,7 +89,7 @@ const TokenSymbol: React.FC<BasisLogoProps> = ({ symbol, size = 64, left = null,
       src={logosBySymbol[symbol]}
       alt={`${symbol} Logo`}
       height={size}
-      style={left ? { marginLeft: left, zIndex: 10 + left, position: 'relative' } : { zIndex: 10, position: 'relative' }}
+      style={style ? style : left ? { marginLeft: left, zIndex: 10 + left, position: 'relative' } : { zIndex: 10, position: 'relative' }}
     />
   );
 };

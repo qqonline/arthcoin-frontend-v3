@@ -353,5 +353,6 @@ height: fit-content;
 justify-content: space-between;
 display: flex;
 align-items: center;
+width: 100%
 `;
 export default TransparentInfoDiv;
