@@ -12,6 +12,8 @@ import arrowUp from '../../assets/svg/arrowUp.svg'
 import TransparentInfoDiv from './components/InfoDiv';
 import { useMediaQuery } from 'react-responsive';
 import OpenableCard from './components/OpenableCard';
+import ImportPool from './components/ImportPool';
+
 
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -141,6 +143,8 @@ const Boardrooms: React.FC = () => {
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
             <MainGrid />
+            {/*main middle container here*/}
+            <ImportPool/>
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
