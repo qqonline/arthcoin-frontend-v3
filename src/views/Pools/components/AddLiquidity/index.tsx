@@ -78,7 +78,7 @@ const AddLiquidity: React.FC<props> = (props) => {
               rightLabelValue={'1000.00'}
             />
             <Grid container spacing={2} style={{marginTop: '32px'}}>
-              <Grid item lg={6}>
+              <Grid item lg={6} md={6} sm={6} xs={6}>
                 <Button
                   variant={'transparent'}
                   text="Cancel"
@@ -86,7 +86,7 @@ const AddLiquidity: React.FC<props> = (props) => {
                   onClick={() => setConfirmModal(false)}
                 />
               </Grid>
-              <Grid item lg={6}>
+              <Grid item lg={6} md={6} sm={6} xs={6}>
                 <Button
                   text={'Confirm Supply'}
                   size={'lg'}
