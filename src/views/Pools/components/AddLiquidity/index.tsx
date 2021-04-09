@@ -100,8 +100,8 @@ const AddLiquidity: React.FC<props> = (props) => {
       </CustomModal>
       <CustomCard>
         <CustomCardHeader>
-          <EachElement> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElement>
-          <EachElement> <CardTitle> Add Liquidity </CardTitle></EachElement>
+          <EachElementBack> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
+          <EachElementTitle> <CardTitle> Add Liquidity </CardTitle></EachElementTitle>
         </CustomCardHeader>
         <CustomCardContainer>
           <CustomInputContainer
@@ -191,13 +191,17 @@ const CustomCardHeader = styled.div`
   align-content: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   @media (max-width: 600px) {
-    padding: 12px 16px;
+    padding: 24px 16px;
   }
 `
-
-const EachElement = styled.div`
-  flex: 0.3333;
+const EachElementBack = styled.div`
+  flex: 0.25;
 `
+
+const EachElementTitle = styled.div`
+  flex: 0.5;
+`
+
 const CustomCardContainer = styled.div`
   padding: 24px 32px;
   @media (max-width: 600px) {
