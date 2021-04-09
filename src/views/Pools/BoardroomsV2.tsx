@@ -13,6 +13,7 @@ import TransparentInfoDiv from './components/InfoDiv';
 import { useMediaQuery } from 'react-responsive';
 import OpenableCard from './components/OpenableCard';
 import ImportPool from './components/ImportPool';
+import RemovePool from './components/RemovePool';
 
 
 const Boardrooms: React.FC = () => {
@@ -51,6 +52,20 @@ const Boardrooms: React.FC = () => {
     }
   ]
   const [cardOpen, setCardOpen] = useState<boolean>(false)
+  const [selectedPair, setSelectedPair] = useState({
+    liquidity: {
+      id: 1,
+      symbol1: 'ARTH',
+      symbol2: 'ETH',
+      pairName: 'ARTH-ETH'
+    },
+    pool: {
+      total: '1500.00',
+      arth: '1500.00',
+      share: '0.06',
+      eth: '1500.00'
+    }
+  })
   const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' })
   const [removeType, setRemoveType] = useState<'S' | 'D'>('S')
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
@@ -64,9 +79,6 @@ const Boardrooms: React.FC = () => {
     )
   }
 
-  const removeLiquidity = () => {
-
-  }
 
   const MainGrid = () => {
     return (
@@ -85,6 +97,7 @@ const Boardrooms: React.FC = () => {
               <OpenableCard
                 liquidityPair={pair.liquidity}
                 poolData={pair.pool}
+                setSelected={(val: any) => setSelectedPair(val)}
               />)
         }
         <FeesSpan>Account Analytics and Accured Fees</FeesSpan>
@@ -142,9 +155,10 @@ const Boardrooms: React.FC = () => {
         <Grid container>
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
-            <MainGrid />
+            {/* <MainGrid /> */}
             {/*main middle container here*/}
-            <ImportPool/>
+            {/* <ImportPool/> */}
+            <RemovePool selectedPair={selectedPair} />
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>

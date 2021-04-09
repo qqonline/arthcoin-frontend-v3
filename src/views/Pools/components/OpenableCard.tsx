@@ -12,13 +12,13 @@ import arrowUp from '../../../assets/svg/arrowUp.svg'
 import TransparentInfoDiv from './InfoDiv';
 import { useMediaQuery } from 'react-responsive';
 
-interface ICards {
+export interface ICards {
     id: number,
     symbol1: string,
     symbol2: string,
     pairName: string;
 }
-interface IPoolData {
+export interface IPoolData {
     total: string,
     arth: string,
     eth: string,
@@ -27,6 +27,7 @@ interface IPoolData {
 interface IProps {
     liquidityPair: ICards;
     poolData: IPoolData;
+    setSelected: (val: any) => void;
 }
 
 export default (props: IProps) => {
