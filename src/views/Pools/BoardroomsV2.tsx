@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg'
 import shushiswap from '../../assets/svg/sushiswapLogo.svg'
 import ImportPool from './components/ImportPool';
+import AddLiquidity from './components/AddLiquidity';
 
 
 const Boardrooms: React.FC = () => {
@@ -65,7 +66,8 @@ const Boardrooms: React.FC = () => {
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
             {/*main middle container here*/}
-            <ImportPool/>
+            {/*<ImportPool/>*/}
+            <AddLiquidity/>
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
