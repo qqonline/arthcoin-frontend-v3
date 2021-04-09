@@ -107,8 +107,8 @@ const Boardrooms: React.FC = () => {
           </PageSubHeading>
         </div>
         <Grid container>
-          <Grid item lg={4}></Grid>
-          <Grid item lg={4} md={12} sm={12} xs={12} >
+          <Grid item lg={3}></Grid>
+          <Grid item lg={6} md={12} sm={12} xs={12} >
             <RadioSelectionConatiner>
               <RadioSubConatiner onClick={() => {
                 if (selectedSwap === 'Sushiswap') {
@@ -138,7 +138,7 @@ const Boardrooms: React.FC = () => {
               </RadioSubConatiner>
             </RadioSelectionConatiner>
           </Grid>
-          <Grid item lg={4}></Grid>
+          <Grid item lg={3}></Grid>
         </Grid>
         <Grid container>
           <Grid item lg={3}></Grid>
