@@ -29,6 +29,7 @@ import './App.css';
 import Mint from './views/Mint';
 import Stablize from './views/Stablize';
 import Trade from './views/Trade';
+import Pools from './views/Pools';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -72,6 +73,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/trade">
             <Trade />
+          </Route>
+          <Route path="/pools">
+            <Pools />
           </Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>
