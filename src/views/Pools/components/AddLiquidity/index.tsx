@@ -8,6 +8,10 @@ import InfoIcon from '@material-ui/icons/Info';
 import CustomInputContainer from '../../../../components/CustomInputContainer';
 import arrowDown from '../../../../assets/svg/arrowDown.svg';
 import Button from '../../../../components/Button';
+import TransparentInfoDiv from '../../../Stablize/components/InfoDiv';
+import { Divider } from '@material-ui/core';
+import CustomModal from '../../../../components/CustomModal';
+import Grid from '@material-ui/core/Grid';
 
 type props = {
 
@@ -44,6 +48,56 @@ const AddLiquidity: React.FC<props> = (props) => {
 
   return (
     <div>
+      <CustomModal
+        closeButton
+        handleClose={() => setConfirmModal(false)}
+        open={confirmModal}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
+        title={`Confirm Supply`}>
+          <>
+            <TransparentInfoDiv
+              labelData={`${firstCoin} Deposit`}
+              rightLabelUnit={firstCoin}
+              rightLabelValue={firstCoinAmount.toString()}
+            />
+            <TransparentInfoDiv
+              labelData={`${secondCoin} Deposit`}
+              rightLabelUnit={secondCoin}
+              rightLabelValue={secondCoinAmount.toString()}
+            />
+            <TransparentInfoDiv
+              labelData={`Your share of pool`}
+              rightLabelValue={'0.06%'}
+            />
+            <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
+            <TransparentInfoDiv
+              labelData={`You receiving pool token`}
+              rightLabelUnit={`${firstCoin}/${secondCoin}`}
+              rightLabelValue={'1000.00'}
+            />
+            <Grid container spacing={2} style={{marginTop: '32px'}}>
+              <Grid item lg={6}>
+                <Button
+                  variant={'transparent'}
+                  text="Cancel"
+                  size={'lg'}
+                  onClick={() => setConfirmModal(false)}
+                />
+              </Grid>
+              <Grid item lg={6}>
+                <Button
+                  text={'Confirm Supply'}
+                  size={'lg'}
+                  onClick={() => {
+                    setConfirmModal(false)
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </>
+      </CustomModal>
       <CustomCard>
         <CustomCardHeader>
           <EachElement> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElement>

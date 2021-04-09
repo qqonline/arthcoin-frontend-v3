@@ -143,7 +143,7 @@ const Boardrooms: React.FC = () => {
         <Grid container>
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
-            <MainGrid />
+            {/*<MainGrid />*/}
             {/*main middle container here*/}
             {/*<ImportPool/>*/}
             <AddLiquidity/>
