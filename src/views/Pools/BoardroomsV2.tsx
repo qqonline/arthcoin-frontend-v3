@@ -14,6 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 import OpenableCard from './components/OpenableCard';
 import ImportPool from './components/ImportPool';
 import RemovePool from './components/RemovePool';
+import AddLiquidity from './components/AddLiquidity';
 
 
 const Boardrooms: React.FC = () => {
@@ -21,6 +22,8 @@ const Boardrooms: React.FC = () => {
   const basisCash = useBasisCash();
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [noLiquidity, setNoLiquidity] = useState<boolean>(false);
+  const [remove, setRemove] = useState<boolean>(false);
+  const [deposit, setDeposit] = useState<boolean>(false);
   const liquidityPairs = [
     {
       liquidity: {
@@ -98,6 +101,8 @@ const Boardrooms: React.FC = () => {
                 liquidityPair={pair.liquidity}
                 poolData={pair.pool}
                 setSelected={(val: any) => setSelectedPair(val)}
+                setRemove={(val: boolean) => { setRemove(val) }}
+                setDeposit={(val: boolean) => { setDeposit(val) }}
               />)
         }
         <FeesSpan>Account Analytics and Accured Fees</FeesSpan>
@@ -119,8 +124,8 @@ const Boardrooms: React.FC = () => {
           </PageSubHeading>
         </div>
         <Grid container>
-          <Grid item lg={4}></Grid>
-          <Grid item lg={4} md={12} sm={12} xs={12} >
+          <Grid item lg={3}></Grid>
+          <Grid item lg={6} md={12} sm={12} xs={12} >
             <RadioSelectionConatiner>
               <RadioSubConatiner onClick={() => {
                 if (selectedSwap === 'Sushiswap') {
@@ -150,15 +155,21 @@ const Boardrooms: React.FC = () => {
               </RadioSubConatiner>
             </RadioSelectionConatiner>
           </Grid>
-          <Grid item lg={4}></Grid>
+          <Grid item lg={3}></Grid>
         </Grid>
         <Grid container>
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
-            {/* <MainGrid /> */}
             {/*main middle container here*/}
-            {/* <ImportPool/> */}
-            <RemovePool selectedPair={selectedPair} />
+
+            {
+              !deposit && !remove && <MainGrid />
+            }
+            {!deposit && remove && selectedPair && <RemovePool selectedPair={selectedPair} />}
+            {/*<MainGrid />*/}
+            {/*main middle container here*/}
+            {!remove && deposit && <AddLiquidity />}
+            {/* <ImportPool /> */}
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>

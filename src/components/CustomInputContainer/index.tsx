@@ -16,14 +16,17 @@ type props = {
   hasDropDown: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
-  inputMode?:  'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+  inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
   tagText?: string;
-  dropDownValues?:string[];
+  dropDownValues?: string[];
   ondropDownValueChange?: (data: string) => void;
+  multiIcons?: boolean;
+  symbol1?: string;
+  symbol2?: string;
 };
 
 const CustomInputContainer: React.FC<props> = (props) => {
-  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, tagText, dropDownValues, ondropDownValueChange } = props;
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, tagText, dropDownValues, ondropDownValueChange, multiIcons = false, symbol1, symbol2 } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 
@@ -69,7 +72,17 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
           />*/}
           <IFieldRightContainerLogo>
-            <TokenSymbol symbol={LogoSymbol} size={25} />
+            {
+              multiIcons && symbol1 && symbol2 ?
+                <LLabel>
+                  <TokenSymbol symbol={symbol1} size={25} style={{ zIndex: 2 }} />
+                  <TokenSymbol symbol={symbol2} size={25} style={{ zIndex: 1, marginLeft: -5 }} />
+                  {/* <LPairLabel>{liquidityPair.pairName}</LPairLabel> */}
+                </LLabel>
+                :
+                <TokenSymbol symbol={LogoSymbol} size={25} />
+
+            }
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>
             {SymbolText}
@@ -79,10 +92,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
           </IFieldRightContainerDropDown>}
 
           {modalOpen && hasDropDown && ondropDownValueChange &&
-          <CustomDropDown
-            dropDownValues={dropDownValues}
-            ondropDownValueChange={ondropDownValueChange}
-          />}
+            <CustomDropDown
+              dropDownValues={dropDownValues}
+              ondropDownValueChange={ondropDownValueChange}
+            />}
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>
@@ -142,6 +155,23 @@ const ILabelBalance = styled.p`
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
 `
+const LLabel = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+`;
+
+const LPairLabel = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 24px;
+color: #FFFFFF;
+opacity: 0.88;
+margin: 0px 0px 0px 16px;
+`;
+
 
 const IFieldConatiner = styled.div`
   display: flex;

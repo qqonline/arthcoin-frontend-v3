@@ -19,6 +19,8 @@ import checkmark from '../../assets/svg/checkmark.svg'
 import CollaterallizeCheckmark from './components/Collaterallize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
+import CustomInputContainer from '../../components/CustomInputContainer';
+import CustomModal from '../../components/CustomModal';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -129,12 +131,13 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Boardrooms: React.FC = () => {
-  useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
   const [shareAmount, setShareAmount] = useState<number>(1500)
-  const [collateralAmount, setCollateralAmount] = useState<number>(1500)
+  const [collateralAmount, setCollateralAmount] = useState<number>(0)
+  const [redeemAmount, setRedeemAmount] = useState<number>(0)
   const [receiveShare, setReceiveShare] = useState<number>(1500)
   const [receiveMAHA, setReceiveMAHA] = useState<number>(1500)
+  const [balance, setBalance] = useState<number>(0)
   const [receiveBonus, setReceiveBonus] = useState<number>(1500)
   const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34)
   const [finalValue, setFinalValue] = useState<number>(100)
@@ -145,7 +148,16 @@ const Boardrooms: React.FC = () => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
-
+  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH')
+  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
+  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  let arr: string[];
+  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+    arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
+    setDropDownValues(arr);
+  }, [selectedAmountCoin])
+  
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
   const handleCheck = (event: any) => {
@@ -162,21 +174,27 @@ const Boardrooms: React.FC = () => {
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
           </HeaderTitle>
           {buyback ? <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>available in protocol</TextForInfoTitle>
+            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
           </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
         <LeftTopCardContainer>
-          <InputContainer
+          <CustomInputContainer
             ILabelValue={'Enter Redeem Amount'}
-            IBalanceValue={'Balance 500.00'}
+            IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
-            DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
-            hasDropDown={false}
-            SymbolText={'ARTH'}
+            DefaultValue={redeemAmount.toString()}
+            hasDropDown={true}
+            LogoSymbol={selectedAmountCoin}
+            dropDownValues={dropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedAmountCoin(data);
+            }}
+            SymbolText={selectedAmountCoin}
+            inputMode={'decimal'}
+            setText={(val: string) => { setRedeemAmount(Number(val.replace(/[^0-9]/g, ''))) }}
           />
           <PlusMinusArrow>
             <img src={arrowDown} />
@@ -217,7 +235,7 @@ const Boardrooms: React.FC = () => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </TcContainer>
-            <div style={{marginTop: 35}}>
+            <div style={{ marginTop: 35 }}>
               <Button text={'Buyback'} size={'lg'} onClick={() => {
                 setType('Buyback')
                 setOpenModal(1)
@@ -235,7 +253,7 @@ const Boardrooms: React.FC = () => {
         <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
           </HeaderTitle>
           {buyback ? <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>available in protocol</TextForInfoTitle>
+            342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
           </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
@@ -264,19 +282,26 @@ const Boardrooms: React.FC = () => {
             </HeaderSubtitle>}
         </LeftTopCardHeader>
         <LeftTopCardContainer>
-          <InputContainer
-            ILabelValue={'Enter collateral'}
-            IBalanceValue={'Balance 500.00'}
+          <CustomInputContainer
+            ILabelValue={'Enter Collateral'}
+            IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
-            DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            SymbolText={'ARTH'}
+            LogoSymbol={selectedAmountCoin}
+            dropDownValues={dropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedAmountCoin(data);
+            }}
+            SymbolText={selectedAmountCoin}
+            setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
+            inputMode={'decimal'}
           />
+
           <PlusMinusArrow>
             <img src={arrowDown} />
           </PlusMinusArrow>
-          <PrimaryText>You receive</PrimaryText>
+          <PrimaryText>You Receive</PrimaryText>
           <ReYouReceiveContain>
             <OneLineInputwomargin style={{ marginBottom: '10px' }}>
               <PrimaryText>ARTH Share</PrimaryText>
@@ -318,7 +343,7 @@ const Boardrooms: React.FC = () => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </TcContainer>
-            <div style={{ flex: 1, marginTop: 15 }}>
+            <div style={{ flex: 1, marginTop: 30 }}>
               <Button text={'Recollatateralize'} size={'lg'} onClick={() => {
                 // setBuyback(true)
                 // setRecollatateralize(false)
@@ -340,7 +365,7 @@ const Boardrooms: React.FC = () => {
           </HeaderTitle>
           {recollatateralize ?
             <HeaderSubtitle>
-              342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+              342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Remaining to Generate</TextForInfoTitle>
             </HeaderSubtitle> :
             <HeaderSubtitle>
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
@@ -353,34 +378,21 @@ const Boardrooms: React.FC = () => {
 
   return (
     <>
-      <Modal
+      <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{
-          color: 'rgba(255, 255, 255, 0.88)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%'
-        }}
-        modalContainerStyle={{
-          width: '600px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        modalBodyStyle={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px'
-        }}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
         title={`Confirm ${type} ARTH`}
       >
         {type === 'Buyback' ?
           <>
             <TransparentInfoDiv
-              labelData={`Your share amount`}
+              labelData={`Your Share Amount`}
               rightLabelUnit={'ARTH'}
-              rightLabelValue={shareAmount.toString()}
+              rightLabelValue={redeemAmount.toString()}
             />
 
             <TransparentInfoDiv
@@ -408,7 +420,7 @@ const Boardrooms: React.FC = () => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive collateral`}
+              labelData={`You will Receive Collateral`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'1000.00'}
@@ -451,7 +463,7 @@ const Boardrooms: React.FC = () => {
           :
           <>
             <TransparentInfoDiv
-              labelData={`Your collateral amount`}
+              labelData={`Your Collateral Amount`}
               rightLabelUnit={'ARTH'}
               rightLabelValue={collateralAmount.toString()}
             />
@@ -472,14 +484,14 @@ const Boardrooms: React.FC = () => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive MAHA`}
+              labelData={`You will Receive MAHA`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'MAHA'}
               rightLabelValue={receiveMAHA.toString()}
             />
 
             <TransparentInfoDiv
-              labelData={`You will receive bonus`}
+              labelData={`You will Receive Bonus`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'ARTHX'}
               rightLabelValue={receiveBonus.toString()}
@@ -521,7 +533,7 @@ const Boardrooms: React.FC = () => {
           </>
         }
 
-      </Modal>
+      </CustomModal>
       <StabilizePageHeader
         title="Stablize"
         subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"
@@ -597,7 +609,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          Estimated discount 1 hour later
+                          Estimated Discount 1 hour later
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                         </TextForInfoTitle>
                       </div>
@@ -622,7 +634,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          Bonus rate
+                          Bonus Rate
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                         </TextForInfoTitle>
                       </div>
@@ -633,7 +645,7 @@ const Boardrooms: React.FC = () => {
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
-                          MAHA reward
+                          MAHA Reward
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                         </TextForInfoTitle>
                       </div>

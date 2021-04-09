@@ -28,12 +28,14 @@ interface IProps {
     liquidityPair: ICards;
     poolData: IPoolData;
     setSelected: (val: any) => void;
+    setRemove: (val: boolean) => void;
+    setDeposit: (val: boolean) => void;
 }
 
 export default (props: IProps) => {
-    const { liquidityPair, poolData } = props
+    const { liquidityPair, poolData, setSelected, setDeposit, setRemove } = props
     const [cardOpen, setCardOpen] = useState<boolean>(false)
-
+    console.log(liquidityPair, poolData)
     const onClick = () => {
         setCardOpen(!cardOpen)
     }
@@ -81,10 +83,18 @@ export default (props: IProps) => {
                     />
                     <div style={{ marginTop: 32, width: '100%', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', justifyContent: 'space-evenly' }}>
                         <div style={{ marginRight: !isMobile ? 5 : undefined, width: '100%', marginTop: isMobile ? 5 : undefined }}>
-                            <Button text={'Remove'} variant={'transparent'} />
+                            <Button text={'Remove'} variant={'transparent'} onClick={() => {
+                                setSelected({ liquidity: liquidityPair, pool: poolData })
+                                setDeposit(false)
+                                setRemove(true)
+                            }} />
                         </div>
                         <div style={{ marginLeft: !isMobile ? 5 : undefined, width: '100%' }}>
-                            <Button text={'Deposit'} />
+                            <Button text={'Deposit'} onClick={() => {
+                                setSelected({ liquidity: liquidityPair, pool: poolData })
+                                setRemove(false)
+                                setDeposit(true)
+                            }} />
                         </div>
                     </div>
                 </>

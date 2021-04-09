@@ -3,12 +3,17 @@ import styled from 'styled-components';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 import TokenSymbol from '../../../../components/TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import plus from '../../../../assets/svg/plus.svg';
 import CustomImportPoolDropDown from './components/CustomImportPoolDropDown';
 import InfoIcon from '@material-ui/icons/Info';
 import { ICards, IPoolData } from '../OpenableCard';
-import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+import { createStyles, Divider, Grid, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import arrowDown from '../../../../assets/svg/arrowDown.svg'
+import plus from '../../../../assets/svg/plus.svg'
+import Button from '../../../../components/Button';
+import { useMediaQuery } from 'react-responsive';
+import CustomInputContainer from '../../../../components/CustomInputContainer';
+import CustomModal from '../../../../components/CustomModal';
+import TransparentInfoDiv from '../InfoDiv';
 
 type props = {
   selectedPair: {
@@ -99,15 +104,24 @@ const PrettoRestrictSlider = withStyles({
 
 const RemovePool: React.FC<props> = (props) => {
   const { selectedPair } = props;
+  console.log(selectedPair)
   const [dropDownNo, setDropDownNo] = useState<number>(0);
-  const [simpleType, setType] = useState<boolean>(true)
+  const [simpleType, setType] = useState<boolean>(false)
   const [dropDownValues, setDropDownValues] = useState<string[]>(['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC']);
-  const defaultDropdownValues = [];
+  // const defaultDropdownValues = [];
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(30);
-
+  const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' })
+  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  const [balance, setBalance] = useState<number>(500.00);
+  const [firstCoin, setFirstCoin] = useState<string>('ARTH');
+  const [secondCoin, setSecondCoin] = useState<string>('ETH');
+  const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.00);
+  const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.00);
+  const [firstCoinDropDown, setFirstCoinDropDown] = useState<string[]>([]);
+  const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>(defaultDropdownValues);
+  const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const handleSliderChange = (event: any, value: any) => {
-    console.log('check trig', value)
     setSliderValue(value);
   };
   const simple = () => {
@@ -179,16 +193,162 @@ const RemovePool: React.FC<props> = (props) => {
           </OneLineInputwomargin>
 
         </ReYouReceiveContain>
+        <OneLine style={{ marginTop: "15px" }}>
+          <div style={{ flex: 1 }}>
+            <TextWithIcon>
+              Price
+            </TextWithIcon>
+          </div>
+          <OneLine>
+            <BeforeChip>0.05</BeforeChip>
+            <TagChips style={{ marginRight: '5px' }}>ARTH</TagChips>
+            <BeforeChip>per</BeforeChip>
+            <TagChips>ETH</TagChips>
+          </OneLine>
+        </OneLine>
       </div>
     )
   }
 
   const detailed = () => {
-    return (<div></div>)
+    return (
+      <div>
+        <div>
+          <OneLineInput>
+            <div>
+              <InputLabel>How much liquidity you want to remove?</InputLabel>
+            </div>
+          </OneLineInput>
+        </div>
+        <CustomInputContainer
+          ILabelValue={'Enter Token Amount'}
+          IBalanceValue={`Balance ${balance}`}
+          // ILabelInfoValue={'How can i get it?'}
+          DefaultValue={firstCoinAmount.toString()}
+          LogoSymbol={firstCoin}
+          hasDropDown={false}
+          multiIcons
+          symbol1={selectedPair?.liquidity?.symbol1}
+          symbol2={selectedPair?.liquidity?.symbol2}
+          // dropDownValues={firstCoinDropDown}
+          // ondropDownValueChange={(data) => {
+          //   if (data !== secondCoin) {
+          //     setFirstCoin(data);
+          //   }
+          // }}
+          SymbolText={selectedPair?.liquidity?.pairName}
+          inputMode={'decimal'}
+          setText={(val: string) => setFirstCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
+          tagText={'MAX'}
+        />
+        <PlusMinusArrow>
+          <img src={arrowDown} />
+        </PlusMinusArrow>
+        <CustomInputContainer
+          ILabelValue={'You Receive'}
+          IBalanceValue={`Balance ${balance}`}
+          // ILabelInfoValue={'How can i get it?'}
+          DefaultValue={secondCoinAmount.toString()}
+          LogoSymbol={secondCoin}
+          hasDropDown={true}
+          dropDownValues={secondCoinDropDown}
+          ondropDownValueChange={(data) => {
+            if (firstCoin !== data) {
+              setSecondCoin(data);
+            }
+          }}
+          SymbolText={secondCoin}
+          inputMode={'decimal'}
+          setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
+          tagText={'MAX'}
+        />
+        <PlusMinusArrow>
+          <img src={plus} />
+        </PlusMinusArrow>
+        <CustomInputContainer
+          ILabelValue={'You Receive'}
+          IBalanceValue={`Balance ${balance}`}
+          // ILabelInfoValue={'How can i get it?'}
+          DefaultValue={secondCoinAmount.toString()}
+          LogoSymbol={secondCoin}
+          hasDropDown={true}
+          dropDownValues={secondCoinDropDown}
+          ondropDownValueChange={(data) => {
+            if (firstCoin !== data) {
+              setSecondCoin(data);
+            }
+          }}
+          SymbolText={secondCoin}
+          inputMode={'decimal'}
+          setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
+          tagText={'MAX'}
+        />
+        <OneLine style={{ marginTop: "15px" }}>
+          <div style={{ flex: 1 }}>
+            <TextWithIcon>
+              Price
+            </TextWithIcon>
+          </div>
+          <OneLine>
+            <BeforeChip>0.05</BeforeChip>
+            <TagChips style={{ marginRight: '5px' }}>{firstCoin}</TagChips>
+            <BeforeChip>per</BeforeChip>
+            <TagChips>{secondCoin}</TagChips>
+          </OneLine>
+        </OneLine>
+      </div>
+    )
   }
 
   return (
     <div>
+      <CustomModal
+        closeButton
+        handleClose={() => setConfirmModal(false)}
+        open={confirmModal}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
+        title={`Confirm Remove Liquidity`}>
+        <>
+          <TransparentInfoDiv
+            labelData={`You will receive ARTH`}
+            rightLabelUnit={firstCoin}
+            rightLabelValue={firstCoinAmount.toString()}
+          />
+          <TransparentInfoDiv
+            labelData={`You will receive ETH`}
+            rightLabelUnit={secondCoin}
+            rightLabelValue={secondCoinAmount.toString()}
+          />
+          <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
+
+          <TransparentInfoDiv
+            labelData={`UNI ARTH/ETH Burned`}
+            rightLabelUnit={`${firstCoin}/${secondCoin}`}
+            rightLabelValue={'1000.00'}
+          />
+          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => setConfirmModal(false)}
+              />
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Button
+                text={'Remove Liquidity'}
+                size={'lg'}
+                onClick={() => {
+                  setConfirmModal(false)
+                }}
+              />
+            </Grid>
+          </Grid>
+        </>
+      </CustomModal>
       <CustomCard>
         <CustomCardHeader>
           <EachElement> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElement>
@@ -198,6 +358,14 @@ const RemovePool: React.FC<props> = (props) => {
         <CustomCardContainer>
           {/* <div> */}
           {simpleType ? simple() : detailed()}
+          <ButtonContainer>
+            <div style={isMobile ? {} : { marginRight: 5, width: '100%' }}>
+              <Button text={'Approve'} size={'lg'} onClick={() => { setConfirmModal(true) }} />
+            </div>
+            <div style={isMobile ? { marginTop: 5 } : { marginLeft: 5, width: '100%' }}>
+              <Button text={'Remove'} size={'lg'} disabled />
+            </div>
+          </ButtonContainer>
           {/* </div> */}
         </CustomCardContainer>
       </CustomCard>
@@ -336,6 +504,15 @@ const CustomCardContainer = styled.div`
     padding: 16px 16px;
   }
 `
+const ButtonContainer = styled.div`
+  margin: 15px 0px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+  justify-content: space-between;
+`
 const CardTitle = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -430,7 +607,7 @@ const ReYouReceiveContain = styled.div`
 
 const PlusMinusArrow = styled.div`
   width: 100%;
-  height: 40px;
+  height: 30px;
   color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -511,11 +688,10 @@ const TextWithIcon = styled.div`
 const BeforeChip = styled.span`
 font-family: Inter;
 font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-text-align: right;
-color: rgba(255, 255, 255, 0.88);
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+color: rgba(255, 255, 255, 0.64);
   margin-right: 5px;
 `
 
