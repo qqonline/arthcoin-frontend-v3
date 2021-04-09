@@ -140,8 +140,8 @@ const DEFAULT_CALC = 1440;
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
-  const [mintColl, setCollateralValue] = useState<number>(0.00)
-  const [mintArthxShare, setArthxShare] = useState<number>(0.00)
+  const [mintColl, setCollateralValue] = useState<number>(0)
+  const [mintArthxShare, setArthxShare] = useState<number>(0)
   const [balance, setBalance] = useState<number>(0)
   const [mintReceive, setReceive] = useState<number>(0)
   const [redeemAmount, setRedeemAmount] = useState<number>(0)

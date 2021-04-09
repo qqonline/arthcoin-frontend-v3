@@ -177,7 +177,7 @@ const Boardrooms: React.FC = () => {
   const mintTabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }} spacing={2}>
-        <Grid item lg={1}/>
+        <Grid item lg={1} />
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
@@ -326,7 +326,7 @@ const Boardrooms: React.FC = () => {
             </Grid>
           </RightBottomCard>
         </Grid>
-        <Grid item lg={1}/>
+        <Grid item lg={1} />
       </Grid>
     )
   };
@@ -343,7 +343,7 @@ const Boardrooms: React.FC = () => {
   const redeemTabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }} spacing={2}>
-        <Grid item lg={1}/>
+        <Grid item lg={1} />
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
@@ -509,7 +509,7 @@ const Boardrooms: React.FC = () => {
             </Grid>
           </RightBottomCard>
         </Grid>
-        <Grid item lg={1}/>
+        <Grid item lg={1} />
       </Grid>
     )
   };
@@ -684,7 +684,7 @@ const Boardrooms: React.FC = () => {
                 </StakingDiv>
               }
               <div style={{
-                flexDirection: 'row',
+                flexDirection: 'column-reverse',
                 display: 'flex',
                 width: '100%',
                 marginTop: '10%',
@@ -693,7 +693,7 @@ const Boardrooms: React.FC = () => {
                 marginBottom: 8
               }}
               >
-                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
                   <Button
                     variant={'transparent'}
                     text="Cancel"
@@ -702,7 +702,7 @@ const Boardrooms: React.FC = () => {
                   // onClick={handleClose}
                   />
                 </div>
-                <div style={{ width: '50%', marginLeft: 10 }}>
+                <div style={{ width: '100%' }}>
                   <Button
                     text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                     // textStyles={{ color: '#F5F5F5' }}
@@ -760,7 +760,7 @@ const Boardrooms: React.FC = () => {
               />
 
               <div style={{
-                flexDirection: 'row',
+                flexDirection: 'column-reverse',
                 display: 'flex',
                 width: '100%',
                 marginTop: '10%',
@@ -769,7 +769,7 @@ const Boardrooms: React.FC = () => {
                 marginBottom: 8
               }}
               >
-                <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+                <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
                   <Button
                     variant={'transparent'}
                     text="Cancel"
@@ -778,7 +778,7 @@ const Boardrooms: React.FC = () => {
                   // onClick={handleClose}
                   />
                 </div>
-                <div style={{ width: '50%', marginLeft: 10 }}>
+                <div style={{ width: '100%' }}>
                   <Button
                     text={'Redeem ARTH'}
                     // textStyles={{ color: '#F5F5F5' }}
@@ -1156,7 +1156,7 @@ color: rgba(255, 255, 255, 0.88);
 const CheckboxDiv = styled.div`
 background: rgba(255, 255, 255, 0.08);
 border-radius: 6px;
-padding: 5px 0px 0px 0px;
+padding: 5px 0px 0px 5px;
 display: flex;
 justify-content: center;
 align-items: center;
