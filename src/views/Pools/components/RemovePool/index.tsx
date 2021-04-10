@@ -20,6 +20,7 @@ type props = {
     liquidity: ICards;
     pool: IPoolData;
   }
+  onBack: () => void;
 };
 
 const useSliderStyles = makeStyles((theme: Theme) =>
@@ -103,10 +104,10 @@ const PrettoRestrictSlider = withStyles({
 })(Slider);
 
 const RemovePool: React.FC<props> = (props) => {
-  const { selectedPair } = props;
+  const { selectedPair, onBack } = props;
   console.log(selectedPair)
   const [dropDownNo, setDropDownNo] = useState<number>(0);
-  const [simpleType, setType] = useState<boolean>(false)
+  const [simpleType, setType] = useState<boolean>(true)
   const [dropDownValues, setDropDownValues] = useState<string[]>(['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC']);
   // const defaultDropdownValues = [];
   const sliderClasses = useSliderStyles();
@@ -351,7 +352,7 @@ const RemovePool: React.FC<props> = (props) => {
       </CustomModal>
       <CustomCard>
         <CustomCardHeader>
-          <EachElement> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElement>
+          <EachElement> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElement>
           <EachElement> <CardTitle>Remove Liquidity</CardTitle></EachElement>
           <EachElement> <Detailed onClick={() => setType(!simpleType)}>{simpleType ? 'Detailed' : 'Simple'}</Detailed></EachElement>
         </CustomCardHeader>
@@ -438,6 +439,7 @@ const CustomCardHeader = styled.div`
 
 const EachElement = styled.div`
   flex: 0.3333;
+  cursor: pointer;
 `
 
 const TimeSpan = styled.div`

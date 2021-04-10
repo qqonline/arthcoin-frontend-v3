@@ -8,11 +8,11 @@ import CustomImportPoolDropDown from './components/CustomImportPoolDropDown';
 import InfoIcon from '@material-ui/icons/Info';
 
 type props = {
-
+  onBack: () => void;
 };
 
 const ImportPool: React.FC<props> = (props) => {
-  const { } = props;
+  const { onBack } = props;
   const [dropDownNo, setDropDownNo] = useState<number>(0);
   const [dropDownValues, setDropDownValues] = useState<string[]>(['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC']);
   const defaultDropdownValues = [];
@@ -21,8 +21,8 @@ const ImportPool: React.FC<props> = (props) => {
     <div>
       <CustomCard>
         <CustomCardHeader>
-          <EachElement> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElement>
-          <EachElement> <CardTitle> Import Pool </CardTitle></EachElement>
+          <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
+          <EachElementTitle> <CardTitle> Import Pool </CardTitle></EachElementTitle>
         </CustomCardHeader>
         <CustomCardContainer>
           <CoinSelection onClick={() => {
@@ -141,9 +141,15 @@ const CustomCardHeader = styled.div`
   }
 `
 
-const EachElement = styled.div`
-  flex: 0.3333;
+const EachElementBack = styled.div`
+  flex: 0.25;
+  cursor: pointer;
 `
+
+const EachElementTitle = styled.div`
+  flex: 0.5;
+`
+
 const CustomCardContainer = styled.div`
   padding: 32px 32px;
   @media (max-width: 600px) {

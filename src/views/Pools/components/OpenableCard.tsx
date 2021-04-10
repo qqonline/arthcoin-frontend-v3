@@ -163,4 +163,5 @@ color: #F7653B;
 display: flex;
 flex-direction: row;
 align-items: center;
+  cursor: pointer;
 `;

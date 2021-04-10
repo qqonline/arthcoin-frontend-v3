@@ -20,6 +20,7 @@ import AddLiquidity from './components/AddLiquidity';
 const Boardrooms: React.FC = () => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
+  const [action, setAction] = useState<'Details' | 'Import' | 'Add' | 'Remove'>('Details')
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [noLiquidity, setNoLiquidity] = useState<boolean>(false);
   const [remove, setRemove] = useState<boolean>(false);
@@ -89,7 +90,7 @@ const Boardrooms: React.FC = () => {
         <YourLiquidityHeader>
           <HeaderLabel>Your Liquidity</HeaderLabel>
           <div style={{ flex: 0.5 }}>
-            <Button text={'Add Liquidity'} />
+            <Button text={'Add Liquidity'} onClick={() => setAction('Add')}/>
           </div>
         </YourLiquidityHeader>
         {
@@ -100,13 +101,19 @@ const Boardrooms: React.FC = () => {
               <OpenableCard
                 liquidityPair={pair.liquidity}
                 poolData={pair.pool}
-                setSelected={(val: any) => setSelectedPair(val)}
-                setRemove={(val: boolean) => { setRemove(val) }}
-                setDeposit={(val: boolean) => { setDeposit(val) }}
+                setSelected={(val: any) => {
+                  setSelectedPair(val)
+                }}
+                setRemove={(val: boolean) => {
+                  setAction('Remove')
+                }}
+                setDeposit={(val: boolean) => {
+                  setDeposit(val)
+                }}
               />)
         }
         <FeesSpan>Account Analytics and Accured Fees</FeesSpan>
-        <ImportIt>
+        <ImportIt onClick={() => {setAction('Import')}}>
           Don't see a pool you joined? <span style={{ color: '#F7653B' }}>Import it.</span>
         </ImportIt>
       </>
@@ -160,16 +167,31 @@ const Boardrooms: React.FC = () => {
         <Grid container>
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12} >
-            {/*main middle container here*/}
-
-            {
-              !deposit && !remove && <MainGrid />
+            {action === 'Details' &&
+              <MainGrid />
             }
-            {!deposit && remove && selectedPair && <RemovePool selectedPair={selectedPair} />}
-            {/*<MainGrid />*/}
-            {/*main middle container here*/}
-            {!remove && deposit && <AddLiquidity />}
-            {/* <ImportPool /> */}
+            {action === 'Remove' &&
+              <RemovePool
+                selectedPair={selectedPair}
+                onBack={() => {
+                  setAction('Details');
+                }}
+              />
+            }
+            {action === 'Add' &&
+              <AddLiquidity
+                onBack={() => {
+                  setAction('Details');
+                }}
+              />
+            }
+            {action === 'Import' &&
+              <ImportPool
+                onBack={() => {
+                  setAction('Details');
+                }}
+              />
+            }
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
@@ -307,6 +329,7 @@ line-height: 20px;
 color: rgba(255, 255, 255, 0.88);
 text-align: center;
 margin: 5px 0px 0px 0px;
+  cursor: pointer;
 `;
 
 const MainOpenableCard = styled.div`

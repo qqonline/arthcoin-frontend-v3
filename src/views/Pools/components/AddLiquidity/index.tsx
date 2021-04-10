@@ -12,13 +12,14 @@ import TransparentInfoDiv from '../../../Stablize/components/InfoDiv';
 import { Divider } from '@material-ui/core';
 import CustomModal from '../../../../components/CustomModal';
 import Grid from '@material-ui/core/Grid';
+import { ICards, IPoolData } from '../OpenableCard';
 
 type props = {
-
+  onBack: () => void;
 };
 
 const AddLiquidity: React.FC<props> = (props) => {
-  const { } = props;
+  const { onBack } = props;
   const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
 
   const [balance, setBalance] = useState<number>(500.00);
@@ -100,7 +101,7 @@ const AddLiquidity: React.FC<props> = (props) => {
       </CustomModal>
       <CustomCard>
         <CustomCardHeader>
-          <EachElementBack> <ArrowBackIos fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
+          <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
           <EachElementTitle> <CardTitle> Add Liquidity </CardTitle></EachElementTitle>
         </CustomCardHeader>
         <CustomCardContainer>
@@ -196,6 +197,7 @@ const CustomCardHeader = styled.div`
 `
 const EachElementBack = styled.div`
   flex: 0.25;
+  cursor: pointer;
 `
 
 const EachElementTitle = styled.div`
