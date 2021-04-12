@@ -14,8 +14,28 @@ type props = {
 const ImportPool: React.FC<props> = (props) => {
   const { onBack } = props;
   const [dropDownNo, setDropDownNo] = useState<number>(0);
-  const [dropDownValues, setDropDownValues] = useState<string[]>(['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC']);
-  const defaultDropdownValues = [];
+
+  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+
+  const [firstCoin, setFirstCoin] = useState<string>('Select Token');
+  const [secondCoin, setSecondCoin] = useState<string>('Select Token');
+
+  const [firstCoinDropDown, setFirstCoinDropDown] = useState<string[]>([]);
+  const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>([]);
+
+  useEffect(() => {
+    var arr: string[];
+    arr = defaultDropdownValues.filter(e => {
+      return (![firstCoin, secondCoin].includes(e))
+    });
+    setFirstCoinDropDown(arr);
+
+    var arr2: string[];
+    arr2 = defaultDropdownValues.filter(e => {
+      return (![firstCoin, secondCoin].includes(e))
+    });
+    setSecondCoinDropDown(arr2);
+  }, [firstCoin, secondCoin])
 
   return (
     <div>
@@ -33,13 +53,16 @@ const ImportPool: React.FC<props> = (props) => {
             }
           }}>
             <TokenConatiner>
-              <TokenSymbol symbol={'MAHA'} size={25} />
-              <TokenText>{'MAHA'}</TokenText>
+              {firstCoin !== 'Select Token' && <TokenSymbol symbol={firstCoin} size={25} />}
+              <TokenText>{firstCoin}</TokenText>
             </TokenConatiner>
             <KeyboardArrowDown fontSize={'default'} htmlColor={'#fffff80'} />
             {dropDownNo === 1 && <CustomImportPoolDropDown
-              dropDownValues={dropDownValues}
-              ondropDownValueChange={() => {
+              dropDownValues={firstCoinDropDown}
+              ondropDownValueChange={(data) => {
+                if (data !== secondCoin) {
+                  setFirstCoin(data);
+                }
               }}
             />}
           </CoinSelection>
@@ -54,13 +77,16 @@ const ImportPool: React.FC<props> = (props) => {
             }
           }}>
             <TokenConatiner>
-              <TokenSymbol symbol={'MAHA'} size={25} />
-              <TokenText>{'MAHA'}</TokenText>
+              {secondCoin !== 'Select Token' && <TokenSymbol symbol={secondCoin} size={25} />}
+              <TokenText>{secondCoin}</TokenText>
             </TokenConatiner>
             <KeyboardArrowDown fontSize={'default'} htmlColor={'#fffff80'} />
             {dropDownNo === 2 && <CustomImportPoolDropDown
-              dropDownValues={dropDownValues}
-              ondropDownValueChange={() => {
+              dropDownValues={secondCoinDropDown}
+              ondropDownValueChange={(data) => {
+                if(data !== firstCoin) {
+                  setSecondCoin(data);
+                }
               }}
             />}
           </CoinSelection>
