@@ -38,6 +38,7 @@ const Banks: React.FC = () => {
                     apy={'40%'}
                     poolDur={'65 Days'}
                     poolEndDate={Date.now() + 550000000}
+                    onClick={()=>{}}
                   />
                 }
               </Grid>

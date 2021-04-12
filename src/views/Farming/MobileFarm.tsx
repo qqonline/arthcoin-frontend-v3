@@ -26,6 +26,7 @@ interface IProps {
     open?: boolean;
     lockedStake?: string;
     earned?: string;
+    onClick?: () => void;
 }
 
 export const MobileFarm = (props: IProps) => {
@@ -124,6 +125,7 @@ export const MobileFarm = (props: IProps) => {
                         <ButtonContainer>
                             <div style={{ marginTop: 15 }}>
                                 <Button size={'sm'} text={'Deposit'} onClick={() => {
+                                    props?.onClick()
                                     setOpen(!open)
                                 }} />
                             </div>
