@@ -3,31 +3,35 @@ import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
+import Countdown from 'react-countdown';
 
 type props = {
   pair: [string, string];
-  wallet: string;
+  deposited?: boolean;
+  walletValue: string;
+  walletUnit: string;
   apy: string;
-  poolDuration: string;
-  days: number;
-  deposited: boolean;
-  lockedState?: string;
+  poolDur: string;
+  poolEndDate: number;
+  open?: boolean;
+  lockedStake?: string;
   earned?: string;
+  onClick?: () => void;
 };
 
 const CustomRowCard: React.FC<props> = (props) => {
 
   return (
     <CustomCardGrid>
-      <Grid container style={{padding: '32px 32px'}} alignItems={'center'}>
+      <Grid container style={{ padding: '32px 32px' }} alignItems={'center'}>
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
-            <TokenSymbol symbol={props.pair[0]} size={45}/>
-            <TokenSymbol symbol={props.pair[1]} size={45} style={{marginLeft: '-12px'}}/>
+            <TokenSymbol symbol={props?.pair[0]} size={45} />
+            <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} />
           </div>
-          <div style={{marginLeft: '16px'}}>
+          <div style={{ marginLeft: '16px' }}>
             <TableMainTextStyle>
-              {`${props.pair[0]} - ${props.pair[1]}`}
+              {`${props?.pair[0]} - ${props?.pair[1]}`}
             </TableMainTextStyle>
             <AddLiquidityButton>
               Add Liquidity
@@ -36,20 +40,27 @@ const CustomRowCard: React.FC<props> = (props) => {
         </Grid>
         <Grid item lg={3}>
           <TableMainTextStyle>
-            {props.wallet}
+            {props?.walletValue} {props?.walletUnit}
           </TableMainTextStyle>
         </Grid>
         <Grid item lg={1}>
           <TableMainTextStyle>
-            {props.apy}
+            {props?.apy}
           </TableMainTextStyle>
         </Grid>
         <Grid item lg={3}>
           <TableMainTextStyle>
-            {props.poolDuration}
+            <Countdown
+              date={props?.poolEndDate || Date.now() + 550000000}
+              renderer={({ days, hours, minutes, seconds, completed }) => {
+                return (
+                  <span>{days}d : {hours}h : {minutes}m : {seconds}s left </span>
+                )
+              }}
+            />
           </TableMainTextStyle>
           <DayText>
-            {props.days}
+            {props?.poolDur}
           </DayText>
         </Grid>
         <Grid item lg={2}>
@@ -63,7 +74,7 @@ const CustomRowCard: React.FC<props> = (props) => {
         <div style={{ display: 'flex' }}>
           Your Locked state
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props.lockedState}
+            {props?.lockedStake}
           </TableMainTextStyle>
           <WithdrawClaimButton>
             Withdraw
@@ -72,7 +83,7 @@ const CustomRowCard: React.FC<props> = (props) => {
         <div style={{ display: 'flex' }}>
           Earned:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props.earned}
+            {props?.earned}
           </TableMainTextStyle>
           <WithdrawClaimButton>
             Claim MAHA

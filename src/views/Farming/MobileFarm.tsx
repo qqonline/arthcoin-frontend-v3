@@ -17,20 +17,20 @@ import farmingSVG from '../../assets/svg/farming.svg';
 import Countdown from 'react-countdown';
 
 interface IProps {
-    title: string;
+    pair: [string, string];
     walletValue: string;
     walletUnit: string;
     apy: string;
     poolDur: string;
     poolEndDate: number;
-    open?: boolean;
+    deposited?: boolean;
     lockedStake?: string;
     earned?: string;
     onClick?: () => void;
 }
 
 export const MobileFarm = (props: IProps) => {
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(props?.deposited || false);
     // const logos = [bank.earnTokenName];
     // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
     // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
@@ -57,7 +57,7 @@ export const MobileFarm = (props: IProps) => {
                                 position: 'relative'
                             }}>
                                 <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-                                    <TokenSymbol symbol={'ARTH'} size={44} style={{}} />
+                                    <TokenSymbol symbol={props?.pair[0]} size={44} style={{}} />
                                 </div>
                                 <div style={{
                                     // zIndex: 4,
@@ -66,12 +66,12 @@ export const MobileFarm = (props: IProps) => {
                                     background: '#2A2827',
                                     borderRadius: 36
                                 }}>
-                                    <TokenSymbol symbol={'MAHA'} size={44} style={{}} />
+                                    <TokenSymbol symbol={props?.pair[1]} size={44} style={{}} />
                                 </div>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
                                 <StyledTitle>
-                                    {props?.title}
+                                    {`${props.pair[0]} - ${props.pair[1]}`}
                                 </StyledTitle>
                                 <StyledSubTitle>
                                     Add Liquidity

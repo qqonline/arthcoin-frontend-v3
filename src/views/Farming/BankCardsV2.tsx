@@ -14,7 +14,7 @@ const BankCardsV2: React.FC = () => {
 
   return (
     <DataContainer>
-      <Grid container style={{padding: '0px 32px ', marginBottom: '16px'}}>
+      <Grid container style={{ padding: '0px 32px ', marginBottom: '16px' }}>
         <Grid item lg={3}>
           <CustomTableHeading>
             Pair
@@ -41,21 +41,22 @@ const BankCardsV2: React.FC = () => {
       </Grid>
       <CustomRowCard
         pair={['ARTH', 'MAHA']}
-        wallet={'12.2 ARTH-MAHA LP'}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
         apy={'40%'}
-        poolDuration={'23d : 22h : 33m : 33s left '}
-        days={60}
-        deposited={true}
-        lockedState={'ARTH-MAHA LP'}
-        earned={'12.3 MAHA'}
+        poolDur={'65 Days'}
+        poolEndDate={Date.now() + 550000000}
+        onClick={() => { }}
+        deposited
       />
       <CustomRowCard
         pair={['ARTH', 'MAHA']}
-        wallet={'12.2 ARTH-MAHA LP'}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
         apy={'40%'}
-        poolDuration={'23d : 22h : 33m : 33s left '}
-        days={60}
-        deposited={false}
+        poolDur={'65 Days'}
+        poolEndDate={Date.now() + 550000000}
+        onClick={() => { }}
       />
     </DataContainer>
 
