@@ -4,6 +4,7 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import Countdown from 'react-countdown';
+import farmingSVG from '../../../assets/svg/farming.svg';
 
 type props = {
   pair: [string, string];
@@ -16,14 +17,15 @@ type props = {
   open?: boolean;
   lockedStake?: string;
   earned?: string;
-  onClick?: () => void;
+  onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
 };
 
 const CustomRowCard: React.FC<props> = (props) => {
 
   return (
     <CustomCardGrid>
-      <Grid container style={{ padding: '32px 32px' }} alignItems={'center'}>
+      <Grid container style={{padding: '32px 32px', position: 'relative'}} alignItems={'center'}>
+        <CardIcon src={farmingSVG} height={32} />
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
             <TokenSymbol symbol={props?.pair[0]} size={45} />
@@ -33,7 +35,7 @@ const CustomRowCard: React.FC<props> = (props) => {
             <TableMainTextStyle>
               {`${props?.pair[0]} - ${props?.pair[1]}`}
             </TableMainTextStyle>
-            <AddLiquidityButton>
+            <AddLiquidityButton onClick={() => {}}>
               Add Liquidity
             </AddLiquidityButton>
           </div>
@@ -67,6 +69,7 @@ const CustomRowCard: React.FC<props> = (props) => {
           <Button
             text="Deposit"
             size={'sm'}
+            onClick={() => props.onButtonClick('Deposit')}
           />
         </Grid>
       </Grid>
@@ -76,7 +79,7 @@ const CustomRowCard: React.FC<props> = (props) => {
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
             {props?.lockedStake}
           </TableMainTextStyle>
-          <WithdrawClaimButton>
+          <WithdrawClaimButton onClick={() => props.onButtonClick('Withdraw')}>
             Withdraw
           </WithdrawClaimButton>
         </div>
@@ -85,7 +88,7 @@ const CustomRowCard: React.FC<props> = (props) => {
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
             {props?.earned}
           </TableMainTextStyle>
-          <WithdrawClaimButton>
+          <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
             Claim MAHA
           </WithdrawClaimButton>
         </div>
@@ -100,6 +103,7 @@ const CustomCardGrid = styled.div`
   box-sizing: border-box;
   border-radius: 12px;
   margin: 8px 0px;
+  position: relative;
 `
 
 const TableMainTextStyle = styled.p`
@@ -160,8 +164,17 @@ const WithdrawClaimButton = styled.p`
   color: #FF7F57;
   margin: 0 0 0 10px;
   cursor: pointer;
-
 `
+
+const CardIcon = styled.img`
+  transform: translate(-50%,-50% );
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  z-index: 10;
+`
+
+
 
 export default CustomRowCard;
 

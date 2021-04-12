@@ -23,6 +23,7 @@ type props = {
   multiIcons?: boolean;
   symbol1?: string;
   symbol2?: string;
+  dontShowBackgroundContainer?: boolean;
 };
 
 const CustomInputContainer: React.FC<props> = (props) => {
@@ -31,7 +32,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
 
   return (
-    <IConatiner>
+    <IConatiner style={props.dontShowBackgroundContainer? {padding: '0px', backgroundColor: 'transparent'}: {}} >
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
