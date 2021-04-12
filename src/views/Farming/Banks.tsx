@@ -19,7 +19,6 @@ const Banks: React.FC = () => {
       <Page>
         <Route exact path={path}>
           <PageHeader
-            icon={<img alt="staking" src={StakingIcon} width="200px" />}
             title="Farming"
             subtitle="Earn MAHA by providing liquidity."
             learnMoreLink="#"
