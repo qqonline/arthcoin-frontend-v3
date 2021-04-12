@@ -30,14 +30,17 @@ const Banks: React.FC = () => {
                 {!isMobile ?
                   <BankCards />
                   :
-                  <MobileFarm />
+                  <MobileFarm 
+                    title={'ARTH-MAHA'}
+                    walletUnit={'ARTH-MAHA LP'}
+                    walletValue={'12.2'}
+                    apy={'40%'}
+                    poolDur={'65 Days'}
+                    poolEndDate={Date.now() + 550000000}
+                  />
                 }
               </Grid>
-              {/* <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
-                <PriceInformation stat={cash} />
-              </Grid> */}
             </Grid>
-            {/* <BankCards /> */}
           </Container>
         </Route>
         <Route path={`${path}/:bankId`}>

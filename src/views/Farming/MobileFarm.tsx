@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
@@ -13,9 +13,23 @@ import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
 import TokenSymbol from '../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
+import farmingSVG from '../../assets/svg/farming.svg';
+import Countdown from 'react-countdown';
 
-export const MobileFarm = (props: any) => {
+interface IProps {
+    title: string;
+    walletValue: string;
+    walletUnit: string;
+    apy: string;
+    poolDur: string;
+    poolEndDate: number;
+    open?: boolean;
+    lockedStake?: string;
+    earned?: string;
+}
 
+export const MobileFarm = (props: IProps) => {
+    const [open, setOpen] = useState<boolean>(false);
     // const logos = [bank.earnTokenName];
     // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
     // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
@@ -24,85 +38,134 @@ export const MobileFarm = (props: any) => {
     // else logos.push(bank.depositTokenName);
     return (
         <StyledCardWrapper>
+            <CardIcon>
+                <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
+                    <img src={farmingSVG} height={32} />
+                </div>
+            </CardIcon>
             <Card>
                 <CardContent>
                     <StyledContent>
-                        <div style={{
-                            flexDirection: 'row',
-                            display: 'flex',
-                            width: '20%',
-                            position: 'absolute',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            top: -50,
-                            // left: '33%',
-                            marginBottom: 15,
-                        }}>
-                            <div style={{ zIndex: 5, background: '#2A2827', borderRadius: 36 }}>
-                                <TokenSymbol symbol={'ARTH'} size={54} style={{}} />
-                            </div>
-                            {/* <div style={{
-                zIndex: 4,
-                position: 'absolute',
-                left: 50,
-                background: '#2A2827',
-                borderRadius: 36
-              }}>
-                <TokenSymbol symbol={boardroom.depositTokenName} size={54} style={{}} />
-              </div> */}
-                        </div>
                         <div style={{ marginTop: 10 }} />
-                        <StyledTitle>
-                            DAI
-            </StyledTitle>
-                        <StyledSubTitle>
-                            DAI
-            </StyledSubTitle>
+                        <CardHeaderDiv>
+                            <div style={{
+                                flexDirection: 'row',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                position: 'relative'
+                            }}>
+                                <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
+                                    <TokenSymbol symbol={'ARTH'} size={44} style={{}} />
+                                </div>
+                                <div style={{
+                                    // zIndex: 4,
+                                    position: 'absolute',
+                                    left: 30,
+                                    background: '#2A2827',
+                                    borderRadius: 36
+                                }}>
+                                    <TokenSymbol symbol={'MAHA'} size={44} style={{}} />
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
+                                <StyledTitle>
+                                    {props?.title}
+                                </StyledTitle>
+                                <StyledSubTitle>
+                                    Add Liquidity
+                                </StyledSubTitle>
+                            </div>
+                        </CardHeaderDiv>
                         <Grid container style={{ display: 'flex', width: '100%', height: 'fit-content', marginTop: 20 }}>
                             <Grid item xs={12} direction={'row'} justify={'space-between'} style={{ display: 'flex', marginTop: 5 }}>
                                 <DescriptionDiv>
+                                    Wallet
+                                    <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                                </DescriptionDiv>
+                                <div style={{ flexDirection: 'column', display: 'flex' }}>
+                                    <MainSpan>{props?.walletValue} {props?.walletUnit}</MainSpan>
+                                    {/* <SecondSpan>{'100'}</SecondSpan> */}
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} direction={'row'} justify={'space-between'} style={{ display: 'flex', marginTop: 15 }}>
+                                <DescriptionDiv>
                                     APY
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                                    <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
                                 </DescriptionDiv>
                                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                                    <MainSpan>{'props.borrowDetails.APY.apy1'}</MainSpan>
-                                    <SecondSpan>{'props.borrowDetails.APY.apy2'}</SecondSpan>
+                                    <MainSpan>{props?.apy}</MainSpan>
+                                    {/* <PercentageChangeSpan
+                                        // style={props?.borrowDetails?.borrowInterest?.percentageChangeDirection === 'positive' ?
+                                        //     { color: '#20C974' }
+                                        //     : { color: '#FA4C69' }}
+                                    >40%</PercentageChangeSpan> */}
                                 </div>
                             </Grid>
                             <Grid item xs={12} direction={'row'} justify={'space-between'} style={{ display: 'flex', marginTop: 15 }}>
-                                <DescriptionDiv>
-                                    Borrow Interest
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                                <DescriptionDiv style={{ maxWidth: 100 }}>
+                                    Pool Duration
+                                    <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
                                 </DescriptionDiv>
                                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                                    <MainSpan>{'props.borrowDetails.borrowInterest.percentage'}</MainSpan>
-                                    <PercentageChangeSpan
-                                        style={props?.borrowDetails?.borrowInterest?.percentageChangeDirection === 'positive' ?
-                                            { color: '#20C974' }
-                                            : { color: '#FA4C69' }}
-                                    >{props?.borrowDetails?.borrowInterest?.percentageChange}</PercentageChangeSpan>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} direction={'row'} justify={'space-between'} style={{ display: 'flex', marginTop: 15 }}>
-                                <DescriptionDiv>
-                                    Trading Fee
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                                </DescriptionDiv>
-                                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                                    <MainSpan>{props?.borrowDetails?.tradingFee?.borrow1}</MainSpan>
-                                    <SecondSpan>{props?.borrowDetails?.tradingFee?.borrow2}</SecondSpan>
+                                    <Countdown
+                                        date={props?.poolEndDate || Date.now() + 550000000}
+                                        renderer={({ days, hours, minutes, seconds, completed }) => {
+                                            return (
+                                                <MainSpan>{days}d : {hours}h : {minutes}m : {seconds}s left </MainSpan>
+                                            )
+                                        }}
+                                    />
+                                    <SecondSpan>{props?.poolDur}</SecondSpan>
                                 </div>
                             </Grid>
 
                         </Grid>
                         <ButtonContainer>
                             <div style={{ marginTop: 15 }}>
-                                <Button size={'sm'} text={'Farm'} onClick={props?.onFarmClick} />
+                                <Button size={'sm'} text={'Deposit'} onClick={() => {
+                                    setOpen(!open)
+                                }} />
                             </div>
                         </ButtonContainer>
+
                     </StyledContent>
                 </CardContent>
+                {open ?
+                    <OpenableDiv>
+                        <InfoDiv>
+                            <div style={{ display: 'flex', flexDirection: 'row', textAlign: 'center', alignSelf: 'center' }}>
+                                <InfoDivLeftSpan>
+                                    Your Locked stake:
+                                </InfoDivLeftSpan>
+                                <InfoDivRightSpan>
+                                    {props?.lockedStake}
+                                </InfoDivRightSpan>
+                            </div>
+                            <Withdraw>
+                                Withdraw
+                            </Withdraw>
+                        </InfoDiv>
+                        <InfoDiv>
+                            <div style={{ display: 'flex', flexDirection: 'row', textAlign: 'center', alignSelf: 'center' }}>
+                                <InfoDivLeftSpan>
+                                    Earned:
+                                </InfoDivLeftSpan>
+                                <InfoDivRightSpan>
+                                    {props?.earned}
+                                </InfoDivRightSpan>
+                            </div>
+                            <Withdraw>
+                                Claim MAHA
+                            </Withdraw>
+                        </InfoDiv>
+
+                    </OpenableDiv>
+                    :
+                    <></>
+                }
             </Card>
+
         </StyledCardWrapper >
     );
 };
@@ -170,8 +233,63 @@ const ButtonContainer = styled.div`
   width: 100%;
   margin-top: 10px;
   flex-direction: column;
-  height:
+//   height:
 `;
+
+const OpenableDiv = styled.div`
+    background: #423B38;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+    border-radius: 0px 0px 12px 12px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    // align-items: center;
+    justify-content: center;
+    // transform: matrix(1, 0, 0, -1, 0, 0);
+    padding: 20px 0px;
+`;
+
+const InfoDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px 0px 0px;
+    // padding: 
+    text-align: center;
+    align-items: center;
+`;
+
+const Withdraw = styled.div`
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FF7F57;
+    margin: 8px 0px 0px 0px;
+`;
+
+const InfoDivLeftSpan = styled.div`
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 140%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.64);
+`;
+
+const InfoDivRightSpan = styled.div`
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.88);
+`;
+
 const StyledCardWrapper = styled.div`
   display: flex;
   margin-bottom: 25px;
@@ -233,18 +351,31 @@ const PercentageContainer = styled.div`
   padding: 13px 15px;
 `;
 
-const StyledTitle = styled.h3`
-  color: ${(props) => props.theme.color.grey[200]};
-  margin-top: 10px;
-  padding: 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  color: #FFFFFF;
-  opacity: 0.88;
+const StyledTitle = styled.span`
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+    opacity: 0.88;
+`;
+
+const CardHeaderDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // background: grey;
+`;
+
+const CardIcon = styled.div`
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    // background: grey;
+    position: absolute;
+    margin: -16px 0px 0px 0px;
+    left: 45%;    
 `;
 
 const DiscountDivContainer = styled.div`
@@ -289,13 +420,12 @@ const TitleText = styled.div`
 `;
 
 const StyledSubTitle = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 140%;
-  text-align: center;
-  color: #FFFFFF;
-  opacity: 0.88;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 140%;
+    color: #FF7F57;
+    opacity: 0.88;
 `;
 
