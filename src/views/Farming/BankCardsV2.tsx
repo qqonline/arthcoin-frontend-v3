@@ -188,13 +188,12 @@ const BankCardsV2: React.FC = () => {
     return(
       <CustomRowCard
         pair={['ARTH', 'MAHA']}
-        wallet={'12.2 ARTH-MAHA LP'}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
         apy={'40%'}
-        poolEndDate={''}
-        poolDur={60}
+        poolDur={'65 Days'}
         deposited={true}
-        lockedState={'ARTH-MAHA LP'}
-        earned={'12.3 MAHA'}
+        poolEndDate={Date.now() + 550000000}
         onButtonClick={(data) => {
           setOpenModal(true);
           setAction(data);

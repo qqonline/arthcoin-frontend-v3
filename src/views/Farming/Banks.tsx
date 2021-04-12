@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
@@ -15,6 +15,7 @@ import { ButtonGroup } from 'react-bootstrap';
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
   const isMobile = useMediaQuery({ 'maxWidth': '600px' })
+  const [selectedId, setId] = useState<number>(1)
   let headerList = [
     {
       id: 1,
@@ -63,10 +64,22 @@ const Banks: React.FC = () => {
             learnMoreLink="#"
           />
           <Container size="lg">
-            <div style={{overflowX: 'scroll'}}>
+            <ScrollDiv style={{ overflowX: 'scroll' }}>
               <ButtonGroupDiv>
                 {headerList.map((obj) =>
-                  <TextDiv key={obj?.id}>
+                  <TextDiv
+                    style={selectedId === obj.id ? {
+                      background: selectedId === obj.id ? '#423B38' : 'transparent',
+                      borderRadius: '4px',
+                      height: selectedId === obj.id ? 40 : undefined,
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      textAlignLast: 'center'
+                    }:{}}
+                    key={obj?.id}
+                    onClick={() => setId(obj?.id)}
+                  >
                     <Text1>
                       {obj?.name}
                     </Text1>
@@ -76,7 +89,7 @@ const Banks: React.FC = () => {
                   </TextDiv>
                 )}
               </ButtonGroupDiv>
-            </div>
+            </ScrollDiv>
             <div className="border-bottom width-100 margin-bottom-20 margin-top-10" />
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -85,7 +98,7 @@ const Banks: React.FC = () => {
                 {/*  :*/}
                 {/*  <BankCards />*/}
                 {/*}*/}
-                <BankCardsV2/>
+                <BankCardsV2 />
               </Grid>
             </Grid>
           </Container>
@@ -105,6 +118,7 @@ const ButtonGroupDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: fit-content;
+  align-items: center;
 `;
 
 const TextDiv = styled.div`
@@ -114,10 +128,21 @@ const TextDiv = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: fit-content;
+  width: 100%;
   margin: 0px 6px;
   padding: 0px 12px;
   // background: grey;
+  &:hover {
+    border: 0.25px solid #aaaaaa;
+    cursor: pointer;
+  }
+`;
+
+const ScrollDiv = styled.div`
+::-webkit-scrollbar {
+  height: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
 `;
 
 const Text1 = styled.div`
@@ -127,6 +152,7 @@ const Text1 = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: #FFFFFF;
+  width: fit-content;
 `;
 
 const Text2 = styled.div`
