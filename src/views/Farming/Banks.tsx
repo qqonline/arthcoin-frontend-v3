@@ -4,7 +4,7 @@ import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 import BankPage from '../Bank';
-import BankCards from './BankCardsV2';
+import BankCardsV2 from './BankCardsV2';
 import StakingIcon from '../../assets/svg/Staking.svg';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
@@ -63,34 +63,29 @@ const Banks: React.FC = () => {
             learnMoreLink="#"
           />
           <Container size="lg">
-            <ButtonGroupDiv>
-              {headerList.map((obj) =>
-                <TextDiv key={obj?.id}>
-                  <Text1>
-                    {obj?.name}
-                  </Text1>
-                  <Text2>
-                    {obj?.count}
-                  </Text2>
-                </TextDiv>
-              )}
-            </ButtonGroupDiv>
+            <div style={{overflowX: 'scroll'}}>
+              <ButtonGroupDiv>
+                {headerList.map((obj) =>
+                  <TextDiv key={obj?.id}>
+                    <Text1>
+                      {obj?.name}
+                    </Text1>
+                    <Text2>
+                      {obj?.count}
+                    </Text2>
+                  </TextDiv>
+                )}
+              </ButtonGroupDiv>
+            </div>
             <div className="border-bottom width-100 margin-bottom-20 margin-top-10" />
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                {!isMobile ?
-                  <BankCards />
-                  :
-                  <MobileFarm
-                    pair={['ARTH', 'MAHA']}
-                    walletUnit={'ARTH-MAHA LP'}
-                    walletValue={'12.2'}
-                    apy={'40%'}
-                    poolDur={'65 Days'}
-                    poolEndDate={Date.now() + 550000000}
-                    onClick={() => { }}
-                  />
-                }
+                {/*{!isMobile ?*/}
+                {/*  <BankCardsV2 />*/}
+                {/*  :*/}
+                {/*  <BankCards />*/}
+                {/*}*/}
+                <BankCardsV2/>
               </Grid>
             </Grid>
           </Container>

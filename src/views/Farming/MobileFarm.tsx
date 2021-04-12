@@ -26,11 +26,11 @@ interface IProps {
     deposited?: boolean;
     lockedStake?: string;
     earned?: string;
-    onClick?: () => void;
+    onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
 }
 
 export const MobileFarm = (props: IProps) => {
-    const [open, setOpen] = useState<boolean>(props?.deposited || false);
+    const [open, setOpen] = useState<boolean>(true);
     // const logos = [bank.earnTokenName];
     // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
     // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
@@ -125,9 +125,8 @@ export const MobileFarm = (props: IProps) => {
                         <ButtonContainer>
                             <div style={{ marginTop: 15 }}>
                                 <Button size={'sm'} text={'Deposit'} onClick={() => {
-                                    props?.onClick()
-                                    setOpen(!open)
-                                }} />
+                                  props.onButtonClick('Deposit')
+                                }}/>
                             </div>
                         </ButtonContainer>
 
@@ -144,7 +143,9 @@ export const MobileFarm = (props: IProps) => {
                                     {props?.lockedStake}
                                 </InfoDivRightSpan>
                             </div>
-                            <Withdraw>
+                            <Withdraw onClick={() => {
+                              props.onButtonClick('Withdraw')
+                            }}>
                                 Withdraw
                             </Withdraw>
                         </InfoDiv>
@@ -157,7 +158,9 @@ export const MobileFarm = (props: IProps) => {
                                     {props?.earned}
                                 </InfoDivRightSpan>
                             </div>
-                            <Withdraw>
+                            <Withdraw onClick={() => {
+                              props.onButtonClick('Claim')
+                            }}>
                                 Claim MAHA
                             </Withdraw>
                         </InfoDiv>

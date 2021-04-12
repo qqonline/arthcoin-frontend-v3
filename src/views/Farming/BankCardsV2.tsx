@@ -8,11 +8,15 @@ import CustomRowCard from './components/CustomRowCard';
 import CustomModal from '../../components/CustomModal';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import Button from '../../components/Button';
+import { useMediaQuery } from 'react-responsive';
+import { MobileFarm } from './MobileFarm';
 
 
 
 const BankCardsV2: React.FC = () => {
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const [openModal, setOpenModal] = useState<boolean>(true);
+
   const [action, setAction] = useState<'Deposit' | 'Withdraw' | 'Claim' | ''>('')
 
   const DepositModal = () => {
@@ -55,8 +59,7 @@ const BankCardsV2: React.FC = () => {
             <Button
               text={'Deposit'}
               size={'lg'}
-              onClick={() => {
-                setOpenModal(false)
+              onClick={() => {setOpenModal(false)
               }}
             />
           </Grid>
@@ -163,9 +166,46 @@ const BankCardsV2: React.FC = () => {
     )
   }
 
+  const MobileCardRender = () => {
+    return (
+      <MobileFarm
+        pair={['MAHA', 'ARTH']}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
+        apy={'40%'}
+        poolDur={'65 Days'}
+        deposited={true}
+        poolEndDate={Date.now() + 550000000}
+        onButtonClick={(data)=>{
+          setOpenModal(true);
+          setAction(data);
+        }}
+      />
+    )
+  };
+
+  const DesktopCardRender = () => {
+    return(
+      <CustomRowCard
+        pair={['ARTH', 'MAHA']}
+        wallet={'12.2 ARTH-MAHA LP'}
+        apy={'40%'}
+        poolEndDate={''}
+        poolDur={60}
+        deposited={true}
+        lockedState={'ARTH-MAHA LP'}
+        earned={'12.3 MAHA'}
+        onButtonClick={(data) => {
+          setOpenModal(true);
+          setAction(data);
+        }}
+      />
+    )
+  }
+
   return (
     <DataContainer>
-      <Grid container style={{ padding: '0px 32px ', marginBottom: '16px' }}>
+      {!isMobile && <Grid container style={{ padding: '0px 32px ', marginBottom: '16px' }}>
         <Grid item lg={3}>
           <CustomTableHeading>
             Pair
@@ -189,35 +229,15 @@ const BankCardsV2: React.FC = () => {
         <Grid item lg={2}>
 
         </Grid>
-      </Grid>
-      <CustomRowCard
-        pair={['ARTH', 'MAHA']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-        }}
-        deposited
-      />
-      <CustomRowCard
-        pair={['ARTH', 'MAHA']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-        }}
-      />
+      </Grid>}
+      {!isMobile? DesktopCardRender(): MobileCardRender()}
+
       {openModal && action !== '' && <CustomModal
         closeButton
-        handleClose={() => setOpenModal(false)}
+        handleClose={() => {
+          setAction('');
+          setOpenModal(false)
+        }}
         open={openModal}
         modalTitleStyle={{}}
         modalContainerStyle={{}}
@@ -240,6 +260,12 @@ const DataContainer = styled.div`
   backdrop-filter: blur(70px);
   border-radius: 12px;
   padding: 24px 32px;
+  @media (max-width: 600px) {
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 12px;
+    padding: 0;
+  }
 `
 
 const CustomTableHeading = styled.span`
