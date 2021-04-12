@@ -12,44 +12,8 @@ const BankCardsV2: React.FC = () => {
 
   return (
     <StyledCards>
-      {/* <VFATAnn>
-        <span role="img" aria-label="farming">
-          🌾
-        </span>{' '}
-        Unofficial farming dashboard at{' '}
-        <a
-          href="https://vfat.tools/arth"
-          style={{ color: '#FFf' }}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          vfat.tools/arth
-        </a>{' '}
-        <span role="img" aria-label="farming">
-          🌾
-        </span>
-      </VFATAnn> */}
-
-      {/* {inactiveRows[0].length > 0 && (
-        <StyledInactiveNoticeContainer>
-          <Notice color="grey">
-            <b>You have banks where the mining has finished.</b>
-            <br />
-            Please withdraw and settle your stakes.
-          </Notice>
-        </StyledInactiveNoticeContainer>
-      )} */}
-
 
       <Grid container spacing={3} justify="center" alignItems="stretch">
-        {/* {activeBanks.map((item, j) => {
-          console.log(activeBanks);
-          return (
-            <Grid key={j} container item xs={12} md={6} lg={6} xl={6}>
-              <StakingCard bank={activeBanks[0]} />
-            </Grid>
-          )
-        })} */}
         <Grid container item xs={12} md={6} lg={6} xl={6}>
           <StakingCard bank={activeBanks[0]} />
         </Grid>

@@ -8,24 +8,31 @@ import BankCards from './BankCardsV2';
 import StakingIcon from '../../assets/svg/Staking.svg';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
+import { useMediaQuery } from 'react-responsive';
+import { MobileFarm } from './MobileFarm';
 
 const Banks: React.FC = () => {
   const { path } = useRouteMatch();
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   return (
     <Switch>
       <Page>
         <Route exact path={path}>
           <PageHeader
             icon={<img alt="staking" src={StakingIcon} width="200px" />}
-            title="Farm and Earn Rewards"
-            subtitle="Earn ARTH by providing liquidity."
+            title="Farming"
+            subtitle="Earn MAHA by providing liquidity."
             learnMoreLink="#"
           />
           <Container size="lg">
             <div className="border-bottom width-100 margin-bottom-20" />
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <BankCards />
+                {!isMobile ?
+                  <BankCards />
+                  :
+                  <MobileFarm />
+                }
               </Grid>
               {/* <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
                 <PriceInformation stat={cash} />
