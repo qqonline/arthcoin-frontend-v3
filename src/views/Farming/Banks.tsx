@@ -70,12 +70,6 @@ const Banks: React.FC = () => {
                   <TextDiv
                     style={selectedId === obj.id ? {
                       background: selectedId === obj.id ? '#423B38' : 'transparent',
-                      borderRadius: '4px',
-                      height: selectedId === obj.id ? 40 : undefined,
-                      alignItems: 'center',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      textAlignLast: 'center'
                     }:{}}
                     key={obj?.id}
                     onClick={() => setId(obj?.id)}
@@ -119,22 +113,23 @@ const ButtonGroupDiv = styled.div`
   flex-direction: row;
   width: fit-content;
   align-items: center;
+  padding: 6px 0;
 `;
 
 const TextDiv = styled.div`
-  height: 52px;
-  display: flex;
+  height: 40px;
+  display: inline-flex;
   text-align: center;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: 100%;
+  border-radius: 4px;
   margin: 0px 6px;
   padding: 0px 12px;
+  cursor: pointer;
   // background: grey;
   &:hover {
-    border: 0.25px solid #aaaaaa;
-    cursor: pointer;
+    background: #423B3860;
   }
 `;
 
@@ -145,17 +140,17 @@ const ScrollDiv = styled.div`
 }
 `;
 
-const Text1 = styled.div`
+const Text1 = styled.p`
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
   color: #FFFFFF;
-  width: fit-content;
+  margin: 0;
 `;
 
-const Text2 = styled.div`
+const Text2 = styled.p`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   padding: 2px 5px;
