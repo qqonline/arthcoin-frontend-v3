@@ -75,7 +75,7 @@ const CustomInfoCard = styled.div`
   backdrop-filter: blur(21px);
   border-radius: 12px;
   padding: 32px;
-  min-height: 234px;
+  min-height: 226px;
   @media (max-width: 600px) {
     padding: 16px;
     min-height: auto;

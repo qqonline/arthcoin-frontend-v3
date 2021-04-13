@@ -22,6 +22,8 @@ import BondingDiscount from './components/BondingDiscount';
 import RewardRates from './components/RewardRates';
 import FeeRates from './components/FeeRates';
 import CoinsPrice from './components/CoinsPrice';
+import BasicInfo from './components/BasicInfo';
+import StakeBox from './components/StakeBox';
 
 
 const FaqData = [
@@ -102,9 +104,11 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
+            <BasicInfo />
+            <StakeBox/>
           </Grid>
         </Grid>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{marginTop: '8px'}}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <BondingDiscount />
           </Grid>
@@ -115,7 +119,7 @@ const Home: React.FC = () => {
             <FeeRates />
           </Grid>
         </Grid>
-        <Grid container spacing={2} >
+        <Grid container spacing={2} style={{marginTop: '8px'}}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="MAHA"
