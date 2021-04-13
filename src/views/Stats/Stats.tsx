@@ -21,6 +21,7 @@ import useFundAmount from '../../hooks/useFundAmount';
 import BondingDiscount from './components/BondingDiscount';
 import RewardRates from './components/RewardRates';
 import FeeRates from './components/FeeRates';
+import CoinsPrice from './components/CoinsPrice';
 
 
 const FaqData = [
@@ -100,75 +101,9 @@ const Home: React.FC = () => {
 
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-            <PriceInformation stat={cash} />
+            <CoinsPrice />
           </Grid>
         </Grid>
-        <div className="margin-top-bottom-20">
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <DistributonSection />
-            </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              <StatCard
-                statData={[
-                  {
-                    title: `${getDisplayBalance(cashToBondConversionLimit)} ARTH`,
-                    subTitle: 'Debt Available for Purchase',
-                    tooltipHtml:
-                      'The amount of debt issued by the protocol that is available for purchase.',
-                  },
-                  {
-                    title: `${getDisplayBalance(accumulatedSeigniorage)} ARTH`,
-                    subTitle: 'Redeemable Debt',
-                    tooltipHtml:
-                      'The amount of debt that can currently be paid off by the protocol. This is redeemable by ARTHB holders at a 1:1 ratio.',
-                  },
-                  {
-                    title: `${getDisplayBalance(bondCirculatingSupply)} ARTHB`,
-                    subTitle: 'Outstanding Debt',
-                    tooltipHtml:
-                      'The amount of debt that the protocol has to pay off.',
-                  },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              {/* <Grid container spacing={2}> */}
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <StatCard
-                  statData={[
-                    {
-                      title: rainyDayFund
-                        ? `${commify(getDisplayBalance(rainyDayFund, 18, 0))} ARTH`
-                        : '-',
-                      subTitle: 'Rainy Day Fund',
-                      tooltipHtml:
-                        'A fund that\'ll be used during a black friday event. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the rainy day fund. ',
-                    },
-                    {
-                      title: ecosystemFund
-                        ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH`
-                        : '-',
-                      subTitle: 'Ecosystem Fund',
-                      tooltipHtml:
-                        'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
-                    },
-                    {
-                      title: ecosystemFund
-                        ? `1%`
-                        : '-',
-                      subTitle: 'Stability',
-                      tooltipHtml:
-                        'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
-                    },
-                  ]}
-                />
-              </Grid>
-              {/* </Grid> */}
-            </Grid>
-          </Grid>
-        </div>
-
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <BondingDiscount />
