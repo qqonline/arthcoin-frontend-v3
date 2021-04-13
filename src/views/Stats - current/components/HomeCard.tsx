@@ -1,14 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import UniswapArrowIcon from '../../../assets/img/uniswapArrow.svg';
 import { TokenStat } from '../../../basis-cash/types';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
-// import Card from '../../../components/InfoCard';
-import Spacer from '../../../components/Spacer';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import CallMadeIcon from '@material-ui/icons/CallMade';
 
 interface HomeCardProps {
   title: string;
@@ -27,7 +23,6 @@ const HomeCard: React.FC<HomeCardProps> = ({
   liquidity,
   supplyLabel = 'Total Supply',
   stat,
-  uniswapInputAddress
 }) => {
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
@@ -47,7 +42,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
         <CardContent>
           <CardSection>
             <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
-              {title} Price
+              Price
             </div>
             {stat ? (
               <StyledValue>
@@ -57,12 +52,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
                 '-'
               )}
           </CardSection>
-          <CardSection>
+          {/* <CardSection>
             <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
-              {title} Liquidity
+              Liquidity
             </div>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
-          </CardSection>
+          </CardSection> */}
           <CardSection>
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
               {supplyLabel}
@@ -70,12 +65,13 @@ const HomeCard: React.FC<HomeCardProps> = ({
             {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : '-'}
           </CardSection>
         </CardContent>
-        <UniswapLink
+
+        {/* <UniswapLink
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
-          <LinkText>Buy {symbol} from MahaSwap <CallMadeIcon style={{ fontSize: 15 }} /></LinkText>
-        </UniswapLink>
+          <LinkText>Buy {symbol} from Uniswap </LinkText>
+        </UniswapLink> */}
       </Card>
     </Wrapper>
   );
@@ -100,34 +96,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const UniswapLink = styled.a`
-  color: #fff;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: center;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  text-decoration: none;
-  padding: 20px;
-`;
-
-const LinkText = styled.span`
-  text-align: center;
-  margin: 0 15px 5px;
-  color: #f7653b;
-  font-size: 16px;
-  padding: 20px;
-  &:hover {
-    background: #2a2827;
-    border-radius: 6px;
-    padding: 20px;
-  }
-  &:focus {
-    background: #423b38;
-    border-radius: 6px;
-    padding: 20px;
-  }
-`;
 
 const CardContent = styled.div`
   display: flex;
@@ -148,14 +116,6 @@ const CardHeader = styled.h2`
   padding: 20px;
 `;
 
-const StyledCards = styled.div`
-  padding: 5px 0;
-  color: #fff;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const StyledValue = styled.span`
   display: inline-block;
   font-size: 18px;
@@ -171,6 +131,7 @@ const CardSection = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
+
   &.right {
     text-align: right;
   }
@@ -196,7 +157,7 @@ const Card = styled.div`
     rgba(255, 255, 255, 0) 100%
   );
   background: rgba(255, 255, 255, 0.02);
-  // backdrop-filter: blur(70px);
+  backdrop-filter: blur(70px);
   border-radius: 12px;
 `;
 const SubTitle = styled.div`

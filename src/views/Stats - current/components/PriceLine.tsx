@@ -4,12 +4,10 @@ import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useSelector } from 'react-redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { TokenStat } from '../../../basis-cash/types';
-import UpTriangle from '../../../assets/svg/UpTriangle.svg';
 import theme from '../../../theme';
-import useBasisCash from '../../../hooks/useBasisCash';
 
 const BorderLinearProgress = withStyles((theme1: Theme) =>
   createStyles({
@@ -39,15 +37,7 @@ interface IProps {
 }
 
 const PriceLine: React.FC<IProps> = (props) => {
-  const basisCash = useBasisCash();
-
-  const [targetPrice, setTargetPrice] = useState<BigNumber>(useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashTargetPrice))
-  useEffect(() => {
-    if (basisCash) {
-      basisCash.getTargetPrice().then(setTargetPrice)
-      // basisCash.getCashPriceInLastTWAP().then(res => console.log('await', getDisplayBalance(res)))
-    }
-  }, [basisCash])
+  const cashTargetPrice = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashTargetPrice)
   const arthPrice = props.stat?.priceInDAI
 
   return (
@@ -57,32 +47,27 @@ const PriceLine: React.FC<IProps> = (props) => {
         <TitleBold>{arthPrice && arthPrice.gt(0) ? `$${getDisplayBalance(arthPrice)}` : '-'}</TitleBold>
         {/* <IncreasedText>+0.15%</IncreasedText> */}
       </div>
-      {true && (<LinearProgressDiv>
-        <TimeComponent>24 h</TimeComponent>
-        {/* <ResponsiveLabelContainer> */}
-        <LabelComponentLite noMargin>Low</LabelComponentLite>
-        <LabelComponentBold>$0.96</LabelComponentBold>
-        {/* </ResponsiveLabelContainer> */}
+      {false && (<LinearProgressDiv>
+        <TimeComponent>24hr</TimeComponent>
+        <ResponsiveLabelContainer>
+          <LabelComponentLite noMargin>Low</LabelComponentLite>
+          <LabelComponentBold>$0.96</LabelComponentBold>
+        </ResponsiveLabelContainer>
         <div style={{ position: 'relative' }}>
           <div className="dialog-class margin-bottom-10">
             <LabelComponentLite>Target Price</LabelComponentLite>
-            <LabelComponentBold>${getDisplayBalance(targetPrice)}</LabelComponentBold>
+            <LabelComponentBold>${getDisplayBalance(cashTargetPrice)}</LabelComponentBold>
           </div>
           <BorderLinearProgress variant="determinate" value={50} />
           <div className="dialog-class margin-top-10">
-            {/* <ResponsiveLabelContainer> */}
-              {/* <img src={UpTriangle} height="5" style={{ marginTop: -3 }} /> */}
-              {/* <div> */}
-                <LabelComponentLite>Current Price</LabelComponentLite>
-                <LabelComponentBold color="#F7653B">${'0.98'}</LabelComponentBold>
-              {/* </div> */}
-            {/* </ResponsiveLabelContainer> */}
+            <LabelComponentLite>Current Price</LabelComponentLite>
+            <LabelComponentBold color="#F7653B">$0.98</LabelComponentBold>
           </div>
         </div>
-        {/* <ResponsiveLabelContainer> */}
-        <LabelComponentLite noMargin>High</LabelComponentLite>
-        <LabelComponentBold>$1.6</LabelComponentBold>
-        {/* </ResponsiveLabelContainer> */}
+        <ResponsiveLabelContainer>
+          <LabelComponentLite noMargin>High</LabelComponentLite>
+          <LabelComponentBold>$1.6</LabelComponentBold>
+        </ResponsiveLabelContainer>
       </LinearProgressDiv>)}
     </StatContainer>
   );
@@ -90,9 +75,7 @@ const PriceLine: React.FC<IProps> = (props) => {
 
 const ResponsiveLabelContainer = styled.div`
   @media (max-width: 768px) {
-    flex-direction: column;
-    // width: 50%
-    // background: red
+    flex-direction: column-reverse;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,7 +104,7 @@ const LinearProgressDiv = styled.div`
   display: flex !important;
   align-items: center;
   justify-content: center;
-  padding-right: 50px;
+  padding-right: 30px;
   @media (max-width: 768px) {
     padding-bottom: 30px;
   }
@@ -149,7 +132,7 @@ const TimeComponent = styled.div`
   color: #ffffff;
   opacity: 0.6;
   padding: 2px 5px;
-  margin: 0px 10px;
+  margin: 0px 4px;
 `;
 
 const LabelComponentLite = styled.div`

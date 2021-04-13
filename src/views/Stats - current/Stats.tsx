@@ -1,9 +1,6 @@
-import { AppState } from '../../state';
-import { BigNumber } from 'ethers';
 import { commify } from 'ethers/lib/utils';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import { OverviewData } from './types';
-import { useSelector } from 'react-redux';
 import Container from '../../components/Container';
 import DistributonSection from './components/DistributonSection';
 import EpochTimer from './components/EpochTimer';
@@ -48,6 +45,7 @@ const FaqData = [
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
+
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     const [cash, bond, share] = await Promise.all([
@@ -55,29 +53,22 @@ const Home: React.FC = () => {
       basisCash.getBondStat(),
       basisCash.getShareStat(),
     ]);
-    // console.log('bond', bond)
+
     setStats({ cash, bond, share });
   }, [basisCash, setStats]);
 
   useEffect(() => {
     if (basisCash) {
       fetchStats().catch((err) => console.error(err.stack));
-      // @ts-ignore
-      // console.log('boardroom data', basisCash.getBoardroom('mahaLiquidity', 'v1'))
     }
   }, [basisCash, fetchStats]);
-
-  const accumulatedSeigniorage = useSelector<AppState, BigNumber>(s => s.treasury.coreState.accumulatedSeigniorage)
-  const cashToBondConversionLimit = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashToBondConversionLimit)
-  const bondCirculatingSupply = useSelector<AppState, BigNumber>(s => s.treasury.bondCirculatingSupply)
 
   const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
   const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
   const bondAddr = useMemo(() => basisCash.ARTHB.address, [basisCash]);
 
   const ecosystemFund = useFundAmount('ecosystem');
-  const rainyDayFund = useFundAmount('ecosystem');
-
+  
   return (
     <Page>
       <PageHeader
@@ -87,25 +78,19 @@ const Home: React.FC = () => {
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
             <EpochTimer />
-            {/* Deep's COde here */}
-
-
-
-
-
           </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={6} md={8} lg={8} xl={8}>
             <PriceInformation stat={cash} />
           </Grid>
         </Grid>
         <div className="margin-top-bottom-20">
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <DistributonSection />
             </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+            {/* <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <StatCard
                 statData={[
                   {
@@ -128,40 +113,38 @@ const Home: React.FC = () => {
                   },
                 ]}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-              {/* <Grid container spacing={2}> */}
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <StatCard
-                  statData={[
-                    {
-                      title: rainyDayFund
-                        ? `${commify(getDisplayBalance(rainyDayFund, 18, 0))} ARTH`
-                        : '-',
-                      subTitle: 'Rainy Day Fund',
-                      tooltipHtml:
-                        'A fund that\'ll be used during a black friday event. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the rainy day fund. ',
-                    },
-                    {
-                      title: ecosystemFund
-                        ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH`
-                        : '-',
-                      subTitle: 'Ecosystem Fund',
-                      tooltipHtml:
-                        'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
-                    },
-                    {
-                      title: ecosystemFund
-                        ? `1%`
-                        : '-',
-                      subTitle: 'Stability',
-                      tooltipHtml:
-                        'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
-                    },
-                  ]}
-                />
+              <Grid container spacing={2}>
+                {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <StatCard
+                    statData={[
+                      {
+                        title: rainyDayFund
+                          ? `${commify(getDisplayBalance(rainyDayFund, 18, 0))} ARTH`
+                          : '-',
+                        subTitle: 'Rainy Day Fund',
+                        tooltipHtml:
+                          'A fund that\'ll be used during a black friday event. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to the rainy day fund. ',
+                      },
+                    ]}
+                  />
+                </Grid> */}
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <StatCard
+                    statData={[
+                      {
+                        title: ecosystemFund
+                          ? `${commify(getDisplayBalance(ecosystemFund, 18, 0))} ARTH`
+                          : '-',
+                        subTitle: 'Ecosystem Fund',
+                        tooltipHtml:
+                          'A fund that’ll be used purely for ecosystem development. When new ARTH is minted during an expansion phase, 2% of minted ARTH is deposited to this fund.',
+                      },
+                    ]}
+                  />
+                </Grid>
               </Grid>
-              {/* </Grid> */}
             </Grid>
           </Grid>
         </div>
@@ -192,7 +175,7 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTH Bond"
               symbol="ARTHB"
-              liquidity={'bond?.liquidity'}
+              liquidity="$2,462,492"
               uniswapInputAddress={basisCash.ARTHB.address}
               address={bondAddr}
               stat={bond}
