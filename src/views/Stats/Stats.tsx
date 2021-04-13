@@ -18,7 +18,9 @@ import StatCard from './components/StatCard';
 import styled from 'styled-components';
 import useBasisCash from '../../hooks/useBasisCash';
 import useFundAmount from '../../hooks/useFundAmount';
-import RatesDiscount from './components/RatesDiscount';
+import BondingDiscount from './components/BondingDiscount';
+import RewardRates from './components/RewardRates';
+import FeeRates from './components/FeeRates';
 
 
 const FaqData = [
@@ -169,13 +171,13 @@ const Home: React.FC = () => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <RatesDiscount />
+            <BondingDiscount />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <RatesDiscount />
+            <RewardRates />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <RatesDiscount />
+            <FeeRates />
           </Grid>
         </Grid>
         <Grid container spacing={2} >

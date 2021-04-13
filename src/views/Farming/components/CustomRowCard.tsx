@@ -75,7 +75,7 @@ const CustomRowCard: React.FC<props> = (props) => {
       </Grid>
       {props.deposited && <DepositInfoContainer>
         <div style={{ display: 'flex' }}>
-          Your Locked state
+          Your Locked state:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
             {props?.lockedStake}
           </TableMainTextStyle>
@@ -86,7 +86,7 @@ const CustomRowCard: React.FC<props> = (props) => {
         <div style={{ display: 'flex' }}>
           Earned:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props?.earned}
+            {'12.3 MAHA'}
           </TableMainTextStyle>
           <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
             Claim MAHA

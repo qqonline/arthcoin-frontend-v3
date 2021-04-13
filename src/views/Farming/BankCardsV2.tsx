@@ -192,12 +192,14 @@ const BankCardsV2: React.FC = () => {
         walletValue={'12.2'}
         apy={'40%'}
         poolDur={'65 Days'}
-        deposited={true}
+        deposited={false}
         poolEndDate={Date.now() + 550000000}
         onButtonClick={(data) => {
           setOpenModal(true);
           setAction(data);
         }}
+        lockedStake={'0 ARTH-MAHA LP'}
+        // earned={''}
       />
     )
   }

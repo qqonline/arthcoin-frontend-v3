@@ -7,19 +7,19 @@ type props = {
 
 };
 
-const RatesDiscount: React.FC<props> = (props) => {
+const BondingDiscount: React.FC<props> = (props) => {
 
 
   return (
     <CustomInfoCard>
       <CustomInfoCardHeader>
-        Bonding Curve Discount on ARTHX
+        Fee rates
       </CustomInfoCardHeader>
       <CustomInfoCardDetails>
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
-              Pooled ARTH
+              Trading fee
               <HtmlTooltip
                 title={
                   <React.Fragment>
@@ -31,42 +31,54 @@ const RatesDiscount: React.FC<props> = (props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>1500.00</BeforeChip>
+            <BeforeChip>0.1%</BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>Pooled ETH</TextWithIcon>
+            <TextWithIcon>
+              Stability fee
+              <HtmlTooltip
+                title={
+                  <React.Fragment>
+                    <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
+                  </React.Fragment>
+                }>
+                <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+              </HtmlTooltip>
+            </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>1500.00</BeforeChip>
+            <BeforeChip>0.1%</BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
-        <OneLine>
+        {/*<OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>Your pool share</TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>1.08</BeforeChip>
-            {/*<TagChips>0.06%</TagChips>*/}
+            <TagChips>0.06%</TagChips>
           </OneLine>
-        </OneLine>
+        </OneLine>*/}
       </CustomInfoCardDetails>
     </CustomInfoCard>
   )
 }
 
-export default RatesDiscount
+export default BondingDiscount
 
 const CustomInfoCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
   padding: 32px;
+  min-height: 234px;
   @media (max-width: 600px) {
     padding: 16px;
+    min-height: auto;
   }
 `
 const CustomInfoCardHeader = styled.p`
@@ -88,7 +100,7 @@ const OneLine = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 5px 0;
+  margin: 4px 0;
 `
 
 const TextWithIcon = styled.div`
