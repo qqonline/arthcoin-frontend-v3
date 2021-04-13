@@ -46,9 +46,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
 
         <CardContent>
           <CardSection>
-            <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
+            <TextWithIcon>
               {title} Price
-            </div>
+            </TextWithIcon>
             {stat ? (
               <StyledValue>
                 {(stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`)}
@@ -58,9 +58,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
               )}
           </CardSection>
           <CardSection>
-            <div style={{ color: 'rgba(255, 255, 255, 0.64)' }} className="font15">
+            <TextWithIcon>
               {title} Liquidity
-            </div>
+            </TextWithIcon>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
           </CardSection>
           <CardSection>
@@ -177,9 +177,14 @@ const CardSection = styled.div`
 `;
 
 const StyledSupplyLabel = styled.a`
-  display: block;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
   color: rgba(255, 255, 255, 0.64);
-  font-size: 15px;
+  margin: 5px 0;
+  display: block;
   &:hover {
     color: #f7653b;
   }
@@ -196,7 +201,7 @@ const Card = styled.div`
     rgba(255, 255, 255, 0) 100%
   );
   background: rgba(255, 255, 255, 0.02);
-  // backdrop-filter: blur(70px);
+  backdrop-filter: blur(70px);
   border-radius: 12px;
 `;
 const SubTitle = styled.div`
@@ -206,4 +211,16 @@ const SubTitle = styled.div`
   line-height: 130%;
   color: rgba(255, 255, 255, 0.64);
 `;
+
+const TextWithIcon = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.64);
+  margin: 5px 0;
+  
+
+`
 export default HomeCard;

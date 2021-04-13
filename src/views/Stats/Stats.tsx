@@ -18,6 +18,7 @@ import StatCard from './components/StatCard';
 import styled from 'styled-components';
 import useBasisCash from '../../hooks/useBasisCash';
 import useFundAmount from '../../hooks/useFundAmount';
+import RatesDiscount from './components/RatesDiscount';
 
 
 const FaqData = [
@@ -165,7 +166,19 @@ const Home: React.FC = () => {
             </Grid>
           </Grid>
         </div>
+
         <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <RatesDiscount />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <RatesDiscount />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <RatesDiscount />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} >
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="MAHA"
@@ -192,7 +205,7 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTH Bond"
               symbol="ARTHB"
-              liquidity={'bond?.liquidity'}
+              liquidity={'$2,462,492'}
               uniswapInputAddress={basisCash.ARTHB.address}
               address={bondAddr}
               stat={bond}
