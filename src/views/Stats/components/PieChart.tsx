@@ -6,7 +6,8 @@ const data = [
   { name: 'ARTH', value: 20 },
   { name: 'ARTH-DAI Mahaswap LP', value: 70 }
 ];
-const COLORS = ['#C4F7DD', '#20C974', '#178A50', '#88E0B4'];
+// const COLORS = ['#C4F7DD', '#20C974', '#178A50', '#88E0B4'];
+const COLORS = ['#D74D26', '#F7653B', '#FF7F57', '#FFA981', '#FEE2D5'];
 export default class Example extends PureComponent {
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/c9pL8k61/';
 

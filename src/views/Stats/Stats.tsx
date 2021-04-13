@@ -18,7 +18,14 @@ import StatCard from './components/StatCard';
 import styled from 'styled-components';
 import useBasisCash from '../../hooks/useBasisCash';
 import useFundAmount from '../../hooks/useFundAmount';
-
+import { useMediaQuery } from 'react-responsive';
+import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
+import arrowRight from '../../assets/svg/arrowRight.svg';
+import arrowRightDisabled from '../../assets/svg/arrowRightDisabed.svg';
+import HtmlTooltip from '../../components/HtmlTooltip';
+import HTMLInfoIcon from '../../assets/img/ToolTipColored.svg';
+import PieChart from './components/PieChart';
 
 const FaqData = [
   {
@@ -45,6 +52,22 @@ const FaqData = [
   },
 ];
 
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 25,
+      borderRadius: 12.5,
+      width: '85%'
+    },
+    colorPrimary: {
+      backgroundColor: '#D9D5D3',
+    },
+    bar: {
+      borderRadius: 0,
+      backgroundColor: '#F7653B',
+    },
+  }),
+)(LinearProgress);
 
 const Home: React.FC = () => {
   const basisCash = useBasisCash();
@@ -66,7 +89,7 @@ const Home: React.FC = () => {
       // console.log('boardroom data', basisCash.getBoardroom('mahaLiquidity', 'v1'))
     }
   }, [basisCash, fetchStats]);
-
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const accumulatedSeigniorage = useSelector<AppState, BigNumber>(s => s.treasury.coreState.accumulatedSeigniorage)
   const cashToBondConversionLimit = useSelector<AppState, BigNumber>(s => s.treasury.coreState.cashToBondConversionLimit)
   const bondCirculatingSupply = useSelector<AppState, BigNumber>(s => s.treasury.bondCirculatingSupply)
@@ -78,6 +101,23 @@ const Home: React.FC = () => {
   const ecosystemFund = useFundAmount('ecosystem');
   const rainyDayFund = useFundAmount('ecosystem');
 
+  const CollateralRatio = () => {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', marginTop: -15 }}>
+        {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <TextForInfoTitle>
+            Collateral Ratio
+            <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+          </TextForInfoTitle>
+          {/* </div> */}
+          <PercentNumber style={{ margin: '6px' }}>50%</PercentNumber>
+        </div>
+        <BorderLinearProgress variant="determinate" value={50} />
+      </div>
+    )
+  }
+
   return (
     <Page>
       <PageHeader
@@ -88,13 +128,167 @@ const Home: React.FC = () => {
         <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-            <EpochTimer />
-            {/* Deep's COde here */}
+            <Card>
+              <Grid item sm={12} md={12} lg={12} direction={'column'}>
+                <Grid item sm={12} md={12} lg={12} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  // justifyContent: 'center',
+                  flexDirection: isMobile ? 'column' : 'row'
+                }}>
+                  <Grid item sm={12} md={6} lg={6}>{CollateralRatio()}</Grid>
+                  <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
+                    <PercentCard>
+                      <PercentCardInfo>
+                        <PercentCardLabel>
+                          <div style={{ height: 14, width: 14, background: '#F7653B', borderRadius: 7 }} />
+                          <OpacitySpan>
+                            Collateral
+                      </OpacitySpan>
+                        </PercentCardLabel>
+                        <PercentCardValue>
+                          86%
+                    </PercentCardValue>
+                      </PercentCardInfo>
 
+                      <PercentCardInfo>
+                        <PercentCardLabel>
+                          <div style={{ height: 14, width: 14, background: '#D9D5D3', borderRadius: 7 }} />
+                          <OpacitySpan>
+                            ARTHX
+                      </OpacitySpan>
+                        </PercentCardLabel>
+                        <PercentCardValue>
+                          14%
+                    </PercentCardValue>
+                      </PercentCardInfo>
+                    </PercentCard>
+                  </Grid>
+                </Grid>
+                <div className="border-bottom width-100 margin-bottom-20" />
+                <Grid item sm={12} md={12} lg={12}>
+                  <Grid container alignItems={'center'} justify={'center'}>
+                    <InfoDiv>
+                      Add Collateral for Recollateralize
+                  </InfoDiv>
+                    <HeaderSubtitle>
+                      342.450K <HardChip>USDT</HardChip> <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+                    </HeaderSubtitle>
+                    <ButtonDiv style={{ width: isMobile ? '100%' : '75%' }}>
+                      <IconButtons style={{ color: '#F7653B' }}>
+                        <ButtonText>
+                          Recollateralize
+                      </ButtonText>
+                        <img src={arrowRight} height={18} style={{ marginLeft: 8 }} />
+                      </IconButtons>
+                      <div style={{ border: '1px solid #FFFFFF', height: 34, marginLeft: -15, opacity: 0.12 }} />
+                      <IconButtons style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
+                        <ButtonText>
+                          Buyback
+                      </ButtonText>
+                        <img src={arrowRightDisabled} height={18} style={{ marginLeft: 8 }} />
+                      </IconButtons>
+                    </ButtonDiv>
+                  </Grid>
+                </Grid>
+                <div className="border-bottom width-100 margin-bottom-20 margin-top-30" />
+                <Grid item sm={12} md={12} lg={12}>
+                  <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
+                    Collateral Breakdown
+                  <HtmlTooltip
+                      enterTouchDelay={0}
+                      title={
+                        <span>
+                          When the system is in expansion mode (12hr TWAP price above $1.05), new
+                          ARTH coins are minted as seigniorage and are added back into the
+                          circulation as a way of increasing the coin supply. What you see below
+                          is the seigniorage distribution for various pools.
+                      </span>
+                      }
+                    >
+                      <img src={HTMLInfoIcon} alt="Inof" width="16px" className="margin-left-5" />
+                    </HtmlTooltip>
+                  </TitleString>
+                  <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
+                    <Grid item sm={12} md={12} lg={12} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      // justifyContent: 'center',
+                      flexDirection: isMobile ? 'column' : 'row'
+                    }}>
+                      <Grid item sm={12} md={6} lg={6}>
+                        <PieChart />
+                      </Grid>
+                      <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
+                        <PercentCard>
+                          <PercentCardInfo>
+                            <PercentCardLabel>
+                              <div style={{ height: 14, width: 14, background: '#D74D26', borderRadius: 7 }} />
+                              <OpacitySpan>
+                                USDT
+                            </OpacitySpan>
+                            </PercentCardLabel>
+                            <PercentCardValue>
+                              50% (50,000 USDT)
+                          </PercentCardValue>
+                          </PercentCardInfo>
 
+                          <PercentCardInfo>
+                            <PercentCardLabel>
+                              <div style={{ height: 14, width: 14, background: '#F7653B', borderRadius: 7 }} />
+                              <OpacitySpan>
+                                ETH
+                            </OpacitySpan>
+                            </PercentCardLabel>
+                            <PercentCardValue>
+                              20% (50,000 ETH)
+                          </PercentCardValue>
+                          </PercentCardInfo>
 
+                          <PercentCardInfo>
+                            <PercentCardLabel>
+                              <div style={{ height: 14, width: 14, background: '#FF7F57', borderRadius: 7 }} />
+                              <OpacitySpan>
+                                USDC
+                            </OpacitySpan>
+                            </PercentCardLabel>
+                            <PercentCardValue>
+                              10% (50,000 USDC)
+                          </PercentCardValue>
+                          </PercentCardInfo>
 
+                          <PercentCardInfo>
+                            <PercentCardLabel>
+                              <div style={{ height: 14, width: 14, background: '#FFA981', borderRadius: 7 }} />
+                              <OpacitySpan>
+                                WBTC
+                            </OpacitySpan>
+                            </PercentCardLabel>
+                            <PercentCardValue>
+                              10% (50,000 WBTC)
+                          </PercentCardValue>
+                          </PercentCardInfo>
 
+                          <PercentCardInfo>
+                            <PercentCardLabel>
+                              <div style={{ height: 14, width: 14, background: '#FEE2D5', borderRadius: 7 }} />
+                              <OpacitySpan>
+                                MAHA
+                            </OpacitySpan>
+                            </PercentCardLabel>
+                            <PercentCardValue>
+                              10% (50,000 MAHA)
+                          </PercentCardValue>
+                          </PercentCardInfo>
+                        </PercentCard>
+                      </Grid>
+                    </Grid>
+
+                  </Grid>
+                </Grid>
+              </Grid>
+
+            </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <PriceInformation stat={cash} />
@@ -215,5 +409,158 @@ const FaqTitle = styled.div`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
+const Card = styled.div`
+  display: flex;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  padding: 16px 32px;
+`;
+const PercentCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content space-between;
+  width: 100%;
+  align-items: center;
+  height: fit-content;
+  padding: 32px 0px;
+  // border: 0.5px solid;
+`;
 
+const PercentCardInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content space-between;
+  width: 100%;
+  margin: 6px;
+`;
+
+const InfoDiv = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.64);
+  margin: 12px 0px 0px 0px;
+`;
+
+const PercentCardLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  // justify-content space-between;
+  width: fit-content;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+  align-items: center;
+`;
+
+const OpacitySpan = styled.span`
+  opacity: 0.64;
+  padding: 0 8px;
+`;
+
+const PercentCardValue = styled.div`
+  display: flex;
+  flex-direction: row;
+  // justify-content space-between;
+  // width: 100%;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+`;
+
+const TextForInfoTitle = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  opacity: 0.64;
+  margin: 20px 0px
+`
+
+const PercentNumber = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 32px;
+text-align: right;
+display: flex;
+align-items: center;
+flex:1;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+
+const HeaderSubtitle = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  // margin: 8px 0px 0px 0px
+`
+
+const HardChip = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: Inter;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.64);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+`
+
+const ButtonDiv = styled.div`
+  // height: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+`
+
+const IconButtons = styled.div`
+  width: fit-content;
+  display: flex;
+  // justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+`
+
+const ButtonText = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+`
+
+const TitleString = styled.div`
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffffff;
+  opacity: 0.88;
+`;
 export default Home;
