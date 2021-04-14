@@ -169,7 +169,8 @@ const OneCardLeft = styled.div`
   flex: 0.5;
   border-right: 0.5px solid #FFFFFF50;
   border-bottom: 0 solid #FFFFFF50;
-  padding: 32px 32px;
+  margin: 32px 0px;
+  padding: 0 32px;
   @media (max-width: 600px) {
     border-right: 0 solid #FFFFFF50;
     border-bottom: 0.5px solid #FFFFFF50;
