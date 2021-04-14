@@ -11,6 +11,7 @@ type props = {
   ILabelValue: string;
   IBalanceValue: string;
   ILabelInfoValue?: string;
+  value?: string;
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
@@ -27,7 +28,7 @@ type props = {
 };
 
 const CustomInputContainer: React.FC<props> = (props) => {
-  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, tagText, dropDownValues, ondropDownValueChange, multiIcons = false, symbol1, symbol2 } = props;
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, tagText, dropDownValues, ondropDownValueChange, multiIcons = false, symbol1, symbol2, value } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 
@@ -46,6 +47,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue}
+          value={value? value: ''}
           inputProps={{ 'aria-label': 'naked' }}
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           onChange={(event) => {
