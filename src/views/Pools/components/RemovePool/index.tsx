@@ -364,7 +364,7 @@ const RemovePool: React.FC<props> = (props) => {
               <Button text={'Approve'} size={'lg'} onClick={() => { setConfirmModal(true) }} />
             </div>
             <div style={isMobile ? { marginTop: 5 } : { marginLeft: 5, width: '100%' }}>
-              <Button text={'Remove'} size={'lg'} disabled />
+              <Button text={'Remove Liquidity'} size={'lg'} disabled />
             </div>
           </ButtonContainer>
           {/* </div> */}
@@ -688,12 +688,13 @@ const TextWithIcon = styled.div`
 
 `
 const BeforeChip = styled.span`
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 12px;
-line-height: 130%;
-color: rgba(255, 255, 255, 0.64);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.88);
   margin-right: 5px;
 `
 
@@ -703,7 +704,10 @@ const TagChips = styled.div`
   padding: 2px 8px;
   font-family: Inter;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: rgba(255, 255, 255, 0.64);
 `
