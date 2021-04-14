@@ -217,7 +217,9 @@ const Home: React.FC = () => {
                       flexDirection: isMobile ? 'column' : 'row'
                     }}>
                       <Grid item sm={12} md={6} lg={6}>
-                        <PieChart />
+                        {/* <div style={{ marginRight: 25, background: 'black' }}> */}
+                          <PieChart />
+                        {/* </div> */}
                       </Grid>
                       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                         <PercentCard>
