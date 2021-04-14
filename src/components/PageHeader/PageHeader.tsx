@@ -18,14 +18,14 @@ interface PageHeaderProps {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
-  icon,
-  subtitle,
-  title,
-  secondParaTitle,
-  secondParaDescription,
-  learnMoreLink,
-  parentLink,
-  parentLinkTitle
+ icon,
+ subtitle,
+ title,
+ secondParaTitle,
+ secondParaDescription,
+ learnMoreLink,
+ parentLink,
+ parentLinkTitle
 }) => {
 
   const isDesktopOrLaptop = useMediaQuery({query: '(min-device-width: 800px)'});
@@ -34,20 +34,20 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     <StyledPageHeader>
       <Container size="lg">
         <StyledPageContent>
-          <StyledTextContainer>            
-          {(isDesktopOrLaptop && parentLink) && (
-            <StyledNav>
-              <StyledNavLink to={parentLink}>{parentLinkTitle}</StyledNavLink>
-              <KeyboardArrowRight style={{color: theme.color.grey[500]}} />
-              <StyledNavTitle>{title}</StyledNavTitle>
-            </StyledNav>
-          )}
+          <StyledTextContainer>
+            {(isDesktopOrLaptop && parentLink) && (
+              <StyledNav>
+                <StyledNavLink to={parentLink}>{parentLinkTitle}</StyledNavLink>
+                <KeyboardArrowRight style={{color: theme.color.grey[500]}} />
+                <StyledNavTitle>{title}</StyledNavTitle>
+              </StyledNav>
+            )}
             <StyledTitle>{title}</StyledTitle>
             <StyledSubtitle>
               {subtitle}
               {learnMoreLink && <LearnMore href={learnMoreLink} target="">
                 &nbsp; Learn more.
-          </LearnMore>}
+              </LearnMore>}
             </StyledSubtitle>
             {secondParaTitle && <SecondParaTitle>{secondParaTitle}</SecondParaTitle>}
             {secondParaDescription && (
@@ -73,8 +73,8 @@ const StyledPageContent = styled.div`
   align-items: center;
   width: 100%;
   margin: 0 auto;
-  min-height: 150px;
-  padding: 0 15px;
+  //min-height: 150px;
+  //padding: 0 15px;
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     padding: 0px;
@@ -117,10 +117,10 @@ const StyledPageHeader = styled.div`
   flex-direction: row;
   width: 100%;
   background: linear-gradient(180deg, #${(props) => props.theme.color.dark[200]} 0%, rgba(42, 40, 39, 0) 100%);
-  padding-bottom: ${(props) => props.theme.spacing[6]}px;
-  padding-top: ${(props) => props.theme.spacing[6]}px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-bottom: ${(props) => props.theme.spacing[5]}px;
+  padding-top: ${(props) => props.theme.spacing[5]}px;
+  //padding-left: 15px;
+  //padding-right: 15px;
   @media (max-width: 768px) {
     width: auto;
     padding-left: 0px;
