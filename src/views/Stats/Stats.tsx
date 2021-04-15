@@ -128,9 +128,8 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon={<div style={{ width: '200px', height: '200px' }} />}
         subtitle="View information about the current ARTH protocol"
-        title="Statistics" />
+        title="Analytics" />
       <Container size="lg">
         <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={2}>

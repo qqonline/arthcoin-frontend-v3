@@ -22,6 +22,7 @@ import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
 import { CustomSnack } from '../../components/SnackBar';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import CallMadeIcon from '@material-ui/icons/CallMade';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -582,10 +583,82 @@ const Boardrooms = (props: WithSnackbarProps) => {
         </Grid>
         {type === "Buy" && buyTabContent()}
         {type === "Sell" && sellTabContent()}
+        <Grid container style={{ marginTop: '24px' }}>
+          <Grid item lg={3} sm={'auto'}></Grid>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <CustomInfoCard>
+              <CustomInfoCardDetails>
+                <Grid container>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <InfoBoxTitle>
+                      ETH-ARTH Uniswap pool
+                    </InfoBoxTitle>
+                    <InfoBoxSubTitle>
+                      Provide liquidity to ETH-ARTH on uniswap
+                    </InfoBoxSubTitle>
+                  </Grid>
+                </Grid>
+              </CustomInfoCardDetails>
+              <CustomInfoCardButton>
+                <img src={uniswapLogo} style={{marginTop: '-6px', marginRight: '10px'}}/>
+                <span>Add liquidity on Uniswap</span>
+                <CallMadeIcon style={{ fontSize: 15, marginLeft: '10px' }} />
+              </CustomInfoCardButton>
+            </CustomInfoCard>
+          </Grid>
+          <Grid item lg={3} sm={'auto'}></Grid>
+        </Grid>
+
+
       </Container>
     </>
   );
 }
+
+const CustomInfoCardButton = styled.div`
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  text-align: center;
+
+  color: #FFFFFF;
+
+  opacity: 0.88;
+`
+
+const InfoBoxTitle = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin: 0;
+`
+
+const InfoBoxSubTitle = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.64);
+  margin: 0;
+
+
+`
 
 const PageHeading = styled.p`
   font-family: Syne;
@@ -1041,4 +1114,20 @@ font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.64);
 `;
+
+const CustomInfoCard = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 16px;
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
+`
+
+const CustomInfoCardDetails = styled.div`
+  margin: 10px 0;
+`
+
 export default withSnackbar(Boardrooms);

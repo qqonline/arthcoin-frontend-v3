@@ -113,7 +113,6 @@ const UniswapLink = styled.a`
 
 const LinkText = styled.span`
   text-align: center;
-  margin: 0 15px 5px;
   color: #f7653b;
   font-size: 16px;
   padding: 20px;
@@ -131,10 +130,14 @@ const LinkText = styled.span`
 
 const CardContent = styled.div`
   display: flex;
-  padding: 0px 20px 20px 20px;
+  padding: 0px 32px 32px 32px;
   align-items: self-start;
-  margin: 0 15px 15px;
+  //margin: 0 15px 15px;
   flex-direction: column;
+  @media (max-width: 600px) {
+    padding: 0px 16px 16px 16px;
+  }
+  
 `;
 
 const CardHeader = styled.h2`
@@ -145,8 +148,10 @@ const CardHeader = styled.h2`
   justify-content: start;
   align-items: center;
   text-align: center;
-  padding: 20px;
-`;
+  padding: 32px;
+  @media (max-width: 600px) {
+    padding: 16px;
+  }`;
 
 const StyledCards = styled.div`
   padding: 5px 0;

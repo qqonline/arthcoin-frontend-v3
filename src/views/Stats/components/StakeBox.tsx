@@ -16,12 +16,12 @@ const StakeBox: React.FC<props> = (props) => {
     <CustomInfoCard>
       <CustomInfoCardDetails>
         <Grid container>
-          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <TextWithIcon>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </TextWithIcon>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4} style={{marginTop: '24px'}}>
             <Button text={'Earn Rewards'} size={'sm'} />
           </Grid>
         </Grid>

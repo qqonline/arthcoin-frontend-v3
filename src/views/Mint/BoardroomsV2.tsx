@@ -142,6 +142,7 @@ const DEFAULT_CALC = 1440;
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
+  const colletralRatio = 86;
   const [mintColl, setCollateralValue] = useState<number>(0.00)
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
   const [balance, setBalance] = useState<number>(0)
@@ -173,7 +174,23 @@ const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => {
     temp = defaultReceiveRedeemDropdownValues.filter(e => e !== selectedReceiveRedeemCoin);
     setReceiveRedeemDropDownValues(temp);
-  }, [selectedReceiveRedeemCoin])
+  }, [selectedReceiveRedeemCoin]);
+
+  const onBuyColletralValueChange = async (val: string) => {
+    const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
+    setCollateralValue(valueInNumber);
+    let arthxShareTemp = await ((100 * valueInNumber)/colletralRatio) * ((100 - colletralRatio)/100)
+    setArthxShare(arthxShareTemp);
+    setReceive(arthxShareTemp + valueInNumber);
+  }
+
+  const onARTHXValueChange = async (val: string) => {
+    const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
+    setArthxShare(valueInNumber);
+    let colletralTemp = await ((100 * valueInNumber)/(100-colletralRatio)) * ((colletralRatio)/100)
+    setCollateralValue(colletralTemp);
+    setReceive(colletralTemp + valueInNumber);
+  }
 
   const TestNetSnack = () => {
     return (
@@ -214,6 +231,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
+                value={mintColl.toString()}
                 DefaultValue={mintColl.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -222,8 +240,14 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   setSelectedCollateralCoin(data);
                 }}
                 SymbolText={selectedCollateralCoin}
-                inputMode={'decimal'}
-                setText={(val: string) => setCollateralValue(Number(val.replace(/[^0-9]/g, '')))}
+                inputMode={'numeric'}
+                setText={(val: string) => {
+                  if (val === '0'){
+                    onBuyColletralValueChange('0')
+                  } else {
+                    onBuyColletralValueChange(val)
+                  }
+                }}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -231,13 +255,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
+                value={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
-                setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
+                setText={(val: string) => {
+                  onARTHXValueChange(val);
+                }}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -245,6 +272,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${balance}`}
+                value={mintReceive.toString()}
                 ILabelInfoValue={''}
                 DefaultValue={mintReceive.toString()}
                 LogoSymbol={'ARTH'}
