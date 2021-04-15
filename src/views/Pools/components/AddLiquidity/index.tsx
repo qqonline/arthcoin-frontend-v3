@@ -13,12 +13,14 @@ import { Divider } from '@material-ui/core';
 import CustomModal from '../../../../components/CustomModal';
 import Grid from '@material-ui/core/Grid';
 import { ICards, IPoolData } from '../OpenableCard';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { CustomSnack } from '../../../../components/SnackBar';
 
 type props = {
   onBack: () => void;
 };
 
-const AddLiquidity: React.FC<props> = (props) => {
+const AddLiquidity = (props: props & WithSnackbarProps) => {
   const { onBack } = props;
   const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
 
@@ -57,51 +59,61 @@ const AddLiquidity: React.FC<props> = (props) => {
         modalContainerStyle={{}}
         modalBodyStyle={{}}
         title={`Confirm Supply`}>
-          <>
-            <TransparentInfoDiv
-              labelData={`${firstCoin} Deposit`}
-              rightLabelUnit={firstCoin}
-              rightLabelValue={firstCoinAmount.toString()}
-            />
-            <TransparentInfoDiv
-              labelData={`${secondCoin} Deposit`}
-              rightLabelUnit={secondCoin}
-              rightLabelValue={secondCoinAmount.toString()}
-            />
-            <TransparentInfoDiv
-              labelData={`Your share of pool`}
-              rightLabelValue={'0.06%'}
-            />
-            <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
-            <TransparentInfoDiv
-              labelData={`You receiving pool token`}
-              rightLabelUnit={`${firstCoin}/${secondCoin}`}
-              rightLabelValue={'1000.00'}
-            />
-            <Grid container spacing={2} style={{marginTop: '32px'}}>
-              <Grid item lg={6} md={6} sm={6} xs={6}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => setConfirmModal(false)}
-                />
-              </Grid>
-              <Grid item lg={6} md={6} sm={6} xs={6}>
-                <Button
-                  text={'Confirm Supply'}
-                  size={'lg'}
-                  onClick={() => {
-                    setConfirmModal(false)
-                  }}
-                />
-              </Grid>
+        <>
+          <TransparentInfoDiv
+            labelData={`${firstCoin} Deposit`}
+            rightLabelUnit={firstCoin}
+            rightLabelValue={firstCoinAmount.toString()}
+          />
+          <TransparentInfoDiv
+            labelData={`${secondCoin} Deposit`}
+            rightLabelUnit={secondCoin}
+            rightLabelValue={secondCoinAmount.toString()}
+          />
+          <TransparentInfoDiv
+            labelData={`Your share of pool`}
+            rightLabelValue={'0.06%'}
+          />
+          <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
+          <TransparentInfoDiv
+            labelData={`You receiving pool token`}
+            rightLabelUnit={`${firstCoin}/${secondCoin}`}
+            rightLabelValue={'1000.00'}
+          />
+          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => {
+                  setConfirmModal(false)
+                  let options = {
+                    content: () => (CustomSnack({ type: 'red', data1: `Add-Liquidity order for ${123} ARTH cancelled` }))
+                  }
+                  props.enqueueSnackbar('timepass', options)
+                }}
+              />
             </Grid>
-          </>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              <Button
+                text={'Confirm Supply'}
+                size={'lg'}
+                onClick={() => {
+                  setConfirmModal(false)
+                  let options = {
+                    content: () => (CustomSnack({ type: 'green', data1: `Adding-Liquidity for ${123} ARTH` }))
+                  }
+                  props.enqueueSnackbar('timepass', options)
+                }}
+              />
+            </Grid>
+          </Grid>
+        </>
       </CustomModal>
       <CustomCard>
         <CustomCardHeader>
-          <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
+          <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElementBack>
           <EachElementTitle> <CardTitle> Add Liquidity </CardTitle></EachElementTitle>
         </CustomCardHeader>
         <CustomCardContainer>
@@ -114,7 +126,7 @@ const AddLiquidity: React.FC<props> = (props) => {
             hasDropDown={true}
             dropDownValues={firstCoinDropDown}
             ondropDownValueChange={(data) => {
-              if (data !== secondCoin){
+              if (data !== secondCoin) {
                 setFirstCoin(data);
               }
             }}
@@ -135,7 +147,7 @@ const AddLiquidity: React.FC<props> = (props) => {
             hasDropDown={true}
             dropDownValues={secondCoinDropDown}
             ondropDownValueChange={(data) => {
-              if (firstCoin !== data){
+              if (firstCoin !== data) {
                 setSecondCoin(data);
               }
             }}
@@ -145,7 +157,7 @@ const AddLiquidity: React.FC<props> = (props) => {
             tagText={'MAX'}
           />
           <TcContainer>
-            <OneLine style={{marginTop: "10px"}}>
+            <OneLine style={{ marginTop: "10px" }}>
               <div style={{ flex: 1 }}>
                 <TextWithIcon>
                   Price
@@ -153,12 +165,12 @@ const AddLiquidity: React.FC<props> = (props) => {
               </div>
               <OneLine>
                 <BeforeChip>0.05</BeforeChip>
-                <TagChips style={{marginRight: '5px'}}>{firstCoin}</TagChips>
+                <TagChips style={{ marginRight: '5px' }}>{firstCoin}</TagChips>
                 <BeforeChip>per</BeforeChip>
                 <TagChips>{secondCoin}</TagChips>
               </OneLine>
             </OneLine>
-            <OneLine style={{marginTop: "10px"}}>
+            <OneLine style={{ marginTop: "10px" }}>
               <div style={{ flex: 1 }}>
                 <TextWithIcon>
                   Share of Pool
@@ -169,14 +181,16 @@ const AddLiquidity: React.FC<props> = (props) => {
               </OneLine>
             </OneLine>
           </TcContainer>
-          <Button text={'Sell'} size={'lg'} onClick={() => {setConfirmModal(true)}} />
+          <Button text={'Sell'} size={'lg'} onClick={() => {
+            setConfirmModal(true)
+          }} />
         </CustomCardContainer>
       </CustomCard>
     </div>
   )
 }
 
-export default AddLiquidity
+export default withSnackbar(AddLiquidity)
 
 const CustomCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);

@@ -8,8 +8,9 @@ import Button from '../../components/Button';
 import Modal from './components/modal';
 import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
+import warning from '../../assets/svg/warning.svg'
 import InputContainer from './components/InputContainer';
-import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, IconButton, makeStyles, Slider, Snackbar, Theme, withStyles } from '@material-ui/core';
 import TransparentInfoDiv from './components/InfoDiv';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -18,6 +19,10 @@ import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { CustomSnack } from '../../components/SnackBar';
+import CloseIcon from '../../assets/img/CloseIcon.svg';
+
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -134,8 +139,7 @@ const DEFAULT_CALC = 1440;
 // }))(Tooltip);
 
 
-
-const Boardrooms: React.FC = () => {
+const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0.00)
@@ -147,8 +151,9 @@ const Boardrooms: React.FC = () => {
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
   const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(1);
   const [checked, setChecked] = React.useState(false);
+  const [testnetDiv, showDiv] = React.useState(true);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
 
@@ -170,7 +175,22 @@ const Boardrooms: React.FC = () => {
     setReceiveRedeemDropDownValues(temp);
   }, [selectedReceiveRedeemCoin])
 
-
+  const TestNetSnack = () => {
+    return (
+      <TestNetDiv>
+        <div />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <img src={warning} height={24} />
+          <span style={{ marginLeft: 5 }}>
+            Please make sure that you are connected to matic mumbai TESTnet.
+          </span>
+        </div>
+        <div style={{cursor: 'pointer'}}>
+          <img src={CloseIcon} height={20} onClick={() => { showDiv(false) }} />
+        </div>
+      </TestNetDiv>
+    )
+  }
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
@@ -698,8 +718,13 @@ const Boardrooms: React.FC = () => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => setOpenModal(0)}
-                  // onClick={handleClose}
+                    onClick={() => {
+                      setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'red', data1: `Minting ${mintColl} ARTH cancelled` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
+                    }}
                   />
                 </div>
                 <div style={{ width: '100%' }}>
@@ -709,6 +734,10 @@ const Boardrooms: React.FC = () => {
                     size={'lg'}
                     onClick={() => {
                       setOpenModal(2)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'green', data1: `Minting ${mintColl} ARTH` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
                     }}
                   />
                 </div>
@@ -774,8 +803,13 @@ const Boardrooms: React.FC = () => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => setOpenModal(0)}
-                  // onClick={handleClose}
+                    onClick={() => {
+                      setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'red', data1: `Redeeming ${redeemAmount} ARTH cancelled` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
+                    }}
                   />
                 </div>
                 <div style={{ width: '100%' }}>
@@ -786,6 +820,10 @@ const Boardrooms: React.FC = () => {
                     onClick={() => {
                       // setType('Redeem')
                       setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'green', data1: `Redeeming ${redeemAmount} ARTH`, data2: `Stability Fee = 4%` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
                     }}
                   />
                 </div>
@@ -794,6 +832,7 @@ const Boardrooms: React.FC = () => {
         }
       </CustomModal>
       <Container size="lg">
+        {testnetDiv && TestNetSnack()}
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
       </Container>
@@ -805,6 +844,23 @@ const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
 `
+const TestNetDiv = styled.div`
+  width: 100%;
+  background: #BA1E38;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align:center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  opacity: 0.88;
+  padding: 10px 25px;
+`;
 
 const TcContainer = styled.div`
   margin-top: 18px;
@@ -1184,4 +1240,4 @@ font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.64);
 `;
-export default Boardrooms;
+export default withSnackbar(Boardrooms);

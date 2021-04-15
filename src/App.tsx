@@ -30,6 +30,7 @@ import Mint from './views/Mint';
 import Stablize from './views/Stablize';
 import Trade from './views/Trade';
 import Pools from './views/Pools';
+import { SnackbarProvider } from 'notistack';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -110,10 +111,19 @@ const AppContent: React.FC = ({ children }) => {
   return (
     <ModalsProvider>
       <BanksProvider>
-        <>
-          <Popups />
-          {children}
-        </>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          maxSnack={2}
+        >
+          <>
+            <Popups />
+            {children}
+          </>
+
+        </SnackbarProvider>
       </BanksProvider>
     </ModalsProvider>
   );

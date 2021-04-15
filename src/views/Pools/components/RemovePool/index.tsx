@@ -14,6 +14,8 @@ import { useMediaQuery } from 'react-responsive';
 import CustomInputContainer from '../../../../components/CustomInputContainer';
 import CustomModal from '../../../../components/CustomModal';
 import TransparentInfoDiv from '../InfoDiv';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { CustomSnack } from '../../../../components/SnackBar';
 
 type props = {
   selectedPair: {
@@ -103,7 +105,7 @@ const PrettoRestrictSlider = withStyles({
 
 })(Slider);
 
-const RemovePool: React.FC<props> = (props) => {
+const RemovePool = (props: props & WithSnackbarProps) => {
   const { selectedPair, onBack } = props;
   console.log(selectedPair)
   const [dropDownNo, setDropDownNo] = useState<number>(0);
@@ -335,7 +337,13 @@ const RemovePool: React.FC<props> = (props) => {
                 variant={'transparent'}
                 text="Cancel"
                 size={'lg'}
-                onClick={() => setConfirmModal(false)}
+                onClick={() => {
+                  setConfirmModal(false)
+                  let options = {
+                    content: () => (CustomSnack({ type: 'red', data1: `Remove-Liquidity order for ${123} ARTH cancelled` }))
+                  }
+                  props.enqueueSnackbar('timepass', options)
+                }}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -344,6 +352,10 @@ const RemovePool: React.FC<props> = (props) => {
                 size={'lg'}
                 onClick={() => {
                   setConfirmModal(false)
+                  let options = {
+                    content: () => (CustomSnack({ type: 'green', data1: `Removing Liquidity for ${123} ARTH` }))
+                  }
+                  props.enqueueSnackbar('timepass', options)
                 }}
               />
             </Grid>
@@ -417,7 +429,7 @@ const RemovePool: React.FC<props> = (props) => {
   )
 }
 
-export default RemovePool;
+export default withSnackbar(RemovePool);
 
 const CustomCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);

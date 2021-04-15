@@ -25,6 +25,8 @@ import MinorInputContainer from './components/MinorInputContainer';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { CustomSnack } from '../../components/SnackBar';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -41,7 +43,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
   }),
 )(LinearProgress);
-const Boardrooms: React.FC = () => {
+const Boardrooms = (props: WithSnackbarProps) => {
 
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
@@ -340,7 +342,13 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
-                  onClick={() => setOpenModal(0)}
+                  onClick={() => {
+                    setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'red', data1: `Buyback for ${redeemAmount} ARTH cancelled` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
+                  }}
                 // onClick={handleClose}
                 />
               </div>
@@ -354,6 +362,10 @@ const Boardrooms: React.FC = () => {
                     setBuyback(false)
                     setRecollatateralize(true)
                     setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'green', data1: `Buyback for ${redeemAmount} ARTH :- processing` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
                   }}
                 />
               </div>
@@ -411,7 +423,13 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
-                  onClick={() => setOpenModal(0)}
+                  onClick={() => {
+                    setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'red', data1: `Recollateralize for ${collateralAmount} ARTH cancelled` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
+                  }}
                 // onClick={handleClose}
                 />
               </div>
@@ -425,6 +443,10 @@ const Boardrooms: React.FC = () => {
                     setBuyback(true)
                     setRecollatateralize(false)
                     setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'green', data1: `Recollateralize for ${collateralAmount} ARTH:- processing` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
                   }}
                 />
               </div>
@@ -1044,4 +1066,4 @@ const InputNoDisplay = styled.span`
   align-items: center;
   margin: 0px 0px 0px 8px;
 `
-export default Boardrooms;
+export default withSnackbar(Boardrooms);

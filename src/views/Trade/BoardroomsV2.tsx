@@ -20,6 +20,8 @@ import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
+import { CustomSnack } from '../../components/SnackBar';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -137,7 +139,7 @@ const DEFAULT_CALC = 1440;
 
 
 
-const Boardrooms: React.FC = () => {
+const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0)
@@ -224,7 +226,7 @@ const Boardrooms: React.FC = () => {
                       <BeforeChip>$ 9,760,068</BeforeChip>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{marginTop: "10px"}}>
+                  <OneLineInputwomargin style={{ marginTop: "10px" }}>
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Price
@@ -313,7 +315,7 @@ const Boardrooms: React.FC = () => {
                       <BeforeChip>$ 9,760,068</BeforeChip>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{marginTop: "10px"}}>
+                  <OneLineInputwomargin style={{ marginTop: "10px" }}>
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Price
@@ -326,7 +328,7 @@ const Boardrooms: React.FC = () => {
                       <TagChips>ETH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{marginTop: "10px"}}>
+                  <OneLineInputwomargin style={{ marginTop: "10px" }}>
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Trading fee
@@ -368,7 +370,7 @@ const Boardrooms: React.FC = () => {
                 rightLabelUnit={'ETH'}
                 rightLabelValue={mintColl.toString()}
               />
-{/*
+              {/*
               <TransparentInfoDiv
                 labelData={`Your share supply`}
                 // labelToolTipData={'testing'}
@@ -421,7 +423,13 @@ const Boardrooms: React.FC = () => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => setOpenModal(0)}
+                    onClick={() => {
+                      setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'red', data1: `Buy order for ${123} ARTH cancelled` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
+                    }}
                   // onClick={handleClose}
                   />
                 </div>
@@ -433,6 +441,10 @@ const Boardrooms: React.FC = () => {
                     onClick={() => {
                       setOpenModal(0)
                       setType('Sell')
+                      let options = {
+                        content: () => (CustomSnack({ type: 'green', data1: `Buying ${123} ARTH` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
                     }}
                   />
                 </div>
@@ -450,7 +462,7 @@ const Boardrooms: React.FC = () => {
                 rightLabelUnit={'5.87'}
                 rightLabelValue={'ARTH'}
               />
-{/*
+              {/*
 
               <TransparentInfoDiv
                 labelData={`Stability Fee`}
@@ -497,7 +509,13 @@ const Boardrooms: React.FC = () => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => setOpenModal(0)}
+                    onClick={() => {
+                      setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'red', data1: `Sell order for ${123} ARTH cancelled` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
+                    }}
                   // onClick={handleClose}
                   />
                 </div>
@@ -508,6 +526,10 @@ const Boardrooms: React.FC = () => {
                     size={'lg'}
                     onClick={() => {
                       setOpenModal(0)
+                      let options = {
+                        content: () => (CustomSnack({ type: 'green', data1: `Selling ${123} ARTH` }))
+                      }
+                      props.enqueueSnackbar('timepass', options)
                     }}
                   />
                 </div>
@@ -529,27 +551,27 @@ const Boardrooms: React.FC = () => {
           <Grid item lg={6} md={12} sm={12} xs={12} >
             <RadioSelectionConatiner>
               <RadioSubConatiner onClick={() => {
-                if(selectedSwap === 'Sushiswap'){
+                if (selectedSwap === 'Sushiswap') {
                   setSelectedSwap('Uniswap')
                 }
               }}>
                 {selectedSwap === 'Uniswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
-                    <img src={uniswapLogo} style={{marginTop: '-6px'}}/>
+                    <img src={uniswapLogo} style={{ marginTop: '-6px' }} />
                   </RadioLogo>
                   Uniswap
                 </RadioText>
               </RadioSubConatiner>
               <RadioSubConatiner onClick={() => {
-                if(selectedSwap === 'Uniswap'){
+                if (selectedSwap === 'Uniswap') {
                   setSelectedSwap('Sushiswap')
                 }
               }}>
                 {selectedSwap === 'Sushiswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
-                    <img src={shushiswap}/>
+                    <img src={shushiswap} />
                   </RadioLogo>
                   Sushiswap
                 </RadioText>
@@ -1019,4 +1041,4 @@ font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.64);
 `;
-export default Boardrooms;
+export default withSnackbar(Boardrooms);

@@ -15,9 +15,10 @@ import OpenableCard from './components/OpenableCard';
 import ImportPool from './components/ImportPool';
 import RemovePool from './components/RemovePool';
 import AddLiquidity from './components/AddLiquidity';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 
-const Boardrooms: React.FC = () => {
+const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [action, setAction] = useState<'Details' | 'Import' | 'Add' | 'Remove'>('Details')
@@ -371,4 +372,4 @@ flex-direction: row;
 align-items: center;
 `;
 
-export default Boardrooms;
+export default withSnackbar(Boardrooms);

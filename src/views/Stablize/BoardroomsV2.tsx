@@ -21,6 +21,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { CustomSnack } from '../../components/SnackBar';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -130,7 +132,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
-const Boardrooms: React.FC = () => {
+const Boardrooms = (props: WithSnackbarProps) => {
   const basisCash = useBasisCash();
   const [shareAmount, setShareAmount] = useState<number>(1500)
   const [collateralAmount, setCollateralAmount] = useState<number>(0)
@@ -157,7 +159,7 @@ const Boardrooms: React.FC = () => {
     arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
     setDropDownValues(arr);
   }, [selectedAmountCoin])
-  
+
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
   const handleCheck = (event: any) => {
@@ -441,7 +443,13 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
-                  onClick={() => setOpenModal(0)}
+                  onClick={() => {
+                    setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'red', data1: `Buyback for ${redeemAmount} ARTH cancelled` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
+                  }}
                 // onClick={handleClose}
                 />
               </div>
@@ -455,6 +463,10 @@ const Boardrooms: React.FC = () => {
                     setBuyback(false)
                     setRecollatateralize(true)
                     setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'green', data1: `Buyback for ${redeemAmount} ARTH :- processing` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
                   }}
                 />
               </div>
@@ -512,7 +524,13 @@ const Boardrooms: React.FC = () => {
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
-                  onClick={() => setOpenModal(0)}
+                  onClick={() => {
+                    setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'red', data1: `Recollateralize for ${collateralAmount} ARTH cancelled` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
+                  }}
                 // onClick={handleClose}
                 />
               </div>
@@ -526,6 +544,10 @@ const Boardrooms: React.FC = () => {
                     setBuyback(true)
                     setRecollatateralize(false)
                     setOpenModal(0)
+                    let options = {
+                      content: () => (CustomSnack({ type: 'green', data1: `Recollateralize for ${collateralAmount} ARTH:- processing` }))
+                    }
+                    props.enqueueSnackbar('timepass', options)
                   }}
                 />
               </div>
@@ -1136,4 +1158,4 @@ font-size: 14px;
 line-height: 20px;
 color: rgba(255, 255, 255, 0.64);
 `;
-export default Boardrooms;
+export default withSnackbar(Boardrooms);
