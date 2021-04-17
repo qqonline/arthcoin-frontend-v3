@@ -255,6 +255,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
+                ILabelInfoValue={'How can i get it?'}
                 value={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
@@ -289,7 +290,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
-                      <BeforeChip>1.08</BeforeChip>
+                      <BeforeChip>0.5</BeforeChip>
                       <TagChips>ARTH/ETH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>

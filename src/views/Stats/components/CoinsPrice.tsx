@@ -10,11 +10,8 @@ const CoinsPrice: React.FC<props> = (props) => {
 
   return (
     <CustomInfoCard>
-      <CustomInfoCardHeader>
-        Bonding Curve Discount on ARTHX
-      </CustomInfoCardHeader>
       <CustomInfoCardDetails>
-        <OneLine>
+        <OneLine style={{marginTop: '0px'}}>
           <div>
             <TextWithIcon>ARTH Current Price</TextWithIcon>
             <TargetPriceTag>Target Price: $1.20</TargetPriceTag>
@@ -79,7 +76,7 @@ const OneLine = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 15px 0;
+  margin-top: 40px;
 `
 
 const TextWithIcon = styled.div`

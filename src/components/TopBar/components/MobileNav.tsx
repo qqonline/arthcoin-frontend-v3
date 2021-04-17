@@ -47,7 +47,7 @@ const MobileNav: React.FC = () => {
         Supply
       </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/stats">
-        Stats
+        Analytics
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/mint">
         Mint/Redeem
@@ -57,6 +57,9 @@ const MobileNav: React.FC = () => {
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/farming">
         Farming
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/farming">
+        Pools
       </StyledLink>
       {false && (
         <StyledButton>

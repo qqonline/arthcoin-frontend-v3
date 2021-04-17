@@ -545,12 +545,15 @@ const StyledLink = styled.a`
   }
 `;
 const ModalText = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
   text-align: left;
   margin-bottom: 15px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 140%;
   color: rgba(255, 255, 255, 0.64);
+
 `;
 const ModalHyperLink = styled.div`
   font-weight: 300;

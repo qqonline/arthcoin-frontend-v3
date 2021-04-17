@@ -131,7 +131,6 @@ const Home: React.FC = () => {
         subtitle="View information about the current ARTH protocol"
         title="Analytics" />
       <Container size="lg">
-        <div className="border-bottom width-100 margin-bottom-20" />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <Card>
@@ -340,8 +339,8 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
-              title="ARTH Bond"
-              symbol="ARTHB"
+              title="ARTHX Share"
+              symbol="ARTHX"
               liquidity={'$2,462,492'}
               uniswapInputAddress={basisCash.ARTHB.address}
               address={bondAddr}
