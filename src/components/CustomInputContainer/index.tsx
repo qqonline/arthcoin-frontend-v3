@@ -160,7 +160,7 @@ const ILabelInfo = styled.p`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  color: #FD565660;
+  color: #F7653B;
   margin-left: 5px;
 `
 

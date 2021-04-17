@@ -4,6 +4,7 @@ import Modal from '../../components/NewModal/index';
 import TopBar from '../../components/TopBar';
 import './styles/index.sass';
 import './footer.css';
+import warning from '../../assets/svg/warning.svg';
 
 const Home: React.FC = () => {
   const [openModal, toggleModal] = useState(true);
@@ -14,11 +15,12 @@ const Home: React.FC = () => {
     <div>
       <Modal
         title="Disclaimer"
+        titleLogo={<img src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />}
         open={openModal}
         handleClose={handleClose}
-        // titleLogo={
-        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
-        // }
+      // titleLogo={
+      //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+      // }
       >
         <ModalText>
           <b>

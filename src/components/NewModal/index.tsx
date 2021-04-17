@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
+import styled from 'styled-components';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
@@ -104,7 +105,9 @@ const CustomizedDialogs: React.FC<props> = ({
           onClose={handleCloseModal}
           titleLogo={titleLogo}
         >
-          {title}
+          <ModalTitle>
+            {title}
+          </ModalTitle>
         </DialogTitle>
         <DialogContent dividers>{children}</DialogContent>
       </Dialog>
@@ -113,3 +116,14 @@ const CustomizedDialogs: React.FC<props> = ({
   return modalJsx;
 };
 export default CustomizedDialogs;
+
+const ModalTitle = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 24px;
+text-align: center;
+color: #FFFFFF;
+opacity: 0.88;
+`;

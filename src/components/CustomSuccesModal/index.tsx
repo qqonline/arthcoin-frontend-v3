@@ -14,7 +14,7 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
     <CustomModal
       closeButton
       handleClose={() => {}}
-      open={true}
+      open={false}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
       modalBodyStyle={{}}>
