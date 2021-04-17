@@ -31,7 +31,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           DefaultValue={'0.00'}
           LogoSymbol={'ARTH'}
           hasDropDown={false}
-          SymbolText={'ARTH'}
+          SymbolText={'ARTH-MAHA'}
           setText={(val) => { }}
           inputMode={'decimal'}
           tagText={'MAX'}

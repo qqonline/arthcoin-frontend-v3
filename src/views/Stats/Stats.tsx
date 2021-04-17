@@ -110,7 +110,7 @@ const Home: React.FC = () => {
 
   const CollateralRatio = () => {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', marginTop: -15 }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <TextForInfoTitle>
@@ -118,7 +118,7 @@ const Home: React.FC = () => {
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
           </TextForInfoTitle>
           {/* </div> */}
-          <PercentNumber style={{ margin: '6px' }}>50%</PercentNumber>
+          <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>50%</PercentNumber>
         </div>
         <BorderLinearProgress variant="determinate" value={50} />
       </div>
@@ -144,7 +144,7 @@ const Home: React.FC = () => {
                   <Grid item sm={12} md={6} lg={6}>{CollateralRatio()}</Grid>
                   <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                     <PercentCard>
-                      <PercentCardInfo>
+                      <PercentCardInfo style={{marginTop: 15}}>
                         <PercentCardLabel>
                           <div style={{ height: 14, width: 14, background: '#F7653B', borderRadius: 7 }} />
                           <OpacitySpan>
@@ -223,7 +223,7 @@ const Home: React.FC = () => {
                     }}>
                       <Grid item sm={12} md={6} lg={6}>
                         {/* <div style={{ marginRight: 25, background: 'black' }}> */}
-                          <PieChart />
+                        <PieChart />
                         {/* </div> */}
                       </Grid>
                       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
@@ -300,10 +300,10 @@ const Home: React.FC = () => {
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
             <BasicInfo />
-            <StakeBox/>
+            <StakeBox />
           </Grid>
         </Grid>
-        <Grid container spacing={2} style={{marginTop: '8px'}}>
+        <Grid container spacing={2} style={{ marginTop: '8px' }}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <BondingDiscount />
           </Grid>
@@ -314,7 +314,7 @@ const Home: React.FC = () => {
             <FeeRates />
           </Grid>
         </Grid>
-        <Grid container spacing={2} style={{marginTop: '8px'}}>
+        <Grid container spacing={2} style={{ marginTop: '8px' }}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="MAHA"
@@ -368,7 +368,7 @@ const Card = styled.div`
   display: flex;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
-  padding: 16px 32px;
+  padding: 0 32px;
 `;
 const PercentCard = styled.div`
   display: flex;
@@ -377,7 +377,7 @@ const PercentCard = styled.div`
   width: 100%;
   align-items: center;
   height: fit-content;
-  padding: 32px 0px;
+  padding: 25px 0px;
   // border: 0.5px solid;
 `;
 
@@ -397,6 +397,7 @@ const InfoDiv = styled.div`
   line-height: 24px;
   color: rgba(255, 255, 255, 0.64);
   margin: 12px 0px 0px 0px;
+  text-align: center;
 `;
 
 const PercentCardLabel = styled.div`
@@ -439,7 +440,8 @@ const TextForInfoTitle = styled.div`
   line-height: 150%;
   color: rgba(255, 255, 255, 0.88);
   opacity: 0.64;
-  margin: 20px 0px
+  margin: 20px 0px;
+  text-align: center;
 `
 
 const PercentNumber = styled.span`
@@ -512,10 +514,12 @@ const ButtonText = styled.div`
 `
 
 const TitleString = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #ffffff;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
   opacity: 0.88;
 `;
 export default Home;

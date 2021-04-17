@@ -117,6 +117,7 @@ const AppContent: React.FC = ({ children }) => {
             horizontal: 'right',
           }}
           maxSnack={2}
+          autoHideDuration={2500}
         >
           <>
             <Popups />
