@@ -367,7 +367,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           type === "Buy" ?
             <>
               <TransparentInfoDiv
-                labelData={`Your collateral supply`}
+                labelData={`Your amount`}
                 rightLabelUnit={'ETH'}
                 rightLabelValue={mintColl.toString()}
               />
@@ -397,7 +397,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               />
 
               <TransparentInfoDiv
-                labelData={`You receive`}
+                labelData={`You will receive`}
                 // labelToolTipData={'testing'}
                 rightLabelUnit={'ARTH'}
                 rightLabelValue={'1000.00'}
