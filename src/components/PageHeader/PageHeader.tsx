@@ -117,8 +117,8 @@ const StyledPageHeader = styled.div`
   flex-direction: row;
   width: 100%;
   background: linear-gradient(180deg, #${(props) => props.theme.color.dark[200]} 0%, rgba(42, 40, 39, 0) 100%);
-  padding-bottom: ${(props) => props.theme.spacing[5]}px;
-  padding-top: ${(props) => props.theme.spacing[5]}px;
+  padding-bottom: 40px;
+  padding-top: 40px;
   //padding-left: 15px;
   //padding-right: 15px;
   @media (max-width: 768px) {
@@ -165,9 +165,8 @@ const StyledTitle = styled.h1`
   text-transform: uppercase;
   opacity: 0.88;
   z-index: 1;
-  margin: 0;
   padding: 0;
-
+  margin-bottom: 4px;
 `;
 
 const LearnMore = styled.a`

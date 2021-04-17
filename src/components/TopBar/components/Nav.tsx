@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
         Supply
       </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/stats">
-        Stats
+        Analytics
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/mint">
         Mint/Redeem

@@ -49,7 +49,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           placeholder={DefaultValue}
           value={value? value: ''}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
+          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1, fontFamily: 'Inter' }}
           onChange={(event) => {
             if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value)
@@ -93,6 +93,11 @@ const CustomInputContainer: React.FC<props> = (props) => {
           {hasDropDown && <IFieldRightContainerDropDown>
             <KeyboardArrowDown fontSize='default' />
           </IFieldRightContainerDropDown>}
+          {modalOpen && hasDropDown && ondropDownValueChange &&
+            <BackgroundAbsolute onClick={() => {
+              setModalOpen(!modalOpen);
+            }}/>
+          }
 
           {modalOpen && hasDropDown && ondropDownValueChange &&
             <CustomDropDown
@@ -106,6 +111,16 @@ const CustomInputContainer: React.FC<props> = (props) => {
 }
 
 export default CustomInputContainer
+
+const BackgroundAbsolute = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
+`
 
 const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
