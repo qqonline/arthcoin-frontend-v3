@@ -22,6 +22,7 @@ import CustomModal from '../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
+import CustomSuccessModal from '../../components/CustomSuccesModal';
 
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
@@ -152,7 +153,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
   const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(1);
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
   const [testnetDiv, showDiv] = React.useState(true);
   const sliderClasses = useSliderStyles();
@@ -865,6 +866,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
       </Container>
+
+      <CustomSuccessModal/>
     </>
   );
 };

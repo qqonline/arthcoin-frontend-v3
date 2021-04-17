@@ -146,7 +146,7 @@ const CustomModal: React.FC<props> = ({
         {/* <div
                     style={modalContainerStyle}
                 > */}
-        <DialogTitle
+        {title && <DialogTitle
           closeButton={closeButton}
           modalTitleStyle={{
             color: 'rgba(255, 255, 255, 0.88)',
@@ -154,12 +154,12 @@ const CustomModal: React.FC<props> = ({
             justifyContent: 'center',
             // width: '100%'
           }}
-          id="customized-dialog-title"
+          id='customized-dialog-title'
           onClose={handleCloseModal}
           titleLogo={titleLogo}
         >
           {title}
-        </DialogTitle>
+        </DialogTitle>}
         <DialogContent style={{
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
