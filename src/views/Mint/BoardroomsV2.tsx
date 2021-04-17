@@ -158,6 +158,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [testnetDiv, showDiv] = React.useState(true);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
+  const [successModal, setSuccessModal] = useState<boolean>(false)
 
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('USDT')
   const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
@@ -768,6 +769,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
                         content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Minting ${mintColl} ARTH` }))
                       }
                       props.enqueueSnackbar('timepass', options)
+                      setTimeout(() => {
+                        setSuccessModal(true);
+                      }, 3000)
                     }}
                   />
                 </div>
@@ -867,7 +871,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
         {type === 'Redeem' && redeemTabContent()}
       </Container>
 
-      <CustomSuccessModal/>
+      <CustomSuccessModal
+        modalOpen={successModal}
+        setModalOpen={() => setSuccessModal(false)}
+        title={'Minting ARTH successful!'}
+        subTitle={'View Transaction'}
+        subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        buttonText={'Stake your ARTH'}
+        buttonType={'default'}
+      />
     </>
   );
 };
