@@ -427,7 +427,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'red', data1: `Buy order for ${123} ARTH cancelled` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Buy order for ${123} ARTH cancelled` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -443,7 +443,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       setOpenModal(0)
                       setType('Sell')
                       let options = {
-                        content: () => (CustomSnack({ type: 'green', data1: `Buying ${123} ARTH` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Buying ${123} ARTH` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -513,7 +513,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'red', data1: `Sell order for ${123} ARTH cancelled` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Sell order for ${123} ARTH cancelled` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -528,7 +528,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'green', data1: `Selling ${123} ARTH` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Selling ${123} ARTH` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}

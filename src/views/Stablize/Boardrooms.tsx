@@ -345,7 +345,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   onClick={() => {
                     setOpenModal(0)
                     let options = {
-                      content: () => (CustomSnack({ type: 'red', data1: `Buyback for ${redeemAmount} ARTH cancelled` }))
+                      content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Buyback for ${redeemAmount} ARTH cancelled` }))
                     }
                     props.enqueueSnackbar('timepass', options)
                   }}
@@ -363,7 +363,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     setRecollatateralize(true)
                     setOpenModal(0)
                     let options = {
-                      content: () => (CustomSnack({ type: 'green', data1: `Buyback for ${redeemAmount} ARTH :- processing` }))
+                      content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Buyback for ${redeemAmount} ARTH :- processing` }))
                     }
                     props.enqueueSnackbar('timepass', options)
                   }}
@@ -426,7 +426,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   onClick={() => {
                     setOpenModal(0)
                     let options = {
-                      content: () => (CustomSnack({ type: 'red', data1: `Recollateralize for ${collateralAmount} ARTH cancelled` }))
+                      content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Recollateralize for ${collateralAmount} ARTH cancelled` }))
                     }
                     props.enqueueSnackbar('timepass', options)
                   }}
@@ -444,7 +444,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     setRecollatateralize(false)
                     setOpenModal(0)
                     let options = {
-                      content: () => (CustomSnack({ type: 'green', data1: `Recollateralize for ${collateralAmount} ARTH:- processing` }))
+                      content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Recollateralize for ${collateralAmount} ARTH:- processing` }))
                     }
                     props.enqueueSnackbar('timepass', options)
                   }}

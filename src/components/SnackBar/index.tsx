@@ -5,35 +5,36 @@ import styled from 'styled-components';
 import { IconButton } from '@material-ui/core';
 
 export interface SnackObject {
-    snackHeader?: string;
-    headerCount?: string | number;
-    type: 'red' | 'green' | 'other';
-    bgColor?: string;
-    data1: string;
-    data2?: string;
-  }
+  snackHeader?: string;
+  headerCount?: string | number;
+  type: 'red' | 'green' | 'other';
+  bgColor?: string;
+  data1: string;
+  data2?: string;
+  onClose: () => void;
+}
 
 export const CustomSnack = (snackObject: SnackObject) => (
-    <SnackDiv style={{ width: 350 }}>
-        <SnackHeader>
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                <HeaderCount>{snackObject?.headerCount || '1'}</HeaderCount>
-                <HeaderText>{snackObject?.snackHeader || 'Transaction'}</HeaderText>
-            </div>
-            <IconButton aria-label="close">
-                <img src={CloseIcon} width="24px" alt="" />
-            </IconButton>
-        </SnackHeader>
-        <SnackContent style={{ background: snackObject.type === 'red' ? '#BA1E38' : snackObject.type === 'green' ? '#178A50' : snackObject?.bgColor || '#178A50' }}>
-            <BellIcon>
-                <img src={bellIcon} height={21} />
-            </BellIcon>
-            <SnackData>
-                <DataSpan>{snackObject.data1}</DataSpan>
-                {snackObject.data2 && <DataSpan style={{ marginTop: 4 }}>{snackObject?.data2}</DataSpan>}
-            </SnackData>
-        </SnackContent>
-    </SnackDiv>
+  <SnackDiv style={{ width: 350 }}>
+    <SnackHeader>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+        <HeaderCount>{snackObject?.headerCount || '1'}</HeaderCount>
+        <HeaderText>{snackObject?.snackHeader || 'Transaction'}</HeaderText>
+      </div>
+      <IconButton aria-label="close" onClick={() => snackObject.onClose()}>
+        <img src={CloseIcon} width="24px" alt="" />
+      </IconButton>
+    </SnackHeader>
+    <SnackContent style={{ background: snackObject.type === 'red' ? '#BA1E38' : snackObject.type === 'green' ? '#178A50' : snackObject?.bgColor || '#178A50' }}>
+      <BellIcon>
+        <img src={bellIcon} height={21} />
+      </BellIcon>
+      <SnackData>
+        <DataSpan>{snackObject.data1}</DataSpan>
+        {snackObject.data2 && <DataSpan style={{ marginTop: 4 }}>{snackObject?.data2}</DataSpan>}
+      </SnackData>
+    </SnackContent>
+  </SnackDiv>
 )
 
 const SnackDiv = styled.div`

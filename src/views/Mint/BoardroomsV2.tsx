@@ -751,7 +751,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'red', data1: `Minting ${mintColl} ARTH cancelled` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Minting ${mintColl} ARTH cancelled` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -765,7 +765,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(2)
                       let options = {
-                        content: () => (CustomSnack({ type: 'green', data1: `Minting ${mintColl} ARTH` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Minting ${mintColl} ARTH` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -836,7 +836,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'red', data1: `Redeeming ${redeemAmount} ARTH cancelled` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Redeeming ${redeemAmount} ARTH cancelled` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}
@@ -851,7 +851,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       // setType('Redeem')
                       setOpenModal(0)
                       let options = {
-                        content: () => (CustomSnack({ type: 'green', data1: `Redeeming ${redeemAmount} ARTH`, data2: `Stability Fee = 4%` }))
+                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Redeeming ${redeemAmount} ARTH`, data2: `Stability Fee = 4%` }))
                       }
                       props.enqueueSnackbar('timepass', options)
                     }}

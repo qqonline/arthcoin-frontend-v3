@@ -57,7 +57,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -70,7 +70,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'green', data1: `Depositing ${123} ARTH` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Depositing ${123} ARTH` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -117,7 +117,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'red', data1: `Withdraw for ${123} ARTH cancelled` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Withdraw for ${123} ARTH cancelled` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -130,7 +130,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'green', data1: `Withdrawing ${123} ARTH` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Withdrawing ${123} ARTH` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -175,7 +175,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'red', data1: `Claim for ${123} ARTH cancelled` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Claim for ${123} ARTH cancelled` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -188,7 +188,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               onClick={() => {
                 setOpenModal(false)
                 let options = {
-                  content: () => (CustomSnack({ type: 'green', data1: `Claiming for ${123} ARTH` }))
+                  content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Claiming for ${123} ARTH` }))
                 }
                 props.enqueueSnackbar('timepass', options)
               }}
@@ -213,7 +213,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           setOpenModal(true);
           setAction(data);
           // let options = {
-          //   content: () => (CustomSnack({ type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
+          //   content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
           // }
           // props.enqueueSnackbar('timepass', options)
         }}

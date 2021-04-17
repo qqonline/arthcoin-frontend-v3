@@ -340,7 +340,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
                 onClick={() => {
                   setConfirmModal(false)
                   let options = {
-                    content: () => (CustomSnack({ type: 'red', data1: `Remove-Liquidity order for ${123} ARTH cancelled` }))
+                    content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Remove-Liquidity order for ${123} ARTH cancelled` }))
                   }
                   props.enqueueSnackbar('timepass', options)
                 }}
@@ -353,7 +353,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
                 onClick={() => {
                   setConfirmModal(false)
                   let options = {
-                    content: () => (CustomSnack({ type: 'green', data1: `Removing Liquidity for ${123} ARTH` }))
+                    content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Removing Liquidity for ${123} ARTH` }))
                   }
                   props.enqueueSnackbar('timepass', options)
                 }}
