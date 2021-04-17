@@ -61,7 +61,7 @@ const Banks: React.FC = () => {
           <PageHeader
             title="Farming"
             subtitle="Earn MAHA by providing liquidity."
-            learnMoreLink="#"
+            // learnMoreLink="#"
           />
           <Container size="lg">
             <ScrollDiv style={{ overflowX: 'scroll' }}>
