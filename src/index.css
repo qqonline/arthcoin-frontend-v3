@@ -68,7 +68,7 @@ code {
 }
 
 .jFiaaq{
-  padding: 0px 12px !important;
+  padding: 0px 6px !important;
 }
 
 .chakra-home {
@@ -1235,7 +1235,7 @@ ul {
   list-style-type: none; /* no default bullets */
 }
 
-ul li { 
+ul li {
   font-family: Arial;
   font-size: 18px;
 }

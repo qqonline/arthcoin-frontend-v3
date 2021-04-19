@@ -27,6 +27,7 @@ import BondingDiscount from '../Genesis/components/BondingDiscount';
 import UnderstandMore from './components/UnderstandMore';
 import PageHeader from '../../components/PageHeader';
 import { useMediaQuery } from 'react-responsive';
+import { KeyboardArrowRight } from '@material-ui/icons';
 
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
@@ -267,356 +268,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
     'Your collaterall is exchanged for ARTHX',
     'There is bonding curve exchange rate which changes as genesis ends'
   ]
-  // const mintTabContent = () => {
-  //   return (
-  //     <Grid container style={{ marginTop: '24px' }} spacing={2}>
-  //       <Grid item lg={1} />
-  //       <Grid item lg={5} md={12} sm={12} xs={12}>
-  //         <LeftTopCard>
-  //           <LeftTopCardHeader>
-  //             <ActiveTab></ActiveTab>
-  //             <TabContainer>
-  //               <TabText>Mint</TabText>
-  //             </TabContainer>
-  //             <TabContainer onClick={() => setType('Redeem')}>
-  //               <TabText>Redeem</TabText>
-  //             </TabContainer>
-  //           </LeftTopCardHeader>
-  //           <LeftTopCardContainer>
-  //             <CustomInputContainer
-  //               ILabelValue={'Enter Collateral'}
-  //               IBalanceValue={`Balance ${balance}`}
-  //               ILabelInfoValue={''}
-  //               value={mintColl.toString()}
-  //               DefaultValue={mintColl.toString()}
-  //               LogoSymbol={selectedCollateralCoin}
-  //               hasDropDown={true}
-  //               dropDownValues={CollateraldropDownValues}
-  //               ondropDownValueChange={(data: string) => {
-  //                 setSelectedCollateralCoin(data);
-  //               }}
-  //               SymbolText={selectedCollateralCoin}
-  //               inputMode={'numeric'}
-  //               setText={(val: string) => {
-  //                 // if (val === '0'){
-  //                 //   onBuyColletralValueChange('0')
-  //                 // } else {
-  //                 //   onBuyColletralValueChange(val)
-  //                 // }
-  //               }}
-  //             />
-  //             <PlusMinusArrow>
-  //               <img src={plus} />
-  //             </PlusMinusArrow>
-  //             <CustomInputContainer
-  //               ILabelValue={'Enter ARTHX Share'}
-  //               IBalanceValue={`Balance ${balance}`}
-  //               ILabelInfoValue={'How can i get it?'}
-  //               value={mintArthxShare.toString()}
-  //               // ILabelInfoValue={'How can i get it?'}
-  //               DefaultValue={mintArthxShare.toString()}
-  //               LogoSymbol={'ARTHX'}
-  //               hasDropDown={false}
-  //               SymbolText={'ARTHX'}
-  //               inputMode={'decimal'}
-  //               setText={(val: string) => {
-  //                 // onARTHXValueChange(val);
-  //               }}
-  //             />
-  //             <PlusMinusArrow>
-  //               <img src={arrowDown} />
-  //             </PlusMinusArrow>
-  //             <CustomInputContainer
-  //               ILabelValue={'You will receive'}
-  //               IBalanceValue={`Balance ${balance}`}
-  //               value={mintReceive.toString()}
-  //               ILabelInfoValue={''}
-  //               DefaultValue={mintReceive.toString()}
-  //               LogoSymbol={'ARTH'}
-  //               hasDropDown={false}
-  //               SymbolText={'ARTH'}
-  //             />
-  //             <div>
-  //               <TcContainer>
-  //                 <OneLineInputwomargin>
-  //                   <div style={{ flex: 1 }}>
-  //                     <TextWithIcon>
-  //                       Trading Fee
-  //                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                     </TextWithIcon>
-  //                   </div>
-  //                   <OneLineInputwomargin>
-  //                     <BeforeChip>0.5</BeforeChip>
-  //                     <TagChips>ARTH/ETH</TagChips>
-  //                   </OneLineInputwomargin>
-  //                 </OneLineInputwomargin>
-  //               </TcContainer>
-  //               <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
-  //             </div>
-  //           </LeftTopCardContainer>
-  //         </LeftTopCard>
-  //       </Grid>
-  //       <Grid item lg={5} md={12} sm={12} xs={12}>
-  //         <RightTopCard>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>$5.4</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Collateral Ratio
-  //                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>86%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Pool Balance
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>154.6M</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Available to Mint
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Stability Fee
-  //                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>2%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Trading Fee
-  //                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>2%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //         </RightTopCard>
-  //         <RightBottomCard>
-  //           <RightBottomCardTitle>
-  //             Farming pools are great way to earn higher APY by staking your $ARTH
-  //           </RightBottomCardTitle>
-  //           <Grid container style={{ marginTop: '16px' }}>
-  //             <Grid item lg={4}>
-  //               <Button text={'Earn Rewards'} size={'sm'} />
-  //             </Grid>
-  //           </Grid>
-  //         </RightBottomCard>
-  //       </Grid>
-  //       <Grid item lg={1} />
-  //     </Grid>
-  //   )
-  // };
-
-
-  // const redeemTabContent = () => {
-  //   return (
-  //     <Grid container style={{ marginTop: '24px' }} spacing={2}>
-  //       <Grid item lg={1} />
-  //       <Grid item lg={5} md={12} sm={12} xs={12}>
-  //         <LeftTopCard>
-  //           <LeftTopCardHeader>
-  //             <TabContainer onClick={() => setType('Mint')}>
-  //               <TabText>Mint</TabText>
-  //             </TabContainer>
-  //             <TabContainer>
-  //               <ActiveTab></ActiveTab>
-  //               <TabText>Redeem</TabText>
-  //             </TabContainer>
-  //           </LeftTopCardHeader>
-  //           <LeftTopCardContainer>
-  //             <CustomInputContainer
-  //               ILabelValue={'Enter Redeem Amount'}
-  //               IBalanceValue={'Balance 500.00'}
-  //               ILabelInfoValue={''}
-  //               DefaultValue={redeemAmount.toString()}
-  //               LogoSymbol={'ARTH'}
-  //               hasDropDown={false}
-  //               SymbolText={'ARTH'}
-  //               inputMode={'decimal'}
-  //               setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
-  //             />
-  //             <PlusMinusArrow>
-  //               <img src={arrowDown} />
-  //             </PlusMinusArrow>
-  //             <CustomInputContainer
-  //               ILabelValue={'You receive'}
-  //               IBalanceValue={'Balance 500.00'}
-  //               // ILabelInfoValue={'How can i get it?'}
-  //               DefaultValue={'0.00'}
-  //               LogoSymbol={selectedReceiveRedeemCoin}
-  //               hasDropDown={true}
-  //               dropDownValues={ReceiveRedeemdropDownValues}
-  //               ondropDownValueChange={(data: string) => {
-  //                 setSelectedReceiveRedeemCoin(data);
-  //               }}
-  //               SymbolText={selectedReceiveRedeemCoin}
-  //             />
-  //             <PlusMinusArrow>
-  //               <img src={plus} />
-  //             </PlusMinusArrow>
-  //             <CustomInputContainer
-  //               ILabelValue={'You receive'}
-  //               IBalanceValue={'Balance 500.00'}
-  //               ILabelInfoValue={''}
-  //               DefaultValue={'0.00'}
-  //               LogoSymbol={'ARTHX'}
-  //               hasDropDown={false}
-  //               SymbolText={'ARTHX'}
-  //             />
-  //             <div>
-  //               {/* <TcContainer> */}
-  //               <OneLineInputwomargin>
-  //                 <div style={{ flex: 1, marginTop: 10 }}>
-  //                   <TextWithIcon>
-  //                     Trading Fee
-  //                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                   </TextWithIcon>
-  //                 </div>
-  //                 <OneLineInputwomargin>
-  //                   <BeforeChip>0.05</BeforeChip>
-  //                   <TagChips>USDT</TagChips>
-  //                 </OneLineInputwomargin>
-  //               </OneLineInputwomargin>
-  //               {/* </TcContainer> */}
-  //               <OneLineInput>
-  //                 <div style={{ flex: 1 }}>
-  //                   <TextWithIcon>
-  //                     Stability Fee
-  //                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                   </TextWithIcon>
-  //                 </div>
-  //                 <OneLineInput>
-  //                   <BeforeChip>0.05</BeforeChip>
-  //                   <TagChips>MAHA</TagChips>
-  //                 </OneLineInput>
-  //               </OneLineInput>
-  //               <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
-  //             </div>
-  //           </LeftTopCardContainer>
-  //         </LeftTopCard>
-  //       </Grid>
-  //       <Grid item lg={5} md={12} sm={12} xs={12}>
-  //         <RightTopCard>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>$5.4</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Collateral Ratio
-  //                   <HtmlTooltip
-  //                     title={
-  //                       <React.Fragment>
-  //                         <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
-  //                       </React.Fragment>
-  //                     }>
-  //                     <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                   </HtmlTooltip>
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>86%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Pool Balance
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>154.6M</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Available to Mint
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Stability Fee
-  //                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //           <div style={{ marginBottom: '12px' }}>
-  //             <OneLineInput>
-  //               <div style={{ flex: 1 }}>
-  //                 <TextForInfoTitle>
-  //                   Trading Fee
-  //                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-  //                 </TextForInfoTitle>
-  //               </div>
-  //               <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-  //             </OneLineInput>
-  //           </div>
-  //         </RightTopCard>
-  //         <RightBottomCard>
-  //           <RightBottomCardTitle>
-  //             Farming pools are greate way to earn higher APY by staking your $ARTH
-  //           </RightBottomCardTitle>
-  //           <Grid container style={{ marginTop: '16px' }}>
-  //             <Grid item lg={4}>
-  //               <Button text={'Earn Rewards'} size={'sm'} />
-  //             </Grid>
-  //           </Grid>
-  //         </RightBottomCard>
-  //       </Grid>
-  //       <Grid item lg={1} />
-  //     </Grid>
-  //   )
-  // };
 
   return (
     <>
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
-        open={true}
+        open={openModal === 1}
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
@@ -709,23 +367,55 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <Grid container style={{ marginTop: '24px' }} spacing={2}>
           <Grid item lg={1} />
           <Grid item lg={5} md={12} sm={12} xs={12}>
-
-
-            {/*Mithil's code here*/}
-
-
-            {/* <LeftTopCard>
+             <CustomInfoCard>
+              <CustomInfoCardDetails>
+                <div>
+                  <TextForInfoTitle>
+                    Available to mint
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
+                        </React.Fragment>
+                      }>
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+                    </HtmlTooltip>
+                  </TextForInfoTitle>
+                  <BeforeChipDark>54.76M</BeforeChipDark>
+                </div>
+                <div style={{textAlign: 'end'}}>
+                  <TextForInfoTitle>
+                    Pool Balance
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
+                        </React.Fragment>
+                      }>
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+                    </HtmlTooltip>
+                  </TextForInfoTitle>
+                  <BeforeChipDark>157.89M</BeforeChipDark>
+                </div>
+              </CustomInfoCardDetails>
+            </CustomInfoCard>
+             <LeftTopCard>
               <LeftTopCardHeader>
-                <ActiveTab></ActiveTab>
-                <TabContainer>
-                  <TabText>Mint</TabText>
+                <TabContainer onClick={() => {
+                  if (type !== 'Commit') setType('Commit')
+                }}>
+                  {type === 'Commit' && <ActiveTab/>}
+                  <TabText>Commit Collateral</TabText>
                 </TabContainer>
-                <TabContainer onClick={() => setType('Redeem')}>
-                  <TabText>Redeem</TabText>
+                <TabContainer onClick={() => {
+                  if (type !== 'Swap') setType('Swap')
+                }}>
+                  {type === 'Swap' && <ActiveTab/>}
+                  <TabText>Swap ARTH for ARTHX</TabText>
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer>
-                <CustomInputContainer
+                {type === "Commit"? <CustomInputContainer
                   ILabelValue={'Enter Collateral'}
                   IBalanceValue={`Balance ${balance}`}
                   ILabelInfoValue={''}
@@ -740,63 +430,47 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   SymbolText={selectedCollateralCoin}
                   inputMode={'numeric'}
                   setText={(val: string) => {
-                    // if (val === '0'){
-                    //   onBuyColletralValueChange('0')
-                    // } else {
-                    //   onBuyColletralValueChange(val)
-                    // }
+                    setCollateralValue(Number(val.replace(/[^0-9]/g, '')));
                   }}
-                />
-                <PlusMinusArrow>
-                  <img src={plus} />
-                </PlusMinusArrow>
-                <CustomInputContainer
-                  ILabelValue={'Enter ARTHX Share'}
-                  IBalanceValue={`Balance ${balance}`}
-                  ILabelInfoValue={'How can i get it?'}
-                  value={mintArthxShare.toString()}
-                  // ILabelInfoValue={'How can i get it?'}
-                  DefaultValue={mintArthxShare.toString()}
-                  LogoSymbol={'ARTHX'}
-                  hasDropDown={false}
-                  SymbolText={'ARTHX'}
-                  inputMode={'decimal'}
-                  setText={(val: string) => {
-                    // onARTHXValueChange(val);
-                  }}
-                />
+                />:
+                  <CustomInputContainer
+                    ILabelValue={'Enter ARTH'}
+                    IBalanceValue={`Balance ${balance}`}
+                    ILabelInfoValue={''}
+                    value={mintColl.toString()}
+                    DefaultValue={mintColl.toString()}
+                    LogoSymbol={'ARTH'}
+                    hasDropDown={false}
+                    SymbolText={'ARTH'}
+                    inputMode={'numeric'}
+                    setText={(val: string) => {
+                      setCollateralValue(Number(val.replace(/[^0-9]/g, '')))
+                    }}
+                  />
+                }
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <CustomInputContainer
-                  ILabelValue={'You will receive'}
-                  IBalanceValue={`Balance ${balance}`}
-                  value={mintReceive.toString()}
-                  ILabelInfoValue={''}
-                  DefaultValue={mintReceive.toString()}
-                  LogoSymbol={'ARTH'}
-                  hasDropDown={false}
-                  SymbolText={'ARTH'}
-                />
-                <div>
-                  <TcContainer>
+                <div style={{marginTop: '12px', marginBottom: '32px'}}>
+                  <TextWithIcon>You Receive</TextWithIcon>
+                  <ReceiveContainer>
                     <OneLineInputwomargin>
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
-                          Trading Fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          ARTHX
+                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
-                        <BeforeChip>0.5</BeforeChip>
-                        <TagChips>ARTH/ETH</TagChips>
+                        <BeforeChip>2,000</BeforeChip>
+                        <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
-                  </TcContainer>
-                  <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
+                  </ReceiveContainer>
                 </div>
+                <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
               </LeftTopCardContainer>
-            </LeftTopCard> */}
+            </LeftTopCard>
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
 
@@ -824,6 +498,32 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 };
 
+const CustomInfoCard = styled.div`
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 16px;
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
+`
+
+const CustomInfoCardDetails = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+`
+
+const OneLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
 
 const PageHeading = styled.p`
   font-family: Syne;
@@ -945,7 +645,7 @@ const RightBottomCardTitle = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: rgba(255, 255, 255, 0.88);
-  
+
 `
 
 const LeftTopCardHeader = styled.div`
@@ -971,10 +671,11 @@ const TabContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 32px 12px;
-  width: 100px;
   height: 80px;
   z-index: 1;
   cursor: pointer;
+  flex: 0.5;
+  position: relative;
 `
 
 const TabText = styled.span`
@@ -994,12 +695,12 @@ const StakingDiv = styled.div`
 
 const ActiveTab = styled.div`
   position: absolute;
-  width: 100px;
   padding: 32px 12px;
   background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, #FD565620);
   height: 80px;
   z-index: 0;
   border-bottom: 2px solid #FD5656;
+  width: 100%;
 `
 
 const PlusMinusArrow = styled.div`
@@ -1014,21 +715,20 @@ const PlusMinusArrow = styled.div`
   font-size: 20px;
 `
 
-const OneLineInput = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
-  margin: 5px 0px 10px 0px;
+const ReceiveContainer = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 12px;
 `
 
 const TextWithIcon = styled.div`
   font-family: Inter;
   font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.7);
 `
 
 const TextForInfoTitle = styled.div`
@@ -1042,7 +742,7 @@ const TextForInfoTitle = styled.div`
 `
 
 const BeforeChip = styled.span`
-  ont-family: Inter;
+  font-family: Inter;
   font-style: normal;
   font-weight: 300;
   font-size: 12px;
@@ -1050,15 +750,28 @@ const BeforeChip = styled.span`
   margin-right: 5px;
 `
 
-const TagChips = styled.div`
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 2px 8px;
+const BeforeChipDark = styled.span`
   font-family: Inter;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+`
+
+const TagChips = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
   font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: rgba(255, 255, 255, 0.64);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 4px;
+
 `
 
 const InputLabelSpanRight = styled.span`
