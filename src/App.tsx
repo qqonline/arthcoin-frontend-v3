@@ -31,6 +31,7 @@ import Stablize from './views/Stablize';
 import Trade from './views/Trade';
 import Pools from './views/Pools';
 import { SnackbarProvider } from 'notistack';
+import Genesis from './views/Genesis';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -77,6 +78,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/pools">
             <Pools />
+          </Route>
+          <Route path="/Genesis">
+            <Genesis />
           </Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>
