@@ -5,17 +5,13 @@ import useBasisCash from '../../hooks/useBasisCash';
 import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import Button from '../../components/Button';
-import Modal from './components/modal';
 import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
 import warning from '../../assets/svg/warning.svg'
-import InputContainer from './components/InputContainer';
-import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, IconButton, makeStyles, Slider, Snackbar, Theme, withStyles } from '@material-ui/core';
+import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import TransparentInfoDiv from './components/InfoDiv';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import Tooltip from '@material-ui/core/Tooltip';
-import theme from '../../theme';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
@@ -149,7 +145,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [balance, setBalance] = useState<number>(0)
   const [mintReceive, setReceive] = useState<number>(0)
   const [redeemAmount, setRedeemAmount] = useState<number>(0)
-  const [finalValue, setFinalValue] = useState<number>(100)
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
   const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
@@ -162,18 +157,20 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('USDT')
   const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
-  const defaultCollateralDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
-  let arr: string[];
+  const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+
   useEffect(() => {
+    let arr: string[];
     arr = defaultCollateralDropdownValues.filter(e => e !== selectedCollateralCoin);
     setCollateralDropDownValues(arr);
   }, [selectedCollateralCoin])
 
   const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('USDT')
   const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>([]);
-  const defaultReceiveRedeemDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
-  let temp: string[];
+  const defaultReceiveRedeemDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+
   useEffect(() => {
+    let temp: string[];
     temp = defaultReceiveRedeemDropdownValues.filter(e => e !== selectedReceiveRedeemCoin);
     setReceiveRedeemDropDownValues(temp);
   }, [selectedReceiveRedeemCoin]);
@@ -220,7 +217,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
-              <ActiveTab></ActiveTab>
+              <ActiveTab/>
               <TabContainer>
                 <TabText>Mint</TabText>
               </TabContainer>
@@ -402,7 +399,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Mint</TabText>
               </TabContainer>
               <TabContainer>
-                <ActiveTab></ActiveTab>
+                <ActiveTab/>
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
@@ -885,8 +882,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
 };
 
 const ToolTipFont = styled.p`
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 `
 const TestNetDiv = styled.div`
   width: 100%;
@@ -918,25 +915,6 @@ const OneLineInputwomargin = styled.div`
   justify-content: flex-start;
 `
 
-const StyledTableHeaderTextCenter = styled.h6`
-  font-size: 12px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 30px;
-  text-align: center;
-`;
-
-const InfoSpan = styled.span`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-color: rgba(255, 255, 255, 0.64);
-// margin: 10px 30px;
-text-align: center;
-`;
-
 const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
@@ -958,15 +936,15 @@ const RightBottomCard = styled.div`
 `
 
 const RightBottomCardTitle = styled.div`
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
   color: rgba(255, 255, 255, 0.88);
-  
+
 `
 
 const LeftTopCardHeader = styled.div`
@@ -1010,7 +988,7 @@ const TabText = styled.span`
 const StakingDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px 0px 0px 0px;
+  padding: 5px 0 0 0;
 `;
 
 const ActiveTab = styled.div`
@@ -1040,7 +1018,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 5px 0px 10px 0px;
+  margin: 5px 0 10px 0;
 `
 
 const TextWithIcon = styled.div`
@@ -1100,12 +1078,6 @@ const InputLabel = styled.p`
   color: rgba(255, 255, 255, 0.64);
   margin: 0px;
 `
-const StyledTableHeaderTextRight = styled.h6`
-  font-size: 12px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 10px;
-`;
 
 const InternalSpan = styled.span`
 font-family: Inter;
@@ -1129,127 +1101,12 @@ const InputNoDisplay = styled.span`
   margin: 0px 0px 0px 8px;
 `
 
-const LabelDiv = styled.div`
-// background: rgba(255, 255, 255, 0.08);
-// border-radius: 6px;
-// padding: 6px 4px;
-height: fit-content;
-justify-content: space-between;
-display: flex;
-align-items: center;
-// margin: 5px 0px 0px 0px;
-`;
-
-const LabelInfo = styled.div`
-// background: rgba(255, 255, 255, 0.08);
-// border-radius: 6px;
-padding: 3px 4px;
-height: fit-content;
-// justify-content: space-between;
-display: flex;
-align-items: center;
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 12px;
-line-height: 130%;
-color: rgba(255, 255, 255, 0.88);
-`;
-
-const LabelInfoText = styled.div`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-text-align: right;
-color: rgba(255, 255, 255, 0.88);
-`;
-
 const TimeSpan = styled.div`
 font-family: Inter;
 font-style: normal;
 font-weight: 300;
 font-size: 12px;
 line-height: 130%;
-color: rgba(255, 255, 255, 0.88);
-`;
-
-const LabelInfoData = styled.div`
-// background: yellow;
-padding: 3px 4px;
-// height: fit-content;
-width: fit-content;
-justify-content: space-between;
-display: flex;
-flex-direction: row;
-align-items: center;
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 12px;
-line-height: 130%;
-color: rgba(255, 255, 255, 0.88);
-`;
-
-const LabelInfoDataChip = styled.div`
-background: rgba(255, 255, 255, 0.08);
-border-radius: 4px;
-padding: 3px 4px;
-height: fit-content;
-// justify-content: space-between;
-display: flex;
-align-items: center;
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 12px;
-line-height: 130%;
-margin: 0px 2px;
-color: rgba(255, 255, 255, 0.64);
-`;
-
-const LabelInfoDataChipText = styled.div`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: rgba(255, 255, 255, 0.64);
-`;
-
-const InfoDiv = styled.div`
-background: rgba(255, 255, 255, 0.08);
-border-radius: 6px;
-padding: 6px 4px;
-height: fit-content;
-justify-content: space-between;
-display: flex;
-align-items: center;
-`;
-
-// const TransparentInfoDiv = styled.div`
-// // background: rgba(255, 255, 255, 0.08);
-// // border-radius: 6px;
-// // padding: 6px 4px;
-// height: fit-content;
-// justify-content: space-between;
-// display: flex;
-// align-items: center;
-// `;
-
-const InfoTitle = styled.div`
-padding: 6px 4px;
-height: fit-content;
-display: flex;
-align-items: center;
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
 color: rgba(255, 255, 255, 0.88);
 `;
 
@@ -1270,18 +1127,4 @@ color: rgba(255, 255, 255, 0.88);
 margin: 15px 0px 0px 0px;
 `;
 
-const CurrencyTag = styled.div`
-padding: 6px 4px;
-width: 85px;
-justify-content: space-around;
-height: fit-content;
-display: flex;
-align-items: center;
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-color: rgba(255, 255, 255, 0.64);
-`;
 export default withSnackbar(Boardrooms);
