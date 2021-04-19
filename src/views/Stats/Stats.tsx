@@ -305,7 +305,7 @@ const Home: React.FC = () => {
         </Grid>
         <Grid container spacing={2} style={{ marginTop: '8px' }}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <BondingDiscount />
+            <BondingDiscount stats/>
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <RewardRates />
