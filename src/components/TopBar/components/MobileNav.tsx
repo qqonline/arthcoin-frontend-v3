@@ -46,6 +46,9 @@ const MobileNav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/supply">
         Supply
       </StyledLink> */}
+      <StyledLink exact activeClassName="active" to="/Genesis">
+        Genesis
+      </StyledLink>
       <StyledLink exact activeClassName="active" to="/stats">
         Analytics
       </StyledLink>

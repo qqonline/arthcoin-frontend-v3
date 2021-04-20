@@ -68,7 +68,7 @@ code {
 }
 
 .jFiaaq{
-  padding: 0px 12px !important;
+  padding: 0px 6px !important;
 }
 
 .chakra-home {
@@ -1229,6 +1229,30 @@ body.modal-open {
 
 .bulleted-list li {
   padding-left: 10px;
+}
+
+ul {
+  list-style-type: none; /* no default bullets */
+}
+
+ul li {
+  font-family: Arial;
+  font-size: 18px;
+}
+
+li {
+  padding-block: 5px;
+}
+
+li::before { /* the custom styled bullets */
+  background-color: white;
+  border-radius: 50%;
+  content: "";
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  height: 5px;
+  width: 5px;
 }
 
 .normal-whitespace {

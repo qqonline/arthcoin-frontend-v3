@@ -5,6 +5,7 @@ import HtmlTooltip from '../../../components/HtmlTooltip';
 
 type props = {
   stats?: boolean
+  dataObj: { label: string; value: string }[]
 };
 
 const BondingDiscount: React.FC<props> = (props: props) => {
@@ -22,11 +23,12 @@ const BondingDiscount: React.FC<props> = (props: props) => {
     </CustomInfoCardHeader>
       }
       <CustomInfoCardDetails>
-        <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Current discount
-              {/*<HtmlTooltip
+        {props?.dataObj?.map(obj => (
+          <OneLine>
+            <div style={{ flex: 1 }}>
+              <TextWithIcon>
+                {obj.label}
+                {/*<HtmlTooltip
                 title={
                   <React.Fragment>
                     <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
@@ -34,31 +36,14 @@ const BondingDiscount: React.FC<props> = (props: props) => {
                 }>
                 <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
               </HtmlTooltip>*/}
-            </TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>0.2%</BeforeChip>
-            {/*<TagChips>ARTH</TagChips>*/}
+              </TextWithIcon>
+            </div>
+            <OneLine>
+              <BeforeChip>{obj.value}</BeforeChip>
+              {/*<TagChips>ARTH</TagChips>*/}
+            </OneLine>
           </OneLine>
-        </OneLine>
-        <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>1 day ago discount</TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>5%</BeforeChip>
-            {/*<TagChips>ETH</TagChips>*/}
-          </OneLine>
-        </OneLine>
-        <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>1 hour later discount</TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>~5%</BeforeChip>
-            {/*<TagChips>0.06%</TagChips>*/}
-          </OneLine>
-        </OneLine>
+        ))}
       </CustomInfoCardDetails>
     </CustomInfoCard>
   )

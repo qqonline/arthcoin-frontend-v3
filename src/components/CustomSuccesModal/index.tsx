@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomModal from '../CustomModal';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import Tick from '../../assets/svg/Tick.svg';
 import Close from '../../assets/svg/Close.svg';
 import Button from '../Button';
@@ -29,7 +29,8 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
       <MainContainer>
         <CloseButton src={Close} height={20} onClick={() => setModalOpen()}/>
         <TickContainer>
-          <img src={Tick} height={100} />
+          <TickBackgroundWave/>
+          <TickImg src={Tick} height={100} />
         </TickContainer>
         <ContentConatiner>
           <ContentTitle>
@@ -51,6 +52,23 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
 
 export default CustomSuccessModal;
 
+const TickAnimation = keyframes`
+  0%   {transform: scale(0)}
+  60%  {transform: scale(1.4)}
+  100% {transform: scale(1)}
+`;
+
+const TickBackground = keyframes`
+  from {
+    transform: scale(0);
+    background: #20C97450;
+  }
+  to {
+    transform: scale(1);
+    background: #20C97400;
+  }
+`;
+
 const CloseButton = styled.img`
   position: absolute;
   right: 32px;
@@ -68,6 +86,22 @@ const TickContainer = styled.div`
   align-items: center;
   margin-top: 20px;
   margin-bottom: 24px;
+  position: relative;
+`
+
+const TickImg = styled.img`
+  animation: ${TickAnimation} 0.5s linear;
+  z-index: 1;
+`
+
+const TickBackgroundWave = styled.div`
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: transparent;
+  position: absolute;
+  z-index: 0;
+  animation: ${TickBackground} 1s linear;
 `
 
 const ContentConatiner = styled.div`

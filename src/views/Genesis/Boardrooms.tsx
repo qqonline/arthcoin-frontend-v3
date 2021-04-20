@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import PageHeader from '../../components/PageHeader';
+
+import Boardroom from './components/Vault';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
-import Grid from '@material-ui/core/Grid';
-import InfoIcon from '@material-ui/icons/Info';
+import DistributionIcon from '../../assets/svg/Boardroom.svg';
+import { Vaults } from '../../basis-cash/config';
 import Button from '../../components/Button';
+import Modal from './components/modal';
+import TokenSymbol from '../../components/TokenSymbol';
 import arrowDown from '../../assets/svg/arrowDown.svg'
 import plus from '../../assets/svg/plus.svg'
-import warning from '../../assets/svg/warning.svg'
-import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+import styled from 'styled-components';
+import InfoIcon from '@material-ui/icons/Info';
+import InputContainer from './Boardroom/components/InputContainer';
 import TransparentInfoDiv from './components/InfoDiv';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import HtmlTooltip from '../../components/HtmlTooltip';
-import CustomInputContainer from '../../components/CustomInputContainer';
-import CustomModal from '../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../components/SnackBar';
-import CloseIcon from '../../assets/img/CloseIcon.svg';
-import CustomSuccessModal from '../../components/CustomSuccesModal';
-
-
-// const HtmlTooltip = withStyles((theme1: Theme) => ({
-//   tooltip: {
-//     backgroundColor: theme.color.dark[200],
-//     color: 'white',
-//     fontWeight: 300,
-//     fontSize: '13px',
-//     borderRadius: '6px',
-//     padding: '20px',
-//   },
-// }))(Tooltip);
-
+import { Checkbox, CheckboxProps, createStyles, Divider, FormControlLabel, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 const OrangeCheckBox = withStyles({
   root: {
     color: 'rgba(255, 255, 255, 0.32)',
@@ -125,99 +113,43 @@ const PrettoRestrictSlider = withStyles({
 })(Slider);
 const DEFAULT_CALC = 1440;
 
-// const HtmlTooltip = withStyles((theme) => ({
-//   tooltip: {
-//     backgroundColor: '#f5f5f9',
-//     color: 'rgba(0, 0, 0, 0.87)',
-//     maxWidth: 220,
-//     fontSize: theme.typography.pxToRem(12),
-//     border: '1px solid #dadde9',
-//   },
-// }))(Tooltip);
-
-
-const Boardrooms = (props: WithSnackbarProps) => {
-  useEffect(() => window.scrollTo(0, 0), []);
+const Boardrooms: React.FC = () => {
+  useEffect(() => window.scrollTo(0, 0));
   const basisCash = useBasisCash();
-  const colletralRatio = 86;
+
   const [mintColl, setCollateralValue] = useState<number>(0.00)
   const [mintArthxShare, setArthxShare] = useState<number>(0.00)
   const [balance, setBalance] = useState<number>(0)
   const [mintReceive, setReceive] = useState<number>(0)
   const [redeemAmount, setRedeemAmount] = useState<number>(0)
+  const [finalValue, setFinalValue] = useState<number>(100)
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC)
   const [currentCounter, setCurrentCounter] = useState<number>(1000)
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
-  const [testnetDiv, showDiv] = React.useState(true);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
-  const [successModal, setSuccessModal] = useState<boolean>(false)
 
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('USDT')
-  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
-  const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+  const handleCheck = (event: any) => {
+    // console.log('check trig', event.target.checked)
+    setChecked(event.target.checked);
+  };
+  const handleSliderChange = (event: any, value: any) => {
+    console.log('check trig', value)
+    setSliderValue(value);
+    setDuration(DEFAULT_CALC - value * value)
+  };
 
-  useEffect(() => {
-    let arr: string[];
-    arr = defaultCollateralDropdownValues.filter(e => e !== selectedCollateralCoin);
-    setCollateralDropDownValues(arr);
-  }, [selectedCollateralCoin])
-
-  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('USDT')
-  const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>([]);
-  const defaultReceiveRedeemDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
-
-  useEffect(() => {
-    let temp: string[];
-    temp = defaultReceiveRedeemDropdownValues.filter(e => e !== selectedReceiveRedeemCoin);
-    setReceiveRedeemDropDownValues(temp);
-  }, [selectedReceiveRedeemCoin]);
-
-  const onBuyColletralValueChange = async (val: string) => {
-    const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
-    setCollateralValue(valueInNumber);
-    let arthxShareTemp = await ((100 * valueInNumber)/colletralRatio) * ((100 - colletralRatio)/100)
-    setArthxShare(arthxShareTemp);
-    setReceive(arthxShareTemp + valueInNumber);
-  }
-
-  const onARTHXValueChange = async (val: string) => {
-    const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
-    setArthxShare(valueInNumber);
-    let colletralTemp = await ((100 * valueInNumber)/(100-colletralRatio)) * ((colletralRatio)/100)
-    setCollateralValue(colletralTemp);
-    setReceive(colletralTemp + valueInNumber);
-  }
-
-  const TestNetSnack = () => {
-    return (
-      <TestNetDiv>
-        <div />
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <img src={warning} height={24} />
-          <span style={{ marginLeft: 5 }}>
-            Please make sure that you are connected to matic mumbai TESTnet.
-          </span>
-        </div>
-        <div style={{cursor: 'pointer'}}>
-          <img src={CloseIcon} height={20} onClick={() => { showDiv(false) }} />
-        </div>
-      </TestNetDiv>
-    )
-  }
-  // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
   const mintTabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }} spacing={2}>
-        <Grid item lg={1} />
-        <Grid item lg={5} md={12} sm={12} xs={12}>
+      <Grid container style={{ marginTop: '24px' }}>
+        <Grid item lg={6} sm={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
-              <ActiveTab/>
+              <ActiveTab></ActiveTab>
               <TabContainer>
                 <TabText>Mint</TabText>
               </TabContainer>
@@ -226,80 +158,65 @@ const Boardrooms = (props: WithSnackbarProps) => {
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                value={mintColl.toString()}
                 DefaultValue={mintColl.toString()}
-                LogoSymbol={selectedCollateralCoin}
+                LogoSymbol={'USDT'}
                 hasDropDown={true}
-                dropDownValues={CollateraldropDownValues}
-                ondropDownValueChange={(data: string) => {
-                  setSelectedCollateralCoin(data);
-                }}
-                SymbolText={selectedCollateralCoin}
-                inputMode={'numeric'}
-                setText={(val: string) => {
-                  if (val === '0'){
-                    onBuyColletralValueChange('0')
-                  } else {
-                    onBuyColletralValueChange(val)
-                  }
-                }}
+                SymbolText={'USDT'}
+                inputMode={'decimal'}
+                setText={(val: string) => setCollateralValue(Number(val.replace(/[^0-9.]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
               </PlusMinusArrow>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'Enter ARTHX Share'}
                 IBalanceValue={`Balance ${balance}`}
-                ILabelInfoValue={'How can i get it?'}
-                value={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
-                setText={(val: string) => {
-                  onARTHXValueChange(val);
-                }}
+                setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9.]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${balance}`}
-                value={mintReceive.toString()}
                 ILabelInfoValue={''}
                 DefaultValue={mintReceive.toString()}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
               />
-              <div>
-                <TcContainer>
-                  <OneLineInputwomargin>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>
-                        Trading Fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                      </TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>0.5</BeforeChip>
-                      <TagChips>ARTH/ETH</TagChips>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                </TcContainer>
-                <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
+              <div style={{ marginTop: '24px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>1.08</BeforeChip>
+                    <TagChips>ARTH/ETH</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Mint'} size={'lg'} onClick={() => {
+                  setType('Mint')
+                  setOpenModal(1)
+                }} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} md={12} sm={12} xs={12}>
+        <Grid item lg={5} sm={12} style={{ marginTop: '24px' }}>
           <RightTopCard>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
@@ -374,37 +291,26 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </Grid>
           </RightBottomCard>
         </Grid>
-        <Grid item lg={1} />
       </Grid>
     )
   };
 
-  const handleCheck = (event: any) => {
-    // console.log('check trig', event.target.checked)
-    setChecked(event.target.checked);
-  };
-  const handleSliderChange = (event: any, value: any) => {
-    console.log('check trig', value)
-    setSliderValue(value);
-    setDuration(DEFAULT_CALC - value * value)
-  };
   const redeemTabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }} spacing={2}>
-        <Grid item lg={1} />
-        <Grid item lg={5} md={12} sm={12} xs={12}>
+      <Grid container style={{ marginTop: '24px' }}>
+        <Grid item lg={6} sm={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
               <TabContainer onClick={() => setType('Mint')}>
                 <TabText>Mint</TabText>
               </TabContainer>
               <TabContainer>
-                <ActiveTab/>
+                <ActiveTab></ActiveTab>
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
@@ -413,28 +319,24 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
+                setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9.]/g, '')))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
               </PlusMinusArrow>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={'0.00'}
-                LogoSymbol={selectedReceiveRedeemCoin}
+                LogoSymbol={'USDT'}
                 hasDropDown={true}
-                dropDownValues={ReceiveRedeemdropDownValues}
-                ondropDownValueChange={(data: string) => {
-                  setSelectedReceiveRedeemCoin(data);
-                }}
-                SymbolText={selectedReceiveRedeemCoin}
+                SymbolText={'USDT'}
               />
               <PlusMinusArrow>
                 <img src={plus} />
               </PlusMinusArrow>
-              <CustomInputContainer
+              <InputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
@@ -443,23 +345,21 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
               />
-              <div>
-                {/* <TcContainer> */}
-                <OneLineInputwomargin>
-                  <div style={{ flex: 1, marginTop: 10 }}>
-                    <TextWithIcon>
-                      Trading Fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInputwomargin>
-                    <BeforeChip>0.05</BeforeChip>
-                    <TagChips>USDT</TagChips>
-                  </OneLineInputwomargin>
-                </OneLineInputwomargin>
-                {/* </TcContainer> */}
+              <div style={{ marginTop: '24px' }}>
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
+                    <TextWithIcon>
+                      Trading Fee
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>USDT</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <OneLineInput style={{ marginTop: -5 }}>
+                  <div style={{ flex: 1,}}>
                     <TextWithIcon>
                       Stability Fee
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -470,12 +370,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
+                <Button text={'Redeem'} size={'lg'} onClick={() => {
+                  setType('Redeem')
+                  setOpenModal(1)
+                }} />
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
         </Grid>
-        <Grid item lg={5} md={12} sm={12} xs={12}>
+        <Grid item lg={5} sm={12} style={{ marginTop: '24px' }}>
           <RightTopCard>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
@@ -490,14 +393,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
-                        </React.Fragment>
-                      }>
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
-                    </HtmlTooltip>
+                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
@@ -548,7 +444,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </RightTopCard>
           <RightBottomCard>
             <RightBottomCardTitle>
-              Farming pools are greate way to earn higher APY by staking your $ARTH
+              Farming pools are great way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
@@ -557,20 +453,55 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </Grid>
           </RightBottomCard>
         </Grid>
-        <Grid item lg={1} />
       </Grid>
     )
   };
 
+  const OldBalance = (
+    <div style={{
+      color: '#fff',
+      fontSize: 14,
+      backgroundColor: '#fff2', padding: 15, textAlign: 'center', borderRadius: 3, marginBottom: 15
+    }}>
+      <p>
+        If have deposits in the old distribution contracts. Please withdraw your funds
+        and deposit them into the new distribution contracts.
+      </p>
+
+      <ul>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/arth">View Old ARTH Distribution contract</Link></li>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/arthLiquidity">View Old ARTH/DAI UNI-LP Distribution contract</Link></li>
+        <li><Link style={{ color: 'aqua', textDecoration: 'underline' }} to="/distribution/v1/mahaLiquidity">View Old MAHA/ETH UNI-LP Distribution contract</Link></li>
+      </ul>
+    </div>
+  )
+
   return (
     <>
-      <CustomModal
+      <Modal
+        mobile
         closeButton
         handleClose={() => setOpenModal(0)}
         open={openModal === 1}
-        modalTitleStyle={{}}
-        modalContainerStyle={{}}
-        modalBodyStyle={{}}
+        modalContainerStyle={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        modalTitleStyle={{
+          color: 'rgba(255, 255, 255, 0.88)',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%'
+        }}
+        modalBodyStyle={{
+          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+          padding: '24px 20px',
+          width: '100%',
+          minWidth: '350px',
+          height: '60%'
+        }}
         title={`Confirm ${type} ARTH`}
       >
         {
@@ -613,12 +544,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 rightLabelValue={'1000.00'}
               />
 
-              {/* <TransparentInfoDiv
-                labelData={`You will receive share`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
-              /> */}
               <CheckboxDiv>
                 <FormControlLabel
                   value=""
@@ -639,9 +564,14 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       size={'medium'}
                     />
                   }
-                  label="Deposit $ARTH in staking pool to earn reward APY"
+                  label={
+                    <LabelSpan>
+                      Deposit $ARTH in staking pool to earn reward APY
+                  </LabelSpan>
+                  }
                   labelPlacement="end"
                   onChange={handleCheck}
+
                 />
               </CheckboxDiv>
               {checked &&
@@ -671,22 +601,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   >
                     <div className={sliderClasses.root}>
                       <PrettoRestrictSlider
-                        // defaultValue={sliderValue ?? 1}
-                        // onChange={handleSliderChange}
-                        // // valueLabelFormat={valueLabelFormat}
-                        // getAriaValueText={valuetext}
-                        // aria-labelledby="discrete-slider-small-steps"
-                        // step={1}
-                        // min={1}
-                        // max={36}
-                        // valueLabelDisplay="on"
-                        // // marks={marks}
-                        // ValueLabelComponent={"strong"}
                         defaultValue={1}
                         getAriaValueText={valuetext}
                         valueLabelFormat={valuetext}
-                        // ValueLabelComponent={'span'}
-                        // value={sliderValue}
                         onChange={handleSliderChange}
                         aria-label="pretto slider"
                         step={1}
@@ -704,16 +621,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   </div>
                   <TransparentInfoDiv
                     labelData={`Estimated earning`}
-                    // labelToolTipData={'testing'}
                     rightLabelUnit={'MAHA'}
                     rightLabelValue={'100.0'}
                     countUp
                     cEnd={9999}
                     cDuration={calcDuration}
                     cStart={currentCounter}
-                  // updateCounter={(val: number)=>{
-                  //   setCurrentCounter(val)
-                  // }}
                   />
 
                   <TransparentInfoDiv
@@ -746,29 +659,17 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => {
-                      setOpenModal(0)
-                      let options = {
-                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Minting ${mintColl} ARTH cancelled` }))
-                      }
-                      props.enqueueSnackbar('timepass', options)
-                    }}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
                   />
                 </div>
-                <div style={{ width: '100%' }}>
+                <div style={{ width: '100%', }}>
                   <Button
                     text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                     // textStyles={{ color: '#F5F5F5' }}
                     size={'lg'}
                     onClick={() => {
-                      setOpenModal(2)
-                      let options = {
-                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Minting ${mintColl} ARTH` }))
-                      }
-                      props.enqueueSnackbar('timepass', options)
-                      setTimeout(() => {
-                        setSuccessModal(true);
-                      }, 3000)
+                      setOpenModal(0)
                     }}
                   />
                 </div>
@@ -834,13 +735,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     variant={'transparent'}
                     text="Cancel"
                     size={'lg'}
-                    onClick={() => {
-                      setOpenModal(0)
-                      let options = {
-                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Redeeming ${redeemAmount} ARTH cancelled` }))
-                      }
-                      props.enqueueSnackbar('timepass', options)
-                    }}
+                    onClick={() => setOpenModal(0)}
+                  // onClick={handleClose}
                   />
                 </div>
                 <div style={{ width: '100%' }}>
@@ -851,69 +747,21 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     onClick={() => {
                       // setType('Redeem')
                       setOpenModal(0)
-                      let options = {
-                        content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Redeeming ${redeemAmount} ARTH`, data2: `Stability Fee = 4%` }))
-                      }
-                      props.enqueueSnackbar('timepass', options)
                     }}
                   />
                 </div>
               </div>
             </>
         }
-      </CustomModal>
-      {testnetDiv && TestNetSnack()}
+      </Modal>
       <Container size="lg">
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
       </Container>
-
-      <CustomSuccessModal
-        modalOpen={successModal}
-        setModalOpen={() => setSuccessModal(false)}
-        title={'Minting ARTH successful!'}
-        subTitle={'View Transaction'}
-        subsubTitle={'You should consider stake your ARTH to earn higher APY'}
-        buttonText={'Stake your ARTH'}
-        buttonType={'default'}
-      />
     </>
   );
 };
 
-const ToolTipFont = styled.p`
-  padding: 0;
-  margin: 0;
-`
-const TestNetDiv = styled.div`
-  width: 100%;
-  background: #BA1E38;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  text-align:center;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFFFF;
-  opacity: 0.88;
-  padding: 10px 25px;
-`;
-
-const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 18px;
-`
-
-const OneLineInputwomargin = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
-`
 
 const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
@@ -924,7 +772,7 @@ const RightTopCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
-  padding: 32px;
+  padding: 24px;
 `
 
 const RightBottomCard = styled.div`
@@ -932,12 +780,12 @@ const RightBottomCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
   border-radius: 12px;
-  padding: 32px;
+  padding: 24px;
 `
 
 const RightBottomCardTitle = styled.div`
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
@@ -950,19 +798,12 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding-right: 32px;
-  padding-left: 32px;
+  padding-right: 12px;
+  padding-left: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  @media (max-width: 600px) {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 32px;
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
+  padding: 12px 12px;
 
 `
 const TabContainer = styled.div`
@@ -985,11 +826,6 @@ const TabText = styled.span`
   text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `
-const StakingDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 5px 0 0 0;
-`;
 
 const ActiveTab = styled.div`
   position: absolute;
@@ -1018,7 +854,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 5px 0 10px 0;
+  margin: 0px 0px 10px 0px;
 `
 
 const TextWithIcon = styled.div`
@@ -1070,6 +906,142 @@ const InputLabelSpanRight = styled.span`
   margin-right: 5px;
 `
 
+
+
+const LabelDiv = styled.div`
+// background: rgba(255, 255, 255, 0.08);
+// border-radius: 6px;
+// padding: 6px 4px;
+height: fit-content;
+justify-content: space-between;
+display: flex;
+align-items: center;
+// margin: 5px 0px 0px 0px;
+`;
+
+const LabelInfo = styled.div`
+// background: rgba(255, 255, 255, 0.08);
+// border-radius: 6px;
+padding: 3px 4px;
+height: fit-content;
+// justify-content: space-between;
+display: flex;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const LabelInfoData = styled.div`
+// background: yellow;
+padding: 3px 4px;
+// height: fit-content;
+width: fit-content;
+justify-content: space-between;
+display: flex;
+flex-direction: row;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const LabelInfoDataChip = styled.div`
+background: rgba(255, 255, 255, 0.08);
+border-radius: 4px;
+padding: 3px 4px;
+height: fit-content;
+// justify-content: space-between;
+display: flex;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 130%;
+margin: 0px 2px;
+color: rgba(255, 255, 255, 0.64);
+`;
+
+const InfoDiv = styled.div`
+background: rgba(255, 255, 255, 0.08);
+border-radius: 6px;
+padding: 6px 4px;
+height: fit-content;
+justify-content: space-between;
+display: flex;
+align-items: center;
+`;
+
+const InfoTitle = styled.div`
+padding: 6px 4px;
+height: fit-content;
+display: flex;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.88);
+`;
+
+const CurrencyTag = styled.div`
+padding: 6px 4px;
+width: 85px;
+justify-content: space-around;
+height: fit-content;
+display: flex;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.64);
+`;
+
+const CheckboxDiv = styled.div`
+background: rgba(255, 255, 255, 0.08);
+border-radius: 6px;
+padding: 10px 5px 5px 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: left;
+color: rgba(255, 255, 255, 0.88);
+margin: 15px 0px 0px 0px;
+`;
+
+const InfoSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.64);
+// margin: 10px 30px;
+text-align: center;
+`;
+
+const StakingDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0px 0px 0px;
+`;
+
+
 const InputLabel = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -1078,8 +1050,17 @@ const InputLabel = styled.p`
   color: rgba(255, 255, 255, 0.64);
   margin: 0px;
 `
+const LabelSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+color: rgba(255, 255, 255, 0.88);
+text-align: left;
+`
 
-const InternalSpan = styled.span`
+const LabelInfoDataChipText = styled.div`
 font-family: Inter;
 font-style: normal;
 font-weight: 600;
@@ -1087,19 +1068,19 @@ font-size: 12px;
 line-height: 150%;
 letter-spacing: 0.08em;
 text-transform: uppercase;
-color: #FFFFFF;
-`
+color: rgba(255, 255, 255, 0.64);
+`;
 
-const InputNoDisplay = styled.span`
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 2px 10px;
-  height: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0px 0px 0px 8px;
-`
+
+const LabelInfoText = styled.div`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: right;
+color: rgba(255, 255, 255, 0.88);
+`;
 
 const TimeSpan = styled.div`
 font-family: Inter;
@@ -1110,21 +1091,31 @@ line-height: 130%;
 color: rgba(255, 255, 255, 0.88);
 `;
 
-const CheckboxDiv = styled.div`
-background: rgba(255, 255, 255, 0.08);
-border-radius: 6px;
-padding: 5px 0px 0px 5px;
-display: flex;
-justify-content: center;
-align-items: center;
+const InternalSpan = styled.span`
 font-family: Inter;
 font-style: normal;
 font-weight: 600;
-font-size: 14px;
-line-height: 20px;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0.08em;
+text-transform: uppercase;
 text-align: center;
-color: rgba(255, 255, 255, 0.88);
-margin: 15px 0px 0px 0px;
-`;
+display: flex;
+align-items: center;
+color: #FFFFFF;
+min-width: 30%;
+height: fit-content;
+// padding: 10px
+`
 
-export default withSnackbar(Boardrooms);
+const InputNoDisplay = styled.span`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 10px;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 0px 8px;
+`
+export default Boardrooms;
