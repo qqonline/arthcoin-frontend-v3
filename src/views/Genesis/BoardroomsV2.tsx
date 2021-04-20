@@ -387,7 +387,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <div style={{ marginTop: '12px', marginBottom: '32px' }}>
+                <div style={{marginTop: '14px', marginBottom: '32px'}}>
                   <TextWithIcon>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
@@ -404,7 +404,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     </OneLineInputwomargin>
                   </ReceiveContainer>
                 </div>
-                <Button text={'Mint'} size={'lg'} variant={'default'} disabled={false} onClick={() => setOpenModal(1)} />
+                <Button
+                  text={type === "Commit"? 'Commit Collateral': 'Swap ARTHX'}
+                  size={'lg'}
+                  variant={'default'}
+                  disabled={false}
+                  onClick={() => setOpenModal(1)}
+                />
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>

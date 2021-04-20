@@ -862,8 +862,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </>
         }
       </CustomModal>
+      {testnetDiv && TestNetSnack()}
       <Container size="lg">
-        {testnetDiv && TestNetSnack()}
         {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()}
       </Container>
