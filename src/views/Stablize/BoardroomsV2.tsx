@@ -150,15 +150,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
-  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH')
-  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
-  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState<string>('ETH')
+  const [BuybackReceivedropDownValues, setBuybackReceiveDropDownValues] = useState<string[]>([]);
+  const defaultDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
   let arr: string[];
   useEffect(() => window.scrollTo(0, 0), []);
+
   useEffect(() => {
-    arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
-    setDropDownValues(arr);
-  }, [selectedAmountCoin])
+    arr = defaultDropdownValues.filter(e => e !== selectedBuybackReceiveAmountCoin);
+    setBuybackReceiveDropDownValues(arr);
+  }, [selectedBuybackReceiveAmountCoin])
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -188,13 +189,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
             IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
             DefaultValue={redeemAmount.toString()}
-            hasDropDown={true}
-            LogoSymbol={selectedAmountCoin}
-            dropDownValues={dropDownValues}
-            ondropDownValueChange={(data) => {
-              setSelectedAmountCoin(data);
-            }}
-            SymbolText={selectedAmountCoin}
+            hasDropDown={false}
+            LogoSymbol={'ARTHX'}
+            SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => { setRedeemAmount(Number(val.replace(/[^0-9]/g, ''))) }}
           />
@@ -206,9 +203,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
             IBalanceValue={''}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            LogoSymbol={selectedBuybackReceiveAmountCoin}
             hasDropDown={true}
-            SymbolText={'ARTH'}
+            SymbolText={selectedBuybackReceiveAmountCoin}
+            dropDownValues={BuybackReceivedropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedBuybackReceiveAmountCoin(data);
+            }}
           />
           <div>
             <TcContainer>
@@ -216,7 +217,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextWithIcon>
                     Trading Fee
-                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
@@ -228,7 +229,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextWithIcon>
                     Stability Fee
-                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
@@ -290,12 +291,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            LogoSymbol={selectedAmountCoin}
-            dropDownValues={dropDownValues}
+            LogoSymbol={selectedBuybackReceiveAmountCoin}
+            dropDownValues={BuybackReceivedropDownValues}
             ondropDownValueChange={(data) => {
-              setSelectedAmountCoin(data);
+              setSelectedBuybackReceiveAmountCoin(data);
             }}
-            SymbolText={selectedAmountCoin}
+            SymbolText={selectedBuybackReceiveAmountCoin}
             setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
             inputMode={'decimal'}
           />
@@ -558,7 +559,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
       </CustomModal>
       <StabilizePageHeader
-        title="Stablize"
+        title="Stabilize"
         subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"
       />
       <Container size="lg">

@@ -17,13 +17,16 @@ const StakeBox: React.FC<props> = (props) => {
     <CustomInfoCard>
       <CustomInfoCardDetails>
         <Grid container>
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
             <TextWithIcon>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </TextWithIcon>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4} style={{ marginTop: '24px' }}>
-            <Button text={'Earn Rewards'} size={'sm'} to={'/farming'} />
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <ButtonConatiner>
+              <Button text={'Earn Rewards'} size={'sm'} to={'/farming'}/>
+            </ButtonConatiner>
+
           </Grid>
         </Grid>
       </CustomInfoCardDetails>
@@ -32,6 +35,12 @@ const StakeBox: React.FC<props> = (props) => {
 }
 
 export default StakeBox
+
+const ButtonConatiner = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 24px;
+  }
+`
 
 const CustomInfoCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
