@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import Button from '../../components/Button';
 import arrowDown from '../../assets/svg/arrowDown.svg'
+import calendar from '../../assets/svg/calendar.svg'
 import { Checkbox, CheckboxProps, createStyles, Divider, LinearProgress, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import TransparentInfoDiv from './components/InfoDiv';
 import HtmlTooltip from '../../components/HtmlTooltip';
@@ -17,6 +18,7 @@ import CustomSuccessModal from '../../components/CustomSuccesModal';
 import BondingDiscount from '../Genesis/components/BondingDiscount';
 import UnderstandMore from './components/UnderstandMore';
 import { useMediaQuery } from 'react-responsive';
+import Countdown from 'react-countdown';
 
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
@@ -181,7 +183,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
   useMediaQuery({ 'maxWidth': '600px' });
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('MAHA')
   const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
-  const defaultCollateralDropdownValues = ['MAHA','WBTC', 'USDT', 'USDC', 'ETH'];
+  const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+  const [timerHeader, setHeader] = useState<boolean>(true)
 
   useEffect(() => {
     let arr: string[];
@@ -211,7 +214,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <>
           <TransparentInfoDiv
             labelData={`Your amount`}
-            rightLabelUnit={type === 'Commit'? selectedCollateralCoin: 'ARTH'}
+            rightLabelUnit={type === 'Commit' ? selectedCollateralCoin : 'ARTH'}
             rightLabelValue={mintColl.toString()}
           />
 
@@ -258,11 +261,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </Grid>
         </>
       </CustomModal>
-      <div style={{}}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <PageHeading>
-          GENESIS
+          {timerHeader ? 'JOIN GENESIS' : 'GENESIS'}
         </PageHeading>
-        <PageSubHeading>
+        {!timerHeader ? <PageSubHeading>
           <div style={{}}>
             <BorderLinearProgress variant="determinate" value={73} />
           </div>
@@ -270,6 +273,28 @@ const Boardrooms = (props: WithSnackbarProps) => {
             73% Completed
           </HeaderSpan>
         </PageSubHeading>
+          :
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+
+            <PageSubHeading>
+              <StartsIn>
+                Starts in
+              </StartsIn>
+              <Countdown
+                date={Date.now() + 550000000}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  return (
+                    <HeaderSpan>{days}d : {hours}h : {minutes}m : {seconds}s</HeaderSpan>
+                  )
+                }}
+              />
+            </PageSubHeading>
+            <HeaderButton>
+              <img src={calendar} height={24} />
+              <span style={{marginLeft: 8}}>Add to Calendar</span>
+            </HeaderButton>
+          </div>
+        }
       </div>
       <Container size="lg">
         {/* {testnetDiv && TestNetSnack()} */}
@@ -278,7 +303,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <Grid container style={{ marginTop: '24px' }} spacing={2}>
           <Grid item lg={1} />
           <Grid item lg={5} md={12} sm={12} xs={12}>
-             <CustomInfoCard>
+            <CustomInfoCard>
               <CustomInfoCardDetails>
                 <div>
                   <TextForInfoTitle>
@@ -289,12 +314,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
                           <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
                         </React.Fragment>
                       }>
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px' }} />
                     </HtmlTooltip>
                   </TextForInfoTitle>
                   <BeforeChipDark>54.76M</BeforeChipDark>
                 </div>
-                <div style={{textAlign: 'end'}}>
+                <div style={{ textAlign: 'end' }}>
                   <TextForInfoTitle>
                     Pool Balance
                     <HtmlTooltip
@@ -303,30 +328,30 @@ const Boardrooms = (props: WithSnackbarProps) => {
                           <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
                         </React.Fragment>
                       }>
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px' }} />
                     </HtmlTooltip>
                   </TextForInfoTitle>
                   <BeforeChipDark>157.89M</BeforeChipDark>
                 </div>
               </CustomInfoCardDetails>
             </CustomInfoCard>
-             <LeftTopCard>
+            <LeftTopCard>
               <LeftTopCardHeader>
                 <TabContainer onClick={() => {
                   if (type !== 'Commit') setType('Commit')
                 }}>
-                  {type === 'Commit' && <ActiveTab/>}
+                  {type === 'Commit' && <ActiveTab />}
                   <TabText>Commit Collateral</TabText>
                 </TabContainer>
                 <TabContainer onClick={() => {
                   if (type !== 'Swap') setType('Swap')
                 }}>
-                  {type === 'Swap' && <ActiveTab/>}
+                  {type === 'Swap' && <ActiveTab />}
                   <TabText>Swap ARTH for ARTHX</TabText>
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer>
-                {type === "Commit"? <CustomInputContainer
+                {type === "Commit" ? <CustomInputContainer
                   ILabelValue={'Enter Collateral'}
                   IBalanceValue={`Balance ${balance}`}
                   ILabelInfoValue={''}
@@ -343,7 +368,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   setText={(val: string) => {
                     setCollateralValue(Number(val.replace(/[^0-9]/g, '')));
                   }}
-                />:
+                /> :
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
                     IBalanceValue={`Balance ${balance}`}
@@ -457,7 +482,15 @@ const HeaderSpan = styled.span`
   margin: 0 0 0 8px;
   color: #FFFFFF;
 `;
-
+const StartsIn = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  opacity: 0.64;
+`;
 const PageSubHeading = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -466,12 +499,30 @@ const PageSubHeading = styled.div`
   line-height: 150%;
   color: rgba(255, 255, 255, 0.64);
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
 
 `
+
+const HeaderButton = styled.div`
+  background: rgba(97, 134, 242, 0.32);
+  border-radius: 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 200px;
+  cursor: pointer;
+`;
 const ToolTipFont = styled.p`
   padding: 0;
   margin: 0;
