@@ -285,7 +285,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Trading Fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                        {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
@@ -449,7 +449,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <div style={{ flex: 1, marginTop: 10 }}>
                     <TextWithIcon>
                       Trading Fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                        {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
                     </TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
@@ -462,7 +462,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Stability Fee
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
                     </TextWithIcon>
                   </div>
                   <OneLineInput>
