@@ -289,7 +289,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 }}
               />
             </PageSubHeading>
-            <HeaderButton onClick={() => setSuccessModal(true)}>
+            <HeaderButton>
               <img src={calendar} height={24} />
               <span style={{marginLeft: 8}}>Add to Calendar</span>
             </HeaderButton>
