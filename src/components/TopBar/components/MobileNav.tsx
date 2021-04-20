@@ -58,7 +58,7 @@ const MobileNav = (props: props) => {
   return (
     <StyledNav>
       { !walletInfo ?
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', background: '#1e1d1d', marginTop: -2 }}>
           <StyledLink exact activeClassName="active" to="/Genesis">
             Genesis
       </StyledLink>
@@ -119,7 +119,7 @@ const MobileNav = (props: props) => {
         <WalletInternal walletData={dummyWallet} />
       }
       <StyledButton>
-        <div style={{ maxWidth: '340px', width: '100%', margin: '-5px 10px 0px 10px' }}>
+        <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
           <Button variant={'transparent'} text={walletInfo ? 'Disconnect (temp button)' : 'Connect'} onClick={() => { setWallet(!walletInfo) }} />
         </div>
@@ -138,8 +138,7 @@ const StyledNav = styled.nav`
   top: 73px;
   width: 100%;
   left: 0px;
-  background: #1f1d1d;
-  backdrop-filter: blur(70px);
+  background: #1e1d1d;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   height: 100%;
 `;
@@ -166,9 +165,9 @@ const StyledLink = styled(NavLink)`
   &.active {
     color: rgba(255, 255, 255, 0.88);
   }
+  background: #1e1d1d;
 `;
 const StyledButton = styled.div`
-  color: ${(props) => props.theme.color.grey[400]};
   height: 80px;
   width: 100%;
   display: flex;
@@ -181,13 +180,15 @@ const StyledButton = styled.div`
   padding-right: ${(props) => props.theme.spacing[3]}px;
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1e1d1d;
+  padding-bottom: ${(props) => props.theme.spacing[3]}px;
   &:hover {
     color: rgba(255, 255, 255, 0.64);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(70px);
+    // background: rgba(255, 255, 255, 0.04);
+    // backdrop-filter: blur(70px);
   }
   &.active {
-    color: rgba(255, 255, 255, 0.88);
+    // color: rgba(255, 255, 255, 0.88);
   }
 `;
 const ColorIcon = styled.div`

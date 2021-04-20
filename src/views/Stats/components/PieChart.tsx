@@ -19,7 +19,7 @@ export default class Example extends PureComponent {
         <PieChart width={200} height={200}>
           <Pie data={data.reverse()} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d">
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              <Cell key={`cell-${index}`} fill={COLORS[index]} stroke={COLORS[index]}/>
             ))}
           </Pie>
 

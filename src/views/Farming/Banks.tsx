@@ -58,10 +58,11 @@ const Banks: React.FC = () => {
     <Switch>
       <Page>
         <Route exact path={path}>
+          <GradientDiv />
           <PageHeader
             title="Farming"
             subtitle="Earn MAHA by providing liquidity."
-            // learnMoreLink="#"
+          // learnMoreLink="#"
           />
           <Container size="lg">
             <ScrollDiv style={{ overflowX: 'scroll' }}>
@@ -70,7 +71,7 @@ const Banks: React.FC = () => {
                   <TextDiv
                     style={selectedId === obj.id ? {
                       background: selectedId === obj.id ? '#423B38' : 'transparent',
-                    }:{}}
+                    } : {}}
                     key={obj?.id}
                     onClick={() => setId(obj?.id)}
                   >
@@ -104,6 +105,15 @@ const Banks: React.FC = () => {
     </Switch>
   );
 };
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 
 const ButtonGroupDiv = styled.div`
   background: #2A2827;

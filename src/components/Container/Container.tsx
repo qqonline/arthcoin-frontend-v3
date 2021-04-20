@@ -4,9 +4,10 @@ import styled, { ThemeContext } from 'styled-components'
 interface ContainerProps {
   children?: React.ReactNode,
   size?: 'sm' | 'md' | 'lg'
+  backgroundColor?: string
 }
 
-const Container: React.FC<ContainerProps> = ({ children, size = 'md' }) => {
+const Container: React.FC<ContainerProps> = ({ children, size = 'md', backgroundColor }) => {
   const { siteWidth } = useContext<{ siteWidth: number }>(ThemeContext)
   let width: number
   switch (size) {
@@ -21,7 +22,7 @@ const Container: React.FC<ContainerProps> = ({ children, size = 'md' }) => {
       width = siteWidth
   }
   return (
-    <StyledContainer width={width}>
+    <StyledContainer width={width} backgroundColor={backgroundColor}>
       {children}
     </StyledContainer>
   )
@@ -29,6 +30,7 @@ const Container: React.FC<ContainerProps> = ({ children, size = 'md' }) => {
 
 interface StyledContainerProps {
   width: number
+  backgroundColor?: string;
 }
 
 const StyledContainer = styled.div<StyledContainerProps>`
@@ -36,6 +38,7 @@ const StyledContainer = styled.div<StyledContainerProps>`
   margin: 0 auto;
   max-width: ${props => props.width}px;
   padding: 0 ${props => props.theme.spacing[4]}px;
+  background: ${props => props.backgroundColor};
   width: 100%;
 `
 

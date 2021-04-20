@@ -138,7 +138,7 @@ const StyledPageContent = styled.div`
   padding: 40px 0px;
   @media (max-width: 768px) {
     flex-direction: column-reverse;
-    padding: 0px;
+    padding: 40px 0px;
   } ;
 `;
 
@@ -188,8 +188,8 @@ const StyledPageHeader = styled.div`
   flex-direction: row;
   width: 100%;
   background: linear-gradient(180deg, #${(props) => props.theme.color.dark[200]} 0%, rgba(42, 40, 39, 0) 100%);
-  padding-bottom: 40px;
-  padding-top: 40px;
+  // padding-bottom: 40px;
+  // padding-top: 40px;
   // padding-left: 15px;
   // padding-right: 15px;
   @media (max-width: 768px) {

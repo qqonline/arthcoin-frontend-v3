@@ -679,6 +679,7 @@ const LeftTopCard = styled.div`
   min-height: 500px;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardChecked = styled.div`
   background: rgba(255, 255, 255, 0.02);
@@ -687,6 +688,8 @@ const LeftTopCardChecked = styled.div`
   min-height: 500px;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
+
 `
 
 const RightTopCard = styled.div`
@@ -738,6 +741,7 @@ const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  backdrop-filter: blur(21px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `
 const LeftTopCardContainer = styled.div`
@@ -746,6 +750,7 @@ const LeftTopCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardContainer2 = styled.div`
   padding: 12px 12px;

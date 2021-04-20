@@ -19,6 +19,8 @@ import BondingDiscount from '../Genesis/components/BondingDiscount';
 import UnderstandMore from './components/UnderstandMore';
 import { useMediaQuery } from 'react-responsive';
 import Countdown from 'react-countdown';
+import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
+import { Link } from 'react-router-dom';
 
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
@@ -177,7 +179,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit')
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-
+  const [calendarLink, setLink] = useState('')
 
   const [successModal, setSuccessModal] = useState<boolean>(false)
   useMediaQuery({ 'maxWidth': '600px' });
@@ -191,6 +193,20 @@ const Boardrooms = (props: WithSnackbarProps) => {
     arr = defaultCollateralDropdownValues.filter(e => e !== selectedCollateralCoin);
     setCollateralDropDownValues(arr);
   }, [selectedCollateralCoin])
+
+  useEffect(() => {
+    const onClick = () => {
+      let event: TCalendarEvent = {
+        name: 'ARTH-v2 Genesis',
+        location: 'Online',
+        details: 'Genesis',
+        startsAt: new Date('1 may 2021 12:30:00').toString(),
+        endsAt: new Date('1 may 2021 20:30:00').toString(),
+      }
+      setLink(makeUrls(event).google)
+    }
+    onClick();
+  }, [])
 
   if (!basisCash) return <div />;
 
@@ -261,7 +277,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </Grid>
         </>
       </CustomModal>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <GradientDiv />
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 0px' }}>
         <PageHeading>
           {timerHeader ? 'JOIN GENESIS' : 'GENESIS'}
         </PageHeading>
@@ -289,10 +306,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 }}
               />
             </PageSubHeading>
-            <HeaderButton>
+            {calendarLink && <HeaderButton
+              onClick={() => window.open(calendarLink, "_blank")}
+            >
               <img src={calendar} height={24} />
-              <span style={{marginLeft: 8}}>Add to Calendar</span>
-            </HeaderButton>
+              <span style={{ marginLeft: 8 }}>Add to Calendar</span>
+            </HeaderButton>}
           </div>
         }
       </div>
@@ -300,7 +319,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         {/* {testnetDiv && TestNetSnack()} */}
         {/* {type === 'Mint' && mintTabContent()}
         {type === 'Redeem' && redeemTabContent()} */}
-        <Grid container style={{ marginTop: '24px' }} spacing={2}>
+        <Grid container style={{  }} spacing={2}>
           <Grid item lg={1} />
           <Grid item lg={5} md={12} sm={12} xs={12}>
             <CustomInfoCard>
@@ -387,7 +406,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <div style={{marginTop: '14px', marginBottom: '32px'}}>
+                <div style={{ marginTop: '14px', marginBottom: '32px' }}>
                   <TextWithIcon>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
@@ -405,7 +424,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   </ReceiveContainer>
                 </div>
                 <Button
-                  text={type === "Commit"? 'Commit Collateral': 'Swap ARTHX'}
+                  text={type === "Commit" ? 'Commit Collateral' : 'Swap ARTHX'}
                   size={'lg'}
                   variant={'default'}
                   disabled={false}
@@ -440,6 +459,14 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 };
 
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 const CustomInfoCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
@@ -457,7 +484,29 @@ const CustomInfoCardDetails = styled.div`
   justify-content: space-between;
 `
 
-
+const StyledNavLink = styled(Link)`
+  // color: ${props => props.theme.color.grey[400]};
+  // font-size: 14px;
+  // margin-right: -4px;
+  // &:hover {
+  //   color: white !important;
+  // }
+  background: rgba(97, 134, 242, 0.32);
+  border-radius: 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 200px;
+  cursor: pointer;
+`;
 
 const PageHeading = styled.p`
   font-family: Syne;
@@ -469,7 +518,6 @@ const PageHeading = styled.p`
   text-transform: uppercase;
   text-align: center;
   color: #FFFFFF;
-  margin-top: 40px;
 `
 
 const HeaderSpan = styled.span`

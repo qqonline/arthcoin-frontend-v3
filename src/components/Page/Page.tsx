@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 // import bgImg from '../../assets/img/bgImg.jpeg';
 import TopBar from '../TopBar';
+import chakra from '../../assets/svg/BG.svg';
 
 const Page: React.FC = ({ children }) => (
   <StyledPage>
     <TopBar />
-    <div className="chakra-home"></div>
+      <div className="chakra-home">
+        <img src={chakra} height={1400}/>
+      </div>
     {/* <div className="gradient-red-1-home"></div> */}
     <StyledMain
     // style={{ backgroundImage: `url(${bgImg})` }}
@@ -16,7 +19,11 @@ const Page: React.FC = ({ children }) => (
   </StyledPage>
 );
 
-const StyledPage = styled.div``;
+const StyledPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  // position: relative;
+`;
 
 const StyledMain = styled.div`
   align-items: center;
@@ -24,6 +31,7 @@ const StyledMain = styled.div`
   flex-direction: column;
   min-height: calc(100vh - ${(props) => props.theme.topBarSize * 2}px);
   padding-bottom: ${(props) => props.theme.spacing[5]}px;
+  padding-top: 72px;
 `;
 
 export default Page;

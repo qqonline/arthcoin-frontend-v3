@@ -34,7 +34,7 @@ export const WalletInternal = (props: IProps) => {
 
     return (
         <>
-            <Container>
+            <Container style={{background: '#1e1d1d', marginTop: -2}}>
 
                 <StyledLink>
                     <span>

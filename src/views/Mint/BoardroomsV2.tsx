@@ -178,7 +178,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const onBuyColletralValueChange = async (val: string) => {
     const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
     setCollateralValue(valueInNumber);
-    let arthxShareTemp = await ((100 * valueInNumber)/colletralRatio) * ((100 - colletralRatio)/100)
+    let arthxShareTemp = await ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100)
     setArthxShare(arthxShareTemp);
     setReceive(arthxShareTemp + valueInNumber);
   }
@@ -186,7 +186,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const onARTHXValueChange = async (val: string) => {
     const valueInNumber = Number(val.replace(/[^0-9]/g, ''))
     setArthxShare(valueInNumber);
-    let colletralTemp = await ((100 * valueInNumber)/(100-colletralRatio)) * ((colletralRatio)/100)
+    let colletralTemp = await ((100 * valueInNumber) / (100 - colletralRatio)) * ((colletralRatio) / 100)
     setCollateralValue(colletralTemp);
     setReceive(colletralTemp + valueInNumber);
   }
@@ -201,7 +201,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             Please make sure that you are connected to matic mumbai TESTnet.
           </span>
         </div>
-        <div style={{cursor: 'pointer'}}>
+        <div style={{ cursor: 'pointer' }}>
           <img src={CloseIcon} height={20} onClick={() => { showDiv(false) }} />
         </div>
       </TestNetDiv>
@@ -217,7 +217,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard>
             <LeftTopCardHeader>
-              <ActiveTab/>
+              <ActiveTab />
               <TabContainer>
                 <TabText>Mint</TabText>
               </TabContainer>
@@ -241,7 +241,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
                 setText={(val: string) => {
-                  if (val === '0'){
+                  if (val === '0') {
                     onBuyColletralValueChange('0')
                   } else {
                     onBuyColletralValueChange(val)
@@ -399,7 +399,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Mint</TabText>
               </TabContainer>
               <TabContainer>
-                <ActiveTab/>
+                <ActiveTab />
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
@@ -564,6 +564,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   return (
     <>
+      <GradientDiv />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -880,6 +881,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
     </>
   );
 };
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 
 const ToolTipFont = styled.p`
   padding: 0;

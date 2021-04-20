@@ -538,6 +538,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </>
         }
       </CustomModal>
+      <GradientDiv />
       <Container size="lg">
         <div>
           <PageHeading>
@@ -600,7 +601,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 </Grid>
               </CustomInfoCardDetails>
               <CustomInfoCardButton>
-                <img src={uniswapLogo} style={{marginTop: '-6px', marginRight: '10px'}}/>
+                <img src={uniswapLogo} style={{ marginTop: '-6px', marginRight: '10px' }} />
                 <span>Add liquidity on Uniswap</span>
                 <CallMadeIcon style={{ fontSize: 15, marginLeft: '10px' }} />
               </CustomInfoCardButton>
@@ -614,6 +615,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
     </>
   );
 }
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 
 const CustomInfoCardButton = styled.div`
   width: 100%;

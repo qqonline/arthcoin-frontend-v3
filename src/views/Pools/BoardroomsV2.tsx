@@ -91,7 +91,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <YourLiquidityHeader>
           <HeaderLabel>Your Liquidity</HeaderLabel>
           <div style={{ flex: 0.5 }}>
-            <Button text={'Add Liquidity'} onClick={() => setAction('Add')}/>
+            <Button text={'Add Liquidity'} onClick={() => setAction('Add')} />
           </div>
         </YourLiquidityHeader>
         {
@@ -114,7 +114,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               />)
         }
         <FeesSpan>Account Analytics and Accured Fees</FeesSpan>
-        <ImportIt onClick={() => {setAction('Import')}}>
+        <ImportIt onClick={() => { setAction('Import') }}>
           Don't see a pool you joined? <span style={{ color: '#F7653B' }}>Import it.</span>
         </ImportIt>
       </>
@@ -122,6 +122,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   }
   return (
     <>
+      <GradientDiv />
       <Container size="lg">
         <div>
           <PageHeading>
@@ -200,6 +201,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
     </>
   );
 }
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 
 const PageHeading = styled.p`
   font-family: Syne;

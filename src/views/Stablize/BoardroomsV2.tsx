@@ -380,6 +380,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   return (
     <>
+      <GradientDiv />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -687,6 +688,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 };
 
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
+
 const TcContainer = styled.div`
   margin-top: 18px;
   margin-bottom: 15px;
@@ -787,6 +797,7 @@ const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
   height: 560px;
+  backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -794,6 +805,7 @@ const LeftTopCardChecked = styled.div`
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   height: 560px;
+  backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -838,9 +850,11 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   padding: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
+  backdrop-filter: blur(21px);
 
 `
 const TabContainer = styled.div`

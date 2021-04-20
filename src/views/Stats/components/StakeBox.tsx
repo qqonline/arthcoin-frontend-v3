@@ -4,6 +4,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import Button from '../../../components/Button';
 import Grid from '@material-ui/core/Grid';
+import { Redirect } from 'react-router';
 
 type props = {
 
@@ -21,8 +22,8 @@ const StakeBox: React.FC<props> = (props) => {
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </TextWithIcon>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4} style={{marginTop: '24px'}}>
-            <Button text={'Earn Rewards'} size={'sm'} />
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4} style={{ marginTop: '24px' }}>
+            <Button text={'Earn Rewards'} size={'sm'} to={'/farming'} />
           </Grid>
         </Grid>
       </CustomInfoCardDetails>
