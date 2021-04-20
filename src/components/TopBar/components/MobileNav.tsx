@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
@@ -7,6 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
 import AccountButton from './AccountButton';
 import ExpandMore from '../../../assets/img/ExpandMore.svg';
+import Button from '../../Button';
+import { WalletInternal } from '../../WalletInternal';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -33,82 +35,95 @@ const BootstrapInput = withStyles((theme: Theme) =>
     },
   }),
 )(InputBase);
-const MobileNav: React.FC = () => {
+
+interface props {
+
+}
+const MobileNav = (props: props) => {
+  // const { walletInfo: Wallet } = props
   const [netWrokType, setNetworkType] = React.useState('mainnet');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
+  const [walletInfo, setWallet] = useState<boolean>(true)
+  let dummyWallet = {
+    accountNumber: '123123123123123123',
+    mahaTokens: 50,
+    mahaDollars: 500,
+    arthTokens: 50,
+    arthDollars: 500,
+    arthxTokens: 50,
+    arthxDollars: 500,
+  }
   return (
     <StyledNav>
-      {/* <StyledLink exact activeClassName="active" to="/">
-        Home
+      { !walletInfo ?
+        <div style={{ width: '100%' }}>
+          <StyledLink exact activeClassName="active" to="/Genesis">
+            Genesis
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/supply">
-        Supply
-      </StyledLink> */}
-      <StyledLink exact activeClassName="active" to="/Genesis">
-        Genesis
+          <StyledLink exact activeClassName="active" to="/stats">
+            Analytics
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stats">
-        Analytics
+          <StyledLink exact activeClassName="active" to="/mint">
+            Mint/Redeem
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/mint">
-        Mint/Redeem
+          <StyledLink exact activeClassName="active" to="/stabilize">
+            Stabilize
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stabilize">
-        Stabilize
+          <StyledLink exact activeClassName="active" to="/farming">
+            Farming
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/farming">
-        Farming
+          <StyledLink exact activeClassName="active" to="/farming">
+            Pools
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/farming">
-        Pools
-      </StyledLink>
-      {false && (
-        <StyledButton>
-          <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
-            <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              value={netWrokType}
-              fullWidth
-              label="Mainnet"
-              onChange={handleChange}
-              input={<BootstrapInput />}
-              IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
-            >
-              <MenuItem value="mainnet">
-                <ColorIcon colorCode="#11af60" />
+          {false && (
+            <StyledButton>
+              <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
+                <Select
+                  labelId="demo-customized-select-label"
+                  id="demo-customized-select"
+                  value={netWrokType}
+                  fullWidth
+                  label="Mainnet"
+                  onChange={handleChange}
+                  input={<BootstrapInput />}
+                  IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
+                >
+                  <MenuItem value="mainnet">
+                    <ColorIcon colorCode="#11af60" />
                 Mainnet
               </MenuItem>
-              <MenuItem value="ropsten">
-                <ColorIcon colorCode="#FA4C69" />
+                  <MenuItem value="ropsten">
+                    <ColorIcon colorCode="#FA4C69" />
                 Ropsten
               </MenuItem>
-              <MenuItem value="kovan">
-                <ColorIcon colorCode="#7A3CF6" />
+                  <MenuItem value="kovan">
+                    <ColorIcon colorCode="#7A3CF6" />
                 Kovan
               </MenuItem>
-              <MenuItem value="rinkeby">
-                <ColorIcon colorCode="#FCB400" />
+                  <MenuItem value="rinkeby">
+                    <ColorIcon colorCode="#FCB400" />
                 Rinkeby
               </MenuItem>
-              <MenuItem value="goerli">
-                <ColorIcon colorCode="#BD9CFF" />
+                  <MenuItem value="goerli">
+                    <ColorIcon colorCode="#BD9CFF" />
                 Goerli
               </MenuItem>
-            </Select>
-          </div>
-        </StyledButton>
-      )}
+                </Select>
+              </div>
+            </StyledButton>
+          )}
+        </div>
+        :
+        <WalletInternal walletData={dummyWallet} />
+      }
       <StyledButton>
-        <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
-          <AccountButton />
+        <div style={{ maxWidth: '340px', width: '100%', margin: '-5px 10px 0px 10px' }}>
+          {/* <AccountButton /> */}
+          <Button variant={'transparent'} text={walletInfo ? 'Disconnect (temp button)' : 'Connect'} onClick={() => { setWallet(!walletInfo) }} />
         </div>
       </StyledButton>
-      {/* <StyledLink2 href="https://snapshot.page/#/basiscash.eth" target="_blank">
-        Vote
-      </StyledLink2> */}
     </StyledNav>
   );
 };
@@ -118,7 +133,7 @@ const StyledNav = styled.nav`
   display: flex;
   z-index: 100;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   position: absolute;
   top: 73px;
   width: 100%;
@@ -126,11 +141,12 @@ const StyledNav = styled.nav`
   background: #1f1d1d;
   backdrop-filter: blur(70px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
 `;
 
 const StyledLink = styled(NavLink)`
   color: ${(props) => props.theme.color.grey[400]};
-  height: 69px;
+  height: 80px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -153,10 +169,10 @@ const StyledLink = styled(NavLink)`
 `;
 const StyledButton = styled.div`
   color: ${(props) => props.theme.color.grey[400]};
-  height: 69px;
+  height: 80px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.64);
