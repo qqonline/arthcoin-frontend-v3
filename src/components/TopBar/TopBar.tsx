@@ -50,6 +50,7 @@ const TopBar: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
+  // const [showWallet, setShowWallet] = useState<boolean>(true)
 
   return (
     <>
@@ -70,7 +71,7 @@ const TopBar: React.FC = () => {
                   justifyContent: 'flex-end',
                 }}
               >
-                <TxButton />
+                {/* <TxButton /> */}
                 {false && (
                   <Select
                     labelId="demo-customized-select-label"
