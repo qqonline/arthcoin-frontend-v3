@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -6,11 +6,15 @@ import Modal from '../../NewModal/index';
 import Label from '../../Label';
 import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
-import { IconButton } from '@material-ui/core';
+import { Divider, IconButton } from '@material-ui/core';
 import metamask from '../../../assets/svg/metamask.svg';
 import copy from '../../../assets/svg/copy.svg';
 import Container from '../../Container';
 import Button from '../../Button';
+import TransparentInfoDiv from '../../../views/Stablize/components/InfoDiv';
+import Grid from '@material-ui/core/Grid';
+import { CustomSnack } from '../../SnackBar';
+import CustomModal from '../../CustomModal';
 
 interface props {
   walletData?: {
@@ -27,6 +31,8 @@ interface props {
 
 const AccountModal: React.FC<props> = (props) => {
   const basisCash = useBasisCash();
+
+  const [ConfirmationModal, setConfirmationModal ] = useState<boolean>(false)
 
   const bacBalance = useTokenBalance(basisCash.ARTH);
   const displayBacBalance = useMemo(() => getDisplayBalance(bacBalance), [bacBalance]);
@@ -108,7 +114,45 @@ const AccountModal: React.FC<props> = (props) => {
         </StyledBalanceWrapper>
       </Balances>
     </Modal>*/
-  <MainDiv onClick={() => props.onClose()}>
+  <MainDiv>
+    <BackgroundAbsolute onClick={() => {
+      console.log('hello')
+      props.onClose()
+    }}/>
+    <CustomModal
+      closeButton
+      handleClose={() => props.onClose()}
+      open={ConfirmationModal}
+      modalTitleStyle={{}}
+      modalContainerStyle={{}}
+      modalBodyStyle={{}}
+      title={`Disconnect Wallet`}>
+      <>
+        <PrimaryText>
+          Are you sure you want to disconnect oxf7...a6d3 ?
+        </PrimaryText>
+        <SecondaryText>
+          0xf77D777462d0cb38A67D7535761980D10cdca6d3
+        </SecondaryText>
+        <Grid container spacing={2} style={{ marginTop: '32px' }}>
+          <Grid item lg={6} md={6} sm={6} xs={6}>
+            <Button
+              variant={'transparent'}
+              text="Cancel"
+              size={'lg'}
+              onClick={() => {props.onClose()}}
+            />
+          </Grid>
+          <Grid item lg={6} md={6} sm={6} xs={6}>
+            <Button
+              text={'Disconnect'}
+              size={'lg'}
+              onClick={() => {props.onClose()}}
+            />
+          </Grid>
+        </Grid>
+      </>
+    </CustomModal>
     <PositionDiv>
       <WalletDiv>
 
@@ -164,7 +208,7 @@ const AccountModal: React.FC<props> = (props) => {
         </StyledRows>
 
         <StyledRows style={{marginBottom: '20px'}}>
-          <Button text={'Disconnect'} size={'lg'} variant={'transparent'}/>
+          <Button text={'Disconnect'} size={'lg'} variant={'transparent'} onClick={() => setConfirmationModal(true)}/>
         </StyledRows>
       </WalletDiv>
     </PositionDiv>
@@ -173,6 +217,38 @@ const AccountModal: React.FC<props> = (props) => {
   );
 };
 
+const BackgroundAbsolute = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+`
+const PrimaryText = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 8px;
+
+`
+
+const SecondaryText = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 0;
+`
+
 const MainDiv = styled.div`
   position: absolute;
   top: 0;
@@ -180,7 +256,6 @@ const MainDiv = styled.div`
   background: transparent;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
 `
 
 const PositionDiv = styled.div`
