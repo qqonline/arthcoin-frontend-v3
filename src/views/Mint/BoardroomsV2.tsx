@@ -654,7 +654,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       </div>
                       <InputNoDisplay>
                         <InternalSpan>
-                          {sliderValue} month(s)
+                          {sliderValue} months
                         </InternalSpan>
                       </InputNoDisplay>
                     </OneLineInput>
@@ -707,7 +707,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     labelData={`Estimated earning`}
                     // labelToolTipData={'testing'}
                     rightLabelUnit={'MAHA'}
-                    rightLabelValue={'100.0'}
+                    rightLabelValue={'~100.0'}
                     countUp
                     cEnd={9999}
                     cDuration={calcDuration}
@@ -877,6 +877,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
+        redirectTo={'/farming'}
       />
     </>
   );
