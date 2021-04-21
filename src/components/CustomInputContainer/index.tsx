@@ -50,7 +50,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           placeholder={DefaultValue}
           value={value? value: ''}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1, fontFamily: 'Inter' }}
+          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1, fontFamily: 'Inter !important' }}
           onChange={(event) => {
             if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value)

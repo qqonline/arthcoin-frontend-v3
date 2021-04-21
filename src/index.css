@@ -2,6 +2,7 @@
 button,
 input {
   outline: none;
+  font-family: 'Inter';
 }
 .dynamicStatBorder {
   border-right: 1px solid rgba(255,255,255,0.12);
