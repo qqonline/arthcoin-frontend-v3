@@ -340,7 +340,7 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
-              title="ARTHX Share"
+              title="ARTHX"
               symbol="ARTHX"
               liquidity={'$2,462,492'}
               uniswapInputAddress={basisCash.ARTHB.address}

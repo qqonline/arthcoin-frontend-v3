@@ -771,8 +771,8 @@ const HardChip = styled.div`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
 `
 
 const StyledTableHeaderTextCenter = styled.h6`
@@ -912,7 +912,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 15px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
 `
 
 const OneLineInputwomargin = styled.div`
