@@ -6,6 +6,8 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 // @ts-ignore
 import Select, { components, provided, state } from "react-select";
 import CustomDropDown from '../../../components/CustomDropDown';
+import DownArrow from '../../../assets/img/ArrowDown.svg';
+
 
 type props = {
   ILabelValue: string;
@@ -64,7 +66,8 @@ const MinorInputContainer: React.FC<props> = (props) => {
             {SymbolText}
           </IFieldRightContainerText>
           {hasDropDown && <IFieldRightContainerDropDown>
-            <KeyboardArrowDown fontSize='default' />
+            {/*<KeyboardArrowDown fontSize='default' />*/}
+            <img src={DownArrow} height={20} style={{marginLeft: 10}}/>
           </IFieldRightContainerDropDown>}
 
           {modalOpen && hasDropDown && ondropDownValueChange &&

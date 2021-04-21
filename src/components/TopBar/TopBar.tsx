@@ -173,6 +173,7 @@ const StyledTopBar = styled.div`
   display: flex;
   width: 100%;
   background: #151414;
+  top: 0;
 `;
 
 const ShowWarningInner = styled.div`
