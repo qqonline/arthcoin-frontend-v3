@@ -127,6 +127,7 @@ const Home: React.FC = () => {
 
   return (
     <Page>
+      <GradientDiv />
       <PageHeader
         subtitle="View information about the current ARTH protocol"
         title="Analytics" />
@@ -144,7 +145,7 @@ const Home: React.FC = () => {
                   <Grid item sm={12} md={6} lg={6}>{CollateralRatio()}</Grid>
                   <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                     <PercentCard>
-                      <PercentCardInfo style={{marginTop: 15}}>
+                      <PercentCardInfo style={{ marginTop: 15 }}>
                         <PercentCardLabel>
                           <div style={{ height: 14, width: 14, background: '#F7653B', borderRadius: 7 }} />
                           <OpacitySpan>
@@ -305,7 +306,7 @@ const Home: React.FC = () => {
         </Grid>
         <Grid container spacing={2} style={{ marginTop: '8px' }}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <BondingDiscount stats/>
+            <BondingDiscount stats />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <RewardRates />
@@ -339,7 +340,7 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
-              title="ARTHX Share"
+              title="ARTHX"
               symbol="ARTHX"
               liquidity={'$2,462,492'}
               uniswapInputAddress={basisCash.ARTHB.address}
@@ -348,12 +349,22 @@ const Home: React.FC = () => {
             />
           </Grid>
         </Grid>
-        <FaqTitle>FAQs</FaqTitle>
-        {FaqData && FaqData.map((eachFaq) => <FAQCard key={eachFaq.question} {...eachFaq} />)}
+        {/* <FaqTitle>FAQs</FaqTitle> */}
+        {/* {FaqData && FaqData.map((eachFaq) => <FAQCard key={eachFaq.question} {...eachFaq} />)} */}
       </Container>
     </Page>
   );
 };
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
+
 const FaqTitle = styled.div`
   font-style: normal;
   font-weight: bold;

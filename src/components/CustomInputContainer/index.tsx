@@ -6,6 +6,7 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 // @ts-ignore
 import Select, { components, provided, state } from "react-select";
 import CustomDropDown from '../CustomDropDown';
+import DownArrow from '../../assets/img/ArrowDown.svg';
 
 type props = {
   ILabelValue: string;
@@ -49,7 +50,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           placeholder={DefaultValue}
           value={value? value: ''}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1, fontFamily: 'Inter' }}
+          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1, fontFamily: 'Inter !important' }}
           onChange={(event) => {
             if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value)
@@ -91,7 +92,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             {SymbolText}
           </IFieldRightContainerText>
           {hasDropDown && <IFieldRightContainerDropDown>
-            <KeyboardArrowDown fontSize='default' />
+            {/*<KeyboardArrowDown fontSize='default' />*/}
+            <img src={DownArrow} height={20} style={{marginLeft: 10}}/>
           </IFieldRightContainerDropDown>}
           {modalOpen && hasDropDown && ondropDownValueChange &&
             <BackgroundAbsolute onClick={() => {
@@ -157,7 +159,7 @@ const ILabel = styled.p`
 const ILabelInfo = styled.p`
   font-family: Inter;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 300;
   font-size: 14px;
   line-height: 20px;
   color: #F7653B;

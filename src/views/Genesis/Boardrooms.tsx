@@ -622,7 +622,7 @@ const Boardrooms: React.FC = () => {
                   <TransparentInfoDiv
                     labelData={`Estimated earning`}
                     rightLabelUnit={'MAHA'}
-                    rightLabelValue={'100.0'}
+                    rightLabelValue={'~100.0'}
                     countUp
                     cEnd={9999}
                     cDuration={calcDuration}

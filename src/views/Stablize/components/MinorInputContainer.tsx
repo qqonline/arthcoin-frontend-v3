@@ -5,50 +5,9 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 // @ts-ignore
 import Select, { components, provided, state } from "react-select";
+import CustomDropDown from '../../../components/CustomDropDown';
+import DownArrow from '../../../assets/img/ArrowDown.svg';
 
-const options = [
-  {
-    value: "MAHA",
-    label: "MAHA",
-  },
-  {
-    value: "USDT",
-    label: "USDT",
-  }, {
-    value: "USDC",
-    label: "USDC",
-  }, {
-    value: "ETH",
-    label: "ETH",
-  }, {
-    value: "WBTC",
-    label: "WBTC",
-  }
-];
-
-
-const { Option } = components;
-const IconOption = (props: any) => (
-  <Option {...props}>
-    <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '5em' }}>
-      <img
-        src={require('../../../assets/svg/' + props.data?.label?.toLowerCase() + '.svg')}
-        style={{ width: 30 }}
-        alt={props.data.label}
-      />
-      <div>
-        {props.data.label}
-      </div>
-
-    </div>
-  </Option>
-);
-
-const Menu = (props: any) => (
-  <components.Menu style={{background: 'green'}} {...props}>
-    {props.children}
-  </components.Menu>
-);
 
 type props = {
   ILabelValue: string;
@@ -58,10 +17,12 @@ type props = {
   LogoSymbol: string;
   hasDropDown: boolean;
   SymbolText: string
+  dropDownValues?: string[];
+  ondropDownValueChange?: (data: string) => void;
 };
 
 const MinorInputContainer: React.FC<props> = (props) => {
-  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText } = props;
+  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, dropDownValues, ondropDownValueChange } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 
@@ -105,27 +66,21 @@ const MinorInputContainer: React.FC<props> = (props) => {
             {SymbolText}
           </IFieldRightContainerText>
           {hasDropDown && <IFieldRightContainerDropDown>
-            <KeyboardArrowDown fontSize='default' />
+            {/*<KeyboardArrowDown fontSize='default' />*/}
+            <img src={DownArrow} height={20} style={{marginLeft: 10}}/>
           </IFieldRightContainerDropDown>}
 
-          {modalOpen && hasDropDown && <CustomDropDown>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={'MAHA'} size={25} />
-              <CustomDropDownLiText>MAHA</CustomDropDownLiText>
-            </CustomDropDownLi>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={'USDC'} size={25} />
-              <CustomDropDownLiText>USDC</CustomDropDownLiText>
-            </CustomDropDownLi>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={'ETH'} size={25} />
-              <CustomDropDownLiText>ETH</CustomDropDownLiText>
-            </CustomDropDownLi>
-            <CustomDropDownLi>
-              <TokenSymbol symbol={'WBTC'} size={25} />
-              <CustomDropDownLiText>WBTC</CustomDropDownLiText>
-            </CustomDropDownLi>
-          </CustomDropDown>}
+          {modalOpen && hasDropDown && ondropDownValueChange &&
+          <BackgroundAbsolute onClick={() => {
+            setModalOpen(!modalOpen);
+          }}/>
+          }
+
+          {modalOpen && hasDropDown && ondropDownValueChange &&
+          <CustomDropDown
+            dropDownValues={dropDownValues}
+            ondropDownValueChange={ondropDownValueChange}
+          />}
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>
@@ -133,6 +88,16 @@ const MinorInputContainer: React.FC<props> = (props) => {
 }
 
 export default MinorInputContainer
+
+const BackgroundAbsolute = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
+`
 
 const IConatiner = styled.div`
   border-radius: 8px;
@@ -219,34 +184,3 @@ const IFieldRightContainerDropDown = styled.span`
   margin-left: 5px;
 `
 
-const CustomDropDown = styled.div`
-  position: absolute;
-  top: 50px;
-  right: 0px;
-  z-index: 12;
-  background: #151414;
-  border-radius: 6px;
-  min-width: 125px;
-`
-
-const CustomDropDownLi = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 48px;
-  padding: 0px 12px;
-  align-items: center;
-  &:hover {
-    background: rgba(62, 62, 62, 0.31);
-  }
-`
-
-const CustomDropDownLiText = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.64);
-  margin-left: 5px;
-  
-`

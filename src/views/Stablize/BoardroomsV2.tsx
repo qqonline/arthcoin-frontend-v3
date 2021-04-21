@@ -150,15 +150,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
-  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH')
-  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
-  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
+  const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState<string>('ETH')
+  const [BuybackReceivedropDownValues, setBuybackReceiveDropDownValues] = useState<string[]>([]);
+  const defaultDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
   let arr: string[];
   useEffect(() => window.scrollTo(0, 0), []);
+
   useEffect(() => {
-    arr = defaultDropdownValues.filter(e => e !== selectedAmountCoin);
-    setDropDownValues(arr);
-  }, [selectedAmountCoin])
+    arr = defaultDropdownValues.filter(e => e !== selectedBuybackReceiveAmountCoin);
+    setBuybackReceiveDropDownValues(arr);
+  }, [selectedBuybackReceiveAmountCoin])
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -188,13 +189,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
             IBalanceValue={`Balance ${balance}`}
             ILabelInfoValue={''}
             DefaultValue={redeemAmount.toString()}
-            hasDropDown={true}
-            LogoSymbol={selectedAmountCoin}
-            dropDownValues={dropDownValues}
-            ondropDownValueChange={(data) => {
-              setSelectedAmountCoin(data);
-            }}
-            SymbolText={selectedAmountCoin}
+            hasDropDown={false}
+            LogoSymbol={'ARTHX'}
+            SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => { setRedeemAmount(Number(val.replace(/[^0-9]/g, ''))) }}
           />
@@ -206,9 +203,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
             IBalanceValue={''}
             ILabelInfoValue={''}
             DefaultValue={'0.00'}
-            LogoSymbol={'MAHA'}
+            LogoSymbol={selectedBuybackReceiveAmountCoin}
             hasDropDown={true}
-            SymbolText={'ARTH'}
+            SymbolText={selectedBuybackReceiveAmountCoin}
+            dropDownValues={BuybackReceivedropDownValues}
+            ondropDownValueChange={(data) => {
+              setSelectedBuybackReceiveAmountCoin(data);
+            }}
           />
           <div>
             <TcContainer>
@@ -216,7 +217,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextWithIcon>
                     Trading Fee
-                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
@@ -228,7 +229,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextWithIcon>
                     Stability Fee
-                    <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />
+                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
@@ -290,12 +291,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            LogoSymbol={selectedAmountCoin}
-            dropDownValues={dropDownValues}
+            LogoSymbol={selectedBuybackReceiveAmountCoin}
+            dropDownValues={BuybackReceivedropDownValues}
             ondropDownValueChange={(data) => {
-              setSelectedAmountCoin(data);
+              setSelectedBuybackReceiveAmountCoin(data);
             }}
-            SymbolText={selectedAmountCoin}
+            SymbolText={selectedBuybackReceiveAmountCoin}
             setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
             inputMode={'decimal'}
           />
@@ -380,6 +381,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   return (
     <>
+      <GradientDiv />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -399,7 +401,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
             <TransparentInfoDiv
               labelData={`Trading Fee`}
-              labelToolTipData={'testing'}
+              // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'0.05'}
             />
@@ -407,7 +409,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
             <TransparentInfoDiv
               labelData={`Stability Fee`}
-              labelToolTipData={'testing'}
+              // labelToolTipData={'testing'}
               rightLabelUnit={'MAHA'}
               rightLabelValue={'0.05'}
             />
@@ -422,7 +424,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will Receive Collateral`}
+              labelData={`You will receive collateral`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'1000.00'}
@@ -557,10 +559,10 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
       </CustomModal>
       <StabilizePageHeader
-        title="Stablize"
+        title="Stabilize"
         subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"
       />
-      <Container size="lg">
+      <Container size="lg" margin={'10px 0px'}>
         <Grid container spacing={3}>
           <Grid container lg={8}>
             <Grid item lg={6} >
@@ -572,7 +574,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <RightTopCardHeader style={{}}>
                     Current Fee Rates
                 </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -583,7 +585,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -594,7 +596,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
@@ -608,7 +610,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <RightTopCardHeader>
                     Bonding Curve Discount on ARTHX
                 </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>Current Discount</TextForInfoTitle>
@@ -616,7 +618,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.2%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -627,7 +629,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>5%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -635,7 +637,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                         </TextForInfoTitle>
                       </div>
-                      <InputLabelSpanRight>5%</InputLabelSpanRight>
+                      <InputLabelSpanRight>~5%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
                   <div style={{ marginBottom: '12px' }}>
@@ -686,6 +688,15 @@ const Boardrooms = (props: WithSnackbarProps) => {
     </>
   );
 };
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2A2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  // border: 1px solid;
+  width: 100rem;
+  z-index: -5;
+`;
 
 const TcContainer = styled.div`
   margin-top: 18px;
@@ -747,7 +758,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  margin: 8px 0px 0px 0px
+  margin: 4px 0px 0px 0px
 `
 
 const HardChip = styled.div`
@@ -760,8 +771,8 @@ const HardChip = styled.div`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
 `
 
 const StyledTableHeaderTextCenter = styled.h6`
@@ -787,6 +798,7 @@ const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
   height: 560px;
+  // backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -794,6 +806,7 @@ const LeftTopCardChecked = styled.div`
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   height: 560px;
+  backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -837,10 +850,13 @@ const RightBottomCardTitle = styled.div`
 
 const LeftTopCardHeader = styled.div`
   padding: 32px;
+  border-radius: 12px 12px 0px 0px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
+  backdrop-filter: blur(21px);
 
 `
 const TabContainer = styled.div`
@@ -896,7 +912,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 15px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
 `
 
 const OneLineInputwomargin = styled.div`

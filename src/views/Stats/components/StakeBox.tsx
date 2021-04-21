@@ -4,6 +4,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import Button from '../../../components/Button';
 import Grid from '@material-ui/core/Grid';
+import { Redirect } from 'react-router';
 
 type props = {
 
@@ -22,7 +23,10 @@ const StakeBox: React.FC<props> = (props) => {
             </TextWithIcon>
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Button text={'Earn Rewards'} size={'sm'} />
+            <ButtonConatiner>
+              <Button text={'Earn Rewards'} size={'sm'} to={'/farming'}/>
+            </ButtonConatiner>
+
           </Grid>
         </Grid>
       </CustomInfoCardDetails>
@@ -31,6 +35,12 @@ const StakeBox: React.FC<props> = (props) => {
 }
 
 export default StakeBox
+
+const ButtonConatiner = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 24px;
+  }
+`
 
 const CustomInfoCard = styled.div`
   background: rgba(255, 255, 255, 0.02);

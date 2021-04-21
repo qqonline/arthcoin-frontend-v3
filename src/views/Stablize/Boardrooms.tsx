@@ -298,7 +298,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
             <TransparentInfoDiv
               labelData={`Trading Fee`}
-              labelToolTipData={'testing'}
+              // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'0.05'}
             />
@@ -306,7 +306,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
             <TransparentInfoDiv
               labelData={`Stability Fee`}
-              labelToolTipData={'testing'}
+              // labelToolTipData={'testing'}
               rightLabelUnit={'MAHA'}
               rightLabelValue={'0.05'}
             />
@@ -321,7 +321,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             />
 
             <TransparentInfoDiv
-              labelData={`You will Receive Collateral`}
+              labelData={`You will receive collateral`}
               // labelToolTipData={'testing'}
               rightLabelUnit={'USDT'}
               rightLabelValue={'1000.00'}
@@ -472,7 +472,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <RightTopCardHeader style={{}}>
                     Current Fee Rates
                 </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -483,7 +483,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -494,7 +494,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
@@ -508,7 +508,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <RightTopCardHeader>
                     Bonding Curve Discount on ARTHX
                 </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>Current Discount</TextForInfoTitle>
@@ -516,7 +516,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.2%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -527,7 +527,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>5%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -535,10 +535,10 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                         </TextForInfoTitle>
                       </div>
-                      <InputLabelSpanRight>5%</InputLabelSpanRight>
+                      <InputLabelSpanRight>~5%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -552,7 +552,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <RightTopCardHeader style={{ marginTop: 20 }}>
                     Current Reward Rates
                 </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -563,7 +563,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InputLabelSpanRight>0.2%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
-                  <div style={{ marginBottom: '12px' }}>
+                  <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
@@ -635,7 +635,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  margin: 8px 0px 0px 0px
+  margin: 4px 0px 0px 0px
 `
 
 
@@ -679,6 +679,7 @@ const LeftTopCard = styled.div`
   min-height: 500px;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardChecked = styled.div`
   background: rgba(255, 255, 255, 0.02);
@@ -687,6 +688,8 @@ const LeftTopCardChecked = styled.div`
   min-height: 500px;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
+
 `
 
 const RightTopCard = styled.div`
@@ -738,6 +741,7 @@ const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  backdrop-filter: blur(21px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `
 const LeftTopCardContainer = styled.div`
@@ -746,6 +750,7 @@ const LeftTopCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(21px);
 `
 const LeftTopCardContainer2 = styled.div`
   padding: 12px 12px;

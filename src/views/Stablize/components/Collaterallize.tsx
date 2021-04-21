@@ -18,7 +18,7 @@ interface IProps {
 }
 const CollaterallizeCheckmark = (props: IProps) => {
     return (
-        <div style={{ height: 450, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+        <div style={{ height: 450, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', backdropFilter: 'blur(21px)' }}>
             <img
                 src={checkmark}
                 height={112}

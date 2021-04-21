@@ -50,6 +50,7 @@ const TopBar: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
+  // const [showWallet, setShowWallet] = useState<boolean>(true)
 
   return (
     <>
@@ -70,7 +71,7 @@ const TopBar: React.FC = () => {
                   justifyContent: 'flex-end',
                 }}
               >
-                <TxButton />
+                {/* <TxButton /> */}
                 {false && (
                   <Select
                     labelId="demo-customized-select-label"
@@ -166,7 +167,15 @@ const HideOnBigScreen = styled.div`
     display: block;
   } ;
 `;
-const StyledTopBar = styled.div``;
+const StyledTopBar = styled.div`
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  width: 100%;
+  background: #151414;
+  top: 0;
+`;
+
 const ShowWarningInner = styled.div`
   font-weight: 600;
   font-size: 16px;

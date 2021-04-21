@@ -22,23 +22,33 @@ const truncateMiddle = function (fullStr: string, strLen: number, separator: str
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
   const [showModal, toggleModal] = React.useState(false);
+  let dummyWallet = {
+    accountNumber: '123123123123123123',
+    mahaTokens: 50,
+    mahaDollars: 500,
+    arthTokens: 50,
+    arthDollars: 500,
+    arthxTokens: 50,
+    arthxDollars: 500,
+  }
 
   const { account, connect } = useWallet();
 
   return (
     <>
-      {showModal && <AccountModal onCancel={() => toggleModal(false)} />}
+      {showModal && <AccountModal walletData={dummyWallet} onClose={() => toggleModal(!showModal)}/>}
       <StyledAccountButton>
-        {!account ? (
+        {account ? (
           <Button variant='transparent' onClick={() => connect('injected')} size="sm" text="Connect" />
         ) : (
-          <ButtonColored
+          <Button
             onClick={() => toggleModal(true)}
             size="sm"
-            text={truncateMiddle(account, 15, '.....')}
+            variant={'transparent'}
+            text={truncateMiddle('21ehisnioiosuhohAHhuHSLIs', 15, '.....')}
           >
             <AccountBalanceWalletOutlinedIcon className="margin-right-10 font20" />
-          </ButtonColored>
+          </Button>
         )}
       </StyledAccountButton>
     </>

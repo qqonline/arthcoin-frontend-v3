@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomModal from '../CustomModal';
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Tick from '../../assets/svg/Tick.svg';
 import Close from '../../assets/svg/Close.svg';
 import Button from '../Button';
@@ -11,13 +11,14 @@ export interface InputProps {
   title: string;
   subTitle?: string;
   subTitleLink?: string;
-  subsubTitle?:string;
+  subsubTitle?: string;
   buttonText: string;
-  buttonType?: 'default' | 'transparent' | 'outlined' | 'rounded' ;
+  buttonType?: 'default' | 'transparent' | 'outlined' | 'rounded';
+  redirectTo?: string;
 }
 
 const CustomSuccessModal: React.FC<InputProps> = (props) => {
-  const {modalOpen, setModalOpen, title, subTitle, subTitleLink, buttonText, subsubTitle, buttonType='transparent' } = props;
+  const { modalOpen, setModalOpen, title, subTitle, subTitleLink, buttonText, subsubTitle, buttonType = 'transparent', redirectTo } = props;
   return (
     <CustomModal
       closeButton
@@ -27,9 +28,9 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
       modalContainerStyle={{}}
       modalBodyStyle={{}}>
       <MainContainer>
-        <CloseButton src={Close} height={20} onClick={() => setModalOpen()}/>
+        <CloseButton src={Close} height={20} onClick={() => setModalOpen()} />
         <TickContainer>
-          <TickBackgroundWave/>
+          <TickBackgroundWave />
           <TickImg src={Tick} height={100} />
         </TickContainer>
         <ContentConatiner>
@@ -43,7 +44,7 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
             {subTitle}
           </ContentSubtitle>
         </ContentConatiner>
-        <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()}/>
+        <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()} to={redirectTo} />
       </MainContainer>
 
     </CustomModal>
