@@ -562,7 +562,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         title="Stabilize"
         subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"
       />
-      <Container size="lg">
+      <Container size="lg" margin={'10px 0px'}>
         <Grid container spacing={3}>
           <Grid container lg={8}>
             <Grid item lg={6} >
@@ -798,7 +798,7 @@ const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
   height: 560px;
-  backdrop-filter: blur(21px);
+  // backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -850,6 +850,7 @@ const RightBottomCardTitle = styled.div`
 
 const LeftTopCardHeader = styled.div`
   padding: 32px;
+  border-radius: 12px 12px 0px 0px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(21px);
 `
