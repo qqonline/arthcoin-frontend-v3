@@ -90,7 +90,7 @@ export default (props: IProps) => {
                             }} />
                         </div>
                         <div style={{ marginLeft: !isMobile ? 5 : undefined, width: '100%' }}>
-                            <Button text={'Deposit'} onClick={() => {
+                            <Button text={'Add Liquidity'} onClick={() => {
                                 setSelected({ liquidity: liquidityPair, pool: poolData })
                                 setRemove(false)
                                 setDeposit(true)

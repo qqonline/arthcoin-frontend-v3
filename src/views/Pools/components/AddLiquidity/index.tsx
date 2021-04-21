@@ -181,7 +181,7 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
               </OneLine>
             </OneLine>
           </TcContainer>
-          <Button text={'Sell'} size={'lg'} onClick={() => {
+          <Button text={'Supply'} size={'lg'} onClick={() => {
             setConfirmModal(true)
           }} />
         </CustomCardContainer>
