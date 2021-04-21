@@ -252,7 +252,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <img src={plus} />
               </PlusMinusArrow>
               <CustomInputContainer
-                ILabelValue={'Enter ARTHX Share'}
+                ILabelValue={'Enter ARTHX'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
                 value={mintArthxShare.toString()}
