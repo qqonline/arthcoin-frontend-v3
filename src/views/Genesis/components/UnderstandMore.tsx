@@ -34,7 +34,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
     }
 
     return (
-        <CustomInfoCard>
+        <CustomInfoCard className={"custom-mahadao-box"}>
             <CustomInfoCardHeader>
                 Understand more about how genesis is working
             </CustomInfoCardHeader>
