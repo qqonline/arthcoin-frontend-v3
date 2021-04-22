@@ -134,7 +134,7 @@ const Home: React.FC = () => {
       <Container size="lg">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-            <Card>
+            <Card className={"custom-mahadao-box"}>
               <Grid item sm={12} md={12} lg={12} direction={'column'}>
                 <Grid item sm={12} md={12} lg={12} style={{
                   display: 'flex',
