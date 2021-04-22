@@ -78,7 +78,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const NoLiquidityFound = () => {
     return (
-      <RightTopCard>
+      <RightTopCard className={"custom-mahadao-box"}>
         <NlfSpan>No Liquidity Found</NlfSpan>
       </RightTopCard>
     )

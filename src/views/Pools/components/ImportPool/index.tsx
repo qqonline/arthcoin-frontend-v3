@@ -100,7 +100,7 @@ const ImportPool: React.FC<props> = (props) => {
           </div>
         </CustomCardContainer>
       </CustomCard>
-      <CustomInfoCard>
+      <CustomInfoCard className={"custom-mahadao-box"}>
         <CustomInfoCardHeader>
           Your Position
         </CustomInfoCardHeader>
