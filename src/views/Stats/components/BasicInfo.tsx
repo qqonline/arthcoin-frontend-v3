@@ -12,7 +12,7 @@ const BasicInfo: React.FC<props> = (props) => {
 
 
   return (
-    <CustomInfoCard>
+    <CustomInfoCard className={"custom-mahadao-box"}>
       <CustomInfoCardDetails>
         <OneCardLeft>
           <OneLine>

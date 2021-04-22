@@ -32,7 +32,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>
-      <Card>
+      <Card className={"custom-mahadao-box"}>
         <CardHeader>
           <TokenSymbol size={60} symbol={symbol} />
           <div

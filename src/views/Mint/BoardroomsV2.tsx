@@ -300,7 +300,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </LeftTopCard>
         </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <RightTopCard>
+          <RightTopCard className={"custom-mahadao-box"}>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
@@ -363,7 +363,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               </OneLineInput>
             </div>
           </RightTopCard>
-          <RightBottomCard>
+          <RightBottomCard className={"custom-mahadao-box"}>
             <RightBottomCardTitle>
               Farming pools are great way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
