@@ -587,7 +587,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         <Grid container style={{ marginTop: '24px' }}>
           <Grid item lg={3} sm={'auto'}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
-            <CustomInfoCard>
+            <CustomInfoCard className={"custom-mahadao-box"}>
               <CustomInfoCardDetails>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
