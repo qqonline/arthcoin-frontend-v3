@@ -32,7 +32,7 @@ interface props {
 const AccountModal: React.FC<props> = (props) => {
   const basisCash = useBasisCash();
 
-  const [ConfirmationModal, setConfirmationModal ] = useState<boolean>(false)
+  const [ConfirmationModal, setConfirmationModal] = useState<boolean>(false)
 
   const bacBalance = useTokenBalance(basisCash.ARTH);
   const displayBacBalance = useMemo(() => getDisplayBalance(bacBalance), [bacBalance]);
@@ -59,160 +59,105 @@ const AccountModal: React.FC<props> = (props) => {
   //   onCancel();
   // };
   return (
-    /*<Modal title="My Wallet" open handleClose={handleClose}>
-      <div
-      // className="dialog-class display-flex-column margin-left-right-20 margin-bottom-20 border-bottom"
-      // style={{ minWidth: '300px' }}
-      >
-        {/!* <div className="dialog-class-1 width-100">
-          <span className="white font18">Connected with Metamask</span>
-          {false && (
-            <div style={{ maxWidth: '200px' }}>
-              <TextButton>Change</TextButton>
-            </div>
-          )}
-        </div> *!/}
-        {/!* <WalletDetils>
-          <img src={metaMaskIcon} alt="Metamask" width="30px" />
-          <CopyToClipboard text="0xf7dDfwefbefbefbfkaD62">
-            <div className="dialog-class margin-left-20">
-              <span className="white font18 margin-right-5">{`${walletAddress.substring(
-                0,
-                4,
-              )}...${walletAddress.substring(walletAddress.length - 4)}`}</span>
-              <img src={copyIcon} className="pointer" width="24px" />
-            </div>
-          </CopyToClipboard>
-        </WalletDetils> *!/}
-      </div>
-      <Balances>
-        <StyledBalanceWrapper>
-          <TokenSymbol symbol="MAHA" />
-          <Label text="MAHA" color="rgba(255, 255, 255, 0.64)" />
-          <StyledBalance>
-            <StyledValue>{displayBasBalance}</StyledValue>
-            {/!* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> *!/}
-          </StyledBalance>
-        </StyledBalanceWrapper>
-
-        <StyledBalanceWrapper>
-          <TokenSymbol symbol="ARTH" />
-          <Label text="ARTH" color="rgba(255, 255, 255, 0.64)" />
-          <StyledBalance>
-            <StyledValue>{displayBacBalance}</StyledValue>
-            {/!* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> *!/}
-          </StyledBalance>
-        </StyledBalanceWrapper>
-
-        <StyledBalanceWrapper>
-          <TokenSymbol symbol="ARTHB" />
-          <Label text="ARTHB" color="rgba(255, 255, 255, 0.64)" />
-          <StyledBalance>
-            <StyledValue>{displayBabBalance}</StyledValue>
-            {/!* <Label text="0.01 MAHA" color="rgba(255, 255, 255, 0.64)" /> *!/}
-          </StyledBalance>
-        </StyledBalanceWrapper>
-      </Balances>
-    </Modal>*/
-  <MainDiv>
-    <BackgroundAbsolute onClick={() => {
-      console.log('hello')
-      props.onClose()
-    }}/>
-    <CustomModal
-      closeButton
-      handleClose={() => props.onClose()}
-      open={ConfirmationModal}
-      modalTitleStyle={{}}
-      modalContainerStyle={{}}
-      modalBodyStyle={{}}
-      title={`Disconnect Wallet`}>
-      <>
-        <PrimaryText>
-          Are you sure you want to disconnect oxf7...a6d3 ?
+    <MainDiv>
+      <BackgroundAbsolute onClick={() => {
+        console.log('hello')
+        props.onClose()
+      }} />
+      <CustomModal
+        closeButton
+        handleClose={() => props.onClose()}
+        open={ConfirmationModal}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
+        title={`Disconnect Wallet`}>
+        <>
+          <PrimaryText>
+            Are you sure you want to disconnect oxf7...a6d3 ?
         </PrimaryText>
-        <SecondaryText>
-          0xf77D777462d0cb38A67D7535761980D10cdca6d3
+          <SecondaryText>
+            0xf77D777462d0cb38A67D7535761980D10cdca6d3
         </SecondaryText>
-        <Grid container spacing={2} style={{ marginTop: '32px' }}>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
-            <Button
-              variant={'transparent'}
-              text="Cancel"
-              size={'lg'}
-              onClick={() => {props.onClose()}}
-            />
+          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => { props.onClose() }}
+              />
+            </Grid>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              <Button
+                text={'Disconnect'}
+                size={'lg'}
+                onClick={() => { props.onClose() }}
+              />
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
-            <Button
-              text={'Disconnect'}
-              size={'lg'}
-              onClick={() => {props.onClose()}}
-            />
-          </Grid>
-        </Grid>
-      </>
-    </CustomModal>
-    <PositionDiv>
-      <WalletDiv>
+        </>
+      </CustomModal>
+      <PositionDiv>
+        <WalletDiv>
 
-        <StyledLink>
-          <span>
+          <StyledLink>
+            <span>
               Your Account
           </span>
-          <AccountDetails>
-            <IconButton>
-              <img height={32} src={metamask} />
-            </IconButton>
-            <span>{truncateMiddle(props?.walletData?.accountNumber, 15)}</span>
-            <IconButton>
-              <img height={24} src={copy} />
-            </IconButton>
-          </AccountDetails>
-        </StyledLink>
+            <AccountDetails>
+              <IconButton>
+                <img height={32} src={metamask} />
+              </IconButton>
+              <span>{truncateMiddle(props?.walletData?.accountNumber, 15)}</span>
+              <IconButton>
+                <img height={24} src={copy} />
+              </IconButton>
+            </AccountDetails>
+          </StyledLink>
+          <div style={{ height: '4px', width: '100%' }} />
+          <StyledRows>
+            <RowName>
+              <IconButton>
+                <TokenSymbol symbol={'MAHA'} size={44} />
+              </IconButton>
+              <span>{props?.walletData?.mahaTokens} MAHA</span>
+            </RowName>
+            <DollarValue>
+              ${props?.walletData?.mahaDollars}
+            </DollarValue>
+          </StyledRows>
 
-        <StyledRows>
-          <RowName>
-            <IconButton>
-              <TokenSymbol symbol={'MAHA'} size={44} />
-            </IconButton>
-            <span>{props?.walletData?.mahaTokens} MAHA</span>
-          </RowName>
-          <DollarValue>
-            ${props?.walletData?.mahaDollars}
-          </DollarValue>
-        </StyledRows>
+          <StyledRows>
+            <RowName>
+              <IconButton>
+                <TokenSymbol symbol={'ARTH'} size={44} />
+              </IconButton>
+              <span>{props?.walletData?.arthTokens} ARTH</span>
+            </RowName>
+            <DollarValue>
+              ${props?.walletData?.arthDollars}
+            </DollarValue>
+          </StyledRows>
 
-        <StyledRows>
-          <RowName>
-            <IconButton>
-              <TokenSymbol symbol={'ARTH'} size={44} />
-            </IconButton>
-            <span>{props?.walletData?.arthTokens} ARTH</span>
-          </RowName>
-          <DollarValue>
-            ${props?.walletData?.arthDollars}
-          </DollarValue>
-        </StyledRows>
+          <StyledRows>
+            <RowName>
+              <IconButton>
+                <TokenSymbol symbol={'MAHA'} size={44} />
+              </IconButton>
+              <span>{props?.walletData?.arthxTokens} ARTHX</span>
+            </RowName>
+            <DollarValue>
+              ${props?.walletData?.arthxDollars}
+            </DollarValue>
+          </StyledRows>
 
-        <StyledRows>
-          <RowName>
-            <IconButton>
-              <TokenSymbol symbol={'MAHA'} size={44} />
-            </IconButton>
-            <span>{props?.walletData?.arthxTokens} ARTHX</span>
-          </RowName>
-          <DollarValue>
-            ${props?.walletData?.arthxDollars}
-          </DollarValue>
-        </StyledRows>
-
-        <StyledRows style={{marginBottom: '20px'}}>
-          <Button text={'Disconnect'} size={'lg'} variant={'transparent'} onClick={() => setConfirmationModal(true)}/>
-        </StyledRows>
-      </WalletDiv>
-    </PositionDiv>
-  </MainDiv>
+          <StyledRows style={{ margin: '20px 0' }}>
+            <Button text={'Disconnect'} size={'lg'} variant={'transparent'} onClick={() => setConfirmationModal(true)} />
+          </StyledRows>
+        </WalletDiv>
+      </PositionDiv>
+    </MainDiv>
 
   );
 };
@@ -284,6 +229,7 @@ const StyledLink = styled.div`
   padding: 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     &:hover {
+        border-radius: 12px;
         color: rgba(255, 255, 255, 0.64);
         background: rgba(255, 255, 255, 0.04);
         backdrop-filter: blur(70px);
@@ -311,7 +257,7 @@ const AccountDetails = styled.div`
 `;
 
 const StyledRows = styled.div`
-    margin-top: 20px;
+    // margin-top: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;

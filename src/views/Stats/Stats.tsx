@@ -362,7 +362,7 @@ const GradientDiv = styled.div`
   position: absolute;
   // border: 1px solid;
   width: 100rem;
-  z-index: -5;
+  z-index: -50;
 `;
 
 const FaqTitle = styled.div`
@@ -380,6 +380,7 @@ const Card = styled.div`
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   padding: 0 32px;
+  backdrop-filter: blur(21px);
 `;
 const PercentCard = styled.div`
   display: flex;
