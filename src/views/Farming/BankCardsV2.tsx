@@ -242,7 +242,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
   }
 
   return (
-    <DataContainer>
+    <DataContainer className={"custom-mahadao-box"}>
       {!isMobile && <Grid container style={{ padding: '0px 32px ', marginBottom: '16px' }}>
         <Grid item lg={3}>
           <CustomTableHeading>
