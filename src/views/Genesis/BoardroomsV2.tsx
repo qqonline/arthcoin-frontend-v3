@@ -182,7 +182,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [calendarLink, setLink] = useState('')
 
   const [successModal, setSuccessModal] = useState<boolean>(false)
-  useMediaQuery({ 'maxWidth': '600px' });
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' });
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('MAHA')
   const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
   const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
@@ -242,7 +242,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             rightLabelValue={'1000.00'}
           />
 
-          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+          <Grid container spacing={2} style={{ marginTop: '32px', display: 'flex', flexDirection: isMobile ? 'column-reverse':'row' }}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 variant={'transparent'}
@@ -350,7 +350,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px' }} />
                     </HtmlTooltip>
                   </TextForInfoTitle>
-                  <BeforeChipDark>157.89M</BeforeChipDark>
+                  <BeforeChipDark style={{paddingRight: 5}}>157.89M</BeforeChipDark>
                 </div>
               </CustomInfoCardDetails>
             </CustomInfoCard>
@@ -619,13 +619,13 @@ const TabContainer = styled.div`
 `
 
 const TabText = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.88);
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+color: rgba(255, 255, 255, 0.64);
 `
 
 const ActiveTab = styled.div`

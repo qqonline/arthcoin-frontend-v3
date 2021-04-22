@@ -50,7 +50,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
                     <span>
                         Go to ARTH V 2.0 article to learn more
                     </span>
-                    <CallMadeIcon style={{ fontSize: 15, marginLeft: 8 }} />
+                    <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
                 </LearnMore>
             </CustomInfoCardDetails>
         </CustomInfoCard>

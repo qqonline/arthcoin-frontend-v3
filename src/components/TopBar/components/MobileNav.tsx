@@ -45,7 +45,7 @@ const MobileNav = (props: props) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
-  const [walletInfo, setWallet] = useState<boolean>(true)
+  const [walletInfo, setWallet] = useState<boolean>(false)
   let dummyWallet = {
     accountNumber: '123123123123123123',
     mahaTokens: 50,

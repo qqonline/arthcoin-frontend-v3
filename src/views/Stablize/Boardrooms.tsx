@@ -457,8 +457,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </CustomModal>
       <StabilizePageHeader
         mobile
-        title="Stablize"
-        subtitle="Earn MAHA and ARTH Share by Stablize the collateral in the protocol"
+        title="Stabilize"
+        subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
       />
       <Container size="lg">
         <Grid direction={'column'}>

@@ -11,6 +11,7 @@ const HtmlTooltip = withStyles((theme1: Theme) => ({
     fontSize: '13px',
     borderRadius: '6px',
     padding: '20px',
+    // paddingRight: 0
   },
 }))(Tooltip);
 

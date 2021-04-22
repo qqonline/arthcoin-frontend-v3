@@ -143,7 +143,7 @@ const AccountModal: React.FC<props> = (props) => {
           <StyledRows>
             <RowName>
               <IconButton>
-                <TokenSymbol symbol={'MAHA'} size={44} />
+                <TokenSymbol symbol={'ARTHX'} size={44} />
               </IconButton>
               <span>{props?.walletData?.arthxTokens} ARTHX</span>
             </RowName>
