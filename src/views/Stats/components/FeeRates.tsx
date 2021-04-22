@@ -11,7 +11,7 @@ const BondingDiscount: React.FC<props> = (props) => {
 
 
   return (
-    <CustomInfoCard>
+    <CustomInfoCard className={"custom-mahadao-box"}>
       <CustomInfoCardHeader>
         Fee rates
       </CustomInfoCardHeader>

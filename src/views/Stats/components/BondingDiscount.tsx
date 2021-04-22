@@ -11,7 +11,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
 
 
   return (
-    <CustomInfoCard>
+    <CustomInfoCard className={"custom-mahadao-box"}>
       {props.stats ?
         <CustomStatsInfoCardHeader>
           Bonding Curve Discount on ARTHX

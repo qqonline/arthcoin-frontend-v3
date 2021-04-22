@@ -9,7 +9,7 @@ const CoinsPrice: React.FC<props> = (props) => {
 
 
   return (
-    <CustomInfoCard>
+    <CustomInfoCard className={"custom-mahadao-box"}>
       <CustomInfoCardDetails>
         <OneLine style={{marginTop: '0px'}}>
           <div>

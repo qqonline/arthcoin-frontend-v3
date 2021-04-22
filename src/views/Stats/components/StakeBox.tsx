@@ -14,7 +14,7 @@ const StakeBox: React.FC<props> = (props) => {
 
 
   return (
-    <CustomInfoCard>
+    <CustomInfoCard className={"custom-mahadao-box"}>
       <CustomInfoCardDetails>
         <Grid container>
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
