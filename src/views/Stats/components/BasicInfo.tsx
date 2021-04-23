@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import { KeyboardArrowRight, KeyboardArrowUp } from '@material-ui/icons';
+import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 
 type props = {
 
@@ -30,7 +31,7 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>54.76M</BeforeChip>
             </div>
-            <KeyboardArrowRight fontSize='large' style={{cursor: 'pointer'}} />
+            <img src={arrowRightWhite} style={{cursor: 'pointer'}}/>
           </OneLine>
         </OneCardLeft>
         <OneCardRight>
@@ -49,7 +50,7 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>157.89M</BeforeChip>
             </div>
-            <KeyboardArrowRight fontSize='large'  style={{cursor: 'pointer'}} />
+            <img src={arrowRightWhite} style={{cursor: 'pointer'}}/>
           </OneLine>
         </OneCardRight>
       </CustomInfoCardDetails>

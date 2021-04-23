@@ -205,7 +205,6 @@ const StyledTopBarInner = styled.div`
   max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
 const ColorIcon = styled.div`
   background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};

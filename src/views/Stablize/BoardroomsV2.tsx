@@ -249,7 +249,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </LeftTopCard>
     )
     else return (
-      <LeftTopCardChecked>
+      <LeftTopCardChecked className={'custom-mahadao-box'}>
         <LeftTopCardHeader>
           <HeaderTitle>
             Buyback
@@ -360,7 +360,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </LeftTopCard>
     )
     else return (
-      <LeftTopCardChecked>
+      <LeftTopCardChecked className={'custom-mahadao-box'}>
         <LeftTopCardHeader>
           <HeaderTitle>
             {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
@@ -374,7 +374,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
-        <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
+        <CollaterallizeCheckmark subText={'The Protocol is ' +
+        'tly collateralised'} />
       </LeftTopCardChecked>
     )
   };
@@ -568,9 +569,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
             <Grid item lg={6} >
               {buyback ? buyBackContainer() : recollatateralizeConatiner()}
             </Grid>
-            <Grid item lg={6} style={{ marginLeft: -5 }}>
+            <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
               {buyback ?
-                <RightTopCard>
+                <RightTopCard className={'custom-mahadao-box'}>
                   <RightTopCardHeader style={{}}>
                     Current Fee Rates
                 </RightTopCardHeader>
@@ -606,7 +607,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   </div>
                 </RightTopCard>
                 :
-                <RightTopCard>
+                <RightTopCard className={'custom-mahadao-box'}>
                   <RightTopCardHeader>
                     Bonding Curve Discount on ARTHX
                 </RightTopCardHeader>
@@ -798,7 +799,6 @@ const LeftTopCard = styled.div`
   background: linear-gradient(180deg, #48423E 0%, #373030 100%);
   border-radius: 12px;
   height: 560px;
-  // backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
@@ -806,13 +806,11 @@ const LeftTopCardChecked = styled.div`
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   height: 560px;
-  backdrop-filter: blur(21px);
   // padding: 32px;
 `
 
 const RightTopCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
-  // backdrop-filter: blur(21px);
   border-radius: 0px 12px 12px 0px;
   padding: 32px;
   height: 560px;
@@ -831,7 +829,6 @@ margin: 12px 0px;
 const RightBottomCard = styled.div`
   margin-top: 24px;
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
   border-radius: 12px;
   padding: 32px;
 `
@@ -852,11 +849,9 @@ const LeftTopCardHeader = styled.div`
   padding: 32px;
   border-radius: 12px 12px 0px 0px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(21px);
 `
 const LeftTopCardContainer = styled.div`
   padding: 24px 32px;
-  backdrop-filter: blur(21px);
 
 `
 const TabContainer = styled.div`

@@ -160,13 +160,15 @@ const StyledTitle = styled.h1`
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  line-height: 29px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   opacity: 0.88;
   z-index: 1;
   padding: 0;
   margin-bottom: 4px;
+  @media (max-width: 600px) {
+    margin-bottom: 2px;
+  } ;
 `;
 
 const LearnMore = styled.a`

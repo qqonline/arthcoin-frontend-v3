@@ -235,7 +235,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     </div>
                     <OneLineInputwomargin>
                       <BeforeChip>0.05</BeforeChip>
-                      <TagChips>ARTH</TagChips>
+                      <TagChips style={{marginRight: '4px'}}>ARTH</TagChips>
                       <BeforeChip>per</BeforeChip>
                       <TagChips>ETH</TagChips>
                     </OneLineInputwomargin>
@@ -639,6 +639,10 @@ const CustomInfoCardButton = styled.div`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
+  cursor: pointer;
+  &:hover {
+    background: #423b38;
+  }
   /* identical to box height, or 143% */
 
   text-align: center;

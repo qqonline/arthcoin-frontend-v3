@@ -222,6 +222,7 @@ const PageHeading = styled.p`
   text-align: center;
   color: #FFFFFF;
   margin-top: 40px;
+  margin-bottom: 4px;
 `
 
 const PageSubHeading = styled.p`

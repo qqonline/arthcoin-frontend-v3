@@ -134,6 +134,9 @@ align-items: center;
 padding: 20px 32px;
 background: linear-gradient(180deg, #48423E 0%, #373030 100%);
 border-radius: 12px;
+  @media(max-width: 600px) {
+    padding: 20px 24px;
+  }
 `;
 
 const LLabel = styled.div`

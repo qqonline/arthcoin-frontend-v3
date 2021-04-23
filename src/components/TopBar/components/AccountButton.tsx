@@ -5,6 +5,7 @@ import Button from '../../Button/Button';
 import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import walletIcon from '../../../assets/svg/wallet-24.svg';
 interface AccountButtonProps {}
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
@@ -47,7 +48,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
             variant={'transparent'}
             text={truncateMiddle('21ehisnioiosuhohAHhuHSLIs', 15, '.....')}
           >
-            <AccountBalanceWalletOutlinedIcon className="margin-right-10 font20" />
+            <img src={walletIcon} className="margin-right-10" />
           </Button>
         )}
       </StyledAccountButton>

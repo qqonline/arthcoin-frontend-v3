@@ -76,8 +76,8 @@ code {
   position:relative;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(21px);
-
 }
+
 .custom-mahadao-box::before {
   content:"";
   position:absolute;
@@ -94,6 +94,22 @@ code {
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
 }
+
+.MuiInputBase-input{
+  font-family: Inter !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+@media (max-width: 600px){
+  .gdHKYe{
+    padding: 0 16px !important;
+  }
+}
+
 
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(180deg); } }

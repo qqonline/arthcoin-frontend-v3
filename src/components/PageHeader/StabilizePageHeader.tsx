@@ -63,7 +63,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                 <StyledNavTitle>{title}</StyledNavTitle>
               </StyledNav>
             )}
-            <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: mobile? 'flex-start': 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <StyledTitle>{title}</StyledTitle>
                 <StyledSubtitle>
