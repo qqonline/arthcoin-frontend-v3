@@ -176,8 +176,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <Grid container style={{ marginTop: '24px' }}>
         <Grid item lg={3} sm={'auto'}></Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
-          <LeftTopCard>
-            <LeftTopCardHeader>
+          <LeftTopCard className={'custom-mahadao-container'}>
+            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer>
                 <ActiveTab></ActiveTab>
                 <TabText>Buy</TabText>
@@ -186,7 +186,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Sell</TabText>
               </TabContainer>
             </LeftTopCardHeader>
-            <LeftTopCardContainer>
+            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Amount'}
                 IBalanceValue={`Balance ${balance}`}
@@ -251,22 +251,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
     )
   };
 
-  const handleCheck = (event: any) => {
-    // console.log('check trig', event.target.checked)
-    setChecked(event.target.checked);
-  };
-  const handleSliderChange = (event: any, value: any) => {
-    console.log('check trig', value)
-    setSliderValue(value);
-    setDuration(DEFAULT_CALC - value * value)
-  };
   const sellTabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }}>
         <Grid item lg={3} sm={'auto'}></Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
-          <LeftTopCard>
-            <LeftTopCardHeader>
+          <LeftTopCard className={'custom-mahadao-container'}>
+            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer onClick={() => setType("Buy")}>
                 <TabText>Buy</TabText>
               </TabContainer>
@@ -275,7 +266,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Sell</TabText>
               </TabContainer>
             </LeftTopCardHeader>
-            <LeftTopCardContainer>
+            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Amount'}
                 IBalanceValue={'Balance 500.00'}
@@ -584,7 +575,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
         </Grid>
         {type === "Buy" && buyTabContent()}
         {type === "Sell" && sellTabContent()}
-        <Grid container style={{ marginTop: '24px' }}>
+        <Grid container style={{ marginTop: '16px' }}>
           <Grid item lg={3} sm={'auto'}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
             <CustomInfoCard className={"custom-mahadao-box"}>
@@ -780,8 +771,7 @@ text-align: center;
 `;
 
 const LeftTopCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
+  
 `
 
 const RightTopCard = styled.div`
@@ -814,19 +804,8 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding-right: 32px;
-  padding-left: 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  @media (max-width: 600px) {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 32px;
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
 
 `
 const TabContainer = styled.div`
@@ -1130,14 +1109,6 @@ color: rgba(255, 255, 255, 0.64);
 `;
 
 const CustomInfoCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
-  margin-top: 16px;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
 `
 
 const CustomInfoCardDetails = styled.div`

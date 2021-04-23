@@ -18,18 +18,14 @@ interface IProps {
 }
 const CollaterallizeCheckmark = (props: IProps) => {
     return (
-        <div style={{ height: 450, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-            <img
-                src={checkmark}
-                height={112}
-            // style={{ alignSelf: 'center', justifyContent: 'center', display: 'flex' }}
-            />
-            <HeaderSubtitle
-                style={{ alignSelf: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', margin: '10px 0px', textAlign: 'center' }}
-            >
-                <TextForInfoTitle >{props.subText}</TextForInfoTitle>
-                <LearnMore>Learn More</LearnMore>
-            </HeaderSubtitle>
+        <div className={'custom-mahadao-container-content'} style={{ height: '386px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignContent: 'center'}}>
+            <div style={{textAlign: 'center'}}>
+              <img src={checkmark} height={112} />
+              <HeaderSubtitle>
+                  <TextForInfoTitle >{props.subText}</TextForInfoTitle>
+                  <LearnMore>Learn More</LearnMore>
+              </HeaderSubtitle>
+            </div>
         </div>
     )
 }
@@ -41,11 +37,7 @@ const HeaderSubtitle = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.88);
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  align-content: center;
+  margin: 12px 0px,
 `
 
 

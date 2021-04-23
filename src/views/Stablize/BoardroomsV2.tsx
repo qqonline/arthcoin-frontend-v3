@@ -170,8 +170,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const buyBackContainer = () => {
     if (buyback) return (
-      <LeftTopCard>
-        <LeftTopCardHeader>
+      <LeftTopCard className={'custom-mahadao-container'}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -183,7 +183,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
-        <LeftTopCardContainer>
+        <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Redeem Amount'}
             IBalanceValue={`Balance ${balance}`}
@@ -249,8 +249,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </LeftTopCard>
     )
     else return (
-      <LeftTopCardChecked className={'custom-mahadao-box'}>
-        <LeftTopCardHeader>
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={buyback? {height: 536}: {height: 546}}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
         <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -270,8 +270,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const recollatateralizeConatiner = () => {
     if (recollatateralize) return (
-      <LeftTopCard>
-        <LeftTopCardHeader>
+      <LeftTopCard className={'custom-mahadao-container'}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -284,7 +284,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
-        <LeftTopCardContainer>
+        <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Collateral'}
             IBalanceValue={`Balance ${balance}`}
@@ -356,12 +356,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </div>
           </div>
         </LeftTopCardContainer>
-
       </LeftTopCard>
     )
     else return (
-      <LeftTopCardChecked className={'custom-mahadao-box'}>
-        <LeftTopCardHeader>
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={buyback? {height: 536}: {height: 546}}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
             <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -374,8 +373,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
             </HeaderSubtitle>}
         </LeftTopCardHeader>
-        <CollaterallizeCheckmark subText={'The Protocol is ' +
-        'tly collateralised'} />
+        <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
       </LeftTopCardChecked>
     )
   };
@@ -571,7 +569,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </Grid>
             <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
               {buyback ?
-                <RightTopCard className={'custom-mahadao-box'}>
+                <RightTopCard className={'custom-mahadao-box'} style={buyback? {height: 536}: {height: 546}}>
                   <RightTopCardHeader style={{}}>
                     Current Fee Rates
                 </RightTopCardHeader>
@@ -607,7 +605,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   </div>
                 </RightTopCard>
                 :
-                <RightTopCard className={'custom-mahadao-box'}>
+                <RightTopCard className={'custom-mahadao-box'} style={buyback? {height: 536}: {height: 546}}>
                   <RightTopCardHeader>
                     Bonding Curve Discount on ARTHX
                 </RightTopCardHeader>
@@ -796,24 +794,15 @@ text-align: center;
 `;
 
 const LeftTopCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
-  height: 560px;
+  //height: 560px;
   // padding: 32px;
 `
 
 const LeftTopCardChecked = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  height: 560px;
-  // padding: 32px;
+  padding: 0 !important;
 `
 
 const RightTopCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 0px 12px 12px 0px;
-  padding: 32px;
-  height: 560px;
 `
 
 const RightTopCardHeader = styled.div`
@@ -846,12 +835,10 @@ const RightBottomCardTitle = styled.div`
 `
 
 const LeftTopCardHeader = styled.div`
-  padding: 32px;
-  border-radius: 12px 12px 0px 0px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 32px;
+  padding-bottom: 32px;
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 32px;
 
 `
 const TabContainer = styled.div`
@@ -900,6 +887,7 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
+  margin: 12px 0;
 `
 
 const OneLineInput = styled.div`

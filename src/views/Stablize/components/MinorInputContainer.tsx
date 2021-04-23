@@ -101,7 +101,6 @@ const BackgroundAbsolute = styled.div`
 
 const IConatiner = styled.div`
   border-radius: 8px;
-  margin: 10px 0px;
 `
 
 const ILabelContainer = styled.div`
@@ -127,6 +126,7 @@ const ILabel = styled.p`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 12px;
 `
 
 const ILabelInfo = styled.p`
@@ -137,6 +137,7 @@ const ILabelInfo = styled.p`
   line-height: 20px;
   color: #FD565660;
   margin-left: 5px;
+  margin-bottom: 12px;
 `
 
 const ILabelBalance = styled.p`
@@ -147,6 +148,8 @@ const ILabelBalance = styled.p`
   line-height: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 12px;
+
 `
 
 const IFieldConatiner = styled.div`
