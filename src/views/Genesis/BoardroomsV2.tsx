@@ -354,8 +354,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 </div>
               </CustomInfoCardDetails>
             </CustomInfoCard>
-            <LeftTopCard>
-              <LeftTopCardHeader>
+            <LeftTopCard className={"custom-mahadao-container"}>
+              <LeftTopCardHeader className={"custom-mahadao-container-header"}>
                 <TabContainer onClick={() => {
                   if (type !== 'Commit') setType('Commit')
                 }}>
@@ -369,7 +369,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <TabText>Swap ARTH for ARTHX</TabText>
                 </TabContainer>
               </LeftTopCardHeader>
-              <LeftTopCardContainer>
+              <LeftTopCardContainer className={"custom-mahadao-container-content"}>
                 {type === "Commit" ? <CustomInputContainer
                   ILabelValue={'Enter Collateral'}
                   IBalanceValue={`Balance ${balance}`}
@@ -467,15 +467,9 @@ const GradientDiv = styled.div`
   width: 100rem;
   z-index: -5;
 `;
+
 const CustomInfoCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
   margin-bottom: 16px;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
 `
 
 const CustomInfoCardDetails = styled.div`
@@ -584,26 +578,14 @@ const OneLineInputwomargin = styled.div`
 `
 
 const LeftTopCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
+  
 `
 
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding-right: 32px;
-  padding-left: 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  @media (max-width: 600px) {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 32px;
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
 
 `
 const TabContainer = styled.div`

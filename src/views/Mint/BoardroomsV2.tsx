@@ -215,8 +215,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <Grid container style={{ marginTop: '24px' }} spacing={2}>
         <Grid item lg={1} />
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <LeftTopCard>
-            <LeftTopCardHeader>
+          <LeftTopCard className={'custom-mahadao-container'}>
+            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <ActiveTab />
               <TabContainer>
                 <TabText>Mint</TabText>
@@ -225,7 +225,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
-            <LeftTopCardContainer>
+            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
@@ -393,8 +393,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <Grid container style={{ marginTop: '24px' }} spacing={2}>
         <Grid item lg={1} />
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <LeftTopCard>
-            <LeftTopCardHeader>
+          <LeftTopCard className={'custom-mahadao-container'}>
+            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer onClick={() => setType('Mint')}>
                 <TabText>Mint</TabText>
               </TabContainer>
@@ -403,7 +403,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
-            <LeftTopCardContainer>
+            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
@@ -476,7 +476,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </LeftTopCard>
         </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <RightTopCard>
+          <RightTopCard className={"custom-mahadao-box"}>
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
@@ -546,7 +546,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               </OneLineInput>
             </div>
           </RightTopCard>
-          <RightBottomCard>
+          <RightBottomCard className={"custom-mahadao-box"}>
             <RightBottomCardTitle>
               Farming pools are greate way to earn higher APY by staking your $ARTH
             </RightBottomCardTitle>
@@ -927,23 +927,15 @@ const OneLineInputwomargin = styled.div`
 `
 
 const LeftTopCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
+  
 `
 
 const RightTopCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
+  
 `
 
 const RightBottomCard = styled.div`
   margin-top: 24px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
 `
 
 const RightBottomCardTitle = styled.div`
@@ -961,19 +953,10 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding-right: 32px;
-  padding-left: 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  @media (max-width: 600px) {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
+  
 `
 const LeftTopCardContainer = styled.div`
-  padding: 24px 32px;
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
+  
 
 `
 const TabContainer = styled.div`
@@ -1014,7 +997,6 @@ const ActiveTab = styled.div`
 
 const PlusMinusArrow = styled.div`
   width: 100%;
-  height: 32px;
   border-radius: 1.33px;
   color: #ffffff;
   align-items: center;
@@ -1022,6 +1004,7 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
+  margin: 12px 0;
 `
 
 const OneLineInput = styled.div`

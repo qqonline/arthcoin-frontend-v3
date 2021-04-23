@@ -60,14 +60,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
 export default UnderstandMore;
 
 const CustomInfoCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
-  margin: 24px 0px;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
+  
 `
 const ListUl = styled.li`
 `

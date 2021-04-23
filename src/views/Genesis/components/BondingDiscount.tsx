@@ -52,13 +52,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
 export default BondingDiscount
 
 const CustomInfoCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
+  
 `
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
