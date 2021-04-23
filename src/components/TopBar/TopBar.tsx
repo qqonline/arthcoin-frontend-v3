@@ -175,9 +175,9 @@ const StyledTopBar = styled.div`
   top: 0;
   
   //background: #151414;
-  background: rgba( 0, 0, 0, 0.55 );
-  backdrop-filter: blur( 20.0px );
-  -webkit-backdrop-filter: blur( 20.0px );
+  background: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
 `;
 
 const ShowWarningInner = styled.div`
