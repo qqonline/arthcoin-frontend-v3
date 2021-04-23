@@ -172,8 +172,12 @@ const StyledTopBar = styled.div`
   z-index: 100;
   display: flex;
   width: 100%;
-  background: #151414;
   top: 0;
+  
+  //background: #151414;
+  background: rgba( 0, 0, 0, 0.55 );
+  backdrop-filter: blur( 20.0px );
+  -webkit-backdrop-filter: blur( 20.0px );
 `;
 
 const ShowWarningInner = styled.div`
