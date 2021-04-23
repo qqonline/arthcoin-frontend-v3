@@ -111,12 +111,12 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
           </Grid>
         </>
       </CustomModal>
-      <CustomCard>
-        <CustomCardHeader>
+      <CustomCard className={'custom-mahadao-container'}>
+        <CustomCardHeader className={'custom-mahadao-container-header'}>
           <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElementBack>
           <EachElementTitle> <CardTitle> Add Liquidity </CardTitle></EachElementTitle>
         </CustomCardHeader>
-        <CustomCardContainer>
+        <CustomCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Amount'}
             IBalanceValue={`Balance ${balance}`}
@@ -193,20 +193,21 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
 export default withSnackbar(AddLiquidity)
 
 const CustomCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
+  
   margin-top: 12px;
 `
 
 const CustomCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 24px 32px;
+  padding-top: 28px;
+  padding-bottom: 28px;
   align-items: center;
   align-content: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   @media (max-width: 600px) {
-    padding: 24px 16px;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 `
 const EachElementBack = styled.div`
@@ -219,11 +220,8 @@ const EachElementTitle = styled.div`
 `
 
 const CustomCardContainer = styled.div`
-  padding: 24px 32px;
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
 `
+
 const CardTitle = styled.p`
   font-family: Inter;
   font-style: normal;

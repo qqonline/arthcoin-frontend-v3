@@ -39,12 +39,12 @@ const ImportPool: React.FC<props> = (props) => {
 
   return (
     <div>
-      <CustomCard>
-        <CustomCardHeader>
+      <CustomCard className={"custom-mahadao-container"}>
+        <CustomCardHeader className={"custom-mahadao-container-header"}>
           <EachElementBack> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'}/> </EachElementBack>
           <EachElementTitle> <CardTitle> Import Pool </CardTitle></EachElementTitle>
         </CustomCardHeader>
-        <CustomCardContainer>
+        <CustomCardContainer className={"custom-mahadao-container-content"}>
           <CoinSelection onClick={() => {
             if (dropDownNo === 1){
               setDropDownNo(0)
@@ -150,21 +150,16 @@ const ImportPool: React.FC<props> = (props) => {
 export default ImportPool
 
 const CustomCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
-  border-radius: 12px;
   margin-top: 12px;
 `
 
 const CustomCardHeader = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 24px 32px;
+  padding-top: 28px;
+  padding-bottom: 28px;
   align-items: center;
   align-content: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  @media (max-width: 600px) {
-    padding: 12px 16px;
-  }
 `
 
 const EachElementBack = styled.div`
@@ -177,10 +172,7 @@ const EachElementTitle = styled.div`
 `
 
 const CustomCardContainer = styled.div`
-  padding: 32px 32px;
-  @media (max-width: 600px) {
-    padding: 16px 16px;
-  }
+  
 `
 const CardTitle = styled.p`
   font-family: Inter;
@@ -250,14 +242,7 @@ const ActionMessage = styled.p`
 `
 
 const CustomInfoCard = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(21px);
-  border-radius: 12px;
-  padding: 32px;
   margin-top: 20px;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
 `
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;

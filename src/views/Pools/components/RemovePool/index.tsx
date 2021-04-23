@@ -362,13 +362,13 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           </Grid>
         </>
       </CustomModal>
-      <CustomCard>
-        <CustomCardHeader>
+      <CustomCard className={"custom-mahadao-container"}>
+        <CustomCardHeader className={"custom-mahadao-container-header"}>
           <EachElement> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElement>
           <EachElement> <CardTitle>Remove Liquidity</CardTitle></EachElement>
           <EachElement> <Detailed onClick={() => setType(!simpleType)}>{simpleType ? 'Detailed' : 'Simple'}</Detailed></EachElement>
         </CustomCardHeader>
-        <CustomCardContainer>
+        <CustomCardContainer className={"custom-mahadao-container-content"}>
           {/* <div> */}
           {simpleType ? simple() : detailed()}
           <ButtonContainer>
@@ -382,7 +382,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           {/* </div> */}
         </CustomCardContainer>
       </CustomCard>
-      <CustomInfoCard>
+      <CustomInfoCard className={"custom-mahadao-box"}>
         <CustomInfoCardHeader>
           Your Position
         </CustomInfoCardHeader>
