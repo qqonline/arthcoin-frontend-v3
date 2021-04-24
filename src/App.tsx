@@ -1,28 +1,22 @@
 import React, { useEffect, useMemo } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useWallet, UseWalletProvider } from 'use-wallet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import BanksProvider from './contexts/Banks';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
 import Farming from './views/Farming';
 import Home from './views/Home';
-import Bond from './views/Bond';
-import Stats from './views/Stats';
+// import Stats from './views/Stats';
 
 import store from './state';
 import theme from './theme';
 import Updaters from './state/Updaters';
-import Distributions from './views/Distributions';
 import Popups from './components/Popups';
 import config from './config';
 import useBasisCash from './hooks/useBasisCash';
-import * as Treasury from './state/treasury/controller';
-import * as Vaults from './state/vault/controller';
-
 
 import './index.css';
 import './App.css';
@@ -31,7 +25,7 @@ import Stablize from './views/Stablize';
 import Trade from './views/Trade';
 import Pools from './views/Pools';
 import { SnackbarProvider } from 'notistack';
-import Genesis from './views/Genesis';
+// import Genesis from './views/Genesis';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -61,9 +55,7 @@ const App: React.FC = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/stats">
-            <Stats />
-          </Route>
+          <Route path="/stats">{/* <Stats /> */}</Route>
           <Route path="/farming">
             <Farming />
           </Route>
@@ -79,9 +71,7 @@ const App: React.FC = () => {
           <Route path="/pools">
             <Pools />
           </Route>
-          <Route path="/Genesis">
-            <Genesis />
-          </Route>
+          <Route path="/Genesis">{/* <Genesis /> */}</Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>
       </Router>
@@ -90,46 +80,26 @@ const App: React.FC = () => {
 };
 
 const AppContent: React.FC = ({ children }) => {
-  const { account } = useWallet();
   const basisCash = useBasisCash();
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    if (basisCash) {
-      Treasury.init(basisCash, dispatch);
-    }
-
-  }, [basisCash, dispatch]);
-
-  useEffect(() => {
-    console.log('test', account)
-    if (account) {
-      Vaults.init(account, basisCash, dispatch)
-    }
-  }, [account, basisCash, dispatch]);
 
   // if (!!!account) return <UnlockWallet />;
   if (!basisCash) return <div>Loading</div>;
 
   return (
     <ModalsProvider>
-      <BanksProvider>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          maxSnack={2}
-          autoHideDuration={2500}
-        >
-          <>
-            <Popups />
-            {children}
-          </>
-
-        </SnackbarProvider>
-      </BanksProvider>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        maxSnack={2}
+        autoHideDuration={2500}
+      >
+        <>
+          <Popups />
+          {children}
+        </>
+      </SnackbarProvider>
     </ModalsProvider>
   );
 };

@@ -2,12 +2,12 @@ import { BigNumber, Contract } from 'ethers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { Provider } from '@ethersproject/abstract-provider';
 import ERC20 from './ERC20';
-import ABI from './deployments/abi/IUniswapV2Pair.json'
+// import ABI from './deployments/abi/IUniswapV2Pair.json'
 
 class UniswapPair extends ERC20 {
   constructor(address: string, provider: Signer | Provider, symbol: string) {
     super(address, provider, symbol, 18)
-    this.contract = new Contract(address, ABI, provider);
+    // this.contract = new Contract(address, ABI, provider);
   }
 
   token0(): Promise<string> {
@@ -18,7 +18,7 @@ class UniswapPair extends ERC20 {
     return this.contract.token1();
   }
 
-  reserves(): Promise<[BigNumber,BigNumber]> {
+  reserves(): Promise<[BigNumber, BigNumber]> {
     return this.contract.getReserves();
   }
 

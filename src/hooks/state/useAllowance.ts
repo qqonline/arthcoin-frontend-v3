@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from 'ethers';
-import ERC20 from '../basis-cash/ERC20';
-import config from '../config';
-import useBasisCash from './useBasisCash';
+import ERC20 from '../../basis-cash/ERC20';
+import config from '../../config';
+import useBasisCash from '../useBasisCash';
 
 
 const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) => {
@@ -14,7 +14,7 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
 
   const fetchAllowance = useCallback(async () => {
     if (!account) return
-     const allowance = await token.allowance(account, spender);
+    const allowance = await token.allowance(account, spender);
     console.log(`Allowance: ${allowance.toString()} ${token.symbol} for ${spender}`);
     setAllowance(allowance);
   }, [account, spender, token]);
