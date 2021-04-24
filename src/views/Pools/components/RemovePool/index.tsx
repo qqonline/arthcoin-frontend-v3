@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import TokenSymbol from '../../../../components/TokenSymbol';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import CustomImportPoolDropDown from './components/CustomImportPoolDropDown';
-import InfoIcon from '@material-ui/icons/Info';
+
 import { ICards, IPoolData } from '../OpenableCard';
 import {
   createStyles,
@@ -105,9 +102,6 @@ const PrettoRestrictSlider = withStyles({
     color: 'rgba(255, 255, 255, 0.88)',
   },
   mark: {
-    // height: '3px',
-    // width: '3px',
-    // borderRadius: '50%',
     color: 'transparent',
   },
 })(Slider);
@@ -115,7 +109,6 @@ const PrettoRestrictSlider = withStyles({
 const RemovePool = (props: props & WithSnackbarProps) => {
   const { selectedPair, onBack } = props;
   console.log(selectedPair);
-  const [dropDownNo, setDropDownNo] = useState<number>(0);
   const [simpleType, setType] = useState<boolean>(true);
   const basisCash = useBasisCash();
   const sliderClasses = useSliderStyles();
@@ -127,7 +120,6 @@ const RemovePool = (props: props & WithSnackbarProps) => {
   const [secondCoin, setSecondCoin] = useState<string>('ETH');
   const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.0);
   const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.0);
-  const [firstCoinDropDown, setFirstCoinDropDown] = useState<string[]>([]);
   const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>(defaultDropdownValues);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const handleSliderChange = (event: any, value: any) => {
@@ -187,7 +179,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           </div>
         </div>
         <PlusMinusArrow>
-          <img src={arrowDown} />
+          <img src={arrowDown} alt="arrow-down" />
         </PlusMinusArrow>
         <PrimaryText>You receive</PrimaryText>
         <ReYouReceiveContain>
@@ -253,7 +245,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           tagText={'MAX'}
         />
         <PlusMinusArrow>
-          <img src={arrowDown} />
+          <img src={arrowDown} alt="arrow-down" />
         </PlusMinusArrow>
         <CustomInputContainer
           ILabelValue={'You Receive'}
@@ -274,7 +266,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           tagText={'MAX'}
         />
         <PlusMinusArrow>
-          <img src={plus} />
+          <img src={plus} alt="plus" />
         </PlusMinusArrow>
         <CustomInputContainer
           ILabelValue={'You Receive'}
@@ -574,30 +566,6 @@ const CardTitle = styled.p`
   margin: 0px;
 `;
 
-const CoinSelection = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #1f1e1e;
-  border-radius: 6px;
-  position: relative;
-  cursor: pointer;
-`;
-const TokenConatiner = styled.div`
-  flex: 1;
-`;
-const TokenText = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.64);
-  margin-left: 10px;
-`;
-
 const PrimaryText = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -637,16 +605,6 @@ const OneLineInputwomargin = styled.div`
   justify-content: flex-start;
 `;
 
-const TextForInfoTitle = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  color: #ffffff;
-  opacity: 0.64;
-`;
-
 const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
@@ -663,28 +621,6 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
-`;
-
-const InfoMessage = styled.p`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  margin-bottom: 4px;
-  color: white;
-`;
-const ActionMessage = styled.p`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  color: #f7653b;
-  margin: 0px;
-  cursor: pointer;
 `;
 
 const CustomInfoCard = styled.div`
