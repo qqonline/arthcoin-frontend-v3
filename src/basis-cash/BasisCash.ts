@@ -504,7 +504,7 @@ export class BasisCash {
   }
 
   boardroomByVersion(kind: Boardrooms, version: BoardroomVersion): Contract {
-     if (version === 'v2') {
+    if (version === 'v2') {
       if (kind === 'arthArth') return this.contracts.ArthArthBoardroomV2;
       if (kind === 'arthMaha') return this.contracts.ArthMahaBoardroomV2;
       if (kind === 'mahaArth') return this.contracts.MahaArthBoardroomV2;
@@ -546,7 +546,7 @@ export class BasisCash {
 
   async getEarningsOnBoardroom(kind: Boardrooms, version: BoardroomVersion): Promise<BigNumber> {
     const boardroom = this.currentBoardroom(kind, version);
-     return await boardroom.earned(this.myAccount);
+    return await boardroom.earned(this.myAccount);
   }
 
 
