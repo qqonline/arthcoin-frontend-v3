@@ -147,14 +147,6 @@ const CardHeader = styled.h2`
   }
 `;
 
-const StyledCards = styled.div`
-  padding: 5px 0;
-  color: #fff;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const StyledValue = styled.span`
   display: inline-block;
   font-size: 18px;
