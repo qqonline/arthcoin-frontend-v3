@@ -4,31 +4,23 @@ import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 // @ts-ignore
-import Select, { components, provided, state } from 'react-select';
-import CustomDropDown from '../CustomDropDown';
-import DownArrow from '../../assets/img/ArrowDown.svg';
+import { components } from 'react-select';
+
+const { Option } = components;
 
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
   ILabelInfoValue?: string;
-  value?: string;
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
   inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-  tagText?: string;
-  dropDownValues?: string[];
-  ondropDownValueChange?: (data: string) => void;
-  multiIcons?: boolean;
-  symbol1?: string;
-  symbol2?: string;
-  dontShowBackgroundContainer?: boolean;
 };
 
-const CustomInputContainer: React.FC<props> = (props) => {
+const InputContainer: React.FC<props> = (props) => {
   const {
     ILabelValue,
     IBalanceValue,
@@ -37,24 +29,11 @@ const CustomInputContainer: React.FC<props> = (props) => {
     LogoSymbol,
     hasDropDown,
     SymbolText,
-    tagText,
-    dropDownValues,
-    ondropDownValueChange,
-    multiIcons = false,
-    symbol1,
-    symbol2,
-    value,
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
-    <IConatiner
-      style={
-        props.dontShowBackgroundContainer
-          ? { padding: '0px', backgroundColor: 'transparent' }
-          : {}
-      }
-    >
+    <IConatiner>
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -68,21 +47,14 @@ const CustomInputContainer: React.FC<props> = (props) => {
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue}
-          value={value ? value : ''}
           inputProps={{ 'aria-label': 'naked' }}
-          style={{
-            padding: '8px 12px',
-            color: '#FFFFFF',
-            flex: 1,
-            fontFamily: 'Inter !important',
-          }}
+          style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           onChange={(event) => {
             if (props?.setText && event.target.value.trim() !== '') {
               props.setText(event.target.value);
             }
           }}
         />
-        {tagText !== '' && <MaxTagConatiner>{tagText}</MaxTagConatiner>}
         <IFieldRightContainer
           onClick={() => {
             if (hasDropDown) setModalOpen(!modalOpen);
@@ -101,36 +73,34 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
           />*/}
           <IFieldRightContainerLogo>
-            {multiIcons && symbol1 && symbol2 ? (
-              <LLabel>
-                <TokenSymbol symbol={symbol1} size={25} style={{ zIndex: 2 }} />
-                <TokenSymbol symbol={symbol2} size={25} style={{ zIndex: 1, marginLeft: -5 }} />
-                {/* <LPairLabel>{liquidityPair.pairName}</LPairLabel> */}
-              </LLabel>
-            ) : (
-              <TokenSymbol symbol={LogoSymbol} size={25} />
-            )}
+            <TokenSymbol symbol={LogoSymbol} size={25} />
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>{SymbolText}</IFieldRightContainerText>
           {hasDropDown && (
             <IFieldRightContainerDropDown>
-              {/*<KeyboardArrowDown fontSize='default' />*/}
-              <img src={DownArrow} height={20} style={{ marginLeft: 10 }} />
+              <KeyboardArrowDown fontSize="default" />
             </IFieldRightContainerDropDown>
           )}
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <BackgroundAbsolute
-              onClick={() => {
-                setModalOpen(!modalOpen);
-              }}
-            />
-          )}
 
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <CustomDropDown
-              dropDownValues={dropDownValues}
-              ondropDownValueChange={ondropDownValueChange}
-            />
+          {modalOpen && hasDropDown && (
+            <CustomDropDown>
+              <CustomDropDownLi>
+                <TokenSymbol symbol={'MAHA'} size={25} />
+                <CustomDropDownLiText>MAHA</CustomDropDownLiText>
+              </CustomDropDownLi>
+              <CustomDropDownLi>
+                <TokenSymbol symbol={'USDC'} size={25} />
+                <CustomDropDownLiText>USDC</CustomDropDownLiText>
+              </CustomDropDownLi>
+              <CustomDropDownLi>
+                <TokenSymbol symbol={'ETH'} size={25} />
+                <CustomDropDownLiText>ETH</CustomDropDownLiText>
+              </CustomDropDownLi>
+              <CustomDropDownLi>
+                <TokenSymbol symbol={'WBTC'} size={25} />
+                <CustomDropDownLiText>WBTC</CustomDropDownLiText>
+              </CustomDropDownLi>
+            </CustomDropDown>
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
@@ -138,22 +108,13 @@ const CustomInputContainer: React.FC<props> = (props) => {
   );
 };
 
-export default CustomInputContainer;
-
-const BackgroundAbsolute = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: transparent;
-  width: 100vw;
-  height: 100vh;
-  z-index: 11;
-`;
+export default InputContainer;
 
 const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 12px;
+  margin: 10px 0px;
 `;
 
 const ILabelContainer = styled.div`
@@ -177,18 +138,16 @@ const ILabel = styled.p`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
 `;
 
 const ILabelInfo = styled.p`
   font-family: Inter;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  color: #f7653b;
+  color: #fd565660;
   margin-left: 5px;
-  margin-bottom: 12px;
 `;
 
 const ILabelBalance = styled.p`
@@ -199,23 +158,6 @@ const ILabelBalance = styled.p`
   line-height: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
-`;
-const LLabel = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const LPairLabel = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #ffffff;
-  opacity: 0.88;
-  margin: 0px 0px 0px 16px;
 `;
 
 const IFieldConatiner = styled.div`
@@ -236,21 +178,6 @@ const IFieldRightContainer = styled.div`
   cursor: pointer;
 `;
 
-const MaxTagConatiner = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  color: #f7653b;
-  padding: 10px 12px;
-  background: transparent;
-  border-radius: 0px 6px 6px 0px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-`;
-
 const IFieldRightContainerLogo = styled.span``;
 
 const IFieldRightContainerText = styled.span`
@@ -264,5 +191,36 @@ const IFieldRightContainerText = styled.span`
 `;
 
 const IFieldRightContainerDropDown = styled.span`
+  margin-left: 5px;
+`;
+
+const CustomDropDown = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  z-index: 12;
+  background: #1f1e1e;
+  border-radius: 6px;
+  min-width: 125px;
+`;
+
+const CustomDropDownLi = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  padding: 0px 12px;
+  align-items: center;
+  &:hover {
+    background: rgba(62, 62, 62, 0.31);
+  }
+`;
+
+const CustomDropDownLiText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.64);
   margin-left: 5px;
 `;

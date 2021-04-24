@@ -10,6 +10,8 @@ import ModalsProvider from './contexts/Modals';
 import Farming from './views/Farming';
 import Home from './views/Home';
 // import Stats from './views/Stats';
+import Page from './components/Page';
+
 import TopBar from './components/TopBar';
 
 import store from './state';
@@ -59,22 +61,34 @@ const App: React.FC = () => {
           </Route>
           <Route path="/stats">{/* <Stats /> */}</Route>
           <Route path="/farming">
-            <Farming />
+            <Page>
+              <Farming />
+            </Page>
           </Route>
           <Route path="/stabilize">
-            <Stablize />
+            <Page>
+              <Stablize />
+            </Page>
           </Route>
           <Route path="/mint">
-            <Mint />
+            <Page>
+              <Mint />
+            </Page>
           </Route>
           <Route path="/trade">
-            <Trade />
+            <Page>
+              <Trade />
+            </Page>
           </Route>
           <Route path="/pools">
-            <Pools />
+            <Page>
+              <Pools />
+            </Page>
           </Route>
           <Route path="/Genesis">
-            <Genesis />
+            <Page>
+              <Genesis />
+            </Page>
           </Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>

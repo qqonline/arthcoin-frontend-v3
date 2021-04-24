@@ -177,7 +177,6 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useBasisCash();
 
   const [mintColl, setCollateralValue] = useState<number>(0.0);
   const [arthValue, setArthValue] = useState<number>(0.0);
@@ -189,9 +188,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('MAHA');
-  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
-  const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
+  const defaultCollateralDropdownValues = ['ETH', 'MAHA', 'WBTC', 'USDT', 'USDC'];
+  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>(
+    defaultCollateralDropdownValues,
+  );
   const [timerHeader, setHeader] = useState<boolean>(true);
 
   // useEffect(() => {
@@ -277,7 +278,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={() => {
                   setOpenModal(2);

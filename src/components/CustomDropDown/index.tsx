@@ -8,18 +8,20 @@ export interface InputProps {
 }
 
 const CustomDropDown: React.FC<InputProps> = (props) => {
-  const {dropDownValues, ondropDownValueChange} = props;
+  const { dropDownValues, ondropDownValueChange } = props;
   return (
     <CustomDropDownContainer>
       {dropDownValues.map((item) => {
-        return(
-          <CustomDropDownLi onClick={() => {
-            ondropDownValueChange(item);
-          }}>
+        return (
+          <CustomDropDownLi
+            onClick={() => {
+              ondropDownValueChange(item);
+            }}
+          >
             <TokenSymbol symbol={item} size={25} />
             <CustomDropDownLiText>{item}</CustomDropDownLiText>
           </CustomDropDownLi>
-        )
+        );
       })}
     </CustomDropDownContainer>
   );
@@ -30,12 +32,10 @@ const CustomDropDownContainer = styled.div`
   top: 50px;
   right: 0px;
   z-index: 12;
-  background: #1F1E1E;
+  background: #1f1e1e;
   border-radius: 6px;
   min-width: 125px;
-  max-height: 192px;
-  overflow-y: scroll;
-`
+`;
 
 const CustomDropDownLi = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const CustomDropDownLi = styled.div`
   &:hover {
     background: rgba(62, 62, 62, 0.31);
   }
-`
+`;
 
 const CustomDropDownLiText = styled.span`
   font-family: Inter;
@@ -56,6 +56,6 @@ const CustomDropDownLiText = styled.span`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
   margin-left: 5px;
-`
+`;
 
 export default CustomDropDown;

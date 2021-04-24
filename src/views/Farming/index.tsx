@@ -1,56 +1,30 @@
 import React, { useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Page from '../../components/Page';
+
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 // import BankPage from '../Bank';
 // import BankCardsV2 from './BankCardsV2';
-import StakingIcon from '../../assets/svg/Staking.svg';
+
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
-import { useMediaQuery } from 'react-responsive';
-import { MobileFarm } from './MobileFarm';
-import { ButtonGroup } from 'react-bootstrap';
 
 const Banks: React.FC = () => {
-  const { path } = useRouteMatch();
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [selectedId, setId] = useState<number>(1);
   let headerList = [
     {
       id: 1,
       name: 'All',
-      count: 25,
+      count: 6,
     },
     {
       id: 2,
-      name: 'MAHA Farming',
-      count: 25,
+      name: 'ARTH Staking',
+      count: 3,
     },
     {
       id: 3,
-      name: 'Yearn Finance',
-      count: 25,
-    },
-    {
-      id: 4,
-      name: 'Cream Finance',
-      count: 25,
-    },
-    {
-      id: 5,
-      name: 'Pickle Finance',
-      count: 25,
-    },
-    {
-      id: 6,
-      name: 'Sushiswap',
-      count: 25,
-    },
-    {
-      id: 7,
-      name: 'Uniswap',
-      count: 25,
+      name: 'ARTHX Staking',
+      count: 3,
     },
   ];
 
