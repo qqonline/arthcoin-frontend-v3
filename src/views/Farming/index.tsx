@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
-// import BankPage from '../Bank';
-// import BankCardsV2 from './BankCardsV2';
+import FarmingCards from './FarmingCards';
 
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
@@ -60,12 +59,7 @@ const Banks: React.FC = () => {
         <div className="border-bottom width-100 margin-bottom-20 margin-top-10" />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            {/*{!isMobile ?*/}
-            {/*  <BankCardsV2 />*/}
-            {/*  :*/}
-            {/*  <BankCards />*/}
-            {/*}*/}
-            {/* <BankCardsV2 /> */}
+            <FarmingCards />
           </Grid>
         </Grid>
       </Container>

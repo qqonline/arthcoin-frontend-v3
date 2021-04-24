@@ -160,25 +160,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
 
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('USDT');
-  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>([]);
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
   const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
+  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>(
+    defaultCollateralDropdownValues,
+  );
 
-  useEffect(() => {
-    let arr: string[];
-    arr = defaultCollateralDropdownValues.filter((e) => e !== selectedCollateralCoin);
-    setCollateralDropDownValues(arr);
-  }, [defaultCollateralDropdownValues, selectedCollateralCoin]);
-
-  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('USDT');
-  const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>([]);
-  const defaultReceiveRedeemDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
-
-  useEffect(() => {
-    let temp: string[];
-    temp = defaultReceiveRedeemDropdownValues.filter((e) => e !== selectedReceiveRedeemCoin);
-    setReceiveRedeemDropDownValues(temp);
-  }, [defaultReceiveRedeemDropdownValues, selectedReceiveRedeemCoin]);
+  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('ETH');
+  const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>(
+    defaultCollateralDropdownValues,
+  );
 
   const onBuyColletralValueChange = async (val: string) => {
     const valueInNumber = Number(val.replace(/[^0-9]/g, ''));

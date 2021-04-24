@@ -57,17 +57,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
     selectedBuybackReceiveAmountCoin,
     setSelectedBuybackReceiveAmountCoin,
   ] = useState<string>('ETH');
-  const [BuybackReceivedropDownValues, setBuybackReceiveDropDownValues] = useState<string[]>(
-    [],
-  );
   const defaultDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
-  let arr: string[];
+  const [BuybackReceivedropDownValues, setBuybackReceiveDropDownValues] = useState<string[]>(
+    defaultDropdownValues,
+  );
   useEffect(() => window.scrollTo(0, 0), []);
-
-  useEffect(() => {
-    // arr = defaultDropdownValues.filter((e) => e !== selectedBuybackReceiveAmountCoin);
-    // setBuybackReceiveDropDownValues(arr);
-  }, [selectedBuybackReceiveAmountCoin]);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;

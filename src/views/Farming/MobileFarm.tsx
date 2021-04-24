@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Page from '../../components/Page';
-import PageHeader from '../../components/PageHeader';
-import Container from '../../components/Container';
-// import BankPage from '../Bank';
-// import BankCards from './BankCardsV2';
-import StakingIcon from '../../assets/svg/Staking.svg';
+
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 import Button from '../../components/Button';
