@@ -1,28 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-// import bgImg from '../../assets/img/bgImg.jpeg';
-import TopBar from '../TopBar';
 import chakra from '../../assets/svg/BG.svg';
 
 const Page: React.FC = ({ children }) => (
   <StyledPage>
-    <TopBar />
-      <div className="chakra-home">
-        <img src={chakra} height={1400}/>
-      </div>
-    {/* <div className="gradient-red-1-home"></div> */}
-    <StyledMain
-    // style={{ backgroundImage: `url(${bgImg})` }}
-    >
-      {children}
-    </StyledMain>
+    <div className="chakra-home">
+      <img src={chakra} height={1400} alt="chakra" />
+    </div>
+    <StyledMain>{children}</StyledMain>
   </StyledPage>
 );
 
 const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
-  // position: relative;
 `;
 
 const StyledMain = styled.div`

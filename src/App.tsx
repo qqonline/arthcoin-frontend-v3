@@ -9,7 +9,7 @@ import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
 import Farming from './views/Farming';
 import Home from './views/Home';
-// import Stats from './views/Stats';
+import Stats from './views/Stats';
 import Page from './components/Page';
 
 import TopBar from './components/TopBar';
@@ -59,7 +59,9 @@ const App: React.FC = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/stats">{/* <Stats /> */}</Route>
+          <Route path="/stats">
+            <Stats />{' '}
+          </Route>
           <Route path="/farming">
             <Page>
               <Farming />

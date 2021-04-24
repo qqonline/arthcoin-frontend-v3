@@ -13,7 +13,7 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-21T15:00:00Z'),
     refreshInterval: 3000,
     gasLimitMultiplier: 1.1,
-    supportedCollaterals: ['USDT', 'USDC', 'ETH'],
+    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
   },
@@ -28,7 +28,7 @@ const configurations: { [env: string]: Configuration } = {
     gasLimitMultiplier: 1.1,
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['USDT', 'USDC', 'ETH']
+    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC']
   },
   production: {
     chainId: ChainId.MAINNET,
@@ -41,7 +41,7 @@ const configurations: { [env: string]: Configuration } = {
     gasLimitMultiplier: 1.7,
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['USDT', 'USDC', 'ETH']
+    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC']
   },
 };
 

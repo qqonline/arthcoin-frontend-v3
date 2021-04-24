@@ -623,7 +623,7 @@ const GradientDiv = styled.div`
   height: 270px;
   position: absolute;
   // border: 1px solid;
-  width: 100rem;
+  width: 100%;
   z-index: -5;
 `;
 
