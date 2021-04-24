@@ -1,16 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 import PieChart from './PieChart';
 import InfoIcon from '../../../assets/img/ToolTipColored.svg';
 import HtmlTooltip from '../../../components/HtmlTooltip';
-import { AppState } from '../../../state';
-import { BigNumber } from 'ethers';
-
 
 const DistributonSection: React.FC = () => {
-  const accumulatedSeigniorage = useSelector<AppState, BigNumber>(s => s.treasury.coreState.accumulatedSeigniorage)
   // console.log('seign', accumulatedSeigniorage)
   return (
     <Card>
@@ -20,11 +15,11 @@ const DistributonSection: React.FC = () => {
           enterTouchDelay={0}
           title={
             <span>
-              When the system is in expansion mode (12hr TWAP price above $1.05), new
-              ARTH coins are minted as seigniorage and are added back into the
-              circulation as a way of increasing the coin supply. What you see below
-              is the seigniorage distribution for various pools.
-                      </span>
+              When the system is in expansion mode (12hr TWAP price above $1.05), new ARTH coins
+              are minted as seigniorage and are added back into the circulation as a way of
+              increasing the coin supply. What you see below is the seigniorage distribution for
+              various pools.
+            </span>
           }
         >
           <img src={InfoIcon} alt="Inof" width="16px" className="margin-left-5" />
@@ -61,7 +56,6 @@ const DistributonSection: React.FC = () => {
               <ChartLabelTitleBold>20% (10,000 MAHA)</ChartLabelTitleBold>
             </div>
           </PieChartLables>
-
         </div>
       </PieChartCard>
     </Card>
@@ -76,7 +70,6 @@ const PieChartCard = styled.div`
     flex-direction: column;
   }
 `;
-
 
 const TitleString = styled.div`
   font-weight: 600;

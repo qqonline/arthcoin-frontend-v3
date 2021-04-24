@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PageHeader from '../../components/PageHeader';
-
-import Boardroom from './components/Vault';
-import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
-import DistributionIcon from '../../assets/svg/Boardroom.svg';
-import { Vaults } from '../../basis-cash/config';
 import Button from '../../components/Button';
-import Modal from './components/modal';
-import TokenSymbol from '../../components/TokenSymbol';
 import arrowDown from '../../assets/svg/arrowDown.svg';
-import plus from '../../assets/svg/plus.svg';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
-import InputContainer from './Boardroom/components/InputContainer';
 import TransparentInfoDiv from './components/InfoDiv';
-import CheckIcon from '@material-ui/icons/Check';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {
   Checkbox,
   CheckboxProps,

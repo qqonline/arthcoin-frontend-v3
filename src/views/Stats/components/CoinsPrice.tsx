@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-type props = {
-
-};
+type props = {};
 
 const CoinsPrice: React.FC<props> = (props) => {
-
-
   return (
-    <CustomInfoCard className={"custom-mahadao-box"}>
+    <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardDetails>
-        <OneLine style={{marginTop: '0px'}}>
+        <OneLine style={{ marginTop: '0px' }}>
           <div>
             <TextWithIcon>ARTH Current Price</TextWithIcon>
             <TargetPriceTag>Target Price: $1.20</TargetPriceTag>
@@ -43,27 +39,25 @@ const CoinsPrice: React.FC<props> = (props) => {
         </OneLine>
       </CustomInfoCardDetails>
     </CustomInfoCard>
-  )
-}
+  );
+};
 
-export default CoinsPrice
+export default CoinsPrice;
 
-const CustomInfoCard = styled.div`
-  
-`
+const CustomInfoCard = styled.div``;
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 24px;
-`
+`;
 
 const CustomInfoCardDetails = styled.div`
   margin: 10px 0;
-`
+`;
 
 const OneLine = styled.div`
   display: flex;
@@ -71,7 +65,7 @@ const OneLine = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   margin-top: 40px;
-`
+`;
 
 const TextWithIcon = styled.div`
   font-family: Inter;
@@ -82,8 +76,7 @@ const TextWithIcon = styled.div`
   color: rgba(255, 255, 255, 0.88);
   opacity: 0.64;
   vertical-align: center;
-
-`
+`;
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -91,8 +84,8 @@ const BeforeChip = styled.span`
   font-size: 24px;
   line-height: 32px;
   text-align: right;
-  color: #FFFFFF;
-`
+  color: #ffffff;
+`;
 
 const TagChips = styled.div`
   background: rgba(255, 255, 255, 0.08);
@@ -103,12 +96,12 @@ const TagChips = styled.div`
   font-weight: 300;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.64);
-`
+`;
 
 const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
-`
+`;
 
 const PercentChange = styled.p`
   font-family: Inter;
@@ -117,12 +110,12 @@ const PercentChange = styled.p`
   font-size: 12px;
   line-height: 130%;
   text-align: right;
-  color: #178A50;
+  color: #178a50;
   margin: 0;
-`
+`;
 
 const TargetPriceTag = styled.p`
-  background: #423B38;
+  background: #423b38;
   border-radius: 4px;
   font-family: Inter;
   font-style: normal;
@@ -131,8 +124,7 @@ const TargetPriceTag = styled.p`
   line-height: 140%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #FCB400;
+  color: #fcb400;
   margin: 0;
   padding: 2px 4px;
-
-`
+`;

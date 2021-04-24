@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
-import { Provider, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useWallet, UseWalletProvider } from 'use-wallet';
+import { UseWalletProvider } from 'use-wallet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import BasisCashProvider from './contexts/BasisCashProvider';
@@ -10,6 +10,7 @@ import ModalsProvider from './contexts/Modals';
 import Farming from './views/Farming';
 import Home from './views/Home';
 // import Stats from './views/Stats';
+import TopBar from './components/TopBar';
 
 import store from './state';
 import theme from './theme';
@@ -25,7 +26,7 @@ import Stablize from './views/Stablize';
 import Trade from './views/Trade';
 import Pools from './views/Pools';
 import { SnackbarProvider } from 'notistack';
-// import Genesis from './views/Genesis';
+import Genesis from './views/Genesis';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -51,6 +52,7 @@ const App: React.FC = () => {
   return (
     <Providers>
       <Router>
+        <TopBar />
         <Switch>
           <Route path="/" exact>
             <Home />
@@ -71,7 +73,9 @@ const App: React.FC = () => {
           <Route path="/pools">
             <Pools />
           </Route>
-          <Route path="/Genesis">{/* <Genesis /> */}</Route>
+          <Route path="/Genesis">
+            <Genesis />
+          </Route>
           {/* <Redirect to="/staking" /> */}
         </Switch>
       </Router>

@@ -33,15 +33,21 @@ const HomeCard: React.FC<HomeCardProps> = ({
         <TokenSymbol symbol={symbol} />
         <CardSection>
           {stat ? (
-            <StyledValue>{stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}</StyledValue>
+            <StyledValue>
+              {stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}
+            </StyledValue>
           ) : (
-              <ValueSkeleton />
-            )}
+            <ValueSkeleton />
+          )}
           <Label text="Current Price" color={color} />
         </CardSection>
 
         <CardSection>
-          {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : <ValueSkeleton />}
+          {stat ? (
+            <StyledValue>{getDisplayBalance(stat.totalSupply)}</StyledValue>
+          ) : (
+            <ValueSkeleton />
+          )}
           <StyledSupplyLabel href={tokenUrl} target="_blank" color={color}>
             {supplyLabel}
           </StyledSupplyLabel>

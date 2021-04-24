@@ -194,11 +194,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
   const [timerHeader, setHeader] = useState<boolean>(true);
 
-  useEffect(() => {
-    let arr: string[];
-    arr = defaultCollateralDropdownValues.filter((e) => e !== selectedCollateralCoin);
-    setCollateralDropDownValues(arr);
-  }, [defaultCollateralDropdownValues, selectedCollateralCoin]);
+  // useEffect(() => {
+  //   let arr: string[];
+  //   arr = defaultCollateralDropdownValues.filter((e) => e !== selectedCollateralCoin);
+  //   setCollateralDropDownValues(arr);
+  // }, [defaultCollateralDropdownValues, selectedCollateralCoin]);
 
   useEffect(() => {
     const onClick = () => {
@@ -213,8 +213,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
     };
     onClick();
   }, []);
-
-  if (!basisCash) return <div />;
 
   const understandMore = [
     'Commited collateral will go to ARTH protocol',

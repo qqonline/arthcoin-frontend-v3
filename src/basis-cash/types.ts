@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber';
 import { ChainId } from '@uniswap/sdk';
 // import { BigNumber, Contract } from 'ethers';
 // import { Boardrooms, BoardroomsV2, Vaults } from './config';
@@ -38,4 +39,9 @@ export interface LinearStakingContract {
   poolRewards: number
   poolDurationInDays: number
   poolSize: number
+}
+
+export interface TokenStat {
+  priceInDAI: BigNumber
+  totalSupply: BigNumber
 }

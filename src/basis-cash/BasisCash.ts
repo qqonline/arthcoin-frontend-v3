@@ -1,4 +1,4 @@
-import { Boardrooms, BoardroomsV2, BoardroomVersion, Configuration, Vaults } from './config';
+import { Configuration } from './config';
 import { ContractName, } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { decimalToBalance } from './ether-utils';
@@ -23,14 +23,14 @@ export class BasisCash {
   contracts: { [name: string]: Contract };
   boardroomVersionOfUser?: string;
 
-  arthEth: UniswapPair;
-  arthDai: UniswapPair;
-  mahaEth: UniswapPair;
+  // arthEth: UniswapPair;
+  // arthDai: UniswapPair;
+  // mahaEth: UniswapPair;
 
   DAI: ERC20;
   ARTH: ERC20;
   MAHA: ERC20;
-  ARTHB: ERC20;
+  ARTHX: ERC20;
 
   multicall: Multicall
 
@@ -45,32 +45,32 @@ export class BasisCash {
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 
-    this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH');
+    this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
-    this.ARTHB = new ERC20(deployments.ARTHB.address, provider, 'ARTHB');
+    this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX');
     this.DAI = new ERC20(deployments.DAI.address, provider, 'DAI');
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
 
     // Uniswap V2 Pair
 
-    this.arthDai = new UniswapPair(
-      deployments.ArthDaiMLP.address,
-      provider,
-      'ARTH-DAI-LP'
-    );
+    // this.arthDai = new UniswapPair(
+    //   deployments.ArthDaiMLP.address,
+    //   provider,
+    //   'ARTH-DAI-LP'
+    // );
 
-    this.arthEth = new UniswapPair(
-      deployments.ArthEthMLP.address,
-      provider,
-      'ARTH-ETH-LP'
-    );
+    // this.arthEth = new UniswapPair(
+    //   deployments.ArthEthMLP.address,
+    //   provider,
+    //   'ARTH-ETH-LP'
+    // );
 
-    this.mahaEth = new UniswapPair(
-      deployments.MahaEthLP.address,
-      provider,
-      'MAHA-ETH'
-    );
+    // this.mahaEth = new UniswapPair(
+    //   deployments.MahaEthLP.address,
+    //   provider,
+    //   'MAHA-ETH'
+    // );
 
     this.config = cfg;
     this.provider = provider;
@@ -88,7 +88,7 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHB, this.DAI, this.arthDai, this.arthEth];
+    const tokens = [this.ARTH, this.MAHA, this.ARTHX, this.DAI];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -136,53 +136,10 @@ export class BasisCash {
   }
 
 
-  /**
-   * @returns Estimated ARTH (ARTH) price data,
-   * calculated by 1-day Time-Weight Averaged Price (TWAP).
-   */
-  async getCashPriceInEstimatedTWAP(): Promise<BigNumber> {
-    const { TWAP12hrOracle } = this.contracts;
-
-    // estimate current TWAP price
-    let cumulativePrice: BigNumber
-    let cumulativePriceLast: BigNumber
-
-    if ((await this.arthDai.token0()).toLowerCase() !== this.ARTH.address.toLowerCase()) {
-      cumulativePrice = await this.arthDai.price1CumulativeLast();
-      cumulativePriceLast = await TWAP12hrOracle.price1CumulativeLast();
-    } else {
-      cumulativePrice = await this.arthDai.price0CumulativeLast();
-      cumulativePriceLast = await TWAP12hrOracle.price0CumulativeLast();
-    }
-
-    const elapsedSec = Math.floor(Date.now() / 1000 - (await TWAP12hrOracle.blockTimestampLast()));
-
-    const denominator112 = BigNumber.from(2).pow(112);
-    const denominator1e18 = BigNumber.from(10).pow(18);
-    const cashPriceTWAP = cumulativePrice
-      .sub(cumulativePriceLast)
-      .mul(denominator1e18)
-      .div(elapsedSec)
-      .div(denominator112);
-
-    return cashPriceTWAP
-  }
 
   async getTargetPrice(): Promise<BigNumber> {
     const { GMUOracle } = this.contracts;
     return GMUOracle.getPrice();
-  }
-
-  async getCashPriceInLastTWAP(): Promise<BigNumber> {
-    const { Treasury } = this.contracts;
-    const fn = Treasury.get12hrTWAPOraclePrice || Treasury.getSeigniorageOraclePrice
-    return fn();
-  }
-
-  async getBondOraclePriceInLastTWAP(): Promise<BigNumber> {
-    const { Treasury } = this.contracts;
-    const fn = Treasury.get1hrTWAPOraclePrice || Treasury.getBondOraclePrice
-    return fn();
   }
 
 
@@ -236,47 +193,6 @@ export class BasisCash {
     }
 
     return BigNumber.from(0)
-  }
-
-  /**
-   * Buy bonds with cash.
-   * @param amount amount of cash to purchase bonds with.
-   */
-  async buyBonds(amount: string | number): Promise<TransactionResponse> {
-    const { Treasury } = this.contracts;
-    return await Treasury.buyBonds(decimalToBalance(amount), await this.getBondOraclePriceInLastTWAP());
-  }
-
-  /**
-   * Redeem bonds for ARTH.
-   * @param amount amount of bonds to redeem.
-   */
-  async redeemBonds(amount: string): Promise<TransactionResponse> {
-    const { Treasury } = this.contracts;
-    return await Treasury.redeemBonds(decimalToBalance(amount));
-  }
-
-  async earnedFromBank(poolName: ContractName, account = this.myAccount): Promise<BigNumber> {
-    const pool = this.contracts[poolName];
-    try {
-      return await pool.earned(account);
-    } catch (err) {
-      console.error(`Failed to call earned() on pool ${pool.address}: ${err.stack}`);
-      return BigNumber.from(0);
-    }
-  }
-
-  async stakedBalanceOnBank(
-    poolName: ContractName,
-    account = this.myAccount,
-  ): Promise<BigNumber> {
-    const pool = this.contracts[poolName];
-    try {
-      return await pool.balanceOf(account);
-    } catch (err) {
-      console.error(`Failed to call balanceOf() on pool ${pool.address}: ${err.stack}`);
-      return BigNumber.from(0);
-    }
   }
 
   /**

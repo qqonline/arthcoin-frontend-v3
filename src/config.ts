@@ -7,7 +7,7 @@ const configurations: { [env: string]: Configuration } = {
   development: {
     chainId: 1337,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'http://127.0.0.1:7545',
+    defaultProvider: 'http://127.0.0.1:8545',
     deployments: require('./basis-cash/deployments/deployments.development.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-21T15:00:00Z'),

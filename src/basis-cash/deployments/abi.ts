@@ -9,12 +9,15 @@ export const ARTHStablecoin = require('./abi/ARTHStablecoin.json')
 export const IWETH = require('./abi/IWETH.json')
 export const StakingRewards = require('./abi/StakingRewards.json')
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json')
+export const Multicall = require('./abi/Multicall.json')
+
 
 type IABIS = {
   [key: string]: any[]
 }
 
 const ret: IABIS = {
+  Multicall,
   ArthController,
   ARTHShares,
   IERC20,

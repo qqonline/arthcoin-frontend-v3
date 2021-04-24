@@ -1,12 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import UniswapArrowIcon from '../../../assets/img/uniswapArrow.svg';
 import { TokenStat } from '../../../basis-cash/types';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { commify } from 'ethers/lib/utils';
 import config from '../../../config';
-// import Card from '../../../components/InfoCard';
-import Spacer from '../../../components/Spacer';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 
@@ -27,12 +23,12 @@ const HomeCard: React.FC<HomeCardProps> = ({
   liquidity,
   supplyLabel = 'Total Supply',
   stat,
-  uniswapInputAddress
+  uniswapInputAddress,
 }) => {
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>
-      <Card className={"custom-mahadao-box"}>
+      <Card className={'custom-mahadao-box'}>
         <CardHeader>
           <TokenSymbol size={60} symbol={symbol} />
           <div
@@ -46,35 +42,33 @@ const HomeCard: React.FC<HomeCardProps> = ({
 
         <CardContent>
           <CardSection>
-            <TextWithIcon>
-              {title} Price
-            </TextWithIcon>
+            <TextWithIcon>{title} Price</TextWithIcon>
             {stat ? (
               <StyledValue>
-                {(stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`)}
+                {stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}
               </StyledValue>
             ) : (
-                '-'
-              )}
+              '-'
+            )}
           </CardSection>
           <CardSection>
-            <TextWithIcon>
-              {title} Liquidity
-            </TextWithIcon>
+            <TextWithIcon>{title} Liquidity</TextWithIcon>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
           </CardSection>
           <CardSection>
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
               {supplyLabel}
             </StyledSupplyLabel>
-            {stat ? <StyledValue>{commify(stat.totalSupply)}</StyledValue> : '-'}
+            {stat ? <StyledValue>{getDisplayBalance(stat.totalSupply)}</StyledValue> : '-'}
           </CardSection>
         </CardContent>
         <UniswapLink
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
-          <LinkText>Buy {symbol} from MahaSwap <CallMadeIcon style={{ fontSize: 15 }} /></LinkText>
+          <LinkText>
+            Buy {symbol} from MahaSwap <CallMadeIcon style={{ fontSize: 15 }} />
+          </LinkText>
         </UniswapLink>
       </Card>
     </Wrapper>
@@ -137,7 +131,6 @@ const CardContent = styled.div`
   @media (max-width: 600px) {
     padding: 0px 16px 16px 16px;
   }
-  
 `;
 
 const CardHeader = styled.h2`
@@ -151,7 +144,8 @@ const CardHeader = styled.h2`
   padding: 32px;
   @media (max-width: 600px) {
     padding: 16px;
-  }`;
+  }
+`;
 
 const StyledCards = styled.div`
   padding: 5px 0;
@@ -225,7 +219,5 @@ const TextWithIcon = styled.div`
   line-height: 150%;
   color: rgba(255, 255, 255, 0.64);
   margin: 5px 0;
-  
-
-`
+`;
 export default HomeCard;
