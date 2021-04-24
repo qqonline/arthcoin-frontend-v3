@@ -6,11 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
 import shushiswap from '../../assets/svg/sushiswapLogo.svg';
 import Button from '../../components/Button';
-import TokenSymbol from '../../components/TokenSymbol';
-import arrowDown from '../../assets/svg/arrowDown2.svg';
-import arrowUp from '../../assets/svg/arrowUp.svg';
-import TransparentInfoDiv from './components/InfoDiv';
-import { useMediaQuery } from 'react-responsive';
+
 import OpenableCard from './components/OpenableCard';
 import ImportPool from './components/ImportPool';
 import RemovePool from './components/RemovePool';
@@ -23,7 +19,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [action, setAction] = useState<'Details' | 'Import' | 'Add' | 'Remove'>('Details');
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [noLiquidity, setNoLiquidity] = useState<boolean>(false);
-  const [remove, setRemove] = useState<boolean>(false);
   const [deposit, setDeposit] = useState<boolean>(false);
   const liquidityPairs = [
     {
@@ -55,7 +50,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
       },
     },
   ];
-  const [cardOpen, setCardOpen] = useState<boolean>(false);
   const [selectedPair, setSelectedPair] = useState({
     liquidity: {
       id: 1,
@@ -70,8 +64,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       eth: '1500.00',
     },
   });
-  const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' });
-  const [removeType, setRemoveType] = useState<'S' | 'D'>('S');
+
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
@@ -144,7 +137,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 {selectedSwap === 'Uniswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
-                    <img src={uniswapLogo} style={{ marginTop: '-6px' }} />
+                    <img src={uniswapLogo} alt="uni" style={{ marginTop: '-6px' }} />
                   </RadioLogo>
                   Uniswap
                 </RadioText>
@@ -159,7 +152,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 {selectedSwap === 'Sushiswap' && <ActiveRadio />}
                 <RadioText>
                   <RadioLogo>
-                    <img src={shushiswap} />
+                    <img src={shushiswap} alt="sushi" />
                   </RadioLogo>
                   Sushiswap
                 </RadioText>
@@ -341,45 +334,6 @@ const ImportIt = styled.div`
   text-align: center;
   margin: 5px 0px 0px 0px;
   cursor: pointer;
-`;
-
-const MainOpenableCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 32px;
-  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
-  border-radius: 12px;
-`;
-
-const LLabel = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const LPairLabel = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #ffffff;
-  opacity: 0.88;
-  margin: 0px 0px 0px 16px;
-`;
-
-const Manage = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: #f7653b;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 `;
 
 export default withSnackbar(Boardrooms);

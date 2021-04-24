@@ -1,13 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../../../components/TokenSymbol';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
-// @ts-ignore
-import Select, { components, provided, state } from "react-select";
+
 import CustomDropDown from '../../../components/CustomDropDown';
 import DownArrow from '../../../assets/img/ArrowDown.svg';
-
 
 type props = {
   ILabelValue: string;
@@ -16,15 +13,24 @@ type props = {
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
-  SymbolText: string
+  SymbolText: string;
   dropDownValues?: string[];
   ondropDownValueChange?: (data: string) => void;
 };
 
 const MinorInputContainer: React.FC<props> = (props) => {
-  const { ILabelValue, IBalanceValue, ILabelInfoValue, DefaultValue, LogoSymbol, hasDropDown, SymbolText, dropDownValues, ondropDownValueChange } = props;
+  const {
+    ILabelValue,
+    IBalanceValue,
+    ILabelInfoValue,
+    DefaultValue,
+    LogoSymbol,
+    hasDropDown,
+    SymbolText,
+    dropDownValues,
+    ondropDownValueChange,
+  } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
 
   return (
     <IConatiner>
@@ -44,9 +50,11 @@ const MinorInputContainer: React.FC<props> = (props) => {
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           disabled={true}
         />
-        <IFieldRightContainer onClick={() => {
-          if (hasDropDown) setModalOpen(!modalOpen)
-        }}>
+        <IFieldRightContainer
+          onClick={() => {
+            if (hasDropDown) setModalOpen(!modalOpen);
+          }}
+        >
           {/*<Select
             width='500px'
             style={{
@@ -60,34 +68,37 @@ const MinorInputContainer: React.FC<props> = (props) => {
 
           />*/}
           <IFieldRightContainerLogo>
-            <TokenSymbol symbol={LogoSymbol} size={25}/>
+            <TokenSymbol symbol={LogoSymbol} size={25} />
           </IFieldRightContainerLogo>
-          <IFieldRightContainerText>
-            {SymbolText}
-          </IFieldRightContainerText>
-          {hasDropDown && <IFieldRightContainerDropDown>
-            {/*<KeyboardArrowDown fontSize='default' />*/}
-            <img src={DownArrow} height={20} style={{marginLeft: 10}}/>
-          </IFieldRightContainerDropDown>}
+          <IFieldRightContainerText>{SymbolText}</IFieldRightContainerText>
+          {hasDropDown && (
+            <IFieldRightContainerDropDown>
+              {/*<KeyboardArrowDown fontSize='default' />*/}
+              <img src={DownArrow} alt="down" height={20} style={{ marginLeft: 10 }} />
+            </IFieldRightContainerDropDown>
+          )}
 
-          {modalOpen && hasDropDown && ondropDownValueChange &&
-          <BackgroundAbsolute onClick={() => {
-            setModalOpen(!modalOpen);
-          }}/>
-          }
+          {modalOpen && hasDropDown && ondropDownValueChange && (
+            <BackgroundAbsolute
+              onClick={() => {
+                setModalOpen(!modalOpen);
+              }}
+            />
+          )}
 
-          {modalOpen && hasDropDown && ondropDownValueChange &&
-          <CustomDropDown
-            dropDownValues={dropDownValues}
-            ondropDownValueChange={ondropDownValueChange}
-          />}
+          {modalOpen && hasDropDown && ondropDownValueChange && (
+            <CustomDropDown
+              dropDownValues={dropDownValues}
+              ondropDownValueChange={ondropDownValueChange}
+            />
+          )}
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>
-  )
-}
+  );
+};
 
-export default MinorInputContainer
+export default MinorInputContainer;
 
 const BackgroundAbsolute = styled.div`
   position: fixed;
@@ -97,27 +108,25 @@ const BackgroundAbsolute = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 11;
-`
+`;
 
 const IConatiner = styled.div`
   border-radius: 8px;
-`
+`;
 
 const ILabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+`;
 
 const ILabelLeft = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
-`
+`;
 
-const ILabelRight = styled.div`
-
-`
+const ILabelRight = styled.div``;
 
 const ILabel = styled.p`
   font-family: Inter;
@@ -127,7 +136,7 @@ const ILabel = styled.p`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 12px;
-`
+`;
 
 const ILabelInfo = styled.p`
   font-family: Inter;
@@ -135,10 +144,10 @@ const ILabelInfo = styled.p`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  color: #FD565660;
+  color: #fd565660;
   margin-left: 5px;
   margin-bottom: 12px;
-`
+`;
 
 const ILabelBalance = styled.p`
   font-family: Inter;
@@ -149,15 +158,14 @@ const ILabelBalance = styled.p`
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 12px;
-
-`
+`;
 
 const IFieldConatiner = styled.div`
   display: flex;
   flex-direction: row;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
-`
+`;
 
 const IFieldRightContainer = styled.div`
   padding: 10px 12px;
@@ -167,11 +175,9 @@ const IFieldRightContainer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-`
+`;
 
-const IFieldRightContainerLogo = styled.span`
-  
-`
+const IFieldRightContainerLogo = styled.span``;
 
 const IFieldRightContainerText = styled.span`
   font-family: Inter;
@@ -181,9 +187,8 @@ const IFieldRightContainerText = styled.span`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
   margin-left: 9px;
-`
+`;
 
 const IFieldRightContainerDropDown = styled.span`
   margin-left: 5px;
-`
-
+`;
