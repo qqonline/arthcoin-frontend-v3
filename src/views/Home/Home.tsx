@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../components/NewModal/index';
-import TopBar from '../../components/TopBar';
 import './styles/index.sass';
 import './footer.css';
 import warning from '../../assets/svg/warning.svg';
@@ -15,12 +14,14 @@ const Home: React.FC = () => {
     <div>
       <Modal
         title="Disclaimer"
-        titleLogo={<img src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />}
+        titleLogo={
+          <img src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
+        }
         open={openModal}
         handleClose={handleClose}
-      // titleLogo={
-      //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
-      // }
+        // titleLogo={
+        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+        // }
       >
         <ModalText>
           <b>
@@ -53,7 +54,6 @@ const Home: React.FC = () => {
           View token contract on Etherscan
         </ModalHyperLink>
       </Modal>
-      <TopBar />
       <div id="header-gradient"></div>
       <div className="chakra"></div>
       <div className="gradient-red-1"></div>
@@ -80,7 +80,12 @@ const Home: React.FC = () => {
         </div>
 
         <div id="padding-top-30">
-          <a target="_blank" href="https://mahaswap.com/" id="no-txt-decoration" rel="noopener noreferrer">
+          <a
+            target="_blank"
+            href="https://mahaswap.com/"
+            id="no-txt-decoration"
+            rel="noopener noreferrer"
+          >
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
@@ -430,7 +435,12 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div id="padding-top-30">
-          <a target="_blank" href="https://mahaswap.com/" rel="noopener noreferrer" id="no-txt-decoration">
+          <a
+            target="_blank"
+            href="https://mahaswap.com/"
+            rel="noopener noreferrer"
+            id="no-txt-decoration"
+          >
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
@@ -498,7 +508,11 @@ const Home: React.FC = () => {
                 </StyledLink>
                 <div className="dialog-class">
                   <span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>
-                  <img src={require('./images/mainlogo.svg')} alt="mahadao-logo" width="140px" />
+                  <img
+                    src={require('./images/mainlogo.svg')}
+                    alt="mahadao-logo"
+                    width="140px"
+                  />
                 </div>
               </FooterEnd>
             </div>
@@ -555,7 +569,6 @@ const ModalText = styled.div`
   font-size: 14px;
   line-height: 140%;
   color: rgba(255, 255, 255, 0.64);
-
 `;
 const ModalHyperLink = styled.div`
   font-weight: 300;
