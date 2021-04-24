@@ -1,7 +1,6 @@
 import { Configuration } from './config';
 import { ContractName, } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
-import { decimalToBalance } from './ether-utils';
 import { TransactionResponse } from '@ethersproject/providers';
 import ERC20 from './ERC20';
 import { getDefaultProvider } from '../utils/provider';
@@ -22,10 +21,6 @@ export class BasisCash {
   config: Configuration;
   contracts: { [name: string]: Contract };
   boardroomVersionOfUser?: string;
-
-  // arthEth: UniswapPair;
-  // arthDai: UniswapPair;
-  // mahaEth: UniswapPair;
 
   DAI: ERC20;
   ARTH: ERC20;
@@ -124,8 +119,10 @@ export class BasisCash {
     return !!this.myAccount;
   }
 
-  getBoardrooms: () => ['arth', 'arthUniLiquidity', 'arthMlpLiquidity', 'mahaLiquidity']
-
+  getCollateralTypes = () => this.config.supportedCollaterals
+  getDefaultCollateral = () => 'ETH'
+  getARTHTradingPairs = () => this.config.arthTradingPairs
+  getARTHXTradingPairs = () => this.config.arthxTradingPairs
 
   gasOptions(gas: BigNumber): Overrides {
     const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
@@ -135,14 +132,10 @@ export class BasisCash {
     };
   }
 
-
-
   async getTargetPrice(): Promise<BigNumber> {
     const { GMUOracle } = this.contracts;
     return GMUOracle.getPrice();
   }
-
-
 
   async getTokenPriceFromPair(pair: UniswapPair, forToken: ERC20): Promise<BigNumber> {
     await this.provider.ready;
@@ -157,7 +150,6 @@ export class BasisCash {
 
   async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<BigNumber> {
     await this.provider.ready;
-
     const decimals = BigNumber.from(10).pow(18);
 
     try {

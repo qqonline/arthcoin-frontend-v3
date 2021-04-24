@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
@@ -7,36 +7,16 @@ import InfoIcon from '@material-ui/icons/Info';
 import Button from '../../components/Button';
 
 import arrowDown from '../../assets/svg/arrowDown.svg';
-import {
-  createStyles,
-  Divider,
-  makeStyles,
-  Slider,
-  Theme,
-  withStyles,
-} from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import TransparentInfoDiv from './components/InfoDiv';
 
 import MinorInputContainer from './components/MinorInputContainer';
 import CollaterallizeCheckmark from './components/Collaterallize';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
-
-const useSliderStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      color: 'white',
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }),
-);
 
 const Boardrooms = (props: WithSnackbarProps) => {
   const basisCash = useBasisCash();
@@ -53,22 +33,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const [buyback, setBuyback] = useState<boolean>(true);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
-  const [
-    selectedBuybackReceiveAmountCoin,
-    setSelectedBuybackReceiveAmountCoin,
-  ] = useState<string>('ETH');
-  const defaultDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
-  const [BuybackReceivedropDownValues, setBuybackReceiveDropDownValues] = useState<string[]>(
-    defaultDropdownValues,
+  const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
+    basisCash.getDefaultCollateral(),
   );
+
+  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+
   useEffect(() => window.scrollTo(0, 0), []);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
-  const handleCheck = (event: any) => {
-    // console.log('check trig', event.target.checked)
-    setChecked(event.target.checked);
-  };
 
   const buyBackContainer = () => {
     if (buyback)
@@ -115,7 +89,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               LogoSymbol={selectedBuybackReceiveAmountCoin}
               hasDropDown={true}
               SymbolText={selectedBuybackReceiveAmountCoin}
-              dropDownValues={BuybackReceivedropDownValues}
+              dropDownValues={collateralTypes}
               ondropDownValueChange={(data) => {
                 setSelectedBuybackReceiveAmountCoin(data);
               }}
@@ -216,7 +190,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               DefaultValue={collateralAmount.toString()}
               hasDropDown={true}
               LogoSymbol={selectedBuybackReceiveAmountCoin}
-              dropDownValues={BuybackReceivedropDownValues}
+              dropDownValues={collateralTypes}
               ondropDownValueChange={(data) => {
                 setSelectedBuybackReceiveAmountCoin(data);
               }}

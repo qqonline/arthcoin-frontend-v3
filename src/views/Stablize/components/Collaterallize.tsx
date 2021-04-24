@@ -1,34 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../../../components/Button';
-import Card from '../../../components/Card';
-import CardContent from '../../../components/CardContent';
-import CardIcon from '../../../components/CardIcon';
-import TokenSymbol from '../../../components/TokenSymbol';
-import { useWallet } from 'use-wallet';
-import useBasisCash from '../../../hooks/useBasisCash';
-import InfoIcon from '../../../assets/img/InfoIcon.svg';
-import { Boardrooms } from '../../../basis-cash/config';
-import HtmlTooltip from '../../../components/HtmlTooltip';
-import checkmark from '../../../assets/svg/checkmark.svg'
+import checkmark from '../../../assets/svg/checkmark.svg';
 
 interface IProps {
-    subText: string;
+  subText: string;
 }
 const CollaterallizeCheckmark = (props: IProps) => {
-    return (
-        <div className={'custom-mahadao-container-content'} style={{ height: '386px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignContent: 'center'}}>
-            <div style={{textAlign: 'center'}}>
-              <img src={checkmark} height={112} />
-              <HeaderSubtitle>
-                  <TextForInfoTitle >{props.subText}</TextForInfoTitle>
-                  <LearnMore>Learn More</LearnMore>
-              </HeaderSubtitle>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div
+      className={'custom-mahadao-container-content'}
+      style={{
+        height: '386px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+      }}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <img src={checkmark} height={112} />
+        <HeaderSubtitle>
+          <TextForInfoTitle>{props.subText}</TextForInfoTitle>
+          <LearnMore>Learn More</LearnMore>
+        </HeaderSubtitle>
+      </div>
+    </div>
+  );
+};
 
 const HeaderSubtitle = styled.div`
   font-family: Inter;
@@ -37,9 +37,8 @@ const HeaderSubtitle = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.88);
-  margin: 12px 0px,
-`
-
+  margin: 12px 0px;
+`;
 
 const TextForInfoTitle = styled.div`
   font-family: Inter;
@@ -47,19 +46,19 @@ const TextForInfoTitle = styled.div`
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.64;
-`
+`;
 
 const LearnMore = styled.div`
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 16px;
-line-height: 150%;
-opacity: 0.64;
-margin: 8px 0px;
-color: #F47F57;
-`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  opacity: 0.64;
+  margin: 8px 0px;
+  color: #f47f57;
+`;
 
 export default CollaterallizeCheckmark;

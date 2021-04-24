@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
 import Grid from '@material-ui/core/Grid';
 import InfoIcon from '@material-ui/icons/Info';
 import Button from '../../components/Button';
@@ -175,7 +174,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
-const Boardrooms = (props: WithSnackbarProps) => {
+const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const [mintColl, setCollateralValue] = useState<number>(0.0);
@@ -731,4 +730,4 @@ const TagChips = styled.div`
   padding: 2px 4px;
 `;
 
-export default withSnackbar(Boardrooms);
+export default withSnackbar(Genesis);

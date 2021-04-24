@@ -5,13 +5,7 @@ import { NavLink } from 'react-router-dom';
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      {/* <StyledLink exact activeClassName="active" to="/">
-        Home
-      </StyledLink> */}
-      {/*<StyledLink exact activeClassName="active" to="/supply">
-        Supply
-      </StyledLink> */}
-      <StyledLink exact activeClassName="active" to="/Genesis">
+      <StyledLink exact activeClassName="active" to="/genesis">
         Genesis
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/stats">

@@ -85,7 +85,7 @@ const App: React.FC = () => {
               <Pools />
             </Page>
           </Route>
-          <Route path="/Genesis">
+          <Route path="/genesis">
             <Page>
               <Genesis />
             </Page>

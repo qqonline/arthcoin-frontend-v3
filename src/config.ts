@@ -13,6 +13,9 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-21T15:00:00Z'),
     refreshInterval: 3000,
     gasLimitMultiplier: 1.1,
+    supportedCollaterals: ['USDT', 'USDC', 'ETH'],
+    arthTradingPairs: ['ETH', 'MAHA'],
+    arthxTradingPairs: ['ETH', 'ARTH'],
   },
   staging: {
     chainId: ChainId.ROPSTEN,
@@ -23,6 +26,9 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,
+    arthTradingPairs: ['ETH', 'MAHA'],
+    arthxTradingPairs: ['ETH', 'ARTH'],
+    supportedCollaterals: ['USDT', 'USDC', 'ETH']
   },
   production: {
     chainId: ChainId.MAINNET,
@@ -33,6 +39,9 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-22T15:00:00Z'),
     refreshInterval: 3000,
     gasLimitMultiplier: 1.7,
+    arthTradingPairs: ['ETH', 'MAHA'],
+    arthxTradingPairs: ['ETH', 'ARTH'],
+    supportedCollaterals: ['USDT', 'USDC', 'ETH']
   },
 };
 

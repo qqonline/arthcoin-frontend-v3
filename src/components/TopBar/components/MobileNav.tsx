@@ -36,16 +36,14 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-interface props {
-
-}
+interface props {}
 const MobileNav = (props: props) => {
   // const { walletInfo: Wallet } = props
   const [netWrokType, setNetworkType] = React.useState('mainnet');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
-  const [walletInfo, setWallet] = useState<boolean>(false)
+  const [walletInfo, setWallet] = useState<boolean>(false);
   let dummyWallet = {
     accountNumber: '123123123123123123',
     mahaTokens: 50,
@@ -54,29 +52,29 @@ const MobileNav = (props: props) => {
     arthDollars: 500,
     arthxTokens: 50,
     arthxDollars: 500,
-  }
+  };
   return (
     <StyledNav>
-      { !walletInfo ?
+      {!walletInfo ? (
         <div style={{ width: '100%', background: '#1e1d1d', marginTop: -2 }}>
-          <StyledLink exact activeClassName="active" to="/Genesis">
+          <StyledLink exact activeClassName="active" to="/genesis">
             Genesis
-      </StyledLink>
+          </StyledLink>
           <StyledLink exact activeClassName="active" to="/stats">
             Analytics
-      </StyledLink>
+          </StyledLink>
           <StyledLink exact activeClassName="active" to="/mint">
             Mint/Redeem
-      </StyledLink>
+          </StyledLink>
           <StyledLink exact activeClassName="active" to="/stabilize">
             Stabilize
-      </StyledLink>
+          </StyledLink>
           <StyledLink exact activeClassName="active" to="/farming">
             Farming
-      </StyledLink>
+          </StyledLink>
           <StyledLink exact activeClassName="active" to="/farming">
             Pools
-      </StyledLink>
+          </StyledLink>
           {false && (
             <StyledButton>
               <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
@@ -92,36 +90,42 @@ const MobileNav = (props: props) => {
                 >
                   <MenuItem value="mainnet">
                     <ColorIcon colorCode="#11af60" />
-                Mainnet
-              </MenuItem>
+                    Mainnet
+                  </MenuItem>
                   <MenuItem value="ropsten">
                     <ColorIcon colorCode="#FA4C69" />
-                Ropsten
-              </MenuItem>
+                    Ropsten
+                  </MenuItem>
                   <MenuItem value="kovan">
                     <ColorIcon colorCode="#7A3CF6" />
-                Kovan
-              </MenuItem>
+                    Kovan
+                  </MenuItem>
                   <MenuItem value="rinkeby">
                     <ColorIcon colorCode="#FCB400" />
-                Rinkeby
-              </MenuItem>
+                    Rinkeby
+                  </MenuItem>
                   <MenuItem value="goerli">
                     <ColorIcon colorCode="#BD9CFF" />
-                Goerli
-              </MenuItem>
+                    Goerli
+                  </MenuItem>
                 </Select>
               </div>
             </StyledButton>
           )}
         </div>
-        :
+      ) : (
         <WalletInternal walletData={dummyWallet} />
-      }
+      )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
-          <Button variant={'transparent'} text={walletInfo ? 'Disconnect (temp button)' : 'Connect'} onClick={() => { setWallet(!walletInfo) }} />
+          <Button
+            variant={'transparent'}
+            text={walletInfo ? 'Disconnect (temp button)' : 'Connect'}
+            onClick={() => {
+              setWallet(!walletInfo);
+            }}
+          />
         </div>
       </StyledButton>
     </StyledNav>

@@ -164,13 +164,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH');
-  const [dropDownValues, setDropDownValues] = useState<string[]>([]);
-  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
-  let arr: string[];
-  useEffect(() => {
-    arr = defaultDropdownValues.filter((e) => e !== selectedAmountCoin);
-    setDropDownValues(arr);
-  }, [selectedAmountCoin]);
+  const [dropDownValues] = useState<string[]>(basisCash.getCollateralTypes());
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;

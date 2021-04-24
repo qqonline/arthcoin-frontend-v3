@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import TokenSymbol from '../../../../components/TokenSymbol';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import CustomImportPoolDropDown from './components/CustomImportPoolDropDown';
 import InfoIcon from '@material-ui/icons/Info';
 import { ICards, IPoolData } from '../OpenableCard';
-import { createStyles, Divider, Grid, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
-import arrowDown from '../../../../assets/svg/arrowDown.svg'
-import plus from '../../../../assets/svg/plus.svg'
+import {
+  createStyles,
+  Divider,
+  Grid,
+  makeStyles,
+  Slider,
+  Theme,
+  withStyles,
+} from '@material-ui/core';
+import arrowDown from '../../../../assets/svg/arrowDown.svg';
+import plus from '../../../../assets/svg/plus.svg';
 import Button from '../../../../components/Button';
 import { useMediaQuery } from 'react-responsive';
 import CustomInputContainer from '../../../../components/CustomInputContainer';
@@ -16,12 +24,13 @@ import CustomModal from '../../../../components/CustomModal';
 import TransparentInfoDiv from '../InfoDiv';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../../components/SnackBar';
+import useBasisCash from '../../../../hooks/useBasisCash';
 
 type props = {
   selectedPair: {
     liquidity: ICards;
     pool: IPoolData;
-  }
+  };
   onBack: () => void;
 };
 
@@ -37,7 +46,6 @@ const useSliderStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 function valuetext(value: number) {
   return `${value}`;
 }
@@ -50,7 +58,7 @@ const PrettoRestrictSlider = withStyles({
   root: {
     // color: 'white',
     height: 15,
-    width: '95%'
+    width: '95%',
   },
   thumb: {
     height: 10,
@@ -70,7 +78,7 @@ const PrettoRestrictSlider = withStyles({
     // color: '#FF7F57',
   },
   marked: {
-    color: 'red'
+    color: 'red',
   },
   markLabel: {
     // color: 'green'
@@ -78,13 +86,13 @@ const PrettoRestrictSlider = withStyles({
   track: {
     height: 3,
     borderRadius: 3,
-    color: '#FFA981'
+    color: '#FFA981',
     // top: '2%'
   },
   rail: {
     height: 3,
     borderRadius: 3,
-    color: '#D74D26'
+    color: '#D74D26',
     // background:'red'
     // border: '1px solid'
   },
@@ -100,27 +108,25 @@ const PrettoRestrictSlider = withStyles({
     // height: '3px',
     // width: '3px',
     // borderRadius: '50%',
-    color: 'transparent'
+    color: 'transparent',
   },
-
 })(Slider);
 
 const RemovePool = (props: props & WithSnackbarProps) => {
   const { selectedPair, onBack } = props;
-  console.log(selectedPair)
+  console.log(selectedPair);
   const [dropDownNo, setDropDownNo] = useState<number>(0);
-  const [simpleType, setType] = useState<boolean>(true)
-  const [dropDownValues, setDropDownValues] = useState<string[]>(['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC']);
-  // const defaultDropdownValues = [];
+  const [simpleType, setType] = useState<boolean>(true);
+  const basisCash = useBasisCash();
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(30);
-  const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' })
-  const defaultDropdownValues = ['MAHA', 'ARTH', 'USDT', 'USDC', 'ETH', 'WBTC'];
-  const [balance, setBalance] = useState<number>(500.00);
+  const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' });
+  const defaultDropdownValues = basisCash.getCollateralTypes();
+  const [balance, setBalance] = useState<number>(500.0);
   const [firstCoin, setFirstCoin] = useState<string>('ARTH');
   const [secondCoin, setSecondCoin] = useState<string>('ETH');
-  const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.00);
-  const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.00);
+  const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.0);
+  const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.0);
   const [firstCoinDropDown, setFirstCoinDropDown] = useState<string[]>([]);
   const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>(defaultDropdownValues);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
@@ -136,9 +142,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
               <InputLabel>How much liquidity you want to remove?</InputLabel>
             </div>
             <InputNoDisplay>
-              <InternalSpan>
-                {sliderValue}%
-              </InternalSpan>
+              <InternalSpan>{sliderValue}%</InternalSpan>
             </InputNoDisplay>
           </OneLineInput>
         </div>
@@ -168,12 +172,19 @@ const RemovePool = (props: props & WithSnackbarProps) => {
               max={100}
               valueLabelDisplay="off"
             />
-            <div style={{ marginTop: -15, marginLeft: -15, marginBottom: 15, display: 'flex', justifyContent: 'space-between' }}>
+            <div
+              style={{
+                marginTop: -15,
+                marginLeft: -15,
+                marginBottom: 15,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
               <TimeSpan>0%</TimeSpan>
               <TimeSpan>100%</TimeSpan>
             </div>
           </div>
-
         </div>
         <PlusMinusArrow>
           <img src={arrowDown} />
@@ -194,13 +205,10 @@ const RemovePool = (props: props & WithSnackbarProps) => {
               <HardChip>MAHA</HardChip>
             </OneLineInputwomargin>
           </OneLineInputwomargin>
-
         </ReYouReceiveContain>
-        <OneLine style={{ marginTop: "15px" }}>
+        <OneLine style={{ marginTop: '15px' }}>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Price
-            </TextWithIcon>
+            <TextWithIcon>Price</TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>0.05</BeforeChip>
@@ -210,8 +218,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           </OneLine>
         </OneLine>
       </div>
-    )
-  }
+    );
+  };
 
   const detailed = () => {
     return (
@@ -286,11 +294,9 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
           tagText={'MAX'}
         />
-        <OneLine style={{ marginTop: "15px" }}>
+        <OneLine style={{ marginTop: '15px' }}>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Price
-            </TextWithIcon>
+            <TextWithIcon>Price</TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>0.05</BeforeChip>
@@ -300,8 +306,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           </OneLine>
         </OneLine>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -312,7 +318,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Remove Liquidity`}>
+        title={`Confirm Remove Liquidity`}
+      >
         <>
           <TransparentInfoDiv
             labelData={`You will receive ARTH`}
@@ -338,11 +345,16 @@ const RemovePool = (props: props & WithSnackbarProps) => {
                 text="Cancel"
                 size={'lg'}
                 onClick={() => {
-                  setConfirmModal(false)
+                  setConfirmModal(false);
                   let options = {
-                    content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Remove-Liquidity order for ${123} ARTH cancelled` }))
-                  }
-                  props.enqueueSnackbar('timepass', options)
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'red',
+                        data1: `Remove-Liquidity order for ${123} ARTH cancelled`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
                 }}
               />
             </Grid>
@@ -351,29 +363,56 @@ const RemovePool = (props: props & WithSnackbarProps) => {
                 text={'Remove Liquidity'}
                 size={'lg'}
                 onClick={() => {
-                  setConfirmModal(false)
+                  setConfirmModal(false);
                   let options = {
-                    content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'green', data1: `Removing Liquidity for ${123} ARTH` }))
-                  }
-                  props.enqueueSnackbar('timepass', options)
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'green',
+                        data1: `Removing Liquidity for ${123} ARTH`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
                 }}
               />
             </Grid>
           </Grid>
         </>
       </CustomModal>
-      <CustomCard className={"custom-mahadao-container"}>
-        <CustomCardHeader className={"custom-mahadao-container-header"}>
-          <EachElement> <ArrowBackIos onClick={() => onBack()} fontSize="default" color={'inherit'} htmlColor={'#ffffff'} /> </EachElement>
-          <EachElement> <CardTitle>Remove Liquidity</CardTitle></EachElement>
-          <EachElement> <Detailed onClick={() => setType(!simpleType)}>{simpleType ? 'Detailed' : 'Simple'}</Detailed></EachElement>
+      <CustomCard className={'custom-mahadao-container'}>
+        <CustomCardHeader className={'custom-mahadao-container-header'}>
+          <EachElement>
+            {' '}
+            <ArrowBackIos
+              onClick={() => onBack()}
+              fontSize="default"
+              color={'inherit'}
+              htmlColor={'#ffffff'}
+            />{' '}
+          </EachElement>
+          <EachElement>
+            {' '}
+            <CardTitle>Remove Liquidity</CardTitle>
+          </EachElement>
+          <EachElement>
+            {' '}
+            <Detailed onClick={() => setType(!simpleType)}>
+              {simpleType ? 'Detailed' : 'Simple'}
+            </Detailed>
+          </EachElement>
         </CustomCardHeader>
-        <CustomCardContainer className={"custom-mahadao-container-content"}>
+        <CustomCardContainer className={'custom-mahadao-container-content'}>
           {/* <div> */}
           {simpleType ? simple() : detailed()}
           <ButtonContainer>
             <div style={isMobile ? {} : { marginRight: 5, width: '100%' }}>
-              <Button text={'Approve'} size={'lg'} onClick={() => { setConfirmModal(true) }} />
+              <Button
+                text={'Approve'}
+                size={'lg'}
+                onClick={() => {
+                  setConfirmModal(true);
+                }}
+              />
             </div>
             <div style={isMobile ? { marginTop: 5 } : { marginLeft: 5, width: '100%' }}>
               <Button text={'Remove Liquidity'} size={'lg'} disabled />
@@ -382,10 +421,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           {/* </div> */}
         </CustomCardContainer>
       </CustomCard>
-      <CustomInfoCard className={"custom-mahadao-box"}>
-        <CustomInfoCardHeader>
-          Your Position
-        </CustomInfoCardHeader>
+      <CustomInfoCard className={'custom-mahadao-box'}>
+        <CustomInfoCardHeader>Your Position</CustomInfoCardHeader>
         <CustomInfoCardDetails>
           <OneLine>
             <div style={{ flex: 1 }}>
@@ -426,16 +463,16 @@ const RemovePool = (props: props & WithSnackbarProps) => {
         </CustomInfoCardDetails>
       </CustomInfoCard>
     </div>
-  )
-}
+  );
+};
 
 export default withSnackbar(RemovePool);
 
 const CustomCard = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
   border-radius: 12px;
   margin-top: 12px;
-`
+`;
 
 const CustomCardHeader = styled.div`
   display: flex;
@@ -447,20 +484,20 @@ const CustomCardHeader = styled.div`
   @media (max-width: 600px) {
     padding: 12px 16px;
   }
-`
+`;
 
 const EachElement = styled.div`
   flex: 0.3333;
   cursor: pointer;
-`
+`;
 
 const TimeSpan = styled.div`
-font-family: Inter;
-font-style: normal;
-font-weight: 300;
-font-size: 12px;
-line-height: 130%;
-color: rgba(255, 255, 255, 0.88);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.88);
 `;
 
 const OneLineInput = styled.div`
@@ -469,18 +506,17 @@ const OneLineInput = styled.div`
   align-items: baseline;
   justify-content: flex-start;
   margin: 0px 0px 10px 0px;
-`
+`;
 const InternalSpan = styled.span`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: #FFFFFF;
-`
-
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+`;
 
 const InputNoDisplay = styled.span`
   background: rgba(255, 255, 255, 0.08);
@@ -491,7 +527,7 @@ const InputNoDisplay = styled.span`
   justify-content: center;
   align-items: center;
   margin: 0px 0px 0px 8px;
-`
+`;
 
 const InputLabel = styled.p`
   font-family: Inter;
@@ -500,24 +536,24 @@ const InputLabel = styled.p`
   font-size: 14px;
   color: rgba(255, 255, 255, 0.64);
   margin: 0px;
-`
+`;
 
 const Detailed = styled.div`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-text-align: right;
-color: #F7653B;
-`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: #f7653b;
+`;
 
 const CustomCardContainer = styled.div`
   padding: 32px 32px;
   @media (max-width: 600px) {
     padding: 16px 16px;
   }
-`
+`;
 const ButtonContainer = styled.div`
   margin: 15px 0px 0px 0px;
   display: flex;
@@ -526,7 +562,7 @@ const ButtonContainer = styled.div`
     flex-direction: column;
   }
   justify-content: space-between;
-`
+`;
 const CardTitle = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -536,7 +572,7 @@ const CardTitle = styled.p`
   text-align: center;
   color: rgba(255, 255, 255);
   margin: 0px;
-`
+`;
 
 const CoinSelection = styled.div`
   display: flex;
@@ -544,14 +580,14 @@ const CoinSelection = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: #1F1E1E;
+  background: #1f1e1e;
   border-radius: 6px;
   position: relative;
   cursor: pointer;
-`
+`;
 const TokenConatiner = styled.div`
   flex: 1;
-`
+`;
 const TokenText = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -560,7 +596,7 @@ const TokenText = styled.span`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
   margin-left: 10px;
-`
+`;
 
 const PrimaryText = styled.p`
   font-family: Inter;
@@ -570,7 +606,7 @@ const PrimaryText = styled.p`
   color: rgba(255, 255, 255, 0.64);
   margin: 0px;
   flex: 1;
-`
+`;
 
 const BeforeHardChip = styled.span`
   font-family: Inter;
@@ -580,8 +616,7 @@ const BeforeHardChip = styled.span`
   line-height: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.88);
-
-`
+`;
 const HardChip = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 4px;
@@ -594,13 +629,13 @@ const HardChip = styled.div`
   line-height: 20px;
   margin-left: 10px;
   margin-right: 10px;
-`
+`;
 const OneLineInputwomargin = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-`
+`;
 
 const TextForInfoTitle = styled.div`
   font-family: Inter;
@@ -608,16 +643,16 @@ const TextForInfoTitle = styled.div`
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.64;
-`
+`;
 
 const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
   margin: 10px 0px;
-`
+`;
 
 const PlusMinusArrow = styled.div`
   width: 100%;
@@ -628,7 +663,7 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
-`
+`;
 
 const InfoMessage = styled.p`
   font-family: Inter;
@@ -639,7 +674,7 @@ const InfoMessage = styled.p`
   text-align: center;
   margin-bottom: 4px;
   color: white;
-`
+`;
 const ActionMessage = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -647,10 +682,10 @@ const ActionMessage = styled.p`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
-  color: #F7653B;
+  color: #f7653b;
   margin: 0px;
   cursor: pointer;
-`
+`;
 
 const CustomInfoCard = styled.div`
   background: rgba(255, 255, 255, 0.02);
@@ -661,20 +696,20 @@ const CustomInfoCard = styled.div`
   @media (max-width: 600px) {
     padding: 16px;
   }
-`
+`;
 const CustomInfoCardHeader = styled.p`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-color: rgba(255, 255, 255, 0.88);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
   margin: 0;
-`
+`;
 
 const CustomInfoCardDetails = styled.div`
   margin: 10px 0;
-`
+`;
 
 const OneLine = styled.div`
   display: flex;
@@ -688,7 +723,7 @@ const OneLine = styled.div`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
   margin: 5px 0;
-`
+`;
 
 const TextWithIcon = styled.div`
   ont-family: Inter;
@@ -697,8 +732,7 @@ const TextWithIcon = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-
-`
+`;
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -708,7 +742,7 @@ const BeforeChip = styled.span`
   text-align: right;
   color: rgba(255, 255, 255, 0.88);
   margin-right: 5px;
-`
+`;
 
 const TagChips = styled.div`
   background: rgba(255, 255, 255, 0.08);
@@ -722,4 +756,4 @@ const TagChips = styled.div`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.64);
-`
+`;

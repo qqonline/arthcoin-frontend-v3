@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
@@ -160,15 +160,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
 
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
-  const defaultCollateralDropdownValues = ['MAHA', 'WBTC', 'USDT', 'USDC', 'ETH'];
-  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>(
-    defaultCollateralDropdownValues,
+  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
+    basisCash.getDefaultCollateral(),
   );
-
-  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState<string>('ETH');
-  const [ReceiveRedeemdropDownValues, setReceiveRedeemDropDownValues] = useState<string[]>(
-    defaultCollateralDropdownValues,
+  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState(
+    basisCash.getDefaultCollateral(),
   );
 
   const onBuyColletralValueChange = async (val: string) => {
@@ -216,7 +213,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 DefaultValue={mintColl.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
-                dropDownValues={CollateraldropDownValues}
+                dropDownValues={collateralTypes}
                 ondropDownValueChange={(data: string) => {
                   setSelectedCollateralCoin(data);
                 }}
@@ -409,7 +406,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 DefaultValue={'0.00'}
                 LogoSymbol={selectedReceiveRedeemCoin}
                 hasDropDown={true}
-                dropDownValues={ReceiveRedeemdropDownValues}
+                dropDownValues={collateralTypes}
                 ondropDownValueChange={(data: string) => {
                   setSelectedReceiveRedeemCoin(data);
                 }}
