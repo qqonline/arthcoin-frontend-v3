@@ -487,7 +487,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </CustomModal>
       <StabilizePageHeader
         title="Stabilize"
-        subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
+        subtitle="Earn/Buyback ARTHX by helping stabilize the protocol"
       />
       <Container size="lg" margin={'10px 0px'}>
         <Grid container spacing={3}>

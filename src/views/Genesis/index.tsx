@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +30,7 @@ import { useMediaQuery } from 'react-responsive';
 import Countdown from 'react-countdown';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import { Link } from 'react-router-dom';
+import useBasisCash from '../../hooks/useBasisCash';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -176,6 +177,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
+  const basisCash = useBasisCash();
 
   const [mintColl, setCollateralValue] = useState<number>(0.0);
   const [arthValue, setArthValue] = useState<number>(0.0);
@@ -188,10 +190,8 @@ const Genesis = (props: WithSnackbarProps) => {
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
-  const defaultCollateralDropdownValues = ['ETH', 'MAHA', 'WBTC', 'USDT', 'USDC'];
-  const [CollateraldropDownValues, setCollateralDropDownValues] = useState<string[]>(
-    defaultCollateralDropdownValues,
-  );
+  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+
   const [timerHeader, setHeader] = useState<boolean>(true);
 
   // useEffect(() => {
@@ -340,9 +340,6 @@ const Genesis = (props: WithSnackbarProps) => {
         )}
       </div>
       <Container size="lg">
-        {/* {testnetDiv && TestNetSnack()} */}
-        {/* {type === 'Mint' && mintTabContent()}
-        {type === 'Redeem' && redeemTabContent()} */}
         <Grid container style={{}} spacing={2}>
           <Grid item lg={1} />
           <Grid item lg={5} md={12} sm={12} xs={12}>
@@ -412,7 +409,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Swap' && <ActiveTab />}
-                  <TabText>Swap ARTH for ARTHX</TabText>
+                  <TabText>Swap ARTH</TabText>
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -425,10 +422,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     DefaultValue={mintColl.toString()}
                     LogoSymbol={selectedCollateralCoin}
                     hasDropDown={true}
-                    dropDownValues={CollateraldropDownValues}
-                    ondropDownValueChange={(data: string) => {
-                      setSelectedCollateralCoin(data);
-                    }}
+                    dropDownValues={collateralTypes}
+                    ondropDownValueChange={setSelectedCollateralCoin}
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
@@ -472,7 +467,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   </ReceiveContainer>
                 </div>
                 <Button
-                  text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTHX'}
+                  text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                   size={'lg'}
                   variant={'default'}
                   disabled={false}

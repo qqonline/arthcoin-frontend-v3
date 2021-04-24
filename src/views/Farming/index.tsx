@@ -32,7 +32,7 @@ const Banks: React.FC = () => {
       <GradientDiv />
       <PageHeader
         title="Farming"
-        subtitle="Earn MAHA by providing liquidity."
+        subtitle="Earn rewards by helping the protocol grow."
         // learnMoreLink="#"
       />
       <Container size="lg">
