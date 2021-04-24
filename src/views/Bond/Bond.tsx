@@ -68,7 +68,7 @@ const Bond: React.FC = () => {
     return cond1 && cond1;
   }, [cash1hrPrice, targetPrice]);
 
-  const isLaunched = Date.now() >= config.bondLaunchesAt.getTime();
+  const isLaunched = Date.now() >= config.genesisEndDate.getTime();
   if (!isLaunched) {
     return (
       <Switch>

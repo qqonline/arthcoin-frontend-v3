@@ -16,8 +16,8 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({
   descriptionLink,
 }) => {
   const percentage =
-    ((Date.now() - config.baseLaunchDate.getTime()) /
-      (deadline.getTime() - config.baseLaunchDate.getTime())) *
+    ((Date.now() - config.genesisLaunchDate.getTime()) /
+      (deadline.getTime() - config.genesisLaunchDate.getTime())) *
     100;
 
   const countdownRenderer = (countdownProps: CountdownRenderProps) => {

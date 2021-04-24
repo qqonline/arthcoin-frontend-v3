@@ -6,20 +6,18 @@ export type Configuration = {
   etherscanUrl: string,
   defaultProvider: string,
   deployments: Deployments,
-  externalTokens: { [contractName: string]: [string, number] };
   config?: EthereumConfig,
 
-  baseLaunchDate: Date,
-  bondLaunchesAt: Date,
-  boardroomLaunchesAt: Date,
+  genesisLaunchDate: Date,
+  genesisEndDate: Date,
 
   refreshInterval: number;
   gasLimitMultiplier: number;
 };
 
-export type BoardroomsV1 = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth'  | 'mahaLiquidity'
-export type BoardroomsV2 = 'arthArthDaiLiquidity' | 'arthArth'  | 'arthMaha' |
-  'mahaArthDaiLiquidity' | 'mahaArth'  | 'mahaMaha' | 'arthArthEthLiquidity' | 'mahaArthEthLiquidity'
+export type BoardroomsV1 = 'arthUniLiquidity' | 'arthMlpLiquidity' | 'arth' | 'mahaLiquidity'
+export type BoardroomsV2 = 'arthArthDaiLiquidity' | 'arthArth' | 'arthMaha' |
+  'mahaArthDaiLiquidity' | 'mahaArth' | 'mahaMaha' | 'arthArthEthLiquidity' | 'mahaArthEthLiquidity'
 
 export type Boardrooms = BoardroomsV1 | BoardroomsV2
 export enum Vaults {
