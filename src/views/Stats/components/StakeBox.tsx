@@ -17,7 +17,7 @@ const StakeBox: React.FC<props> = (props) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <ButtonConatiner>
-              <Button text={'Earn Rewards'} size={'sm'} to={'/farming'} />
+              <Button text={'Earn Rewards'} size={'sm'} to={'farming'}/>
             </ButtonConatiner>
           </Grid>
         </Grid>

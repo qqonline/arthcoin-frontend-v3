@@ -29,6 +29,8 @@ import Trade from './views/Trade';
 import Pools from './views/Pools';
 import { SnackbarProvider } from 'notistack';
 import Genesis from './views/Genesis';
+import BuyBack from './views/Stablize/components/BuyBack';
+import Recollatateralize from './views/Stablize/components/Recollatateralize';
 
 const Providers: React.FC = ({ children }) => {
   return (

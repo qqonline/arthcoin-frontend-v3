@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import CallMadeIcon from '@material-ui/icons/CallMade';
+import { Link } from 'react-router-dom';
 
 type props = {
     stats?: boolean
@@ -46,18 +47,24 @@ const UnderstandMore: React.FC<props> = (props: props) => {
                         // <li>{obj}</li>
                     ))}
                 </ul>
-                <LearnMore>
+                <HrefLink href={'https://www.google.com/'} target="__blank">
+                  <LearnMore>
                     <span>
                         Go to ARTH V 2.0 article to learn more
                     </span>
                     <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
-                </LearnMore>
+                  </LearnMore>
+                </HrefLink>
             </CustomInfoCardDetails>
         </CustomInfoCard>
     )
 }
 
 export default UnderstandMore;
+
+const HrefLink = styled.a`
+  z-index: 1;
+`
 
 const CustomInfoCard = styled.div`
   margin-top: 24px;

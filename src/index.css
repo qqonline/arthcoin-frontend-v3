@@ -107,6 +107,7 @@ code {
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
+  z-index: -1;
 }
 
 @media (max-width: 600px){
@@ -188,7 +189,7 @@ code {
   opacity: 0.1;
   top: 400px;
   /* animation: up-down 10s infinite alternate; */
-  background-image: url('./views/Home/images//gradient-circle.png');
+  background-image: url('views/Home/images//gradient-circle.png');
   background-position: center;
   background-size: cover;
   height: 100%;
@@ -202,7 +203,7 @@ code {
   opacity: 0.5;
   top: 400px;
   /* animation: up-down 10s infinite alternate; */
-  background-image: url('./views/Home/images//gradient-circle.png');
+  background-image: url('views/Home/images//gradient-circle.png');
   background-size: contain;
   height: 100%;
   max-width: 1024px;
