@@ -348,9 +348,9 @@ const Genesis = (props: WithSnackbarProps) => {
           <Grid item lg={5} md={12} sm={12} xs={12}>
             <CustomInfoCard className={'custom-mahadao-box'}>
               <CustomInfoCardDetails>
-                <div>
+                <OneLineInputwomargin style={{marginBottom: '20px'}}>
                   <TextForInfoTitle>
-                    Available to mint
+                    Amount Remaining to Raise
                     <HtmlTooltip
                       title={
                         <React.Fragment>
@@ -370,10 +370,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     </HtmlTooltip>
                   </TextForInfoTitle>
                   <BeforeChipDark>54.76M</BeforeChipDark>
-                </div>
-                <div style={{ textAlign: 'end' }}>
+                </OneLineInputwomargin>
+                <OneLineInputwomargin>
                   <TextForInfoTitle>
-                    Pool Balance
+                    Commited Collateral
                     <HtmlTooltip
                       title={
                         <React.Fragment>
@@ -392,8 +392,8 @@ const Genesis = (props: WithSnackbarProps) => {
                       />
                     </HtmlTooltip>
                   </TextForInfoTitle>
-                  <BeforeChipDark style={{ paddingRight: 5 }}>157.89M</BeforeChipDark>
-                </div>
+                  <BeforeChipDark>157.89M</BeforeChipDark>
+                </OneLineInputwomargin>
               </CustomInfoCardDetails>
             </CustomInfoCard>
             <LeftTopCard className={'custom-mahadao-container'}>
@@ -454,7 +454,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <div style={{ marginTop: '14px', marginBottom: '32px' }}>
+                <div style={{marginBottom: '32px'}}>
                   <TextWithIcon>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
@@ -465,7 +465,7 @@ const Genesis = (props: WithSnackbarProps) => {
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
-                        <BeforeChip>2,000</BeforeChip>
+                        <BeforeChip className={'custom-mahadao-chip'}>2,000</BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
@@ -518,9 +518,6 @@ const CustomInfoCard = styled.div`
 `;
 
 const CustomInfoCardDetails = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `;
 
 const StyledNavLink = styled(Link)`
@@ -617,8 +614,8 @@ const ToolTipFont = styled.p`
 const OneLineInputwomargin = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const LeftTopCard = styled.div``;
@@ -662,7 +659,6 @@ const ActiveTab = styled.div`
 
 const PlusMinusArrow = styled.div`
   width: 100%;
-  height: 32px;
   border-radius: 1.33px;
   color: #ffffff;
   align-items: center;
@@ -670,13 +666,14 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
+  margin: 12px 0;
 `;
 
 const ReceiveContainer = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 12px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 const TextWithIcon = styled.div`

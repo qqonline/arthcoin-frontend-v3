@@ -60,6 +60,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
 export default UnderstandMore;
 
 const CustomInfoCard = styled.div`
+  margin-top: 24px;
   
 `
 const ListUl = styled.li`
