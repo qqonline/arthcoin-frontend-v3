@@ -72,9 +72,9 @@ const MobileNav = (props: props) => {
           <StyledLink exact activeClassName="active" to="/farming">
             Farming
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/farming">
+          {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
-          </StyledLink>
+          </StyledLink>*/}
           {false && (
             <StyledButton>
               <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
