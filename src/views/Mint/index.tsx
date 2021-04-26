@@ -235,6 +235,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter ARTHX'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
+                href={'https://www.google.com/'}
                 value={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={mintArthxShare.toString()}
@@ -351,7 +352,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} />
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'}/>
               </Grid>
             </Grid>
           </RightBottomCard>
@@ -536,7 +537,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} />
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'}/>
               </Grid>
             </Grid>
           </RightBottomCard>

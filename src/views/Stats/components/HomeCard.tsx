@@ -67,7 +67,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
           href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
         >
           <LinkText>
-            Buy {symbol} from MahaSwap <CallMadeIcon style={{ fontSize: 15 }} />
+            Buy {symbol} from Uniswap <CallMadeIcon style={{ fontSize: 15 }} />
           </LinkText>
         </UniswapLink>
       </Card>

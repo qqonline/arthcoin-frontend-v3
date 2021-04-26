@@ -4,6 +4,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 import CustomToolTip from '../../../components/CustomTooltip';
+import { Link } from 'react-router-dom';
 
 type props = {};
 
@@ -20,7 +21,9 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>54.76M</BeforeChip>
             </div>
-            <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            <ToLink to={'/mint'}>
+              <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            </ToLink>
           </OneLine>
         </OneCardLeft>
         <OneCardRight>
@@ -32,7 +35,10 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>157.89M</BeforeChip>
             </div>
-            <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            <ToLink to={'/mint'}>
+              <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            </ToLink>
+
           </OneLine>
         </OneCardRight>
       </CustomInfoCardDetails>
@@ -41,6 +47,10 @@ const BasicInfo: React.FC<props> = (props) => {
 };
 
 export default BasicInfo;
+
+const ToLink = styled(Link)`
+  z-index: 1;
+`
 
 const CustomInfoCard = styled.div`
   padding: 0 !important;

@@ -95,6 +95,7 @@ code {
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
+  z-index: -1;
 }
 
 @media (max-width: 600px){

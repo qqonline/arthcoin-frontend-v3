@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../TokenSymbol';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-// @ts-ignore
-import Select, { components, provided, state } from 'react-select';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
+import { Link } from 'react-router-dom';
 
 type props = {
   ILabelValue: string;
@@ -26,6 +24,8 @@ type props = {
   symbol1?: string;
   symbol2?: string;
   dontShowBackgroundContainer?: boolean;
+  href?: string;
+  to?: string;
 };
 
 const CustomInputContainer: React.FC<props> = (props) => {
@@ -47,6 +47,30 @@ const CustomInputContainer: React.FC<props> = (props) => {
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
+  const Redirection = () => {
+    if (props?.href){
+      return(
+        <HrefLink href={props.href} target="__blank">
+          <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
+        </HrefLink>
+      )
+
+    } else if (props?.to) {
+      return(
+        <ToLink to={'/mint'}>
+        <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
+        </ToLink>
+      )
+    } else {
+      return (
+        <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
+      )
+
+    }
+  }
+
+
+
   return (
     <IConatiner
       style={
@@ -58,7 +82,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
-          {ILabelInfoValue !== '' && <ILabelInfo>{ILabelInfoValue}</ILabelInfo>}
+          {ILabelInfoValue !== '' && Redirection()}
         </ILabelLeft>
         <ILabelRight>
           <ILabelBalance>{IBalanceValue}</ILabelBalance>
@@ -139,6 +163,15 @@ const CustomInputContainer: React.FC<props> = (props) => {
 };
 
 export default CustomInputContainer;
+
+const HrefLink = styled.a`
+  z-index: 1;
+`
+
+const ToLink = styled(Link)`
+  z-index: 1;
+`
+
 
 const BackgroundAbsolute = styled.div`
   position: fixed;
