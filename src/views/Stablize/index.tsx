@@ -24,8 +24,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
         subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
       />
       <Container size="lg" margin={'10px 0px'}>
-        {type === "Buyback" && <BuyBack/>}
-        {type === "Recollateralize" && <Recollatateralize/>}
+        {type === "Buyback" &&
+          <BuyBack
+            // onChange={() => setType('Recollateralize')}
+          />
+        }
+        {type === "Recollateralize" &&
+          <Recollatateralize
+            // onChange={() => setType('Buyback')}
+          />
+        }
       </Container>
     </>
   );

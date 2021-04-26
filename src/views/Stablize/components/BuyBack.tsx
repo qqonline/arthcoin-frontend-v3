@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import Container from '../../../components/Container';
 import useBasisCash from '../../../hooks/useBasisCash';
 import Grid from '@material-ui/core/Grid';
-import InfoIcon from '@material-ui/icons/Info';
 import Button from '../../../components/Button';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -12,7 +10,6 @@ import TransparentInfoDiv from './InfoDiv';
 
 import MinorInputContainer from './MinorInputContainer';
 import CollaterallizeCheckmark from './Collaterallize';
-import StabilizePageHeader from '../../../components/PageHeader/StabilizePageHeader';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
@@ -21,19 +18,10 @@ import CustomToolTip from '../../../components/CustomTooltip';
 
 const BuyBack = (props: WithSnackbarProps) => {
   const basisCash = useBasisCash();
-  const [collateralAmount, setCollateralAmount] = useState<number>(0);
-  const [redeemAmount, setRedeemAmount] = useState<number>(0);
-  const [receiveShare, setReceiveShare] = useState<number>(1500);
-  const [receiveMAHA, setReceiveMAHA] = useState<number>(1500);
+  const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [balance, setBalance] = useState<number>(0);
-  const [receiveBonus, setReceiveBonus] = useState<number>(1500);
-  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34);
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [checked, setChecked] = React.useState(false);
-
-  const [buyback, setBuyback] = useState<boolean>(true);
-  const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
     basisCash.getDefaultCollateral(),
   );
@@ -53,16 +41,10 @@ const BuyBack = (props: WithSnackbarProps) => {
             Buyback
             <CustomToolTip/>
           </HeaderTitle>
-          {buyback ? (
-            <HeaderSubtitle>
-              342.450K <HardChip>USDT</HardChip>{' '}
-              <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
-            </HeaderSubtitle>
-          ) : (
-            <HeaderSubtitle>
-              <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
-            </HeaderSubtitle>
-          )}
+          <HeaderSubtitle>
+            342.450K <HardChip>USDT</HardChip>{' '}
+            <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
+          </HeaderSubtitle>
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
@@ -75,7 +57,7 @@ const BuyBack = (props: WithSnackbarProps) => {
             SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => {
-              setRedeemAmount(Number(val.replace(/[^0-9]/g, '')));
+              setRedeemAmount(val.replace(/[^0-9]/g, ''));
             }}
           />
           <PlusMinusArrow>
@@ -127,7 +109,7 @@ const BuyBack = (props: WithSnackbarProps) => {
                 size={'lg'}
                 onClick={() => {
                   setType('Buyback');
-                  setOpenModal(1);
+                  setOpenModal(true);
                 }}
               />
             </div>
@@ -141,23 +123,16 @@ const BuyBack = (props: WithSnackbarProps) => {
       return (
         <LeftTopCardChecked
           className={'custom-mahadao-box'}
-          style={buyback ? { height: 536 } : { height: 546 }}
+          style={{ height: 536 }}
         >
           <LeftTopCardHeader className={'custom-mahadao-container-header'}>
             <HeaderTitle>
-              {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
+              {'Recollatateralize'}
               <CustomToolTip/>
             </HeaderTitle>
-            {recollatateralize ? (
-              <HeaderSubtitle>
-                342.450K <HardChip>USDT</HardChip>{' '}
-                <TextForInfoTitle>Remaining to Generate</TextForInfoTitle>
-              </HeaderSubtitle>
-            ) : (
-              <HeaderSubtitle>
-                <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
-              </HeaderSubtitle>
-            )}
+            <HeaderSubtitle>
+              <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
+            </HeaderSubtitle>
           </LeftTopCardHeader>
           <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
         </LeftTopCardChecked>
@@ -168,8 +143,8 @@ const BuyBack = (props: WithSnackbarProps) => {
     <>
       <CustomModal
         closeButton
-        handleClose={() => setOpenModal(0)}
-        open={openModal === 1}
+        handleClose={() => setOpenModal(false)}
+        open={openModal}
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
@@ -183,51 +158,32 @@ const BuyBack = (props: WithSnackbarProps) => {
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
-            // labelToolTipData={'testing'}
             rightLabelUnit={'USDT'}
             rightLabelValue={'0.05'}
           />
 
           <TransparentInfoDiv
             labelData={`Stability Fee`}
-            // labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={'0.05'}
           />
 
-          <Divider
-            style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              margin: '15px 0px',
-            }}
-            // variant={'middle'}
-          />
+          <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px', }} />
 
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
-            // labelToolTipData={'testing'}
             rightLabelUnit={'USDT'}
             rightLabelValue={'1000.00'}
           />
 
-          <div
-            style={{
-              flexDirection: 'row',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8,
-            }}
-          >
-            <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 variant={'transparent'}
                 text="Cancel"
                 size={'lg'}
                 onClick={() => {
-                  setOpenModal(0);
+                  setOpenModal(false);
                   let options = {
                     content: () =>
                       CustomSnack({
@@ -240,17 +196,13 @@ const BuyBack = (props: WithSnackbarProps) => {
                 }}
                 // onClick={handleClose}
               />
-            </div>
-            <div style={{ width: '50%', marginLeft: 10 }}>
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 text={'Buyback'}
-                // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={() => {
-                  // setType('Redeem')
-                  setBuyback(false);
-                  setRecollatateralize(true);
-                  setOpenModal(0);
+                  setOpenModal(false);
                   let options = {
                     content: () =>
                       CustomSnack({
@@ -262,8 +214,8 @@ const BuyBack = (props: WithSnackbarProps) => {
                   props.enqueueSnackbar('timepass', options);
                 }}
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </>
       </CustomModal>
       <Grid container spacing={3}>
@@ -274,7 +226,7 @@ const BuyBack = (props: WithSnackbarProps) => {
           <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
             <RightTopCard
               className={'custom-mahadao-box'}
-              style={buyback ? { height: 536 } : { height: 546 }}
+              style={{ height: 536 }}
             >
               <RightTopCardHeader style={{}}>Current Fee Rates</RightTopCardHeader>
               <div style={{ marginBottom: '8px' }}>

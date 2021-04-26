@@ -245,6 +245,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
 
   const DesktopCardRender = () => {
     return (
+      <div>
       <CustomRowCard
         pair={['ARTH', 'MAHA']}
         walletUnit={'ARTH-MAHA LP'}
@@ -260,6 +261,37 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
         lockedStake={'0 ARTH-MAHA LP'}
       // earned={''}
       />
+      <CustomRowCard
+        pair={['ARTH', 'MAHA']}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
+        apy={'40%'}
+        poolDur={'65 Days'}
+        deposited={true}
+        poolEndDate={Date.now() + 550000000}
+        onButtonClick={(data) => {
+          setOpenModal(true);
+          setAction(data);
+        }}
+        lockedStake={'0 ARTH-MAHA LP'}
+        // earned={''}
+      />
+      <CustomRowCard
+        pair={['ARTH', 'MAHA']}
+        walletUnit={'ARTH-MAHA LP'}
+        walletValue={'12.2'}
+        apy={'40%'}
+        poolDur={'65 Days'}
+        deposited={false}
+        poolEndDate={Date.now() + 550000000}
+        onButtonClick={(data) => {
+          setOpenModal(true);
+          setAction(data);
+        }}
+        lockedStake={'0 ARTH-MAHA LP'}
+        // earned={''}
+      />
+      </div>
     );
   };
 
@@ -304,7 +336,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
       )}
     </DataContainer>
   );
-};
+}
 
 const DataContainer = styled.div`
   background: rgba(255, 255, 255, 0.02);
