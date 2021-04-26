@@ -170,7 +170,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 
   const onBuyColletralValueChange = async (val: string) => {
-    const valueInNumber = Number(val.replace(/[^0-9]/g, ''));
+    const valueInNumber = Number(val);
     setCollateralValue(valueInNumber);
     let arthxShareTemp =
       (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
@@ -211,7 +211,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
                 value={mintColl.toString()}
-                DefaultValue={mintColl.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -221,7 +221,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
                 setText={(val: string) => {
-                  if (val === '0') {
+                  if (val === '0' || val === '' || val === undefined) {
                     onBuyColletralValueChange('0');
                   } else {
                     onBuyColletralValueChange(val);
@@ -237,7 +237,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelInfoValue={'How can i get it?'}
                 value={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={mintArthxShare.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -254,7 +254,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 IBalanceValue={`Balance ${balance}`}
                 value={mintReceive.toString()}
                 ILabelInfoValue={''}
-                DefaultValue={mintReceive.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -300,7 +300,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
@@ -327,7 +327,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
@@ -338,7 +338,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
@@ -390,7 +390,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={redeemAmount.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -404,7 +404,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={'0.00'}
+                DefaultValue={'0'}
                 LogoSymbol={selectedReceiveRedeemCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -420,7 +420,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={'0.00'}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -484,7 +484,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                         </React.Fragment>
                       }
                     >
-                      <CustomToolTip/>
+                      <CustomToolTip />
                     </HtmlTooltip>
                   </TextForInfoTitle>
                 </div>
@@ -512,7 +512,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -523,7 +523,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -585,7 +585,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 background: 'rgba(255, 255, 255, 0.08)',
                 margin: '15px 0px',
               }}
-              // variant={'middle'}
+            // variant={'middle'}
             />
 
             <TransparentInfoDiv
@@ -698,9 +698,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   cEnd={9999}
                   cDuration={calcDuration}
                   cStart={currentCounter}
-                  // updateCounter={(val: number)=>{
-                  //   setCurrentCounter(val)
-                  // }}
+                // updateCounter={(val: number)=>{
+                //   setCurrentCounter(val)
+                // }}
                 />
 
                 <TransparentInfoDiv
@@ -799,7 +799,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 background: 'rgba(255, 255, 255, 0.08)',
                 margin: '15px 0px',
               }}
-              // variant={'middle'}
+            // variant={'middle'}
             />
 
             <TransparentInfoDiv

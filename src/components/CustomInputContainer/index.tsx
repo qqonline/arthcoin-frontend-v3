@@ -67,8 +67,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
       <IFieldConatiner>
         <InputBase
           inputMode={props?.inputMode}
-          placeholder={DefaultValue}
-          value={value ? value : ''}
+          placeholder={DefaultValue || '0'}
+          defaultValue={value ? value : 0}
+          value={value}
           inputProps={{ 'aria-label': 'naked' }}
           style={{
             padding: '8px 12px',
@@ -76,10 +77,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
             flex: 1,
             fontFamily: 'Inter !important',
           }}
+          type={'number'}
           onChange={(event) => {
-            if (props?.setText && event.target.value.trim() !== '') {
-              props.setText(event.target.value);
-            }
+            props.setText(event.target.value);
           }}
         />
         {tagText !== '' && <MaxTagConatiner>{tagText}</MaxTagConatiner>}
