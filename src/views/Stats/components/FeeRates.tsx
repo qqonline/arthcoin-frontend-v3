@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
+import CustomToolTip from '../../../components/CustomTooltip';
 
 type props = {};
 
@@ -14,22 +15,7 @@ const BondingDiscount: React.FC<props> = (props) => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Trading fee
-              <HtmlTooltip
-                title={
-                  <React.Fragment>
-                    <ToolTipFont>
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever since the
-                      1500s, when an unknown printer took a galley of type and scrambled
-                    </ToolTipFont>
-                  </React.Fragment>
-                }
-              >
-                <InfoIcon
-                  fontSize="default"
-                  style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                />
-              </HtmlTooltip>
+              <CustomToolTip/>
             </TextWithIcon>
           </div>
           <OneLine>
@@ -41,22 +27,7 @@ const BondingDiscount: React.FC<props> = (props) => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Stability fee
-              <HtmlTooltip
-                title={
-                  <React.Fragment>
-                    <ToolTipFont>
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever since the
-                      1500s, when an unknown printer took a galley of type and scrambled
-                    </ToolTipFont>
-                  </React.Fragment>
-                }
-              >
-                <InfoIcon
-                  fontSize="default"
-                  style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                />
-              </HtmlTooltip>
+              <CustomToolTip/>
             </TextWithIcon>
           </div>
           <OneLine>

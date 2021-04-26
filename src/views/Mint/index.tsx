@@ -29,6 +29,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
+import CustomToolTip from '../../components/CustomTooltip';
 
 // const HtmlTooltip = withStyles((theme1: Theme) => ({
 //   tooltip: {
@@ -299,7 +300,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>86%</InputLabelSpanRight>
@@ -326,7 +327,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
@@ -337,7 +338,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>2%</InputLabelSpanRight>
@@ -483,7 +484,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                         </React.Fragment>
                       }
                     >
-                      <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      <CustomToolTip/>
                     </HtmlTooltip>
                   </TextForInfoTitle>
                 </div>
@@ -511,7 +512,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Stability Fee
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -522,7 +523,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
                     Trading Fee
-                    <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>0.1%</InputLabelSpanRight>

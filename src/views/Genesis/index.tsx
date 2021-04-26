@@ -30,6 +30,7 @@ import { useMediaQuery } from 'react-responsive';
 import Countdown from 'react-countdown';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import { Link } from 'react-router-dom';
+import CustomToolTip from '../../components/CustomTooltip';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -351,46 +352,14 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin style={{marginBottom: '20px'}}>
                   <TextForInfoTitle>
                     Amount Remaining to Raise
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of type
-                            and scrambled
-                          </ToolTipFont>
-                        </React.Fragment>
-                      }
-                    >
-                      <InfoIcon
-                        fontSize="default"
-                        style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                      />
-                    </HtmlTooltip>
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                   <BeforeChipDark>54.76M</BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of type
-                            and scrambled
-                          </ToolTipFont>
-                        </React.Fragment>
-                      }
-                    >
-                      <InfoIcon
-                        fontSize="default"
-                        style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                      />
-                    </HtmlTooltip>
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                   <BeforeChipDark>157.89M</BeforeChipDark>
                 </OneLineInputwomargin>
@@ -461,7 +430,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
                           ARTHX
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip toolTipText={'loreum ipsum'}/>
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
