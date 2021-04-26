@@ -46,251 +46,120 @@ const Recollatateralize = (props: WithSnackbarProps) => {
   if (!basisCash) return <div />;
 
   const buyBackContainer = () => {
-    if (buyback)
-      return (
-        <LeftTopCard className={'custom-mahadao-container'}>
-          <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-            <HeaderTitle>
-              Buyback
-              <CustomToolTip/>
-            </HeaderTitle>
-            {buyback ? (
-              <HeaderSubtitle>
-                342.450K <HardChip>USDT</HardChip>{' '}
-                <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
-              </HeaderSubtitle>
-            ) : (
-              <HeaderSubtitle>
-                <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
-              </HeaderSubtitle>
-            )}
-          </LeftTopCardHeader>
-          <LeftTopCardContainer className={'custom-mahadao-container-content'}>
-            <CustomInputContainer
-              ILabelValue={'Enter Redeem Amount'}
-              IBalanceValue={`Balance ${balance}`}
-              ILabelInfoValue={''}
-              DefaultValue={redeemAmount.toString()}
-              hasDropDown={false}
-              LogoSymbol={'ARTHX'}
-              SymbolText={'ARTHX'}
-              inputMode={'decimal'}
-              setText={(val: string) => {
-                setRedeemAmount(Number(val.replace(/[^0-9]/g, '')));
-              }}
-            />
-            <PlusMinusArrow>
-              <img src={arrowDown} />
-            </PlusMinusArrow>
-            <MinorInputContainer
-              ILabelValue={'You receive'}
-              IBalanceValue={''}
-              ILabelInfoValue={''}
-              DefaultValue={'0.00'}
-              LogoSymbol={selectedBuybackReceiveAmountCoin}
-              hasDropDown={true}
-              SymbolText={selectedBuybackReceiveAmountCoin}
-              dropDownValues={collateralTypes}
-              ondropDownValueChange={(data) => {
-                setSelectedBuybackReceiveAmountCoin(data);
-              }}
-            />
-            <div>
-              <TcContainer>
-                <OneLineInputwomargin style={{ marginBottom: '5px' }}>
-                  <div style={{ flex: 1 }}>
-                    <TextWithIcon>
-                      Trading Fee
-                      {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInputwomargin>
-                    <BeforeChip>0.05</BeforeChip>
-                    <TagChips>USDT</TagChips>
-                  </OneLineInputwomargin>
-                </OneLineInputwomargin>
-                <OneLineInputwomargin>
-                  <div style={{ flex: 1 }}>
-                    <TextWithIcon>
-                      Stability Fee
-                      {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInputwomargin>
-                    <BeforeChip>0.05</BeforeChip>
-                    <TagChips>MAHA</TagChips>
-                  </OneLineInputwomargin>
-                </OneLineInputwomargin>
-              </TcContainer>
-              <div style={{ marginTop: 35 }}>
-                <Button
-                  text={'Buyback'}
-                  size={'lg'}
-                  onClick={() => {
-                    setType('Buyback');
-                    setOpenModal(1);
-                  }}
-                />
-              </div>
-            </div>
-          </LeftTopCardContainer>
-        </LeftTopCard>
-      );
-    else
-      return (
-        <LeftTopCardChecked
-          className={'custom-mahadao-box'}
-          style={buyback ? { height: 536 } : { height: 546 }}
-        >
-          <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-            <HeaderTitle>
-              Buyback
-              <CustomToolTip/>
-            </HeaderTitle>
-            {buyback ? (
-              <HeaderSubtitle>
-                342.450K <HardChip>USDT</HardChip>{' '}
-                <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
-              </HeaderSubtitle>
-            ) : (
-              <HeaderSubtitle>
-                <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
-              </HeaderSubtitle>
-            )}
-          </LeftTopCardHeader>
-          <CollaterallizeCheckmark subText={'Buyback is not needed for now'} />
-        </LeftTopCardChecked>
-      );
+    return (
+      <LeftTopCardChecked
+        className={'custom-mahadao-box'}
+        style={buyback ? { height: 536 } : { height: 546 }}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
+          <HeaderTitle>
+            Buyback
+            <CustomToolTip/>
+          </HeaderTitle>
+          <HeaderSubtitle>
+            <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
+          </HeaderSubtitle>
+        </LeftTopCardHeader>
+        <CollaterallizeCheckmark subText={'Buyback is not needed for now'} />
+      </LeftTopCardChecked>
+    );
   };
 
   const recollatateralizeConatiner = () => {
-    if (recollatateralize)
-      return (
-        <LeftTopCard className={'custom-mahadao-container'}>
-          <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-            <HeaderTitle>
-              {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
-              <CustomToolTip/>
-            </HeaderTitle>
-            {recollatateralize ? (
-              <HeaderSubtitle>
-                342.450K <HardChip>USDT</HardChip>{' '}
-                <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
-              </HeaderSubtitle>
-            ) : (
-              <HeaderSubtitle>
-                <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
-              </HeaderSubtitle>
-            )}
-          </LeftTopCardHeader>
-          <LeftTopCardContainer className={'custom-mahadao-container-content'}>
-            <CustomInputContainer
-              ILabelValue={'Enter Collateral'}
-              IBalanceValue={`Balance ${balance}`}
-              ILabelInfoValue={''}
-              DefaultValue={collateralAmount.toString()}
-              hasDropDown={true}
-              LogoSymbol={selectedBuybackReceiveAmountCoin}
-              dropDownValues={collateralTypes}
-              ondropDownValueChange={(data) => {
-                setSelectedBuybackReceiveAmountCoin(data);
-              }}
-              SymbolText={selectedBuybackReceiveAmountCoin}
-              setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
-              inputMode={'decimal'}
-            />
+    return (
+      <LeftTopCard className={'custom-mahadao-container'}>
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
+          <HeaderTitle>
+            {'Add Collateral'}
+            <CustomToolTip/>
+          </HeaderTitle>
+            <HeaderSubtitle>
+              342.450K <HardChip>USDT</HardChip>{' '}
+              <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+            </HeaderSubtitle>
+        </LeftTopCardHeader>
+        <LeftTopCardContainer className={'custom-mahadao-container-content'}>
+          <CustomInputContainer
+            ILabelValue={'Enter Collateral'}
+            IBalanceValue={`Balance ${balance}`}
+            ILabelInfoValue={''}
+            DefaultValue={collateralAmount.toString()}
+            hasDropDown={true}
+            LogoSymbol={selectedBuybackReceiveAmountCoin}
+            dropDownValues={collateralTypes}
+            ondropDownValueChange={(data) => {
+              setSelectedBuybackReceiveAmountCoin(data);
+            }}
+            SymbolText={selectedBuybackReceiveAmountCoin}
+            setText={(val: string) => setCollateralAmount(Number(val.replace(/[^0-9]/g, '')))}
+            inputMode={'decimal'}
+          />
 
-            <PlusMinusArrow>
-              <img src={arrowDown} />
-            </PlusMinusArrow>
-            <PrimaryText>You Receive</PrimaryText>
-            <ReYouReceiveContain>
-              <OneLineInputwomargin style={{ marginBottom: '10px' }}>
-                <PrimaryText>ARTH Share</PrimaryText>
-                <OneLineInputwomargin>
-                  <BeforeHardChip>1.08</BeforeHardChip>
-                  <HardChip>ARTHX</HardChip>
-                </OneLineInputwomargin>
-              </OneLineInputwomargin>
-              <OneLineInputwomargin style={{ marginBottom: '10px' }}>
-                <PrimaryText>MAHA Reward</PrimaryText>
-                <OneLineInputwomargin>
-                  <BeforeHardChip>1.08</BeforeHardChip>
-                  <HardChip>ARTHX</HardChip>
-                </OneLineInputwomargin>
-              </OneLineInputwomargin>
+          <PlusMinusArrow>
+            <img src={arrowDown} />
+          </PlusMinusArrow>
+          <PrimaryText>You Receive</PrimaryText>
+          <ReYouReceiveContain>
+            <OneLineInputwomargin style={{ marginBottom: '10px' }}>
+              <PrimaryText>ARTH Share</PrimaryText>
               <OneLineInputwomargin>
-                <PrimaryText>
-                  Bonus
-                  <CustomToolTip/>
-                </PrimaryText>
+                <BeforeHardChip>1.08</BeforeHardChip>
+                <HardChip>ARTHX</HardChip>
+              </OneLineInputwomargin>
+            </OneLineInputwomargin>
+            <OneLineInputwomargin style={{ marginBottom: '10px' }}>
+              <PrimaryText>MAHA Reward</PrimaryText>
+              <OneLineInputwomargin>
+                <BeforeHardChip>1.08</BeforeHardChip>
+                <HardChip>ARTHX</HardChip>
+              </OneLineInputwomargin>
+            </OneLineInputwomargin>
+            <OneLineInputwomargin>
+              <PrimaryText>
+                Bonus
+                <CustomToolTip/>
+              </PrimaryText>
+              <OneLineInputwomargin>
+                <BeforeHardChip>1.08</BeforeHardChip>
+                <HardChip>ARTHX</HardChip>
+              </OneLineInputwomargin>
+            </OneLineInputwomargin>
+          </ReYouReceiveContain>
+          <div>
+            <TcContainer>
+              <OneLineInputwomargin>
+                <div style={{ flex: 1 }}>
+                  <TextWithIcon>
+                    {/* Bonus */}
+                    {/* <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} /> */}
+                  </TextWithIcon>
+                </div>
                 <OneLineInputwomargin>
-                  <BeforeHardChip>1.08</BeforeHardChip>
-                  <HardChip>ARTHX</HardChip>
+                  {/* <BeforeChip>1.06</BeforeChip> */}
+                  {/* <TagChips>ARTHX</TagChips> */}
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
-            </ReYouReceiveContain>
-            <div>
-              <TcContainer>
-                <OneLineInputwomargin>
-                  <div style={{ flex: 1 }}>
-                    <TextWithIcon>
-                      {/* Bonus */}
-                      {/* <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} /> */}
-                    </TextWithIcon>
-                  </div>
-                  <OneLineInputwomargin>
-                    {/* <BeforeChip>1.06</BeforeChip> */}
-                    {/* <TagChips>ARTHX</TagChips> */}
-                  </OneLineInputwomargin>
-                </OneLineInputwomargin>
-              </TcContainer>
-              <div style={{ flex: 1, marginTop: 30 }}>
-                <Button
-                  text={'Recollatateralize'}
-                  size={'lg'}
-                  onClick={() => {
-                    // setBuyback(true)
-                    // setRecollatateralize(false)
-                    setType('Recollateralize');
-                    setOpenModal(1);
-                  }}
-                />
-              </div>
+            </TcContainer>
+            <div style={{ flex: 1, marginTop: 30 }}>
+              <Button
+                text={'Recollatateralize'}
+                size={'lg'}
+                onClick={() => {
+                  // setBuyback(true)
+                  // setRecollatateralize(false)
+                  setType('Recollateralize');
+                  setOpenModal(1);
+                }}
+              />
             </div>
-          </LeftTopCardContainer>
-        </LeftTopCard>
-      );
-    else
-      return (
-        <LeftTopCardChecked
-          className={'custom-mahadao-box'}
-          style={buyback ? { height: 536 } : { height: 546 }}
-        >
-          <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-            <HeaderTitle>
-              {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
-              <CustomToolTip/>
-            </HeaderTitle>
-            {recollatateralize ? (
-              <HeaderSubtitle>
-                342.450K <HardChip>USDT</HardChip>{' '}
-                <TextForInfoTitle>Remaining to Generate</TextForInfoTitle>
-              </HeaderSubtitle>
-            ) : (
-              <HeaderSubtitle>
-                <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
-              </HeaderSubtitle>
-            )}
-          </LeftTopCardHeader>
-          <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
-        </LeftTopCardChecked>
-      );
+          </div>
+        </LeftTopCardContainer>
+      </LeftTopCard>
+    );
+
   };
 
   return (
     <>
-      <GradientDiv />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -298,102 +167,8 @@ const Recollatateralize = (props: WithSnackbarProps) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm ${type} ARTH`}
-      >
-        {type === 'Buyback' ? (
-          <>
-            <TransparentInfoDiv
-              labelData={`Your Share Amount`}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={redeemAmount.toString()}
-            />
-
-            <TransparentInfoDiv
-              labelData={`Trading Fee`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'USDT'}
-              rightLabelValue={'0.05'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`Stability Fee`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'MAHA'}
-              rightLabelValue={'0.05'}
-            />
-
-            <Divider
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                margin: '15px 0px',
-              }}
-              // variant={'middle'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`You will receive collateral`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'USDT'}
-              rightLabelValue={'1000.00'}
-            />
-
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Buyback for ${redeemAmount} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Buyback'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    // setType('Redeem')
-                    setBuyback(false);
-                    setRecollatateralize(true);
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Buyback for ${redeemAmount} ARTH :- processing`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
+        title={`Confirm ${type} ARTH`}>
+        <>
             <TransparentInfoDiv
               labelData={`Your Collateral Amount`}
               rightLabelUnit={'ARTH'}
@@ -484,137 +259,90 @@ const Recollatateralize = (props: WithSnackbarProps) => {
               </div>
             </div>
           </>
-        )}
       </CustomModal>
-      <StabilizePageHeader
-        title="Stabilize"
-        subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
-      />
-      <Container size="lg" margin={'10px 0px'}>
-        <Grid container spacing={3}>
-          <Grid container lg={8}>
-            <Grid item lg={6}>
-              {buyback ? buyBackContainer() : recollatateralizeConatiner()}
-            </Grid>
-            <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
-              {buyback ? (
-                <RightTopCard
-                  className={'custom-mahadao-box'}
-                  style={buyback ? { height: 536 } : { height: 546 }}
-                >
-                  <RightTopCardHeader style={{}}>Current Fee Rates</RightTopCardHeader>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          Stability Fee
-                          <CustomToolTip/>
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          Trading Fee
-                          <CustomToolTip/>
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>$7.55</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                </RightTopCard>
-              ) : (
-                <RightTopCard
-                  className={'custom-mahadao-box'}
-                  style={buyback ? { height: 536 } : { height: 546 }}
-                >
-                  <RightTopCardHeader>Bonding Curve Discount on ARTHX</RightTopCardHeader>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>Current Discount</TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>0.2%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          1 day ago discount
-                          {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>5%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '8px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          Estimated Discount 1 hour later
-                          {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>~5%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          ARTHX Price
-                          {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>$7.55</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <RightTopCardHeader style={{ marginTop: 20 }}>
-                    Current Reward Rates
-                  </RightTopCardHeader>
-                  <div style={{ marginBottom: '12px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          Bonus Rate
-                          <CustomToolTip/>
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>0.2%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <OneLineInput>
-                      <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          MAHA Reward
-                          <CustomToolTip/>
-                        </TextForInfoTitle>
-                      </div>
-                      <InputLabelSpanRight>5%</InputLabelSpanRight>
-                    </OneLineInput>
-                  </div>
-                </RightTopCard>
-              )}
-            </Grid>
+      <Grid container spacing={3}>
+        <Grid container lg={8}>
+          <Grid item lg={6}>
+            {recollatateralizeConatiner()}
           </Grid>
-          <Grid item lg={4} style={{ marginTop: -12 }}>
-            {!buyback ? buyBackContainer() : recollatateralizeConatiner()}
+          <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
+            <RightTopCard
+              className={'custom-mahadao-box'}
+              style={buyback ? { height: 536 } : { height: 546 }}>
+                <RightTopCardHeader>Bonding Curve Discount on ARTHX</RightTopCardHeader>
+                <div style={{ marginBottom: '8px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>Current Discount</TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>
+                        1 day ago discount
+                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                      </TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>5%</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>
+                        Estimated Discount 1 hour later
+                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                      </TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>~5%</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>
+                        ARTHX Price
+                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                      </TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>$7.55</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+                <RightTopCardHeader style={{ marginTop: 20 }}>
+                  Current Reward Rates
+                </RightTopCardHeader>
+                <div style={{ marginBottom: '12px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>
+                        Bonus Rate
+                        <CustomToolTip/>
+                      </TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <OneLineInput>
+                    <div style={{ flex: 1 }}>
+                      <TextForInfoTitle>
+                        MAHA Reward
+                        <CustomToolTip/>
+                      </TextForInfoTitle>
+                    </div>
+                    <InputLabelSpanRight>5%</InputLabelSpanRight>
+                  </OneLineInput>
+                </div>
+              </RightTopCard>
           </Grid>
         </Grid>
-      </Container>
+        <Grid item lg={4} style={{ marginTop: -12 }}>
+          {buyBackContainer()}
+        </Grid>
+      </Grid>
     </>
   );
 };
@@ -704,24 +432,6 @@ const HardChip = styled.div`
   margin-right: 4px;
 `;
 
-const StyledTableHeaderTextCenter = styled.h6`
-  font-size: 12px;
-  font-weight: 600;
-  color: ${(props) => props.theme.color.grey[600]};
-  margin: 10px 30px;
-  text-align: center;
-`;
-
-const InfoSpan = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.64);
-  // margin: 10px 30px;
-  text-align: center;
-`;
 
 const LeftTopCard = styled.div`
   //height: 560px;
