@@ -36,7 +36,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-interface props {}
+interface props { }
 const MobileNav = (props: props) => {
   // const { walletInfo: Wallet } = props
   const [netWrokType, setNetworkType] = React.useState('mainnet');
@@ -44,6 +44,8 @@ const MobileNav = (props: props) => {
     setNetworkType(event.target.value as string);
   };
   const [walletInfo, setWallet] = useState<boolean>(false);
+  const [disconnect, setDisconnect] = useState<boolean>(false);
+
   let dummyWallet = {
     accountNumber: '123123123123123123',
     mahaTokens: 50,
@@ -114,15 +116,18 @@ const MobileNav = (props: props) => {
           )}
         </div>
       ) : (
-        <WalletInternal walletData={dummyWallet} />
+        <WalletInternal walletData={dummyWallet} disconnect={disconnect} />
       )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
           <Button
             variant={'transparent'}
-            text={walletInfo ? 'Disconnect (temp button)' : 'Connect'}
+            text={walletInfo ? 'Disconnect' : 'Connect'}
             onClick={() => {
+              if (!walletInfo) {
+                setDisconnect(true)
+              }
               setWallet(!walletInfo);
             }}
           />

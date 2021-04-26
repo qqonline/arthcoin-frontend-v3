@@ -82,7 +82,7 @@ const AccountModal: React.FC<props> = (props) => {
         title={`Disconnect Wallet`}
       >
         <>
-          <PrimaryText>Are you sure you want to disconnect oxf7...a6d3 ?</PrimaryText>
+          <PrimaryText>Are you sure you want to disconnect {truncateMiddle(props?.walletData?.accountNumber, 15)} ?</PrimaryText>
           <SecondaryText>0xf77D777462d0cb38A67D7535761980D10cdca6d3</SecondaryText>
           <Grid container spacing={2} style={{ marginTop: '32px' }}>
             <Grid item lg={6} md={6} sm={6} xs={6}>

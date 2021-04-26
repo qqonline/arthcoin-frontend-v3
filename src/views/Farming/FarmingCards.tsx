@@ -27,7 +27,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           LogoSymbol={'ARTH'}
           hasDropDown={false}
           SymbolText={'ARTH-MAHA'}
-          setText={(val) => {}}
+          setText={(val) => { }}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
@@ -42,8 +42,8 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
             <TagChips>ARTH / ETH </TagChips>
           </OneLine>
         </OneLine>
-        <Grid container spacing={2} style={{ marginTop: '32px' }}>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+        <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               variant={'transparent'}
               text="Cancel"
@@ -62,7 +62,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               }}
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               text={'Deposit'}
               size={'lg'}
@@ -96,7 +96,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           LogoSymbol={'ARTH'}
           hasDropDown={false}
           SymbolText={'ARTH'}
-          setText={(val) => {}}
+          setText={(val) => { }}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
@@ -111,8 +111,8 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
             <TagChips>ARTH-MAHA-LP</TagChips>
           </OneLine>
         </OneLine>
-        <Grid container spacing={2} style={{ marginTop: '32px' }}>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+        <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               variant={'transparent'}
               text="Cancel"
@@ -131,9 +131,9 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               }}
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
-              text={'Deposit'}
+              text={'Withdraw'}
               size={'lg'}
               onClick={() => {
                 setOpenModal(false);
@@ -165,7 +165,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           LogoSymbol={'MAHA'}
           hasDropDown={false}
           SymbolText={'MAHA'}
-          setText={(val) => {}}
+          setText={(val) => { }}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
@@ -178,8 +178,8 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
             <TagChips>MAHA</TagChips>
           </OneLine>
         </OneLine>
-        <Grid container spacing={2} style={{ marginTop: '32px' }}>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+        <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               variant={'transparent'}
               text="Cancel"
@@ -198,9 +198,9 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
               }}
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
-              text={'Deposit'}
+              text={'Clain'}
               size={'lg'}
               onClick={() => {
                 setOpenModal(false);
@@ -258,7 +258,7 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
           setAction(data);
         }}
         lockedStake={'0 ARTH-MAHA LP'}
-        // earned={''}
+      // earned={''}
       />
     );
   };
