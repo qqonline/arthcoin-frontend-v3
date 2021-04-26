@@ -84,9 +84,10 @@ const ButtonGroupDiv = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: row;
-  width: fit-content;
   align-items: center;
   padding: 6px 0;
+  flex-wrap: wrap;
+  width: max-content;
 `;
 
 const TextDiv = styled.div`

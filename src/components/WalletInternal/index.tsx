@@ -54,7 +54,7 @@ export const WalletInternal = (props: IProps) => {
                 >
                     <div>
                         <PrimaryText>Are you sure you want to disconnect {truncateMiddle(props?.walletData?.accountNumber, 15)} ?</PrimaryText>
-                        <SecondaryText style={{ overflowWrap: 'break-word' }}><span>0xf77D777462d0cb38A67D7535761980D10cdca6d3</span></SecondaryText>
+                        <SecondaryText>0xf77D777462d0cb38A67D7535761980D1</SecondaryText>
                         <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
                             <Grid item lg={6} md={6} sm={12} xs={12}>
                                 <Button
@@ -168,7 +168,7 @@ const PrimaryText = styled.p`
   margin-bottom: 8px;
 `;
 
-const SecondaryText = styled.div`
+const SecondaryText = styled.p`
   font-family: Inter;
   font-style: normal;
   font-weight: 300;
@@ -177,10 +177,6 @@ const SecondaryText = styled.div`
   text-align: center;
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 0;
-  width: 100%;
-  max-height: 100px;
-  display: flex;
-  height: auto;
 `;
 
 const AccountDetails = styled.div`
