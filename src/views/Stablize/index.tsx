@@ -6,7 +6,7 @@ import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader
 import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
 
-const Boardrooms = () => {
+const Stabelize = () => {
   const basisCash = useBasisCash();
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
 
@@ -48,4 +48,4 @@ const GradientDiv = styled.div`
   z-index: -5;
 `;
 
-export default Boardrooms;
+export default Stabelize;

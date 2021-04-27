@@ -1,80 +1,39 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import useTokenBalance from '../../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import Modal from '../../NewModal/index';
-import Label from '../../Label';
 import useBasisCash from '../../../hooks/useBasisCash';
 import TokenSymbol from '../../TokenSymbol';
-import { Divider, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import metamask from '../../../assets/svg/metamask.svg';
 import copy from '../../../assets/svg/copy.svg';
-import Container from '../../Container';
 import Button from '../../Button';
-import TransparentInfoDiv from '../../../views/Stablize/components/InfoDiv';
 import Grid from '@material-ui/core/Grid';
-import { CustomSnack } from '../../SnackBar';
 import CustomModal from '../../CustomModal';
+import useTokenBalanceOf from '../../../hooks/state/useTokenBalanceOf';
+import { useWallet } from 'use-wallet';
+import { truncateMiddle } from '../../../utils/formatBalance';
 
 interface props {
-  walletData?: {
-    accountNumber: string;
-    mahaTokens: number;
-    mahaDollars: number;
-    arthTokens: number;
-    arthDollars: number;
-    arthxTokens: number;
-    arthxDollars: number;
-  };
   onClose: () => void;
 }
 
 const AccountModal: React.FC<props> = (props) => {
-  const basisCash = useBasisCash();
+  const core = useBasisCash();
+
+  const { account } = useWallet();
 
   const [ConfirmationModal, setConfirmationModal] = useState<boolean>(false);
 
-  const bacBalance = useTokenBalance(basisCash.ARTH);
-  const displayBacBalance = useMemo(() => getDisplayBalance(bacBalance), [bacBalance]);
+  const arthBalance = useTokenBalanceOf(core.ARTH, account);
+  const mahaBalance = useTokenBalanceOf(core.MAHA, account);
+  const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
 
-  const basBalance = useTokenBalance(basisCash.MAHA);
-  const displayBasBalance = useMemo(() => getDisplayBalance(basBalance), [basBalance]);
-
-  const babBalance = useTokenBalance(basisCash.ARTHX);
-  const displayBabBalance = useMemo(() => getDisplayBalance(babBalance), [babBalance]);
-
-  const truncateMiddle = function (
-    fullStr: string = '12345678922500025',
-    strLen: number,
-    separator?: string,
-  ) {
-    if (fullStr.length <= strLen) return fullStr;
-
-    separator = separator || '...';
-
-    var sepLen = separator.length,
-      charsToShow = strLen - sepLen,
-      frontChars = Math.ceil(charsToShow / 3),
-      backChars = Math.floor(charsToShow / 3);
-
-    return (
-      fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars)
-    );
-  };
-  // const handleClose = () => {
-  //   onCancel();
-  // };
   return (
     <MainDiv>
-      <BackgroundAbsolute
-        onClick={() => {
-          console.log('hello');
-          props.onClose();
-        }}
-      />
+      <BackgroundAbsolute onClick={props.onClose} />
       <CustomModal
         closeButton
-        handleClose={() => props.onClose()}
+        handleClose={props.onClose}
         open={ConfirmationModal}
         modalTitleStyle={{}}
         modalContainerStyle={{}}
@@ -82,26 +41,22 @@ const AccountModal: React.FC<props> = (props) => {
         title={`Disconnect Wallet`}
       >
         <>
-          <PrimaryText>Are you sure you want to disconnect {truncateMiddle(props?.walletData?.accountNumber, 15)} ?</PrimaryText>
-          <SecondaryText>0xf77D777462d0cb38A67D7535761980D10cdca6d3</SecondaryText>
+          <PrimaryText>Are you sure you want to disconnect {truncateMiddle(account, 15)} ?</PrimaryText>
+          <SecondaryText>{account}</SecondaryText>
           <Grid container spacing={2} style={{ marginTop: '32px' }}>
             <Grid item lg={6} md={6} sm={6} xs={6}>
               <Button
                 variant={'transparent'}
                 text="Cancel"
                 size={'lg'}
-                onClick={() => {
-                  props.onClose();
-                }}
+                onClick={props.onClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={6} xs={6}>
               <Button
                 text={'Disconnect'}
                 size={'lg'}
-                onClick={() => {
-                  props.onClose();
-                }}
+                onClick={props.onClose}
               />
             </Grid>
           </Grid>
@@ -113,11 +68,11 @@ const AccountModal: React.FC<props> = (props) => {
             <span>Your Account</span>
             <AccountDetails>
               <IconButton>
-                <img height={32} src={metamask} />
+                <img height={32} src={metamask} alt="metamask" />
               </IconButton>
-              <span>{truncateMiddle(props?.walletData?.accountNumber, 15)}</span>
+              <span>{truncateMiddle(account, 15)}</span>
               <IconButton>
-                <img height={24} src={copy} />
+                <img height={24} src={copy} alt="copy" />
               </IconButton>
             </AccountDetails>
           </StyledLink>
@@ -127,9 +82,9 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'MAHA'} size={44} />
               </IconButton>
-              <span>{props?.walletData?.mahaTokens} MAHA</span>
+              <span>{getDisplayBalance(mahaBalance)} MAHA</span>
             </RowName>
-            <DollarValue>${props?.walletData?.mahaDollars}</DollarValue>
+            {/* <DollarValue>${props?.walletData?.mahaDollars}</DollarValue> */}
           </StyledRows>
 
           <StyledRows>
@@ -137,9 +92,9 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTH'} size={44} />
               </IconButton>
-              <span>{props?.walletData?.arthTokens} ARTH</span>
+              <span>{getDisplayBalance(arthBalance)} ARTH</span>
             </RowName>
-            <DollarValue>${props?.walletData?.arthDollars}</DollarValue>
+            {/* <DollarValue>${props?.walletData?.arthDollars}</DollarValue> */}
           </StyledRows>
 
           <StyledRows>
@@ -147,9 +102,9 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTHX'} size={44} />
               </IconButton>
-              <span>{props?.walletData?.arthxTokens} ARTHX</span>
+              <span>{getDisplayBalance(arthxBalance)} ARTHX</span>
             </RowName>
-            <DollarValue>${props?.walletData?.arthxDollars}</DollarValue>
+            {/* <DollarValue>${props?.walletData?.arthxDollars}</DollarValue> */}
           </StyledRows>
 
           <StyledRows style={{ margin: '20px 0' }}>

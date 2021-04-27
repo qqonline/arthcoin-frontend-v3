@@ -12,3 +12,20 @@ export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
 export function getBalance(balance: BigNumber, decimals = 18): number {
   return balance?.div(BigNumber.from(10).pow(decimals)).toNumber();
 }
+
+export const truncateMiddle = function (
+  fullStr: string = '12345678922500025',
+  strLen: number,
+  separator?: string,
+) {
+  if (fullStr.length <= strLen) return fullStr;
+
+  separator = separator || '...';
+
+  var sepLen = separator.length,
+    charsToShow = strLen - sepLen,
+    frontChars = Math.ceil(charsToShow / 3),
+    backChars = Math.floor(charsToShow / 3);
+
+  return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
+};

@@ -6,7 +6,7 @@ import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import walletIcon from '../../../assets/svg/wallet-24.svg';
-interface AccountButtonProps {}
+interface AccountButtonProps { }
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
   if (fullStr.length <= strLen) return fullStr;
@@ -37,18 +37,18 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
 
   return (
     <>
-      {showModal && <AccountModal walletData={dummyWallet} onClose={() => toggleModal(!showModal)}/>}
+      {showModal && <AccountModal onClose={() => toggleModal(!showModal)} />}
       <StyledAccountButton>
-        {account ? (
+        {!account ? (
           <Button variant='transparent' onClick={() => connect('injected')} size="sm" text="Connect" />
         ) : (
           <Button
             onClick={() => toggleModal(true)}
             size="sm"
             variant={'transparent'}
-            text={truncateMiddle('21ehisnioiosuhohAHhuHSLIs', 15, '.....')}
+            text={truncateMiddle(account, 15, '.....')}
           >
-            <img src={walletIcon} className="margin-right-10" />
+            <img alt="wallet" src={walletIcon} className="margin-right-10" />
           </Button>
         )}
       </StyledAccountButton>

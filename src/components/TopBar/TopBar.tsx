@@ -15,6 +15,7 @@ import TxButton from './components/TxButton';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
 import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
+
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -173,7 +174,7 @@ const StyledTopBar = styled.div`
   display: flex;
   width: 100%;
   top: 0;
-  
+
   //background: #151414;
   background: rgba(0, 0, 0, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
