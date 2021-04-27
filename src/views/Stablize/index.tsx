@@ -17,6 +17,7 @@ import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
+import CustomToolTip from '../../components/CustomTooltip';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   const basisCash = useBasisCash();
@@ -51,7 +52,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <LeftTopCardHeader className={'custom-mahadao-container-header'}>
             <HeaderTitle>
               Buyback
-              <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+              <CustomToolTip/>
             </HeaderTitle>
             {buyback ? (
               <HeaderSubtitle>
@@ -144,7 +145,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <LeftTopCardHeader className={'custom-mahadao-container-header'}>
             <HeaderTitle>
               Buyback
-              <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+              <CustomToolTip/>
             </HeaderTitle>
             {buyback ? (
               <HeaderSubtitle>
@@ -169,7 +170,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <LeftTopCardHeader className={'custom-mahadao-container-header'}>
             <HeaderTitle>
               {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
-              <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+              <CustomToolTip/>
             </HeaderTitle>
             {recollatateralize ? (
               <HeaderSubtitle>
@@ -221,7 +222,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <OneLineInputwomargin>
                 <PrimaryText>
                   Bonus
-                  <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  <CustomToolTip/>
                 </PrimaryText>
                 <OneLineInputwomargin>
                   <BeforeHardChip>1.08</BeforeHardChip>
@@ -269,7 +270,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <LeftTopCardHeader className={'custom-mahadao-container-header'}>
             <HeaderTitle>
               {recollatateralize ? 'Add Collateral' : 'Recollatateralize'}
-              <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+              <CustomToolTip/>
             </HeaderTitle>
             {recollatateralize ? (
               <HeaderSubtitle>
@@ -507,7 +508,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
                           Stability Fee
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip/>
                         </TextForInfoTitle>
                       </div>
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -518,7 +519,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
                           Trading Fee
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip/>
                         </TextForInfoTitle>
                       </div>
                       <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -582,7 +583,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
                           Bonus Rate
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip/>
                         </TextForInfoTitle>
                       </div>
                       <InputLabelSpanRight>0.2%</InputLabelSpanRight>
@@ -593,7 +594,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>
                           MAHA Reward
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip/>
                         </TextForInfoTitle>
                       </div>
                       <InputLabelSpanRight>5%</InputLabelSpanRight>

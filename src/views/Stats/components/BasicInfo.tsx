@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
+import CustomToolTip from '../../../components/CustomTooltip';
+import { Link } from 'react-router-dom';
 
 type props = {};
 
@@ -15,27 +17,13 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Available to mint
-                <HtmlTooltip
-                  title={
-                    <React.Fragment>
-                      <ToolTipFont>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer took a galley of type and
-                        scrambled
-                      </ToolTipFont>
-                    </React.Fragment>
-                  }
-                >
-                  <InfoIcon
-                    fontSize="default"
-                    style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                  />
-                </HtmlTooltip>
+                <CustomToolTip/>
               </TextWithIcon>
               <BeforeChip>54.76M</BeforeChip>
             </div>
-            <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            <ToLink to={'/mint'}>
+              <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            </ToLink>
           </OneLine>
         </OneCardLeft>
         <OneCardRight>
@@ -43,27 +31,14 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Pool Balance
-                <HtmlTooltip
-                  title={
-                    <React.Fragment>
-                      <ToolTipFont>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer took a galley of type and
-                        scrambled
-                      </ToolTipFont>
-                    </React.Fragment>
-                  }
-                >
-                  <InfoIcon
-                    fontSize="default"
-                    style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                  />
-                </HtmlTooltip>
+                <CustomToolTip/>
               </TextWithIcon>
               <BeforeChip>157.89M</BeforeChip>
             </div>
-            <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            <ToLink to={'/mint'}>
+              <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
+            </ToLink>
+
           </OneLine>
         </OneCardRight>
       </CustomInfoCardDetails>
@@ -72,6 +47,10 @@ const BasicInfo: React.FC<props> = (props) => {
 };
 
 export default BasicInfo;
+
+const ToLink = styled(Link)`
+  z-index: 1;
+`
 
 const CustomInfoCard = styled.div`
   padding: 0 !important;

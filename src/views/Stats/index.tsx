@@ -22,6 +22,7 @@ import FeeRates from './components/FeeRates';
 import CoinsPrice from './components/CoinsPrice';
 import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
+import CustomToolTip from '../../components/CustomTooltip';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -72,7 +73,7 @@ const Home: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <TextForInfoTitle>
             Collateral Ratio
-            <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+            <CustomToolTip/>
           </TextForInfoTitle>
           {/* </div> */}
           <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>

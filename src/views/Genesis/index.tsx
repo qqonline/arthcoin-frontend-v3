@@ -31,6 +31,7 @@ import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
 import useBasisCash from '../../hooks/useBasisCash';
+import CustomToolTip from '../../components/CustomTooltip';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -336,52 +337,20 @@ const Genesis = (props: WithSnackbarProps) => {
           <Grid item lg={5} md={12} sm={12} xs={12}>
             <CustomInfoCard className={'custom-mahadao-box'}>
               <CustomInfoCardDetails>
-                <div>
+                <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
-                    Available to mint
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of type
-                            and scrambled
-                          </ToolTipFont>
-                        </React.Fragment>
-                      }
-                    >
-                      <InfoIcon
-                        fontSize="default"
-                        style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                      />
-                    </HtmlTooltip>
+                    Amount Remaining to Raise
+                    <CustomToolTip />
                   </TextForInfoTitle>
                   <BeforeChipDark>54.76M</BeforeChipDark>
-                </div>
-                <div style={{ textAlign: 'end' }}>
+                </OneLineInputwomargin>
+                <OneLineInputwomargin>
                   <TextForInfoTitle>
-                    Pool Balance
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of type
-                            and scrambled
-                          </ToolTipFont>
-                        </React.Fragment>
-                      }
-                    >
-                      <InfoIcon
-                        fontSize="default"
-                        style={{ transform: 'scale(0.6)', marginBottom: '4px' }}
-                      />
-                    </HtmlTooltip>
+                    Commited Collateral
+                    <CustomToolTip />
                   </TextForInfoTitle>
-                  <BeforeChipDark style={{ paddingRight: 5 }}>157.89M</BeforeChipDark>
-                </div>
+                  <BeforeChipDark>157.89M</BeforeChipDark>
+                </OneLineInputwomargin>
               </CustomInfoCardDetails>
             </CustomInfoCard>
             <LeftTopCard className={'custom-mahadao-container'}>
@@ -440,18 +409,18 @@ const Genesis = (props: WithSnackbarProps) => {
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <div style={{ marginTop: '14px', marginBottom: '32px' }}>
+                <div style={{ marginBottom: '32px' }}>
                   <TextWithIcon>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
                           ARTHX
-                          <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                          <CustomToolTip toolTipText={'loreum ipsum'} />
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
-                        <BeforeChip>2,000</BeforeChip>
+                        <BeforeChip className={'custom-mahadao-chip'}>2,000</BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
@@ -505,11 +474,7 @@ const CustomInfoCard = styled.div`
   margin-bottom: 16px;
 `;
 
-const CustomInfoCardDetails = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+const CustomInfoCardDetails = styled.div``;
 
 const StyledNavLink = styled(Link)`
   // color: ${(props) => props.theme.color.grey[400]};
@@ -605,8 +570,8 @@ const ToolTipFont = styled.p`
 const OneLineInputwomargin = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const LeftTopCard = styled.div``;
@@ -650,7 +615,6 @@ const ActiveTab = styled.div`
 
 const PlusMinusArrow = styled.div`
   width: 100%;
-  height: 32px;
   border-radius: 1.33px;
   color: #ffffff;
   align-items: center;
@@ -658,13 +622,14 @@ const PlusMinusArrow = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
+  margin: 12px 0;
 `;
 
 const ReceiveContainer = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 12px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 const TextWithIcon = styled.div`

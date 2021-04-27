@@ -17,6 +17,7 @@ import CustomModal from '../../components/CustomModal';
 import { CustomSnack } from '../../components/SnackBar';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CallMadeIcon from '@material-ui/icons/CallMade';
+import CustomToolTip from '../../components/CustomTooltip';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -188,7 +189,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Trading fee
-                        <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                        <CustomToolTip/>
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>

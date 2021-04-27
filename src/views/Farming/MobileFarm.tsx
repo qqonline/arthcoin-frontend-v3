@@ -263,7 +263,6 @@ const PercentageChangeSpan = styled.span`
 `;
 
 const ButtonContainer = styled.div`
-  max-width: 300px;
   width: 100%;
   margin-top: 10px;
   flex-direction: column;

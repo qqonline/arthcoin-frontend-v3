@@ -36,27 +36,30 @@ const Banks: React.FC = () => {
         // learnMoreLink="#"
       />
       <Container size="lg">
-        <ScrollDiv style={{ overflowX: 'scroll' }}>
-          <ButtonGroupDiv>
-            {headerList.map((obj) => (
-              <TextDiv
-                style={
-                  selectedId === obj.id
-                    ? {
-                        background: selectedId === obj.id ? '#423B38' : 'transparent',
-                      }
-                    : {}
-                }
-                key={obj?.id}
-                onClick={() => setId(obj?.id)}
-              >
-                <Text1>{obj?.name}</Text1>
-                <Text2>{obj?.count}</Text2>
-              </TextDiv>
-            ))}
-          </ButtonGroupDiv>
-        </ScrollDiv>
-        <div className="border-bottom width-100 margin-bottom-20 margin-top-10" />
+        <div style={{ position: 'relative', display: 'flex' }}>
+          <ScrollDiv style={{ overflowX: 'scroll' }}>
+            <ButtonGroupDiv>
+              {headerList.map((obj) => (
+                <TextDiv
+                  style={
+                    selectedId === obj.id
+                      ? {
+                          background: selectedId === obj.id ? '#423B38' : 'transparent',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                        }
+                      : {}
+                  }
+                  key={obj?.id}
+                  onClick={() => setId(obj?.id)}
+                >
+                  <Text1>{obj?.name}</Text1>
+                  <Text2>{obj?.count}</Text2>
+                </TextDiv>
+              ))}
+            </ButtonGroupDiv>
+          </ScrollDiv>
+        </div>
+        <div className="width-100 margin-bottom-30 margin-top-10" />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <FarmingCards />
@@ -80,9 +83,10 @@ const ButtonGroupDiv = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: row;
-  width: fit-content;
   align-items: center;
   padding: 6px 0;
+  flex-wrap: wrap;
+  width: max-content;
 `;
 
 const TextDiv = styled.div`
