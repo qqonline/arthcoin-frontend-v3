@@ -170,7 +170,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 
   const onBuyColletralValueChange = async (val: string) => {
+    console.log('1', val)
     const valueInNumber = Number(val);
+    console.log('2', valueInNumber)
     setCollateralValue(valueInNumber);
     let arthxShareTemp =
       (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
@@ -210,8 +212,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                value={mintColl.toString()}
-                DefaultValue={'0'}
+                // value={mintColl.toString()}
+                DefaultValue={mintColl.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -236,9 +238,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
                 href={'https://www.google.com/'}
-                value={mintArthxShare.toString()}
-                // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={'0'}
+                DefaultValue={mintArthxShare.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -253,9 +253,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${balance}`}
-                value={mintReceive.toString()}
                 ILabelInfoValue={''}
-                DefaultValue={'0'}
+                DefaultValue={mintReceive.toString()}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
@@ -391,7 +390,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={'0'}
+                DefaultValue={redeemAmount.toString()}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
