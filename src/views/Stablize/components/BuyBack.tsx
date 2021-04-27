@@ -211,7 +211,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Mint ARTH`}>
+        title={`Confirm Buyback ARTH`}>
         <div>
           <TransparentInfoDiv
             labelData={`Your Share Amount`}

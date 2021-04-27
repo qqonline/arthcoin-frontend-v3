@@ -9,7 +9,7 @@ import Recollatateralize from './components/Recollatateralize';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   const basisCash = useBasisCash();
-  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
+  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
 
   useEffect(() => window.scrollTo(0, 0), []);
 
