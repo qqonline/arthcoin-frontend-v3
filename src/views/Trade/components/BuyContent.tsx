@@ -10,7 +10,6 @@ import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
 import { CustomSnack } from '../../../components/SnackBar';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import CustomToolTip from '../../../components/CustomTooltip';
 
 const BuyContent = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -21,8 +20,7 @@ const BuyContent = (props: WithSnackbarProps) => {
   const [buyAmount, setBuyAmount] = useState<string>('0.00');
   const [buyReceive, setBuyReceive] = useState<string>('0.00');
 
-  const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH');
   const [dropDownValues] = useState<string[]>(basisCash.getCollateralTypes());
@@ -60,8 +58,8 @@ const BuyContent = (props: WithSnackbarProps) => {
     return (
       <CustomModal
         closeButton
-        handleClose={() => setOpenModal(0)}
-        open={openModal === 1}
+        handleClose={() => setOpenModal(false)}
+        open={openModal}
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
@@ -94,7 +92,7 @@ const BuyContent = (props: WithSnackbarProps) => {
                 text="Cancel"
                 size={'lg'}
                 onClick={() => {
-                  setOpenModal(0);
+                  setOpenModal(false);
                   let options = {
                     content: () =>
                       CustomSnack({
@@ -114,8 +112,7 @@ const BuyContent = (props: WithSnackbarProps) => {
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={() => {
-                  setOpenModal(0);
-                  setType('Sell');
+                  setOpenModal(false);
                   let options = {
                     content: () =>
                       CustomSnack({
@@ -199,7 +196,7 @@ const BuyContent = (props: WithSnackbarProps) => {
             size={'lg'}
             variant={'default'}
             disabled={false}
-            onClick={() => setOpenModal(1)}
+            onClick={() => setOpenModal(true)}
           />
         </div>
       </LeftTopCardContainer>

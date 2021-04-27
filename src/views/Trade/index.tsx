@@ -3,38 +3,20 @@ import styled from 'styled-components';
 import Container from '../../components/Container';
 import useBasisCash from '../../hooks/useBasisCash';
 import Grid from '@material-ui/core/Grid';
-import Button from '../../components/Button';
-import arrowDown from '../../assets/svg/arrowDown.svg';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
 import shushiswap from '../../assets/svg/sushiswapLogo.svg';
-
-import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './components/InfoDiv';
-
-import CustomInputContainer from '../../components/CustomInputContainer';
-import CustomModal from '../../components/CustomModal';
-import { CustomSnack } from '../../components/SnackBar';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CallMadeIcon from '@material-ui/icons/CallMade';
-import CustomToolTip from '../../components/CustomTooltip';
 import SellContent from './components/SellContent';
 import BuyContent from './components/BuyContent';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
-  const [mintColl, setCollateralValue] = useState<number>(0);
-  const [mintArthxShare, setArthxShare] = useState<number>(0);
-  const [balance, setBalance] = useState<number>(0);
-  const [mintReceive, setReceive] = useState<number>(0);
-  const [redeemAmount, setRedeemAmount] = useState<number>(0);
 
   const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
 
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
-  const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH');
-  const [dropDownValues] = useState<string[]>(basisCash.getCollateralTypes());
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -262,24 +244,12 @@ const ActiveRadio = styled.div`
   z-index: 0;
 `;
 
-const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 18px;
-`;
-
-const OneLineInputwomargin = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
-`;
 const LeftTopCard = styled.div``;
 
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -311,47 +281,6 @@ const ActiveTab = styled.div`
   height: 80px;
   z-index: 0;
   border-bottom: 2px solid #fd5656;
-`;
-
-const PlusMinusArrow = styled.div`
-  width: 100%;
-  height: 32px;
-  border-radius: 1.33px;
-  color: #ffffff;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-`;
-
-const TextWithIcon = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  color: rgba(255, 255, 255, 0.88);
-`;
-
-const BeforeChip = styled.span`
-  ont-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.64);
-  margin-right: 5px;
-`;
-
-const TagChips = styled.div`
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 2px 8px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.64);
 `;
 
 const CustomInfoCard = styled.div``;
