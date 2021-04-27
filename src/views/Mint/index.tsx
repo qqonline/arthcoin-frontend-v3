@@ -266,7 +266,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Trading Fee
-                        {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
+                        {/*{*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*}*/}
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
@@ -432,7 +432,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <div style={{ flex: 1, marginTop: 10 }}>
                     <TextWithIcon>
                       Trading Fee
-                      {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
+                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
                     </TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
@@ -445,7 +445,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   <div style={{ flex: 1 }}>
                     <TextWithIcon>
                       Stability Fee
-                      {/*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*/}
+                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
                     </TextWithIcon>
                   </div>
                   <OneLineInput>
@@ -586,7 +586,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 background: 'rgba(255, 255, 255, 0.08)',
                 margin: '15px 0px',
               }}
-            // variant={'middle'}
+              // variant={'middle'}
             />
 
             <TransparentInfoDiv
@@ -699,9 +699,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
                   cEnd={9999}
                   cDuration={calcDuration}
                   cStart={currentCounter}
-                // updateCounter={(val: number)=>{
-                //   setCurrentCounter(val)
-                // }}
+                  // updateCounter={(val: number)=>{
+                  //   setCurrentCounter(val)
+                  // }}
                 />
 
                 <TransparentInfoDiv
@@ -800,7 +800,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 background: 'rgba(255, 255, 255, 0.08)',
                 margin: '15px 0px',
               }}
-            // variant={'middle'}
+              // variant={'middle'}
             />
 
             <TransparentInfoDiv

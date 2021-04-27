@@ -19,18 +19,19 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 
-const Recollatateralize = (props: WithSnackbarProps) => {
+type Iprops = {
+  onChange: () => void;
+}
+
+const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const basisCash = useBasisCash();
   const [collateralAmount, setCollateralAmount] = useState<number>(0);
-  const [redeemAmount, setRedeemAmount] = useState<number>(0);
   const [receiveShare, setReceiveShare] = useState<number>(1500);
   const [receiveMAHA, setReceiveMAHA] = useState<number>(1500);
   const [balance, setBalance] = useState<number>(0);
   const [receiveBonus, setReceiveBonus] = useState<number>(1500);
-  const [algorithmicValue, setAlgorithmicValue] = useState<number>(2.34);
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [checked, setChecked] = React.useState(false);
 
   const [buyback, setBuyback] = useState<boolean>(false);
   const [recollatateralize, setRecollatateralize] = useState<boolean>(false);
@@ -204,60 +205,51 @@ const Recollatateralize = (props: WithSnackbarProps) => {
               rightLabelValue={receiveBonus.toString()}
             />
 
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Recollateralize for ${collateralAmount} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Recollateralize'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    // setType('Redeem')
-                    setBuyback(true);
-                    setRecollatateralize(false);
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Recollateralize for ${collateralAmount} ARTH:- processing`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
-            </div>
+          <Grid container spacing={2} style={{ marginTop: '32px' }}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => {
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'red',
+                        data1: `Recollateralize for ${collateralAmount} ARTH cancelled`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                }}
+                // onClick={handleClose}
+              />
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <Button
+                text={'Recollateralize'}
+                // textStyles={{ color: '#F5F5F5' }}
+                size={'lg'}
+                onClick={() => {
+                  // setType('Redeem')
+                  setBuyback(true);
+                  setRecollatateralize(false);
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'green',
+                        data1: `Recollateralize for ${collateralAmount} ARTH:- processing`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                  props.onChange();
+                }}
+              />
+            </Grid>
+          </Grid>
           </>
       </CustomModal>
       <Grid container spacing={3}>

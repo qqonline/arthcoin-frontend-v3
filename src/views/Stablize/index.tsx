@@ -26,12 +26,12 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <Container size="lg" margin={'10px 0px'}>
         {type === "Buyback" &&
           <BuyBack
-            // onChange={() => setType('Recollateralize')}
+            onChange={() => setType('Recollateralize')}
           />
         }
         {type === "Recollateralize" &&
           <Recollatateralize
-            // onChange={() => setType('Buyback')}
+            onChange={() => setType('Buyback')}
           />
         }
       </Container>

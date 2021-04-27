@@ -5,7 +5,6 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
-
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
@@ -27,7 +26,6 @@ type props = {
   href?: string;
   to?: string;
 };
-
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
     ILabelValue,
@@ -46,7 +44,6 @@ const CustomInputContainer: React.FC<props> = (props) => {
     value,
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
   const Redirection = () => {
     if (props?.href){
       return(
@@ -54,23 +51,18 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </HrefLink>
       )
-
     } else if (props?.to) {
       return(
         <ToLink to={'/mint'}>
-        <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
+          <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </ToLink>
       )
     } else {
       return (
         <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
       )
-
     }
   }
-
-
-
   return (
     <IConatiner
       style={
@@ -115,14 +107,12 @@ const CustomInputContainer: React.FC<props> = (props) => {
           {/*<Select
             width='500px'
             style={{
-
               background: 'red'
             }}
             options={options}
             defaultValue={options[0]}
             components={{ Option: IconOption, Menu }}
             menuColor='red'
-
           />*/}
           <IFieldRightContainerLogo>
             {multiIcons && symbol1 && symbol2 ? (
@@ -149,7 +139,6 @@ const CustomInputContainer: React.FC<props> = (props) => {
               }}
             />
           )}
-
           {modalOpen && hasDropDown && ondropDownValueChange && (
             <CustomDropDown
               dropDownValues={dropDownValues}
@@ -161,18 +150,13 @@ const CustomInputContainer: React.FC<props> = (props) => {
     </IConatiner>
   );
 };
-
 export default CustomInputContainer;
-
 const HrefLink = styled.a`
   z-index: 1;
 `
-
 const ToLink = styled(Link)`
   z-index: 1;
 `
-
-
 const BackgroundAbsolute = styled.div`
   position: fixed;
   top: 0;
@@ -182,27 +166,22 @@ const BackgroundAbsolute = styled.div`
   height: 100vh;
   z-index: 11;
 `;
-
 const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 12px;
 `;
-
 const ILabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
-
 const ILabelLeft = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
 `;
-
 const ILabelRight = styled.div``;
-
 const ILabel = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -212,7 +191,6 @@ const ILabel = styled.p`
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 12px;
 `;
-
 const ILabelInfo = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -223,7 +201,6 @@ const ILabelInfo = styled.p`
   margin-left: 5px;
   margin-bottom: 12px;
 `;
-
 const ILabelBalance = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -239,7 +216,6 @@ const LLabel = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-
 const LPairLabel = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -250,7 +226,6 @@ const LPairLabel = styled.div`
   opacity: 0.88;
   margin: 0px 0px 0px 16px;
 `;
-
 const IFieldConatiner = styled.div`
   display: flex;
   flex-direction: row;
@@ -258,7 +233,6 @@ const IFieldConatiner = styled.div`
   border-radius: 6px;
   max-height: 44px;
 `;
-
 const IFieldRightContainer = styled.div`
   padding: 10px 12px;
   background: #1f1e1e;
@@ -268,7 +242,6 @@ const IFieldRightContainer = styled.div`
   position: relative;
   cursor: pointer;
 `;
-
 const MaxTagConatiner = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -283,9 +256,7 @@ const MaxTagConatiner = styled.div`
   position: relative;
   cursor: pointer;
 `;
-
 const IFieldRightContainerLogo = styled.span``;
-
 const IFieldRightContainerText = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -295,7 +266,6 @@ const IFieldRightContainerText = styled.span`
   color: rgba(255, 255, 255, 0.64);
   margin-left: 5px;
 `;
-
 const IFieldRightContainerDropDown = styled.span`
   margin-left: 5px;
 `;

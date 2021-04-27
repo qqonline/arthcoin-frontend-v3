@@ -16,7 +16,11 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 
-const BuyBack = (props: WithSnackbarProps) => {
+type Iprops = {
+  onChange: () => void;
+}
+
+const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const basisCash = useBasisCash();
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [balance, setBalance] = useState<number>(0);
@@ -212,6 +216,7 @@ const BuyBack = (props: WithSnackbarProps) => {
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
+                  props.onChange();
                 }}
               />
             </Grid>
