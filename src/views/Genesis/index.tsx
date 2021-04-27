@@ -17,19 +17,19 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
-import TransparentInfoDiv from './components/InfoDiv';
-import HtmlTooltip from '../../components/HtmlTooltip';
+import { CustomSnack } from '../../components/SnackBar';
+import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import BondingDiscount from './components/BondingDiscount';
+import Countdown from 'react-countdown';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../components/SnackBar';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
-import BondingDiscount from './components/BondingDiscount';
-import UnderstandMore from './components/UnderstandMore';
-import { useMediaQuery } from 'react-responsive';
-import Countdown from 'react-countdown';
+import HtmlTooltip from '../../components/HtmlTooltip';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
-import { Link } from 'react-router-dom';
+import TransparentInfoDiv from './components/InfoDiv';
+import UnderstandMore from './components/UnderstandMore';
 import useBasisCash from '../../hooks/useBasisCash';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
@@ -142,19 +142,15 @@ withStyles({
 const bondingDiscount = [
   {
     label: 'Current discount',
-    value: '0.2%',
+    value: '30%',
   },
   {
-    label: '1 day ago discount',
-    value: '5%',
+    label: 'Starting ARTHX Price',
+    value: '0.01$',
   },
   {
-    label: 'Estimated discount 1 hour later',
-    value: '~5%',
-  },
-  {
-    label: 'ARTHX Price',
-    value: '$7.55',
+    label: 'Discounted ARTHX Price',
+    value: '0.007$',
   },
 ];
 
@@ -194,12 +190,6 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const [timerHeader, setHeader] = useState<boolean>(true);
 
-  // useEffect(() => {
-  //   let arr: string[];
-  //   arr = defaultCollateralDropdownValues.filter((e) => e !== selectedCollateralCoin);
-  //   setCollateralDropDownValues(arr);
-  // }, [defaultCollateralDropdownValues, selectedCollateralCoin]);
-
   useEffect(() => {
     const onClick = () => {
       let event: TCalendarEvent = {
@@ -215,9 +205,10 @@ const Genesis = (props: WithSnackbarProps) => {
   }, []);
 
   const understandMore = [
-    'Commited collateral will go to ARTH protocol',
-    'Your collaterall is exchanged for ARTHX',
-    'There is bonding curve exchange rate which changes as genesis ends',
+    'ARTHX is a deflationary token that charges a 5% fee on every transfer.',
+    'ARTHX is minted whenever the protocol finds that it does not have enough collateral.',
+    'The discount decreases over time as more collateral is committed.',
+    'Users can either commit collateral or swap ARTH to receive ARTHX.',
   ];
 
   return (
@@ -307,7 +298,7 @@ const Genesis = (props: WithSnackbarProps) => {
           padding: '40px 0px',
         }}
       >
-        <PageHeading>{timerHeader ? 'JOIN GENESIS' : 'GENESIS'}</PageHeading>
+        <PageHeading>{timerHeader ? 'JOIN THE GENESIS' : 'GENESIS'}</PageHeading>
         {!timerHeader ? (
           <PageSubHeading>
             <div style={{}}>
@@ -467,7 +458,9 @@ const Genesis = (props: WithSnackbarProps) => {
                   </ReceiveContainer>
                 </div>
                 <Button
-                  text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                  text={
+                    type === 'Commit' ? 'Commit Collateral for ARTHX' : 'Swap ARTH for ARTHX'
+                  }
                   size={'lg'}
                   variant={'default'}
                   disabled={false}

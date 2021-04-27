@@ -544,29 +544,23 @@ const Boardrooms = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextForInfoTitle>Current Discount</TextForInfoTitle>
                       </div>
-                      <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                      <InputLabelSpanRight>30%</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
                   <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          1 day ago discount
-                          {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                        </TextForInfoTitle>
+                        <TextForInfoTitle>Current Price</TextForInfoTitle>
                       </div>
-                      <InputLabelSpanRight>5%</InputLabelSpanRight>
+                      <InputLabelSpanRight>0.01$</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
                   <div style={{ marginBottom: '8px' }}>
                     <OneLineInput>
                       <div style={{ flex: 1 }}>
-                        <TextForInfoTitle>
-                          Estimated Discount 1 hour later
-                          {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                        </TextForInfoTitle>
+                        <TextForInfoTitle>Discounted Price</TextForInfoTitle>
                       </div>
-                      <InputLabelSpanRight>~5%</InputLabelSpanRight>
+                      <InputLabelSpanRight>0.007$</InputLabelSpanRight>
                     </OneLineInput>
                   </div>
                   <div style={{ marginBottom: '12px' }}>

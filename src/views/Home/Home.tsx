@@ -25,8 +25,8 @@ const Home: React.FC = () => {
       >
         <ModalText>
           <b>
-            ARTH and ARTH Bonds are risky assets and there is a probability that you could lose
-            all your money. Do not invest if you are not aware of what you are doing.
+            ARTH and ARTHX are risky assets and there is a probability that you could lose all
+            your money. Do not invest if you are not aware of what you are doing.
           </b>
         </ModalText>
         <ModalText>
