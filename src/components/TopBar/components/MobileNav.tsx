@@ -36,7 +36,9 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-interface props { }
+interface props {
+  onClick: () => void;
+}
 const MobileNav = (props: props) => {
   // const { walletInfo: Wallet } = props
   const [netWrokType, setNetworkType] = React.useState('mainnet');
@@ -59,19 +61,19 @@ const MobileNav = (props: props) => {
     <StyledNav>
       {!walletInfo ? (
         <div style={{ width: '100%', background: '#1e1d1d', marginTop: -2 }}>
-          <StyledLink exact activeClassName="active" to="/genesis">
+          <StyledLink exact activeClassName="active" to="/genesis" onClick={() => props.onClick()}>
             Genesis
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/stats">
+          <StyledLink exact activeClassName="active" to="/stats" onClick={() => props.onClick()}>
             Analytics
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/mint">
+          <StyledLink exact activeClassName="active" to="/mint" onClick={() => props.onClick()}>
             Mint/Redeem
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/stabilize">
+          <StyledLink exact activeClassName="active" to="/stabilize" onClick={() => props.onClick()}>
             Stabilize
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/farming">
+          <StyledLink exact activeClassName="active" to="/farming" onClick={() => props.onClick()}>
             Farming
           </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">

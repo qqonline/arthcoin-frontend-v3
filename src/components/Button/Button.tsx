@@ -184,13 +184,13 @@ const StyledButton = styled.button<StyledButtonProps>`
     border: ${({ border }) => border.hover};
     border-radius: ${({ border }) => border.radiusHover}
   }
-  &:selected {
+  &:focus {
     color: ${({ fg }) => fg.selected};
     background: ${({ bg }) => bg.selected};
   }
-  &:focus: {
+  /*&:focus: {
     outline: none;
-  }
+  }*/
   &:disabled {
     color: ${({ fg }) => fg.disabled};
     background: ${({ bg }) => bg.disabled};

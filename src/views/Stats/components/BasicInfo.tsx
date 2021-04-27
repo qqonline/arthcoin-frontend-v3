@@ -146,7 +146,7 @@ const OneCardRight = styled.div`
   flex: 0.5;
   padding: 32px 32px;
   @media (max-width: 600px) {
-    padding: 16px 16px;
+    padding: 32px 24px;
   }
 `;
 
@@ -159,7 +159,7 @@ const OneCardLeft = styled.div`
   @media (max-width: 600px) {
     border-right: 0 solid #ffffff50;
     border-bottom: 0.5px solid #ffffff50;
-    padding: 16px 0;
-    margin: 0 16px;
+    padding: 32px 0;
+    margin: 0 24px;
   }
 `;

@@ -4,6 +4,18 @@ input {
   outline: none;
   font-family: 'Inter';
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .dynamicStatBorder {
   border-right: 1px solid rgba(255,255,255,0.12);
   border-bottom: none;
@@ -142,7 +154,7 @@ code {
 
 @media (max-width: 600px){
   .gdHKYe{
-    padding: 0 16px !important;
+    padding: 0 24px !important;
   }
 }
 
@@ -177,7 +189,7 @@ code {
   opacity: 0.1;
   top: 400px;
   /* animation: up-down 10s infinite alternate; */
-  background-image: url('./views/Home/images//gradient-circle.png');
+  background-image: url('views/Home/images//gradient-circle.png');
   background-position: center;
   background-size: cover;
   height: 100%;
@@ -191,7 +203,7 @@ code {
   opacity: 0.5;
   top: 400px;
   /* animation: up-down 10s infinite alternate; */
-  background-image: url('./views/Home/images//gradient-circle.png');
+  background-image: url('views/Home/images//gradient-circle.png');
   background-size: contain;
   height: 100%;
   max-width: 1024px;

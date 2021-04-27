@@ -176,8 +176,8 @@ const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
 
-  const [mintColl, setCollateralValue] = useState<number>(0.0);
-  const [arthValue, setArthValue] = useState<number>(0.0);
+  const [mintColl, setCollateralValue] = useState<string>('0.0');
+  const [arthValue, setArthValue] = useState<string>('0.0');
   const [balance] = useState<number>(0);
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
@@ -378,7 +378,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     ILabelValue={'Enter Collateral'}
                     IBalanceValue={`Balance ${balance}`}
                     ILabelInfoValue={''}
-                    value={mintColl.toString()}
+                    // value={mintColl.toString()}
                     DefaultValue={mintColl.toString()}
                     LogoSymbol={selectedCollateralCoin}
                     hasDropDown={true}
@@ -387,7 +387,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(Number(val.replace(/[^0-9]/g, '')));
+                      setCollateralValue(String(Number(val)));
                     }}
                   />
                 ) : (
@@ -395,14 +395,14 @@ const Genesis = (props: WithSnackbarProps) => {
                     ILabelValue={'Enter ARTH'}
                     IBalanceValue={`Balance ${balance}`}
                     ILabelInfoValue={''}
-                    value={arthValue.toString()}
+                    // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(Number(val.replace(/[^0-9]/g, '')));
+                      setArthValue(String(Number(val)));
                     }}
                   />
                 )}

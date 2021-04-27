@@ -7,9 +7,13 @@ import FarmingCards from './FarmingCards';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
-const Banks: React.FC = () => {
-  const [selectedId, setId] = useState<number>(1);
-  let headerList = [
+interface ModeProps {
+  id: number, name: string, count: number
+}
+const Banks = () => {
+  let initMode = { id: 1, name: 'All', count: 3 }
+  const [mode, setMode] = useState<ModeProps>(initMode);
+  let headerList: ModeProps[] = [
     {
       id: 1,
       name: 'All',
@@ -33,7 +37,7 @@ const Banks: React.FC = () => {
       <PageHeader
         title="Farming"
         subtitle="Earn rewards by helping the protocol grow."
-        // learnMoreLink="#"
+      // learnMoreLink="#"
       />
       <Container size="lg">
         <div style={{ position: 'relative', display: 'flex' }}>
@@ -42,15 +46,15 @@ const Banks: React.FC = () => {
               {headerList.map((obj) => (
                 <TextDiv
                   style={
-                    selectedId === obj.id
+                    mode.name === obj.name
                       ? {
-                          background: selectedId === obj.id ? '#423B38' : 'transparent',
-                          border: '1px solid rgba(255, 255, 255, 0.08)',
-                        }
+                        background: mode.name === obj.name ? '#423B38' : 'transparent',
+                        border: '1px solid rgba(255, 255, 255, 0.08)'
+                      }
                       : {}
                   }
                   key={obj?.id}
-                  onClick={() => setId(obj?.id)}
+                  onClick={() => setMode(obj)}
                 >
                   <Text1>{obj?.name}</Text1>
                   <Text2>{obj?.count}</Text2>
@@ -62,7 +66,7 @@ const Banks: React.FC = () => {
         <div className="width-100 margin-bottom-30 margin-top-10" />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <FarmingCards />
+            <FarmingCards mode={mode} />
           </Grid>
         </Grid>
       </Container>
