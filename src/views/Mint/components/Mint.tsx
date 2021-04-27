@@ -425,11 +425,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 SymbolText={selectedCollateralCoin}
                                 inputMode={'numeric'}
                                 setText={(val: string) => {
-                                    if (val === '0' || val === '' || val === undefined) {
-                                        onBuyColletralValueChange('0');
-                                    } else {
-                                        onBuyColletralValueChange(val);
-                                    }
+                                    onBuyColletralValueChange(val);
                                 }}
                             />
                             <PlusMinusArrow>

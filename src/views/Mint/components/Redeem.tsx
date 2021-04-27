@@ -20,7 +20,7 @@ import CustomSuccessModal from '../../../components/CustomSuccesModal';
 interface IProps {
     setType: (type: 'Mint' | 'Redeem') => void;
 }
-const RedeemTabContent = (props: WithSnackbarProps &  IProps) => {
+const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
     useEffect(() => window.scrollTo(0, 0), []);
     const basisCash = useBasisCash();
@@ -166,7 +166,7 @@ const RedeemTabContent = (props: WithSnackbarProps &  IProps) => {
                                 hasDropDown={false}
                                 SymbolText={'ARTH'}
                                 inputMode={'decimal'}
-                                setText={(val: string) => setRedeemAmount(String(Number(val.replace(/[^0-9]/g, ''))))}
+                                setText={(val: string) => setRedeemAmount(String(Number(val)))}
                             />
                             <PlusMinusArrow>
                                 <img src={arrowDown} />
