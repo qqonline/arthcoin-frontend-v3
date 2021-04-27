@@ -30,7 +30,7 @@ import HtmlTooltip from '../../components/HtmlTooltip';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
-import useBasisCash from '../../hooks/useBasisCash';
+import useCore from '../../hooks/useCore';
 import CustomToolTip from '../../components/CustomTooltip';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
@@ -174,7 +174,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   const [mintColl, setCollateralValue] = useState<string>('0.0');
   const [arthValue, setArthValue] = useState<string>('0.0');

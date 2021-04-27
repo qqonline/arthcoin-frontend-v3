@@ -19,7 +19,7 @@ import theme from './theme';
 import Updaters from './state/Updaters';
 import Popups from './components/Popups';
 import config from './config';
-import useBasisCash from './hooks/useBasisCash';
+import useCore from './hooks/useCore';
 
 import './index.css';
 import './App.css';
@@ -100,7 +100,7 @@ const App: React.FC = () => {
 };
 
 const AppContent: React.FC = ({ children }) => {
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   // if (!!!account) return <UnlockWallet />;
   if (!basisCash) return <div>Loading</div>;

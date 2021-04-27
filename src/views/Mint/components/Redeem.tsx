@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useCore from '../../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -23,7 +23,7 @@ interface IProps {
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
     useEffect(() => window.scrollTo(0, 0), []);
-    const basisCash = useBasisCash();
+    const basisCash = useCore();
     const [redeemReceive, setRedeemReceive] = useState<string>('0');
     const [redeemAmount, setRedeemAmount] = useState<string>('0');
     const type = 'Redeem'

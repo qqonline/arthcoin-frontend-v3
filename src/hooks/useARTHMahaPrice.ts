@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import useBasisCash from './useBasisCash';
+import useCore from './useCore';
 import { BigNumber } from 'ethers';
 
 const useARTHMahaPrice = () => {
   const [price, setPrice] = useState<BigNumber>(BigNumber.from(1).pow(18));
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   const fetchCashPrice = useCallback(async () => {
     const { Treasury } = basisCash.contracts;

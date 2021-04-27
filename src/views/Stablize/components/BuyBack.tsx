@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useCore from '../../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -19,7 +19,7 @@ type Iprops = {
 }
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
   const [balance, setBalance] = useState<number>(0);
@@ -38,12 +38,12 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const ratio = 100;
 
   const onRedeemValueChange = (val: string) => {
-    if (val === ''){
+    if (val === '') {
       setReceiveAmount('0');
     }
     setRedeemAmount(val);
     const valInNumber = Number(val);
-    if (valInNumber){
+    if (valInNumber) {
       const temp = String(valInNumber * ratio);
       setReceiveAmount(temp);
     }
@@ -55,7 +55,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
-            <CustomToolTip/>
+            <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
             342.450K <HardChip>USDT</HardChip>{' '}
@@ -135,23 +135,23 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   };
 
   const recollatateralizeConatiner = () => {
-      return (
-        <LeftTopCardChecked
-          className={'custom-mahadao-box'}
-          style={{ height: 536 }}
-        >
-          <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-            <HeaderTitle>
-              {'Recollatateralize'}
-              <CustomToolTip/>
-            </HeaderTitle>
-            <HeaderSubtitle>
-              <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
-            </HeaderSubtitle>
-          </LeftTopCardHeader>
-          <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
-        </LeftTopCardChecked>
-      );
+    return (
+      <LeftTopCardChecked
+        className={'custom-mahadao-box'}
+        style={{ height: 536 }}
+      >
+        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
+          <HeaderTitle>
+            {'Recollatateralize'}
+            <CustomToolTip />
+          </HeaderTitle>
+          <HeaderSubtitle>
+            <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
+          </HeaderSubtitle>
+        </LeftTopCardHeader>
+        <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
+      </LeftTopCardChecked>
+    );
   };
 
   return (
@@ -169,7 +169,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       Stability Fee
-                      <CustomToolTip/>
+                      <CustomToolTip />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -180,7 +180,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       Trading Fee
-                      <CustomToolTip/>
+                      <CustomToolTip />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -254,7 +254,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-                // onClick={handleClose}
+              // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>

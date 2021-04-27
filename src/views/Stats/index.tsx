@@ -7,7 +7,7 @@ import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../hooks/useBasisCash';
+import useCore from '../../hooks/useCore';
 import { useMediaQuery } from 'react-responsive';
 import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
@@ -42,7 +42,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Home: React.FC = () => {
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     // const [cash, bond, share] = await Promise.all([
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <TextForInfoTitle>
             Collateral Ratio
-            <CustomToolTip/>
+            <CustomToolTip />
           </TextForInfoTitle>
           {/* </div> */}
           <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>

@@ -1,14 +1,13 @@
 import { Fetcher, Route, Token } from '@uniswap/sdk';
 import { useCallback, useEffect, useState } from 'react';
-import useBasisCash from './useBasisCash';
+import useCore from './useCore';
 
 import ERC20 from '../basis-cash/ERC20';
 import config from '../config';
 
-
 const useUniswapPrice = (assetA: ERC20, assetB: ERC20) => {
   const [price, setPrice] = useState<string>('-');
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   const fetchCashPrice = useCallback(async () => {
     const assetAT = new Token(config.chainId, assetA.address, 18);
@@ -20,7 +19,9 @@ const useUniswapPrice = (assetA: ERC20, assetB: ERC20) => {
   }, [assetA, assetB, basisCash.provider]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch uniswap price: ${err.stack}`));
+    fetchCashPrice().catch((err) =>
+      console.error(`Failed to fetch uniswap price: ${err.stack}`),
+    );
   }, [fetchCashPrice]);
 
   return price;

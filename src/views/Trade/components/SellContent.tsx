@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useCore from '../../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -14,7 +14,7 @@ import CustomToolTip from '../../../components/CustomTooltip';
 
 const SellContent = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   const [sellAmount, setSellAmount] = useState<string>('0.00');
   const [sellReceive, setSellReceive] = useState<string>('0.00');
@@ -30,24 +30,24 @@ const SellContent = (props: WithSnackbarProps) => {
   const ratio = 100;
 
   const onSellAmountChange = (val: string) => {
-    if (val === ''){
+    if (val === '') {
       setSellReceive('0');
     }
     setSellAmount(val);
     const valInNumber = Number(val);
-    if (valInNumber){
+    if (valInNumber) {
       const temp = String(valInNumber * ratio);
       setSellReceive(temp);
     }
   }
 
   const onReceiveAmountChange = (val: string) => {
-    if (val === ''){
+    if (val === '') {
       setSellAmount('0');
     }
     setSellReceive(val);
     const valInNumber = Number(val);
-    if (valInNumber){
+    if (valInNumber) {
       const temp = String(valInNumber * (1 / ratio));
       setSellAmount(temp);
     }
@@ -105,7 +105,7 @@ const SellContent = (props: WithSnackbarProps) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-                // onClick={handleClose}
+              // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -194,7 +194,7 @@ const SellContent = (props: WithSnackbarProps) => {
               <div style={{ flex: 1 }}>
                 <TextWithIcon>
                   Trading fee
-                  <CustomToolTip/>
+                  <CustomToolTip />
                 </TextWithIcon>
               </div>
               <OneLineInputwomargin>

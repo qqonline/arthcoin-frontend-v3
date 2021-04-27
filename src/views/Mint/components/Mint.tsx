@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useCore from '../../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -119,7 +119,7 @@ interface IProps {
 }
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
     useEffect(() => window.scrollTo(0, 0), []);
-    const basisCash = useBasisCash();
+    const basisCash = useCore();
     const colletralRatio = 86;
     const [mintColl, setCollateralValue] = useState<string>('0');
     const [mintArthxShare, setArthxShare] = useState<string>('0');

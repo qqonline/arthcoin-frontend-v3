@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
+import useCore from '../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
 import shushiswap from '../../assets/svg/sushiswapLogo.svg';
@@ -12,7 +12,7 @@ import BuyContent from './components/BuyContent';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
 
   const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import useBasisCash from '../../../hooks/useBasisCash';
+import useCore from '../../../hooks/useCore';
 import TokenSymbol from '../../TokenSymbol';
 import { IconButton } from '@material-ui/core';
 import metamask from '../../../assets/svg/metamask.svg';
@@ -18,7 +18,7 @@ interface props {
 }
 
 const AccountModal: React.FC<props> = (props) => {
-  const core = useBasisCash();
+  const core = useCore();
 
   const { account } = useWallet();
 

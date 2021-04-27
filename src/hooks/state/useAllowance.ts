@@ -3,17 +3,15 @@ import { useWallet } from 'use-wallet';
 import { BigNumber } from 'ethers';
 import ERC20 from '../../basis-cash/ERC20';
 import config from '../../config';
-import useBasisCash from '../useBasisCash';
-
+import useCore from '../useCore';
 
 const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) => {
   const [allowance, setAllowance] = useState<BigNumber>(BigNumber.from(0));
   const { account } = useWallet();
-  const basisCash = useBasisCash();
-
+  const basisCash = useCore();
 
   const fetchAllowance = useCallback(async () => {
-    if (!account) return
+    if (!account) return;
     const allowance = await token.allowance(account, spender);
     console.log(`Allowance: ${allowance.toString()} ${token.symbol} for ${spender}`);
     setAllowance(allowance);
@@ -21,7 +19,11 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
 
   useEffect(() => {
     if (basisCash.isUnlocked) {
-      fetchAllowance().catch((err) => console.log(`Failed to fetch allowance for ${token.address} ${account} ${spender}: ${err.stack}`));
+      fetchAllowance().catch((err) =>
+        console.log(
+          `Failed to fetch allowance for ${token.address} ${account} ${spender}: ${err.stack}`,
+        ),
+      );
 
       let refreshInterval = setInterval(fetchAllowance, config.refreshInterval);
       return () => clearInterval(refreshInterval);

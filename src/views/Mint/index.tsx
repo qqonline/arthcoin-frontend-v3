@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
+import useCore from '../../hooks/useCore';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import MintTabContent from './components/Mint'
 import RedeemTabContent from './components/Redeem'
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
@@ -19,7 +19,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <GradientDiv />
       <Container size="lg">
         {type === 'Mint' && <MintTabContent setType={(type: 'Mint' | 'Redeem') => setType(type)} />}
-        {type === 'Redeem' && <RedeemTabContent setType={(type: 'Mint' | 'Redeem') => setType(type)}/>}
+        {type === 'Redeem' && <RedeemTabContent setType={(type: 'Mint' | 'Redeem') => setType(type)} />}
         {/* </LeftTopCard> */}
       </Container>
     </>

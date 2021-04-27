@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
+import useCore from '../../hooks/useCore';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
 
 const Stabelize = () => {
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
 
   useEffect(() => window.scrollTo(0, 0), []);

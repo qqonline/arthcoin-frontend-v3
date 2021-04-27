@@ -21,7 +21,7 @@ import CustomModal from '../../../../components/CustomModal';
 import TransparentInfoDiv from '../InfoDiv';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../../components/SnackBar';
-import useBasisCash from '../../../../hooks/useBasisCash';
+import useCore from '../../../../hooks/useCore';
 
 type props = {
   selectedPair: {
@@ -110,7 +110,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
   const { selectedPair, onBack } = props;
   console.log(selectedPair);
   const [simpleType, setType] = useState<boolean>(true);
-  const basisCash = useBasisCash();
+  const basisCash = useCore();
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(30);
   const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' });
