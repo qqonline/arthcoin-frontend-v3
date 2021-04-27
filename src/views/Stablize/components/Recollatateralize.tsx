@@ -360,7 +360,7 @@ const PrimaryText = styled.p`
   font-weight: 600;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.64);
-  margin: 0px;
+  margin: 0;
   flex: 1;
 `;
 
@@ -378,7 +378,7 @@ const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
-  margin: 10px 0px;
+  margin: 10px 0;
 `;
 
 const HeaderTitle = styled.div`
@@ -408,7 +408,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  margin: 4px 0px 0px 0px;
+  margin: 4px 0 0 0;
 `;
 
 const HardChip = styled.div`
@@ -444,7 +444,7 @@ const RightTopCardHeader = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  margin: 12px 0px;
+  margin: 12px 0;
 `;
 
 const LeftTopCardHeader = styled.div`
@@ -452,16 +452,6 @@ const LeftTopCardHeader = styled.div`
   padding-bottom: 32px;
 `;
 const LeftTopCardContainer = styled.div``;
-const TabContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 32px 12px;
-  width: 100px;
-  height: 80px;
-  z-index: 1;
-  cursor: pointer;
-`;
 
 const PlusMinusArrow = styled.div`
   width: 100%;
@@ -481,7 +471,7 @@ const OneLineInput = styled.div`
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-start;
-  margin: 8px 0px 0px 0px;
+  margin: 8px 0 0 0;
 `;
 
 const OneLineInputwomargin = styled.div`
@@ -508,17 +498,6 @@ const TextForInfoTitle = styled.div`
   line-height: 150%;
   color: #ffffff;
   opacity: 0.64;
-`;
-
-const LearnMore = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  opacity: 0.64;
-  margin: 8px 0px;
-  color: #f47f57;
 `;
 
 const InputLabelSpanRight = styled.span`
