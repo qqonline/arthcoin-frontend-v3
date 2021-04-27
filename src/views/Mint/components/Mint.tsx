@@ -141,7 +141,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         if (val === '') {
             setReceive('0');
         }
-        setCollateralValue(val.replace(/[^0-9]/g, ''));
+        setCollateralValue(val);
         const valueInNumber = Number(val);
         if (valueInNumber) {
             let arthxShareTemp =
@@ -156,8 +156,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         if (val === '') {
             setReceive('0');
         }
-        setArthxShare(val.replace(/[^0-9]/g, ''));
-        const valueInNumber = Number(val.replace(/[^0-9]/g, ''));
+        setArthxShare(val);
+        const valueInNumber = Number(val);
         if (valueInNumber) {
             let colletralTemp =
                 (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
