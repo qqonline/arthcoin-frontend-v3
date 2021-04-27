@@ -41,7 +41,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     if (val === ''){
       setReceiveAmount('0');
     }
-    setRedeemAmount(val.replace(/[^0-9]/g, ''));
+    setRedeemAmount(val);
     const valInNumber = Number(val);
     if (valInNumber){
       const temp = String(valInNumber * ratio);
@@ -235,8 +235,8 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
-            rightLabelUnit={'USDT'}
-            rightLabelValue={'1000.00'}
+            rightLabelUnit={selectedBuybackReceiveAmountCoin}
+            rightLabelValue={receiveAmount.toString()}
           />
 
           <Grid container spacing={2} style={{ marginTop: '32px' }}>

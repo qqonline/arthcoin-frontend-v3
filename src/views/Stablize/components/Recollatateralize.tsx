@@ -45,7 +45,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveMAHA('0');
       setReceiveBonus('0');
     }
-    setCollateralAmount(val.replace(/[^0-9]/g, ''));
+    setCollateralAmount(val);
     const valInNumber = Number(val);
     if (valInNumber){
       setReceiveBonus(String(valInNumber * bonusRatio));
