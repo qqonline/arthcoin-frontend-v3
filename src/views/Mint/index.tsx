@@ -170,16 +170,13 @@ const Boardrooms = (props: WithSnackbarProps) => {
   );
 
   const onBuyColletralValueChange = async (val: string) => {
-    console.log('1', val)
     const valueInNumber = Number(val);
-    console.log('2', valueInNumber)
     setCollateralValue(valueInNumber);
     let arthxShareTemp =
       (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
     setArthxShare(arthxShareTemp);
     setReceive(arthxShareTemp + valueInNumber);
   };
-
   const onARTHXValueChange = async (val: string) => {
     const valueInNumber = Number(val.replace(/[^0-9]/g, ''));
     setArthxShare(valueInNumber);
@@ -212,8 +209,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
-                // value={mintColl.toString()}
-                DefaultValue={mintColl.toString()}
+                value={mintColl.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -238,7 +235,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
                 IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={'How can i get it?'}
                 href={'https://www.google.com/'}
-                DefaultValue={mintArthxShare.toString()}
+                value={mintArthxShare.toString()}
+                // ILabelInfoValue={'How can i get it?'}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -253,8 +252,9 @@ const Boardrooms = (props: WithSnackbarProps) => {
               <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${balance}`}
+                value={mintReceive.toString()}
                 ILabelInfoValue={''}
-                DefaultValue={mintReceive.toString()}
+                DefaultValue={'0'}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
