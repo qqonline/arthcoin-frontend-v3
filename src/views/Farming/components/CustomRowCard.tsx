@@ -86,7 +86,7 @@ const CustomRowCard: React.FC<props> = (props) => {
         <div style={{ display: 'flex' }}>
           Earned:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {'12.3 MAHA'}
+            {props?.earned ||'0.0 MAHA'}
           </TableMainTextStyle>
           <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
             Claim MAHA

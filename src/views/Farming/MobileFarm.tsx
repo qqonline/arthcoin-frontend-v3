@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
@@ -24,7 +24,10 @@ interface IProps {
 }
 
 export const MobileFarm = (props: IProps) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(props?.deposited);
+  useEffect(()=>{
+    setOpen(props?.deposited)
+  },[props?.deposited])
   // const logos = [bank.earnTokenName];
   // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
   // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');

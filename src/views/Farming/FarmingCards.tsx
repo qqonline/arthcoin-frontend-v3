@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import CustomRowCard from './components/CustomRowCard';
@@ -9,10 +9,79 @@ import { useMediaQuery } from 'react-responsive';
 import { MobileFarm } from './MobileFarm';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
+interface ModeProps {
+  id: number, name: string, count: number
+}
 
-const BankCardsV2 = (props: WithSnackbarProps) => {
+interface FarmCard {
+  id: number,
+  type: string,
+  pair: [string, string],
+  walletUnit: string,
+  walletValue: string,
+  apy: string,
+  poolDur: string,
+  deposited: boolean,
+  poolEndDate: number,
+  lockedStake: string,
+  earned: string
+}
+interface IProps {
+  mode?: ModeProps;
+}
+const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
+  console.log(props.mode)
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [openModal, setOpenModal] = useState<boolean>(true);
+  let dummyJSON: FarmCard[] = [
+    {
+      id: 1,
+      type: 'ARTH Staking',
+      pair: ['MAHA', 'ARTH'],
+      walletUnit: 'ARTH-MAHA LP',
+      walletValue: '12.2',
+      apy: '40%',
+      poolDur: '65 Days',
+      deposited: false,
+      poolEndDate: Date.now() + 550000000,
+      lockedStake: '0 ARTH-MAHA LP',
+      earned: '12 MAHA'
+    },
+    {
+      id: 2,
+      type: 'ARTHX Staking',
+      pair: ['MAHA', 'ARTHX'],
+      walletUnit: 'ARTHX-MAHA LP',
+      walletValue: '1222.2',
+      apy: '4%',
+      poolDur: '6 Days',
+      deposited: true,
+      poolEndDate: Date.now() + 550000000,
+      lockedStake: '0 ARTH-MAHA LP',
+      earned: '12 MAHA'
+    },
+    {
+      id: 3,
+      type: 'ARTH Staking',
+      pair: ['MAHA', 'ARTH'],
+      walletUnit: 'ARTH-MAHA LP',
+      walletValue: '12.2',
+      apy: '40%',
+      poolDur: '65 Days',
+      deposited: false,
+      poolEndDate: Date.now() + 550000000,
+      lockedStake: '0 ARTH-MAHA LP',
+      earned: '12 MAHA'
+    },
+  ]
+  const [data, setData] = useState<FarmCard[]>([])
+
+  useEffect(() => {
+    if (props?.mode.name !== 'All') {
+      setData(dummyJSON.filter(obj => obj.type === props?.mode?.name))
+    }
+    else { setData(dummyJSON) }
+  }, [props.mode.name])
 
   const [action, setAction] = useState<'Deposit' | 'Withdraw' | 'Claim' | ''>('');
 
@@ -223,74 +292,36 @@ const BankCardsV2 = (props: WithSnackbarProps) => {
 
   const MobileCardRender = () => {
     return (
-      <MobileFarm
-        pair={['MAHA', 'ARTH']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        deposited={true}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-          // let options = {
-          //   content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
-          // }
-          // props.enqueueSnackbar('timepass', options)
-        }}
-      />
+      <>
+        {data.map(cardData => (
+          <MobileFarm
+            {...cardData}
+            onButtonClick={(data) => {
+              setOpenModal(true);
+              setAction(data);
+              // let options = {
+              //   content: () => (CustomSnack({ onClose: props.closeSnackbar, type: 'red', data1: `Deposition for ${123} ARTH cancelled` }))
+              // }
+              // props.enqueueSnackbar('timepass', options)
+            }}
+          />
+        ))}
+      </>
     );
   };
 
   const DesktopCardRender = () => {
     return (
       <div>
-      <CustomRowCard
-        pair={['ARTH', 'MAHA']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        deposited={false}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-        }}
-        lockedStake={'0 ARTH-MAHA LP'}
-      // earned={''}
-      />
-      <CustomRowCard
-        pair={['ARTH', 'MAHA']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        deposited={true}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-        }}
-        lockedStake={'0 ARTH-MAHA LP'}
-        // earned={''}
-      />
-      <CustomRowCard
-        pair={['ARTH', 'MAHA']}
-        walletUnit={'ARTH-MAHA LP'}
-        walletValue={'12.2'}
-        apy={'40%'}
-        poolDur={'65 Days'}
-        deposited={false}
-        poolEndDate={Date.now() + 550000000}
-        onButtonClick={(data) => {
-          setOpenModal(true);
-          setAction(data);
-        }}
-        lockedStake={'0 ARTH-MAHA LP'}
-        // earned={''}
-      />
+        {data.map(cardData => (
+          <CustomRowCard
+            {...cardData}
+            onButtonClick={(data) => {
+              setOpenModal(true);
+              setAction(data);
+            }}
+          />
+        ))}
       </div>
     );
   };
