@@ -8,7 +8,7 @@ import useCore from '../useCore';
 const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) => {
   const [allowance, setAllowance] = useState<BigNumber>(BigNumber.from(0));
   const { account } = useWallet();
-  const basisCash = useCore();
+  const core = useCore();
 
   const fetchAllowance = useCallback(async () => {
     if (!account) return;
@@ -18,7 +18,7 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
   }, [account, spender, token]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked) {
+    if (core.isUnlocked) {
       fetchAllowance().catch((err) =>
         console.log(
           `Failed to fetch allowance for ${token.address} ${account} ${spender}: ${err.stack}`,
@@ -28,7 +28,7 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
       let refreshInterval = setInterval(fetchAllowance, config.refreshInterval);
       return () => clearInterval(refreshInterval);
     }
-  }, [account, basisCash.isUnlocked, fetchAllowance, spender, token]);
+  }, [account, core.isUnlocked, fetchAllowance, spender, token]);
 
   useEffect(() => {
     if (account && spender && token) {

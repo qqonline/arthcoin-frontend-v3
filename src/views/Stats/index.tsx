@@ -42,29 +42,29 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Home: React.FC = () => {
-  const basisCash = useCore();
+  const core = useCore();
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     // const [cash, bond, share] = await Promise.all([
-    //   // basisCash.getCashStat(),
-    //   // basisCash.getBondStat(),
-    //   // basisCash.getShareStat(),
+    //   // core.getCashStat(),
+    //   // core.getBondStat(),
+    //   // core.getShareStat(),
     // ]);
     // // console.log('bond', bond)
     // setStats({ cash, bond, share });
   }, []);
 
   useEffect(() => {
-    if (basisCash) {
+    if (core) {
       fetchStats().catch((err) => console.error(err.stack));
       // @ts-ignore
     }
-  }, [basisCash, fetchStats]);
+  }, [core, fetchStats]);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
-  const cashAddr = useMemo(() => basisCash.ARTH.address, [basisCash]);
-  const shareAddr = useMemo(() => basisCash.MAHA.address, [basisCash]);
-  const bondAddr = useMemo(() => basisCash.ARTHX.address, [basisCash]);
+  const cashAddr = useMemo(() => core.ARTH.address, [core]);
+  const shareAddr = useMemo(() => core.MAHA.address, [core]);
+  const bondAddr = useMemo(() => core.ARTHX.address, [core]);
 
   const CollateralRatio = () => {
     return (
@@ -320,7 +320,7 @@ const Home: React.FC = () => {
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="MAHA"
-              uniswapInputAddress={basisCash.MAHA.address}
+              uniswapInputAddress={core.MAHA.address}
               symbol="MAHA"
               liquidity="$87,783,601"
               supplyLabel="Circulating Supply"
@@ -333,7 +333,7 @@ const Home: React.FC = () => {
               title="ARTH"
               symbol="ARTH"
               liquidity="$2,462,492"
-              uniswapInputAddress={basisCash.ARTH.address}
+              uniswapInputAddress={core.ARTH.address}
               supplyLabel="Circulating Supply"
               address={cashAddr}
               stat={cash}
@@ -344,7 +344,7 @@ const Home: React.FC = () => {
               title="ARTHX"
               symbol="ARTHX"
               liquidity={'$2,462,492'}
-              uniswapInputAddress={basisCash.ARTHX.address}
+              uniswapInputAddress={core.ARTHX.address}
               address={bondAddr}
               stat={bond}
             />

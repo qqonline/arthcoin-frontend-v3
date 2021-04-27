@@ -110,11 +110,11 @@ const RemovePool = (props: props & WithSnackbarProps) => {
   const { selectedPair, onBack } = props;
   console.log(selectedPair);
   const [simpleType, setType] = useState<boolean>(true);
-  const basisCash = useCore();
+  const core = useCore();
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(30);
   const isMobile = useMediaQuery({ query: '(max-device-width: 1284px)' });
-  const defaultDropdownValues = basisCash.getCollateralTypes();
+  const defaultDropdownValues = core.getCollateralTypes();
   const [balance, setBalance] = useState<number>(500.0);
   const [firstCoin, setFirstCoin] = useState<string>('ARTH');
   const [secondCoin, setSecondCoin] = useState<string>('ETH');

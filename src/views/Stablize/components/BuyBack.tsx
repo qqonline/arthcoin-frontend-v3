@@ -19,21 +19,21 @@ type Iprops = {
 }
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
-  const basisCash = useCore();
+  const core = useCore();
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
   const [balance, setBalance] = useState<number>(0);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
-    basisCash.getDefaultCollateral(),
+    core.getDefaultCollateral(),
   );
 
-  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   const ratio = 100;
 

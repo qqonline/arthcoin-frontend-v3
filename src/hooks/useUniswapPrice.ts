@@ -7,16 +7,16 @@ import config from '../config';
 
 const useUniswapPrice = (assetA: ERC20, assetB: ERC20) => {
   const [price, setPrice] = useState<string>('-');
-  const basisCash = useCore();
+  const core = useCore();
 
   const fetchCashPrice = useCallback(async () => {
     const assetAT = new Token(config.chainId, assetA.address, 18);
     const assetBT = new Token(config.chainId, assetB.address, 18);
 
-    const pair = await Fetcher.fetchPairData(assetAT, assetBT, basisCash.provider);
+    const pair = await Fetcher.fetchPairData(assetAT, assetBT, core.provider);
     const price = new Route([pair], assetBT);
     setPrice(price.midPrice.toSignificant(3));
-  }, [assetA, assetB, basisCash.provider]);
+  }, [assetA, assetB, core.provider]);
 
   useEffect(() => {
     fetchCashPrice().catch((err) =>

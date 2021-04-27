@@ -18,7 +18,7 @@ type Iprops = {
 }
 
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
-  const basisCash = useCore();
+  const core = useCore();
 
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
@@ -28,14 +28,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const [balance, setBalance] = useState<number>(0);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
-    basisCash.getDefaultCollateral(),
+    core.getDefaultCollateral(),
   );
 
   const shareRatio = 2;
   const mahaRatio = 3;
   const bonusRatio = 4;
 
-  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -55,7 +55,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   }
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   const buyBackContainer = () => {
     return (

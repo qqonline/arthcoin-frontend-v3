@@ -7,13 +7,13 @@ import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
 
 const Stabelize = () => {
-  const basisCash = useCore();
+  const core = useCore();
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   return (
     <>

@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { Context } from '../contexts/BasisCashProvider';
 
 const useCore = () => {
-  const { basisCash } = useContext(Context);
-  return basisCash;
+  const { core } = useContext(Context);
+  return core;
 };
 
 export default useCore;

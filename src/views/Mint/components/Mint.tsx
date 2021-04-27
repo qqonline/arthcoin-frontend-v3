@@ -119,7 +119,7 @@ interface IProps {
 }
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
     useEffect(() => window.scrollTo(0, 0), []);
-    const basisCash = useCore();
+    const core = useCore();
     const colletralRatio = 86;
     const [mintColl, setCollateralValue] = useState<string>('0');
     const [mintArthxShare, setArthxShare] = useState<string>('0');
@@ -133,9 +133,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const sliderClasses = useSliderStyles();
     const [sliderValue, setSliderValue] = React.useState(1);
     const [successModal, setSuccessModal] = useState<boolean>(false);
-    const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+    const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
     const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
-        basisCash.getDefaultCollateral(),
+        core.getDefaultCollateral(),
     );
     const onBuyColletralValueChange = async (val: string) => {
         if (val === '') {

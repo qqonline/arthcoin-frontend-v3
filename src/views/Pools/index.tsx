@@ -15,7 +15,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useCore();
+  const core = useCore();
   const [action, setAction] = useState<'Details' | 'Import' | 'Add' | 'Remove'>('Details');
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [noLiquidity, setNoLiquidity] = useState<boolean>(false);
@@ -66,7 +66,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   });
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   const NoLiquidityFound = () => {
     return (

@@ -4,17 +4,17 @@ import BasisCash from '../../basis-cash';
 import config from '../../config';
 
 export interface BasisCashContext {
-  basisCash: BasisCash;
+  core: BasisCash;
 }
 
-export const Context = createContext<BasisCashContext>({ basisCash: null });
+export const Context = createContext<BasisCashContext>({ core: null });
 
 export const BasisCashProvider: React.FC = ({ children }) => {
   const { ethereum, account } = useWallet();
-  const [basisCash, setBasisCash] = useState<BasisCash>();
+  const [core, setBasisCash] = useState<BasisCash>();
 
   useEffect(() => {
-    if (!basisCash) {
+    if (!core) {
       const basis = new BasisCash(config);
       if (account) {
         // wallet was unlocked at initialization
@@ -22,9 +22,9 @@ export const BasisCashProvider: React.FC = ({ children }) => {
       }
       setBasisCash(basis);
     } else if (account) {
-      basisCash.unlockWallet(ethereum, account);
+      core.unlockWallet(ethereum, account);
     }
-  }, [account, basisCash, ethereum]);
+  }, [account, core, ethereum]);
 
-  return <Context.Provider value={{ basisCash }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ core }}>{children}</Context.Provider>;
 };

@@ -100,10 +100,10 @@ const App: React.FC = () => {
 };
 
 const AppContent: React.FC = ({ children }) => {
-  const basisCash = useCore();
+  const core = useCore();
 
   // if (!!!account) return <UnlockWallet />;
-  if (!basisCash) return <div>Loading</div>;
+  if (!core) return <div>Loading</div>;
 
   return (
     <ModalsProvider>

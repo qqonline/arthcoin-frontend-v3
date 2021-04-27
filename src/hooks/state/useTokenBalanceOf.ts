@@ -6,14 +6,14 @@ import config from '../../config';
 
 const useTokenBalanceOf = (token: ERC20, address: string) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const basisCash = useCore();
+  const core = useCore();
 
   const fetchBalance = useCallback(async () => {
     setBalance(await token.balanceOf(address));
   }, [address, token]);
 
   useEffect(() => {
-    if (basisCash.isUnlocked) {
+    if (core.isUnlocked) {
       fetchBalance().catch((err) =>
         console.error(`Failed to fetch token balance: ${err.stack}`),
       );
@@ -21,7 +21,7 @@ const useTokenBalanceOf = (token: ERC20, address: string) => {
       let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshInterval);
     }
-  }, [basisCash.isUnlocked, fetchBalance, token]);
+  }, [core.isUnlocked, fetchBalance, token]);
 
   return balance;
 };

@@ -8,11 +8,11 @@ import RedeemTabContent from './components/Redeem'
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useCore();
+  const core = useCore();
   const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   return (
     <>

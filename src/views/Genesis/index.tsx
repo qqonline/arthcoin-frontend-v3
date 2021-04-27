@@ -174,7 +174,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useCore();
+  const core = useCore();
 
   const [mintColl, setCollateralValue] = useState<string>('0.0');
   const [arthValue, setArthValue] = useState<string>('0.0');
@@ -187,7 +187,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
-  const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
   const [timerHeader, setHeader] = useState<boolean>(true);
 

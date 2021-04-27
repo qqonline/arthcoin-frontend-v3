@@ -13,7 +13,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 const BuyContent = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useCore();
+  const core = useCore();
 
   const [balance, setBalance] = useState<number>(0);
 
@@ -23,10 +23,10 @@ const BuyContent = (props: WithSnackbarProps) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [selectedAmountCoin, setSelectedAmountCoin] = useState<string>('ETH');
-  const [dropDownValues] = useState<string[]>(basisCash.getCollateralTypes());
+  const [dropDownValues] = useState<string[]>(core.getCollateralTypes());
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   const ratio = 100;
 

@@ -12,14 +12,14 @@ import BuyContent from './components/BuyContent';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const basisCash = useCore();
+  const core = useCore();
 
   const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
 
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!basisCash) return <div />;
+  if (!core) return <div />;
 
   const TabContent = () => {
     return (

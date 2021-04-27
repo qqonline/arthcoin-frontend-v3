@@ -23,14 +23,14 @@ interface IProps {
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
     useEffect(() => window.scrollTo(0, 0), []);
-    const basisCash = useCore();
+    const core = useCore();
     const [redeemReceive, setRedeemReceive] = useState<string>('0');
     const [redeemAmount, setRedeemAmount] = useState<string>('0');
     const type = 'Redeem'
     const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-    const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
+    const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
     const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState(
-        basisCash.getDefaultCollateral(),
+        core.getDefaultCollateral(),
     );
     const [successModal, setSuccessModal] = useState<boolean>(false);
 

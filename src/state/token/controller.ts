@@ -1,28 +1,26 @@
-import { Dispatch } from '@reduxjs/toolkit'
-import { BasisCash } from '../../basis-cash/BasisCash'
-import * as Actions from './actions'
-import { IMulticallInput } from '../../basis-cash/Mulitcall'
+import { Dispatch } from '@reduxjs/toolkit';
+import { BasisCash } from '../../basis-cash/BasisCash';
+import * as Actions from './actions';
+import { IMulticallInput } from '../../basis-cash/Mulitcall';
 
-
-export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
+export const init = (core: BasisCash, dispatch: Dispatch) => {
   const registerVariable = (fn: string, reduxAction: any) => {
     const input: IMulticallInput = {
       key: `TOKEN:${fn}`,
-      target: basisCash.contracts.Treasury.address,
+      target: core.contracts.Treasury.address,
       call: [fn],
-      convertResult: val => val.toNumber()
-    }
+      convertResult: (val) => val.toNumber(),
+    };
 
-    basisCash.multicall.on(input.key, val => dispatch(reduxAction(val)))
+    core.multicall.on(input.key, (val) => dispatch(reduxAction(val)));
 
-    return input
-  }
+    return input;
+  };
 
   const calls: any[] = [
     // registerVariable('nextEpochPoint()(uint256)', Actions.updateNextEpochPoint),
     // registerVariable('getPeriod()(uint256)', Actions.updatePeriod),
     // registerVariable('getCurrentEpoch()(uint256)', Actions.updateCurrentEpoch),
-
     // // registerVariable('getReserve()(uint256)', Actions.updateGetReserve),
     // // registerVariable('getBondOraclePrice()(uint256)', Actions.updateGetBondOraclePrice),
     // registerVariable('getStabilityFee()(uint256)', Actions.updateGetStabilityFee),
@@ -52,7 +50,7 @@ export const init = (basisCash: BasisCash, dispatch: Dispatch) => {
     // registerVariable('arthBoardroomAllocationRate()(uint256)', Actions.updateArthBoardroomAllocationRate),
     // registerVariable('mahaLiquidityBoardroomAllocationRate()(uint256)', Actions.updateMahaLiquidityBoardroomAllocationRate),
     // registerVariable('stabilityFee()(uint256)', Actions.updateStabilityFee),
-  ]
+  ];
 
-  basisCash.multicall.addCalls(calls)
-}
+  core.multicall.addCalls(calls);
+};

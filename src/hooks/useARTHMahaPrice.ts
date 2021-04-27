@@ -4,16 +4,16 @@ import { BigNumber } from 'ethers';
 
 const useARTHMahaPrice = () => {
   const [price, setPrice] = useState<BigNumber>(BigNumber.from(1).pow(18));
-  const basisCash = useCore();
+  const core = useCore();
 
   const fetchCashPrice = useCallback(async () => {
-    const { Treasury } = basisCash.contracts;
+    const { Treasury } = core.contracts;
     setPrice(await Treasury.getArthMahaOraclePrice());
-  }, [basisCash]);
+  }, [core]);
 
   useEffect(() => {
     fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));
-  }, [setPrice, basisCash, fetchCashPrice]);
+  }, [setPrice, core, fetchCashPrice]);
 
   return price;
 };
