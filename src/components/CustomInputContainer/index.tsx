@@ -45,14 +45,14 @@ const CustomInputContainer: React.FC<props> = (props) => {
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const Redirection = () => {
-    if (props?.href){
-      return(
+    if (props?.href) {
+      return (
         <HrefLink href={props.href} target="__blank">
           <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </HrefLink>
       )
     } else if (props?.to) {
-      return(
+      return (
         <ToLink to={'/mint'}>
           <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </ToLink>
@@ -84,8 +84,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
-          defaultValue={value ? value : 0}
-          value={value}
+          defaultValue={DefaultValue ? DefaultValue : 0}
+          value={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{
             padding: '8px 12px',
