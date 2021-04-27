@@ -23,6 +23,7 @@ type Iprops = {
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const basisCash = useBasisCash();
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
+  const [receive, setReceive] = useState<string>('0.00');
   const [balance, setBalance] = useState<number>(0);
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -36,6 +37,20 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
+
+  const ratio = 100;
+
+  const onRedeemValueChange = (val: string) => {
+    if (val === ''){
+      setReceive('0');
+    }
+    setRedeemAmount(val.replace(/[^0-9]/g, ''));
+    const valInNumber = Number(val);
+    if (valInNumber){
+      const temp = String(valInNumber * ratio);
+      setReceive(temp);
+    }
+  }
 
   const buyBackContainer = () => {
     return (
@@ -61,7 +76,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => {
-              setRedeemAmount(val.replace(/[^0-9]/g, ''));
+              onRedeemValueChange(val)
             }}
           />
           <PlusMinusArrow>
@@ -71,7 +86,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             ILabelValue={'You receive'}
             IBalanceValue={''}
             ILabelInfoValue={''}
-            DefaultValue={'0.00'}
+            DefaultValue={receive.toString()}
             LogoSymbol={selectedBuybackReceiveAmountCoin}
             hasDropDown={true}
             SymbolText={selectedBuybackReceiveAmountCoin}

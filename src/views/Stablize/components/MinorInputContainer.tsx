@@ -45,7 +45,9 @@ const MinorInputContainer: React.FC<props> = (props) => {
       </ILabelContainer>
       <IFieldConatiner>
         <InputBase
-          defaultValue={DefaultValue}
+          placeholder={DefaultValue || '0'}
+          defaultValue={DefaultValue ? DefaultValue : 0}
+          value={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{ padding: '8px 12px', color: '#FFFFFF', flex: 1 }}
           disabled={true}
