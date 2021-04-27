@@ -18,6 +18,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 import CustomToolTip from '../../components/CustomTooltip';
 import SellContent from './components/SellContent';
+import BuyContent from './components/BuyContent';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -38,89 +39,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
 
-  const buyTabContent = () => {
-    return (
-      <Grid container style={{ marginTop: '24px' }}>
-        <Grid item lg={3} sm={'auto'}></Grid>
-        <Grid item lg={6} md={12} sm={12} xs={12}>
-          <LeftTopCard className={'custom-mahadao-container'}>
-            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <TabContainer>
-                <ActiveTab></ActiveTab>
-                <TabText>Buy</TabText>
-              </TabContainer>
-              <TabContainer onClick={() => setType('Sell')}>
-                <TabText>Sell</TabText>
-              </TabContainer>
-            </LeftTopCardHeader>
-            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
-              <CustomInputContainer
-                ILabelValue={'Enter Amount'}
-                IBalanceValue={`Balance ${balance}`}
-                // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={mintArthxShare.toString()}
-                LogoSymbol={selectedAmountCoin}
-                hasDropDown={true}
-                dropDownValues={dropDownValues}
-                ondropDownValueChange={(data) => {
-                  setSelectedAmountCoin(data);
-                }}
-                SymbolText={selectedAmountCoin}
-                inputMode={'decimal'}
-                setText={(val: string) => setArthxShare(Number(val.replace(/[^0-9]/g, '')))}
-                tagText={'MAX'}
-              />
-              <PlusMinusArrow>
-                <img src={arrowDown} />
-              </PlusMinusArrow>
-              <CustomInputContainer
-                ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${balance}`}
-                ILabelInfoValue={''}
-                DefaultValue={mintReceive.toString()}
-                LogoSymbol={'ARTH'}
-                hasDropDown={false}
-                SymbolText={'ARTH'}
-              />
-              <div>
-                <TcContainer>
-                  <OneLineInputwomargin>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>Liquidity on Uniswap</TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>$ 9,760,068</BeforeChip>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{ marginTop: '10px' }}>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>Price</TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>0.05</BeforeChip>
-                      <TagChips style={{ marginRight: '4px' }}>ARTH</TagChips>
-                      <BeforeChip>per</BeforeChip>
-                      <TagChips>ETH</TagChips>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                </TcContainer>
-                <Button
-                  text={'Buy'}
-                  size={'lg'}
-                  variant={'default'}
-                  disabled={false}
-                  onClick={() => setOpenModal(1)}
-                />
-              </div>
-            </LeftTopCardContainer>
-          </LeftTopCard>
-        </Grid>
-        <Grid item lg={3} sm={'auto'}></Grid>
-      </Grid>
-    );
-  };
-
-  const sellTabContent = () => {
+  const TabContent = () => {
     return (
       <Grid container style={{ marginTop: '24px' }}>
         <Grid item lg={3} sm={'auto'}></Grid>
@@ -128,79 +47,16 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer onClick={() => setType('Buy')}>
+                {type === 'Buy' && <ActiveTab />}
                 <TabText>Buy</TabText>
               </TabContainer>
-              <TabContainer>
-                <ActiveTab></ActiveTab>
+              <TabContainer onClick={() => setType('Sell')}>
+                {type === 'Sell' && <ActiveTab />}
                 <TabText>Sell</TabText>
               </TabContainer>
             </LeftTopCardHeader>
-            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
-              <CustomInputContainer
-                ILabelValue={'Enter Amount'}
-                IBalanceValue={'Balance 500.00'}
-                ILabelInfoValue={''}
-                DefaultValue={redeemAmount.toString()}
-                LogoSymbol={'ARTH'}
-                hasDropDown={false}
-                SymbolText={'ARTH'}
-                inputMode={'decimal'}
-                tagText={'MAX'}
-                setText={(val: string) => setRedeemAmount(Number(val.replace(/[^0-9]/g, '')))}
-              />
-              <PlusMinusArrow>
-                <img src={arrowDown} />
-              </PlusMinusArrow>
-              <CustomInputContainer
-                ILabelValue={'You receive'}
-                IBalanceValue={'Balance 500.00'}
-                // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={redeemAmount.toString()}
-                LogoSymbol={selectedAmountCoin}
-                dropDownValues={dropDownValues}
-                ondropDownValueChange={(data) => {
-                  setSelectedAmountCoin(data);
-                }}
-                hasDropDown={true}
-                SymbolText={selectedAmountCoin}
-              />
-              <div>
-                <TcContainer>
-                  <OneLineInputwomargin>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>Liquidity on Uniswap</TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>$ 9,760,068</BeforeChip>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{ marginTop: '10px' }}>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>Price</TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>0.05</BeforeChip>
-                      <TagChips>ARTH</TagChips>
-                      <BeforeChip>per</BeforeChip>
-                      <TagChips>ETH</TagChips>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                  <OneLineInputwomargin style={{ marginTop: '10px' }}>
-                    <div style={{ flex: 1 }}>
-                      <TextWithIcon>
-                        Trading fee
-                        <CustomToolTip/>
-                      </TextWithIcon>
-                    </div>
-                    <OneLineInputwomargin>
-                      <BeforeChip>0.05</BeforeChip>
-                      <TagChips>ARTH</TagChips>
-                    </OneLineInputwomargin>
-                  </OneLineInputwomargin>
-                </TcContainer>
-                <Button text={'Sell'} size={'lg'} onClick={() => setOpenModal(1)} />
-              </div>
-            </LeftTopCardContainer>
+            {type === 'Buy' && <BuyContent />}
+            {type === 'Sell' && <SellContent />}
           </LeftTopCard>
         </Grid>
         <Grid item lg={3} sm={'auto'}></Grid>
@@ -210,210 +66,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   return (
     <>
-      <CustomModal
-        closeButton
-        handleClose={() => setOpenModal(0)}
-        open={openModal === 1}
-        modalTitleStyle={{}}
-        modalContainerStyle={{}}
-        modalBodyStyle={{}}
-        title={`Confirm ${type}`}
-      >
-        {type === 'Buy' ? (
-          <>
-            <TransparentInfoDiv
-              labelData={`Your amount`}
-              rightLabelUnit={'ETH'}
-              rightLabelValue={mintColl.toString()}
-            />
-            {/*
-              <TransparentInfoDiv
-                labelData={`Your share supply`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={mintArthxShare.toString()}
-              />
-
-
-              <TransparentInfoDiv
-                labelData={`Trading Fee`}
-                labelToolTipData={'testing'}
-                rightLabelUnit={'USDT'}
-                rightLabelValue={'0.05'}
-              />*/}
-
-            <Divider
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                margin: '15px 0px',
-              }}
-              // variant={'middle'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`You will receive`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={'1000.00'}
-            />
-
-            {/* <TransparentInfoDiv
-                labelData={`You will receive share`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
-              /> */}
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Buy order for ${123} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Buy'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    setType('Sell');
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Buying ${123} ARTH`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <TransparentInfoDiv
-              labelData={`Your amount`}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={'1500.00'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`Trading Fee`}
-              rightLabelUnit={'5.87'}
-              rightLabelValue={'ARTH'}
-            />
-            {/*
-
-              <TransparentInfoDiv
-                labelData={`Stability Fee`}
-                labelToolTipData={'testing'}
-                rightLabelUnit={'MAHA'}
-                rightLabelValue={'0.05'}
-              />*/}
-
-            <Divider
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                margin: '15px 0px',
-              }}
-              // variant={'middle'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`You will receive`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'ETH'}
-              rightLabelValue={'5.00'}
-            />
-
-            {/*<TransparentInfoDiv
-                labelData={`You will receive share`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
-              />*/}
-
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Sell order for ${123} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Sell'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Selling ${123} ARTH`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
-            </div>
-          </>
-        )}
-      </CustomModal>
       <GradientDiv />
       <Container size="lg">
         <div>
@@ -460,10 +112,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
-        {type === 'Buy' && buyTabContent()}
-        {type === 'Sell' && sellTabContent()}
-        {/*{type === 'Sell' && <SellContent/>}*/}
-
+        {TabContent()}
         <Grid container style={{ marginTop: '16px' }}>
           <Grid item lg={3} sm={'auto'}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -488,7 +137,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </Container>
     </>
   );
-};
+}
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
