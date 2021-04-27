@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import Button from '../../Button/Button';
-import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
-import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import walletIcon from '../../../assets/svg/wallet-24.svg';
+
 interface AccountButtonProps { }
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
@@ -21,18 +20,8 @@ const truncateMiddle = function (fullStr: string, strLen: number, separator: str
   return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
 };
 
-const AccountButton: React.FC<AccountButtonProps> = (props) => {
+const AccountButton: React.FC<AccountButtonProps> = () => {
   const [showModal, toggleModal] = React.useState(false);
-  let dummyWallet = {
-    accountNumber: '123123123123123123',
-    mahaTokens: 50,
-    mahaDollars: 500,
-    arthTokens: 50,
-    arthDollars: 500,
-    arthxTokens: 50,
-    arthxDollars: 500,
-  }
-
   const { account, connect } = useWallet();
 
   return (
