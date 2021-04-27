@@ -95,7 +95,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           }}
           type={'number'}
           onChange={(event) => {
-            props.setText(event.target.value);
+            props?.setText(event.target.value);
           }}
         />
         {tagText !== '' && <MaxTagConatiner>{tagText}</MaxTagConatiner>}
