@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Container from '../../components/Container';
-import useBasisCash from '../../hooks/useBasisCash';
+import useBasisCash from '../../../hooks/useBasisCash';
 import Grid from '@material-ui/core/Grid';
-import Button from '../../components/Button';
-import arrowDown from '../../assets/svg/arrowDown.svg';
-import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
-import shushiswap from '../../assets/svg/sushiswapLogo.svg';
-
+import Button from '../../../components/Button';
+import arrowDown from '../../../assets/svg/arrowDown.svg';
 import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './components/InfoDiv';
-
-import CustomInputContainer from '../../components/CustomInputContainer';
-import CustomModal from '../../components/CustomModal';
-import { CustomSnack } from '../../components/SnackBar';
+import TransparentInfoDiv from './InfoDiv';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+import CustomModal from '../../../components/CustomModal';
+import { CustomSnack } from '../../../components/SnackBar';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import CallMadeIcon from '@material-ui/icons/CallMade';
-import CustomToolTip from '../../components/CustomTooltip';
-import SellContent from './components/SellContent';
+import CustomToolTip from '../../../components/CustomTooltip';
 
-const Boardrooms = (props: WithSnackbarProps) => {
+const SellContent = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [mintColl, setCollateralValue] = useState<number>(0);
@@ -28,7 +21,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   const [mintReceive, setReceive] = useState<number>(0);
   const [redeemAmount, setRedeemAmount] = useState<number>(0);
 
-  const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
+  const [type, setType] = useState<'Buy' | 'Sell'>('Sell');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
 
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
@@ -209,7 +202,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   };
 
   return (
-    <>
+    <div>
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -219,274 +212,104 @@ const Boardrooms = (props: WithSnackbarProps) => {
         modalBodyStyle={{}}
         title={`Confirm ${type}`}
       >
-        {type === 'Buy' ? (
-          <>
-            <TransparentInfoDiv
-              labelData={`Your amount`}
-              rightLabelUnit={'ETH'}
-              rightLabelValue={mintColl.toString()}
-            />
-            {/*
-              <TransparentInfoDiv
-                labelData={`Your share supply`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={mintArthxShare.toString()}
-              />
+        <>
+          <TransparentInfoDiv
+            labelData={`Your amount`}
+            rightLabelUnit={'ARTH'}
+            rightLabelValue={'1500.00'}
+          />
 
-
-              <TransparentInfoDiv
-                labelData={`Trading Fee`}
-                labelToolTipData={'testing'}
-                rightLabelUnit={'USDT'}
-                rightLabelValue={'0.05'}
-              />*/}
-
-            <Divider
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                margin: '15px 0px',
-              }}
-              // variant={'middle'}
-            />
+          <TransparentInfoDiv
+            labelData={`Trading Fee`}
+            rightLabelUnit={'5.87'}
+            rightLabelValue={'ARTH'}
+          />
+          {/*
 
             <TransparentInfoDiv
-              labelData={`You will receive`}
+              labelData={`Stability Fee`}
+              labelToolTipData={'testing'}
+              rightLabelUnit={'MAHA'}
+              rightLabelValue={'0.05'}
+            />*/}
+
+          <Divider
+            style={{
+              background: 'rgba(255, 255, 255, 0.08)',
+              margin: '15px 0px',
+            }}
+            // variant={'middle'}
+          />
+
+          <TransparentInfoDiv
+            labelData={`You will receive`}
+            // labelToolTipData={'testing'}
+            rightLabelUnit={'ETH'}
+            rightLabelValue={'5.00'}
+          />
+
+          {/*<TransparentInfoDiv
+              labelData={`You will receive share`}
               // labelToolTipData={'testing'}
-              rightLabelUnit={'ARTH'}
+              rightLabelUnit={'ARTHX'}
               rightLabelValue={'1000.00'}
-            />
+            />*/}
 
-            {/* <TransparentInfoDiv
-                labelData={`You will receive share`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
-              /> */}
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Buy order for ${123} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Buy'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    setType('Sell');
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Buying ${123} ARTH`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
+          <div
+            style={{
+              flexDirection: 'row',
+              display: 'flex',
+              width: '100%',
+              marginTop: '10%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8,
+            }}
+          >
+            <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => {
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'red',
+                        data1: `Sell order for ${123} ARTH cancelled`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                }}
+                // onClick={handleClose}
+              />
             </div>
-          </>
-        ) : (
-          <>
-            <TransparentInfoDiv
-              labelData={`Your amount`}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={'1500.00'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`Trading Fee`}
-              rightLabelUnit={'5.87'}
-              rightLabelValue={'ARTH'}
-            />
-            {/*
-
-              <TransparentInfoDiv
-                labelData={`Stability Fee`}
-                labelToolTipData={'testing'}
-                rightLabelUnit={'MAHA'}
-                rightLabelValue={'0.05'}
-              />*/}
-
-            <Divider
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                margin: '15px 0px',
-              }}
-              // variant={'middle'}
-            />
-
-            <TransparentInfoDiv
-              labelData={`You will receive`}
-              // labelToolTipData={'testing'}
-              rightLabelUnit={'ETH'}
-              rightLabelValue={'5.00'}
-            />
-
-            {/*<TransparentInfoDiv
-                labelData={`You will receive share`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'ARTHX'}
-                rightLabelValue={'1000.00'}
-              />*/}
-
-            <div
-              style={{
-                flexDirection: 'row',
-                display: 'flex',
-                width: '100%',
-                marginTop: '10%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1, width: '50%', marginRight: 10 }}>
-                <Button
-                  variant={'transparent'}
-                  text="Cancel"
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'red',
-                          data1: `Sell order for ${123} ARTH cancelled`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                  // onClick={handleClose}
-                />
-              </div>
-              <div style={{ width: '50%', marginLeft: 10 }}>
-                <Button
-                  text={'Confirm Sell'}
-                  // textStyles={{ color: '#F5F5F5' }}
-                  size={'lg'}
-                  onClick={() => {
-                    setOpenModal(0);
-                    let options = {
-                      content: () =>
-                        CustomSnack({
-                          onClose: props.closeSnackbar,
-                          type: 'green',
-                          data1: `Selling ${123} ARTH`,
-                        }),
-                    };
-                    props.enqueueSnackbar('timepass', options);
-                  }}
-                />
-              </div>
+            <div style={{ width: '50%', marginLeft: 10 }}>
+              <Button
+                text={'Confirm Sell'}
+                // textStyles={{ color: '#F5F5F5' }}
+                size={'lg'}
+                onClick={() => {
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'green',
+                        data1: `Selling ${123} ARTH`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                }}
+              />
             </div>
-          </>
-        )}
+          </div>
+        </>
       </CustomModal>
-      <GradientDiv />
-      <Container size="lg">
-        <div>
-          <PageHeading>TRADE</PageHeading>
-          <PageSubHeading>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </PageSubHeading>
-        </div>
-        <Grid container>
-          <Grid item lg={3}></Grid>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
-            <RadioSelectionConatiner>
-              <RadioSubConatiner
-                onClick={() => {
-                  if (selectedSwap === 'Sushiswap') {
-                    setSelectedSwap('Uniswap');
-                  }
-                }}
-              >
-                {selectedSwap === 'Uniswap' && <ActiveRadio />}
-                <RadioText>
-                  <RadioLogo>
-                    <img src={uniswapLogo} style={{ marginTop: '-6px' }} />
-                  </RadioLogo>
-                  Uniswap
-                </RadioText>
-              </RadioSubConatiner>
-              <RadioSubConatiner
-                onClick={() => {
-                  if (selectedSwap === 'Uniswap') {
-                    setSelectedSwap('Sushiswap');
-                  }
-                }}
-              >
-                {selectedSwap === 'Sushiswap' && <ActiveRadio />}
-                <RadioText>
-                  <RadioLogo>
-                    <img src={shushiswap} />
-                  </RadioLogo>
-                  Sushiswap
-                </RadioText>
-              </RadioSubConatiner>
-            </RadioSelectionConatiner>
-          </Grid>
-          <Grid item lg={3}></Grid>
-        </Grid>
-        {type === 'Buy' && buyTabContent()}
-        {type === 'Sell' && sellTabContent()}
-        {/*{type === 'Sell' && <SellContent/>}*/}
-
-        <Grid container style={{ marginTop: '16px' }}>
-          <Grid item lg={3} sm={'auto'}></Grid>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
-            <CustomInfoCard className={'custom-mahadao-box'}>
-              <CustomInfoCardDetails>
-                <Grid container>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <InfoBoxTitle>ETH-ARTH Uniswap pool</InfoBoxTitle>
-                    <InfoBoxSubTitle>Provide liquidity to ETH-ARTH on uniswap</InfoBoxSubTitle>
-                  </Grid>
-                </Grid>
-              </CustomInfoCardDetails>
-              <CustomInfoCardButton>
-                <img src={uniswapLogo} style={{ marginTop: '-6px', marginRight: '10px' }} />
-                <span>Add liquidity on Uniswap</span>
-                <CallMadeIcon style={{ fontSize: 15, marginLeft: '10px' }} />
-              </CustomInfoCardButton>
-            </CustomInfoCard>
-          </Grid>
-          <Grid item lg={3} sm={'auto'}></Grid>
-        </Grid>
-      </Container>
-    </>
+      {sellTabContent()}
+    </div>
   );
 };
 
@@ -711,4 +534,4 @@ const CustomInfoCardDetails = styled.div`
   margin: 10px 0;
 `;
 
-export default withSnackbar(Boardrooms);
+export default withSnackbar(SellContent);
