@@ -131,7 +131,7 @@ const TopBar: React.FC = () => {
                 )}
               </div>
             </HideOnBigScreen>
-            {showMobileMenu && <MobileNav />}
+            {showMobileMenu && <MobileNav onClick={() => toggleMobileMenu(false)} />}
           </StyledTopBarInner>
         </Container>
       </StyledTopBar>

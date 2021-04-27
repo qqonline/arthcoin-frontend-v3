@@ -8,7 +8,7 @@ import Recollatateralize from './components/Recollatateralize';
 
 const Boardrooms = () => {
   const basisCash = useBasisCash();
-  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
+  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -21,6 +21,7 @@ const Boardrooms = () => {
       <StabilizePageHeader
         title="Stabilize"
         subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
+        mobile
       />
       <Container size="lg" margin={'10px 0px'}>
         {type === "Buyback" &&

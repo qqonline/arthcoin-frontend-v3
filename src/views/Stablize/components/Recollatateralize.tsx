@@ -61,7 +61,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     return (
       <LeftTopCardChecked
         className={'custom-mahadao-box'}
-        style={{ height: 546 }}>
+        style={{ height: 570 }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
@@ -172,87 +172,84 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 
   return (
     <div>
-
-      <Grid container spacing={3}>
-        <Grid container lg={8}>
-          <Grid item lg={6}>
+      <Grid container>
+        <Grid container lg={8} md={12} sm={12} xs={12}>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
             {recollatateralizeConatiner()}
           </Grid>
-          <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
-            <RightTopCard
-              className={'custom-mahadao-box'}
-              style={{ height: 546 }}>
-                <RightTopCardHeader>Bonding Curve Discount on ARTHX</RightTopCardHeader>
-                <div style={{ marginBottom: '8px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>Current Discount</TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>0.2%</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-                <div style={{ marginBottom: '8px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>
-                        1 day ago discount
-                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                      </TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>5%</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-                <div style={{ marginBottom: '8px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>
-                        Estimated Discount 1 hour later
-                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                      </TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>~5%</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-                <div style={{ marginBottom: '12px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>
-                        ARTHX Price
-                        {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
-                      </TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>$7.55</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-                <RightTopCardHeader style={{ marginTop: 20 }}>
-                  Current Reward Rates
-                </RightTopCardHeader>
-                <div style={{ marginBottom: '12px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>
-                        Bonus Rate
-                        <CustomToolTip/>
-                      </TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>0.2%</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-                <div style={{ marginBottom: '12px' }}>
-                  <OneLineInput>
-                    <div style={{ flex: 1 }}>
-                      <TextForInfoTitle>
-                        MAHA Reward
-                        <CustomToolTip/>
-                      </TextForInfoTitle>
-                    </div>
-                    <InputLabelSpanRight>5%</InputLabelSpanRight>
-                  </OneLineInput>
-                </div>
-              </RightTopCard>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <RightTopCard className={'custom-mahadao-box'}>
+              <RightTopCardHeader>Bonding Curve Discount on ARTHX</RightTopCardHeader>
+              <div style={{ marginBottom: '8px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>Current Discount</TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+              <div style={{ marginBottom: '8px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>
+                      1 day ago discount
+                      {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                    </TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>5%</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+              <div style={{ marginBottom: '8px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>
+                      Estimated Discount 1 hour later
+                      {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                    </TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>~5%</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+              <div style={{ marginBottom: '12px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>
+                      ARTHX Price
+                      {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
+                    </TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>$7.55</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+              <RightTopCardHeader style={{ marginTop: 20 }}>
+                Current Reward Rates
+              </RightTopCardHeader>
+              <div style={{ marginBottom: '12px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>
+                      Bonus Rate
+                      <CustomToolTip/>
+                    </TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+              <div style={{ marginBottom: '12px' }}>
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextForInfoTitle>
+                      MAHA Reward
+                      <CustomToolTip/>
+                    </TextForInfoTitle>
+                  </div>
+                  <InputLabelSpanRight>5%</InputLabelSpanRight>
+                </OneLineInput>
+              </div>
+            </RightTopCard>
           </Grid>
         </Grid>
-        <Grid item lg={4} style={{ marginTop: -12 }}>
+        <Grid item lg={4} md={12} sm={12} xs={12}>
           {buyBackContainer()}
         </Grid>
       </Grid>
@@ -433,9 +430,23 @@ const LeftTopCard = styled.div`
 
 const LeftTopCardChecked = styled.div`
   padding: 0 !important;
+  margin-left: 12px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: 16px;
+  }
 `;
 
-const RightTopCard = styled.div``;
+const RightTopCard = styled.div`
+  height: 570px;
+  z-index: -1;
+  margin-left: -5px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: -10px;
+    height: auto;
+  }
+`;
 
 const RightTopCardHeader = styled.div`
   font-family: Inter;

@@ -156,16 +156,13 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   return (
     <div>
-      <Grid container spacing={3}>
-        <Grid container lg={8}>
-          <Grid item lg={6}>
+      <Grid container>
+        <Grid container lg={8} md={12} sm={12} xs={12}>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
             {buyBackContainer()}
           </Grid>
-          <Grid item lg={6} style={{ marginLeft: -5, zIndex: -1 }}>
-            <RightTopCard
-              className={'custom-mahadao-box'}
-              style={{ height: 536 }}
-            >
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <RightTopCard className={'custom-mahadao-box'}>
               <RightTopCardHeader style={{}}>Current Fee Rates</RightTopCardHeader>
               <div style={{ marginBottom: '8px' }}>
                 <OneLineInput>
@@ -200,7 +197,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             </RightTopCard>
           </Grid>
         </Grid>
-        <Grid item lg={4} style={{ marginTop: -12 }}>
+        <Grid item lg={4} md={12} sm={12} xs={12}>
           {recollatateralizeConatiner()}
         </Grid>
       </Grid>
@@ -339,9 +336,23 @@ const LeftTopCard = styled.div`
 
 const LeftTopCardChecked = styled.div`
   padding: 0 !important;
+  margin-left: 12px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: 16px;
+  }
 `;
 
-const RightTopCard = styled.div``;
+const RightTopCard = styled.div`
+  height: 536px;
+  z-index: -1;
+  margin-left: -5px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: -10px;
+    height: auto;
+  }
+`;
 
 const RightTopCardHeader = styled.div`
   font-family: Inter;
