@@ -18,6 +18,8 @@ import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import { useWallet } from 'use-wallet';
 
 interface IProps {
   setType: (type: 'Mint' | 'Redeem') => void;
@@ -26,6 +28,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
+  const { account, connect } = useWallet()
+
   const [redeemReceive, setRedeemReceive] = useState<string>('0');
   const [redeemReceiveS, setRedeemReceiveS] = useState<string>('0');
   const [redeemAmount, setRedeemAmount] = useState<string>('0');
@@ -40,6 +44,26 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const arthxBalance = useTokenBalance(core.ARTHX)
   const arthBalance = useTokenBalance(core.ARTH)
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral])
+
+  const collateralPool = core.getCollatearalPool(selectedCollateral)
+
+  const [mahaApproveStatus, approveARTHX] = useApprove(
+    core.MAHA,
+    collateralPool.address,
+  );
+
+  const [arthApproveStatus, approveCollat] = useApprove(
+    core.ARTH,
+    collateralPool.address,
+  );
+
+  const isWalletConnected = !!account
+  const isMAHAApproving = mahaApproveStatus === ApprovalState.PENDING
+  const isMAHAApproved = mahaApproveStatus === ApprovalState.APPROVED
+
+  const isArthApproved = arthApproveStatus === ApprovalState.APPROVED
+  const isArthApproving = arthApproveStatus === ApprovalState.PENDING
+  const isArthMahaApproved = useMemo(() => isMAHAApproved && !!account && isArthApproved, [account, isMAHAApproved, isArthApproved])
 
   return (
     <>
@@ -199,7 +223,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={redeemReceiveS.toString()}
-                setText={(val: string) => setRedeemReceive(String(val))}
+                setText={(val: string) => setRedeemReceiveS(String(val))}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -231,7 +255,53 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
-                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
+                {
+                  !isWalletConnected ? (
+                    <Button
+                      text={'Connect Wallet'}
+                      size={'lg'}
+                      onClick={() => connect('injected')}
+                    />
+                  ) : (
+                    <>
+                      {
+                        !isArthMahaApproved && (
+                          <>
+                            <ApproveButtonContainer>
+                              <Button
+                                text={
+                                  isArthApproved ? `Approved ARTH` :
+                                    !isArthApproving ? `Approve ARTH` : 'Approving...'
+                                }
+                                size={'lg'}
+                                disabled={isArthApproving || isArthApproved}
+                                onClick={approveCollat}
+                              />
+                              <div style={{ padding: 5 }} />
+                              <Button
+                                text={
+                                  isMAHAApproved ? 'Approved MAHA' :
+                                    !isMAHAApproving ? `Approve MAHA` : 'Approving...'
+                                }
+                                size={'lg'}
+                                disabled={isMAHAApproving || isMAHAApproved}
+                                onClick={approveARTHX}
+                              />
+                            </ApproveButtonContainer>
+                            <br />
+                          </>
+                        )
+                      }
+                      <Button
+                        text={'Redeem'}
+                        size={'lg'}
+                        variant={'default'}
+                        disabled={!isArthMahaApproved}
+                        onClick={() => setOpenModal(1)}
+                      />
+                    </>
+                  )
+                }
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -337,10 +407,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 }
 
 export default withSnackbar(RedeemTabContent)
-
-const TcContainer = styled.div`
-  margin-top: 24px;
-`;
 
 const ToolTipFont = styled.p`
   padding: 0;
@@ -493,4 +559,8 @@ const InputLabelSpanRight = styled.span`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.88);
   margin-right: 5px;
+`;
+
+const ApproveButtonContainer = styled.div`
+  display: flex
 `;
