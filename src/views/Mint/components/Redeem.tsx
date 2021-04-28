@@ -32,14 +32,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const type = 'Redeem'
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState(
+  const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
     core.getDefaultCollateral()
   );
   const [successModal, setSuccessModal] = useState<boolean>(false);
 
   const arthxBalance = useTokenBalance(core.ARTHX)
   const arthBalance = useTokenBalance(core.ARTH)
-  const collateralBalance = useTokenBalance(core.tokens[selectedReceiveRedeemCoin])
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral])
 
   return (
     <>
@@ -84,8 +84,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
             // labelToolTipData={'testing'}
-            rightLabelUnit={'USDT'}
-            rightLabelValue={'1000.00'}
+            rightLabelUnit={selectedCollateral}
+            rightLabelValue={'123'}
           />
 
           <TransparentInfoDiv
@@ -179,16 +179,17 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={'Balance 500.00'}
+                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={redeemReceive.toString()}
-                LogoSymbol={selectedReceiveRedeemCoin}
+                LogoSymbol={selectedCollateral}
                 hasDropDown={true}
+                setText={(val: string) => setRedeemReceive(String(val))}
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={(data: string) => {
                   setSelectedReceiveRedeemCoin(data);
                 }}
-                SymbolText={selectedReceiveRedeemCoin}
+                SymbolText={selectedCollateral}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -198,7 +199,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={redeemReceiveS.toString()}
-                setText={(val: string) => setRedeemReceiveS(String(val))}
+                setText={(val: string) => setRedeemReceive(String(val))}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -214,7 +215,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   </div>
                   <OneLineInputwomargin>
                     <BeforeChip>0.05</BeforeChip>
-                    <TagChips>USDT</TagChips>
+                    <TagChips>{selectedCollateral}</TagChips>
                   </OneLineInputwomargin>
                 </OneLineInputwomargin>
                 {/* </TcContainer> */}

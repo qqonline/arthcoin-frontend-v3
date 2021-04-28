@@ -27,6 +27,8 @@ import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import { useWallet } from 'use-wallet';
 
 
 const OrangeCheckBox = withStyles({
@@ -121,15 +123,16 @@ interface IProps {
 }
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
+  const { account, connect } = useWallet()
+
   const core = useCore();
   const colletralRatio = 86;
   const [mintColl, setCollateralValue] = useState<string>('0');
   const [mintArthxShare, setArthxShare] = useState<string>('0');
   const [mintReceive, setReceive] = useState<string>('0');
-  const [balance, setBalance] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
   const [currentCounter, setCurrentCounter] = useState<number>(1000);
-  const type = 'Mint'
+
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
   const sliderClasses = useSliderStyles();
@@ -199,6 +202,28 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const arthxBalance = useTokenBalance(core.ARTHX)
   const arthBalance = useTokenBalance(core.ARTH)
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin])
+  const collateralPool = core.getCollatearalPool(selectedCollateralCoin)
+
+  const [arthXApproveStatus, approveARTHX] = useApprove(
+    core.ARTHX,
+    collateralPool.address,
+  );
+
+  const [collatApproveStatus, approveCollat] = useApprove(
+    core.tokens[selectedCollateralCoin],
+    collateralPool.address,
+  );
+
+  const isWalletConnected = !!account
+  const isARTHXApproving = arthXApproveStatus === ApprovalState.PENDING
+  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED
+
+  const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED
+  const isCollatApproving = collatApproveStatus === ApprovalState.PENDING
+  const isCollatArthxApproved = useMemo(() => {
+    return isARTHXApproved && !!account &&
+      isCollatApproved
+  }, [account, isARTHXApproved, isCollatApproved])
 
   return (
     <>
@@ -435,7 +460,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={`Balance ${balance}`}
+                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
                 DefaultValue={mintColl.toString()}
@@ -497,20 +522,59 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     </div>
                     <OneLineInputwomargin>
                       <BeforeChip>0.5</BeforeChip>
-                      <TagChips>ARTH/ETH</TagChips>
+                      <TagChips>ARTH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
                 <div style={{ marginTop: '32px' }}>
-                  <Button
-                    text={'Mint'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={false}
-                    onClick={() => setOpenModal(1)}
-                  />
+                  {
+                    !isWalletConnected ? (
+                      <Button
+                        text={'Connect Wallet'}
+                        size={'lg'}
+                        onClick={() => connect('injected')}
+                      />
+                    ) : (
+                      <>
+                        {
+                          !isCollatArthxApproved && (
+                            <>
+                              <ApproveButtonContainer>
+                                <Button
+                                  text={
+                                    isCollatApproved ? `Approved ${selectedCollateralCoin}` :
+                                      !isCollatApproving ? `Approve ${selectedCollateralCoin}` : 'Approving...'
+                                  }
+                                  size={'lg'}
+                                  disabled={isCollatApproving || isCollatApproved}
+                                  onClick={approveCollat}
+                                />
+                                <div style={{ padding: 5 }} />
+                                <Button
+                                  text={
+                                    isARTHXApproved ? 'Approved ARTHX' :
+                                      !isARTHXApproving ? `Approve ARTHX` : 'Approving...'
+                                  }
+                                  size={'lg'}
+                                  disabled={isARTHXApproving || isARTHXApproved}
+                                  onClick={approveARTHX}
+                                />
+                              </ApproveButtonContainer>
+                              <br />
+                            </>
+                          )
+                        }
+                        <Button
+                          text={'Mint'}
+                          size={'lg'}
+                          variant={'default'}
+                          disabled={!isCollatArthxApproved}
+                          onClick={() => setOpenModal(1)}
+                        />
+                      </>
+                    )
+                  }
                 </div>
-
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
@@ -666,6 +730,11 @@ const TabText = styled.span`
   text-align: center;
   color: rgba(255, 255, 255, 0.64);
 `;
+
+const ApproveButtonContainer = styled.div`
+  display: flex
+`;
+
 const TabTextActive = styled.span`
   font-family: Inter;
   font-style: normal;
