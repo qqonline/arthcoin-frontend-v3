@@ -147,10 +147,10 @@ const Home: React.FC = () => {
                     </PercentCard>
                   </Grid>
                 </Grid>
-                <div className="border-bottom"/>
+                <div className="border-bottom" />
                 <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
-                    <InfoDiv style={{marginTop: '24px'}}>Add Collateral for Recollateralize</InfoDiv>
+                    <InfoDiv style={{ marginTop: '24px' }}>Recollatearlize the protocol to recei`ve ARTHX</InfoDiv>
                     <HeaderSubtitle>
                       342.450K <HardChip>ARTHX</HardChip>{' '}
                       <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
@@ -175,11 +175,11 @@ const Home: React.FC = () => {
                     </ButtonDiv>
                   </Grid>
                 </Grid>
-                <div className="border-bottom width-100"/>
-                <Grid item sm={12} md={12} lg={12} style={{padding: '24px 0 0 0'}}>
+                <div className="border-bottom width-100" />
+                <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <CustomToolTip/>
+                    <CustomToolTip />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid
@@ -361,7 +361,7 @@ const FaqTitle = styled.div`
   margin-bottom: 20px;
 `;
 const Card = styled.div`
-  
+
 `;
 const PercentCard = styled.div`
   display: flex;

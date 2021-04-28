@@ -29,25 +29,25 @@ const BondingDiscount: React.FC<props> = (props: props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>0.2%</BeforeChip>
+            <BeforeChip>1`2%</BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>1 day ago discount</TextWithIcon>
+            <TextWithIcon>Minimum discount</TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>5%</BeforeChip>
+            <BeforeChip>0.75%</BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>1 hour later discount</TextWithIcon>
+            <TextWithIcon>Maximum discount</TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>~5%</BeforeChip>
+            <BeforeChip>30%</BeforeChip>
             {/*<TagChips>0.06%</TagChips>*/}
           </OneLine>
         </OneLine>

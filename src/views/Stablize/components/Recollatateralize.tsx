@@ -225,11 +225,11 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
-                      1 day ago discount
+                      Minimum discount
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>5%</InputLabelSpanRight>
+                  <InputLabelSpanRight>0.75%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '8px' }}>

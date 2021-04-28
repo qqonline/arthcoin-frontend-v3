@@ -163,7 +163,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         onClose: props.closeSnackbar,
                         type: 'green',
                         data1: `Redeeming ${redeemAmount} ARTH`,
-                        data2: `Stability Fee = 4%`,
+                        data2: `Stability Fee = 1%`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -381,7 +381,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
           </RightTopCard>
           <RightBottomCard className={'custom-mahadao-box'}>
             <RightBottomCardTitle>
-              Farming pools are greate way to earn higher APY by staking your $ARTH
+              Farming pools are a great way to earn rewards by staking your $ARTH
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>

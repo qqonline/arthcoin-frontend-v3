@@ -15,7 +15,7 @@ const BondingDiscount: React.FC<props> = (props) => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Trading fee
-              <CustomToolTip/>
+              <CustomToolTip />
             </TextWithIcon>
           </div>
           <OneLine>
@@ -27,11 +27,11 @@ const BondingDiscount: React.FC<props> = (props) => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Stability fee
-              <CustomToolTip/>
+              <CustomToolTip />
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>0.1%</BeforeChip>
+            <BeforeChip>1%</BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>

@@ -122,18 +122,6 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <TagChips>{selectedCollateral}</TagChips>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
-              <OneLineInputwomargin>
-                <div style={{ flex: 1 }}>
-                  <TextWithIcon>
-                    Stability Fee
-                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
-                  </TextWithIcon>
-                </div>
-                <OneLineInputwomargin>
-                  <BeforeChip>0.05</BeforeChip>
-                  <TagChips>MAHA</TagChips>
-                </OneLineInputwomargin>
-              </OneLineInputwomargin>
             </TcContainer>
             <div style={{ marginTop: 35 }}>
               {
@@ -210,17 +198,6 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
-                      Stability Fee
-                      <CustomToolTip />
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
-              <div style={{ marginBottom: '8px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
                       Trading Fee
                       <CustomToolTip />
                     </TextForInfoTitle>
@@ -233,7 +210,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice)}</InputLabelSpanRight>
+                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6, 6)}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
             </RightTopCard>
@@ -261,12 +238,6 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={'0.05'}
-          />
-
-          <TransparentInfoDiv
-            labelData={`Stability Fee`}
-            rightLabelUnit={'MAHA'}
             rightLabelValue={'0.05'}
           />
 

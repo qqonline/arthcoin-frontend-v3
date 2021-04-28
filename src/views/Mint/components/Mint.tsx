@@ -621,7 +621,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>2%</InputLabelSpanRight>
+                <InputLabelSpanRight>1%</InputLabelSpanRight>
               </OneLineInput>
             </div>
             <div style={{ marginBottom: '12px' }}>
@@ -632,7 +632,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>2%</InputLabelSpanRight>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
               </OneLineInput>
             </div>
           </RightTopCard>
