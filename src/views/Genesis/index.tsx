@@ -221,11 +221,11 @@ const Genesis = (props: WithSnackbarProps) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm ${type} ARTH`}
+        title={`Confirm ${type}`}
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your amount`}
+            labelData={`Your will commit`}
             rightLabelUnit={type === 'Commit' ? selectedCollateralCoin : 'ARTH'}
             rightLabelValue={mintColl.toString()}
           />
@@ -369,7 +369,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Swap' && <ActiveTab />}
-                  {type !== 'Swap' ? <TabText>Swap ARTH for ARTH</TabText> : <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
+                  {type !== 'Swap' ? <TabText>Swap ARTH</TabText> : <TabTextActive>Swap ARTH</TabTextActive>}
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -428,7 +428,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 </div>
                 <Button
                   text={
-                    type === 'Commit' ? 'Commit Collateral for ARTHX' : 'Swap ARTH for ARTHX'
+                    type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'
                   }
                   size={'lg'}
                   variant={'default'}

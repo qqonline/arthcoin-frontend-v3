@@ -311,7 +311,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                  <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$5.4</InputLabelSpanRight>
               </OneLineInput>

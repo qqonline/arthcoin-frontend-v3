@@ -17,6 +17,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
+import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 
 type Iprops = {
   onChange: () => void;
@@ -39,6 +40,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   useEffect(() => window.scrollTo(0, 0), []);
 
+  const arthxPrice = useARTHXOraclePrice()
 
   const [approveStatus, approve] = useApprove(
     core.ARTHX,
@@ -229,9 +231,9 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               <div style={{ marginBottom: '8px' }}>
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                    <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>$7.55</InputLabelSpanRight>
+                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice)}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
             </RightTopCard>

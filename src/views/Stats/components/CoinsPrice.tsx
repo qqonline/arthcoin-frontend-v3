@@ -19,7 +19,7 @@ const CoinsPrice: React.FC<props> = (props) => {
         </OneLine>
         <OneLine>
           <div>
-            <TextWithIcon>ARTHX Price</TextWithIcon>
+            <TextWithIcon>ARTHX Oracle Price</TextWithIcon>
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>

@@ -16,6 +16,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
+import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 
 type Iprops = {
   onChange: () => void;
@@ -50,6 +51,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED
   const isWalletConnected = !!account
   const isARTHXApproving = approveStatus === ApprovalState.PENDING
+
+  const arthxPrice = useARTHXOraclePrice()
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -244,11 +247,11 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
-                      ARTHX Price
+                      ARTHX Oracle Price
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>$7.55</InputLabelSpanRight>
+                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice)}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <RightTopCardHeader style={{ marginTop: 20 }}>
