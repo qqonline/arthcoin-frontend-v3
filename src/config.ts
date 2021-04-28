@@ -29,10 +29,10 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,
-    defaultCollateral: 'ETH',
+    defaultCollateral: 'USDT',
+    supportedCollaterals: ['USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
   },
   production: {
     networkName: 'Ethereum Mainnet',
@@ -90,4 +90,4 @@ export const boostedStakingContracts: { [contractName: string]: BoostedStakingCo
   },
 };
 
-export default configurations['development'];
+export default configurations['staging'];

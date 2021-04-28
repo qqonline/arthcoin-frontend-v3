@@ -131,7 +131,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [mintArthxShare, setArthxShare] = useState<string>('0');
   const [mintReceive, setReceive] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
-  const [currentCounter, setCurrentCounter] = useState<number>(1000);
+  const [currentCounter, setCurrentCounter] = useState<number>(0);
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
@@ -292,7 +292,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   size={'medium'}
                 />
               }
-              label="Deposit $ARTH in staking pool to earn reward APY"
+              label="Stake $ARTH and earn more rewards"
               labelPlacement="end"
               onChange={handleCheck}
             />
@@ -361,17 +361,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 </div>
               </div>
               <TransparentInfoDiv
-                labelData={`Estimated earning`}
+                labelData={`Realtime earning`}
                 // labelToolTipData={'testing'}
                 rightLabelUnit={'MAHA'}
                 rightLabelValue={'~100.0'}
                 countUp
-                cEnd={9999}
+                cEnd={10}
                 cDuration={calcDuration}
-                cStart={currentCounter}
-              // updateCounter={(val: number)=>{
-              //   setCurrentCounter(val)
-              // }}
+                cStart={0}
               />
 
               <TransparentInfoDiv
