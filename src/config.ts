@@ -57,7 +57,7 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
     contract: 'Pool_USDC',
     collateralTokenName: 'USDC',
     finished: true,
-    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
     sort: 3,
   },
 };
@@ -90,4 +90,4 @@ export const boostedStakingContracts: { [contractName: string]: BoostedStakingCo
   },
 };
 
-export default configurations['staging'];
+export default configurations['development'];

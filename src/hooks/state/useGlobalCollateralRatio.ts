@@ -6,16 +6,14 @@ export default () => {
   const [value, setValue] = useState<BigNumber>(BigNumber.from(0));
   const core = useCore();
 
-  const fetchCashPrice = useCallback(async () => {
+  const fetchValue = useCallback(async () => {
     const controller = core.contracts.ArthController;
     setValue(await controller.getGlobalCollateralRatio());
   }, [core.contracts.ArthController]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) =>
-      console.error(`Failed to fetch uniswap price: ${err.stack}`),
-    );
-  }, [fetchCashPrice]);
+    fetchValue().catch((err) => console.error(`Failed to fetch global CR: ${err.stack}`));
+  }, [fetchValue]);
 
   return value;
 };

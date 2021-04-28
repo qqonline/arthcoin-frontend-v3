@@ -29,7 +29,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>1`2%</BeforeChip>
+            <BeforeChip>12%</BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
