@@ -82,7 +82,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
-            ILabelValue={'Enter Redeem Amount'}
+            ILabelValue={'Enter Amount'}
             IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
             ILabelInfoValue={''}
             DefaultValue={redeemAmount.toString()}
@@ -248,11 +248,11 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Buyback ARTH`}>
+        title={`Confirm Buyback ARTHX`}>
         <div>
           <TransparentInfoDiv
             labelData={`Your Share Amount`}
-            rightLabelUnit={'ARTH'}
+            rightLabelUnit={'ARTHX'}
             rightLabelValue={redeemAmount.toString()}
           />
 
