@@ -82,7 +82,7 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'MAHA'} size={44} />
               </IconButton>
-              <span>{getDisplayBalance(mahaBalance, 24)} MAHA</span>
+              <span>{getDisplayBalance(mahaBalance)} MAHA</span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.mahaDollars}</DollarValue> */}
           </StyledRows>
