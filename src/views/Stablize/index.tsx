@@ -23,7 +23,7 @@ const Stabelize = () => {
       <GradientDiv />
       <StabilizePageHeader
         title="Stabilize"
-        subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
+        subtitle="Earn ARTHX by helping stabilize the protocol with collateral"
         mobile={isMobile ? true : false}
       />
       <Container size="lg">
