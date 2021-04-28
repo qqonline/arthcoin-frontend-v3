@@ -14,7 +14,7 @@ const configurations: { [env: string]: Configuration } = {
     refreshInterval: 3000,
     gasLimitMultiplier: 1.1,
     defaultCollateral: 'USDT',
-    supportedCollaterals: ['WBTC', 'USDT', 'USDC'],
+    supportedCollaterals: ['USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
   },

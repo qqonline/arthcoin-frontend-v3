@@ -8,7 +8,7 @@ import Recollatateralize from './components/Recollatateralize';
 
 const Stabelize = () => {
   const core = useCore();
-  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Recollateralize');
+  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
 
   useEffect(() => window.scrollTo(0, 0), []);
 

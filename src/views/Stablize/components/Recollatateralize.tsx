@@ -28,26 +28,22 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
-  const [receiveMAHA, setReceiveMAHA] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(
     core.getDefaultCollateral(),
   );
 
   const shareRatio = 2;
-  const mahaRatio = 3;
   const bonusRatio = 4;
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin])
-
-  const collateralPool = core.getCollatearalPool(selectedCollateralCoin)
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral])
+  const collateralPool = core.getCollatearalPool(selectedCollateral)
 
   const [approveStatus, approve] = useApprove(
-    core.tokens[selectedCollateralCoin],
+    core.tokens[selectedCollateral],
     collateralPool.address,
   );
 
@@ -60,14 +56,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const onColleteralChange = (val: string) => {
     if (val === '') {
       setReceiveShare('0');
-      setReceiveMAHA('0');
       setReceiveBonus('0');
     }
     setCollateralAmount(val);
     const valInNumber = Number(val);
     if (valInNumber) {
       setReceiveBonus(String(valInNumber * bonusRatio));
-      setReceiveMAHA(String(valInNumber * mahaRatio));
       setReceiveShare(String(valInNumber * shareRatio));
     }
   }
@@ -114,12 +108,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            LogoSymbol={selectedCollateralCoin}
+            LogoSymbol={selectedCollateral}
             dropDownValues={collateralTypes}
             ondropDownValueChange={(data) => {
               setSelectedCollateralCoin(data);
             }}
-            SymbolText={selectedCollateralCoin}
+            SymbolText={selectedCollateral}
             setText={(val: string) => {
               onColleteralChange(val)
             }}
@@ -178,7 +172,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       !isARTHXApproved && (
                         <>
                           <Button
-                            text={!isARTHXApproving ? 'Approve ARTHX' : 'Approving...'}
+                            text={!isARTHXApproving ? `Approve ${selectedCollateral}` : 'Approving...'}
                             size={'lg'}
                             disabled={isARTHXApproving}
                             onClick={approve}
@@ -198,7 +192,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   </>
                 )
               }
-
             </div>
           </div>
         </LeftTopCardContainer>
@@ -300,8 +293,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         title={`Confirm Recollateralize ARTH`}>
         <div>
           <TransparentInfoDiv
-            labelData={`Your Collateral Amount`}
-            rightLabelUnit={'ARTH'}
+            labelData={`Your will deposit`}
+            rightLabelUnit={selectedCollateral}
             rightLabelValue={collateralAmount.toString()}
           />
 
@@ -314,21 +307,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
           />
 
           <TransparentInfoDiv
-            labelData={`You will receive share`}
+            labelData={`And receive`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTHX'}
             rightLabelValue={receiveShare.toString()}
           />
 
           <TransparentInfoDiv
-            labelData={`You will Receive MAHA`}
-            // labelToolTipData={'testing'}
-            rightLabelUnit={'MAHA'}
-            rightLabelValue={receiveMAHA.toString()}
-          />
-
-          <TransparentInfoDiv
-            labelData={`You will Receive Bonus`}
+            labelData={`Along with a bonus of`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTHX'}
             rightLabelValue={receiveBonus.toString()}

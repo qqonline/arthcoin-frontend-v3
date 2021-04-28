@@ -15,6 +15,8 @@ import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import { useWallet } from 'use-wallet';
 
 type Iprops = {
   onChange: () => void;
@@ -22,10 +24,10 @@ type Iprops = {
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
+  const { account, connect } = useWallet()
+
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
-
-
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
@@ -33,12 +35,25 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const arthxBalance = useTokenBalance(core.ARTHX)
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
+  const collateralPool = core.getCollatearalPool(selectedCollateral)
+
   useEffect(() => window.scrollTo(0, 0), []);
+
+
+  const [approveStatus, approve] = useApprove(
+    core.ARTHX,
+    collateralPool.address,
+  );
+
+  const isARTHXApproved = approveStatus === ApprovalState.APPROVED
+  const isWalletConnected = !!account
+  const isARTHXApproving = approveStatus === ApprovalState.PENDING
+
+  const ratio = 100;
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
 
-  const ratio = 100;
 
   const onRedeemValueChange = (val: string) => {
     if (val === '') {
@@ -119,13 +134,39 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               </OneLineInputwomargin>
             </TcContainer>
             <div style={{ marginTop: 35 }}>
-              <Button
-                text={'Buyback'}
-                size={'lg'}
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-              />
+              {
+                !isWalletConnected ? (
+                  <Button
+                    text={'Connect Wallet'}
+                    size={'lg'}
+                    onClick={() => connect('injected')}
+                  />
+                ) : (
+                  <>
+                    {
+                      !isARTHXApproved && (
+                        <>
+                          <Button
+                            text={!isARTHXApproving ? `Approve ARTHX` : 'Approving...'}
+                            size={'lg'}
+                            disabled={isARTHXApproving}
+                            onClick={approve}
+                          />
+                          <br />
+                        </>
+                      )
+                    }
+                    <Button
+                      text={'Buyback'}
+                      disabled={!isARTHXApproved}
+                      size={'lg'}
+                      onClick={() => {
+                        setOpenModal(true);
+                      }}
+                    />
+                  </>
+                )
+              }
             </div>
           </div>
         </LeftTopCardContainer>
@@ -257,6 +298,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
+
               <Button
                 text={'Buyback'}
                 size={'lg'}
@@ -443,4 +485,5 @@ const InputLabelSpanRight = styled.span`
   color: rgba(255, 255, 255, 0.88);
   margin-right: 5px;
 `;
+
 export default withSnackbar(BuyBack);
