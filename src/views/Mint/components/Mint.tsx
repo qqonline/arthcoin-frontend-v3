@@ -139,6 +139,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     );
     const onBuyColletralValueChange = async (val: string) => {
         if (val === '') {
+          setArthxShare('0')
             setReceive('0');
         }
         setCollateralValue(val);
@@ -155,6 +156,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const onARTHXValueChange = async (val: string) => {
         if (val === '') {
             setReceive('0');
+            setCollateralValue('0')
         }
         setArthxShare(val);
         const valueInNumber = Number(val);
@@ -166,6 +168,19 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
         }
     };
+
+  const onReceiveValueChange = async (val: string) => {
+    if (val === '') {
+      setArthxShare('0');
+      setCollateralValue('0');
+    }
+    setReceive(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
+      setArthxShare(String(valueInNumber * ((100 - colletralRatio) / 100)));
+    }
+  };
 
     const handleCheck = (event: any) => {
         // console.log('check trig', event.target.checked)
@@ -459,6 +474,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 LogoSymbol={'ARTH'}
                                 hasDropDown={false}
                                 SymbolText={'ARTH'}
+                                setText={(val: string) => {
+                                  onReceiveValueChange(val);
+                                }}
                             />
                             <div>
                                 <TcContainer>

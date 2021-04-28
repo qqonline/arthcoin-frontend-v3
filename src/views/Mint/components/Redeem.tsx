@@ -25,6 +25,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [redeemReceive, setRedeemReceive] = useState<string>('0');
+  const [redeemReceiveS, setRedeemReceiveS] = useState<string>('0');
   const [redeemAmount, setRedeemAmount] = useState<string>('0');
   const type = 'Redeem'
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -166,7 +167,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => setRedeemAmount(String(Number(val)))}
+                setText={(val: string) => setRedeemAmount(String(val))}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -175,7 +176,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={redeemReceive}
+                DefaultValue={redeemReceive.toString()}
                 LogoSymbol={selectedReceiveRedeemCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -183,6 +184,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   setSelectedReceiveRedeemCoin(data);
                 }}
                 SymbolText={selectedReceiveRedeemCoin}
+                setText={(val: string) => setRedeemReceive(String(val))}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -191,10 +193,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={redeemReceive}
+                DefaultValue={redeemReceiveS.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
+                setText={(val: string) => setRedeemReceiveS(String(val))}
               />
               <div>
                  <TcContainer>

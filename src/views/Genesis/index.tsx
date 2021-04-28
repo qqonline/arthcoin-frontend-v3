@@ -401,7 +401,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(String(Number(val)));
+                      setCollateralValue(String(val));
                     }}
                   />
                 ) : (
@@ -416,7 +416,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(String(Number(val)));
+                      setArthValue(String(val));
                     }}
                   />
                 )}
@@ -424,13 +424,12 @@ const Genesis = (props: WithSnackbarProps) => {
                   <img src={arrowDown} />
                 </PlusMinusArrow>
                 <div style={{marginBottom: '32px'}}>
-                  <TextWithIcon>You Receive</TextWithIcon>
+                  <TextWithIcon style={{marginBottom: '12px'}}>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
                           ARTHX
-                          <CustomToolTip toolTipText={'loreum ipsum'}/>
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>

@@ -67,7 +67,7 @@ const HrefLink = styled.a`
 `
 
 const CustomInfoCard = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
   
 `
 const ListUl = styled.li`
