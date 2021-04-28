@@ -9,6 +9,8 @@ import theme from '../../theme';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useGlobalCollateralRatio from '../../hooks/state/useGlobalCollateralRatio';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
@@ -51,6 +53,8 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
 
   const isDesktopOrLaptop = useMediaQuery({ query: '(min-device-width: 800px)' });
 
+  const globalCR = useGlobalCollateralRatio()
+
   return (
     <StyledPageHeader>
       <Container size="lg">
@@ -63,7 +67,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                 <StyledNavTitle>{title}</StyledNavTitle>
               </StyledNav>
             )}
-            <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: mobile? 'flex-start': 'center' }}>
+            <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: mobile ? 'flex-start' : 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <StyledTitle>{title}</StyledTitle>
                 <StyledSubtitle>
@@ -85,11 +89,11 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                 </TextForInfoTitle>
                 {/* </div> */}
-                <PercentNumber style={{ margin: '0px 12px' }}>50%</PercentNumber>
-                <BorderLinearProgress variant="determinate" value={50} />
+                <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4, 2)}%</PercentNumber>
+                <BorderLinearProgress variant="determinate" value={Number(getDisplayBalance(globalCR, 4))} />
               </div>
                 :
-                <div style={{ display: 'flex', flexDirection: 'column', marginTop: 40}}>
+                <div style={{ display: 'flex', flexDirection: 'column', marginTop: 40 }}>
                   {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
                   <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px' }}>
                     <TextForInfoTitle>
@@ -97,9 +101,9 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
                     </TextForInfoTitle>
                     {/* </div> */}
-                    <PercentNumber style={{ margin: '0px 12px' }}>50%</PercentNumber>
+                    <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4)}%</PercentNumber>
                   </div>
-                  <BorderLinearProgress variant="determinate" value={50} />
+                  <BorderLinearProgress variant="determinate" value={Number(getDisplayBalance(globalCR, 4, 2))} />
                 </div>
               }
             </div>

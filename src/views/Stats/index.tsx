@@ -150,7 +150,7 @@ const Home: React.FC = () => {
                 <div className="border-bottom" />
                 <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
-                    <InfoDiv style={{ marginTop: '24px' }}>Recollatearlize the protocol to recei`ve ARTHX</InfoDiv>
+                    <InfoDiv style={{ marginTop: '24px' }}>Recollatearlize the protocol to receive ARTHX</InfoDiv>
                     <HeaderSubtitle>
                       342.450K <HardChip>ARTHX</HardChip>{' '}
                       <TextForInfoTitle>Rewards to claim</TextForInfoTitle>

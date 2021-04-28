@@ -29,6 +29,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
+import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 
 
 const OrangeCheckBox = withStyles({
@@ -224,6 +225,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     return isARTHXApproved && !!account &&
       isCollatApproved
   }, [account, isARTHXApproved, isCollatApproved])
+
+  const mintCR = useMintCollateralRatio()
 
   return (
     <>
@@ -590,11 +593,11 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
-                    Collateral Ratio
+                    Mint Collateral Ratio
                     <CustomToolTip />
                   </TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>86%</InputLabelSpanRight>
+                <InputLabelSpanRight>{getDisplayBalance(mintCR, 4, 2)}%</InputLabelSpanRight>
               </OneLineInput>
             </div>
             <div style={{ marginBottom: '12px' }}>

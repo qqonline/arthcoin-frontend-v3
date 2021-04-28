@@ -20,6 +20,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
+import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
 
 interface IProps {
   setType: (type: 'Mint' | 'Redeem') => void;
@@ -64,6 +65,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const isArthApproved = arthApproveStatus === ApprovalState.APPROVED
   const isArthApproving = arthApproveStatus === ApprovalState.PENDING
   const isArthMahaApproved = useMemo(() => isMAHAApproved && !!account && isArthApproved, [account, isMAHAApproved, isArthApproved])
+
+  const redeemCR = useRedeemCollateralRatio()
 
   return (
     <>
@@ -320,7 +323,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>
-                    Collateral Ratio
+                    Redeem Collateral Ratio
                     <HtmlTooltip
                       title={
                         <React.Fragment>
@@ -337,7 +340,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     </HtmlTooltip>
                   </TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>86%</InputLabelSpanRight>
+                <InputLabelSpanRight>{getDisplayBalance(redeemCR, 4, 2)}%</InputLabelSpanRight>
               </OneLineInput>
             </div>
             <div style={{ marginBottom: '12px' }}>
