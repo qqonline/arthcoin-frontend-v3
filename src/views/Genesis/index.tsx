@@ -483,6 +483,9 @@ const GradientDiv = styled.div`
 
 const CustomInfoCard = styled.div`
   margin-bottom: 16px;
+  @media (max-width: 600px) {
+    margin-bottom: 24px;
+  }
 `;
 
 const CustomInfoCardDetails = styled.div`
@@ -586,7 +589,11 @@ const OneLineInputwomargin = styled.div`
   justify-content: space-between;
 `;
 
-const LeftTopCard = styled.div``;
+const LeftTopCard = styled.div`
+  @media(max-width: 600px) {
+    margin-bottom: 8px;
+  }
+`;
 
 const LeftTopCardHeader = styled.div`
   display: flex;

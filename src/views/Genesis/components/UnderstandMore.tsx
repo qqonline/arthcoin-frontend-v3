@@ -68,7 +68,9 @@ const HrefLink = styled.a`
 
 const CustomInfoCard = styled.div`
   margin-top: 16px;
-  
+  @media(max-width: 600px) {
+    margin-top: 24px;
+  }
 `
 const ListUl = styled.li`
 `

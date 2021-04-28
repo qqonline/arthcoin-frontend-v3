@@ -55,6 +55,7 @@ const CustomInfoCard = styled.div`
   min-height: 220px;
   @media (max-width: 600px) {
     min-height: auto;
+    margin-top: 8px;
   }
 `;
 const CustomInfoCardHeader = styled.p`

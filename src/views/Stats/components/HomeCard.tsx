@@ -90,7 +90,7 @@ const Wrapper = styled.div`
   );
   @media (max-width: 768px) {
     margin-top: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
   }
 `;
 
