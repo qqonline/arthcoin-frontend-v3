@@ -15,6 +15,7 @@ import TxButton from './components/TxButton';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
 import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
+import useCore from '../../hooks/useCore';
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -44,17 +45,19 @@ const BootstrapInput = withStyles((theme: Theme) =>
 )(InputBase);
 
 const TopBar: React.FC = () => {
-  const { account } = useWallet();
+  const { account, chainId } = useWallet();
+  const core = useCore()
+
   const [netWrokType, setNetworkType] = React.useState('mainnet');
-  const [showWarning, toggleWarning] = useState(false);
   const [showMobileMenu, toggleMobileMenu] = useState(false);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
-  // const [showWallet, setShowWallet] = useState<boolean>(true)
+
+  const showWarning = core.config.chainId !== chainId
 
   return (
-    <>
+    <TopBarContainer>
       <StyledTopBar>
         <Container size="lg">
           <StyledTopBarInner>
@@ -140,20 +143,23 @@ const TopBar: React.FC = () => {
         <ShowWarning>
           <ShowWarningInner>
             <img src={InfoIcon} alt="" width="24px" className="margin-right-5" />
-            Please make sure that you are connected to matic mumbai TESTnet.
-            <img
-              src={CloseIcon}
-              width="24px"
-              alt=""
-              className="pointer"
-              onClick={() => toggleWarning(false)}
-            />
+            Please make sure that you are connected to {core.config.networkName}.
           </ShowWarningInner>
         </ShowWarning>
       )}
-    </>
+    </TopBarContainer>
   );
 };
+
+const TopBarContainer = styled.div`
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  top: 0;
+`
+
 const HideonPhone = styled.div`
   display: flex;
   justify-content: center;
@@ -169,11 +175,11 @@ const HideOnBigScreen = styled.div`
   } ;
 `;
 const StyledTopBar = styled.div`
-  position: fixed;
-  z-index: 100;
-  display: flex;
-  width: 100%;
-  top: 0;
+  // position: fixed;
+  // z-index: 100;
+  // display: flex;
+  // width: 100%;
+  // top: 0;
 
   //background: #151414;
   background: rgba(0, 0, 0, 0.08);
@@ -185,23 +191,24 @@ const ShowWarningInner = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px 20px;
+  // margin: 0px 20px;
   color: rgba(255, 255, 255, 0.88);
-  text-align: left;
+  text-align: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 800px;
   position: relative;
 `;
+
 const ShowWarning = styled.div`
   background: #ba1e38;
-  padding: 10px 0px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;

@@ -5,6 +5,7 @@ import { BoostedStakingContract, LinearStakingContract } from './basis-cash/type
 
 const configurations: { [env: string]: Configuration } = {
   development: {
+    networkName: 'Ganace',
     chainId: 1337,
     etherscanUrl: 'https://etherscan.io',
     defaultProvider: 'http://127.0.0.1:8545',
@@ -19,8 +20,9 @@ const configurations: { [env: string]: Configuration } = {
     arthxTradingPairs: ['ETH', 'ARTH'],
   },
   staging: {
-    chainId: ChainId.ROPSTEN,
-    etherscanUrl: 'https://ropsten.etherscan.io',
+    networkName: 'Rinkeby',
+    chainId: ChainId.RINKEBY,
+    etherscanUrl: 'https://rinkeby.etherscan.io',
     defaultProvider:
       'https://weathered-young-wave.quiknode.io/75809a67-435c-4d8b-a287-649990316295/IHZHq4dJhpdQq85_QIA5Uidl_btMGwikH8tF3VNPZsgoFhaetWDXXdmkavW1TaTf5JrVwFWnMsx8aJ-fR01pTg==/',
     deployments: require('./basis-cash/deployments/deployments.rinkeby.json'),
@@ -34,6 +36,7 @@ const configurations: { [env: string]: Configuration } = {
     supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
   },
   production: {
+    networkName: 'Ethereum Mainnet',
     chainId: ChainId.MAINNET,
     etherscanUrl: 'https://etherscan.io',
     defaultProvider:
