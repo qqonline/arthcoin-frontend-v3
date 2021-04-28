@@ -351,11 +351,19 @@ const OneLineInputwomargin = styled.div`
 
 const LeftTopCard = styled.div``;
 
-const RightTopCard = styled.div``;
+const RightTopCard = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 8px;
+  }
+`;
 
 const RightBottomCard = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
+  @media (max-width: 600px){
+    margin-top: 24px;
+  }
 `;
+
 
 const RightBottomCardTitle = styled.div`
   padding: 0;

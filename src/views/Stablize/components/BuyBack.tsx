@@ -338,7 +338,7 @@ const LeftTopCardChecked = styled.div`
   margin-left: 12px;
   @media (max-width: 600px) {
     margin-left: 0;
-    margin-top: 16px;
+    margin-top: 24px;
   }
 `;
 

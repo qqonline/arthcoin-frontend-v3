@@ -328,7 +328,7 @@ const InfoDivRightSpan = styled.div`
 
 const StyledCardWrapper = styled.div`
   display: flex;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
   // max-width: 500px;
   width: 100%;
   position: relative;
