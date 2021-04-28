@@ -13,6 +13,8 @@ import CustomModal from '../../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type Iprops = {
   onChange: () => void;
@@ -22,12 +24,13 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
-  const [balance, setBalance] = useState<number>(0);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
-    core.getDefaultCollateral(),
-  );
 
+
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
+
+  const arthxBalance = useTokenBalance(core.ARTHX)
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
   useEffect(() => window.scrollTo(0, 0), []);
@@ -58,39 +61,35 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip>{' '}
-            <TextForInfoTitle>Available in Protocol</TextForInfoTitle>
+            342.450K <HardChip>ARTHX</HardChip>{' '}
+            <TextForInfoTitle>To be bought back</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Redeem Amount'}
-            IBalanceValue={`Balance ${balance}`}
+            IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
             ILabelInfoValue={''}
             DefaultValue={redeemAmount.toString()}
             hasDropDown={false}
             LogoSymbol={'ARTHX'}
             SymbolText={'ARTHX'}
             inputMode={'decimal'}
-            setText={(val: string) => {
-              onRedeemValueChange(val)
-            }}
+            setText={(val: string) => onRedeemValueChange(val)}
           />
           <PlusMinusArrow>
-            <img src={arrowDown} />
+            <img src={arrowDown} alt="arrow" />
           </PlusMinusArrow>
           <MinorInputContainer
             ILabelValue={'You receive'}
             IBalanceValue={''}
             ILabelInfoValue={''}
             DefaultValue={receiveAmount.toString()}
-            LogoSymbol={selectedBuybackReceiveAmountCoin}
+            LogoSymbol={selectedCollateral}
             hasDropDown={true}
-            SymbolText={selectedBuybackReceiveAmountCoin}
+            SymbolText={selectedCollateral}
             dropDownValues={collateralTypes}
-            ondropDownValueChange={(data) => {
-              setSelectedBuybackReceiveAmountCoin(data);
-            }}
+            ondropDownValueChange={(data) => setSelectedCoin(data)}
           />
           <div>
             <TcContainer>
@@ -103,7 +102,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                 </div>
                 <OneLineInputwomargin>
                   <BeforeChip>0.05</BeforeChip>
-                  <TagChips>USDT</TagChips>
+                  <TagChips>{selectedCollateral}</TagChips>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
               <OneLineInputwomargin>
@@ -142,14 +141,14 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
       >
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
-            {'Recollatateralize'}
+            Recollatateralize
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
+            <TextForInfoTitle>The protocol is currently fully collateralised</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
-        <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
+        <CollaterallizeCheckmark subText={'The protocol is currently fully collateralised'} />
       </LeftTopCardChecked>
     );
   };
@@ -218,7 +217,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
-            rightLabelUnit={'USDT'}
+            rightLabelUnit={selectedCollateral}
             rightLabelValue={'0.05'}
           />
 
@@ -232,7 +231,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
-            rightLabelUnit={selectedBuybackReceiveAmountCoin}
+            rightLabelUnit={selectedCollateral}
             rightLabelValue={receiveAmount.toString()}
           />
 

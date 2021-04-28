@@ -20,7 +20,7 @@ const CollaterallizeCheckmark = (props: IProps) => {
       }}
     >
       <div style={{ textAlign: 'center' }}>
-        <img src={checkmark} height={112} />
+        <img src={checkmark} height={112} alt="checkmark" />
         <HeaderSubtitle>
           <TextForInfoTitle>{props.subText}</TextForInfoTitle>
           <LearnMore>Learn More</LearnMore>

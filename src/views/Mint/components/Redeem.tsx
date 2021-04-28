@@ -6,7 +6,7 @@ import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import plus from '../../../assets/svg/plus.svg';
 import {
-    Divider,
+  Divider,
 } from '@material-ui/core';
 import TransparentInfoDiv from './InfoDiv';
 import HtmlTooltip from '../../../components/HtmlTooltip';
@@ -16,316 +16,321 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface IProps {
-    setType: (type: 'Mint' | 'Redeem') => void;
+  setType: (type: 'Mint' | 'Redeem') => void;
 }
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
-    useEffect(() => window.scrollTo(0, 0), []);
-    const core = useCore();
-    const [redeemReceive, setRedeemReceive] = useState<string>('0');
-    const [redeemAmount, setRedeemAmount] = useState<string>('0');
-    const type = 'Redeem'
-    const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-    const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-    const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState(
-        core.getDefaultCollateral(),
-    );
-    const [successModal, setSuccessModal] = useState<boolean>(false);
+  useEffect(() => window.scrollTo(0, 0), []);
+  const core = useCore();
+  const [redeemReceive, setRedeemReceive] = useState<string>('0');
+  const [redeemAmount, setRedeemAmount] = useState<string>('0');
+  const type = 'Redeem'
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const [selectedReceiveRedeemCoin, setSelectedReceiveRedeemCoin] = useState(
+    core.getDefaultCollateral()
+  );
+  const [successModal, setSuccessModal] = useState<boolean>(false);
 
+  const arthxBalance = useTokenBalance(core.ARTHX)
+  const arthBalance = useTokenBalance(core.ARTH)
+  const collateralBalance = useTokenBalance(core.tokens[selectedReceiveRedeemCoin])
 
-    return (
+  return (
+    <>
+      <CustomModal
+        closeButton
+        handleClose={() => setOpenModal(0)}
+        open={openModal === 1}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
+        title={`Confirm Redeem ARTH`}
+      >
         <>
-            <CustomModal
-                closeButton
-                handleClose={() => setOpenModal(0)}
-                open={openModal === 1}
-                modalTitleStyle={{}}
-                modalContainerStyle={{}}
-                modalBodyStyle={{}}
-                title={`Confirm Redeem ARTH`}
-            >
-                <>
-                    <TransparentInfoDiv
-                        labelData={`Your ${type.toLocaleLowerCase()} amount`}
-                        rightLabelUnit={'ARTH'}
-                        rightLabelValue={redeemAmount.toString()}
-                    />
+          <TransparentInfoDiv
+            labelData={`Your ${type.toLocaleLowerCase()} amount`}
+            rightLabelUnit={'ARTH'}
+            rightLabelValue={redeemAmount.toString()}
+          />
 
-                    <TransparentInfoDiv
-                        labelData={`Trading Fee`}
-                        labelToolTipData={'testing'}
-                        rightLabelUnit={'USDT'}
-                        rightLabelValue={'0.05'}
-                    />
+          <TransparentInfoDiv
+            labelData={`Trading Fee`}
+            labelToolTipData={'testing'}
+            rightLabelUnit={'USDT'}
+            rightLabelValue={'0.05'}
+          />
 
-                    <TransparentInfoDiv
-                        labelData={`Stability Fee`}
-                        labelToolTipData={'testing'}
-                        rightLabelUnit={'MAHA'}
-                        rightLabelValue={'0.05'}
-                    />
+          <TransparentInfoDiv
+            labelData={`Stability Fee`}
+            labelToolTipData={'testing'}
+            rightLabelUnit={'MAHA'}
+            rightLabelValue={'0.05'}
+          />
 
-                    <Divider
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            margin: '15px 0px',
-                        }}
-                    // variant={'middle'}
-                    />
+          <Divider
+            style={{
+              background: 'rgba(255, 255, 255, 0.08)',
+              margin: '15px 0px',
+            }}
+          // variant={'middle'}
+          />
 
-                    <TransparentInfoDiv
-                        labelData={`You will receive collateral`}
-                        // labelToolTipData={'testing'}
-                        rightLabelUnit={'USDT'}
-                        rightLabelValue={'1000.00'}
-                    />
+          <TransparentInfoDiv
+            labelData={`You will receive collateral`}
+            // labelToolTipData={'testing'}
+            rightLabelUnit={'USDT'}
+            rightLabelValue={'1000.00'}
+          />
 
-                    <TransparentInfoDiv
-                        labelData={`You will receive share`}
-                        // labelToolTipData={'testing'}
-                        rightLabelUnit={'ARTHX'}
-                        rightLabelValue={'1000.00'}
-                    />
+          <TransparentInfoDiv
+            labelData={`You will receive share`}
+            // labelToolTipData={'testing'}
+            rightLabelUnit={'ARTHX'}
+            rightLabelValue={'1000.00'}
+          />
 
-                    <div
-                        style={{
-                            flexDirection: 'column-reverse',
-                            display: 'flex',
-                            width: '100%',
-                            marginTop: '10%',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginBottom: 8,
-                        }}
-                    >
-                        <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
-                            <Button
-                                variant={'transparent'}
-                                text="Cancel"
-                                size={'lg'}
-                                onClick={() => {
-                                    setOpenModal(0);
-                                    let options = {
-                                        content: () =>
-                                            CustomSnack({
-                                                onClose: props.closeSnackbar,
-                                                type: 'red',
-                                                data1: `Redeeming ${redeemAmount} ARTH cancelled`,
-                                            }),
-                                    };
-                                    props.enqueueSnackbar('timepass', options);
-                                }}
-                            />
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <Button
-                                text={'Redeem ARTH'}
-                                // textStyles={{ color: '#F5F5F5' }}
-                                size={'lg'}
-                                onClick={() => {
-                                    // setType('Redeem')
-                                    setOpenModal(0);
-                                    let options = {
-                                        content: () =>
-                                            CustomSnack({
-                                                onClose: props.closeSnackbar,
-                                                type: 'green',
-                                                data1: `Redeeming ${redeemAmount} ARTH`,
-                                                data2: `Stability Fee = 4%`,
-                                            }),
-                                    };
-                                    props.enqueueSnackbar('timepass', options);
-                                }}
-                            />
-                        </div>
-                    </div>
-                </>
-            </CustomModal>
-            <Grid container style={{ marginTop: '24px' }} spacing={2}>
-                <Grid item lg={1} />
-                <Grid item lg={5} md={12} sm={12} xs={12}>
-                    <LeftTopCard className={'custom-mahadao-container'}>
-                        <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-                            <TabContainer onClick={() => props.setType('Mint')}>
-                                <TabText>Mint</TabText>
-                            </TabContainer>
-                            <TabContainer onClick={() => props.setType('Redeem')}>
-                                <ActiveTab />
-                                <TabText>Redeem</TabText>
-                            </TabContainer>
-                        </LeftTopCardHeader>
-                        <LeftTopCardContainer className={'custom-mahadao-container-content'}>
-                            <CustomInputContainer
-                                ILabelValue={'Enter Redeem Amount'}
-                                IBalanceValue={'Balance 500.00'}
-                                ILabelInfoValue={''}
-                                DefaultValue={redeemAmount.toString()}
-                                LogoSymbol={'ARTH'}
-                                hasDropDown={false}
-                                SymbolText={'ARTH'}
-                                inputMode={'decimal'}
-                                setText={(val: string) => setRedeemAmount(String(Number(val)))}
-                            />
-                            <PlusMinusArrow>
-                                <img src={arrowDown} />
-                            </PlusMinusArrow>
-                            <CustomInputContainer
-                                ILabelValue={'You receive'}
-                                IBalanceValue={'Balance 500.00'}
-                                // ILabelInfoValue={'How can i get it?'}
-                                DefaultValue={redeemReceive}
-                                LogoSymbol={selectedReceiveRedeemCoin}
-                                hasDropDown={true}
-                                dropDownValues={collateralTypes}
-                                ondropDownValueChange={(data: string) => {
-                                    setSelectedReceiveRedeemCoin(data);
-                                }}
-                                SymbolText={selectedReceiveRedeemCoin}
-                            />
-                            <PlusMinusArrow>
-                                <img src={plus} />
-                            </PlusMinusArrow>
-                            <CustomInputContainer
-                                ILabelValue={'You receive'}
-                                IBalanceValue={'Balance 500.00'}
-                                ILabelInfoValue={''}
-                                DefaultValue={redeemReceive}
-                                LogoSymbol={'ARTHX'}
-                                hasDropDown={false}
-                                SymbolText={'ARTHX'}
-                            />
-                            <div>
-                                {/* <TcContainer> */}
-                                <OneLineInputwomargin>
-                                    <div style={{ flex: 1, marginTop: 10 }}>
-                                        <TextWithIcon>
-                                            Trading Fee
-                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
-                                        </TextWithIcon>
-                                    </div>
-                                    <OneLineInputwomargin>
-                                        <BeforeChip>0.05</BeforeChip>
-                                        <TagChips>USDT</TagChips>
-                                    </OneLineInputwomargin>
-                                </OneLineInputwomargin>
-                                {/* </TcContainer> */}
-                                <OneLineInput>
-                                    <div style={{ flex: 1 }}>
-                                        <TextWithIcon>
-                                            Stability Fee
-                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
-                                        </TextWithIcon>
-                                    </div>
-                                    <OneLineInput>
-                                        <BeforeChip>0.05</BeforeChip>
-                                        <TagChips>MAHA</TagChips>
-                                    </OneLineInput>
-                                </OneLineInput>
-                                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
-                            </div>
-                        </LeftTopCardContainer>
-                    </LeftTopCard>
-                </Grid>
-                <Grid item lg={5} md={12} sm={12} xs={12}>
-                    <RightTopCard className={'custom-mahadao-box'}>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>
-                                        Collateral Ratio
-                    <HtmlTooltip
-                                            title={
-                                                <React.Fragment>
-                                                    <ToolTipFont>
-                                                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                        industry. Lorem Ipsum has been the industry's standard dummy text
-                                                        ever since the 1500s, when an unknown printer took a galley of type
-                                                        and scrambled
-                          </ToolTipFont>
-                                                </React.Fragment>
-                                            }
-                                        >
-                                            <CustomToolTip />
-                                        </HtmlTooltip>
-                                    </TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>86%</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>Pool Balance</TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>Available to Mint</TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>
-                                        Stability Fee
-                    <CustomToolTip />
-                                    </TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                        <div style={{ marginBottom: '12px' }}>
-                            <OneLineInput>
-                                <div style={{ flex: 1 }}>
-                                    <TextForInfoTitle>
-                                        Trading Fee
-                    <CustomToolTip />
-                                    </TextForInfoTitle>
-                                </div>
-                                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-                            </OneLineInput>
-                        </div>
-                    </RightTopCard>
-                    <RightBottomCard className={'custom-mahadao-box'}>
-                        <RightBottomCardTitle>
-                            Farming pools are greate way to earn higher APY by staking your $ARTH
-            </RightBottomCardTitle>
-                        <Grid container style={{ marginTop: '16px' }}>
-                            <Grid item lg={4}>
-                                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
-                            </Grid>
-                        </Grid>
-                    </RightBottomCard>
-                </Grid>
-                <Grid item lg={1} />
-            </Grid>
-            <CustomSuccessModal
-                modalOpen={successModal}
-                setModalOpen={() => setSuccessModal(false)}
-                title={'Minting ARTH successful!'}
-                subTitle={'View Transaction'}
-                subsubTitle={'You should consider stake your ARTH to earn higher APY'}
-                buttonText={'Stake your ARTH'}
-                buttonType={'default'}
-                redirectTo={'/farming'}
-            />
+          <div
+            style={{
+              flexDirection: 'column-reverse',
+              display: 'flex',
+              width: '100%',
+              marginTop: '10%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8,
+            }}
+          >
+            <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
+              <Button
+                variant={'transparent'}
+                text="Cancel"
+                size={'lg'}
+                onClick={() => {
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'red',
+                        data1: `Redeeming ${redeemAmount} ARTH cancelled`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                }}
+              />
+            </div>
+            <div style={{ width: '100%' }}>
+              <Button
+                text={'Redeem ARTH'}
+                // textStyles={{ color: '#F5F5F5' }}
+                size={'lg'}
+                onClick={() => {
+                  // setType('Redeem')
+                  setOpenModal(0);
+                  let options = {
+                    content: () =>
+                      CustomSnack({
+                        onClose: props.closeSnackbar,
+                        type: 'green',
+                        data1: `Redeeming ${redeemAmount} ARTH`,
+                        data2: `Stability Fee = 4%`,
+                      }),
+                  };
+                  props.enqueueSnackbar('timepass', options);
+                }}
+              />
+            </div>
+          </div>
         </>
-    )
+      </CustomModal>
+      <Grid container style={{ marginTop: '24px' }} spacing={2}>
+        <Grid item lg={1} />
+        <Grid item lg={5} md={12} sm={12} xs={12}>
+          <LeftTopCard className={'custom-mahadao-container'}>
+            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
+              <TabContainer onClick={() => props.setType('Mint')}>
+                <TabText>Mint</TabText>
+              </TabContainer>
+              <TabContainer onClick={() => props.setType('Redeem')}>
+                <ActiveTab />
+                <TabText>Redeem</TabText>
+              </TabContainer>
+            </LeftTopCardHeader>
+            <LeftTopCardContainer className={'custom-mahadao-container-content'}>
+              <CustomInputContainer
+                ILabelValue={'Enter Redeem Amount'}
+                IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
+                ILabelInfoValue={''}
+                DefaultValue={redeemAmount.toString()}
+                LogoSymbol={'ARTH'}
+                hasDropDown={false}
+                SymbolText={'ARTH'}
+                inputMode={'decimal'}
+                setText={(val: string) => setRedeemAmount(String(Number(val)))}
+              />
+              <PlusMinusArrow>
+                <img src={arrowDown} alt="arrow" />
+              </PlusMinusArrow>
+              <CustomInputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+                // ILabelInfoValue={'How can i get it?'}
+                DefaultValue={redeemReceive}
+                LogoSymbol={selectedReceiveRedeemCoin}
+                hasDropDown={true}
+                dropDownValues={collateralTypes}
+                ondropDownValueChange={(data: string) => {
+                  setSelectedReceiveRedeemCoin(data);
+                }}
+                SymbolText={selectedReceiveRedeemCoin}
+              />
+              <PlusMinusArrow>
+                <img src={plus} alt="plus" />
+              </PlusMinusArrow>
+              <CustomInputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
+                ILabelInfoValue={''}
+                DefaultValue={redeemReceive}
+                LogoSymbol={'ARTHX'}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+              />
+              <div>
+                {/* <TcContainer> */}
+                <OneLineInputwomargin>
+                  <div style={{ flex: 1, marginTop: 10 }}>
+                    <TextWithIcon>
+                      Trading Fee
+                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInputwomargin>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>USDT</TagChips>
+                  </OneLineInputwomargin>
+                </OneLineInputwomargin>
+                {/* </TcContainer> */}
+                <OneLineInput>
+                  <div style={{ flex: 1 }}>
+                    <TextWithIcon>
+                      Stability Fee
+                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
+                    </TextWithIcon>
+                  </div>
+                  <OneLineInput>
+                    <BeforeChip>0.05</BeforeChip>
+                    <TagChips>MAHA</TagChips>
+                  </OneLineInput>
+                </OneLineInput>
+                <Button text={'Redeem'} size={'lg'} onClick={() => setOpenModal(1)} />
+              </div>
+            </LeftTopCardContainer>
+          </LeftTopCard>
+        </Grid>
+        <Grid item lg={5} md={12} sm={12} xs={12}>
+          <RightTopCard className={'custom-mahadao-box'}>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>ARTHX Price</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <ToolTipFont>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has been the industry's standard dummy text
+                            ever since the 1500s, when an unknown printer took a galley of type
+                            and scrambled
+                          </ToolTipFont>
+                        </React.Fragment>
+                      }
+                    >
+                      <CustomToolTip />
+                    </HtmlTooltip>
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>86%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>Pool Balance</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>Available to Mint</TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>
+                    Stability Fee
+                    <CustomToolTip />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+            <div style={{ marginBottom: '12px' }}>
+              <OneLineInput>
+                <div style={{ flex: 1 }}>
+                  <TextForInfoTitle>
+                    Trading Fee
+                    <CustomToolTip />
+                  </TextForInfoTitle>
+                </div>
+                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+              </OneLineInput>
+            </div>
+          </RightTopCard>
+          <RightBottomCard className={'custom-mahadao-box'}>
+            <RightBottomCardTitle>
+              Farming pools are greate way to earn higher APY by staking your $ARTH
+            </RightBottomCardTitle>
+            <Grid container style={{ marginTop: '16px' }}>
+              <Grid item lg={4}>
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
+              </Grid>
+            </Grid>
+          </RightBottomCard>
+        </Grid>
+        <Grid item lg={1} />
+      </Grid>
+      <CustomSuccessModal
+        modalOpen={successModal}
+        setModalOpen={() => setSuccessModal(false)}
+        title={'Minting ARTH successful!'}
+        subTitle={'View Transaction'}
+        subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        buttonText={'Stake your ARTH'}
+        buttonType={'default'}
+        redirectTo={'/farming'}
+      />
+    </>
+  )
 }
 
 export default withSnackbar(RedeemTabContent)

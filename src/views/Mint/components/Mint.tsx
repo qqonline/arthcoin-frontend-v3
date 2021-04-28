@@ -125,25 +125,23 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const colletralRatio = 86;
   const [mintColl, setCollateralValue] = useState<string>('0');
   const [mintArthxShare, setArthxShare] = useState<string>('0');
-  const [balance, setBalance] = useState<string>('0');
   const [mintReceive, setReceive] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
   const [currentCounter, setCurrentCounter] = useState<number>(1000);
-  const type = 'Mint'
+
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
-    core.getDefaultCollateral(),
+    core.getDefaultCollateral()
   );
 
   const onBuyColletralValueChange = async (val: string) => {
-    if (val === '') {
-      setReceive('0');
-    }
+    if (val === '') setReceive('0');
     setCollateralValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
@@ -156,9 +154,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '') {
+    if (val === '')
       setReceive('0');
-    }
+
     setArthxShare(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
@@ -182,8 +180,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const arthxBalance = useTokenBalance(core.ARTHX)
-  const arthBalance = useTokenBalance(core.ARTHX)
-  const collateralBalance = useTokenBalance(core.ARTHX)
+  const arthBalance = useTokenBalance(core.ARTH)
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin])
 
   return (
     <>

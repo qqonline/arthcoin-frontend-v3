@@ -13,38 +13,42 @@ const configurations: { [env: string]: Configuration } = {
     genesisEndDate: new Date('2021-01-21T15:00:00Z'),
     refreshInterval: 3000,
     gasLimitMultiplier: 1.1,
-    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
+    defaultCollateral: 'USDT',
+    supportedCollaterals: ['WBTC', 'USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
   },
   staging: {
     chainId: ChainId.ROPSTEN,
     etherscanUrl: 'https://ropsten.etherscan.io',
-    defaultProvider: 'https://weathered-young-wave.quiknode.io/75809a67-435c-4d8b-a287-649990316295/IHZHq4dJhpdQq85_QIA5Uidl_btMGwikH8tF3VNPZsgoFhaetWDXXdmkavW1TaTf5JrVwFWnMsx8aJ-fR01pTg==/',
+    defaultProvider:
+      'https://weathered-young-wave.quiknode.io/75809a67-435c-4d8b-a287-649990316295/IHZHq4dJhpdQq85_QIA5Uidl_btMGwikH8tF3VNPZsgoFhaetWDXXdmkavW1TaTf5JrVwFWnMsx8aJ-fR01pTg==/',
     deployments: require('./basis-cash/deployments/deployments.rinkeby.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,
+    defaultCollateral: 'ETH',
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC']
+    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
   },
   production: {
     chainId: ChainId.MAINNET,
     etherscanUrl: 'https://etherscan.io',
-    defaultProvider: 'https://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
+    defaultProvider:
+      'https://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
     deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-22T15:00:00Z'),
     refreshInterval: 3000,
     gasLimitMultiplier: 1.7,
+    defaultCollateral: 'ETH',
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC']
+    supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
   },
 };
-
 
 export const collateralPools: { [contractName: string]: CollateralPool } = {
   PoolUSDC: {
@@ -53,7 +57,7 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
     finished: true,
     networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     sort: 3,
-  }
+  },
 };
 
 export const linearStakingContracts: { [contractName: string]: LinearStakingContract } = {
@@ -67,7 +71,7 @@ export const linearStakingContracts: { [contractName: string]: LinearStakingCont
     poolSize: 84460,
     networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     sort: 3,
-  }
+  },
 };
 
 export const boostedStakingContracts: { [contractName: string]: BoostedStakingContract } = {
@@ -81,8 +85,7 @@ export const boostedStakingContracts: { [contractName: string]: BoostedStakingCo
     poolSize: 84460,
     networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
     sort: 3,
-  }
+  },
 };
 
-
-export default configurations["development"];
+export default configurations['development'];

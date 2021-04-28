@@ -151,8 +151,8 @@ const Home: React.FC = () => {
                   <Grid container alignItems={'center'} justify={'center'}>
                     <InfoDiv>Add Collateral for Recollateralize</InfoDiv>
                     <HeaderSubtitle>
-                      342.450K <HardChip>USDT</HardChip>{' '}
-                      <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+                      342.450K <HardChip>ARTHX</HardChip>{' '}
+                      <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
                     </HeaderSubtitle>
                     <ButtonDiv style={{ width: isMobile ? '100%' : '75%' }}>
                       <IconButtons style={{ color: '#F7653B' }}>

@@ -1,5 +1,5 @@
 import { Configuration } from './config';
-import { ContractName, } from './types';
+import { ContractName } from './types';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { TransactionResponse } from '@ethersproject/providers';
 import ERC20 from './ERC20';
@@ -8,7 +8,6 @@ import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 import Multicall from './Mulitcall';
 import UniswapPair from './UniswapPair';
 import ABIS from './deployments/abi';
-
 
 /**
  * An API module of ARTH contracts.
@@ -26,27 +25,50 @@ export class BasisCash {
   ARTH: ERC20;
   MAHA: ERC20;
   ARTHX: ERC20;
+  USDT: ERC20;
+  USDC: ERC20;
+  WBTC: ERC20;
+  WETH: ERC20;
 
-  multicall: Multicall
+  tokens: {
+    [name: string]: ERC20;
+  };
+
+  multicall: Multicall;
 
   constructor(cfg: Configuration) {
-    const { deployments, } = cfg;
+    const { deployments } = cfg;
     const provider = getDefaultProvider();
 
     // loads contracts from deployments
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
-      if (!deployment.abi) continue
+      if (!deployment.abi) continue;
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 
     this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH');
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
     this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX');
-    this.DAI = new ERC20(deployments.DAI.address, provider, 'DAI');
 
-    this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address)
+    this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI');
+    this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT');
+    this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC');
+    this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC');
+    this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH');
 
+    this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
+
+    this.tokens = {
+      ARTH: this.ARTH,
+      ARTHX: this.ARTHX,
+      MAHA: this.MAHA,
+      DAI: this.DAI,
+      USDT: this.USDT,
+      USDC: this.USDC,
+      WBTC: this.WBTC,
+      WETH: this.WETH,
+    };
     // Uniswap V2 Pair
 
     // this.arthDai = new UniswapPair(
@@ -83,9 +105,20 @@ export class BasisCash {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ARTH, this.MAHA, this.ARTHX, this.DAI];
+
+    const tokens = [
+      this.ARTH,
+      this.MAHA,
+      this.ARTHX,
+      this.DAI,
+      this.USDC,
+      this.USDT,
+      this.WBTC,
+      this.USDT,
+    ];
+
     for (const token of tokens) {
-      token.connect(this.signer);
+      if (token && token.address) token.connect(this.signer);
     }
 
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
@@ -119,10 +152,18 @@ export class BasisCash {
     return !!this.myAccount;
   }
 
-  getCollateralTypes = () => this.config.supportedCollaterals
-  getDefaultCollateral = () => 'ETH'
-  getARTHTradingPairs = () => this.config.arthTradingPairs
-  getARTHXTradingPairs = () => this.config.arthxTradingPairs
+  getCollateralTypes = () => this.config.supportedCollaterals;
+  getDefaultCollateral = () => this.config.defaultCollateral;
+  getARTHTradingPairs = () => this.config.arthTradingPairs;
+  getARTHXTradingPairs = () => this.config.arthxTradingPairs;
+
+  getCollatearalPool = (collateral: string) => {
+    if (collateral === 'USDT') return this.contracts.Pool_USDT;
+    if (collateral === 'USDC') return this.contracts.Pool_USDC;
+    if (collateral === 'DAI') return this.contracts.Pool_DAI;
+    if (collateral === 'WBTC') return this.contracts.Pool_WBTC;
+    if (collateral === 'ETH') return this.contracts.Pool_ETH;
+  };
 
   gasOptions(gas: BigNumber): Overrides {
     const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
@@ -140,12 +181,13 @@ export class BasisCash {
   async getTokenPriceFromPair(pair: UniswapPair, forToken: ERC20): Promise<BigNumber> {
     await this.provider.ready;
 
-    const token0 = await pair.token0()
-    const [r0, r1] = await pair.reserves()
+    const token0 = await pair.token0();
+    const [r0, r1] = await pair.reserves();
     const decimals = BigNumber.from(10).pow(18);
 
-    if (token0.toLowerCase() === forToken.address.toLowerCase()) return r1.mul(decimals).div(r0)
-    return r0.mul(decimals).div(r1)
+    if (token0.toLowerCase() === forToken.address.toLowerCase())
+      return r1.mul(decimals).div(r0);
+    return r0.mul(decimals).div(r1);
   }
 
   async getTokenPriceFromCoingecko(tokenContract: ERC20): Promise<BigNumber> {
@@ -153,38 +195,45 @@ export class BasisCash {
     const decimals = BigNumber.from(10).pow(18);
 
     try {
-      const result = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`)
-      const json = await result.json()
-      return BigNumber.from(Number(json[tokenContract.address.toLowerCase()].usd)).mul(decimals)
+      const result = await fetch(
+        `https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${tokenContract.address}&vs_currencies=usd`,
+      );
+      const json = await result.json();
+      return BigNumber.from(Number(json[tokenContract.address.toLowerCase()].usd)).mul(
+        decimals,
+      );
     } catch (err) {
       console.error(`Failed to fetch token price of ${tokenContract.symbol}: ${err}`);
     }
 
-    return BigNumber.from(0)
+    return BigNumber.from(0);
   }
 
   async estimateAmountOutFromUniswap(amountIn: number, path: ERC20[]): Promise<BigNumber> {
     await this.provider.ready;
 
-    if (amountIn <= 0) return BigNumber.from(0)
+    if (amountIn <= 0) return BigNumber.from(0);
 
     const denominator1e18 = BigNumber.from(10).pow(18).mul(Math.floor(amountIn));
-    const adjustedAmount = BigNumber.from(1).mul(denominator1e18)
+    const adjustedAmount = BigNumber.from(1).mul(denominator1e18);
 
     const UniswapV2Library = new Contract(
       this.config.deployments.UniswapV2Router02.address,
       UniswapV2Router02ABI,
       this.provider,
-    )
+    );
 
     try {
-      const result: BigNumber[] = await UniswapV2Library.getAmountsOut(adjustedAmount, path.map(p => p.address))
-      return result[result.length - 1]
+      const result: BigNumber[] = await UniswapV2Library.getAmountsOut(
+        adjustedAmount,
+        path.map((p) => p.address),
+      );
+      return result[result.length - 1];
     } catch (error) {
-      console.log('Uniswap estimation error', error)
+      console.log('Uniswap estimation error', error);
     }
 
-    return BigNumber.from(0)
+    return BigNumber.from(0);
   }
 
   /**
@@ -228,5 +277,4 @@ export class BasisCash {
     const gas = await pool.estimateGas.exit();
     return await pool.exit(this.gasOptions(gas));
   }
-
 }

@@ -12,6 +12,10 @@ import CustomModal from '../../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import { useWallet } from 'use-wallet';
 
 type Iprops = {
   onChange: () => void;
@@ -20,14 +24,15 @@ type Iprops = {
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
 
+  const { account, connect } = useWallet()
+
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
   const [receiveMAHA, setReceiveMAHA] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
 
-  const [balance, setBalance] = useState<number>(0);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
     core.getDefaultCollateral(),
   );
 
@@ -36,6 +41,19 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const bonusRatio = 4;
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin])
+
+  const collateralPool = core.getCollatearalPool(selectedCollateralCoin)
+
+  const [approveStatus, approve] = useApprove(
+    core.tokens[selectedCollateralCoin],
+    collateralPool.address,
+  );
+
+  const isARTHXApproved = approveStatus === ApprovalState.APPROVED
+  const isWalletConnected = !!account
+  const isARTHXApproving = approveStatus === ApprovalState.PENDING
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -68,7 +86,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
+            <TextForInfoTitle>Buyback is not needed for now</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
         <CollaterallizeCheckmark subText={'Buyback is not needed for now'} />
@@ -81,38 +99,37 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       <LeftTopCard className={'custom-mahadao-container'}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
-            {'Add Collateral'}
+            Add Collateral
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            342.450K <HardChip>USDT</HardChip>{' '}
-            <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+            342.450K <HardChip>ARTHX</HardChip>{' '}
+            <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Collateral'}
-            IBalanceValue={`Balance ${balance}`}
+            IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
-            LogoSymbol={selectedBuybackReceiveAmountCoin}
+            LogoSymbol={selectedCollateralCoin}
             dropDownValues={collateralTypes}
             ondropDownValueChange={(data) => {
-              setSelectedBuybackReceiveAmountCoin(data);
+              setSelectedCollateralCoin(data);
             }}
-            SymbolText={selectedBuybackReceiveAmountCoin}
+            SymbolText={selectedCollateralCoin}
             setText={(val: string) => {
               onColleteralChange(val)
-
             }}
             inputMode={'decimal'}
           />
 
           <PlusMinusArrow>
-            <img src={arrowDown} />
+            <img src={arrowDown} alt="arrow-down" />
           </PlusMinusArrow>
-          <PrimaryText>You Receive</PrimaryText>
+          <PrimaryText>You Will Receive</PrimaryText>
           <ReYouReceiveContain>
             <OneLineInputwomargin style={{ marginBottom: '10px' }}>
               <PrimaryText>ARTH Share</PrimaryText>
@@ -121,16 +138,9 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <HardChip>ARTHX</HardChip>
               </OneLineInputwomargin>
             </OneLineInputwomargin>
-            <OneLineInputwomargin style={{ marginBottom: '10px' }}>
-              <PrimaryText>MAHA Reward</PrimaryText>
-              <OneLineInputwomargin>
-                <BeforeHardChip>{receiveMAHA}</BeforeHardChip>
-                <HardChip>ARTHX</HardChip>
-              </OneLineInputwomargin>
-            </OneLineInputwomargin>
             <OneLineInputwomargin>
               <PrimaryText>
-                Bonus
+                + Bonus
                 <CustomToolTip />
               </PrimaryText>
               <OneLineInputwomargin>
@@ -155,17 +165,44 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               </OneLineInputwomargin>
             </TcContainer>
             <div style={{ flex: 1, marginTop: 30 }}>
-              <Button
-                text={'Recollatateralize'}
-                size={'lg'}
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-              />
+              {
+                !isWalletConnected ? (
+                  <Button
+                    text={'Connect Wallet'}
+                    size={'lg'}
+                    onClick={() => connect('injected')}
+                  />
+                ) : (
+                  <>
+                    {
+                      !isARTHXApproved && (
+                        <>
+                          <Button
+                            text={!isARTHXApproving ? 'Approve ARTHX' : 'Approving...'}
+                            size={'lg'}
+                            disabled={isARTHXApproving}
+                            onClick={approve}
+                          />
+                          <br />
+                        </>
+                      )
+                    }
+                    <Button
+                      text={'Recollatateralize'}
+                      disabled={!isARTHXApproved}
+                      size={'lg'}
+                      onClick={() => {
+                        setOpenModal(true);
+                      }}
+                    />
+                  </>
+                )
+              }
+
             </div>
           </div>
         </LeftTopCardContainer>
-      </LeftTopCard>
+      </LeftTopCard >
     );
 
   };
