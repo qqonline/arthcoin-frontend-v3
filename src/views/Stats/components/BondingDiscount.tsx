@@ -60,6 +60,9 @@ export default BondingDiscount;
 
 const CustomInfoCard = styled.div`
   min-height: 220px;
+  @media (max-width: 600px) {
+    margin-top: 8px;
+  }
 `;
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;

@@ -70,7 +70,7 @@ const Home: React.FC = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px', alignItems: 'center' }}>
           <TextForInfoTitle>
             Collateral Ratio
             <CustomToolTip />
@@ -107,6 +107,7 @@ const Home: React.FC = () => {
                     alignItems: 'center',
                     // justifyContent: 'center',
                     flexDirection: isMobile ? 'column' : 'row',
+                    paddingBottom: '24px',
                   }}
                 >
                   <Grid item sm={12} md={6} lg={6}>
@@ -146,15 +147,15 @@ const Home: React.FC = () => {
                     </PercentCard>
                   </Grid>
                 </Grid>
-                <div className="border-bottom width-100 margin-bottom-20" />
+                <div className="border-bottom"/>
                 <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
-                    <InfoDiv>Add Collateral for Recollateralize</InfoDiv>
+                    <InfoDiv style={{marginTop: '24px'}}>Add Collateral for Recollateralize</InfoDiv>
                     <HeaderSubtitle>
                       342.450K <HardChip>ARTHX</HardChip>{' '}
                       <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
                     </HeaderSubtitle>
-                    <ButtonDiv style={{ width: isMobile ? '100%' : '75%' }}>
+                    <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
                         <ButtonText>Recollateralize</ButtonText>
                         <img src={arrowRight} height={18} style={{ marginLeft: 8 }} />
@@ -174,28 +175,11 @@ const Home: React.FC = () => {
                     </ButtonDiv>
                   </Grid>
                 </Grid>
-                <div className="border-bottom width-100 margin-bottom-20 margin-top-30" />
-                <Grid item sm={12} md={12} lg={12}>
+                <div className="border-bottom width-100"/>
+                <Grid item sm={12} md={12} lg={12} style={{padding: '24px 0 0 0'}}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <HtmlTooltip
-                      enterTouchDelay={0}
-                      title={
-                        <span>
-                          When the system is in expansion mode (12hr TWAP price above $1.05),
-                          new ARTH coins are minted as seigniorage and are added back into the
-                          circulation as a way of increasing the coin supply. What you see below
-                          is the seigniorage distribution for various pools.
-                        </span>
-                      }
-                    >
-                      <img
-                        src={HTMLInfoIcon}
-                        alt="Inof"
-                        width="16px"
-                        className="margin-left-5"
-                      />
-                    </HtmlTooltip>
+                    <CustomToolTip/>
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid
@@ -377,11 +361,7 @@ const FaqTitle = styled.div`
   margin-bottom: 20px;
 `;
 const Card = styled.div`
-  display: flex;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  padding: 0 32px;
-  backdrop-filter: blur(21px);
+  
 `;
 const PercentCard = styled.div`
   display: flex;
@@ -390,7 +370,6 @@ const PercentCard = styled.div`
   width: 100%;
   align-items: center;
   height: fit-content;
-  padding: 25px 0px;
   // border: 0.5px solid;
 `;
 
@@ -453,7 +432,6 @@ const TextForInfoTitle = styled.div`
   line-height: 150%;
   color: rgba(255, 255, 255, 0.88);
   opacity: 0.64;
-  margin: 20px 0px;
   text-align: center;
 `;
 
@@ -482,7 +460,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  // margin: 8px 0px 0px 0px
+   margin: 12px 0px 22px 0px;
 `;
 
 const HardChip = styled.div`

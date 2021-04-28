@@ -52,6 +52,9 @@ const ToLink = styled(Link)`
 const CustomInfoCard = styled.div`
   padding: 0 !important;
   margin-top: 16px;
+  @media(max-width: 600px) {
+    margin-top: 24px;
+  }
 `;
 
 

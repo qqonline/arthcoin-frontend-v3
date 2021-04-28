@@ -126,9 +126,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [mintColl, setCollateralValue] = useState<string>('0');
   const [mintArthxShare, setArthxShare] = useState<string>('0');
   const [mintReceive, setReceive] = useState<string>('0');
+  const [balance, setBalance] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
   const [currentCounter, setCurrentCounter] = useState<number>(1000);
-
+  const type = 'Mint'
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
   const sliderClasses = useSliderStyles();
@@ -141,7 +142,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   );
 
   const onBuyColletralValueChange = async (val: string) => {
-    if (val === '') setReceive('0');
+    if (val === '') {
+      setArthxShare('0')
+      setReceive('0');
+    }
     setCollateralValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
@@ -165,6 +169,19 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setCollateralValue(colletralTemp.toString());
       setReceive(String(colletralTemp + valueInNumber));
       console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
+    }
+  };
+
+  const onReceiveValueChange = async (val: string) => {
+    if (val === '') {
+      setArthxShare('0');
+      setCollateralValue('0');
+    }
+    setReceive(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
+      setArthxShare(String(valueInNumber * ((100 - colletralRatio) / 100)));
     }
   };
 
@@ -258,9 +275,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           {checked && (
             <StakingDiv>
               <div>
-                <OneLineInput>
+                <OneLineInput style={{ margin: '0px' }}>
                   <div>
-                    <InputLabel>Select how long would you like to stake</InputLabel>
+                    <InputLabel style={{ marginTop: '12px' }}>Select how long would you like to stake</InputLabel>
                   </div>
                   <InputNoDisplay>
                     <InternalSpan>{sliderValue} months</InternalSpan>
@@ -275,7 +292,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   flexDirection: 'row',
                   width: '100%',
                   paddingLeft: '16px',
-                  // marginTop: '10px'
+                  marginTop: '5px'
                 }}
               >
                 <div className={sliderClasses.root}>
@@ -409,7 +426,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <ActiveTab />
               <TabContainer onClick={() => props.setType('Redeem')}>
-                <TabText>Mint</TabText>
+                <TabTextActive>Mint</TabTextActive>
               </TabContainer>
               <TabContainer onClick={() => props.setType('Redeem')}>
                 <TabText>Redeem</TabText>
@@ -418,7 +435,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+                IBalanceValue={`Balance ${balance}`}
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
                 DefaultValue={mintColl.toString()}
@@ -465,6 +482,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
+                setText={(val: string) => {
+                  onReceiveValueChange(val);
+                }}
               />
               <div>
                 <TcContainer>
@@ -481,17 +501,20 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
-                <Button
-                  text={'Mint'}
-                  size={'lg'}
-                  variant={'default'}
-                  disabled={false}
-                  onClick={() => setOpenModal(1)}
-                />
+                <div style={{ marginTop: '32px' }}>
+                  <Button
+                    text={'Mint'}
+                    size={'lg'}
+                    variant={'default'}
+                    disabled={false}
+                    onClick={() => setOpenModal(1)}
+                  />
+                </div>
+
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
-        </Grid>
+        </Grid >
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <RightTopCard className={'custom-mahadao-box'}>
             <div style={{ marginBottom: '12px' }}>
@@ -564,7 +587,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           </RightBottomCard>
         </Grid>
         <Grid item lg={1} />
-      </Grid>
+      </Grid >
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
@@ -582,8 +605,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 export default withSnackbar(MintTabContent)
 
 const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: 24px;
 `;
 
 const OneLineInputwomargin = styled.div`
@@ -595,10 +617,17 @@ const OneLineInputwomargin = styled.div`
 
 const LeftTopCard = styled.div``;
 
-const RightTopCard = styled.div``;
+const RightTopCard = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 8px;
+  }
+`;
 
 const RightBottomCard = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
+  @media (max-width: 600px){
+    margin-top: 24px;
+  }
 `;
 
 const RightBottomCardTitle = styled.div`
@@ -635,8 +664,18 @@ const TabText = styled.span`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+const TabTextActive = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `;
+
 const StakingDiv = styled.div`
   display: flex;
   flex-direction: column;

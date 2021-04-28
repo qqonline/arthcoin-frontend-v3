@@ -23,18 +23,18 @@ const Boardrooms = (props: WithSnackbarProps) => {
 
   const TabContent = () => {
     return (
-      <Grid container style={{ marginTop: '24px' }}>
+      <Grid container>
         <Grid item lg={3} sm={'auto'}></Grid>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer onClick={() => setType('Buy')}>
                 {type === 'Buy' && <ActiveTab />}
-                <TabText>Buy</TabText>
+                {type === 'Buy'? <TabTextActive>Buy</TabTextActive>: <TabText>Buy</TabText>}
               </TabContainer>
               <TabContainer onClick={() => setType('Sell')}>
                 {type === 'Sell' && <ActiveTab />}
-                <TabText>Sell</TabText>
+                {type === 'Sell'? <TabTextActive>Sell</TabTextActive>: <TabText>Sell</TabText>}
               </TabContainer>
             </LeftTopCardHeader>
             {type === 'Buy' && <BuyContent />}
@@ -95,7 +95,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
           <Grid item lg={3}></Grid>
         </Grid>
         {TabContent()}
-        <Grid container style={{ marginTop: '16px' }}>
+        <Grid container>
           <Grid item lg={3} sm={'auto'}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
             <CustomInfoCard className={'custom-mahadao-box'}>
@@ -244,7 +244,12 @@ const ActiveRadio = styled.div`
   z-index: 0;
 `;
 
-const LeftTopCard = styled.div``;
+const LeftTopCard = styled.div`
+  margin-top: 24px;
+  @media (max-width: 600px) {
+    margin-top: 24px;
+  }
+`;
 
 const LeftTopCardHeader = styled.div`
   display: flex;
@@ -270,6 +275,15 @@ const TabText = styled.span`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+const TabTextActive = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `;
 
@@ -283,7 +297,12 @@ const ActiveTab = styled.div`
   border-bottom: 2px solid #fd5656;
 `;
 
-const CustomInfoCard = styled.div``;
+const CustomInfoCard = styled.div`
+  margin-top: 16px;
+  @media (max-width: 600px) {
+    margin-top: 24px;
+  }
+`;
 
 const CustomInfoCardDetails = styled.div`
   margin: 10px 0;

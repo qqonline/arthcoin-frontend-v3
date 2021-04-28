@@ -73,7 +73,7 @@ const Button: React.FC<ButtonProps> = ({
   let fg = {
     normal: theme === 'secondary' ? color.teal[200] : color.white,
     hover: color.white,
-    selected: 'rgba(255, 255, 255, 0.32)',
+    selected: theme === 'secondary' ? color.teal[200] : color.white,
     disabled: '',
     ...variantStyle.fg
   };

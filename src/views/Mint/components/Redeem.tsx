@@ -27,6 +27,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
   const [redeemReceive, setRedeemReceive] = useState<string>('0');
+  const [redeemReceiveS, setRedeemReceiveS] = useState<string>('0');
   const [redeemAmount, setRedeemAmount] = useState<string>('0');
   const type = 'Redeem'
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -158,7 +159,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               </TabContainer>
               <TabContainer onClick={() => props.setType('Redeem')}>
                 <ActiveTab />
-                <TabText>Redeem</TabText>
+                <TabTextActive>Redeem</TabTextActive>
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -171,16 +172,16 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => setRedeemAmount(String(Number(val)))}
+                setText={(val: string) => setRedeemAmount(String(val))}
               />
               <PlusMinusArrow>
-                <img src={arrowDown} alt="arrow" />
+                <img src={arrowDown} />
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+                IBalanceValue={'Balance 500.00'}
                 // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={redeemReceive}
+                DefaultValue={redeemReceive.toString()}
                 LogoSymbol={selectedReceiveRedeemCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -196,7 +197,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
-                DefaultValue={redeemReceive}
+                DefaultValue={redeemReceiveS.toString()}
+                setText={(val: string) => setRedeemReceiveS(String(val))}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
@@ -335,6 +337,10 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
 export default withSnackbar(RedeemTabContent)
 
+const TcContainer = styled.div`
+  margin-top: 24px;
+`;
+
 const ToolTipFont = styled.p`
   padding: 0;
   margin: 0;
@@ -349,11 +355,19 @@ const OneLineInputwomargin = styled.div`
 
 const LeftTopCard = styled.div``;
 
-const RightTopCard = styled.div``;
+const RightTopCard = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 8px;
+  }
+`;
 
 const RightBottomCard = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
+  @media (max-width: 600px){
+    margin-top: 24px;
+  }
 `;
+
 
 const RightBottomCardTitle = styled.div`
   padding: 0;
@@ -383,6 +397,15 @@ const TabContainer = styled.div`
 `;
 
 const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`;
+const TabTextActive = styled.span`
   font-family: Inter;
   font-style: normal;
   font-weight: 600;

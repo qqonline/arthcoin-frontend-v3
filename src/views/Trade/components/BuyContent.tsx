@@ -179,7 +179,7 @@ const BuyContent = (props: WithSnackbarProps) => {
                 <BeforeChip>$ 9,760,068</BeforeChip>
               </OneLineInputwomargin>
             </OneLineInputwomargin>
-            <OneLineInputwomargin style={{ marginTop: '10px' }}>
+            <OneLineInputwomargin style={{ marginTop: '12px' }}>
               <div style={{ flex: 1 }}>
                 <TextWithIcon>Price</TextWithIcon>
               </div>
@@ -191,13 +191,16 @@ const BuyContent = (props: WithSnackbarProps) => {
               </OneLineInputwomargin>
             </OneLineInputwomargin>
           </TcContainer>
-          <Button
-            text={'Buy'}
-            size={'lg'}
-            variant={'default'}
-            disabled={false}
-            onClick={() => setOpenModal(true)}
-          />
+          <div style={{marginTop: '32px'}}>
+            <Button
+              text={'Buy'}
+              size={'lg'}
+              variant={'default'}
+              disabled={false}
+              onClick={() => setOpenModal(true)}
+            />
+          </div>
+
         </div>
       </LeftTopCardContainer>
       {BuyConfirmModal()}
@@ -207,8 +210,7 @@ const BuyContent = (props: WithSnackbarProps) => {
 
 
 const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: 24px;
 `;
 
 const OneLineInputwomargin = styled.div`

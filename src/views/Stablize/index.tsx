@@ -5,12 +5,15 @@ import useCore from '../../hooks/useCore';
 import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader';
 import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
+import { useMediaQuery } from 'react-responsive';
 
 const Stabelize = () => {
   const core = useCore();
   const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
 
   useEffect(() => window.scrollTo(0, 0), []);
+
+  const isMobile = useMediaQuery({ query: '(max-device-width: 600px)' })
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
@@ -21,9 +24,9 @@ const Stabelize = () => {
       <StabilizePageHeader
         title="Stabilize"
         subtitle="Earn MAHA and ARTH Share by Stabilize the collateral in the protocol"
-        mobile
+        mobile={isMobile ? true : false}
       />
-      <Container size="lg" margin={'10px 0px'}>
+      <Container size="lg">
         {type === "Buyback" &&
           <BuyBack
             onChange={() => setType('Recollateralize')}

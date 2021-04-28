@@ -44,7 +44,11 @@ const CoinsPrice: React.FC<props> = (props) => {
 
 export default CoinsPrice;
 
-const CustomInfoCard = styled.div``;
+const CustomInfoCard = styled.div`
+  @media (max-width: 600px) {
+    margin-top: 8px;
+  }
+`;
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
