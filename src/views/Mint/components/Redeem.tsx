@@ -153,7 +153,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               </TabContainer>
               <TabContainer onClick={() => props.setType('Redeem')}>
                 <ActiveTab />
-                <TabText>Redeem</TabText>
+                <TabTextActive>Redeem</TabTextActive>
               </TabContainer>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -382,6 +382,15 @@ const TabContainer = styled.div`
 `;
 
 const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`;
+const TabTextActive = styled.span`
   font-family: Inter;
   font-style: normal;
   font-weight: 600;

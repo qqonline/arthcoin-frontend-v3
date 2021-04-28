@@ -403,7 +403,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
                             <ActiveTab />
                             <TabContainer onClick={() => props.setType('Redeem')}>
-                                <TabText>Mint</TabText>
+                                <TabTextActive>Mint</TabTextActive>
                             </TabContainer>
                             <TabContainer onClick={() => props.setType('Redeem')}>
                                 <TabText>Redeem</TabText>
@@ -434,7 +434,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                             <CustomInputContainer
                                 ILabelValue={'Enter ARTHX'}
                                 IBalanceValue={`Balance ${balance}`}
-                                ILabelInfoValue={'How can i get it?'}
+                                ILabelInfoValue={'How can I get it?'}
                                 href={'https://www.google.com/'}
                                 DefaultValue={mintArthxShare.toString()}
                                 // ILabelInfoValue={'How can i get it?'}
@@ -631,8 +631,18 @@ const TabText = styled.span`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+const TabTextActive = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `;
+
 const StakingDiv = styled.div`
   display: flex;
   flex-direction: column;

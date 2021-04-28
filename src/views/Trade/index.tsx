@@ -30,11 +30,11 @@ const Boardrooms = (props: WithSnackbarProps) => {
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <TabContainer onClick={() => setType('Buy')}>
                 {type === 'Buy' && <ActiveTab />}
-                <TabText>Buy</TabText>
+                {type === 'Buy'? <TabTextActive>Buy</TabTextActive>: <TabText>Buy</TabText>}
               </TabContainer>
               <TabContainer onClick={() => setType('Sell')}>
                 {type === 'Sell' && <ActiveTab />}
-                <TabText>Sell</TabText>
+                {type === 'Sell'? <TabTextActive>Sell</TabTextActive>: <TabText>Sell</TabText>}
               </TabContainer>
             </LeftTopCardHeader>
             {type === 'Buy' && <BuyContent />}
@@ -264,6 +264,15 @@ const TabContainer = styled.div`
 `;
 
 const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+const TabTextActive = styled.span`
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
