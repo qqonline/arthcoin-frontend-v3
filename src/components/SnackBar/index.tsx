@@ -49,7 +49,7 @@ const SnackHeader = styled.div`
   align-items: center;
   padding: 0px 16px;
   border-radius: 4px 4px 0px 0px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(70px);
 `;
 

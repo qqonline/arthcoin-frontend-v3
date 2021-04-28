@@ -140,21 +140,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             </OneLineInputwomargin>
           </ReYouReceiveContain>
           <div>
-            <TcContainer>
-              <OneLineInputwomargin>
-                <div style={{ flex: 1 }}>
-                  <TextWithIcon>
-                    {/* Bonus */}
-                    {/* <InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} /> */}
-                  </TextWithIcon>
-                </div>
-                <OneLineInputwomargin>
-                  {/* <BeforeChip>1.06</BeforeChip> */}
-                  {/* <TagChips>ARTHX</TagChips> */}
-                </OneLineInputwomargin>
-              </OneLineInputwomargin>
-            </TcContainer>
-            <div style={{ flex: 1, marginTop: 30 }}>
+            <div style={{ flex: 1, marginTop: 32 }}>
               <Button
                 text={'Recollatateralize'}
                 size={'lg'}
@@ -347,8 +333,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 };
 
 const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 15px;
+  margin-top: 24px;
 `;
 
 const PrimaryText = styled.p`
@@ -375,7 +360,7 @@ const ReYouReceiveContain = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
 `;
 
 const HeaderTitle = styled.div`

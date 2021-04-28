@@ -373,7 +373,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Commit' && <ActiveTab />}
-                  <TabText>Commit Collateral</TabText>
+                  {type !== 'Commit' ?<TabText>Commit Collateral</TabText>: <TabTextActive>Commit Collateral</TabTextActive>}
                 </TabContainer>
                 <TabContainer
                   onClick={() => {
@@ -381,7 +381,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Swap' && <ActiveTab />}
-                  <TabText>Swap ARTH for ARTHX</TabText>
+                  {type !== 'Swap' ?<TabText>Swap ARTH for ARTH</TabText>: <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -615,6 +615,17 @@ const TabText = styled.span`
   text-align: center;
   color: rgba(255, 255, 255, 0.64);
 `;
+
+const TabTextActive = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`;
+
 
 const ActiveTab = styled.div`
   position: absolute;

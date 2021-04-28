@@ -252,9 +252,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     {checked && (
                         <StakingDiv>
                             <div>
-                                <OneLineInput>
+                                <OneLineInput style={{margin: '0px'}}>
                                     <div>
-                                        <InputLabel>Select how long would you like to stake</InputLabel>
+                                        <InputLabel style={{marginTop: '12px'}}>Select how long would you like to stake</InputLabel>
                                     </div>
                                     <InputNoDisplay>
                                         <InternalSpan>{sliderValue} months</InternalSpan>
@@ -269,7 +269,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                     flexDirection: 'row',
                                     width: '100%',
                                     paddingLeft: '16px',
-                                    // marginTop: '10px'
+                                    marginTop: '5px'
                                 }}
                             >
                                 <div className={sliderClasses.root}>
@@ -475,13 +475,16 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                         </OneLineInputwomargin>
                                     </OneLineInputwomargin>
                                 </TcContainer>
-                                <Button
+                                <div style={{marginTop: '32px'}}>
+                                  <Button
                                     text={'Mint'}
                                     size={'lg'}
                                     variant={'default'}
                                     disabled={false}
                                     onClick={() => setOpenModal(1)}
-                                />
+                                  />
+                                </div>
+
                             </div>
                         </LeftTopCardContainer>
                     </LeftTopCard>
@@ -576,8 +579,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 export default withSnackbar(MintTabContent)
 
 const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: 24px;
 `;
 
 const OneLineInputwomargin = styled.div`

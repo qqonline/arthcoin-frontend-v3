@@ -91,7 +91,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                 :
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: 40}}>
                   {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px' }}>
                     <TextForInfoTitle>
                       Collateral Ratio
                   <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
@@ -216,6 +216,7 @@ const StyledSubtitle = styled.h3`
   margin: 0;
   max-width: 500px;
   padding: 0;
+  margin-top: 4px;
 `;
 const SecondParaDescription = styled.h3`
   color: ${(props) => props.theme.color.grey[400]};

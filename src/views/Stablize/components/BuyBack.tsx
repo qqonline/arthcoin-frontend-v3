@@ -119,7 +119,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
             </TcContainer>
-            <div style={{ marginTop: 35 }}>
+            <div style={{ marginTop: 32 }}>
               <Button
                 text={'Buyback'}
                 size={'lg'}
@@ -283,8 +283,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   );
 };
 const TcContainer = styled.div`
-  margin-top: 18px;
-  margin-bottom: 15px;
+  margin-top: 24px;
 `;
 const HeaderTitle = styled.div`
   font-family: Inter;
