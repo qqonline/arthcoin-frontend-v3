@@ -44,7 +44,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
-
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
 
   const isWalletConnected = !!account;
@@ -80,7 +79,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             labelToolTipData={'testing'}
-            rightLabelUnit={'USDT'}
+            rightLabelUnit={selectedCollateral}
             rightLabelValue={'0.05'}
           />
 
