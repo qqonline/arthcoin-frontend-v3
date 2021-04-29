@@ -24,8 +24,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
+  const colletralRatio = 86;
   const [redeemReceive, setRedeemReceive] = useState<string>('0');
-  const [redeemReceiveS, setRedeemReceiveS] = useState<string>('0');
+  const [redeemReceiveARTHX, setRedeemReceiveARTHX] = useState<string>('0');
   const [redeemAmount, setRedeemAmount] = useState<string>('0');
   const type = 'Redeem'
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -34,6 +35,50 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     basisCash.getDefaultCollateral(),
   );
   const [successModal, setSuccessModal] = useState<boolean>(false);
+
+  const onReceiveARTHXValueChange = async (val: string) => {
+    if (val === '') {
+      setRedeemReceive('0')
+      setRedeemAmount('0');
+    }
+    setRedeemReceiveARTHX(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      let arthxShareTemp =
+        (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
+      setRedeemReceive(arthxShareTemp.toString());
+      setRedeemAmount(String(arthxShareTemp + valueInNumber));
+    }
+  };
+
+  const onReceiveValueChange = async (val: string) => {
+    if (val === '') {
+      setRedeemReceiveARTHX('0');
+      setRedeemAmount('0')
+    }
+    setRedeemReceive(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      let colletralTemp =
+        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
+      setRedeemReceiveARTHX(colletralTemp.toString());
+      setRedeemAmount(String(colletralTemp + valueInNumber));
+      console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
+    }
+  };
+
+  const onRedeemValueChange = async (val: string) => {
+    if (val === '') {
+      setRedeemReceiveARTHX('0');
+      setRedeemReceive('0');
+    }
+    setRedeemAmount(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      setRedeemReceiveARTHX(String(valueInNumber * (colletralRatio / 100)));
+      setRedeemReceive(String(valueInNumber * ((100 - colletralRatio) / 100)));
+    }
+  };
 
 
   return (
@@ -167,7 +212,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => setRedeemAmount(String(val))}
+                setText={(val: string) => {
+                  onRedeemValueChange(val)
+                }}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -184,7 +231,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   setSelectedReceiveRedeemCoin(data);
                 }}
                 SymbolText={selectedReceiveRedeemCoin}
-                setText={(val: string) => setRedeemReceive(String(val))}
+                setText={(val: string) => {
+                  onReceiveValueChange(val)
+                }}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -193,11 +242,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={'Balance 500.00'}
                 ILabelInfoValue={''}
-                DefaultValue={redeemReceiveS.toString()}
+                DefaultValue={redeemReceiveARTHX.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
-                setText={(val: string) => setRedeemReceiveS(String(val))}
+                setText={(val: string) => {
+                  onReceiveARTHXValueChange(val)
+                }}
               />
               <div>
                  <TcContainer>
