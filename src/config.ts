@@ -23,7 +23,7 @@ const configurations: { [env: string]: Configuration } = {
     networkName: 'Rinkeby',
     chainId: ChainId.RINKEBY,
     etherscanUrl: 'https://rinkeby.etherscan.io',
-    defaultProvider: 'https://rinkeby.infura.io/v3/f5142baf5554446b93de1ee52410b27b',
+    defaultProvider: 'https://bitter-twilight-moon.quiknode.io/a7bc771b-a15c-49a6-9e23-a1106f86b2db/g9PahkWuM3pjJMRqNA39cUyZpov8PMSH5MbcKSJs4zrqyGwEsuUajCGSpWmFbvVU7HboSbF6lauR38Y0Zyr8NQ==/',
     deployments: require('./basis-cash/deployments/rinkeby.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
@@ -90,4 +90,5 @@ export const boostedStakingContracts: { [contractName: string]: BoostedStakingCo
   },
 };
 
-export default configurations['development'];
+export default configurations['staging'];
+
