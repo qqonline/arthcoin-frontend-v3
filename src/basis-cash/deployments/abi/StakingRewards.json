@@ -23,7 +23,7 @@
       },
       {
         "internalType": "address",
-        "name": "_arthAddress",
+        "name": "_arthControllerAddress",
         "type": "address"
       },
       {
@@ -868,6 +868,19 @@
       }
     ],
     "name": "stakeLockedFor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      }
+    ],
+    "name": "setArthController",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

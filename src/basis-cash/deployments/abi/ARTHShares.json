@@ -1156,6 +1156,19 @@
   {
     "inputs": [
       {
+        "internalType": "contract IARTHXTaxController",
+        "name": "controller",
+        "type": "address"
+      }
+    ],
+    "name": "setTaxController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_controller",
         "type": "address"
@@ -1255,6 +1268,29 @@
       }
     ],
     "name": "poolBurnFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "taxTransfer",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
