@@ -5,7 +5,7 @@ import CustomToolTip from '../../../components/CustomTooltip';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useCollateralPoolBalance from '../../../hooks/state/useCollateralPoolBalance';
+import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
 import useCore from '../../../hooks/useCore';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';

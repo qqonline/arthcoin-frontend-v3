@@ -30,9 +30,9 @@ import PoolInfo from './PoolInfo';
 import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useCollateralPoolPrice from '../../../hooks/state/useCollateralPoolPrice';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
-import usePoolMintingFees from '../../../hooks/state/usePoolMintingFees';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
 
@@ -245,7 +245,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     // mintARTH();
   };
 
-  const handleStakeAndMint = () => {};
+  const handleStakeAndMint = () => { };
 
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
@@ -309,7 +309,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -577,8 +577,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 isCollatApproved
                                   ? `Approved ${selectedCollateralCoin}`
                                   : !isCollatApproving
-                                  ? `Approve ${selectedCollateralCoin}`
-                                  : 'Approving...'
+                                    ? `Approve ${selectedCollateralCoin}`
+                                    : 'Approving...'
                               }
                               size={'lg'}
                               disabled={isCollatApproving || isCollatApproved}
@@ -590,8 +590,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 isARTHXApproved
                                   ? 'Approved ARTHX'
                                   : !isARTHXApproving
-                                  ? `Approve ARTHX`
-                                  : 'Approving...'
+                                    ? `Approve ARTHX`
+                                    : 'Approving...'
                               }
                               size={'lg'}
                               disabled={isARTHXApproving || isARTHXApproved}
