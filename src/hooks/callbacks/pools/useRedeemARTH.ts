@@ -13,7 +13,7 @@ export default function (collateralToken: string, collateralAmount: number, arth
     return mintingAmount.mul(BigNumber.from(1e6).sub(mintingFee)).div(1e6);
   }, [arthOutMin, mintingFee]);
 
-  const action = useCallback(async (callback: () => void): Promise<void> => {
+  const action = useCallback(async (): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
 
     const response = await pool.mint1t1ARTH(
@@ -22,10 +22,8 @@ export default function (collateralToken: string, collateralAmount: number, arth
     )
 
     addTransaction(response, {
-      summary: `Mint ${arthOutMin} ARTH`
+      summary: `Redeem ${arthOutMin} ARTH`
     });
-
-    callback()
 
   }, [core, collateralToken, collateralAmount, arthAmountAfterFees, addTransaction, arthOutMin]);
 

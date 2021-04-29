@@ -1,25 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import useCore from '../../../hooks/useCore';
-import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
-import arrowDown from '../../../assets/svg/arrowDown.svg';
-import plus from '../../../assets/svg/plus.svg';
+import { CustomSnack } from '../../../components/SnackBar';
 import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './InfoDiv';
-import HtmlTooltip from '../../../components/HtmlTooltip';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { useWallet } from 'use-wallet';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import arrowDown from '../../../assets/svg/arrowDown.svg';
+import Button from '../../../components/Button';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../../components/SnackBar';
-import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import Grid from '@material-ui/core/Grid';
+import plus from '../../../assets/svg/plus.svg';
+import PoolInfo from './PoolInfo';
+import styled from 'styled-components';
+import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import { useWallet } from 'use-wallet';
-import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useCore from '../../../hooks/useCore';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 interface IProps {
   setType: (type: 'Mint' | 'Redeem') => void;
@@ -61,9 +58,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     isMAHAApproved,
     isArthApproved,
   ]);
-
-  const redeemCR = useRedeemCollateralRatio();
-  const arthxPrice = useARTHXOraclePrice();
 
   return (
     <>
@@ -309,90 +303,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
           </LeftTopCard>
         </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <RightTopCard className={'custom-mahadao-box'}>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>
-                  ${getDisplayBalance(arthxPrice, 6, 6)}
-                </InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Redeem Collateral Ratio
-                    <HtmlTooltip
-                      title={
-                        <React.Fragment>
-                          <ToolTipFont>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since the 1500s, when an unknown printer took a galley of type
-                            and scrambled
-                          </ToolTipFont>
-                        </React.Fragment>
-                      }
-                    >
-                      <CustomToolTip />
-                    </HtmlTooltip>
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>{getDisplayBalance(redeemCR, 4, 2)}%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>Pool Balance</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            {/* <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>Available to Mint</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-              </OneLineInput>
-            </div> */}
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Stability Fee
-                    <CustomToolTip />
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Trading Fee
-                    <CustomToolTip />
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-          </RightTopCard>
-          <RightBottomCard className={'custom-mahadao-box'}>
-            <RightBottomCardTitle>
-              Farming pools are a great way to earn rewards by staking your $ARTH
-            </RightBottomCardTitle>
-            <Grid container style={{ marginTop: '16px' }}>
-              <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
-              </Grid>
-            </Grid>
-          </RightBottomCard>
+          <PoolInfo selectedCollateralCoin={selectedCollateral} />
         </Grid>
         <Grid item lg={1} />
       </Grid>
@@ -412,11 +323,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
 export default withSnackbar(RedeemTabContent);
 
-const ToolTipFont = styled.p`
-  padding: 0;
-  margin: 0;
-`;
-
 const OneLineInputwomargin = styled.div`
   display: flex;
   flex-direction: row;
@@ -425,30 +331,6 @@ const OneLineInputwomargin = styled.div`
 `;
 
 const LeftTopCard = styled.div``;
-
-const RightTopCard = styled.div`
-  @media (max-width: 600px) {
-    margin-top: 8px;
-  }
-`;
-
-const RightBottomCard = styled.div`
-  margin-top: 16px;
-  @media (max-width: 600px) {
-    margin-top: 24px;
-  }
-`;
-
-const RightBottomCardTitle = styled.div`
-  padding: 0;
-  margin: 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: rgba(255, 255, 255, 0.88);
-`;
 
 const LeftTopCardHeader = styled.div`
   display: flex;
@@ -523,17 +405,6 @@ const TextWithIcon = styled.div`
   line-height: 130%;
   color: rgba(255, 255, 255, 0.88);
 `;
-
-const TextForInfoTitle = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  color: #ffffff;
-  opacity: 0.64;
-`;
-
 const BeforeChip = styled.span`
   ont-family: Inter;
   font-style: normal;
@@ -552,16 +423,6 @@ const TagChips = styled.div`
   font-weight: 300;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.64);
-`;
-
-const InputLabelSpanRight = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.88);
-  margin-right: 5px;
 `;
 
 const ApproveButtonContainer = styled.div`

@@ -26,11 +26,10 @@ import CheckIcon from '@material-ui/icons/Check';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
-import CustomToolTip from '../../../components/CustomTooltip';
+import PoolInfo from './PoolInfo';
 import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useCollateralPoolBalance from '../../../hooks/state/useCollateralPoolBalance';
 import useCollateralPoolPrice from '../../../hooks/state/useCollateralPoolPrice';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import usePoolMintingFees from '../../../hooks/state/usePoolMintingFees';
@@ -132,19 +131,19 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const { account, connect } = useWallet();
 
   const core = useCore();
-  const [mintColl, setCollateralValue] = useState<string>('0');
-  const [mintArthxShare, setArthxShare] = useState<string>('0');
-  const [mintReceive, setReceive] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
+  const [mintArthxShare, setArthxShare] = useState<string>('0');
+  const [mintColl, setCollateralValue] = useState<string>('0');
+  const [mintReceive, setReceive] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
   const colletralRatio = mintCR.div(10000).toNumber();
 
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
-  const sliderClasses = useSliderStyles();
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const sliderClasses = useSliderStyles();
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
@@ -155,7 +154,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
   const arthxToGMUPrice = useARTHXOraclePrice();
-  const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
 
   const onBuyColletralValueChange = async (val: string) => {
     if (val === '') {
@@ -164,7 +162,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     }
     setCollateralValue(val);
     const valueInNumber = Number(val);
-    if (!valueInNumber) return;
+    if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
 
     const arthxShareValueInCollatTerms =
       ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
@@ -208,7 +206,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const handleCheck = (event: any) => {
-    // console.log('check trig', event.target.checked)
     setChecked(event.target.checked);
   };
 
@@ -228,7 +225,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const handleMint = () => {
     // setOpenModal(2);
-    mintARTH();
+    mintARTH(() => {
+      setOpenModal(2);
+      setSuccessModal(true);
+    });
 
     // let options = {
     //   content: () =>
@@ -269,7 +269,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     return isARTHXApproved && !!account && isCollatApproved;
   }, [account, isARTHXApproved, isCollatApproved]);
 
-  const arthxPrice = useARTHXOraclePrice();
   const tradingFee = useMemo(() => {
     const mintingAmount = BigNumber.from(Math.floor(Number(mintReceive) * 1e6));
     return mintingAmount.mul(mintingFee).div(1e6);
@@ -617,86 +616,19 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           </LeftTopCard>
         </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12}>
-          <RightTopCard className={'custom-mahadao-box'}>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>
-                  ${getDisplayBalance(arthxPrice, 6, 6)}
-                </InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Mint Collateral Ratio
-                    <CustomToolTip />
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>{getDisplayBalance(mintCR, 4, 2)}%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>Pool Balance</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>{getDisplayBalance(poolBalance, 18)}</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            {/* <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>Available to Mint</TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
-              </OneLineInput>
-            </div> */}
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Stability Fee
-                    <CustomToolTip />
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>1%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-            <div style={{ marginBottom: '12px' }}>
-              <OneLineInput>
-                <div style={{ flex: 1 }}>
-                  <TextForInfoTitle>
-                    Trading Fee
-                    <CustomToolTip />
-                  </TextForInfoTitle>
-                </div>
-                <InputLabelSpanRight>0.1%</InputLabelSpanRight>
-              </OneLineInput>
-            </div>
-          </RightTopCard>
-          <RightBottomCard className={'custom-mahadao-box'}>
-            <RightBottomCardTitle>
-              Farming pools are great way to earn higher APY by staking your $ARTH
-            </RightBottomCardTitle>
-            <Grid container style={{ marginTop: '16px' }}>
-              <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
-              </Grid>
-            </Grid>
-          </RightBottomCard>
+          <PoolInfo selectedCollateralCoin={selectedCollateralCoin} />
         </Grid>
         <Grid item lg={1} />
       </Grid>
+
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTH successful!'}
         subTitle={'View Transaction'}
-        subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        subsubTitle={
+          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+        }
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
         redirectTo={'/farming'}
@@ -719,30 +651,6 @@ const OneLineInputwomargin = styled.div`
 `;
 
 const LeftTopCard = styled.div``;
-
-const RightTopCard = styled.div`
-  @media (max-width: 600px) {
-    margin-top: 8px;
-  }
-`;
-
-const RightBottomCard = styled.div`
-  margin-top: 16px;
-  @media (max-width: 600px) {
-    margin-top: 24px;
-  }
-`;
-
-const RightBottomCardTitle = styled.div`
-  padding: 0;
-  margin: 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: rgba(255, 255, 255, 0.88);
-`;
 
 const LeftTopCardHeader = styled.div`
   display: flex;
@@ -829,16 +737,6 @@ const TextWithIcon = styled.div`
   color: rgba(255, 255, 255, 0.88);
 `;
 
-const TextForInfoTitle = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  color: #ffffff;
-  opacity: 0.64;
-`;
-
 const BeforeChip = styled.span`
   ont-family: Inter;
   font-style: normal;
@@ -857,16 +755,6 @@ const TagChips = styled.div`
   font-weight: 300;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.64);
-`;
-
-const InputLabelSpanRight = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.88);
-  margin-right: 5px;
 `;
 
 const InputLabel = styled.p`
