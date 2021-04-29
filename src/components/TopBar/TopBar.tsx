@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputBase from '@material-ui/core/InputBase';
 import Select from '@material-ui/core/Select';
@@ -15,6 +15,7 @@ import TxButton from './components/TxButton';
 import CloseIcon from '../../assets/img/CloseIcon.svg';
 import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
+import Button from '../Button';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -50,6 +51,10 @@ const TopBar: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
   };
+  const network = {
+    name: 'Mainnet',
+    color: '#11af60',
+  }
   // const [showWallet, setShowWallet] = useState<boolean>(true)
 
   return (
@@ -64,14 +69,12 @@ const TopBar: React.FC = () => {
               </HideonPhone>
             </div>
             <HideonPhone>
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
                 {/* <TxButton /> */}
+                {network.name !== '' && <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>}
                 {false && (
                   <Select
                     labelId="demo-customized-select-label"
@@ -107,6 +110,7 @@ const TopBar: React.FC = () => {
                 <AccountButton />
               </div>
             </HideonPhone>
+
             <HideOnBigScreen>
               <div className="dialog-class">
                 {!!account && (
@@ -114,6 +118,10 @@ const TopBar: React.FC = () => {
                     <TxButton />
                   </div>
                 )}
+                {network.name !== '' && <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>}
                 {!showMobileMenu ? (
                   <MenuIcon
                     style={{ color: 'white' }}
@@ -153,6 +161,25 @@ const TopBar: React.FC = () => {
     </>
   );
 };
+
+const CustomNetwork = styled.div`
+  display: flex;
+  color: #FFF;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.88);
+  border-radius: 6px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  height: 38px;
+  justify-content: center;
+  outline: none !important;
+  padding: 10px 22px;
+  width: 100%;
+  margin-right: 12px;
+`;
 const HideonPhone = styled.div`
   display: flex;
   justify-content: center;
@@ -216,6 +243,6 @@ const ColorIcon = styled.div`
   border-radius: 50%;
   height: 10px;
   margin-right: 5px;
-  margin-left: -10px;
+  //margin-left: -10px;
 `;
 export default TopBar;
