@@ -28,7 +28,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
           ))}
         </ul>
         <LearnMore>
-          <span>Go to ARTH V 2.0 article to learn more</span>
+          <span>Go to ARTH v2 announcement article to learn more</span>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
       </CustomInfoCardDetails>

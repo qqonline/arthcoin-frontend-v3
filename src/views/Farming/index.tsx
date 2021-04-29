@@ -36,7 +36,7 @@ const Banks = () => {
       <GradientDiv />
       <PageHeader
         title="Farming"
-        subtitle="Earn rewards by helping the protocol grow."
+        subtitle="Earn rewards by staking your tokens and helping the protocol grow."
       // learnMoreLink="#"
       />
       <Container size="lg">
