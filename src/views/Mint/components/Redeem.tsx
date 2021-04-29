@@ -74,67 +74,58 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
   const arthxToGMUPrice = useARTHXOraclePrice();
 
-  const mintARTH = useRedeemARTH(
+  const redeemARTH = useRedeemARTH(
     selectedCollateral,
-    Number(collateralValue),
-    Number(arthxValue),
     Number(arthValue),
+    Number(arthxValue),
+    Number(collateralValue),
     redeemFee,
     0.1,
   );
 
   const handleRedeem = () => {
-    // setOpenModal(2);
-    mintARTH(() => {
+    redeemARTH(() => {
       setOpenModal(2);
       setSuccessModal(true);
     });
-
-    // let options = {
-    //   content: () =>
-    //     CustomSnack({
-    //       onClose: props.closeSnackbar,
-    //       type: 'green',
-    //       data1: `Minting ${mintColl} ARTH`,
-    //     }),
-    // };
-    // props.enqueueSnackbar('timepass', options);
-    // setTimeout(() => {
-    //   setSuccessModal(true);
-    // }, 3000);
-    // mintARTH();
   };
 
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '') {
-      setCollateralValue('0')
-      setArthValue('0');
-    }
+    if (val === '') setArthValue('0');
+
     setArthxValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
-      let arthxShareTemp =
-        (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
-      setCollateralValue(arthxShareTemp.toString());
-      setArthValue(String(arthxShareTemp + valueInNumber));
+      let colletralTemp =
+        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
+      setCollateralValue(colletralTemp.toString());
+      setArthValue(String(colletralTemp + valueInNumber));
     }
   };
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
       setArthxValue('0');
-      setArthValue('0')
+      setArthValue('0');
     }
     setCollateralValue(val);
     const valueInNumber = Number(val);
-    if (valueInNumber) {
-      let colletralTemp =
-        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
-      setArthxValue(colletralTemp.toString());
-      setArthValue(String(colletralTemp + valueInNumber));
-      console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
-    }
+    if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
+
+    const arthxShareValueInCollatTerms =
+      ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
+
+    const finalArthxValue = collateralToGMUPrice
+      .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
+      .div(arthxToGMUPrice);
+
+    const finalArthValue = collateralToGMUPrice
+      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
+      .div(1e6);
+
+    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -145,8 +136,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     setArthValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
-      setArthxValue(String(valueInNumber * (colletralRatio / 100)));
-      setCollateralValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
+      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
+      setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
     }
   };
 

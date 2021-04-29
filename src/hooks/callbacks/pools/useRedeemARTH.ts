@@ -23,6 +23,11 @@ export default function (
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
 
+      console.log(
+        BigNumber.from(Math.floor(arthAmount * 1e6)).toString(),
+        collateralAmountAfterFees.toString(),
+      );
+
       const response = await pool.redeem1t1ARTH(
         BigNumber.from(Math.floor(arthAmount * 1e6)),
         collateralAmountAfterFees,
