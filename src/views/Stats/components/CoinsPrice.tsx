@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type props = {};
 
 const CoinsPrice: React.FC<props> = (props) => {
+  const arthxPrice = useARTHXOraclePrice();
+
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardDetails>
@@ -23,7 +27,7 @@ const CoinsPrice: React.FC<props> = (props) => {
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
-            <BeforeChip>0.2%</BeforeChip>
+            <BeforeChip>${getDisplayBalance(arthxPrice, 6, 6)}</BeforeChip>
             <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
@@ -48,15 +52,6 @@ const CustomInfoCard = styled.div`
   @media (max-width: 600px) {
     margin-top: 8px;
   }
-`;
-const CustomInfoCardHeader = styled.p`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 150%;
-  color: #ffffff;
-  margin-bottom: 24px;
 `;
 
 const CustomInfoCardDetails = styled.div`

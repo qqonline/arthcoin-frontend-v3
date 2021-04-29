@@ -26,11 +26,14 @@ import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useCollateralPoolPrice from '../../../hooks/state/useCollateralPoolPrice';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
-
+import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import usePoolMintingFees from '../../../hooks/state/usePoolMintingFees';
+import { BigNumber } from '@ethersproject/bignumber';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -124,15 +127,16 @@ interface IProps {
 }
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const { account, connect } = useWallet()
+  const { account, connect } = useWallet();
 
   const core = useCore();
-  const colletralRatio = 86;
   const [mintColl, setCollateralValue] = useState<string>('0');
   const [mintArthxShare, setArthxShare] = useState<string>('0');
   const [mintReceive, setReceive] = useState<string>('0');
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
-  const [currentCounter, setCurrentCounter] = useState<number>(0);
+
+  const mintCR = useMintCollateralRatio();
+  const colletralRatio = mintCR.div(10000).toNumber();
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [checked, setChecked] = React.useState(false);
@@ -142,28 +146,40 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
-    core.getDefaultCollateral()
+    core.getDefaultCollateral(),
   );
+
+  const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+
+  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  const arthxToGMUPrice = useARTHXOraclePrice();
 
   const onBuyColletralValueChange = async (val: string) => {
     if (val === '') {
-      setArthxShare('0')
+      setArthxShare('0');
       setReceive('0');
     }
     setCollateralValue(val);
     const valueInNumber = Number(val);
-    if (valueInNumber) {
-      let arthxShareTemp =
-        (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
-      setArthxShare(arthxShareTemp.toString());
-      setReceive(String(arthxShareTemp + valueInNumber));
-      console.log(arthxShareTemp.toString(), String(arthxShareTemp + valueInNumber))
-    }
+    if (!valueInNumber) return;
+
+    const arthxShareValueInCollatTerms =
+      ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
+
+    const finalArthxValue = collateralToGMUPrice
+      .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
+      .div(arthxToGMUPrice);
+
+    const finalArthValue = collateralToGMUPrice
+      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
+      .div(1e6);
+
+    setArthxShare(getDisplayBalance(finalArthxValue, 6, 3));
+    setReceive(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '')
-      setReceive('0');
+    if (val === '') setReceive('0');
 
     setArthxShare(val);
     const valueInNumber = Number(val);
@@ -172,7 +188,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
       setCollateralValue(colletralTemp.toString());
       setReceive(String(colletralTemp + valueInNumber));
-      console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
     }
   };
 
@@ -195,38 +210,39 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const handleSliderChange = (event: any, value: any) => {
-    console.log('check trig', value);
     setSliderValue(value);
     setDuration(DEFAULT_CALC - value * value);
   };
 
-  const arthxBalance = useTokenBalance(core.ARTHX)
-  const arthBalance = useTokenBalance(core.ARTH)
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin])
-  const collateralPool = core.getCollatearalPool(selectedCollateralCoin)
+  const arthxBalance = useTokenBalance(core.ARTHX);
+  const arthBalance = useTokenBalance(core.ARTH);
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
+  const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
-  const [arthXApproveStatus, approveARTHX] = useApprove(
-    core.ARTHX,
-    collateralPool.address,
-  );
+  const [arthXApproveStatus, approveARTHX] = useApprove(core.ARTHX, collateralPool.address);
 
   const [collatApproveStatus, approveCollat] = useApprove(
     core.tokens[selectedCollateralCoin],
     collateralPool.address,
   );
 
-  const isWalletConnected = !!account
-  const isARTHXApproving = arthXApproveStatus === ApprovalState.PENDING
-  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED
+  const isWalletConnected = !!account;
+  const isARTHXApproving = arthXApproveStatus === ApprovalState.PENDING;
+  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED;
 
-  const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED
-  const isCollatApproving = collatApproveStatus === ApprovalState.PENDING
+  const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
+  const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
   const isCollatArthxApproved = useMemo(() => {
-    return isARTHXApproved && !!account &&
-      isCollatApproved
-  }, [account, isARTHXApproved, isCollatApproved])
+    return isARTHXApproved && !!account && isCollatApproved;
+  }, [account, isARTHXApproved, isCollatApproved]);
 
-  const mintCR = useMintCollateralRatio()
+  const arthxPrice = useARTHXOraclePrice();
+  const tradingFee = useMemo(() => {
+    const mintingAmount = BigNumber.from(Math.floor(Number(mintReceive) * 1e6));
+    return mintingAmount.mul(mintingFee).div(1e6);
+  }, [mintReceive, mintingFee]);
+
+  console.log(tradingFee.toString(), mintingFee.toString());
 
   return (
     <>
@@ -237,27 +253,25 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Mint ARTH`}
+        title={`Confirm Mint`}
       >
         <>
           <TransparentInfoDiv
             labelData={`Your collateral supply`}
-            rightLabelUnit={'USDT'}
+            rightLabelUnit={selectedCollateralCoin}
             rightLabelValue={mintColl.toString()}
           />
 
           <TransparentInfoDiv
             labelData={`Your share supply`}
-            // labelToolTipData={'testing'}
             rightLabelUnit={'ARTHX'}
             rightLabelValue={mintArthxShare.toString()}
           />
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
-            labelToolTipData={'testing'}
-            rightLabelUnit={'USDT'}
-            rightLabelValue={'0.05'}
+            rightLabelUnit={'ARTH'}
+            rightLabelValue={getDisplayBalance(tradingFee, 6)}
           />
 
           <Divider
@@ -265,14 +279,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-          // variant={'middle'}
+            // variant={'middle'}
           />
 
           <TransparentInfoDiv
-            labelData={`You receive`}
+            labelData={`You will mint`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={'1000.00'}
+            rightLabelValue={mintReceive.toString()}
           />
 
           <CheckboxDiv>
@@ -305,7 +319,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <div>
                 <OneLineInput style={{ margin: '0px' }}>
                   <div>
-                    <InputLabel style={{ marginTop: '12px' }}>Select how long would you like to stake</InputLabel>
+                    <InputLabel style={{ marginTop: '12px' }}>
+                      Select how long would you like to stake
+                    </InputLabel>
                   </div>
                   <InputNoDisplay>
                     <InternalSpan>{sliderValue} months</InternalSpan>
@@ -320,7 +336,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   flexDirection: 'row',
                   width: '100%',
                   paddingLeft: '16px',
-                  marginTop: '5px'
+                  marginTop: '5px',
                 }}
               >
                 <div className={sliderClasses.root}>
@@ -463,6 +479,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
+                disabled={mintCR.eq(0)}
                 DefaultValue={mintColl.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -483,6 +500,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'Enter ARTHX'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={'How can i get it?'}
+                disabled={mintCR.gte(1000000)}
                 href={'https://www.google.com/'}
                 DefaultValue={mintArthxShare.toString()}
                 // ILabelInfoValue={'How can i get it?'}
@@ -521,64 +539,66 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
-                      <BeforeChip>0.5</BeforeChip>
+                      <BeforeChip>{getDisplayBalance(tradingFee, 6)}</BeforeChip>
                       <TagChips>ARTH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
                 <div style={{ marginTop: '32px' }}>
-                  {
-                    !isWalletConnected ? (
+                  {!isWalletConnected ? (
+                    <Button
+                      text={'Connect Wallet'}
+                      size={'lg'}
+                      onClick={() => connect('injected')}
+                    />
+                  ) : (
+                    <>
+                      {!isCollatArthxApproved && (
+                        <>
+                          <ApproveButtonContainer>
+                            <Button
+                              text={
+                                isCollatApproved
+                                  ? `Approved ${selectedCollateralCoin}`
+                                  : !isCollatApproving
+                                  ? `Approve ${selectedCollateralCoin}`
+                                  : 'Approving...'
+                              }
+                              size={'lg'}
+                              disabled={isCollatApproving || isCollatApproved}
+                              onClick={approveCollat}
+                            />
+                            <div style={{ padding: 5 }} />
+                            <Button
+                              text={
+                                isARTHXApproved
+                                  ? 'Approved ARTHX'
+                                  : !isARTHXApproving
+                                  ? `Approve ARTHX`
+                                  : 'Approving...'
+                              }
+                              size={'lg'}
+                              disabled={isARTHXApproving || isARTHXApproved}
+                              onClick={approveARTHX}
+                            />
+                          </ApproveButtonContainer>
+                          <br />
+                        </>
+                      )}
                       <Button
-                        text={'Connect Wallet'}
+                        text={'Mint'}
                         size={'lg'}
-                        onClick={() => connect('injected')}
+                        variant={'default'}
+                        disabled={!isCollatArthxApproved}
+                        onClick={() => setOpenModal(1)}
                       />
-                    ) : (
-                      <>
-                        {
-                          !isCollatArthxApproved && (
-                            <>
-                              <ApproveButtonContainer>
-                                <Button
-                                  text={
-                                    isCollatApproved ? `Approved ${selectedCollateralCoin}` :
-                                      !isCollatApproving ? `Approve ${selectedCollateralCoin}` : 'Approving...'
-                                  }
-                                  size={'lg'}
-                                  disabled={isCollatApproving || isCollatApproved}
-                                  onClick={approveCollat}
-                                />
-                                <div style={{ padding: 5 }} />
-                                <Button
-                                  text={
-                                    isARTHXApproved ? 'Approved ARTHX' :
-                                      !isARTHXApproving ? `Approve ARTHX` : 'Approving...'
-                                  }
-                                  size={'lg'}
-                                  disabled={isARTHXApproving || isARTHXApproved}
-                                  onClick={approveARTHX}
-                                />
-                              </ApproveButtonContainer>
-                              <br />
-                            </>
-                          )
-                        }
-                        <Button
-                          text={'Mint'}
-                          size={'lg'}
-                          variant={'default'}
-                          disabled={!isCollatArthxApproved}
-                          onClick={() => setOpenModal(1)}
-                        />
-                      </>
-                    )
-                  }
+                    </>
+                  )}
                 </div>
               </div>
             </LeftTopCardContainer>
           </LeftTopCard>
-        </Grid >
+        </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <RightTopCard className={'custom-mahadao-box'}>
             <div style={{ marginBottom: '12px' }}>
@@ -586,7 +606,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>$5.4</InputLabelSpanRight>
+                <InputLabelSpanRight>
+                  ${getDisplayBalance(arthxPrice, 6, 6)}
+                </InputLabelSpanRight>
               </OneLineInput>
             </div>
             <div style={{ marginBottom: '12px' }}>
@@ -651,7 +673,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           </RightBottomCard>
         </Grid>
         <Grid item lg={1} />
-      </Grid >
+      </Grid>
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
@@ -666,7 +688,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   );
 };
 
-export default withSnackbar(MintTabContent)
+export default withSnackbar(MintTabContent);
 
 const TcContainer = styled.div`
   margin-top: 24px;
@@ -689,7 +711,7 @@ const RightTopCard = styled.div`
 
 const RightBottomCard = styled.div`
   margin-top: 16px;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     margin-top: 24px;
   }
 `;
@@ -732,7 +754,7 @@ const TabText = styled.span`
 `;
 
 const ApproveButtonContainer = styled.div`
-  display: flex
+  display: flex;
 `;
 
 const TabTextActive = styled.span`

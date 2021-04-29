@@ -13,6 +13,7 @@ type props = {
   DefaultValue: string;
   LogoSymbol: string;
   hasDropDown: boolean;
+  disabled?: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
   inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
@@ -41,7 +42,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     multiIcons = false,
     symbol1,
     symbol2,
-    value,
+    disabled,
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const Redirection = () => {
@@ -50,24 +51,22 @@ const CustomInputContainer: React.FC<props> = (props) => {
         <HrefLink href={props.href} target="__blank">
           <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </HrefLink>
-      )
+      );
     } else if (props?.to) {
       return (
         <ToLink to={'/mint'}>
           <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
         </ToLink>
-      )
+      );
     } else {
-      return (
-        <ILabelInfo>{ILabelInfoValue}</ILabelInfo>
-      )
+      return <ILabelInfo>{ILabelInfoValue}</ILabelInfo>;
     }
-  }
+  };
   return (
     <IConatiner
       style={
         props.dontShowBackgroundContainer
-          ? { padding: '0px', backgroundColor: 'transparent' }
+          ? { padding: '0px', backgroundColor: 'transparent', opacity: disabled ? 0.5 : 1 }
           : {}
       }
     >
@@ -87,6 +86,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           defaultValue={DefaultValue ? DefaultValue : 0}
           value={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
+          disabled={props?.disabled}
           style={{
             padding: '8px 12px',
             color: '#FFFFFF',
@@ -153,10 +153,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
 export default CustomInputContainer;
 const HrefLink = styled.a`
   z-index: 1;
-`
+`;
 const ToLink = styled(Link)`
   z-index: 1;
-`
+`;
 const BackgroundAbsolute = styled.div`
   position: fixed;
   top: 0;

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../useCore';
 
 export default () => {
-  const [value, setValue] = useState<BigNumber>(BigNumber.from(0));
+  const [value, setValue] = useState<BigNumber>(BigNumber.from(1000000));
   const core = useCore();
 
   const fetchValue = useCallback(async () => {
