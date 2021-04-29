@@ -26,6 +26,8 @@ type props = {
   dontShowBackgroundContainer?: boolean;
   href?: string;
   to?: string;
+  Istate?: 'default' | 'error' | 'warning';
+  msg?: string;
 };
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
@@ -43,6 +45,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
     symbol1,
     symbol2,
     disabled,
+    Istate = 'default',
+    msg = '',
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const Redirection = () => {
@@ -61,15 +65,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
     } else {
       return <ILabelInfo>{ILabelInfoValue}</ILabelInfo>;
     }
-  };
+  }
+
   return (
-    <IConatiner
-      style={
-        props.dontShowBackgroundContainer
-          ? { padding: '0px', backgroundColor: 'transparent', opacity: disabled ? 0.5 : 1 }
-          : {}
-      }
-    >
+    <IConatiner style={props.dontShowBackgroundContainer ? { padding: '0px', backgroundColor: 'transparent' } : {}}>
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -79,7 +78,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <ILabelBalance>{IBalanceValue}</ILabelBalance>
         </ILabelRight>
       </ILabelContainer>
-      <IFieldConatiner>
+      <IFieldConatiner className={`input-${Istate}`}>
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
@@ -129,7 +128,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           {hasDropDown && (
             <IFieldRightContainerDropDown>
               {/*<KeyboardArrowDown fontSize='default' />*/}
-              <img src={DownArrow} height={20} style={{ marginLeft: 10 }} />
+              <img alt="arrow" src={DownArrow} height={20} style={{ marginLeft: 10 }} />
             </IFieldRightContainerDropDown>
           )}
           {modalOpen && hasDropDown && ondropDownValueChange && (
@@ -147,9 +146,11 @@ const CustomInputContainer: React.FC<props> = (props) => {
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
+      {msg !== '' && <p className={`input-font-${Istate}`}>{msg}</p>}
     </IConatiner>
   );
-};
+}
+
 export default CustomInputContainer;
 const HrefLink = styled.a`
   z-index: 1;
@@ -216,16 +217,7 @@ const LLabel = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-const LPairLabel = styled.div`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #ffffff;
-  opacity: 0.88;
-  margin: 0px 0px 0px 16px;
-`;
+
 const IFieldConatiner = styled.div`
   display: flex;
   flex-direction: row;

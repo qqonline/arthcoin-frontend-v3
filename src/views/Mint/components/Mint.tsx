@@ -124,7 +124,7 @@ const PrettoRestrictSlider = withStyles({
 const DEFAULT_CALC = 1440;
 
 interface IProps {
-  setType: (type: 'Mint' | 'Redeem') => void;
+  setType: (type: 'mint' | 'redeem') => void;
 }
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -482,10 +482,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
               <ActiveTab />
-              <TabContainer onClick={() => props.setType('Redeem')}>
+              <TabContainer onClick={() => props.setType('mint')}>
                 <TabTextActive>Mint</TabTextActive>
               </TabContainer>
-              <TabContainer onClick={() => props.setType('Redeem')}>
+              <TabContainer onClick={() => props.setType('redeem')}>
                 <TabText>Redeem</TabText>
               </TabContainer>
             </LeftTopCardHeader>
@@ -508,6 +508,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onBuyColletralValueChange(val);
                 }}
+                Istate={'warning'}
+                msg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -528,6 +530,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
+                Istate={'error'}
+                msg={'ERROR message goes here'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />

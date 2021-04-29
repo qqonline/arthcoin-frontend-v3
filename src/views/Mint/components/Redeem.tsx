@@ -19,7 +19,7 @@ import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 interface IProps {
-  setType: (type: 'Mint' | 'Redeem') => void;
+  setType: (type: 'mint' | 'redeem') => void;
 }
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -171,10 +171,10 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <TabContainer onClick={() => props.setType('Mint')}>
+              <TabContainer onClick={() => props.setType('mint')}>
                 <TabText>Mint</TabText>
               </TabContainer>
-              <TabContainer onClick={() => props.setType('Redeem')}>
+              <TabContainer onClick={() => props.setType('redeem')}>
                 <ActiveTab />
                 <TabTextActive>Redeem</TabTextActive>
               </TabContainer>

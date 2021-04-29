@@ -52,6 +52,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-select": "^4.3.0",
+    "react-spinners": "^0.10.6",
     "react-spring": "^8.0.27",
     "recharts": "^2.0.4",
     "redux-localstorage-simple": "^2.3.1",

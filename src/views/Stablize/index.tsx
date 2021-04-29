@@ -6,10 +6,12 @@ import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader
 import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
 import { useMediaQuery } from 'react-responsive';
+import { useParams } from 'react-router-dom';
 
-const Stabelize = () => {
+export default () => {
   const core = useCore();
-  const [type, setType] = useState<'Buyback' | 'Recollateralize'>('Buyback');
+  const { stabilizeType } = useParams<{ stabilizeType: string }>()
+  const [type, setType] = useState(stabilizeType || 'buyback');
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -27,14 +29,14 @@ const Stabelize = () => {
         mobile={isMobile ? true : false}
       />
       <Container size="lg">
-        {type === "Buyback" &&
+        {type === "buyback" &&
           <BuyBack
-            onChange={() => setType('Recollateralize')}
+            onChange={() => setType('recollateralize')}
           />
         }
-        {type === "Recollateralize" &&
+        {type === "recollateralize" &&
           <Recollatateralize
-            onChange={() => setType('Buyback')}
+            onChange={() => setType('buyback')}
           />
         }
       </Container>
@@ -50,5 +52,3 @@ const GradientDiv = styled.div`
   width: 100%;
   z-index: -5;
 `;
-
-export default Stabelize;

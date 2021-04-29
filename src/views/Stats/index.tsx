@@ -23,6 +23,7 @@ import CoinsPrice from './components/CoinsPrice';
 import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
 import CustomToolTip from '../../components/CustomTooltip';
+import { Link } from 'react-router-dom';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -157,7 +158,7 @@ const Home: React.FC = () => {
                     </HeaderSubtitle>
                     <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
-                        <ButtonText>Recollateralize</ButtonText>
+                        <ToLink to={'/stabilize/recollateralize'}><ButtonText style={{color: '#F7653B'}}>Recollateralize</ButtonText></ToLink>
                         <img src={arrowRight} height={18} style={{ marginLeft: 8 }} />
                       </IconButtons>
                       <div
@@ -169,7 +170,7 @@ const Home: React.FC = () => {
                         }}
                       />
                       <IconButtons style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
-                        <ButtonText>Buyback</ButtonText>
+                        <ToLink to={'/stabilize/buyback'}><ButtonText style={{color: 'rgba(255, 255, 255, 0.16)'}}>Buyback</ButtonText></ToLink>
                         <img src={arrowRightDisabled} height={18} style={{ marginLeft: 8 }} />
                       </IconButtons>
                     </ButtonDiv>
@@ -341,6 +342,11 @@ const Home: React.FC = () => {
   );
 };
 
+const ToLink = styled(Link)`
+  z-index: 1;
+  colo
+`
+
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   height: 270px;
@@ -501,6 +507,7 @@ const ButtonText = styled.div`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+  
 `;
 
 const TitleString = styled.div`
