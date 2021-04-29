@@ -592,7 +592,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        redirectTo={'/farming'}
+        buttonTo={'/farming'}
       />
     </>
   );

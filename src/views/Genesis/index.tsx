@@ -465,12 +465,14 @@ const Genesis = (props: WithSnackbarProps) => {
         title={'Minting ARTH successful!'}
         subTitle={'View Transaction'}
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        subTitleLink={'https://arthcoin.com/#/'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
+        buttonHref={'https://arthcoin.com/#/'}
       />
     </>
   );
-};
+}
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
