@@ -15,7 +15,7 @@ export enum ApprovalState {
 }
 
 // returns a variable indicating the state of the approval and a function which approves if necessary or early returns
-function performBuyback(token: ERC20, spender: string): [ApprovalState, () => Promise<void>] {
+export default function (token: ERC20, spender: string): [ApprovalState, () => Promise<void>] {
   const pendingApproval = useHasPendingApproval(token?.address, spender);
   const currentAllowance = useAllowance(token, spender, pendingApproval);
 
@@ -54,5 +54,3 @@ function performBuyback(token: ERC20, spender: string): [ApprovalState, () => Pr
 
   return [approvalState, approve];
 }
-
-export default performBuyback;

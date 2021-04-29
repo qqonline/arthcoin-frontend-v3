@@ -20,39 +20,37 @@ import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 
 type Iprops = {
   onChange: () => void;
-}
+};
 
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
 
-  const { account, connect } = useWallet()
+  const { account, connect } = useWallet();
 
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedCollateral, setSelectedCollateralCoin] = useState(
-    core.getDefaultCollateral(),
-  );
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
 
   const shareRatio = 2;
   const bonusRatio = 4;
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral])
-  const collateralPool = core.getCollatearalPool(selectedCollateral)
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   const [approveStatus, approve] = useApprove(
     core.tokens[selectedCollateral],
     collateralPool.address,
   );
 
-  const isARTHXApproved = approveStatus === ApprovalState.APPROVED
-  const isWalletConnected = !!account
-  const isARTHXApproving = approveStatus === ApprovalState.PENDING
+  const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
+  const isWalletConnected = !!account;
+  const isARTHXApproving = approveStatus === ApprovalState.PENDING;
 
-  const arthxPrice = useARTHXOraclePrice()
+  const arthxPrice = useARTHXOraclePrice();
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -67,16 +65,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveBonus(String(valInNumber * bonusRatio));
       setReceiveShare(String(valInNumber * shareRatio));
     }
-  }
+  };
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
 
   const buyBackContainer = () => {
     return (
-      <LeftTopCardChecked
-        className={'custom-mahadao-box'}
-        style={{ height: 570 }}>
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: 570 }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
@@ -107,7 +103,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Collateral'}
-            IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+            IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}
@@ -118,7 +114,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             }}
             SymbolText={selectedCollateral}
             setText={(val: string) => {
-              onColleteralChange(val)
+              onColleteralChange(val);
             }}
             inputMode={'decimal'}
           />
@@ -162,45 +158,42 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               </OneLineInputwomargin>
             </TcContainer>
             <div style={{ flex: 1, marginTop: 30 }}>
-              {
-                !isWalletConnected ? (
+              {!isWalletConnected ? (
+                <Button
+                  text={'Connect Wallet'}
+                  size={'lg'}
+                  onClick={() => connect('injected')}
+                />
+              ) : (
+                <>
+                  {!isARTHXApproved && (
+                    <>
+                      <Button
+                        text={
+                          !isARTHXApproving ? `Approve ${selectedCollateral}` : 'Approving...'
+                        }
+                        size={'lg'}
+                        disabled={isARTHXApproving}
+                        onClick={approve}
+                      />
+                      <br />
+                    </>
+                  )}
                   <Button
-                    text={'Connect Wallet'}
+                    text={'Recollatateralize'}
+                    disabled={!isARTHXApproved}
                     size={'lg'}
-                    onClick={() => connect('injected')}
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
                   />
-                ) : (
-                  <>
-                    {
-                      !isARTHXApproved && (
-                        <>
-                          <Button
-                            text={!isARTHXApproving ? `Approve ${selectedCollateral}` : 'Approving...'}
-                            size={'lg'}
-                            disabled={isARTHXApproving}
-                            onClick={approve}
-                          />
-                          <br />
-                        </>
-                      )
-                    }
-                    <Button
-                      text={'Recollatateralize'}
-                      disabled={!isARTHXApproved}
-                      size={'lg'}
-                      onClick={() => {
-                        setOpenModal(true);
-                      }}
-                    />
-                  </>
-                )
-              }
+                </>
+              )}
             </div>
           </div>
         </LeftTopCardContainer>
-      </LeftTopCard >
+      </LeftTopCard>
     );
-
   };
 
   return (
@@ -293,7 +286,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Recollateralize ARTH`}>
+        title={`Confirm Recollateralize ARTH`}
+      >
         <div>
           <TransparentInfoDiv
             labelData={`Your will deposit`}
@@ -306,7 +300,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-          // variant={'middle'}
+            // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -341,7 +335,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-              // onClick={handleClose}
+                // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -446,7 +440,6 @@ const HardChip = styled.div`
   margin-left: 4px;
   margin-right: 4px;
 `;
-
 
 const LeftTopCard = styled.div`
   //height: 560px;

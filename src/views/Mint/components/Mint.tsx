@@ -16,24 +16,26 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
-import TransparentInfoDiv from './InfoDiv';
-import CheckIcon from '@material-ui/icons/Check';
+import { BigNumber } from '@ethersproject/bignumber';
+import { CustomSnack } from '../../../components/SnackBar';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { useWallet } from 'use-wallet';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckIcon from '@material-ui/icons/Check';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../../components/SnackBar';
-import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useCollateralPoolPrice from '../../../hooks/state/useCollateralPoolPrice';
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import CustomToolTip from '../../../components/CustomTooltip';
+import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import { useWallet } from 'use-wallet';
-import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useCollateralPoolBalance from '../../../hooks/state/useCollateralPoolBalance';
+import useCollateralPoolPrice from '../../../hooks/state/useCollateralPoolPrice';
+import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import usePoolMintingFees from '../../../hooks/state/usePoolMintingFees';
-import { BigNumber } from '@ethersproject/bignumber';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -153,6 +155,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
   const arthxToGMUPrice = useARTHXOraclePrice();
+  const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
 
   const onBuyColletralValueChange = async (val: string) => {
     if (val === '') {
@@ -214,6 +217,36 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     setDuration(DEFAULT_CALC - value * value);
   };
 
+  const mintARTH = useMintARTH(
+    selectedCollateralCoin,
+    Number(mintColl),
+    Number(mintArthxShare),
+    Number(mintReceive),
+    mintingFee,
+    0.1,
+  );
+
+  const handleMint = () => {
+    // setOpenModal(2);
+    mintARTH();
+
+    // let options = {
+    //   content: () =>
+    //     CustomSnack({
+    //       onClose: props.closeSnackbar,
+    //       type: 'green',
+    //       data1: `Minting ${mintColl} ARTH`,
+    //     }),
+    // };
+    // props.enqueueSnackbar('timepass', options);
+    // setTimeout(() => {
+    //   setSuccessModal(true);
+    // }, 3000);
+    // mintARTH();
+  };
+
+  const handleStakeAndMint = () => {};
+
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
@@ -241,8 +274,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const mintingAmount = BigNumber.from(Math.floor(Number(mintReceive) * 1e6));
     return mintingAmount.mul(mintingFee).div(1e6);
   }, [mintReceive, mintingFee]);
-
-  console.log(tradingFee.toString(), mintingFee.toString());
 
   return (
     <>
@@ -440,21 +471,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
-                onClick={() => {
-                  setOpenModal(2);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'green',
-                        data1: `Minting ${mintColl} ARTH`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                  setTimeout(() => {
-                    setSuccessModal(true);
-                  }, 3000);
-                }}
+                onClick={handleMint}
               />
             </div>
           </div>
@@ -476,7 +493,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
                 disabled={mintCR.eq(0)}
@@ -627,7 +644,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>Pool Balance</TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>154.6M</InputLabelSpanRight>
+                <InputLabelSpanRight>{getDisplayBalance(poolBalance, 18)}</InputLabelSpanRight>
               </OneLineInput>
             </div>
             <div style={{ marginBottom: '12px' }}>
