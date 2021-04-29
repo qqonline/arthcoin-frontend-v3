@@ -17,6 +17,12 @@ import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
+import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import { BigNumber } from '@ethersproject/bignumber';
+import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -26,10 +32,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
 
-  const [redeemReceive, setRedeemReceive] = useState<string>('0');
-  const [redeemReceiveARTHX, setRedeemReceiveARTHX] = useState<string>('0');
-  const [redeemAmount, onReceiveValueChange] = useState<string>('0');
-  const type = 'Redeem';
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [arthxValue, setArthxValue] = useState<string>('0');
+  const [arthValue, setArthValue] = useState<string>('0');
+  // const [arthxValue, setArthxValue] = useState<string>('0');
+  // const [collateralValue, setCollateralValue] = useState<string>('0');
+  // const [arthValue, setArthValue] = useState<string>('0');
+
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
@@ -42,6 +51,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
 
   const collateralPool = core.getCollatearalPool(selectedCollateral);
+
+  const redeemCR = useRedeemCollateralRatio();
+  const colletralRatio = redeemCR.div(10000).toNumber();
 
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
@@ -58,6 +70,91 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     isArthApproved,
   ]);
 
+  const redeemFee = usePoolRedeemFees(selectedCollateral)
+  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
+  const arthxToGMUPrice = useARTHXOraclePrice();
+
+  const mintARTH = useRedeemARTH(
+    selectedCollateral,
+    Number(collateralValue),
+    Number(arthxValue),
+    Number(arthValue),
+    redeemFee,
+    0.1,
+  );
+
+  const handleRedeem = () => {
+    // setOpenModal(2);
+    mintARTH(() => {
+      setOpenModal(2);
+      setSuccessModal(true);
+    });
+
+    // let options = {
+    //   content: () =>
+    //     CustomSnack({
+    //       onClose: props.closeSnackbar,
+    //       type: 'green',
+    //       data1: `Minting ${mintColl} ARTH`,
+    //     }),
+    // };
+    // props.enqueueSnackbar('timepass', options);
+    // setTimeout(() => {
+    //   setSuccessModal(true);
+    // }, 3000);
+    // mintARTH();
+  };
+
+
+  const onARTHXValueChange = async (val: string) => {
+    if (val === '') {
+      setCollateralValue('0')
+      setArthValue('0');
+    }
+    setArthxValue(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      let arthxShareTemp =
+        (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
+      setCollateralValue(arthxShareTemp.toString());
+      setArthValue(String(arthxShareTemp + valueInNumber));
+    }
+  };
+
+  const onCollateralValueChange = async (val: string) => {
+    if (val === '') {
+      setArthxValue('0');
+      setArthValue('0')
+    }
+    setCollateralValue(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      let colletralTemp =
+        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
+      setArthxValue(colletralTemp.toString());
+      setArthValue(String(colletralTemp + valueInNumber));
+      console.log(colletralTemp.toString(), String(colletralTemp + valueInNumber))
+    }
+  };
+
+  const onARTHValueChange = async (val: string) => {
+    if (val === '') {
+      setArthxValue('0');
+      setCollateralValue('0');
+    }
+    setArthValue(val);
+    const valueInNumber = Number(val);
+    if (valueInNumber) {
+      setArthxValue(String(valueInNumber * (colletralRatio / 100)));
+      setCollateralValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
+    }
+  };
+
+  const tradingFee = useMemo(() => {
+    const mintingAmount = BigNumber.from(Math.floor(Number(collateralValue) * 1e6));
+    return mintingAmount.mul(redeemFee).div(1e6);
+  }, [collateralValue, redeemFee]);
+
   return (
     <>
       <CustomModal
@@ -71,16 +168,16 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your ${type.toLocaleLowerCase()} amount`}
+            labelData={`Your redeem amount`}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={redeemAmount.toString()}
+            rightLabelValue={arthValue.toString()}
           />
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={'0.05'}
+            rightLabelValue={getDisplayBalance(tradingFee, 6)}
           />
 
           <TransparentInfoDiv
@@ -102,14 +199,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             labelData={`You will receive collateral`}
             // labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={'123'}
+            rightLabelValue={collateralValue}
           />
 
           <TransparentInfoDiv
             labelData={`You will receive share`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={'1000.00'}
+            rightLabelValue={arthxValue}
           />
 
           <div
@@ -135,7 +232,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Redeeming ${redeemAmount} ARTH cancelled`,
+                        data1: `Redeeming ${arthValue} ARTH cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -148,18 +245,19 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={() => {
-                  // setType('Redeem')
-                  setOpenModal(0);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'green',
-                        data1: `Redeeming ${redeemAmount} ARTH`,
-                        data2: `Stability Fee = 1%`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
+                  handleRedeem()
+                  // // setType('Redeem')
+                  // setOpenModal(0);
+                  // let options = {
+                  //   content: () =>
+                  //     CustomSnack({
+                  //       onClose: props.closeSnackbar,
+                  //       type: 'green',
+                  //       data1: `Redeeming ${arthValue} ARTH`,
+                  //       data2: `Stability Fee = 1%`,
+                  //     }),
+                  // };
+                  // props.enqueueSnackbar('timepass', options);
                 }}
               />
             </div>
@@ -184,34 +282,27 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
                 ILabelInfoValue={''}
-                DefaultValue={redeemAmount.toString()}
+                DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => {
-                  setRedeemReceiveARTHX(val)
-                }}
+                setText={onARTHValueChange}
               />
               <PlusMinusArrow>
-                <img src={arrowDown} />
+                <img src={arrowDown} alt="arrow" />
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance)}`}
+                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
                 // ILabelInfoValue={'How can i get it?'}
-                DefaultValue={redeemReceive.toString()}
+                DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateral}
                 hasDropDown={true}
-                setText={(val: string) => setRedeemReceive(String(val))}
+                setText={onCollateralValueChange}
                 dropDownValues={collateralTypes}
-                ondropDownValueChange={(data: string) => {
-                  setSelectedReceiveRedeemCoin(data);
-                }}
+                ondropDownValueChange={setSelectedReceiveRedeemCoin}
                 SymbolText={selectedCollateral}
-                setText={(val: string) => {
-                  setRedeemReceiveARTHX(val)
-                }}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -220,29 +311,25 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
-                DefaultValue={redeemReceiveARTHX.toString()}
+                DefaultValue={arthxValue.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
-                setText={(val: string) => {
-                  setRedeemReceiveARTHX(val)
-                }}
+                setText={onARTHXValueChange}
               />
               <div>
-                {/* <TcContainer> */}
                 <OneLineInputwomargin>
                   <div style={{ flex: 1, marginTop: 10 }}>
                     <TextWithIcon>
                       Trading Fee
-                      {/*{/<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />/}*/}
                     </TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
-                    <BeforeChip>0.05</BeforeChip>
+                    <BeforeChip>{getDisplayBalance(tradingFee, 6)}</BeforeChip>
                     <TagChips>{selectedCollateral}</TagChips>
                   </OneLineInputwomargin>
                 </OneLineInputwomargin>
-                {/* </TcContainer> */}
+
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextWithIcon>

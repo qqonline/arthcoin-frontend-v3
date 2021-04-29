@@ -132,12 +132,13 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const core = useCore();
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
-  const [mintArthxShare, setArthxShare] = useState<string>('0');
-  const [mintColl, setCollateralValue] = useState<string>('0');
-  const [mintReceive, setReceive] = useState<string>('0');
+
+  const [arthxValue, setArthxValue] = useState<string>('0');
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [arthValue, setArthValue] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber() - 30;
+  const colletralRatio = mintCR.div(10000).toNumber();
 
   const [checked, setChecked] = React.useState(false);
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -155,10 +156,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
   const arthxToGMUPrice = useARTHXOraclePrice();
 
-  const onBuyColletralValueChange = async (val: string) => {
+  const onCollateralValueChange = async (val: string) => {
     if (val === '') {
-      setArthxShare('0');
-      setReceive('0');
+      setArthxValue('0');
+      setArthValue('0');
     }
     setCollateralValue(val);
     const valueInNumber = Number(val);
@@ -175,33 +176,33 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
       .div(1e6);
 
-    setArthxShare(getDisplayBalance(finalArthxValue, 6, 3));
-    setReceive(getDisplayBalance(finalArthValue, 6, 3));
+    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '') setReceive('0');
+    if (val === '') setArthValue('0');
 
-    setArthxShare(val);
+    setArthxValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
       let colletralTemp =
         (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
       setCollateralValue(colletralTemp.toString());
-      setReceive(String(colletralTemp + valueInNumber));
+      setArthValue(String(colletralTemp + valueInNumber));
     }
   };
 
-  const onReceiveValueChange = async (val: string) => {
+  const onARTHValueChange = async (val: string) => {
     if (val === '') {
-      setArthxShare('0');
+      setArthxValue('0');
       setCollateralValue('0');
     }
-    setReceive(val);
+    setArthValue(val);
     const valueInNumber = Number(val);
     if (valueInNumber) {
       setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
-      setArthxShare(String(valueInNumber * ((100 - colletralRatio) / 100)));
+      setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
     }
   };
 
@@ -216,9 +217,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const mintARTH = useMintARTH(
     selectedCollateralCoin,
-    Number(mintColl),
-    Number(mintArthxShare),
-    Number(mintReceive),
+    Number(collateralValue),
+    Number(arthxValue),
+    Number(arthValue),
     mintingFee,
     0.1,
   );
@@ -245,7 +246,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     // mintARTH();
   };
 
-  const handleStakeAndMint = () => { };
 
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
@@ -270,9 +270,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   }, [account, isARTHXApproved, isCollatApproved]);
 
   const tradingFee = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(mintReceive) * 1e6));
+    const mintingAmount = BigNumber.from(Math.floor(Number(arthValue) * 1e6));
     return mintingAmount.mul(mintingFee).div(1e6);
-  }, [mintReceive, mintingFee]);
+  }, [arthValue, mintingFee]);
 
   return (
     <>
@@ -289,13 +289,13 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`Your collateral supply`}
             rightLabelUnit={selectedCollateralCoin}
-            rightLabelValue={mintColl.toString()}
+            rightLabelValue={collateralValue.toString()}
           />
 
           <TransparentInfoDiv
             labelData={`Your share supply`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={mintArthxShare.toString()}
+            rightLabelValue={arthxValue.toString()}
           />
 
           <TransparentInfoDiv
@@ -316,7 +316,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             labelData={`You will mint`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={mintReceive.toString()}
+            rightLabelValue={arthValue.toString()}
           />
 
           <CheckboxDiv>
@@ -458,7 +458,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Minting ${mintColl} ARTH cancelled`,
+                        data1: `Minting ${collateralValue} ARTH cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -496,7 +496,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
                 disabled={mintCR.eq(0)}
-                DefaultValue={mintColl.toString()}
+                DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
                 dropDownValues={collateralTypes}
@@ -506,10 +506,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
                 setText={(val: string) => {
-                  onBuyColletralValueChange(val);
+                  onCollateralValueChange(val);
                 }}
-                Istate={'warning'}
-                msg={'Warning message goes here'}
+              // Istate={'warning'}
+              // msg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -520,7 +520,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelInfoValue={'How can i get it?'}
                 disabled={mintCR.gte(1000000)}
                 href={'https://www.google.com/'}
-                DefaultValue={mintArthxShare.toString()}
+                DefaultValue={arthxValue.toString()}
                 // ILabelInfoValue={'How can i get it?'}
                 // DefaultValue={'0'}
                 LogoSymbol={'ARTHX'}
@@ -530,8 +530,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
-                Istate={'error'}
-                msg={'ERROR message goes here'}
+              // Istate={'error'}
+              // msg={'ERROR message goes here'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
@@ -539,14 +539,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
-                DefaultValue={mintReceive.toString()}
+                DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 // DefaultValue={'0'}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 setText={(val: string) => {
-                  onReceiveValueChange(val);
+                  onARTHValueChange(val);
                 }}
               />
               <div>
