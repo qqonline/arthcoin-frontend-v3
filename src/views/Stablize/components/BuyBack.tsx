@@ -18,6 +18,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
 
 type Iprops = {
   onChange: () => void;
@@ -52,6 +53,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const isARTHXApproving = approveStatus === ApprovalState.PENDING
 
   const ratio = 100;
+  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral)
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
@@ -69,6 +71,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     }
   }
 
+
   const buyBackContainer = () => {
     return (
       <LeftTopCard className={'custom-mahadao-container'}>
@@ -78,7 +81,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            342.450K <HardChip>ARTHX</HardChip>{' '}
+            {getDisplayBalance(collateralToBeBoughtBack, 18, 2)} <HardChip>{selectedCollateral}</HardChip><br />
             <TextForInfoTitle>To be bought back</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>

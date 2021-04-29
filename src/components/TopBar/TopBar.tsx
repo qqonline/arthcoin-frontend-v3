@@ -76,7 +76,7 @@ const TopBar: React.FC = () => {
                 }}
               >
                 {/* <TxButton /> */}
-                {false && (
+                {(
                   <Select
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"

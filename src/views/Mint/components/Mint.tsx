@@ -137,7 +137,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [mintReceive, setReceive] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber();
+  const colletralRatio = mintCR.div(10000).toNumber() - 30;
 
   const [checked, setChecked] = React.useState(false);
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
