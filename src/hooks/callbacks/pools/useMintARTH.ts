@@ -27,7 +27,6 @@ export default function (collateralToken: string, collateralAmount: number, arth
 
   }, [core, collateralToken, collateralAmount, arthAmountAfterFees, addTransaction, arthOutMin]);
 
-  // TODO: do something about the apprve
 
   return action;
 }

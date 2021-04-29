@@ -647,14 +647,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 <InputLabelSpanRight>{getDisplayBalance(poolBalance, 18)}</InputLabelSpanRight>
               </OneLineInput>
             </div>
-            <div style={{ marginBottom: '12px' }}>
+            {/* <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>Available to Mint</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
-            </div>
+            </div> */}
             <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
