@@ -11,10 +11,10 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/stats">
         Analytics
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/mint">
+      <StyledLink exact activeClassName="active" to="/mint/mint">
         Mint/Redeem
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stabilize">
+      <StyledLink exact activeClassName="active" to="/stabilize/buyback">
         Stabilize
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/farming">

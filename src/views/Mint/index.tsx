@@ -5,11 +5,13 @@ import useBasisCash from '../../hooks/useBasisCash';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import MintTabContent from './components/Mint'
 import RedeemTabContent from './components/Redeem'
+import {useParams} from "react-router-dom"
 
 const Boardrooms = (props: WithSnackbarProps) => {
+  const {paramType} = useParams()
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
-  const [type, setType] = useState<'Mint' | 'Redeem'>('Mint')
+  const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint')
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!basisCash) return <div />;
@@ -18,8 +20,8 @@ const Boardrooms = (props: WithSnackbarProps) => {
     <>
       <GradientDiv />
       <Container size="lg">
-        {type === 'Mint' && <MintTabContent setType={(type: 'Mint' | 'Redeem') => setType(type)} />}
-        {type === 'Redeem' && <RedeemTabContent setType={(type: 'Mint' | 'Redeem') => setType(type)}/>}
+        {type === 'mint' && <MintTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />}
+        {type === 'redeem' && <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)}/>}
         {/* </LeftTopCard> */}
       </Container>
     </>

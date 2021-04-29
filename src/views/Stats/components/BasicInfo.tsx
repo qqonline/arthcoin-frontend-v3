@@ -21,7 +21,7 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>54.76M</BeforeChip>
             </div>
-            <ToLink to={'/mint'}>
+            <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
             </ToLink>
           </OneLine>
@@ -35,7 +35,7 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>157.89M</BeforeChip>
             </div>
-            <ToLink to={'/mint'}>
+            <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} style={{ cursor: 'pointer' }} />
             </ToLink>
 
