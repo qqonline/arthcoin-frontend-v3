@@ -11,37 +11,23 @@ export interface CollateralPool {
   collateralTokenName: ContractName;
   sort: number;
   finished: boolean;
-  networks: ChainId[]
+  networks: ChainId[];
 }
 
-
-export interface BoostedStakingContract {
+export interface StakingContract {
+  platform: string;
   contract: ContractName;
-  collateralTokenName: ContractName;
-
+  kind: 'linear' | 'vested';
+  depositTokenKind: 'single' | 'uniswap-v2-lp' | 'sushiswap-v2-lp';
+  depositTokens: string[];
   earnTokenName: ContractName;
   sort: number;
   finished: boolean;
-  networks: ChainId[]
-  poolRewards: number
-  poolDurationInDays: number
-  poolSize: number
-}
-
-export interface LinearStakingContract {
-  contract: ContractName;
-  collateralTokenName: ContractName;
-
-  earnTokenName: ContractName;
-  sort: number;
-  finished: boolean;
-  networks: ChainId[]
-  poolRewards: number
-  poolDurationInDays: number
-  poolSize: number
+  networks: ChainId[];
+  categories: string[];
 }
 
 export interface TokenStat {
-  priceInDAI: BigNumber
-  totalSupply: BigNumber
+  priceInDAI: BigNumber;
+  totalSupply: BigNumber;
 }

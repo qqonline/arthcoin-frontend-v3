@@ -143,9 +143,6 @@ const CustomModal: React.FC<props> = ({
           scrollPaper: modalStyles.customPaper,
         }}
       >
-        {/* <div
-                    style={modalContainerStyle}
-                > */}
         {title && <DialogTitle
           closeButton={closeButton}
           modalTitleStyle={{
@@ -164,7 +161,6 @@ const CustomModal: React.FC<props> = ({
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '24px 32px',
-
         }} dividers>
           <div style={{}}>{children}</div>
         </DialogContent>

@@ -2,32 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
-import Button from '../../components/Button';
-import Card from '../../components/Card';
-import CardContent from '../../components/CardContent';
-import TokenSymbol from '../../components/TokenSymbol';
+import Button from '../../../components/Button';
+import Card from '../../../components/Card';
+import CardContent from '../../../components/CardContent';
+import TokenSymbol from '../../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
-import farmingSVG from '../../assets/svg/farming.svg';
-import Countdown from 'react-countdown';
+import farmingSVG from '../../../assets/svg/farming.svg';
+import { StakingContract } from '../../../basis-cash';
 
 interface IProps {
-  pair: [string, string];
-  walletValue: string;
-  walletUnit: string;
-  apy: string;
-  poolDur: string;
-  poolEndDate: number;
-  deposited?: boolean;
-  lockedStake?: string;
-  earned?: string;
-  onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
+  pool: StakingContract
+  onDepositClick: () => void
+  onWithdrawClick: () => void
+  onClaimClick: () => void
 }
 
-export const MobileFarm = (props: IProps) => {
-  const [open, setOpen] = useState<boolean>(props?.deposited);
-  useEffect(()=>{
-    setOpen(props?.deposited)
-  },[props?.deposited])
+export default (props: IProps) => {
+  // const [open, setOpen] = useState<boolean>(props?.deposited);
+  // useEffect(() => {
+  //   setOpen(props?.deposited)
+  // }, [props])
   // const logos = [bank.earnTokenName];
   // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
   // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
@@ -56,7 +50,7 @@ export const MobileFarm = (props: IProps) => {
                 }}
               >
                 <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-                  <TokenSymbol symbol={props?.pair[0]} size={44} style={{}} />
+                  <TokenSymbol symbol={props.pool.depositTokens[0]} size={44} style={{}} />
                 </div>
                 <div
                   style={{
@@ -67,11 +61,11 @@ export const MobileFarm = (props: IProps) => {
                     borderRadius: 36,
                   }}
                 >
-                  <TokenSymbol symbol={props?.pair[1]} size={44} style={{}} />
+                  <TokenSymbol symbol={props.pool.depositTokens[1]} size={44} style={{}} />
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
-                <StyledTitle>{`${props.pair[0]} - ${props.pair[1]}`}</StyledTitle>
+                <StyledTitle>{props.pool.depositTokens.join('-')}</StyledTitle>
                 <StyledSubTitle>Add Liquidity</StyledSubTitle>
               </div>
             </CardHeaderDiv>
@@ -92,12 +86,12 @@ export const MobileFarm = (props: IProps) => {
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
                   <MainSpan>
-                    {props?.walletValue} {props?.walletUnit}
+                    {/* {props?.walletValue} {props?.walletUnit} */}
                   </MainSpan>
                   {/* <SecondSpan>{'100'}</SecondSpan> */}
                 </div>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 xs={12}
                 direction={'row'}
@@ -110,53 +104,21 @@ export const MobileFarm = (props: IProps) => {
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
                   <MainSpan>{props?.apy}</MainSpan>
-                  {/* <PercentageChangeSpan
-                                        // style={props?.borrowDetails?.borrowInterest?.percentageChangeDirection === 'positive' ?
-                                        //     { color: '#20C974' }
-                                        //     : { color: '#FA4C69' }}
-                                    >40%</PercentageChangeSpan> */}
                 </div>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                direction={'row'}
-                justify={'space-between'}
-                style={{ display: 'flex', marginTop: 15 }}
-              >
-                <DescriptionDiv style={{ maxWidth: 100 }}>
-                  Pool Duration
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                </DescriptionDiv>
-                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <Countdown
-                    date={props?.poolEndDate || Date.now() + 550000000}
-                    renderer={({ days, hours, minutes, seconds, completed }) => {
-                      return (
-                        <MainSpan>
-                          {days}d : {hours}h : {minutes}m : {seconds}s left{' '}
-                        </MainSpan>
-                      );
-                    }}
-                  />
-                  <SecondSpan>{props?.poolDur}</SecondSpan>
-                </div>
-              </Grid>
+              </Grid> */}
             </Grid>
             <ButtonContainer>
               <div style={{ marginTop: 15 }}>
                 <Button
                   size={'sm'}
                   text={'Deposit'}
-                  onClick={() => {
-                    props.onButtonClick('Deposit');
-                  }}
+                  onClick={props.onDepositClick}
                 />
               </div>
             </ButtonContainer>
           </StyledContent>
         </CardContent>
-        {open ? (
+        {false ? (
           <OpenableDiv>
             <InfoDiv>
               <div
@@ -168,12 +130,10 @@ export const MobileFarm = (props: IProps) => {
                 }}
               >
                 <InfoDivLeftSpan>Your Locked stake:</InfoDivLeftSpan>
-                <InfoDivRightSpan>{props?.lockedStake}</InfoDivRightSpan>
+                {/* <InfoDivRightSpan>{props?.lockedStake}</InfoDivRightSpan> */}
               </div>
               <Withdraw
-                onClick={() => {
-                  props.onButtonClick('Withdraw');
-                }}
+                onClick={props.onWithdrawClick}
               >
                 Withdraw
               </Withdraw>
@@ -188,13 +148,9 @@ export const MobileFarm = (props: IProps) => {
                 }}
               >
                 <InfoDivLeftSpan>Earned:</InfoDivLeftSpan>
-                <InfoDivRightSpan>{props?.earned}</InfoDivRightSpan>
+                {/* <InfoDivRightSpan>{props?.earned}</InfoDivRightSpan> */}
               </div>
-              <Withdraw
-                onClick={() => {
-                  props.onButtonClick('Claim');
-                }}
-              >
+              <Withdraw onClick={props.onClaimClick}>
                 Claim MAHA
               </Withdraw>
             </InfoDiv>
@@ -207,18 +163,6 @@ export const MobileFarm = (props: IProps) => {
   );
 };
 
-// const CardIcon = styled.div`
-//   background-color: ${(props) => props.theme.color.grey[900]};
-//   width: 72px;
-//   height: 72px;
-//   border-radius: 36px;
-//   // display: flex;
-//   // align-items: center;
-//   postition: absolute;
-//   // justify-content: center;
-//   top: -100px;
-//   margin-bottom: ${(props) => props.theme.spacing[2]}px;
-// `;
 
 const DescriptionDiv = styled.div`
   font-family: Inter;
@@ -240,28 +184,6 @@ const MainSpan = styled.span`
   line-height: 20px;
   text-align: right;
   color: #ffffff;
-  opacity: 0.88;
-`;
-
-const SecondSpan = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  text-align: right;
-  color: rgba(255, 255, 255, 0.64);
-  opacity: 0.88;
-`;
-
-const PercentageChangeSpan = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 130%;
-  text-align: right;
-  color: #fff;
   opacity: 0.88;
 `;
 

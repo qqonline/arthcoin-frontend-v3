@@ -2,32 +2,41 @@ import React, { useState } from 'react';
 
 import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
-import FarmingCards from './FarmingCards';
+import FarmingCards from './components/FarmingCards';
 
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
+import { stakingContracts } from '../../config';
 
-interface ModeProps {
-  id: number, name: string, count: number
+export interface ModeProps {
+  id: string
+  name: string
+  count: number
 }
+
 const Banks = () => {
-  let initMode = { id: 1, name: 'All', count: 3 }
+  let initMode = { id: 'all', name: 'All', count: 3 }
   const [mode, setMode] = useState<ModeProps>(initMode);
   let headerList: ModeProps[] = [
     {
-      id: 1,
+      id: 'all',
       name: 'All',
-      count: 6,
+      count: stakingContracts.length,
     },
     {
-      id: 2,
+      id: 'arth',
       name: 'ARTH Staking',
-      count: 3,
+      count: stakingContracts.filter(d => d.categories.includes('arth')).length,
     },
     {
-      id: 3,
+      id: 'arthx',
       name: 'ARTHX Staking',
-      count: 3,
+      count: stakingContracts.filter(d => d.categories.includes('arthx')).length,
+    },
+    {
+      id: 'maha',
+      name: 'MAHA Staking',
+      count: stakingContracts.filter(d => d.categories.includes('maha')).length,
     },
   ];
 

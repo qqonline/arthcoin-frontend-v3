@@ -1,7 +1,7 @@
 import { ChainId } from '@uniswap/sdk';
 import { Configuration } from './basis-cash/config';
 import { CollateralPool } from './basis-cash';
-import { BoostedStakingContract, LinearStakingContract } from './basis-cash/types';
+import { StakingContract } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
@@ -23,7 +23,8 @@ const configurations: { [env: string]: Configuration } = {
     networkName: 'Rinkeby',
     chainId: ChainId.RINKEBY,
     etherscanUrl: 'https://rinkeby.etherscan.io',
-    defaultProvider: 'https://bitter-twilight-moon.quiknode.io/a7bc771b-a15c-49a6-9e23-a1106f86b2db/g9PahkWuM3pjJMRqNA39cUyZpov8PMSH5MbcKSJs4zrqyGwEsuUajCGSpWmFbvVU7HboSbF6lauR38Y0Zyr8NQ==/',
+    defaultProvider:
+      'https://bitter-twilight-moon.quiknode.io/a7bc771b-a15c-49a6-9e23-a1106f86b2db/g9PahkWuM3pjJMRqNA39cUyZpov8PMSH5MbcKSJs4zrqyGwEsuUajCGSpWmFbvVU7HboSbF6lauR38Y0Zyr8NQ==/',
     deployments: require('./basis-cash/deployments/rinkeby.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
@@ -58,37 +59,78 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
     collateralTokenName: 'USDC',
     finished: true,
     networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
-    sort: 3,
+    sort: 0,
+  },
+  PoolUSDT: {
+    contract: 'Pool_USDT',
+    collateralTokenName: 'USDT',
+    finished: true,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
   },
 };
 
-export const linearStakingContracts: { [contractName: string]: LinearStakingContract } = {
-  USDTPool: {
-    contract: '',
-    collateralTokenName: 'USDT',
-    poolRewards: 12500,
-    earnTokenName: 'ARTH',
-    finished: true,
-    poolDurationInDays: 5,
-    poolSize: 84460,
-    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
-    sort: 3,
+export const stakingContracts: StakingContract[] = [
+  {
+    platform: 'arth',
+    contract: 'Stake_ARTH_WETH',
+    kind: 'vested',
+    depositTokens: ['ARTH', 'WETH'],
+    depositTokenKind: 'single',
+    earnTokenName: 'ARTHX',
+    finished: false,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
+    categories: ['all', 'arth'],
   },
-};
-
-export const boostedStakingContracts: { [contractName: string]: BoostedStakingContract } = {
-  USDTPool: {
-    contract: '',
-    collateralTokenName: 'USDT',
-    poolRewards: 12500,
-    earnTokenName: 'ARTH',
-    finished: true,
-    poolDurationInDays: 5,
-    poolSize: 84460,
-    networks: [ChainId.MAINNET, ChainId.ROPSTEN, 1337],
-    sort: 3,
+  {
+    platform: 'arth',
+    contract: 'Stake_ARTH_WETH',
+    kind: 'vested',
+    depositTokens: ['MAHA', 'WETH'],
+    depositTokenKind: 'single',
+    earnTokenName: 'ARTHX',
+    finished: false,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
+    categories: ['all', 'maha'],
   },
-};
+  {
+    platform: 'arth',
+    contract: 'Stake_ARTH_WETH',
+    kind: 'vested',
+    depositTokens: ['ARTHX'],
+    depositTokenKind: 'single',
+    earnTokenName: 'MAHA',
+    finished: false,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
+    categories: ['all', 'arthx'],
+  },
+  {
+    platform: 'uniswap',
+    contract: 'Stake_ARTH_ARTHX',
+    kind: 'vested',
+    depositTokens: ['ARTH', 'ARTHX'],
+    depositTokenKind: 'single',
+    earnTokenName: 'MAHA',
+    finished: false,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
+    categories: ['all', 'arth', 'arthx'],
+  },
+  {
+    platform: 'uniswap',
+    contract: 'Stake_ARTHX_WETH',
+    kind: 'vested',
+    depositTokens: ['ARTH', 'ARTHX'],
+    depositTokenKind: 'single',
+    earnTokenName: 'ARTHX',
+    finished: false,
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    sort: 0,
+    categories: ['all', 'arthx'],
+  },
+];
 
 export default configurations['staging'];
-

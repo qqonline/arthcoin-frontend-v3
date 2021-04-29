@@ -36,6 +36,7 @@ const logosBySymbol: { [title: string]: string } = {
   USDC: USDCLogo,
   USDT: USDTLogo,
 
+  WETH: ETH,
   MKR: MKR,
   BAS: BAS,
   SHARE: SHARE,

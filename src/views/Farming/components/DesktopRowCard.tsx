@@ -1,57 +1,64 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import Countdown from 'react-countdown';
 import farmingSVG from '../../../assets/svg/farming.svg';
+import { StakingContract } from '../../../basis-cash';
 
-type props = {
-  pair: [string, string];
-  deposited?: boolean;
-  walletValue: string;
-  walletUnit: string;
-  apy: string;
-  poolDur: string;
-  poolEndDate: number;
-  open?: boolean;
-  lockedStake?: string;
-  earned?: string;
-  onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
+type IProps = {
+  pool: StakingContract
+  // pair: [string, string];
+  // deposited?: boolean;
+  // walletValue: string;
+  // walletUnit: string;
+  // apy: string;
+  // poolDur: string;
+  // poolEndDate: number;
+  // open?: boolean;
+  // lockedStake?: string;
+  // earned?: string;
+  onDepositClick: () => void
+  onWithdrawClick: () => void
+  onClaimClick: () => void
 };
 
-const CustomRowCard: React.FC<props> = (props) => {
-
+export default (props: IProps) => {
   return (
     <CustomCardGrid>
-      <Grid container style={{padding: '32px 32px', position: 'relative'}} alignItems={'center'}>
+      <Grid container style={{ padding: '32px 32px', position: 'relative' }} alignItems={'center'}>
         <CardIcon src={farmingSVG} height={32} />
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
-            <TokenSymbol symbol={props?.pair[0]} size={45} />
-            <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} />
+            {
+              props.pool.depositTokens.map(token => (
+                <TokenSymbol symbol={token} size={45} />
+              ))
+            }
+            {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
           </div>
           <div style={{ marginLeft: '16px' }}>
             <TableMainTextStyle>
-              {`${props?.pair[0]} - ${props?.pair[1]}`}
+              {props.pool.depositTokens.join(' - ')}
             </TableMainTextStyle>
-            <AddLiquidityButton onClick={() => {}}>
+            <AddLiquidityButton onClick={() => { }}>
               Add Liquidity
             </AddLiquidityButton>
           </div>
         </Grid>
         <Grid item lg={3}>
           <TableMainTextStyle>
-            {props?.walletValue} {props?.walletUnit}
+            {/* {props?.walletValue} {props?.walletUnit} */}
           </TableMainTextStyle>
         </Grid>
         <Grid item lg={1}>
           <TableMainTextStyle>
-            {props?.apy}
+            {/* {props?.apy} */}
           </TableMainTextStyle>
         </Grid>
         <Grid item lg={3}>
-          <TableMainTextStyle>
+          {/* <TableMainTextStyle>
             <Countdown
               date={props?.poolEndDate || Date.now() + 550000000}
               renderer={({ days, hours, minutes, seconds, completed }) => {
@@ -63,17 +70,17 @@ const CustomRowCard: React.FC<props> = (props) => {
           </TableMainTextStyle>
           <DayText>
             {props?.poolDur}
-          </DayText>
+          </DayText> */}
         </Grid>
         <Grid item lg={2}>
           <Button
             text="Deposit"
             size={'sm'}
-            onClick={() => props.onButtonClick('Deposit')}
+            onClick={props.onDepositClick}
           />
         </Grid>
       </Grid>
-      {props.deposited && <DepositInfoContainer>
+      {/* {props.deposited && <DepositInfoContainer>
         <div style={{ display: 'flex' }}>
           Your Locked state:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
@@ -86,13 +93,13 @@ const CustomRowCard: React.FC<props> = (props) => {
         <div style={{ display: 'flex' }}>
           Earned:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props?.earned ||'0.0 MAHA'}
+            {props?.earned || '0.0 MAHA'}
           </TableMainTextStyle>
           <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
             Claim MAHA
           </WithdrawClaimButton>
         </div>
-      </DepositInfoContainer>}
+      </DepositInfoContainer>} */}
     </CustomCardGrid>
   )
 }
@@ -173,8 +180,3 @@ const CardIcon = styled.img`
   left: 0px;
   z-index: 10;
 `
-
-
-
-export default CustomRowCard;
-
