@@ -442,6 +442,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onBuyColletralValueChange(val);
                 }}
+                Istate={'warning'}
+                msg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -461,6 +463,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
+                Istate={'error'}
+                msg={'ERROR message goes here'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -573,7 +577,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} loading={true}/>
               </Grid>
             </Grid>
           </RightBottomCard>

@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
+import Loader from "react-spinners/PulseLoader";
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -12,6 +13,7 @@ interface ButtonProps {
   to?: string;
   theme?: 'default' | 'secondary' | 'tertiary';
   variant?: 'default' | 'transparent' | 'outlined' | 'rounded';
+  loading?: boolean;
 }
 
 function variantToStyle(variant: string = 'default', color: any) {
@@ -66,6 +68,7 @@ const Button: React.FC<ButtonProps> = ({
   to,
   theme,
   variant,
+  loading= false,
 }) => {
   const { color, spacing } = useContext(ThemeContext);
 
@@ -140,8 +143,9 @@ const Button: React.FC<ButtonProps> = ({
       padding={buttonPadding}
       size={buttonSize}
     >
-      {children}
-      {ButtonChild}
+      {!loading && children}
+      {!loading && ButtonChild}
+      <Loader color={'#ffffff'} loading={loading} size={10} margin={2}/>
     </StyledButton>
   );
 };

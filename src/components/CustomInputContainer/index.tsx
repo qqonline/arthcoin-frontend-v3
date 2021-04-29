@@ -25,6 +25,8 @@ type props = {
   dontShowBackgroundContainer?: boolean;
   href?: string;
   to?: string;
+  Istate?: 'default' | 'error' | 'warning';
+  msg?: string;
 };
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
@@ -42,6 +44,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
     symbol1,
     symbol2,
     value,
+    Istate = 'default',
+    msg = '',
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const Redirection = () => {
@@ -63,14 +67,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
       )
     }
   }
+
   return (
-    <IConatiner
-      style={
-        props.dontShowBackgroundContainer
-          ? { padding: '0px', backgroundColor: 'transparent' }
-          : {}
-      }
-    >
+    <IConatiner style={props.dontShowBackgroundContainer ? { padding: '0px', backgroundColor: 'transparent' } : {}}>
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -80,7 +79,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <ILabelBalance>{IBalanceValue}</ILabelBalance>
         </ILabelRight>
       </ILabelContainer>
-      <IFieldConatiner>
+      <IFieldConatiner className={`input-${Istate}`}>
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
@@ -147,9 +146,11 @@ const CustomInputContainer: React.FC<props> = (props) => {
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
+      {msg !== '' && <p className={`input-font-${Istate}`}>{msg}</p>}
     </IConatiner>
   );
-};
+}
+
 export default CustomInputContainer;
 const HrefLink = styled.a`
   z-index: 1;
