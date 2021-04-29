@@ -16,6 +16,7 @@ import CloseIcon from '../../assets/img/CloseIcon.svg';
 import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
 import useCore from '../../hooks/useCore';
+import Button from '../Button';
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -55,6 +56,11 @@ const TopBar: React.FC = () => {
   };
 
   const showWarning = core.config.chainId !== chainId
+  const network = {
+    name: 'Mainnet',
+    color: '#11af60',
+  }
+  // const [showWallet, setShowWallet] = useState<boolean>(true)
 
   return (
     <TopBarContainer>
@@ -68,15 +74,13 @@ const TopBar: React.FC = () => {
               </HideonPhone>
             </div>
             <HideonPhone>
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 {/* <TxButton /> */}
-                {(
+                {network.name !== '' && <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>}
+                {false && (
                   <Select
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
@@ -111,6 +115,7 @@ const TopBar: React.FC = () => {
                 <AccountButton />
               </div>
             </HideonPhone>
+
             <HideOnBigScreen>
               <div className="dialog-class">
                 {!!account && (
@@ -118,6 +123,10 @@ const TopBar: React.FC = () => {
                     <TxButton />
                   </div>
                 )}
+                {network.name !== '' && <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>}
                 {!showMobileMenu ? (
                   <MenuIcon
                     style={{ color: 'white' }}
@@ -160,6 +169,24 @@ const TopBarContainer = styled.div`
   top: 0;
 `
 
+const CustomNetwork = styled.div`
+  display: flex;
+  color: #FFF;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.88);
+  border-radius: 6px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  height: 38px;
+  justify-content: center;
+  outline: none !important;
+  padding: 10px 22px;
+  width: 100%;
+  margin-right: 12px;
+`;
 const HideonPhone = styled.div`
   display: flex;
   justify-content: center;
@@ -224,6 +251,6 @@ const ColorIcon = styled.div`
   border-radius: 50%;
   height: 10px;
   margin-right: 5px;
-  margin-left: -10px;
+  //margin-left: -10px;
 `;
 export default TopBar;

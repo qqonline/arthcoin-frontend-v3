@@ -27,8 +27,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const { account, connect } = useWallet();
 
   const [redeemReceive, setRedeemReceive] = useState<string>('0');
-  const [redeemReceiveS, setRedeemReceiveS] = useState<string>('0');
-  const [redeemAmount, setRedeemAmount] = useState<string>('0');
+  const [redeemReceiveARTHX, setRedeemReceiveARTHX] = useState<string>('0');
+  const [redeemAmount, onReceiveValueChange] = useState<string>('0');
   const type = 'Redeem';
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
@@ -95,7 +95,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -189,7 +189,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
-                setText={(val: string) => setRedeemAmount(String(val))}
+                setText={(val: string) => {
+                  setRedeemReceiveARTHX(val)
+                }}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />
@@ -207,6 +209,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   setSelectedReceiveRedeemCoin(data);
                 }}
                 SymbolText={selectedCollateral}
+                setText={(val: string) => {
+                  setRedeemReceiveARTHX(val)
+                }}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -215,11 +220,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'You receive'}
                 IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
-                DefaultValue={redeemReceiveS.toString()}
-                setText={(val: string) => setRedeemReceiveS(String(val))}
+                DefaultValue={redeemReceiveARTHX.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
+                setText={(val: string) => {
+                  setRedeemReceiveARTHX(val)
+                }}
               />
               <div>
                 {/* <TcContainer> */}
@@ -264,8 +271,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isArthApproved
                                 ? `Approved ARTH`
                                 : !isArthApproving
-                                ? `Approve ARTH`
-                                : 'Approving...'
+                                  ? `Approve ARTH`
+                                  : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isArthApproving || isArthApproved}
@@ -277,8 +284,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isMAHAApproved
                                 ? 'Approved MAHA'
                                 : !isMAHAApproving
-                                ? `Approve MAHA`
-                                : 'Approving...'
+                                  ? `Approve MAHA`
+                                  : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isMAHAApproving || isMAHAApproved}
