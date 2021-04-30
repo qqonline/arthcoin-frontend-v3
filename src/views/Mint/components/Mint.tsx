@@ -176,8 +176,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
       .div(1e6);
 
-    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 18, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
@@ -246,7 +246,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     // mintARTH();
   };
 
-
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
@@ -309,7 +308,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-          // variant={'middle'}
+            // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -508,8 +507,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
-              // Istate={'warning'}
-              // msg={'Warning message goes here'}
+                // Istate={'warning'}
+                // msg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -530,8 +529,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
-              // Istate={'error'}
-              // msg={'ERROR message goes here'}
+                // Istate={'error'}
+                // msg={'ERROR message goes here'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
@@ -581,8 +580,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 isCollatApproved
                                   ? `Approved ${selectedCollateralCoin}`
                                   : !isCollatApproving
-                                    ? `Approve ${selectedCollateralCoin}`
-                                    : 'Approving...'
+                                  ? `Approve ${selectedCollateralCoin}`
+                                  : 'Approving...'
                               }
                               size={'lg'}
                               disabled={isCollatApproving || isCollatApproved}
@@ -594,8 +593,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                 isARTHXApproved
                                   ? 'Approved ARTHX'
                                   : !isARTHXApproving
-                                    ? `Approve ARTHX`
-                                    : 'Approving...'
+                                  ? `Approve ARTHX`
+                                  : 'Approving...'
                               }
                               size={'lg'}
                               disabled={isARTHXApproving || isARTHXApproved}

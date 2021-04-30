@@ -25,6 +25,8 @@ export default ({ selectedCollateralCoin }: IProps) => {
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
+  // console.log(poolBalance.toString());
+
   const arthxPrice = useARTHXOraclePrice();
 
   return (

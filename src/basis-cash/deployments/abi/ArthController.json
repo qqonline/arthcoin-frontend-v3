@@ -2,6 +2,11 @@
   {
     "inputs": [
       {
+        "internalType": "contract IERC20",
+        "name": "_ARTH",
+        "type": "address"
+      },
+      {
         "internalType": "address",
         "name": "_creatorAddress",
         "type": "address"
@@ -1153,6 +1158,20 @@
   {
     "inputs": [],
     "name": "getCRForMint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getARTHSupply",
     "outputs": [
       {
         "internalType": "uint256",

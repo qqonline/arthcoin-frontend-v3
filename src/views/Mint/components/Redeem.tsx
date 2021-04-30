@@ -70,7 +70,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     isArthApproved,
   ]);
 
-  const redeemFee = usePoolRedeemFees(selectedCollateral)
+  const redeemFee = usePoolRedeemFees(selectedCollateral);
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
   const arthxToGMUPrice = useARTHXOraclePrice();
 
@@ -89,7 +89,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setSuccessModal(true);
     });
   };
-
 
   const onARTHXValueChange = async (val: string) => {
     if (val === '') setArthValue('0');
@@ -183,7 +182,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-          // variant={'middle'}
+            // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -236,7 +235,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={() => {
-                  handleRedeem()
+                  handleRedeem();
                   // // setType('Redeem')
                   // setOpenModal(0);
                   // let options = {
@@ -311,9 +310,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <div>
                 <OneLineInputwomargin>
                   <div style={{ flex: 1, marginTop: 10 }}>
-                    <TextWithIcon>
-                      Trading Fee
-                    </TextWithIcon>
+                    <TextWithIcon>Trading Fee</TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
                     <BeforeChip>{getDisplayBalance(tradingFee, 6)}</BeforeChip>
@@ -349,8 +346,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isArthApproved
                                 ? `Approved ARTH`
                                 : !isArthApproving
-                                  ? `Approve ARTH`
-                                  : 'Approving...'
+                                ? `Approve ARTH`
+                                : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isArthApproving || isArthApproved}
@@ -362,8 +359,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isMAHAApproved
                                 ? 'Approved MAHA'
                                 : !isMAHAApproving
-                                  ? `Approve MAHA`
-                                  : 'Approving...'
+                                ? `Approve MAHA`
+                                : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isMAHAApproving || isMAHAApproved}
@@ -394,11 +391,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
-        title={'Minting ARTH successful!'}
+        title={'Redeeming ARTH successful!'}
         subTitle={'View Transaction'}
-        subsubTitle={'You should consider stake your ARTH to earn higher APY'}
-        buttonText={'Stake your ARTH'}
-        buttonType={'default'}
+        subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
+        buttonText={'Checkout Staking Pools'}
+        // buttonType={'default'}
         redirectTo={'/farming'}
       />
     </>

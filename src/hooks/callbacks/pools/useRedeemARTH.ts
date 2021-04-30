@@ -22,31 +22,21 @@ export default function (
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
+      const decimals = BigNumber.from(10).pow(16)
 
-      console.log(
-        BigNumber.from(Math.floor(arthAmount * 1e6)).toString(),
-        collateralAmountAfterFees.toString(),
-      );
 
       const response = await pool.redeem1t1ARTH(
-        BigNumber.from(Math.floor(arthAmount * 1e6)),
-        collateralAmountAfterFees,
+        BigNumber.from(Math.floor(arthAmount * 100)).mul(decimals),
+        0, // collateralAmountAfterFees,
       );
 
       addTransaction(response, {
-        summary: `Redeem ${collatearlOutMin} ARTH`,
+        summary: `Redeem ARTH`,
       });
 
       callback();
     },
-    [
-      core,
-      collateralToken,
-      arthAmount,
-      collateralAmountAfterFees,
-      addTransaction,
-      collatearlOutMin,
-    ],
+    [core, collateralToken, arthAmount, addTransaction],
   );
 
   return action;

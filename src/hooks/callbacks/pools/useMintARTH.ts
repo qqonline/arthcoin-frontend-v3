@@ -9,7 +9,7 @@ export default function (collateralToken: string, collateralAmount: number, arth
   const core = useCore();
 
   const arthAmountAfterFees = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(arthOutMin) * 1e6));
+    const mintingAmount = BigNumber.from(Math.floor(Number(arthOutMin))).mul(1e6);
     return mintingAmount.mul(BigNumber.from(1e6).sub(mintingFee)).div(1e6);
   }, [arthOutMin, mintingFee]);
 
