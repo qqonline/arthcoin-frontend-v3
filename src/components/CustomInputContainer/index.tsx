@@ -96,6 +96,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
           }}
           type={'number'}
           onInput={(event) => {
+            // var regexp = /^\d+(\.\d*)?$/;
+            // if (regexp.test(event.target.value))
             props?.setText(event.target.value);
           }}
         />
