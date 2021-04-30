@@ -41,8 +41,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceive('0')
       setRedeemAmount('0');
     }
+    setRedeemReceiveARTHX(val);
     const valueInNumber = Number(val);
-    setRedeemReceiveARTHX(valueInNumber.toString());
     if (valueInNumber) {
       let arthxShareTemp =
         (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
@@ -56,8 +56,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceiveARTHX('0');
       setRedeemAmount('0')
     }
+    setRedeemReceive(val);
     const valueInNumber = Number(val);
-    setRedeemReceive(valueInNumber.toString());
     if (valueInNumber) {
       let colletralTemp =
         (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
@@ -72,8 +72,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceiveARTHX('0');
       setRedeemReceive('0');
     }
+    setRedeemAmount(val);
     const valueInNumber = Number(val);
-    setRedeemAmount(valueInNumber.toString());
     if (valueInNumber) {
       setRedeemReceiveARTHX(String(valueInNumber * (colletralRatio / 100)));
       setRedeemReceive(String(valueInNumber * ((100 - colletralRatio) / 100)));
@@ -376,7 +376,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        redirectTo={'/farming'}
+        buttonTo={'/farming'}
       />
     </>
   )

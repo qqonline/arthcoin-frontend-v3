@@ -41,8 +41,8 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     if (val === ''){
       setReceiveAmount('0');
     }
+    setRedeemAmount(val);
     const valInNumber = Number(val);
-    setRedeemAmount(valInNumber.toString());
     if (valInNumber){
       const temp = String(valInNumber * ratio);
       setReceiveAmount(temp);

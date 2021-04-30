@@ -8,17 +8,41 @@ import Button from '../Button';
 export interface InputProps {
   modalOpen: boolean;
   setModalOpen: () => void;
+
+  //title
   title: string;
+
+  //Subtitle props
   subTitle?: string;
-  subTitleLink?: string;
+  subTitleLink?: string; /* if want to redirect to other website only */
+
+  //test below title and above subtitle
   subsubTitle?: string;
+
+  //Buttons Props
   buttonText: string;
   buttonType?: 'default' | 'transparent' | 'outlined' | 'rounded';
-  redirectTo?: string;
+  buttonHref?: string; /* if want to redirect button to other website */
+  buttonTo?: string; /* if want to redirect to other page */
 }
 
 const CustomSuccessModal: React.FC<InputProps> = (props) => {
-  const { modalOpen, setModalOpen, title, subTitle, subTitleLink, buttonText, subsubTitle, buttonType = 'transparent', redirectTo } = props;
+  const { modalOpen, setModalOpen, title, subTitle, subTitleLink, buttonText, subsubTitle, buttonType = 'transparent', buttonHref, buttonTo } = props;
+
+  let buttonRedirection: object;
+
+  if (buttonHref){
+    buttonRedirection = {
+      href: buttonHref
+    }
+  } else if (buttonTo) {
+    buttonRedirection = {
+      to: buttonTo
+    }
+  } else {
+    buttonRedirection = {}
+  }
+
   return (
     <CustomModal
       closeButton
@@ -40,11 +64,11 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
           <ContentSubSubtitle>
             {subsubTitle}
           </ContentSubSubtitle>
-          <ContentSubtitle>
+          <ContentSubtitle href={subTitleLink} target={"__blank"}>
             {subTitle}
           </ContentSubtitle>
         </ContentConatiner>
-        <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()} to={redirectTo} />
+        <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()} {...buttonRedirection}/>
       </MainContainer>
 
     </CustomModal>
@@ -121,7 +145,7 @@ const ContentTitle = styled.p`
   margin-bottom: 10px;
 `
 
-const ContentSubtitle = styled.p`
+const ContentSubtitle = styled.a`
   font-family: Inter;
   font-style: normal;
   font-weight: 300;
@@ -130,6 +154,10 @@ const ContentSubtitle = styled.p`
   text-align: center;
   color: #F7653B;
   margin: 0;
+  cursor: pointer;
+  &:hover {
+    color: #F7653B;
+  }
 `
 
 const ContentSubSubtitle = styled.p`

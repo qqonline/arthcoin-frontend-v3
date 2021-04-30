@@ -34,8 +34,8 @@ const BuyContent = (props: WithSnackbarProps) => {
     if (val === ''){
       setBuyReceive('0');
     }
+    setBuyAmount(val);
     const valInNumber = Number(val);
-    setBuyAmount(valInNumber.toString());
     if (valInNumber){
       const temp = String(valInNumber * ratio);
       setBuyReceive(temp);
@@ -46,8 +46,8 @@ const BuyContent = (props: WithSnackbarProps) => {
     if (val === ''){
       setBuyAmount('0');
     }
+    setBuyReceive(val);
     const valInNumber = Number(val);
-    setBuyReceive(valInNumber.toString());
     if (valInNumber){
       const temp = String(valInNumber * (1 / ratio));
       setBuyAmount(temp);

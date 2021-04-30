@@ -118,8 +118,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
   const [balance, setBalance] = useState<number>(500.0);
   const [firstCoin, setFirstCoin] = useState<string>('ARTH');
   const [secondCoin, setSecondCoin] = useState<string>('ETH');
-  const [firstCoinAmount, setFirstCoinAmount] = useState<string>('0.0');
-  const [secondCoinAmount, setSecondCoinAmount] = useState<string>('0.0');
+  const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.0);
+  const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.0);
   const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>(defaultDropdownValues);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const handleSliderChange = (event: any, value: any) => {
@@ -241,7 +241,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           // }}
           SymbolText={selectedPair?.liquidity?.pairName}
           inputMode={'decimal'}
-          setText={(val: string) => setFirstCoinAmount(String(Number(val)))}
+          setText={(val: string) => setFirstCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
           tagText={'MAX'}
         />
         <PlusMinusArrow>
@@ -262,7 +262,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           }}
           SymbolText={secondCoin}
           inputMode={'decimal'}
-          setText={(val: string) => setSecondCoinAmount(String(Number(val)))}
+          setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
           tagText={'MAX'}
         />
         <PlusMinusArrow>
@@ -283,7 +283,7 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           }}
           SymbolText={secondCoin}
           inputMode={'decimal'}
-          setText={(val: string) => setSecondCoinAmount(String(Number(val)))}
+          setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
           tagText={'MAX'}
         />
         <OneLine style={{ marginTop: '15px' }}>

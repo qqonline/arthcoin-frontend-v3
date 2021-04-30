@@ -351,17 +351,17 @@ const Genesis = (props: WithSnackbarProps) => {
           <Grid item lg={5} md={12} sm={12} xs={12}>
             <CustomInfoCard className={'custom-mahadao-box'}>
               <CustomInfoCardDetails>
-                <OneLineInputwomargin style={{ marginBottom: '20px' }}>
+                <OneLineInputwomargin style={{marginBottom: '20px'}}>
                   <TextForInfoTitle>
                     Amount Remaining to Raise
-                    <CustomToolTip />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                   <BeforeChipDark>54.76M</BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip />
+                    <CustomToolTip/>
                   </TextForInfoTitle>
                   <BeforeChipDark>157.89M</BeforeChipDark>
                 </OneLineInputwomargin>
@@ -375,7 +375,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Commit' && <ActiveTab />}
-                  {type !== 'Commit' ? <TabText>Commit Collateral</TabText> : <TabTextActive>Commit Collateral</TabTextActive>}
+                  {type !== 'Commit' ?<TabText>Commit Collateral</TabText>: <TabTextActive>Commit Collateral</TabTextActive>}
                 </TabContainer>
                 <TabContainer
                   onClick={() => {
@@ -383,7 +383,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Swap' && <ActiveTab />}
-                  {type !== 'Swap' ? <TabText>Swap ARTH for ARTH</TabText> : <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
+                  {type !== 'Swap' ?<TabText>Swap ARTH for ARTH</TabText>: <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -403,7 +403,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(String(Number(val)));
+                      setCollateralValue(String(val));
                     }}
                   />
                 ) : (
@@ -418,15 +418,15 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(String(Number(val)));
+                      setArthValue(String(val));
                     }}
                   />
                 )}
                 <PlusMinusArrow>
                   <img src={arrowDown} />
                 </PlusMinusArrow>
-                <div style={{ marginBottom: '32px' }}>
-                  <TextWithIcon style={{ marginBottom: '12px' }}>You Receive</TextWithIcon>
+                <div style={{marginBottom: '32px'}}>
+                  <TextWithIcon style={{marginBottom: '12px'}}>You Receive</TextWithIcon>
                   <ReceiveContainer>
                     <OneLineInputwomargin>
                       <div style={{ flex: 1 }}>
@@ -467,12 +467,14 @@ const Genesis = (props: WithSnackbarProps) => {
         title={'Minting ARTH successful!'}
         subTitle={'View Transaction'}
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        subTitleLink={'https://arthcoin.com/#/'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
+        buttonHref={'https://arthcoin.com/#/'}
       />
     </>
   );
-};
+}
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);

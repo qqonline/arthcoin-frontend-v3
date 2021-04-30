@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
@@ -6,7 +5,6 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
-
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
@@ -95,9 +93,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
             fontFamily: 'Inter !important',
           }}
           type={'number'}
-          onInput={(event) => {
-            // var regexp = /^\d+(\.\d*)?$/;
-            // if (regexp.test(event.target.value))
+          onChange={(event) => {
             props?.setText(event.target.value);
           }}
         />
