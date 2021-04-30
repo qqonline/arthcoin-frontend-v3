@@ -40,14 +40,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const onColleteralChange = (val: string) => {
-    if (val === ''){
+    if (val === '') {
       setReceiveShare('0');
       setReceiveMAHA('0');
       setReceiveBonus('0');
     }
-    setCollateralAmount(val);
     const valInNumber = Number(val);
-    if (valInNumber){
+    setCollateralAmount(valInNumber.toString());
+    if (valInNumber) {
       setReceiveBonus(String(valInNumber * bonusRatio));
       setReceiveMAHA(String(valInNumber * mahaRatio));
       setReceiveShare(String(valInNumber * shareRatio));
@@ -65,7 +65,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             Buyback
-            <CustomToolTip/>
+            <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
             <TextForInfoTitle>Buy is not needed for now</TextForInfoTitle>
@@ -82,12 +82,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
             {'Add Collateral'}
-            <CustomToolTip/>
+            <CustomToolTip />
           </HeaderTitle>
-            <HeaderSubtitle>
-              342.450K <HardChip>USDT</HardChip>{' '}
-              <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
-            </HeaderSubtitle>
+          <HeaderSubtitle>
+            342.450K <HardChip>USDT</HardChip>{' '}
+            <TextForInfoTitle>Remaining to generate</TextForInfoTitle>
+          </HeaderSubtitle>
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
@@ -131,7 +131,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             <OneLineInputwomargin>
               <PrimaryText>
                 Bonus
-                <CustomToolTip/>
+                <CustomToolTip />
               </PrimaryText>
               <OneLineInputwomargin>
                 <BeforeHardChip>{receiveBonus}</BeforeHardChip>
@@ -215,7 +215,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       Bonus Rate
-                      <CustomToolTip/>
+                      <CustomToolTip />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>0.2%</InputLabelSpanRight>
@@ -226,7 +226,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       MAHA Reward
-                      <CustomToolTip/>
+                      <CustomToolTip />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>5%</InputLabelSpanRight>
@@ -259,7 +259,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -301,7 +301,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-                // onClick={handleClose}
+              // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>

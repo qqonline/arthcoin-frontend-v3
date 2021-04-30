@@ -29,8 +29,8 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
   const [firstCoin, setFirstCoin] = useState<string>('ARTH');
   const [secondCoin, setSecondCoin] = useState<string>('ETH');
 
-  const [firstCoinAmount, setFirstCoinAmount] = useState<number>(0.00);
-  const [secondCoinAmount, setSecondCoinAmount] = useState<number>(0.00);
+  const [firstCoinAmount, setFirstCoinAmount] = useState<string>('0.00');
+  const [secondCoinAmount, setSecondCoinAmount] = useState<string>('0.00');
 
   const [firstCoinDropDown, setFirstCoinDropDown] = useState<string[]>([]);
   const [secondCoinDropDown, setSecondCoinDropDown] = useState<string[]>([]);
@@ -132,7 +132,7 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
             }}
             SymbolText={firstCoin}
             inputMode={'decimal'}
-            setText={(val: string) => setFirstCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
+            setText={(val: string) => setFirstCoinAmount(String(Number(val)))}
             tagText={'MAX'}
           />
           <PlusMinusArrow>
@@ -153,7 +153,7 @@ const AddLiquidity = (props: props & WithSnackbarProps) => {
             }}
             SymbolText={secondCoin}
             inputMode={'decimal'}
-            setText={(val: string) => setSecondCoinAmount(Number(val.replace(/[^0-9]/g, '')))}
+            setText={(val: string) => setSecondCoinAmount(String(Number(val)))}
             tagText={'MAX'}
           />
           <TcContainer>

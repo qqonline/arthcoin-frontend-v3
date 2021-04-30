@@ -142,8 +142,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxShare('0')
       setReceive('0');
     }
-    setCollateralValue(val);
     const valueInNumber = Number(val);
+    setCollateralValue(valueInNumber.toString());
     if (valueInNumber) {
       let arthxShareTemp =
         (await ((100 * valueInNumber) / colletralRatio)) * ((100 - colletralRatio) / 100);
@@ -158,8 +158,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setReceive('0');
       setCollateralValue('0')
     }
-    setArthxShare(val);
     const valueInNumber = Number(val);
+    setArthxShare(valueInNumber.toString());
     if (valueInNumber) {
       let colletralTemp =
         (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
@@ -174,8 +174,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxShare('0');
       setCollateralValue('0');
     }
-    setReceive(val);
     const valueInNumber = Number(val);
+    setReceive(valueInNumber.toString());
     if (valueInNumber) {
       setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
       setArthxShare(String(valueInNumber * ((100 - colletralRatio) / 100)));
@@ -229,7 +229,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -267,9 +267,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           {checked && (
             <StakingDiv>
               <div>
-                <OneLineInput style={{margin: '0px'}}>
+                <OneLineInput style={{ margin: '0px' }}>
                   <div>
-                    <InputLabel style={{marginTop: '12px'}}>Select how long would you like to stake</InputLabel>
+                    <InputLabel style={{ marginTop: '12px' }}>Select how long would you like to stake</InputLabel>
                   </div>
                   <InputNoDisplay>
                     <InternalSpan>{sliderValue} months</InternalSpan>
@@ -336,9 +336,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 cEnd={9999}
                 cDuration={calcDuration}
                 cStart={currentCounter}
-                // updateCounter={(val: number)=>{
-                //   setCurrentCounter(val)
-                // }}
+              // updateCounter={(val: number)=>{
+              //   setCurrentCounter(val)
+              // }}
               />
 
               <TransparentInfoDiv
@@ -497,7 +497,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
-                <div style={{marginTop: '32px'}}>
+                <div style={{ marginTop: '32px' }}>
                   <Button
                     text={'Mint'}
                     size={'lg'}
@@ -577,7 +577,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} loading={true}/>
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} loading={true} />
               </Grid>
             </Grid>
           </RightBottomCard>
