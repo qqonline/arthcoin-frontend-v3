@@ -70,10 +70,11 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
   },
 };
 
+
 export const stakingContracts: StakingContract[] = [
   {
     platform: 'arth',
-    contract: 'Stake_ARTH_WETH',
+    contract: 'StakeARTHWETH',
     kind: 'vested',
     depositTokens: ['ARTH', 'WETH'],
     depositTokenKind: 'single',
@@ -85,7 +86,7 @@ export const stakingContracts: StakingContract[] = [
   },
   {
     platform: 'arth',
-    contract: 'Stake_ARTH_WETH',
+    contract: 'StakeARTHMAHA',
     kind: 'vested',
     depositTokens: ['MAHA', 'WETH'],
     depositTokenKind: 'single',
@@ -97,7 +98,7 @@ export const stakingContracts: StakingContract[] = [
   },
   {
     platform: 'uniswap',
-    contract: 'Stake_ARTHX_WETH',
+    contract: 'StakeARTHXWETH',
     kind: 'vested',
     depositTokens: ['ARTHX', 'WETH'],
     depositTokenKind: 'single',
@@ -109,7 +110,7 @@ export const stakingContracts: StakingContract[] = [
   },
   {
     platform: 'arth',
-    contract: 'Stake_ARTH_WETH',
+    contract: 'StakeARTHX',
     kind: 'vested',
     depositTokens: ['ARTHX'],
     depositTokenKind: 'single',
@@ -121,7 +122,7 @@ export const stakingContracts: StakingContract[] = [
   },
   {
     platform: 'uniswap',
-    contract: 'Stake_ARTH_MAHA',
+    contract: 'StakeARTHMAHA',
     kind: 'vested',
     depositTokens: ['ARTH', 'MAHA'],
     depositTokenKind: 'single',
@@ -133,16 +134,16 @@ export const stakingContracts: StakingContract[] = [
   },
   {
     platform: 'uniswap',
-    contract: 'Stake_ARTH_ARTHX',
+    contract: 'StakeARTH',
     kind: 'vested',
-    depositTokens: ['ARTH', 'ARTHX'],
+    depositTokens: ['ARTH'],
     depositTokenKind: 'single',
     earnTokenName: 'MAHA',
     finished: false,
     networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
     sort: 0,
-    categories: ['all', 'arth', 'arthx'],
+    categories: ['all', 'arth'],
   },
 ];
 
-export default configurations['staging'];
+export default configurations['development'];
