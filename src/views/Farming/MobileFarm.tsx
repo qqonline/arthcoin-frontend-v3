@@ -20,14 +20,16 @@ interface IProps {
   deposited?: boolean;
   lockedStake?: string;
   earned?: string;
+  unclaimedRewards?: string;
+  rewards?: string;
   onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
 }
 
 export const MobileFarm = (props: IProps) => {
   const [open, setOpen] = useState<boolean>(props?.deposited);
-  useEffect(()=>{
+  useEffect(() => {
     setOpen(props?.deposited)
-  },[props?.deposited])
+  }, [props?.deposited])
   // const logos = [bank.earnTokenName];
   // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
   // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
@@ -125,11 +127,11 @@ export const MobileFarm = (props: IProps) => {
                 style={{ display: 'flex', marginTop: 15 }}
               >
                 <DescriptionDiv style={{ maxWidth: 100 }}>
-                  Pool Duration
+                  Reward
                   <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <Countdown
+                  {/* <Countdown
                     date={props?.poolEndDate || Date.now() + 550000000}
                     renderer={({ days, hours, minutes, seconds, completed }) => {
                       return (
@@ -138,8 +140,11 @@ export const MobileFarm = (props: IProps) => {
                         </MainSpan>
                       );
                     }}
-                  />
-                  <SecondSpan>{props?.poolDur}</SecondSpan>
+                  /> */}
+                  {/* <SecondSpan>{props?.rewards}</SecondSpan> */}
+                  <MainSpan>
+                    {props?.rewards}
+                  </MainSpan>
                 </div>
               </Grid>
             </Grid>
@@ -187,15 +192,15 @@ export const MobileFarm = (props: IProps) => {
                   alignSelf: 'center',
                 }}
               >
-                <InfoDivLeftSpan>Earned:</InfoDivLeftSpan>
-                <InfoDivRightSpan>{props?.earned}</InfoDivRightSpan>
+                <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
+                <InfoDivRightSpan>{props?.unclaimedRewards}</InfoDivRightSpan>
               </div>
               <Withdraw
                 onClick={() => {
                   props.onButtonClick('Claim');
                 }}
               >
-                Claim MAHA
+                Claim
               </Withdraw>
             </InfoDiv>
           </OpenableDiv>

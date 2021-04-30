@@ -14,22 +14,10 @@ const UnderstandMore: React.FC<props> = (props: props) => {
 
     function ListItem(props: any) {
         return (
-            <ListLi
-            // style={{ listStyleType: 'circle', color: 'white', listStylePosition: 'inside', paddingBlock: 8}}
-            >
+            <ListLi>
                 <ListSpan>
                     {props.value}
                 </ListSpan>
-                {/* <div style={{display: 'inline-block'}}>
-                    <OneLine>
-                        <div style={{ flex: 1 }}>
-                            <TextWithIcon>
-                                {props.value}
-                            </TextWithIcon>
-                        </div>
-                    </OneLine>
-                </div> */}
-
             </ListLi>
         )
     }
@@ -44,7 +32,6 @@ const UnderstandMore: React.FC<props> = (props: props) => {
                     {props?.dataObj?.map(obj => (
                         <ListItem key={obj}
                             value={obj} />
-                        // <li>{obj}</li>
                     ))}
                 </ul>
                 <HrefLink href={'https://www.google.com/'} target="__blank">
@@ -82,9 +69,9 @@ const ListSpan = styled.span`
 // padding: 80px 0;
 font-family: Inter;
 font-style: normal;
-font-weight: 300;
-font-size: 16px;
-line-height: 150%;
+font-weight: normal;
+font-size: 14px;
+line-height: 140%;
 color: rgba(255, 255, 255, 0.88);
 // text-align: left;
 `;

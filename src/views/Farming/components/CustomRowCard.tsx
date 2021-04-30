@@ -17,6 +17,8 @@ type props = {
   open?: boolean;
   lockedStake?: string;
   earned?: string;
+  rewards?: string;
+  unclaimedRewards?: string;
   onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
 };
 
@@ -24,7 +26,7 @@ const CustomRowCard: React.FC<props> = (props) => {
 
   return (
     <CustomCardGrid>
-      <Grid container style={{padding: '32px 32px', position: 'relative'}} alignItems={'center'}>
+      <Grid container style={{ padding: '32px 32px', position: 'relative' }} alignItems={'center'}>
         <CardIcon src={farmingSVG} height={32} />
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
@@ -35,7 +37,7 @@ const CustomRowCard: React.FC<props> = (props) => {
             <TableMainTextStyle>
               {`${props?.pair[0]} - ${props?.pair[1]}`}
             </TableMainTextStyle>
-            <AddLiquidityButton onClick={() => {}}>
+            <AddLiquidityButton onClick={() => { }}>
               Add Liquidity
             </AddLiquidityButton>
           </div>
@@ -52,18 +54,19 @@ const CustomRowCard: React.FC<props> = (props) => {
         </Grid>
         <Grid item lg={3}>
           <TableMainTextStyle>
-            <Countdown
+            {/* <Countdown
               date={props?.poolEndDate || Date.now() + 550000000}
               renderer={({ days, hours, minutes, seconds, completed }) => {
                 return (
                   <span>{days}d : {hours}h : {minutes}m : {seconds}s left </span>
                 )
               }}
-            />
+            /> */}
+            {props?.rewards}
           </TableMainTextStyle>
-          <DayText>
+          {/* <DayText>
             {props?.poolDur}
-          </DayText>
+          </DayText> */}
         </Grid>
         <Grid item lg={2}>
           <Button
@@ -84,12 +87,12 @@ const CustomRowCard: React.FC<props> = (props) => {
           </WithdrawClaimButton>
         </div>
         <div style={{ display: 'flex' }}>
-          Earned:
+          Unclaimed Rewards:
           <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props?.earned ||'0.0 MAHA'}
+            {props?.unclaimedRewards || '0.0 MAHA'}
           </TableMainTextStyle>
           <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
-            Claim MAHA
+            Claim
           </WithdrawClaimButton>
         </div>
       </DepositInfoContainer>}

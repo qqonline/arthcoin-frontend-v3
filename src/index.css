@@ -1375,12 +1375,14 @@ ul {
 }
 
 ul li {
-  font-family: Arial;
-  font-size: 18px;
+  /* font-family: Arial; */
+  /* font-size: 18px; */
 }
 
 li {
   padding-block: 5px;
+  line-height: 200%;
+  text-anchor: start;
 }
 
 li::before { /* the custom styled bullets */
