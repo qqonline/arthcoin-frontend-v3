@@ -48,6 +48,7 @@ const logosBySymbol: { [title: string]: string } = {
   ESD: ESD,
   SUSHI: SUSHI,
   ETH: ETH,
+  WETH: ETH,
   CURVE: CURVE,
   FRAX: FRAX,
   FXS: FRAX,
