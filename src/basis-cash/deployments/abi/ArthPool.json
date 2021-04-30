@@ -255,7 +255,7 @@
   },
   {
     "inputs": [],
-    "name": "collateralETHOracleAddress",
+    "name": "collateralGMUOracleAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -330,6 +330,19 @@
       }
     ],
     "name": "hasRole",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isWETHPool",
     "outputs": [
       {
         "internalType": "bool",
@@ -677,16 +690,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_collateralWETHOracleAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "__wethAddress",
+        "name": "_collateralGMUOracleAddress",
         "type": "address"
       }
     ],
-    "name": "setCollatETHOracle",
+    "name": "setCollatGMUOracle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
