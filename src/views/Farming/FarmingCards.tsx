@@ -24,7 +24,9 @@ interface FarmCard {
   deposited: boolean,
   poolEndDate: number,
   lockedStake: string,
-  earned: string
+  earned: string,
+  rewards: string;
+  unclaimedRewards: string;
 }
 interface IProps {
   mode?: ModeProps;
@@ -45,7 +47,9 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
       deposited: false,
       poolEndDate: Date.now() + 550000000,
       lockedStake: '0 ARTH-MAHA LP',
-      earned: '12 MAHA'
+      earned: '12 MAHA',
+      rewards: 'MAHA',
+      unclaimedRewards: '12.3 MAHA'
     },
     {
       id: 2,
@@ -58,7 +62,9 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
       deposited: true,
       poolEndDate: Date.now() + 550000000,
       lockedStake: '0 ARTH-MAHA LP',
-      earned: '12 MAHA'
+      earned: '12 MAHA',
+      rewards: 'MAHA',
+      unclaimedRewards: '12.3 MAHA'
     },
     {
       id: 3,
@@ -71,7 +77,9 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
       deposited: false,
       poolEndDate: Date.now() + 550000000,
       lockedStake: '0 ARTH-MAHA LP',
-      earned: '12 MAHA'
+      earned: '12 MAHA',
+      rewards: 'MAHA',
+      unclaimedRewards: '12.3 MAHA'
     },
   ]
   const [data, setData] = useState<FarmCard[]>([])
@@ -340,7 +348,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
             <CustomTableHeading>Apy</CustomTableHeading>
           </Grid>
           <Grid item lg={3}>
-            <CustomTableHeading>Pool duration</CustomTableHeading>
+            <CustomTableHeading>Reward</CustomTableHeading>
           </Grid>
           <Grid item lg={2}></Grid>
         </Grid>

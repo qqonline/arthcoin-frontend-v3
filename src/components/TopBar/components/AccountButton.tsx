@@ -6,7 +6,10 @@ import ButtonColored from '../../Button/';
 import AccountModal from './AccountModal';
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import walletIcon from '../../../assets/svg/wallet-24.svg';
-interface AccountButtonProps {}
+import CustomModal from '../../CustomModal';
+import Loader from 'react-spinners/PulseLoader';
+
+interface AccountButtonProps { }
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
   if (fullStr.length <= strLen) return fullStr;
@@ -23,6 +26,7 @@ const truncateMiddle = function (fullStr: string, strLen: number, separator: str
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
   const [showModal, toggleModal] = React.useState(false);
+  const [connectModal, showConnectModal] = React.useState(false);
   let dummyWallet = {
     accountNumber: '123123123123123123',
     mahaTokens: 50,
@@ -37,10 +41,32 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
 
   return (
     <>
-      {showModal && <AccountModal walletData={dummyWallet} onClose={() => toggleModal(!showModal)}/>}
+      <CustomModal
+        open={connectModal}
+        closeButton
+        handleClose={() => showConnectModal(false)}
+        modalTitleStyle={{}}
+        modalContainerStyle={{}}
+        modalBodyStyle={{}}
+        title={`Connecting Wallet`}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', marginBlock: '32px', justifyContent: 'center', alignItems: 'center' }}>
+          <Loader color={'#ffffff'} loading={true} size={10} margin={2} />
+          <ModalSpan>Please check your MetaMask extension to continue logging in.</ModalSpan>
+        </div>
+      </CustomModal>
+      {showModal && <AccountModal walletData={dummyWallet} onClose={() => toggleModal(!showModal)} />}
       <StyledAccountButton>
-        {account ? (
-          <Button variant='transparent' onClick={() => connect('injected')} size="sm" text="Connect" />
+        {!account ? (
+          <Button
+            variant='transparent'
+            onClick={() => {
+              showConnectModal(true)
+              connect('injected')
+            }}
+            size="sm"
+            text="Connect"
+          />
         ) : (
           <Button
             onClick={() => toggleModal(true)}
@@ -57,5 +83,14 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
 };
 
 const StyledAccountButton = styled.div``;
-
+const ModalSpan = styled.span`
+font-family: Inter;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+color: rgba(255, 255, 255, 0.88);
+margin: 15px 0px 0px 0px;
+`;
 export default AccountButton;

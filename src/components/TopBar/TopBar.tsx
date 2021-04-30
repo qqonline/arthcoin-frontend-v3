@@ -46,7 +46,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
 const TopBar: React.FC = () => {
   const { account } = useWallet();
   const [netWrokType, setNetworkType] = React.useState('mainnet');
-  const [showWarning, toggleWarning] = useState(false);
+  const [showWarning, toggleWarning] = useState(true);
   const [showMobileMenu, toggleMobileMenu] = useState(false);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
@@ -69,7 +69,7 @@ const TopBar: React.FC = () => {
               </HideonPhone>
             </div>
             <HideonPhone>
-              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 {/* <TxButton /> */}
                 {network.name !== '' && <CustomNetwork>
                   <ColorIcon colorCode={network.color} />
@@ -146,13 +146,17 @@ const TopBar: React.FC = () => {
       {showWarning && (
         <ShowWarning>
           <ShowWarningInner>
-            <img src={InfoIcon} alt="" width="24px" className="margin-right-5" />
-            Please make sure that you are connected to matic mumbai TESTnet.
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'baseline'}}>
+              <img src={InfoIcon} alt="" width="24px" className="margin-right-10" />
+              <WarningSpan>
+                Please make sure that you are connected to matic mumbai TESTnet.
+              </WarningSpan>
+            </div>
             <img
               src={CloseIcon}
               width="24px"
               alt=""
-              className="pointer"
+              className="pointer margin-left-10"
               onClick={() => toggleWarning(false)}
             />
           </ShowWarningInner>
@@ -222,11 +226,36 @@ const ShowWarningInner = styled.div`
   position: relative;
 `;
 const ShowWarning = styled.div`
-  background: #ba1e38;
+  background: #BA1E38;
+  border: 1px solid #FF9EAE;
+  box-sizing: border-box;
+  border-radius: 6px;
   padding: 10px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
+  // max-width: 600px;
+  z-index: 50;
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  top: 90px;
+  @media (max-width: 768px) {
+    // max-width: 200px;
+    width: 95%;
+    left: 2.5%;
+    right: 2.5%;
+  } ;
+`;
+
+const WarningSpan = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFFFFF;
+  opacity: 0.88;
 `;
 const StyledTopBarInner = styled.div`
   align-items: center;
