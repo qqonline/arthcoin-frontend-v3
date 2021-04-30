@@ -25,6 +25,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import SlippageContainer from '../../../components/SlippageContainer';
 
 
 const OrangeCheckBox = withStyles({
@@ -416,13 +417,18 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <ActiveTab />
-              <TabContainer onClick={() => props.setType('mint')}>
-                <TabTextActive>Mint</TabTextActive>
-              </TabContainer>
-              <TabContainer onClick={() => props.setType('redeem')}>
+              <div style={{display: 'flex'}}>
+                <TabContainer onClick={() => props.setType('mint')}>
+                  <ActiveTab />
+                  <TabTextActive>Mint</TabTextActive>
+                </TabContainer>
+                <TabContainer onClick={() => props.setType('redeem')}>
                 <TabText>Redeem</TabText>
               </TabContainer>
+              </div>
+              <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
+                console.log('rates', data)
+              }}/>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
@@ -640,12 +646,15 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   padding: 32px 12px;
   width: 100px;
   height: 80px;

@@ -16,6 +16,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import SlippageContainer from '../../../components/SlippageContainer';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -194,13 +195,18 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <TabContainer onClick={() => props.setType('mint')}>
-                <TabText>Mint</TabText>
-              </TabContainer>
-              <TabContainer onClick={() => props.setType('redeem')}>
-                <ActiveTab />
-                <TabTextActive>Redeem</TabTextActive>
-              </TabContainer>
+              <div  style={{display: 'flex'}}>
+                <TabContainer onClick={() => props.setType('mint')}>
+                  <TabText>Mint</TabText>
+                </TabContainer>
+                <TabContainer onClick={() => props.setType('redeem')}>
+                  <ActiveTab />
+                  <TabTextActive>Redeem</TabTextActive>
+                </TabContainer>
+              </div>
+              <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
+                console.log('rates', data)
+              }}/>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
@@ -430,6 +436,8 @@ const RightBottomCardTitle = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`

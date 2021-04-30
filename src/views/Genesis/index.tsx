@@ -31,6 +31,7 @@ import Countdown from 'react-countdown';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import { Link } from 'react-router-dom';
 import CustomToolTip from '../../components/CustomTooltip';
+import SlippageContainer from '../../components/SlippageContainer';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -367,22 +368,27 @@ const Genesis = (props: WithSnackbarProps) => {
             </CustomInfoCard>
             <LeftTopCard className={'custom-mahadao-container'}>
               <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-                <TabContainer
-                  onClick={() => {
-                    if (type !== 'Commit') setType('Commit');
-                  }}
-                >
-                  {type === 'Commit' && <ActiveTab />}
-                  {type !== 'Commit' ?<TabText>Commit Collateral</TabText>: <TabTextActive>Commit Collateral</TabTextActive>}
-                </TabContainer>
-                <TabContainer
-                  onClick={() => {
-                    if (type !== 'Swap') setType('Swap');
-                  }}
-                >
-                  {type === 'Swap' && <ActiveTab />}
-                  {type !== 'Swap' ?<TabText>Swap ARTH for ARTH</TabText>: <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
-                </TabContainer>
+                <div style={{display: 'flex', flex: '1'}}>
+                    <TabContainer
+                    onClick={() => {
+                      if (type !== 'Commit') setType('Commit');
+                    }}
+                    >
+                      {type === 'Commit' && <ActiveTab />}
+                      {type !== 'Commit' ?<TabText>Commit Collateral</TabText>: <TabTextActive>Commit Collateral</TabTextActive>}
+                    </TabContainer>
+                    <TabContainer
+                      onClick={() => {
+                        if (type !== 'Swap') setType('Swap');
+                      }}
+                    >
+                      {type === 'Swap' && <ActiveTab />}
+                      {type !== 'Swap' ?<TabText>Swap ARTH for ARTH</TabText>: <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
+                  </TabContainer>
+                  <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
+                    console.log('rates', data)
+                  }}/>
+                </div>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
                 {type === 'Commit' ? (
@@ -600,6 +606,8 @@ const LeftTopCard = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`

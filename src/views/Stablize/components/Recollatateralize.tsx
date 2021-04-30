@@ -12,6 +12,7 @@ import CustomModal from '../../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
+import SlippageContainer from '../../../components/SlippageContainer';
 
 type Iprops = {
   onChange: () => void;
@@ -63,7 +64,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         className={'custom-mahadao-box'}
         style={{ height: 570 }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-          <HeaderTitle>
+          <HeaderTitle style={{justifyContent: 'flex-start'}}>
             Buyback
             <CustomToolTip/>
           </HeaderTitle>
@@ -81,8 +82,13 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       <LeftTopCard className={'custom-mahadao-container'}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
-            {'Add Collateral'}
-            <CustomToolTip/>
+            <div>
+              {'Add Collateral'}
+              <CustomToolTip/>
+            </div>
+            <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
+              console.log('rates', data)
+            }}/>
           </HeaderTitle>
             <HeaderSubtitle>
               342.450K <HardChip>USDT</HardChip>{' '}
@@ -373,7 +379,7 @@ const HeaderTitle = styled.div`
   opacity: 0.88;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
 `;
