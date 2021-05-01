@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../TokenSymbol';
@@ -72,9 +72,23 @@ const CustomInputContainer: React.FC<props> = (props) => {
     }
   }
 
+  const IConatinerStyle = () => {
+    let returnObj: CSSProperties = {}
+    if (props.dontShowBackgroundContainer){
+      returnObj['padding'] = '0px';
+      returnObj['backgroundColor'] = 'transparent';
+    }
+    if (DisableMsg !== "") {
+      returnObj['opacity'] = "0.32";
+    }
+    return returnObj;
+  }
+
+
   return (
-    <IConatiner style={props.dontShowBackgroundContainer ? { padding: '0px', backgroundColor: 'transparent' } : {}}>
+    <div style={{position: 'relative'}}>
       {DisableMsg !== '' && <TotalDisable><DMsg>{DisableMsg}</DMsg></TotalDisable>}
+      <IConatiner style={IConatinerStyle()}>
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -153,6 +167,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
       </IFieldConatiner>
       {StateMsg !== '' && DisableMsg === '' && <p className={`input-font-${Istate}`}>{StateMsg}</p>}
     </IConatiner>
+    </div>
   );
 }
 
@@ -181,6 +196,7 @@ const DMsg = styled.p`
   font-size: 16px;
   line-height: 24px;
   color: #FFFFFF;
+  margin-bottom: 0;
 `
 const HrefLink = styled.a`
   z-index: 1;
@@ -201,7 +217,6 @@ const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 12px;
-  position: relative;
 `;
 const ILabelContainer = styled.div`
   display: flex;

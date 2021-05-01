@@ -379,7 +379,6 @@ const HeaderTitle = styled.div`
   font-size: 18px;
   line-height: 24px;
   color: #ffffff;
-  opacity: 0.88;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

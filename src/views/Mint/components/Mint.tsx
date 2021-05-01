@@ -591,7 +591,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             </RightBottomCardTitle>
             <Grid container style={{ marginTop: '16px' }}>
               <Grid item lg={4}>
-                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} loading={true} />
+                <Button text={'Earn Rewards'} size={'sm'} to={'farming'} loading={false}/>
               </Grid>
             </Grid>
           </RightBottomCard>
