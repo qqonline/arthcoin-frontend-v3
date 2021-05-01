@@ -10,6 +10,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
+import DynamicSlider from '../../../components/DynamicSlider';
 
 interface IProps {
   onCancel: () => void;
@@ -24,7 +25,7 @@ export default (props: IProps) => {
   const [val, setValue] = useState<string>('0');
   const symbol = props.pool.depositTokenSymbols.join('-');
   const core = useCore();
-
+  const [sliderValue, setSliderValue] = useState<number>(0)
   const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
   const contract = core.contracts[props.pool.contract];
 
@@ -70,6 +71,11 @@ export default (props: IProps) => {
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
+        
+        <DynamicSlider
+          onSliderChange={setSliderValue}
+        />
+        
         <Grid
           container
           spacing={2}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-import useCore from '../../hooks/useCore';
+// import useCore from '../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
 import shushiswap from '../../assets/svg/sushiswapLogo.svg';
@@ -12,14 +12,14 @@ import BuyContent from './components/BuyContent';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const core = useCore();
+  // const core = useCore();
 
   const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
 
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  if (!core) return <div />;
+  // if (!core) return <div />;
 
   const TabContent = () => {
     return (
