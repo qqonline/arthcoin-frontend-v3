@@ -36,6 +36,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     basisCash.getDefaultCollateral(),
   );
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [selectedRate, setSelectedRate] = useState<number>(0.00);
+
 
   const onReceiveARTHXValueChange = async (val: string) => {
     if (val === '') {
@@ -204,8 +206,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   <TabTextActive>Redeem</TabTextActive>
                 </TabContainer>
               </div>
-              <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
-                console.log('rates', data)
+              <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
+                console.log('rates', data);
+                setSelectedRate(data);
               }}/>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>

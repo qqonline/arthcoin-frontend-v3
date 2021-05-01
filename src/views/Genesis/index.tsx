@@ -195,6 +195,7 @@ const Genesis = (props: WithSnackbarProps) => {
     defaultCollateralDropdownValues,
   );
   const [timerHeader, setHeader] = useState<boolean>(true);
+  const [selectedRate, setSelectedRate] = useState<number>(0.6);
 
   // useEffect(() => {
   //   let arr: string[];
@@ -387,8 +388,9 @@ const Genesis = (props: WithSnackbarProps) => {
                       {type === 'Swap' && <ActiveTab />}
                       {type !== 'Swap' ?<TabText>Swap ARTH for ARTH</TabText>: <TabTextActive>Swap ARTH for ARTH</TabTextActive>}
                   </TabContainer>
-                  <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
+                  <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
                     console.log('rates', data)
+                    setSelectedRate(data);
                   }}/>
                 </div>
               </LeftTopCardHeader>

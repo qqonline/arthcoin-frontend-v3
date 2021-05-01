@@ -138,6 +138,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
     basisCash.getDefaultCollateral(),
   );
+  const [selectedRate, setSelectedRate] = useState<number>(0.00);
+
   const onBuyColletralValueChange = async (val: string) => {
     if (val === '') {
       setArthxShare('0')
@@ -426,8 +428,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 <TabText>Redeem</TabText>
               </TabContainer>
               </div>
-              <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
-                console.log('rates', data)
+              <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
+                console.log('rates', data);
+                setSelectedRate(data);
               }}/>
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>

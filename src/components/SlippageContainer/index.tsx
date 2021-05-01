@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TokenSymbol from '../TokenSymbol';
 import settings from '../../assets/svg/settingSlidder.svg';
@@ -44,6 +44,23 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
   const [ modalOpen, setOpenModal ] = useState<boolean>(false);
   const [selectedRate, setSelectedRate ] = useState<number>(1);
   const [customRate, setCustomRate] = useState<string>('0.00');
+
+  useEffect(() => {
+    if (!modalOpen) {
+      if (props.defaultRate === 0.1) {
+        setSelectedRate(1);
+      } else if (props.defaultRate === 0.5) {
+        setSelectedRate(2);
+      } else if (props.defaultRate === 1.0) {
+        setSelectedRate(3);
+      } else if (props.defaultRate === 0.00) {
+
+      } else {
+        setSelectedRate(4);
+        setCustomRate(props.defaultRate.toString())
+      }
+    }
+  }, [modalOpen])
 
   const onRateClick = (data: Irates) => {
     setSelectedRate(data.id);

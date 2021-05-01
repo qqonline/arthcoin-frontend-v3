@@ -31,6 +31,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
     basisCash.getDefaultCollateral(),
   );
+  const [selectedRate, setSelectedRate] = useState<number>(0.00);
+
 
   const shareRatio = 2;
   const mahaRatio = 3;
@@ -86,8 +88,9 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               {'Add Collateral'}
               <CustomToolTip/>
             </div>
-            <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
-              console.log('rates', data)
+            <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
+              console.log('rates', data);
+              setSelectedRate(data);
             }}/>
           </HeaderTitle>
             <HeaderSubtitle>

@@ -28,6 +28,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const [selectedBuybackReceiveAmountCoin, setSelectedBuybackReceiveAmountCoin] = useState(
     basisCash.getDefaultCollateral(),
   );
+  const [selectedRate, setSelectedRate] = useState<number>(0.00);
 
   const collateralTypes = useMemo(() => basisCash.getCollateralTypes(), [basisCash]);
 
@@ -59,8 +60,9 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               Buyback
               <CustomToolTip/>
             </div>
-            <SlippageContainer defaultRate={0.5} onRateChange={(data) => {
-              console.log('rates', data)
+            <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
+              console.log('rates', data);
+              setSelectedRate(data);
             }}/>
           </HeaderTitle>
           <HeaderSubtitle>
