@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import CustomInputContainer from '../../../components/CustomInputContainer';
@@ -6,10 +6,13 @@ import Button from '../../../components/Button';
 import { ModeProps } from '../index';
 import { StakingContract } from '../../../basis-cash';
 import { BigNumber } from '@ethersproject/bignumber';
+import CustomModal from '../../../components/CustomModal';
+import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface IProps {
   mode?: ModeProps;
-  tokenBalance: BigNumber;
+  stakedBalance: BigNumber;
   pool: StakingContract;
   onCancel: () => void;
   onWithdraw?: () => void;
@@ -17,17 +20,37 @@ interface IProps {
 }
 
 export default (props: IProps) => {
+  const [val, setValue] = useState<string>('0');
+  const symbol = props.pool.depositTokenSymbols.join('-');
+
+  const withdraw = useStakingWithdraw(
+    props.pool.contract,
+    Number(val),
+    props.pool.depositToken,
+  );
+
   return (
-    <div>
+    <CustomModal
+      closeButton
+      handleClose={props.onCancel}
+      open={true}
+      modalTitleStyle={{}}
+      modalContainerStyle={{}}
+      modalBodyStyle={{}}
+      title={`Withdraw Your Tokens`}
+    >
       <CustomInputContainer
-        ILabelValue={'How much ARTH-MAHA LP would you like to Withdraw?'}
+        ILabelValue={`How much ${symbol} would you like to withdraw?`}
         IBalanceValue={''}
         ILabelInfoValue={''}
-        DefaultValue={'0.00'}
+        DefaultValue={String(val)}
         LogoSymbol={'ARTH'}
         hasDropDown={false}
-        SymbolText={'ARTH'}
-        setText={(val) => {}}
+        SymbolText={symbol}
+        setText={(t) => {
+          console.log(t);
+          setValue(String(t));
+        }}
         inputMode={'decimal'}
         tagText={'MAX'}
         dontShowBackgroundContainer={true}
@@ -37,8 +60,8 @@ export default (props: IProps) => {
       <OneLine>
         <div style={{ flex: 1 }}></div>
         <OneLine>
-          <BeforeChip>Staked Amount: 1000.00</BeforeChip>
-          <TagChips>ARTH-MAHA-LP</TagChips>
+          <BeforeChip>Staked Amount: {getDisplayBalance(props.stakedBalance)}</BeforeChip>
+          <TagChips>{symbol}</TagChips>
         </OneLine>
       </OneLine>
       <Grid
@@ -51,10 +74,10 @@ export default (props: IProps) => {
           <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button text={'Withdraw'} size={'lg'} onClick={props.onWithdraw} />
+          <Button text={'Withdraw'} size={'lg'} onClick={withdraw} />
         </Grid>
       </Grid>
-    </div>
+    </CustomModal>
   );
 };
 

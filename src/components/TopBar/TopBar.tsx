@@ -47,7 +47,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
 
 const TopBar: React.FC = () => {
   const { account, chainId } = useWallet();
-  const core = useCore()
+  const core = useCore();
 
   const [netWrokType, setNetworkType] = React.useState('mainnet');
   const [showMobileMenu, toggleMobileMenu] = useState(false);
@@ -55,11 +55,11 @@ const TopBar: React.FC = () => {
     setNetworkType(event.target.value as string);
   };
 
-  const showWarning = core.config.chainId !== chainId
+  const showWarning = core.config.chainId !== chainId;
   const network = {
-    name: 'Mainnet',
+    name: 'Testnet',
     color: '#11af60',
-  }
+  };
   // const [showWallet, setShowWallet] = useState<boolean>(true)
 
   return (
@@ -76,10 +76,12 @@ const TopBar: React.FC = () => {
             <HideonPhone>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 {/* <TxButton /> */}
-                {network.name !== '' && <CustomNetwork>
-                  <ColorIcon colorCode={network.color} />
-                  <span>{network.name}</span>
-                </CustomNetwork>}
+                {network.name !== '' && (
+                  <CustomNetwork>
+                    <ColorIcon colorCode={network.color} />
+                    <span>{network.name}</span>
+                  </CustomNetwork>
+                )}
                 {false && (
                   <Select
                     labelId="demo-customized-select-label"
@@ -123,10 +125,12 @@ const TopBar: React.FC = () => {
                     <TxButton />
                   </div>
                 )}
-                {network.name !== '' && <CustomNetwork>
-                  <ColorIcon colorCode={network.color} />
-                  <span>{network.name}</span>
-                </CustomNetwork>}
+                {network.name !== '' && (
+                  <CustomNetwork>
+                    <ColorIcon colorCode={network.color} />
+                    <span>{network.name}</span>
+                  </CustomNetwork>
+                )}
                 {!showMobileMenu ? (
                   <MenuIcon
                     style={{ color: 'white' }}
@@ -167,13 +171,13 @@ const TopBarContainer = styled.div`
   flex-direction: column;
   width: 100%;
   top: 0;
-`
+`;
 
 const CustomNetwork = styled.div`
   display: flex;
-  color: #FFF;
+  color: #fff;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.88);
+  border: 1px solid rgba(255, 255, 255, 0.88);
   border-radius: 6px;
   align-items: center;
   text-align: center;
