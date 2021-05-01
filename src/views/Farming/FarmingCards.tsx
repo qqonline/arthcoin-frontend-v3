@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { MobileFarm } from './MobileFarm';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../components/SnackBar';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 interface ModeProps {
   id: number, name: string, count: number
 }
@@ -109,7 +110,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           hasDropDown={false}
           SymbolText={'ARTH-MAHA'}
           setText={(val) => {
-            setDepositValue(val);
+            setDepositValue(ValidateNumber(val) ? val : String(Number(val)));
           }}
           inputMode={'numeric'}
           tagText={'MAX'}
@@ -180,7 +181,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           hasDropDown={false}
           SymbolText={'ARTH'}
           setText={(val) => {
-            setWithdrawValue(val)
+            setWithdrawValue(ValidateNumber(val) ? val : String(Number(val)))
           }}
           inputMode={'numeric'}
           tagText={'MAX'}
@@ -251,7 +252,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           hasDropDown={false}
           SymbolText={'MAHA'}
           setText={(val) => {
-            setClaimValue(val);
+            setClaimValue(ValidateNumber(val) ? val : String(Number(val)));
           }}
           inputMode={'decimal'}
           tagText={'MAX'}
