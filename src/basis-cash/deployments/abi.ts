@@ -13,6 +13,7 @@ export const SimpleOracle = require('./abi/SimpleOracle.json')
 export const UniswapPairOracle = require('./abi/UniswapPairOracle.json')
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json')
 export const UniswapV2Router02 = require('./abi/UniswapV2Router02.json')
+export const UniswapV2Pair = require('./abi/UniswapV2Pair.json')
 
 
 type IABIS = {
@@ -27,6 +28,7 @@ const ret: IABIS = {
   ARTHStablecoin,
   BoostedStaking,
   GMUOracle,
+  UniswapV2Pair,
   IERC20,
   IWETH,
   MahaToken,

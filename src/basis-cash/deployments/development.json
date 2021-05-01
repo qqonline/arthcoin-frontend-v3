@@ -94,5 +94,17 @@
   "Multicall": {
     "address": "0x21ac69CE058721a5aE839F37d7B877CACd9cC6e3",
     "abi": "Multicall"
+  },
+  "ArthMahaLP": {
+    "address": "0x1F39D0547AdfCC45DC6B6B7F1C17dC6F068B75b8",
+    "abi": "UniswapV2Pair"
+  },
+  "ArthxWethLP": {
+    "address": "0xFeF2C4bbc99a313F8A0991D40Ef8DBE9Eb97f4a0",
+    "abi": "UniswapV2Pair"
+  },
+  "ArthWethLP": {
+    "address": "0x7E934cb88daDBF298CAa153C14e34D18deef8F97",
+    "abi": "UniswapV2Pair"
   }
 }
