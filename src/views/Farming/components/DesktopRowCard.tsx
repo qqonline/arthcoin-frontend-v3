@@ -30,15 +30,14 @@ type IProps = {
 export default (props: IProps) => {
   const core = useCore();
 
-  const uniswapLink = `https://app.uniswap.org/#/add/${props.pool.depositTokenSymbols.join(
-    '/',
-  )}`;
+  const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
 
-  const etherscan = `https://rinkeby.etherscan.io/address/${props.pool.depositToken}`;
+  const tokenAddresses = tokens.map((t) => t.address);
+  const uniswapLink = `https://app.uniswap.org/#/add/${tokenAddresses.join('/')}`;
+
+  const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
-
-  console.log(props.pool.depositToken, depositTokenContract);
   const tokenBalance = useTokenBalance(depositTokenContract);
 
   return (
