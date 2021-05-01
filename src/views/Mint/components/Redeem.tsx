@@ -270,7 +270,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
@@ -284,7 +284,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
+                IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateral}
@@ -299,7 +299,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={arthxValue.toString()}
                 LogoSymbol={'ARTHX'}

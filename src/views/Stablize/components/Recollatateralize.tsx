@@ -103,7 +103,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Collateral'}
-            IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
+            IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
             ILabelInfoValue={''}
             DefaultValue={collateralAmount.toString()}
             hasDropDown={true}

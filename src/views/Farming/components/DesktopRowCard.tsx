@@ -11,6 +11,8 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
+import uniswap from '../../../assets/svg/uniswapLogo.svg'
+
 
 type IProps = {
   pool: StakingContract;
@@ -56,7 +58,7 @@ export default (props: IProps) => {
       >
         {props.pool.platform === 'uniswap' && (
           <CardIcon
-            src={'https://upload.wikimedia.org/wikipedia/commons/8/82/Uniswap_Logo.png'}
+            src={uniswap}
             height={32}
           />
         )}

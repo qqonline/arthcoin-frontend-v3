@@ -9,6 +9,7 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
 import farmingSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
+import uniswap from '../../../assets/svg/uniswapLogo.svg'
 
 interface IProps {
   pool: StakingContract;
@@ -32,7 +33,7 @@ export default (props: IProps) => {
     <StyledCardWrapper>
       <CardIcon>
         <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-          <img src={farmingSVG} height={32} />
+          <img src={uniswap} height={32} />
         </div>
       </CardIcon>
       <Card>

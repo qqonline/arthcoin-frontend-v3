@@ -46,7 +46,8 @@ export default (props: IProps) => {
       <div>
         <CustomInputContainer
           ILabelValue={`How much ${symbol} would you like to supply?`}
-          IBalanceValue={''}
+          IBalanceValue={getDisplayBalance(props.tokenBalance)}
+          showBalance={false}
           ILabelInfoValue={''}
           DefaultValue={String(val)}
           LogoSymbol={'ARTH'}

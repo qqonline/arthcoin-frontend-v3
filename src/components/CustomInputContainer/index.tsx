@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
+  showBalance?: boolean;
   ILabelInfoValue?: string;
   value?: string;
   DefaultValue: string;
@@ -18,6 +19,7 @@ type props = {
   setText?: (val: string) => void;
   inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
   tagText?: string;
+  onTagTextClick?: () => void;
   dropDownValues?: string[];
   ondropDownValueChange?: (data: string) => void;
   multiIcons?: boolean;
@@ -32,6 +34,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
   const {
     ILabelValue,
     IBalanceValue,
+    showBalance = true,
     ILabelInfoValue,
     DefaultValue,
     LogoSymbol,
@@ -79,7 +82,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           {ILabelInfoValue !== '' && Redirection()}
         </ILabelLeft>
         <ILabelRight>
-          <ILabelBalance>{IBalanceValue}</ILabelBalance>
+          {showBalance && <ILabelBalance>{`Balance  ${IBalanceValue}`}</ILabelBalance>}
         </ILabelRight>
       </ILabelContainer>
       <IFieldConatiner className={`input-${Istate}`}>
@@ -101,7 +104,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
             props?.setText(event.target.value);
           }}
         />
-        {tagText !== '' && <MaxTagConatiner>{tagText}</MaxTagConatiner>}
+        {tagText !== '' && <MaxTagConatiner onClick={() => {
+          props?.setText(IBalanceValue.toString());
+        }
+        }>{tagText}</MaxTagConatiner>}
         <IFieldRightContainer
           onClick={() => {
             if (hasDropDown) setModalOpen(!modalOpen);

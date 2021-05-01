@@ -29,3 +29,4 @@ export const truncateMiddle = function (
 
   return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
 };
+
