@@ -82,7 +82,11 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
       unclaimedRewards: '12.3 MAHA'
     },
   ]
-  const [data, setData] = useState<FarmCard[]>([])
+  const [data, setData] = useState<FarmCard[]>([]);
+  const [depositValue, setDepositValue] = useState<string>('');
+  const [withdrawValue, setWithdrawValue] = useState<string>('');
+  const [claimValue, setClaimValue] = useState<string>('');
+
 
   useEffect(() => {
     if (props?.mode.name !== 'All') {
@@ -100,12 +104,14 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           ILabelValue={'How much ARTH-MAHA LP would you like to supply?'}
           IBalanceValue={''}
           ILabelInfoValue={''}
-          DefaultValue={'0.00'}
+          DefaultValue={depositValue.toString()}
           LogoSymbol={'ARTH'}
           hasDropDown={false}
           SymbolText={'ARTH-MAHA'}
-          setText={(val) => { }}
-          inputMode={'decimal'}
+          setText={(val) => {
+            setDepositValue(val);
+          }}
+          inputMode={'numeric'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
           multiIcons={true}
@@ -132,7 +138,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'red',
-                      data1: `Deposition for ${123} ARTH cancelled`,
+                      data1: `Deposition for ${depositValue} ARTH cancelled`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
@@ -150,7 +156,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'green',
-                      data1: `Depositing ${123} ARTH`,
+                      data1: `Depositing ${depositValue} ARTH`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
@@ -169,12 +175,14 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           ILabelValue={'How much ARTH-MAHA LP would you like to Withdraw?'}
           IBalanceValue={''}
           ILabelInfoValue={''}
-          DefaultValue={'0.00'}
+          DefaultValue={withdrawValue.toString()}
           LogoSymbol={'ARTH'}
           hasDropDown={false}
           SymbolText={'ARTH'}
-          setText={(val) => { }}
-          inputMode={'decimal'}
+          setText={(val) => {
+            setWithdrawValue(val)
+          }}
+          inputMode={'numeric'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
           multiIcons={true}
@@ -201,7 +209,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'red',
-                      data1: `Withdraw for ${123} ARTH cancelled`,
+                      data1: `Withdraw for ${withdrawValue} ARTH cancelled`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
@@ -219,7 +227,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'green',
-                      data1: `Withdrawing ${123} ARTH`,
+                      data1: `Withdrawing ${withdrawValue} ARTH`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
@@ -238,11 +246,13 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
           ILabelValue={'How much MAHA  would you like to claim?'}
           IBalanceValue={''}
           ILabelInfoValue={''}
-          DefaultValue={'0.00'}
+          DefaultValue={claimValue.toString()}
           LogoSymbol={'MAHA'}
           hasDropDown={false}
           SymbolText={'MAHA'}
-          setText={(val) => { }}
+          setText={(val) => {
+            setClaimValue(val);
+          }}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
@@ -268,7 +278,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'red',
-                      data1: `Claim for ${123} ARTH cancelled`,
+                      data1: `Claim for ${claimValue} ARTH cancelled`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
@@ -286,7 +296,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'green',
-                      data1: `Claiming for ${123} ARTH`,
+                      data1: `Claiming for ${claimValue} ARTH`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
