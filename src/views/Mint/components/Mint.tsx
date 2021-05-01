@@ -449,7 +449,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   onBuyColletralValueChange(val);
                 }}
                 Istate={'warning'}
-                msg={'Warning message goes here'}
+                StateMsg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} />
@@ -470,7 +470,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   onARTHXValueChange(val);
                 }}
                 Istate={'error'}
-                msg={'ERROR message goes here'}
+                StateMsg={'ERROR message goes here'}
+                DisableMsg={'Currently Collateral ratio is 100%'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} />

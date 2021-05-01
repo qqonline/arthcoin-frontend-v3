@@ -26,7 +26,8 @@ type props = {
   href?: string;
   to?: string;
   Istate?: 'default' | 'error' | 'warning';
-  msg?: string;
+  StateMsg?: string;
+  DisableMsg?:string;
 };
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
@@ -45,7 +46,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
     symbol2,
     value,
     Istate = 'default',
-    msg = '',
+    StateMsg = '',
+    DisableMsg = '',
   } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const Redirection = () => {
@@ -70,6 +72,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
   return (
     <IConatiner style={props.dontShowBackgroundContainer ? { padding: '0px', backgroundColor: 'transparent' } : {}}>
+      {DisableMsg !== '' && <TotalDisable><DMsg>{DisableMsg}</DMsg></TotalDisable>}
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -79,7 +82,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <ILabelBalance>{IBalanceValue}</ILabelBalance>
         </ILabelRight>
       </ILabelContainer>
-      <IFieldConatiner className={`input-${Istate}`}>
+      <IFieldConatiner className={DisableMsg === ''? `input-${Istate}`: ''}>
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
@@ -146,12 +149,37 @@ const CustomInputContainer: React.FC<props> = (props) => {
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
-      {msg !== '' && <p className={`input-font-${Istate}`}>{msg}</p>}
+      {StateMsg !== '' && DisableMsg === '' && <p className={`input-font-${Istate}`}>{StateMsg}</p>}
     </IConatiner>
   );
 }
 
 export default CustomInputContainer;
+
+const TotalDisable = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.16);
+  box-sizing: border-box;
+  border-radius: 12px;
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FFFFFF29;
+`;
+
+const DMsg = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+`
 const HrefLink = styled.a`
   z-index: 1;
 `
@@ -171,6 +199,7 @@ const IConatiner = styled.div`
   background: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 12px;
+  position: relative;
 `;
 const ILabelContainer = styled.div`
   display: flex;
