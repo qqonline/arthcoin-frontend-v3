@@ -8,6 +8,8 @@ import { StakingContract } from '../../../basis-cash';
 import { BigNumber } from '@ethersproject/bignumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useCore from '../../../hooks/useCore';
 
 interface IProps {
   onCancel: () => void;
@@ -20,8 +22,15 @@ interface IProps {
 
 export default (props: IProps) => {
   const symbol = props.pool.depositTokenSymbols.join('-');
+  const core = useCore();
 
   const stake = useStakingDeposit(props.pool.contract, 0.1, props.pool.depositToken);
+  const contract = core.contracts[props.pool.contract];
+
+  const [approveStatus, approve] = useApprove(
+    core.tokens[props.pool.depositToken],
+    contract.address,
+  );
 
   return (
     <CustomModal
@@ -71,14 +80,23 @@ export default (props: IProps) => {
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Button
-              text={'Deposit'}
-              size={'lg'}
-              onClick={async () => {
-                stake();
-                // if (props.onDeposit) props.onDeposit();
-              }}
-            />
+            {approveStatus !== ApprovalState.APPROVED ? (
+              <Button
+                disabled={approveStatus === ApprovalState.PENDING}
+                text={approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve'}
+                size={'lg'}
+                onClick={approve}
+              />
+            ) : (
+              <Button
+                text={'Deposit'}
+                size={'lg'}
+                onClick={async () => {
+                  stake();
+                  // if (props.onDeposit) props.onDeposit();
+                }}
+              />
+            )}
           </Grid>
         </Grid>
       </div>

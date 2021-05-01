@@ -11,6 +11,8 @@ import { StakingContract } from '../../../basis-cash';
 import useModal from '../../../hooks/useModal';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
+import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
 
 interface IProps {
   mode?: ModeProps;
@@ -28,6 +30,9 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const [onPresentClaimModal, onDismissClaimModal] = useModal(
     <ClaimModal isMobile={isMobile} onCancel={() => onDismissClaimModal()} />,
   );
+
+  const stakedBalance = useStakingBalance(pool.contract);
+  const claimableBalance = useStakingRewards(pool.contract);
 
   const [onPresentWithdrawModal, onDismissWithdrawModal] = useModal(
     <WithdrawModal
@@ -52,6 +57,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       {!isMobile ? (
         <DesktopRowCard
           pool={pool}
+          claimableBalance={claimableBalance}
+          stakedBalance={stakedBalance}
           onDepositClick={onPresentDepositModal}
           onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}

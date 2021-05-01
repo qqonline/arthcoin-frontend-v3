@@ -12,6 +12,9 @@ export default function (stakingContract: string, amount: number, depositToken: 
     const contract = core.contracts[stakingContract]
 
     const decmals = BigNumber.from(10).pow(15)
+
+    console.log(contract.address, BigNumber.from(Math.floor(amount * 1000)).mul(decmals).toString())
+    console.log(await contract.stakingToken())
     const response = await contract.stake(BigNumber.from(Math.floor(amount * 1000)).mul(decmals))
     addTransaction(response, {
       summary: `Stake ${amount} ${depositToken}`

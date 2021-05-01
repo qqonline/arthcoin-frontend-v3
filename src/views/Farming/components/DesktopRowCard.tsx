@@ -9,9 +9,13 @@ import { StakingContract } from '../../../basis-cash';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import { useWallet } from 'use-wallet';
+import { BigNumber } from '@ethersproject/bignumber';
 
 type IProps = {
   pool: StakingContract;
+  stakedBalance: BigNumber;
+  claimableBalance: BigNumber;
   // pair: [string, string];
   // deposited?: boolean;
   // walletValue: string;
@@ -29,6 +33,7 @@ type IProps = {
 
 export default (props: IProps) => {
   const core = useCore();
+  const { account, connect } = useWallet();
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
 
@@ -39,6 +44,8 @@ export default (props: IProps) => {
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
   const tokenBalance = useTokenBalance(depositTokenContract);
+
+  const isWalletConnected = !!account;
 
   return (
     <CustomCardGrid>
@@ -97,29 +104,32 @@ export default (props: IProps) => {
           </DayText> */}
         </Grid>
         <Grid item lg={2}>
-          <Button text="Deposit" size={'sm'} onClick={props.onDepositClick} />
+          {!isWalletConnected ? (
+            <Button text={'Connect Wallet'} size={'lg'} onClick={() => connect('injected')} />
+          ) : (
+            <Button text="Deposit" size={'sm'} onClick={props.onDepositClick} />
+          )}
         </Grid>
       </Grid>
-      {/* {props.deposited && <DepositInfoContainer>
-        <div style={{ display: 'flex' }}>
-          Your Locked state:
-          <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props?.lockedStake}
-          </TableMainTextStyle>
-          <WithdrawClaimButton onClick={() => props.onButtonClick('Withdraw')}>
-            Withdraw
-          </WithdrawClaimButton>
-        </div>
-        <div style={{ display: 'flex' }}>
-          Earned:
-          <TableMainTextStyle style={{ marginLeft: '10px' }}>
-            {props?.earned || '0.0 MAHA'}
-          </TableMainTextStyle>
-          <WithdrawClaimButton onClick={() => props.onButtonClick('Claim')}>
-            Claim MAHA
-          </WithdrawClaimButton>
-        </div>
-      </DepositInfoContainer>} */}
+      {props.stakedBalance.gt(0) && (
+        <DepositInfoContainer>
+          <div style={{ display: 'flex' }}>
+            Your Locked state:
+            <TableMainTextStyle style={{ marginLeft: '10px' }}>
+              {getDisplayBalance(props.stakedBalance)}
+            </TableMainTextStyle>
+            <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
+          </div>
+          <div style={{ display: 'flex' }}>
+            Earned:
+            <TableMainTextStyle style={{ marginLeft: '10px' }}>
+              {getDisplayBalance(props.claimableBalance)} ARTHX
+              {/* {props?.earned || '0.0 MAHA'} */}
+            </TableMainTextStyle>
+            <WithdrawClaimButton onClick={props.onClaimClick}>Claim MAHA</WithdrawClaimButton>
+          </div>
+        </DepositInfoContainer>
+      )}
     </CustomCardGrid>
   );
 };
