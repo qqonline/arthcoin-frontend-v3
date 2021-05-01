@@ -17,6 +17,7 @@ import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -42,7 +43,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceive('0')
       setRedeemAmount('0');
     }
-    setRedeemReceiveARTHX(val);
+    let check = ValidateNumber(val)
+    setRedeemReceiveARTHX(check ? val : String(Number(val)));
+    if (!check) return
     const valueInNumber = Number(val);
     if (valueInNumber) {
       let arthxShareTemp =
@@ -57,7 +60,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceiveARTHX('0');
       setRedeemAmount('0')
     }
-    setRedeemReceive(val);
+    let check = ValidateNumber(val)
+    setRedeemReceive(check ? val : String(Number(val)));
+    if (!check) return
     const valueInNumber = Number(val);
     if (valueInNumber) {
       let colletralTemp =
@@ -73,7 +78,10 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setRedeemReceiveARTHX('0');
       setRedeemReceive('0');
     }
-    setRedeemAmount(val);
+    let check = ValidateNumber(val)
+    setRedeemAmount(check ? val : String(Number(val)));
+    if (!check) return
+
     const valueInNumber = Number(val);
     if (valueInNumber) {
       setRedeemReceiveARTHX(String(valueInNumber * (colletralRatio / 100)));

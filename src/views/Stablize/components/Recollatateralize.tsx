@@ -13,6 +13,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 type Iprops = {
   onChange: () => void;
@@ -46,7 +47,9 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveMAHA('0');
       setReceiveBonus('0');
     }
-    setCollateralAmount(val);
+    let check = ValidateNumber(val)
+    setCollateralAmount(check ? val : String(Number(val)));
+    if (!check) return
     const valInNumber = Number(val);
     if (valInNumber){
       setReceiveBonus(String(valInNumber * bonusRatio));

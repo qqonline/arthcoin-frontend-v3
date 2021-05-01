@@ -5,10 +5,11 @@ import useBasisCash from '../../hooks/useBasisCash';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import MintTabContent from './components/Mint'
 import RedeemTabContent from './components/Redeem'
-import {useParams} from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 const Boardrooms = (props: WithSnackbarProps) => {
-  const {paramType} = useParams()
+  // @ts-ignore
+  const { paramType } = useParams()
   useEffect(() => window.scrollTo(0, 0), []);
   const basisCash = useBasisCash();
   const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint')
@@ -21,7 +22,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       <GradientDiv />
       <Container size="lg">
         {type === 'mint' && <MintTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />}
-        {type === 'redeem' && <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)}/>}
+        {type === 'redeem' && <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />}
         {/* </LeftTopCard> */}
       </Container>
     </>
