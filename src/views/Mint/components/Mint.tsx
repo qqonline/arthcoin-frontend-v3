@@ -26,6 +26,7 @@ import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 
 const OrangeCheckBox = withStyles({
@@ -145,7 +146,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxShare('0')
       setReceive('0');
     }
-    setCollateralValue(val);
+    let check = ValidateNumber(val)
+    setCollateralValue(check ? val : String(Number(val)));
+    if (!check) return
     const valueInNumber = Number(val);
     if (valueInNumber) {
       let arthxShareTemp =
@@ -161,7 +164,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setReceive('0');
       setCollateralValue('0')
     }
-    setArthxShare(val);
+    let check = ValidateNumber(val)
+    setArthxShare(check ? val : String(Number(val)));
+    if (!check) return
     const valueInNumber = Number(val);
     if (valueInNumber) {
       let colletralTemp =
@@ -177,7 +182,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxShare('0');
       setCollateralValue('0');
     }
-    setReceive(val);
+    let check = ValidateNumber(val)
+    setReceive(check ? val : String(Number(val)));
+    if (!check) return
     const valueInNumber = Number(val);
     if (valueInNumber) {
       setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
@@ -232,7 +239,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -270,9 +277,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           {checked && (
             <StakingDiv>
               <div>
-                <OneLineInput style={{margin: '0px'}}>
+                <OneLineInput style={{ margin: '0px' }}>
                   <div>
-                    <InputLabel style={{marginTop: '12px'}}>Select how long would you like to stake</InputLabel>
+                    <InputLabel style={{ marginTop: '12px' }}>Select how long would you like to stake</InputLabel>
                   </div>
                   <InputNoDisplay>
                     <InternalSpan>{sliderValue} months</InternalSpan>
@@ -339,9 +346,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 cEnd={9999}
                 cDuration={calcDuration}
                 cStart={currentCounter}
-                // updateCounter={(val: number)=>{
-                //   setCurrentCounter(val)
-                // }}
+              // updateCounter={(val: number)=>{
+              //   setCurrentCounter(val)
+              // }}
               />
 
               <TransparentInfoDiv
@@ -419,14 +426,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <div style={{display: 'flex'}}>
+              <div style={{ display: 'flex' }}>
                 <TabContainer onClick={() => props.setType('mint')}>
                   <ActiveTab />
                   <TabTextActive>Mint</TabTextActive>
                 </TabContainer>
                 <TabContainer onClick={() => props.setType('redeem')}>
-                <TabText>Redeem</TabText>
-              </TabContainer>
+                  <TabText>Redeem</TabText>
+                </TabContainer>
               </div>
               <SlippageContainer defaultRate={selectedRate} onRateChange={(data) => {
                 console.log('rates', data);
@@ -507,7 +514,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
-                <div style={{marginTop: '32px'}}>
+                <div style={{ marginTop: '32px' }}>
                   <Button
                     text={'Mint'}
                     size={'lg'}

@@ -32,6 +32,7 @@ import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import { Link } from 'react-router-dom';
 import CustomToolTip from '../../components/CustomTooltip';
 import SlippageContainer from '../../components/SlippageContainer';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -411,7 +412,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(String(val));
+                      setCollateralValue(ValidateNumber(val) ? val : String(Number(val)));
                     }}
                   />
                 ) : (
@@ -426,7 +427,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(String(val));
+                      setArthValue(ValidateNumber(val) ? val : String(Number(val)));
                     }}
                   />
                 )}

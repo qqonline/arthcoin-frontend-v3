@@ -14,6 +14,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
 import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 type Iprops = {
   onChange: () => void;
@@ -43,7 +44,9 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     if (val === ''){
       setReceiveAmount('0');
     }
-    setRedeemAmount(val);
+    let check = ValidateNumber(val)
+    setRedeemAmount(check ? val : String(Number(val)));
+    if (!check) return
     const valInNumber = Number(val);
     if (valInNumber){
       const temp = String(valInNumber * ratio);

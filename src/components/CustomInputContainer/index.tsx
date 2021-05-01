@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { CSSProperties, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
@@ -5,6 +6,7 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
+import { correctString } from './RegexValidation';
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
@@ -27,7 +29,7 @@ type props = {
   to?: string;
   Istate?: 'default' | 'error' | 'warning';
   StateMsg?: string;
-  DisableMsg?:string;
+  DisableMsg?: string;
 };
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
@@ -96,11 +98,11 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <ILabelBalance>{IBalanceValue}</ILabelBalance>
         </ILabelRight>
       </ILabelContainer>
-      <IFieldConatiner className={DisableMsg === ''? `input-${Istate}`: ''}>
+      <IFieldConatiner className={DisableMsg === '' ? `input-${Istate}` : ''}>
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
-          defaultValue={DefaultValue ? DefaultValue : 0}
+          defaultValue={DefaultValue}
           value={DefaultValue}
           inputProps={{ 'aria-label': 'naked' }}
           style={{
@@ -110,8 +112,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             fontFamily: 'Inter !important',
           }}
           type={'number'}
-          onChange={(event) => {
-            props?.setText(event.target.value);
+          onInput={(event) => {
+            props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
           }}
         />
         {tagText !== '' && <MaxTagConatiner>{tagText}</MaxTagConatiner>}
