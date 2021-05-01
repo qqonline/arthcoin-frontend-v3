@@ -278,6 +278,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
                 setText={onARTHValueChange}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
@@ -293,6 +294,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={setSelectedReceiveRedeemCoin}
                 SymbolText={selectedCollateral}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -306,6 +308,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 setText={onARTHXValueChange}
+                tagText={'MAX'}
               />
               <div>
                 <OneLineInputwomargin>

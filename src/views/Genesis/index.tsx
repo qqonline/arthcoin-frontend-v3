@@ -389,7 +389,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={`Balance ${balance}`}
+                    IBalanceValue={`${balance}`}
                     ILabelInfoValue={''}
                     // value={mintColl.toString()}
                     DefaultValue={mintColl.toString()}
@@ -402,6 +402,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     setText={(val: string) => {
                       setCollateralValue(String(val));
                     }}
+                    tagText={'MAX'}
                   />
                 ) : (
                   <CustomInputContainer

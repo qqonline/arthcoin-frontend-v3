@@ -507,6 +507,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
+                tagText={'MAX'}
                 // Istate={'warning'}
                 // msg={'Warning message goes here'}
               />
@@ -529,6 +530,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
+                tagText={'MAX'}
                 // Istate={'error'}
                 // msg={'ERROR message goes here'}
               />
@@ -547,6 +549,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
+                tagText={'MAX'}
               />
               <div>
                 <TcContainer>

@@ -117,6 +117,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               onColleteralChange(val);
             }}
             inputMode={'decimal'}
+            tagText={'MAX'}
           />
 
           <PlusMinusArrow>

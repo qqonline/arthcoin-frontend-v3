@@ -96,6 +96,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => onRedeemValueChange(val)}
+            tagText={'MAX'}
           />
           <PlusMinusArrow>
             <img src={arrowDown} alt="arrow" />
