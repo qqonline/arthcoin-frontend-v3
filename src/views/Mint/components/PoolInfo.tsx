@@ -6,24 +6,20 @@ import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
-import useCore from '../../../hooks/useCore';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 
 interface IProps {
   selectedCollateralCoin: string;
 }
 
 export default ({ selectedCollateralCoin }: IProps) => {
-  const core = useCore();
-
   const mintCR = useMintCollateralRatio();
   const redeemCR = useRedeemCollateralRatio();
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
 
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
-  const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
+  const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
 
   // console.log(poolBalance.toString());
 
@@ -35,9 +31,17 @@ export default ({ selectedCollateralCoin }: IProps) => {
         <div style={{ marginBottom: '12px' }}>
           <OneLineInput>
             <div style={{ flex: 1 }}>
-              <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
+              <TextForInfoTitle>ARTHX GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6, 6)}</InputLabelSpanRight>
+            <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6)}</InputLabelSpanRight>
+          </OneLineInput>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <OneLineInput>
+            <div style={{ flex: 1 }}>
+              <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
+            </div>
+            <InputLabelSpanRight>${getDisplayBalance(collatearlPrice, 18)}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -67,7 +71,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Pool Balance</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(poolBalance, 18)}</InputLabelSpanRight>
+            <InputLabelSpanRight>{getDisplayBalance(poolBalance, 6)}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         {/* <div style={{ marginBottom: '12px' }}>

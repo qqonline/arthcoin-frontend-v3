@@ -32,6 +32,8 @@ import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
 import useCore from '../../hooks/useCore';
 import CustomToolTip from '../../components/CustomTooltip';
+import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
+import { getDisplayBalance } from '../../utils/formatBalance';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -189,7 +191,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
-  const [timerHeader, setHeader] = useState<boolean>(true);
+  const [timerHeader, setHeader] = useState<boolean>(false);
 
   useEffect(() => {
     const onClick = () => {
@@ -212,6 +214,8 @@ const Genesis = (props: WithSnackbarProps) => {
     'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral',
     'The discount decreases over time as more collateral is committed.',
   ];
+
+  const committedCollateral = useGlobalCollateralValue();
 
   return (
     <>
@@ -304,9 +308,9 @@ const Genesis = (props: WithSnackbarProps) => {
         {!timerHeader ? (
           <PageSubHeading>
             <div style={{}}>
-              <BorderLinearProgress variant="determinate" value={73} />
+              <BorderLinearProgress variant="determinate" value={0} />
             </div>
-            <HeaderSpan>73% Completed</HeaderSpan>
+            <HeaderSpan>0% Completed</HeaderSpan>
           </PageSubHeading>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -343,14 +347,14 @@ const Genesis = (props: WithSnackbarProps) => {
                     Amount Remaining to Raise
                     <CustomToolTip />
                   </TextForInfoTitle>
-                  <BeforeChipDark>54.76M</BeforeChipDark>
+                  <BeforeChipDark>21M</BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
                     <CustomToolTip />
                   </TextForInfoTitle>
-                  <BeforeChipDark>157.89M</BeforeChipDark>
+                  <BeforeChipDark>{getDisplayBalance(committedCollateral)}</BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
             </CustomInfoCard>
@@ -362,7 +366,11 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Commit' && <ActiveTab />}
-                  {type !== 'Commit' ? <TabText>Commit Collateral</TabText> : <TabTextActive>Commit Collateral</TabTextActive>}
+                  {type !== 'Commit' ? (
+                    <TabText>Commit Collateral</TabText>
+                  ) : (
+                    <TabTextActive>Commit Collateral</TabTextActive>
+                  )}
                 </TabContainer>
                 <TabContainer
                   onClick={() => {
@@ -370,7 +378,11 @@ const Genesis = (props: WithSnackbarProps) => {
                   }}
                 >
                   {type === 'Swap' && <ActiveTab />}
-                  {type !== 'Swap' ? <TabText>Swap ARTH</TabText> : <TabTextActive>Swap ARTH</TabTextActive>}
+                  {type !== 'Swap' ? (
+                    <TabText>Swap ARTH</TabText>
+                  ) : (
+                    <TabTextActive>Swap ARTH</TabTextActive>
+                  )}
                 </TabContainer>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
@@ -428,9 +440,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   </ReceiveContainer>
                 </div>
                 <Button
-                  text={
-                    type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'
-                  }
+                  text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                   size={'lg'}
                   variant={'default'}
                   disabled={false}
@@ -579,7 +589,7 @@ const OneLineInputwomargin = styled.div`
 `;
 
 const LeftTopCard = styled.div`
-  @media(max-width: 600px) {
+  @media (max-width: 600px) {
     margin-bottom: 8px;
   }
 `;
@@ -620,7 +630,6 @@ const TabTextActive = styled.span`
   text-align: center;
   color: rgba(255, 255, 255, 0.88);
 `;
-
 
 const ActiveTab = styled.div`
   position: absolute;
