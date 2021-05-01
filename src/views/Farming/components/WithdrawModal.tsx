@@ -5,14 +5,15 @@ import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import { ModeProps } from '../index';
 import { StakingContract } from '../../../basis-cash';
+import { BigNumber } from '@ethersproject/bignumber';
 
 interface IProps {
   mode?: ModeProps;
-  // cardData: StakingContract
-
-  onCancel: () => void
-  onWithdraw?: () => void
-  isMobile: boolean
+  tokenBalance: BigNumber;
+  pool: StakingContract;
+  onCancel: () => void;
+  onWithdraw?: () => void;
+  isMobile: boolean;
 }
 
 export default (props: IProps) => {
@@ -26,13 +27,12 @@ export default (props: IProps) => {
         LogoSymbol={'ARTH'}
         hasDropDown={false}
         SymbolText={'ARTH'}
-        setText={(val) => { }}
+        setText={(val) => {}}
         inputMode={'decimal'}
         tagText={'MAX'}
         dontShowBackgroundContainer={true}
         multiIcons={true}
-        symbol1={'ARTH'}
-        symbol2={'MAHA'}
+        symbols={props.pool.depositTokenSymbols}
       />
       <OneLine>
         <div style={{ flex: 1 }}></div>
@@ -41,26 +41,22 @@ export default (props: IProps) => {
           <TagChips>ARTH-MAHA-LP</TagChips>
         </OneLine>
       </OneLine>
-      <Grid container spacing={2} direction={props.isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+      <Grid
+        container
+        spacing={2}
+        direction={props.isMobile ? 'column-reverse' : 'row'}
+        style={{ marginTop: '32px' }}
+      >
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button
-            variant={'transparent'}
-            text="Cancel"
-            size={'lg'}
-            onClick={props.onCancel}
-          />
+          <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button
-            text={'Withdraw'}
-            size={'lg'}
-            onClick={props.onWithdraw}
-          />
+          <Button text={'Withdraw'} size={'lg'} onClick={props.onWithdraw} />
         </Grid>
       </Grid>
     </div>
   );
-}
+};
 
 const OneLine = styled.div`
   display: flex;

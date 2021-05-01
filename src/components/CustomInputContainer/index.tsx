@@ -21,8 +21,7 @@ type props = {
   dropDownValues?: string[];
   ondropDownValueChange?: (data: string) => void;
   multiIcons?: boolean;
-  symbol1?: string;
-  symbol2?: string;
+  symbols?: string[];
   dontShowBackgroundContainer?: boolean;
   href?: string;
   to?: string;
@@ -42,8 +41,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     dropDownValues,
     ondropDownValueChange,
     multiIcons = false,
-    symbol1,
-    symbol2,
+    symbols,
     disabled,
     Istate = 'default',
     msg = '',
@@ -65,10 +63,16 @@ const CustomInputContainer: React.FC<props> = (props) => {
     } else {
       return <ILabelInfo>{ILabelInfoValue}</ILabelInfo>;
     }
-  }
+  };
 
   return (
-    <IConatiner style={props.dontShowBackgroundContainer ? { padding: '0px', backgroundColor: 'transparent' } : {}}>
+    <IConatiner
+      style={
+        props.dontShowBackgroundContainer
+          ? { padding: '0px', backgroundColor: 'transparent' }
+          : {}
+      }
+    >
       <ILabelContainer>
         <ILabelLeft>
           <ILabel>{ILabelValue}</ILabel>
@@ -114,10 +118,12 @@ const CustomInputContainer: React.FC<props> = (props) => {
             menuColor='red'
           />*/}
           <IFieldRightContainerLogo>
-            {multiIcons && symbol1 && symbol2 ? (
+            {multiIcons && symbols ? (
               <LLabel>
-                <TokenSymbol symbol={symbol1} size={25} style={{ zIndex: 2 }} />
-                <TokenSymbol symbol={symbol2} size={25} style={{ zIndex: 1, marginLeft: -5 }} />
+                {symbols.map((s) => (
+                  <TokenSymbol key={s} symbol={s} size={25} style={{ zIndex: 2 }} />
+                ))}
+                {/* <TokenSymbol symbol={symbol2} size={25} style={{ zIndex: 1, marginLeft: -5 }} /> */}
                 {/* <LPairLabel>{liquidityPair.pairName}</LPairLabel> */}
               </LLabel>
             ) : (
@@ -149,7 +155,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
       {msg !== '' && <p className={`input-font-${Istate}`}>{msg}</p>}
     </IConatiner>
   );
-}
+};
 
 export default CustomInputContainer;
 const HrefLink = styled.a`

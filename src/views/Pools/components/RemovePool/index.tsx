@@ -231,8 +231,8 @@ const RemovePool = (props: props & WithSnackbarProps) => {
           LogoSymbol={firstCoin}
           hasDropDown={false}
           multiIcons
-          symbol1={selectedPair?.liquidity?.symbol1}
-          symbol2={selectedPair?.liquidity?.symbol2}
+          // symbol1={selectedPair?.liquidity?.symbol1}
+          // symbol2={selectedPair?.liquidity?.symbol2}
           // dropDownValues={firstCoinDropDown}
           // ondropDownValueChange={(data) => {
           //   if (data !== secondCoin) {

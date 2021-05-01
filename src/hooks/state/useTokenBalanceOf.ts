@@ -9,9 +9,7 @@ const useTokenBalanceOf = (token: ERC20, address: string) => {
   const core = useCore();
 
   const fetchBalance = useCallback(async () => {
-    console.log(token)
     const bal = await token.balanceOf(address);
-    console.log(`balance of ${address} for ${token.address} is ${bal.toString()}`);
     setBalance(bal);
   }, [address, token]);
 

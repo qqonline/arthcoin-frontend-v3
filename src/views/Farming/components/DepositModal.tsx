@@ -4,15 +4,25 @@ import styled from 'styled-components';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
-
+import { StakingContract } from '../../../basis-cash';
+import { BigNumber } from '@ethersproject/bignumber';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
 
 interface IProps {
-  onCancel: () => void
-  onDeposit?: () => void
-  isMobile: boolean
+  onCancel: () => void;
+  onDeposit?: () => void;
+  isMobile: boolean;
+
+  tokenBalance: BigNumber;
+  pool: StakingContract;
 }
 
 export default (props: IProps) => {
+  const symbol = props.pool.depositTokenSymbols.join('-');
+
+  const stake = useStakingDeposit(props.pool.contract, 0.1, props.pool.depositToken);
+
   return (
     <CustomModal
       closeButton
@@ -21,33 +31,37 @@ export default (props: IProps) => {
       modalTitleStyle={{}}
       modalContainerStyle={{}}
       modalBodyStyle={{}}
-      title={`Deposit ARTH-MAHA LP`}
+      title={`Stake Your Tokens`}
     >
       <div>
         <CustomInputContainer
-          ILabelValue={'How much ARTH-MAHA LP would you like to supply?'}
+          ILabelValue={`How much ${symbol} would you like to supply?`}
           IBalanceValue={''}
           ILabelInfoValue={''}
           DefaultValue={'0.00'}
           LogoSymbol={'ARTH'}
           hasDropDown={false}
-          SymbolText={'ARTH-MAHA'}
-          setText={(val) => { }}
+          SymbolText={symbol}
+          setText={(val) => {}}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
           multiIcons={true}
-          symbol1={'ARTH'}
-          symbol2={'MAHA'}
+          symbols={props.pool.depositTokenSymbols}
         />
         <OneLine>
           <div style={{ flex: 1 }}></div>
           <OneLine>
-            <BeforeChip>Balance: 1000.00</BeforeChip>
-            <TagChips>ARTH / ETH</TagChips>
+            <BeforeChip>Balance: {getDisplayBalance(props.tokenBalance)}</BeforeChip>
+            <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
-        <Grid container spacing={2} direction={props.isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+        <Grid
+          container
+          spacing={2}
+          direction={props.isMobile ? 'column-reverse' : 'row'}
+          style={{ marginTop: '32px' }}
+        >
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               variant={'transparent'}
@@ -60,7 +74,10 @@ export default (props: IProps) => {
             <Button
               text={'Deposit'}
               size={'lg'}
-              onClick={props.onDeposit}
+              onClick={async () => {
+                stake();
+                // if (props.onDeposit) props.onDeposit();
+              }}
             />
           </Grid>
         </Grid>
@@ -68,7 +85,6 @@ export default (props: IProps) => {
     </CustomModal>
   );
 };
-
 
 const OneLine = styled.div`
   display: flex;
