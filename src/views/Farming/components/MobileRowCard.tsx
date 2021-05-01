@@ -11,10 +11,10 @@ import farmingSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
 
 interface IProps {
-  pool: StakingContract
-  onDepositClick: () => void
-  onWithdrawClick: () => void
-  onClaimClick: () => void
+  pool: StakingContract;
+  onDepositClick: () => void;
+  onWithdrawClick: () => void;
+  onClaimClick: () => void;
 }
 
 export default (props: IProps) => {
@@ -50,7 +50,11 @@ export default (props: IProps) => {
                 }}
               >
                 <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-                  <TokenSymbol symbol={props.pool.depositTokens[0]} size={44} style={{}} />
+                  <TokenSymbol
+                    symbol={props.pool.depositTokenSymbols[0]}
+                    size={44}
+                    style={{}}
+                  />
                 </div>
                 <div
                   style={{
@@ -61,11 +65,15 @@ export default (props: IProps) => {
                     borderRadius: 36,
                   }}
                 >
-                  <TokenSymbol symbol={props.pool.depositTokens[1]} size={44} style={{}} />
+                  <TokenSymbol
+                    symbol={props.pool.depositTokenSymbols[1]}
+                    size={44}
+                    style={{}}
+                  />
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
-                <StyledTitle>{props.pool.depositTokens.join('-')}</StyledTitle>
+                <StyledTitle>{props.pool.depositTokenSymbols.join('-')}</StyledTitle>
                 <StyledSubTitle>Add Liquidity</StyledSubTitle>
               </div>
             </CardHeaderDiv>
@@ -85,9 +93,7 @@ export default (props: IProps) => {
                   <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <MainSpan>
-                    {/* {props?.walletValue} {props?.walletUnit} */}
-                  </MainSpan>
+                  <MainSpan>{/* {props?.walletValue} {props?.walletUnit} */}</MainSpan>
                   {/* <SecondSpan>{'100'}</SecondSpan> */}
                 </div>
               </Grid>
@@ -109,11 +115,7 @@ export default (props: IProps) => {
             </Grid>
             <ButtonContainer>
               <div style={{ marginTop: 15 }}>
-                <Button
-                  size={'sm'}
-                  text={'Deposit'}
-                  onClick={props.onDepositClick}
-                />
+                <Button size={'sm'} text={'Deposit'} onClick={props.onDepositClick} />
               </div>
             </ButtonContainer>
           </StyledContent>
@@ -132,11 +134,7 @@ export default (props: IProps) => {
                 <InfoDivLeftSpan>Your Locked stake:</InfoDivLeftSpan>
                 {/* <InfoDivRightSpan>{props?.lockedStake}</InfoDivRightSpan> */}
               </div>
-              <Withdraw
-                onClick={props.onWithdrawClick}
-              >
-                Withdraw
-              </Withdraw>
+              <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
             </InfoDiv>
             <InfoDiv>
               <div
@@ -150,9 +148,7 @@ export default (props: IProps) => {
                 <InfoDivLeftSpan>Earned:</InfoDivLeftSpan>
                 {/* <InfoDivRightSpan>{props?.earned}</InfoDivRightSpan> */}
               </div>
-              <Withdraw onClick={props.onClaimClick}>
-                Claim MAHA
-              </Withdraw>
+              <Withdraw onClick={props.onClaimClick}>Claim MAHA</Withdraw>
             </InfoDiv>
           </OpenableDiv>
         ) : (
@@ -162,7 +158,6 @@ export default (props: IProps) => {
     </StyledCardWrapper>
   );
 };
-
 
 const DescriptionDiv = styled.div`
   font-family: Inter;

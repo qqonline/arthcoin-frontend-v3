@@ -30,6 +30,11 @@ export class BasisCash {
   WBTC: ERC20;
   WETH: ERC20;
 
+  ArthWethLP: ERC20;
+  MahaWethLP: ERC20;
+  ArthxWethLP: ERC20;
+  ArthMahaLP: ERC20;
+
   tokens: {
     [name: string]: ERC20;
   };
@@ -59,6 +64,12 @@ export class BasisCash {
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 
+    this.ArthMahaLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'ARTH-MAHA LP');
+    this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
+    this.ArthxWethLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-ETH LP');
+    this.ArthWethLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-ETH LP');
+
+
     this.tokens = {
       ARTH: this.ARTH,
       ARTHX: this.ARTHX,
@@ -68,8 +79,15 @@ export class BasisCash {
       USDC: this.USDC,
       WBTC: this.WBTC,
       WETH: this.WETH,
+
+      ArthMahaLP: this.ArthMahaLP,
+      MahaWethLP: this.MahaWethLP,
+      ArthxWethLP: this.ArthxWethLP,
+      ArthWethLP: this.ArthWethLP,
     };
-    // Uniswap V2 Pair
+
+    console.log(this.tokens)
+
 
     // this.arthDai = new UniswapPair(
     //   deployments.ArthDaiMLP.address,
@@ -115,6 +133,10 @@ export class BasisCash {
       this.USDT,
       this.WBTC,
       this.USDT,
+      this.ArthMahaLP,
+      this.MahaWethLP,
+      this.ArthxWethLP,
+      this.ArthWethLP,
     ];
 
     for (const token of tokens) {

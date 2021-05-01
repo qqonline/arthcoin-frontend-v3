@@ -19,7 +19,8 @@ export interface StakingContract {
   contract: ContractName;
   kind: 'linear' | 'vested';
   depositTokenKind: 'single' | 'uniswap-v2-lp' | 'sushiswap-v2-lp';
-  depositTokens: string[];
+  depositTokenSymbols: string[];
+  depositToken: string
   earnTokenName: ContractName;
   sort: number;
   finished: boolean;
