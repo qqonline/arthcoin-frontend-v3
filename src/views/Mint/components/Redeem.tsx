@@ -270,7 +270,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
@@ -278,13 +278,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
                 setText={onARTHValueChange}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
+                IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
                 // ILabelInfoValue={'How can i get it?'}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateral}
@@ -293,19 +294,21 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={setSelectedReceiveRedeemCoin}
                 SymbolText={selectedCollateral}
+                tagText={'MAX'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={''}
                 DefaultValue={arthxValue.toString()}
                 LogoSymbol={'ARTHX'}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 setText={onARTHXValueChange}
+                tagText={'MAX'}
               />
               <div>
                 <OneLineInputwomargin>

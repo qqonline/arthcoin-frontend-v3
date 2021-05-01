@@ -88,7 +88,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Amount'}
-            IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
+            IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
             ILabelInfoValue={''}
             DefaultValue={redeemAmount.toString()}
             hasDropDown={false}
@@ -96,6 +96,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             SymbolText={'ARTHX'}
             inputMode={'decimal'}
             setText={(val: string) => onRedeemValueChange(val)}
+            tagText={'MAX'}
           />
           <PlusMinusArrow>
             <img src={arrowDown} alt="arrow" />

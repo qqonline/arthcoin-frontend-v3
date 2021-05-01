@@ -41,7 +41,8 @@ export default (props: IProps) => {
     >
       <CustomInputContainer
         ILabelValue={`How much ${symbol} would you like to withdraw?`}
-        IBalanceValue={''}
+        IBalanceValue={''}//just pass the balance here
+        showBalance={false}
         ILabelInfoValue={''}
         DefaultValue={String(val)}
         LogoSymbol={'ARTH'}

@@ -31,7 +31,8 @@ export default (props: IProps) => {
       >
         <CustomInputContainer
           ILabelValue={'How much MAHA  would you like to claim?'}
-          IBalanceValue={''}
+          IBalanceValue={''} //just pass the balance here
+          showBalance={false}
           ILabelInfoValue={''}
           DefaultValue={'0.00'}
           LogoSymbol={'MAHA'}

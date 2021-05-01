@@ -491,7 +491,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={`Balance ${getDisplayBalance(collateralBalance, 6)}`}
+                IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
                 ILabelInfoValue={''}
                 // value={mintColl.toString()}
                 disabled={mintCR.eq(0)}
@@ -507,6 +507,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
+                tagText={'MAX'}
                 // Istate={'warning'}
                 // msg={'Warning message goes here'}
               />
@@ -515,7 +516,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthxBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
                 ILabelInfoValue={'How can i get it?'}
                 disabled={mintCR.gte(1000000)}
                 href={'https://www.google.com/'}
@@ -529,6 +530,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
+                tagText={'MAX'}
                 // Istate={'error'}
                 // msg={'ERROR message goes here'}
               />
@@ -537,7 +539,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               </PlusMinusArrow>
               <CustomInputContainer
                 ILabelValue={'You will receive'}
-                IBalanceValue={`Balance ${getDisplayBalance(arthBalance)}`}
+                IBalanceValue={`${getDisplayBalance(arthBalance)}`}
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 // DefaultValue={'0'}
@@ -547,6 +549,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
+                tagText={'MAX'}
               />
               <div>
                 <TcContainer>
