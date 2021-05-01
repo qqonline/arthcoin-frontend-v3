@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import CustomInputContainer from '../../../components/CustomInputContainer';
@@ -21,10 +21,11 @@ interface IProps {
 }
 
 export default (props: IProps) => {
+  const [val, setValue] = useState<string>('0');
   const symbol = props.pool.depositTokenSymbols.join('-');
   const core = useCore();
 
-  const stake = useStakingDeposit(props.pool.contract, 0.1, props.pool.depositToken);
+  const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
   const contract = core.contracts[props.pool.contract];
 
   const [approveStatus, approve] = useApprove(
@@ -47,11 +48,14 @@ export default (props: IProps) => {
           ILabelValue={`How much ${symbol} would you like to supply?`}
           IBalanceValue={''}
           ILabelInfoValue={''}
-          DefaultValue={'0.00'}
+          DefaultValue={String(val)}
           LogoSymbol={'ARTH'}
           hasDropDown={false}
           SymbolText={symbol}
-          setText={(val) => {}}
+          setText={(t) => {
+            console.log(t);
+            setValue(String(t));
+          }}
           inputMode={'decimal'}
           tagText={'MAX'}
           dontShowBackgroundContainer={true}
