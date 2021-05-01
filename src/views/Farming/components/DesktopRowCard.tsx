@@ -104,7 +104,7 @@ export default (props: IProps) => {
           </DayText> */}
         </Grid>
         <Grid item lg={2}>
-          {!isWalletConnected ? (
+          {isWalletConnected ? (
             <Button text={'Connect Wallet'} size={'lg'} onClick={() => connect('injected')} />
           ) : (
             <Button text="Deposit" size={'sm'} onClick={props.onDepositClick} />
