@@ -22,6 +22,7 @@ const styles = (theme: Theme) =>
       top: theme.spacing(1),
       color: theme.palette.grey[500],
     },
+
   });
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {
@@ -91,6 +92,7 @@ const useStyles = makeStyles({
       height: 'auto',
       maxHeight: '70%',
       width: '100%',
+      borderRadius: '12px 12px 0px 0px !important'
     },
     customPaper: {
       alignItems: 'flex-end',

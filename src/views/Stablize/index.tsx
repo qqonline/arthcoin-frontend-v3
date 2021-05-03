@@ -10,8 +10,8 @@ import { useParams } from 'react-router-dom';
 
 export default () => {
   const core = useCore();
-  const { stabilizeType } = useParams<{ stabilizeType: string }>()
-  const [type, setType] = useState(stabilizeType || 'buyback');
+  const { stabilizeType } = useParams<{ stabilizeType: 'buyback' | 'recollateralize' }>()
+  const [type, setType] = useState<'buyback' | 'recollateralize'>(stabilizeType || 'buyback');
 
   useEffect(() => window.scrollTo(0, 0), []);
 

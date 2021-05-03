@@ -67,10 +67,10 @@ const MobileNav = (props: props) => {
           <StyledLink exact activeClassName="active" to="/stats" onClick={() => props.onClick()}>
             Analytics
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/mint" onClick={() => props.onClick()}>
+          <StyledLink exact activeClassName="active" to="/mint/mint" onClick={() => props.onClick()}>
             Mint/Redeem
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/stabilize" onClick={() => props.onClick()}>
+          <StyledLink exact activeClassName="active" to="/stabilize/buyback" onClick={() => props.onClick()}>
             Stabilize
           </StyledLink>
           <StyledLink exact activeClassName="active" to="/farming" onClick={() => props.onClick()}>
@@ -182,16 +182,15 @@ const StyledButton = styled.div`
   height: 80px;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.64);
   font-weight: 600;
-  padding-left: ${(props) => props.theme.spacing[3]}px;
-  padding-right: ${(props) => props.theme.spacing[3]}px;
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: #1e1d1d;
+  padding: 0 16px 0 16px;
   padding-bottom: ${(props) => props.theme.spacing[3]}px;
   &:hover {
     color: rgba(255, 255, 255, 0.64);
