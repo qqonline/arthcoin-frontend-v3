@@ -172,7 +172,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     return (
       <LeftTopCardChecked
         className={'custom-mahadao-box'}
-        style={{ height: 536 }}
+        style={{ height: 516 }}
       >
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
@@ -361,7 +361,7 @@ const LeftTopCardChecked = styled.div`
 `;
 
 const RightTopCard = styled.div`
-  height: 536px;
+  height: 516px;
   z-index: -1;
   margin-left: -5px;
   @media (max-width: 600px) {
