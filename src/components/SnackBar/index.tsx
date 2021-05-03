@@ -15,7 +15,7 @@ export interface SnackObject {
 }
 
 export const CustomSnack = (snackObject: SnackObject) => (
-  <SnackDiv style={{ width: 350 }}>
+  <SnackDiv style={{ width: 360 }}>
     <SnackHeader>
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
         <HeaderCount>{snackObject?.headerCount || '1'}</HeaderCount>
