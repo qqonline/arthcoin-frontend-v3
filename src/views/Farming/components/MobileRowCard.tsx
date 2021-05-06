@@ -9,7 +9,7 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
 import farmingSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
-import uniswap from '../../../assets/svg/uniswapLogo.svg'
+import uniswap from '../../../assets/svg/UniswapWhite.svg'
 
 interface IProps {
   pool: StakingContract;

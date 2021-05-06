@@ -11,7 +11,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
-import uniswap from '../../../assets/svg/uniswapLogo.svg'
+import uniswap from '../../../assets/svg/UniswapWhite.svg'
 
 
 type IProps = {
@@ -64,8 +64,8 @@ export default (props: IProps) => {
         )}
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
-            {props.pool.depositTokenSymbols.map((token) => (
-              <TokenSymbol symbol={token} size={45} />
+            {props.pool.depositTokenSymbols.map((token, index) => (
+              <TokenSymbol symbol={token} size={44} style={index === 1? {marginLeft: '-6px'}: {}}/>
             ))}
             {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
           </div>
@@ -87,10 +87,11 @@ export default (props: IProps) => {
         <Grid item lg={3}>
           <TableMainTextStyle>{getDisplayBalance(tokenBalance)}</TableMainTextStyle>
         </Grid>
-        <Grid item lg={1}>
+        <Grid item lg={2}>
           <TableMainTextStyle>{/* {props?.apy} */}</TableMainTextStyle>
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={2}>
+          <TableMainTextStyle>MAHA</TableMainTextStyle>
           {/* <TableMainTextStyle>
             <Countdown
               date={props?.poolEndDate || Date.now() + 550000000}
