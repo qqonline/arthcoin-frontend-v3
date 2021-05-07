@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../TokenSymbol';
@@ -30,6 +30,12 @@ type props = {
   Istate?: 'default' | 'error' | 'warning';
   msg?: string;
 };
+
+interface ICStatesInterface {
+  IState: 'default' | 'error' | 'warning';
+  IMsg: string;
+
+}
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
     ILabelValue,
@@ -49,7 +55,14 @@ const CustomInputContainer: React.FC<props> = (props) => {
     Istate = 'default',
     msg = '',
   } = props;
+  const [ICStates, setICStates] = useState<ICStatesInterface>({IState: Istate, IMsg: msg})
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    let temp = {IState: Istate, IMsg: msg}
+    setICStates(temp);
+  }, [Istate, msg])
+
   const Redirection = () => {
     if (props?.href) {
       return (
@@ -68,6 +81,24 @@ const CustomInputContainer: React.FC<props> = (props) => {
     }
   };
 
+  const checkForErrors = async (val: string) => {
+    if (Number(val) > Number(IBalanceValue)){
+       const temp: ICStatesInterface = {
+          IState: 'error',
+          IMsg: 'Amount canont be more than your balance',
+        }
+      setICStates(temp);
+      return true;
+    } else {
+      const temp: ICStatesInterface = {
+        IState: 'default',
+        IMsg: '',
+      }
+      setICStates(temp);
+      return true;
+    }
+  }
+
   return (
     <IConatiner
       style={
@@ -85,7 +116,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           {showBalance && <ILabelBalance>{`Balance  ${IBalanceValue}`}</ILabelBalance>}
         </ILabelRight>
       </ILabelContainer>
-      <IFieldConatiner className={`input-${Istate}`}>
+      <IFieldConatiner className={`input-${ICStates.IState}`}>
         <InputBase
           inputMode={props?.inputMode}
           placeholder={DefaultValue || '0'}
@@ -101,7 +132,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
           }}
           type={'number'}
           onChange={(event) => {
-            props?.setText(event.target.value);
+            const proceed = checkForErrors(event.target.value);
+            if (proceed) props?.setText(event.target.value);
           }}
         />
         {tagText !== '' && <MaxTagConatiner onClick={() => {
@@ -158,7 +190,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
-      {msg !== '' && <p className={`input-font-${Istate}`}>{msg}</p>}
+      {ICStates.IMsg !== '' && <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>}
     </IConatiner>
   );
 };
