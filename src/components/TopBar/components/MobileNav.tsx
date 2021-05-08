@@ -76,6 +76,9 @@ const MobileNav = (props: props) => {
           <StyledLink exact activeClassName="active" to="/farming" onClick={() => props.onClick()}>
             Farming
           </StyledLink>
+          <StyledLink exact activeClassName="active" to="/faucet">
+            Faucet
+          </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
           </StyledLink>*/}
