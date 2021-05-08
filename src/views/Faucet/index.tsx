@@ -69,6 +69,8 @@ const Boardrooms = () => {
     console.log(accountAddress.length)
     if (selectedTestToken !== '' && accountAddress.length > 16) {
       setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
   }, [selectedTestToken, accountAddress])
 
