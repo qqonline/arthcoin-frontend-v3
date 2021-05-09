@@ -65,8 +65,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
 
-  const collateralToGMUPrice = useARTHXOraclePrice().mul(2); // useCollateralPoolPrice(selectedCollateralCoin);
-  const arthxToGMUPrice = useARTHXOraclePrice().mul(2);
+  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  const arthxToGMUPrice = useARTHXOraclePrice();
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
