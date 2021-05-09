@@ -11,8 +11,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
-import uniswap from '../../../assets/svg/UniswapWhite.svg'
-
+import uniswap from '../../../assets/svg/UniswapWhite.svg';
 
 type IProps = {
   pool: StakingContract;
@@ -56,16 +55,15 @@ export default (props: IProps) => {
         style={{ padding: '32px 32px', position: 'relative' }}
         alignItems={'center'}
       >
-        {props.pool.platform === 'uniswap' && (
-          <CardIcon
-            src={uniswap}
-            height={32}
-          />
-        )}
+        {props.pool.platform === 'uniswap' && <CardIcon src={uniswap} height={32} />}
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
             {props.pool.depositTokenSymbols.map((token, index) => (
-              <TokenSymbol symbol={token} size={44} style={index === 1? {marginLeft: '-6px'}: {}}/>
+              <TokenSymbol
+                symbol={token}
+                size={44}
+                style={index === 1 ? { marginLeft: '-6px' } : {}}
+              />
             ))}
             {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
           </div>
@@ -91,7 +89,7 @@ export default (props: IProps) => {
           <TableMainTextStyle>{/* {props?.apy} */}</TableMainTextStyle>
         </Grid>
         <Grid item lg={2}>
-          <TableMainTextStyle>MAHA</TableMainTextStyle>
+          <TableMainTextStyle>MAHA + ARTHX</TableMainTextStyle>
           {/* <TableMainTextStyle>
             <Countdown
               date={props?.poolEndDate || Date.now() + 550000000}
@@ -107,7 +105,7 @@ export default (props: IProps) => {
           </DayText> */}
         </Grid>
         <Grid item lg={2}>
-          {isWalletConnected ? (
+          {!isWalletConnected ? (
             <Button text={'Connect Wallet'} size={'lg'} onClick={() => connect('injected')} />
           ) : (
             <Button text="Deposit" size={'sm'} onClick={props.onDepositClick} />
@@ -126,10 +124,14 @@ export default (props: IProps) => {
           <div style={{ display: 'flex' }}>
             Earned:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
+              {/* TODO: have some kind of rate added here */}
               {getDisplayBalance(props.claimableBalance)} ARTHX
-              {/* {props?.earned || '0.0 MAHA'} */}
+              {' + '}
+              {getDisplayBalance(props.claimableBalance)} MAHA
             </TableMainTextStyle>
-            <WithdrawClaimButton onClick={props.onClaimClick}>Claim MAHA</WithdrawClaimButton>
+            <WithdrawClaimButton onClick={props.onClaimClick}>
+              Claim Rewards
+            </WithdrawClaimButton>
           </div>
         </DepositInfoContainer>
       )}

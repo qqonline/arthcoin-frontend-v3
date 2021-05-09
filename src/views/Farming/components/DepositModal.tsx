@@ -25,7 +25,7 @@ export default (props: IProps) => {
   const [val, setValue] = useState<string>('0');
   const symbol = props.pool.depositTokenSymbols.join('-');
   const core = useCore();
-  const [sliderValue, setSliderValue] = useState<number>(0)
+  const [sliderValue, setSliderValue] = useState<number>(0);
   const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
   const contract = core.contracts[props.pool.contract];
 
@@ -71,11 +71,9 @@ export default (props: IProps) => {
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
-        
-        <DynamicSlider
-          onSliderChange={setSliderValue}
-        />
-        
+
+        <DynamicSlider onSliderChange={setSliderValue} />
+
         <Grid
           container
           spacing={2}
@@ -99,14 +97,7 @@ export default (props: IProps) => {
                 onClick={approve}
               />
             ) : (
-              <Button
-                text={'Deposit'}
-                size={'lg'}
-                onClick={async () => {
-                  stake();
-                  // if (props.onDeposit) props.onDeposit();
-                }}
-              />
+              <Button text={'Deposit'} size={'lg'} onClick={stake} />
             )}
           </Grid>
         </Grid>

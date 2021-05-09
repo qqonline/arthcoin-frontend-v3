@@ -52,7 +52,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [arthValue, setArthValue] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber() - 30;
+  const colletralRatio = mintCR.div(10000).toNumber() - 10;
+  const arthxRatio = mintCR.div(10000).toNumber() - 10;
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
@@ -64,8 +65,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
 
-  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  const arthxToGMUPrice = useARTHXOraclePrice();
+  const collateralToGMUPrice = useARTHXOraclePrice().mul(2); // useCollateralPoolPrice(selectedCollateralCoin);
+  const arthxToGMUPrice = useARTHXOraclePrice().mul(2);
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
@@ -106,10 +107,25 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber = Number(val);
     if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
 
-    let colletralTemp =
-      (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
-    setCollateralValue(colletralTemp.toString());
-    setArthValue(String(colletralTemp + valueInNumber));
+    const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
+      .mul(1e6)
+      .div(arthxToGMUPrice);
+    const arthxGMUValueInNumber = arthxGMUValue.toNumber();
+
+    const collateralGMUValue =
+      ((100 * arthxGMUValueInNumber) / (100 - colletralRatio)) * (colletralRatio / 100);
+
+    const finalCollateralValue = BigNumber.from(1e6)
+      .mul(Math.floor(collateralGMUValue * 1e6))
+      .div(collateralToGMUPrice);
+
+    const finalArthValue = arthxGMUValue.add(
+      finalCollateralValue.mul(collateralToGMUPrice).div(1e6),
+    );
+    // .div(arthxToGMUPrice);
+
+    setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -216,8 +232,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX'}
                 IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
-                ILabelInfoValue={'How can i get it?'}
-                disabled={mintCR.gte(1000000)}
+                ILabelInfoValue={'How can I get ARTHX?'}
+                // disabled={mintCR.gte(1000000)}
                 href={'https://www.google.com/'}
                 DefaultValue={arthxValue.toString()}
                 // ILabelInfoValue={'How can i get it?'}
