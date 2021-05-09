@@ -9,26 +9,33 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
 import farmingSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
-import uniswap from '../../../assets/svg/UniswapWhite.svg'
+import uniswap from '../../../assets/svg/UniswapWhite.svg';
 
 interface IProps {
   pool: StakingContract;
   onDepositClick: () => void;
   onWithdrawClick: () => void;
   onClaimClick: () => void;
-}
 
-export default (props: IProps) => {
   // const [open, setOpen] = useState<boolean>(props?.deposited);
   // useEffect(() => {
   //   setOpen(props?.deposited)
   // }, [props])
-  // const logos = [bank.earnTokenName];
-  // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
-  // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
-  // else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
-  // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');
-  // else logos.push(bank.depositTokenName);
+  // pair: [string, string];
+  // walletValue: string;
+  // walletUnit: string;
+  // apy: string;
+  // poolDur: string;
+  // poolEndDate: number;
+  // deposited?: boolean;
+  // lockedStake?: string;
+  // earned?: string;
+  // unclaimedRewards?: string;
+  // rewards?: string;
+  onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
+}
+
+export const MobileFarm = (props: IProps) => {
   return (
     <StyledCardWrapper>
       <CardIcon>
@@ -112,7 +119,35 @@ export default (props: IProps) => {
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
                   <MainSpan>{props?.apy}</MainSpan>
                 </div>
-              </Grid> */}
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                direction={'row'}
+                justify={'space-between'}
+                style={{ display: 'flex', marginTop: 15 }}
+              >
+                <DescriptionDiv style={{ maxWidth: 100 }}>
+                  Reward
+                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                </DescriptionDiv>
+                <div style={{ flexDirection: 'column', display: 'flex' }}>
+                  {/* <Countdown
+                    date={props?.poolEndDate || Date.now() + 550000000}
+                    renderer={({ days, hours, minutes, seconds, completed }) => {
+                      return (
+                        <MainSpan>
+                          {days}d : {hours}h : {minutes}m : {seconds}s left{' '}
+                        </MainSpan>
+                      );
+                    }}
+                  /> */}
+              {/* <SecondSpan>{props?.rewards}</SecondSpan> */}
+              {/* <MainSpan>
+                    {props?.rewards}
+                  </MainSpan> */}
+              {/* </div> */}
+              {/* </Grid> */}
             </Grid>
             <ButtonContainer>
               <div style={{ marginTop: 15 }}>
@@ -146,10 +181,16 @@ export default (props: IProps) => {
                   alignSelf: 'center',
                 }}
               >
-                <InfoDivLeftSpan>Earned:</InfoDivLeftSpan>
-                {/* <InfoDivRightSpan>{props?.earned}</InfoDivRightSpan> */}
+                <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
+                {/* <InfoDivRightSpan>{props?. }</InfoDivRightSpan> */}
               </div>
-              <Withdraw onClick={props.onClaimClick}>Claim MAHA</Withdraw>
+              <Withdraw
+                onClick={() => {
+                  props.onButtonClick('Claim');
+                }}
+              >
+                Claim
+              </Withdraw>
             </InfoDiv>
           </OpenableDiv>
         ) : (
@@ -382,3 +423,5 @@ const StyledSubTitle = styled.div`
   color: #ff7f57;
   opacity: 0.88;
 `;
+
+export default MobileFarm;

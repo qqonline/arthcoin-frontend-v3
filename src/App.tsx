@@ -30,6 +30,9 @@ import Trade from './views/Trade';
 import Pools from './views/Pools';
 import { SnackbarProvider } from 'notistack';
 import Genesis from './views/Genesis';
+import BuyBack from './views/Stablize/components/BuyBack';
+import Recollatateralize from './views/Stablize/components/Recollatateralize';
+import TemporaryTrade from './views/Temporary Trade';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -80,7 +83,7 @@ const App: React.FC = () => {
           </Route>
           <Route path="/trade">
             <Page>
-              <Trade />
+              <TemporaryTrade />
             </Page>
           </Route>
           <Route path="/pools">

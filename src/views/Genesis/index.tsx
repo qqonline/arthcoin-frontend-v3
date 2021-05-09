@@ -34,6 +34,8 @@ import useCore from '../../hooks/useCore';
 import CustomToolTip from '../../components/CustomTooltip';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import { getDisplayBalance } from '../../utils/formatBalance';
+import SlippageContainer from '../../components/SlippageContainer';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -216,6 +218,7 @@ const Genesis = (props: WithSnackbarProps) => {
   ];
 
   const committedCollateral = useGlobalCollateralValue();
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   return (
     <>
@@ -360,30 +363,39 @@ const Genesis = (props: WithSnackbarProps) => {
             </CustomInfoCard>
             <LeftTopCard className={'custom-mahadao-container'}>
               <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-                <TabContainer
-                  onClick={() => {
-                    if (type !== 'Commit') setType('Commit');
-                  }}
-                >
-                  {type === 'Commit' && <ActiveTab />}
-                  {type !== 'Commit' ? (
-                    <TabText>Commit Collateral</TabText>
-                  ) : (
-                    <TabTextActive>Commit Collateral</TabTextActive>
-                  )}
-                </TabContainer>
-                <TabContainer
-                  onClick={() => {
-                    if (type !== 'Swap') setType('Swap');
-                  }}
-                >
-                  {type === 'Swap' && <ActiveTab />}
-                  {type !== 'Swap' ? (
-                    <TabText>Swap ARTH</TabText>
-                  ) : (
-                    <TabTextActive>Swap ARTH</TabTextActive>
-                  )}
-                </TabContainer>
+                <div style={{ display: 'flex', flex: '1' }}>
+                  <TabContainer
+                    onClick={() => {
+                      if (type !== 'Commit') setType('Commit');
+                    }}
+                  >
+                    {type === 'Commit' && <ActiveTab />}
+                    {type !== 'Commit' ? (
+                      <TabText>Commit Collateral</TabText>
+                    ) : (
+                      <TabTextActive>Commit Collateral</TabTextActive>
+                    )}
+                  </TabContainer>
+                  <TabContainer
+                    onClick={() => {
+                      if (type !== 'Swap') setType('Swap');
+                    }}
+                  >
+                    {type === 'Swap' && <ActiveTab />}
+                    {type !== 'Swap' ? (
+                      <TabText>Swap ARTH for ARTH</TabText>
+                    ) : (
+                      <TabTextActive>Swap ARTH for ARTH</TabTextActive>
+                    )}
+                  </TabContainer>
+                  <SlippageContainer
+                    defaultRate={selectedRate}
+                    onRateChange={(data) => {
+                      console.log('rates', data);
+                      setSelectedRate(data);
+                    }}
+                  />
+                </div>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>
                 {type === 'Commit' ? (
@@ -400,7 +412,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(String(val));
+                      setCollateralValue(ValidateNumber(val) ? val : String(Number(val)));
                     }}
                     tagText={'MAX'}
                   />
@@ -416,7 +428,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(String(val));
+                      setArthValue(ValidateNumber(val) ? val : String(Number(val)));
                     }}
                   />
                 )}
@@ -466,8 +478,10 @@ const Genesis = (props: WithSnackbarProps) => {
         title={'Minting ARTH successful!'}
         subTitle={'View Transaction'}
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
+        subTitleLink={'https://arthcoin.com/#/'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
+        buttonHref={'https://arthcoin.com/#/'}
       />
     </>
   );
@@ -598,6 +612,8 @@ const LeftTopCard = styled.div`
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`

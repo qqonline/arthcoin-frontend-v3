@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import MintTabContent from './components/Mint'
-import RedeemTabContent from './components/Redeem'
-import { useParams } from "react-router-dom"
+import MintTabContent from './components/Mint';
+import RedeemTabContent from './components/Redeem';
+import { useParams } from 'react-router-dom';
 
 const Boardrooms = (props: WithSnackbarProps) => {
-  const { paramType } = useParams()
+  // @ts-ignore
+  const { paramType } = useParams();
   useEffect(() => window.scrollTo(0, 0), []);
-  const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint')
+  const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint');
 
   return (
     <>
       <GradientDiv />
       <Container size="lg">
-        {type === 'mint' && <MintTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />}
-        {type === 'redeem' && <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />}
+        {type === 'mint' && (
+          <MintTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />
+        )}
+        {type === 'redeem' && (
+          <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />
+        )}
         {/* </LeftTopCard> */}
       </Container>
     </>

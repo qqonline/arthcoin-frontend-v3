@@ -19,14 +19,16 @@ import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
+import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 type Iprops = {
   onChange: () => void;
-}
+};
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
-  const { account, connect } = useWallet()
+  const { account, connect } = useWallet();
 
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
@@ -34,54 +36,63 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
 
-  const arthxBalance = useTokenBalance(core.ARTHX)
+  const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
-  const collateralPool = core.getCollatearalPool(selectedCollateral)
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const arthxPrice = useARTHXOraclePrice()
+  const arthxPrice = useARTHXOraclePrice();
 
-  const [approveStatus, approve] = useApprove(
-    core.ARTHX,
-    collateralPool.address,
-  );
+  const [approveStatus, approve] = useApprove(core.ARTHX, collateralPool.address);
 
-  const isARTHXApproved = approveStatus === ApprovalState.APPROVED
-  const isWalletConnected = !!account
-  const isARTHXApproving = approveStatus === ApprovalState.PENDING
+  const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
+  const isWalletConnected = !!account;
+  const isARTHXApproving = approveStatus === ApprovalState.PENDING;
 
   const ratio = 100;
-  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral)
+  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral);
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
-
 
   const onRedeemValueChange = (val: string) => {
     if (val === '') {
       setReceiveAmount('0');
     }
-    setRedeemAmount(val);
+    let check = ValidateNumber(val);
+    setRedeemAmount(check ? val : String(Number(val)));
+    if (!check) return;
     const valInNumber = Number(val);
     if (valInNumber) {
       const temp = String(valInNumber * ratio);
       setReceiveAmount(temp);
     }
-  }
-
+  };
 
   const buyBackContainer = () => {
     return (
       <LeftTopCard className={'custom-mahadao-container'}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
-            Buyback
-            <CustomToolTip />
+            <div>
+              Buyback
+              <CustomToolTip />
+            </div>
+            <SlippageContainer
+              defaultRate={selectedRate}
+              onRateChange={(data) => {
+                console.log('rates', data);
+                setSelectedRate(data);
+              }}
+            />
           </HeaderTitle>
           <HeaderSubtitle>
-            {getDisplayBalance(collateralToBeBoughtBack, 18, 2)} <HardChip>{selectedCollateral}</HardChip><br />
+            {getDisplayBalance(collateralToBeBoughtBack, 18, 2)}{' '}
+            <HardChip>{selectedCollateral}</HardChip>
+            <br />
             <TextForInfoTitle>To be bought back</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -128,39 +139,35 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               </OneLineInputwomargin>
             </TcContainer>
             <div style={{ marginTop: 35 }}>
-              {
-                !isWalletConnected ? (
+              {!isWalletConnected ? (
+                <Button
+                  text={'Connect Wallet'}
+                  size={'lg'}
+                  onClick={() => connect('injected')}
+                />
+              ) : (
+                <>
+                  {!isARTHXApproved && (
+                    <>
+                      <Button
+                        text={!isARTHXApproving ? `Approve ARTHX` : 'Approving...'}
+                        size={'lg'}
+                        disabled={isARTHXApproving}
+                        onClick={approve}
+                      />
+                      <br />
+                    </>
+                  )}
                   <Button
-                    text={'Connect Wallet'}
+                    text={'Buyback'}
+                    disabled={!isARTHXApproved}
                     size={'lg'}
-                    onClick={() => connect('injected')}
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
                   />
-                ) : (
-                  <>
-                    {
-                      !isARTHXApproved && (
-                        <>
-                          <Button
-                            text={!isARTHXApproving ? `Approve ARTHX` : 'Approving...'}
-                            size={'lg'}
-                            disabled={isARTHXApproving}
-                            onClick={approve}
-                          />
-                          <br />
-                        </>
-                      )
-                    }
-                    <Button
-                      text={'Buyback'}
-                      disabled={!isARTHXApproved}
-                      size={'lg'}
-                      onClick={() => {
-                        setOpenModal(true);
-                      }}
-                    />
-                  </>
-                )
-              }
+                </>
+              )}
             </div>
           </div>
         </LeftTopCardContainer>
@@ -170,20 +177,17 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   const recollatateralizeConatiner = () => {
     return (
-      <LeftTopCardChecked
-        className={'custom-mahadao-box'}
-        style={{ height: 516 }}
-      >
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: 536 }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-          <HeaderTitle>
-            Recollatateralize
+          <HeaderTitle style={{ justifyContent: 'flex-start' }}>
+            {'Recollatateralize'}
             <CustomToolTip />
           </HeaderTitle>
           <HeaderSubtitle>
-            <TextForInfoTitle>The protocol is currently fully collateralised</TextForInfoTitle>
+            <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
-        <CollaterallizeCheckmark subText={'The protocol is currently fully collateralised'} />
+        <CollaterallizeCheckmark subText={'The Protocol is currently collateralised'} />
       </LeftTopCardChecked>
     );
   };
@@ -214,7 +218,9 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6, 6)}</InputLabelSpanRight>
+                  <InputLabelSpanRight>
+                    ${getDisplayBalance(arthxPrice, 6, 6)}
+                  </InputLabelSpanRight>
                 </OneLineInput>
               </div>
             </RightTopCard>
@@ -231,7 +237,8 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         modalTitleStyle={{}}
         modalContainerStyle={{}}
         modalBodyStyle={{}}
-        title={`Confirm Buyback ARTHX`}>
+        title={`Confirm Buyback ARTHX`}
+      >
         <div>
           <TransparentInfoDiv
             labelData={`Your Share Amount`}
@@ -245,7 +252,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             rightLabelValue={'0.05'}
           />
 
-          <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px', }} />
+          <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
 
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
@@ -271,11 +278,10 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-              // onClick={handleClose}
+                // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
-
               <Button
                 text={'Buyback'}
                 size={'lg'}
@@ -310,10 +316,9 @@ const HeaderTitle = styled.div`
   font-size: 18px;
   line-height: 24px;
   color: #ffffff;
-  opacity: 0.88;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
 `;

@@ -23,6 +23,8 @@ import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPool
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import { BigNumber } from '@ethersproject/bignumber';
 import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
+import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -45,6 +47,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     core.getDefaultCollateral(),
   );
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
@@ -259,13 +262,22 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <TabContainer onClick={() => props.setType('mint')}>
-                <TabText>Mint</TabText>
-              </TabContainer>
-              <TabContainer onClick={() => props.setType('redeem')}>
-                <ActiveTab />
-                <TabTextActive>Redeem</TabTextActive>
-              </TabContainer>
+              <div style={{ display: 'flex' }}>
+                <TabContainer onClick={() => props.setType('mint')}>
+                  <TabText>Mint</TabText>
+                </TabContainer>
+                <TabContainer onClick={() => props.setType('redeem')}>
+                  <ActiveTab />
+                  <TabTextActive>Redeem</TabTextActive>
+                </TabContainer>
+              </div>
+              <SlippageContainer
+                defaultRate={selectedRate}
+                onRateChange={(data) => {
+                  console.log('rates', data);
+                  setSelectedRate(data);
+                }}
+              />
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
@@ -399,7 +411,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
         buttonText={'Checkout Staking Pools'}
         // buttonType={'default'}
-        redirectTo={'/farming'}
+        buttonHref={'/farming'}
       />
     </>
   );
@@ -419,6 +431,8 @@ const LeftTopCard = styled.div``;
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`

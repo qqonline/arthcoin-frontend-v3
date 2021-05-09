@@ -31,7 +31,7 @@ const CustomDropDownContainer = styled.div`
   position: absolute;
   top: 50px;
   right: 0px;
-  z-index: 12;
+  z-index: 13;
   background: #1f1e1e;
   border-radius: 6px;
   min-width: 125px;

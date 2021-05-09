@@ -4,8 +4,10 @@ import { useWallet } from 'use-wallet';
 import Button from '../../Button/Button';
 import AccountModal from './AccountModal';
 import walletIcon from '../../../assets/svg/wallet-24.svg';
+import CustomModal from '../../CustomModal';
+import Loader from 'react-spinners/PulseLoader';
 
-interface AccountButtonProps { }
+interface AccountButtonProps {}
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
   if (fullStr.length <= strLen) return fullStr;
@@ -29,7 +31,12 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
       {showModal && <AccountModal onClose={() => toggleModal(!showModal)} />}
       <StyledAccountButton>
         {!account ? (
-          <Button variant='transparent' onClick={() => connect('injected')} size="sm" text="Connect" />
+          <Button
+            variant="transparent"
+            onClick={() => connect('injected')}
+            size="sm"
+            text="Connect"
+          />
         ) : (
           <Button
             onClick={() => toggleModal(true)}
@@ -46,5 +53,14 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
 };
 
 const StyledAccountButton = styled.div``;
-
+const ModalSpan = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 15px 0px 0px 0px;
+`;
 export default AccountButton;

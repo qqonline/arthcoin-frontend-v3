@@ -9,13 +9,13 @@ import { Grid } from '@material-ui/core';
 import { stakingContracts } from '../../config';
 
 export interface ModeProps {
-  id: string
-  name: string
-  count: number
+  id: string;
+  name: string;
+  count: number;
 }
 
 const Banks = () => {
-  let initMode = { id: 'all', name: 'All', count: 3 }
+  let initMode = { id: 'all', name: 'All', count: 3 };
   const [mode, setMode] = useState<ModeProps>(initMode);
   let headerList: ModeProps[] = [
     {
@@ -26,17 +26,17 @@ const Banks = () => {
     {
       id: 'arth',
       name: 'ARTH Staking',
-      count: stakingContracts.filter(d => d.categories.includes('arth')).length,
+      count: stakingContracts.filter((d) => d.categories.includes('arth')).length,
     },
     {
       id: 'arthx',
       name: 'ARTHX Staking',
-      count: stakingContracts.filter(d => d.categories.includes('arthx')).length,
+      count: stakingContracts.filter((d) => d.categories.includes('arthx')).length,
     },
     {
       id: 'maha',
       name: 'MAHA Staking',
-      count: stakingContracts.filter(d => d.categories.includes('maha')).length,
+      count: stakingContracts.filter((d) => d.categories.includes('maha')).length,
     },
   ];
 
@@ -46,7 +46,7 @@ const Banks = () => {
       <PageHeader
         title="Farming"
         subtitle="Earn rewards by staking your tokens and helping the protocol grow."
-      // learnMoreLink="#"
+        // learnMoreLink="#"
       />
       <Container size="lg">
         <div style={{ position: 'relative', display: 'flex' }}>
@@ -57,9 +57,9 @@ const Banks = () => {
                   style={
                     mode.name === obj.name
                       ? {
-                        background: mode.name === obj.name ? '#423B38' : 'transparent',
-                        border: '1px solid rgba(255, 255, 255, 0.08)'
-                      }
+                          background: mode.name === obj.name ? '#423B38' : 'transparent',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                        }
                       : {}
                   }
                   key={obj?.id}

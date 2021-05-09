@@ -17,6 +17,8 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import { useWallet } from 'use-wallet';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 type Iprops = {
   onChange: () => void;
@@ -36,6 +38,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 
   const shareRatio = 2;
   const bonusRatio = 4;
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
@@ -59,7 +62,9 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveShare('0');
       setReceiveBonus('0');
     }
-    setCollateralAmount(val);
+    let check = ValidateNumber(val);
+    setCollateralAmount(check ? val : String(Number(val)));
+    if (!check) return;
     const valInNumber = Number(val);
     if (valInNumber) {
       setReceiveBonus(String(valInNumber * bonusRatio));
@@ -74,7 +79,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     return (
       <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: 519 }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-          <HeaderTitle>
+          <HeaderTitle style={{ justifyContent: 'flex-start' }}>
             Buyback
             <CustomToolTip />
           </HeaderTitle>
@@ -92,8 +97,17 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       <LeftTopCard className={'custom-mahadao-container'}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle>
-            Add Collateral
-            <CustomToolTip />
+            <div>
+              {'Add Collateral'}
+              <CustomToolTip />
+            </div>
+            <SlippageContainer
+              defaultRate={selectedRate}
+              onRateChange={(data) => {
+                console.log('rates', data);
+                setSelectedRate(data);
+              }}
+            />
           </HeaderTitle>
           <HeaderSubtitle>
             342.450K <HardChip>ARTHX</HardChip>{' '}
@@ -405,10 +419,9 @@ const HeaderTitle = styled.div`
   font-size: 18px;
   line-height: 24px;
   color: #ffffff;
-  opacity: 0.88;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
 `;

@@ -35,6 +35,8 @@ import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio'
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
+import SlippageContainer from '../../../components/SlippageContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -161,7 +163,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxValue('0');
       setArthValue('0');
     }
-    setCollateralValue(val);
+    let check = ValidateNumber(val);
+    setCollateralValue(check ? val : String(Number(val)));
+    if (!check) return;
     const valueInNumber = Number(val);
     if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
 
@@ -272,6 +276,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const mintingAmount = BigNumber.from(Math.floor(Number(arthValue) * 1e6));
     return mintingAmount.mul(mintingFee).div(1e6);
   }, [arthValue, mintingFee]);
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   return (
     <>
@@ -480,13 +485,22 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         <Grid item lg={5} md={12} sm={12} xs={12}>
           <LeftTopCard className={'custom-mahadao-container'}>
             <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <ActiveTab />
-              <TabContainer onClick={() => props.setType('mint')}>
-                <TabTextActive>Mint</TabTextActive>
-              </TabContainer>
-              <TabContainer onClick={() => props.setType('redeem')}>
-                <TabText>Redeem</TabText>
-              </TabContainer>
+              <div style={{ display: 'flex' }}>
+                <TabContainer onClick={() => props.setType('mint')}>
+                  <ActiveTab />
+                  <TabTextActive>Mint</TabTextActive>
+                </TabContainer>
+                <TabContainer onClick={() => props.setType('redeem')}>
+                  <TabText>Redeem</TabText>
+                </TabContainer>
+              </div>
+              <SlippageContainer
+                defaultRate={selectedRate}
+                onRateChange={(data) => {
+                  console.log('rates', data);
+                  setSelectedRate(data);
+                }}
+              />
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
@@ -507,9 +521,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
-                tagText={'MAX'}
-                // Istate={'warning'}
-                // msg={'Warning message goes here'}
+                Istate={'warning'}
+                // StateMsg={'Warning message goes here'}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -530,9 +543,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
-                tagText={'MAX'}
-                // Istate={'error'}
-                // msg={'ERROR message goes here'}
+                Istate={'error'}
+                // StateMsg={'ERROR message goes here'}
+                // DisableMsg={'Currently Collateral ratio is 100%'}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
@@ -637,7 +650,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         }
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        redirectTo={'/farming'}
+        buttonTo={'/farming'}
       />
     </>
   );
@@ -661,12 +674,15 @@ const LeftTopCard = styled.div``;
 const LeftTopCardHeader = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 const LeftTopCardContainer = styled.div``;
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   padding: 32px 12px;
   width: 100px;
   height: 80px;

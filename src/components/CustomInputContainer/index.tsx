@@ -34,7 +34,6 @@ type props = {
 interface ICStatesInterface {
   IState: 'default' | 'error' | 'warning';
   IMsg: string;
-
 }
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
@@ -55,13 +54,13 @@ const CustomInputContainer: React.FC<props> = (props) => {
     Istate = 'default',
     msg = '',
   } = props;
-  const [ICStates, setICStates] = useState<ICStatesInterface>({IState: Istate, IMsg: msg})
+  const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: Istate, IMsg: msg });
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    let temp = {IState: Istate, IMsg: msg}
+    let temp = { IState: Istate, IMsg: msg };
     setICStates(temp);
-  }, [Istate, msg])
+  }, [Istate, msg]);
 
   const Redirection = () => {
     if (props?.href) {
@@ -82,22 +81,22 @@ const CustomInputContainer: React.FC<props> = (props) => {
   };
 
   const checkForErrors = async (val: string) => {
-    if (Number(val) > Number(IBalanceValue)){
-       const temp: ICStatesInterface = {
-          IState: 'error',
-          IMsg: 'Amount canont be more than your balance',
-        }
+    if (Number(val) > Number(IBalanceValue)) {
+      const temp: ICStatesInterface = {
+        IState: 'error',
+        IMsg: 'Amount canont be more than your balance',
+      };
       setICStates(temp);
       return true;
     } else {
       const temp: ICStatesInterface = {
         IState: 'default',
         IMsg: '',
-      }
+      };
       setICStates(temp);
       return true;
     }
-  }
+  };
 
   return (
     <IConatiner
@@ -136,10 +135,15 @@ const CustomInputContainer: React.FC<props> = (props) => {
             if (proceed) props?.setText(event.target.value);
           }}
         />
-        {tagText !== '' && <MaxTagConatiner onClick={() => {
-          props?.setText(IBalanceValue.toString());
-        }
-        }>{tagText}</MaxTagConatiner>}
+        {tagText !== '' && (
+          <MaxTagConatiner
+            onClick={() => {
+              props?.setText(IBalanceValue.toString());
+            }}
+          >
+            {tagText}
+          </MaxTagConatiner>
+        )}
         <IFieldRightContainer
           onClick={() => {
             if (hasDropDown) setModalOpen(!modalOpen);
@@ -190,7 +194,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
           )}
         </IFieldRightContainer>
       </IFieldConatiner>
-      {ICStates.IMsg !== '' && <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>}
+      {ICStates.IMsg !== '' && (
+        <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>
+      )}
     </IConatiner>
   );
 };

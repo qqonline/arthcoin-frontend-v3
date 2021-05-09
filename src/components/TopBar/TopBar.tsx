@@ -234,10 +234,35 @@ const ShowWarningInner = styled.div`
 
 const ShowWarning = styled.div`
   background: #ba1e38;
-  padding: 10px;
+  border: 1px solid #ff9eae;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 10px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
+  // max-width: 600px;
+  z-index: 50;
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  top: 90px;
+  @media (max-width: 768px) {
+    // max-width: 200px;
+    width: 95%;
+    left: 2.5%;
+    right: 2.5%;
+  } ;
+`;
+
+const WarningSpan = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #ffffff;
+  opacity: 0.88;
 `;
 
 const StyledTopBarInner = styled.div`

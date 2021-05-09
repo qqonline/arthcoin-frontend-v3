@@ -3,160 +3,155 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import TransparentInfoDiv from '../../views/Mint/components/InfoDiv';
 
-
 const useSliderStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-            // color: 'white'
-        },
-        margin: {
-            height: theme.spacing(3),
-        },
-    }),
+  createStyles({
+    root: {
+      width: '100%',
+      // color: 'white'
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
 );
 
 function valuetext(value: number) {
-    return `${value}`;
+  return `${value}`;
 }
 
 const PrettoRestrictSlider = withStyles({
-    root: {
-        height: 15,
-        width: '95%',
+  root: {
+    height: 15,
+    width: '95%',
+  },
+  thumb: {
+    height: 10,
+    width: 10,
+    border: '2px solid currentColor',
+    color: '#FFA981',
+    marginTop: -3.5,
+    marginLeft: -3,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
     },
-    thumb: {
-        height: 10,
-        width: 10,
-        border: '2px solid currentColor',
-        color: '#FFA981',
-        marginTop: -3.5,
-        marginLeft: -3,
-        '&:focus, &:hover, &$active': {
-            boxShadow: 'inherit',
-        },
-    },
-    active: {},
-    valueLabel: {
-        left: 'calc(-100% - 5px)',
-    },
-    marked: {
-        color: 'red',
-    },
-    markLabel: {
-    },
-    track: {
-        height: 3,
-        borderRadius: 3,
-        color: '#FFA981',
-    },
-    rail: {
-        height: 3,
-        borderRadius: 3,
-        color: '#D74D26',
-    },
-    markLabelActive: {
-        fontStyle: 'normal',
-        fontWeight: 300,
-        fontSize: '12px',
-        lineHeight: '130%',
-        textAlign: 'center',
-        color: 'rgba(255, 255, 255, 0.88)',
-    },
-    mark: {
-        color: 'transparent',
-    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-100% - 5px)',
+  },
+  marked: {
+    color: 'red',
+  },
+  markLabel: {},
+  track: {
+    height: 3,
+    borderRadius: 3,
+    color: '#FFA981',
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    color: '#D74D26',
+  },
+  markLabelActive: {
+    fontStyle: 'normal',
+    fontWeight: 300,
+    fontSize: '12px',
+    lineHeight: '130%',
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.88)',
+  },
+  mark: {
+    color: 'transparent',
+  },
 })(Slider);
 const DEFAULT_CALC = 1440;
 
 interface IProps {
-    onSliderChange?: (val: any) => void;
-    sliderLabel?: string;
+  onSliderChange?: (val: any) => void;
+  sliderLabel?: string;
 }
+
 export default (props: IProps) => {
-    const [sliderValue, setSliderValue] = React.useState(1);
-    const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
-    const sliderClasses = useSliderStyles();
-    const [currentCounter, setCurrentCounter] = useState<number>(1000);
+  const [sliderValue, setSliderValue] = React.useState(1);
+  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
+  const sliderClasses = useSliderStyles();
+  const [currentCounter, setCurrentCounter] = useState<number>(1000);
 
-    const handleSliderChange = (event: any, value: any) => {
-        setSliderValue(value);
-        props?.onSliderChange(value)
-        setDuration(DEFAULT_CALC - value * value);
-    };
+  const handleSliderChange = (event: any, value: any) => {
+    setSliderValue(value);
+    props?.onSliderChange(value);
+    setDuration(DEFAULT_CALC - value * value);
+  };
 
-    return (
-        <StakingDiv>
-            <div>
-                <OneLineInput style={{ margin: '0px' }}>
-                    <div>
-                        <InputLabel style={{ marginTop: '12px' }}>{props?.sliderLabel || 'Select how long would you like to stake'}</InputLabel>
-                    </div>
-                    <InputNoDisplay>
-                        <InternalSpan>{sliderValue} months</InternalSpan>
-                    </InputNoDisplay>
-                </OneLineInput>
-            </div>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    color: 'white',
-                    flexDirection: 'row',
-                    width: '100%',
-                    paddingLeft: '16px',
-                    marginTop: '5px'
-                }}
-            >
-                <div className={sliderClasses.root}>
-                    <PrettoRestrictSlider
-                        defaultValue={1}
-                        getAriaValueText={valuetext}
-                        valueLabelFormat={valuetext}
-                        onChange={handleSliderChange}
-                        aria-label="pretto slider"
-                        step={1}
-                        marks
-                        min={1}
-                        max={36}
-                        valueLabelDisplay="off"
-                    />
-                    <div
-                        style={{
-                            marginTop: -15,
-                            marginLeft: -15,
-                            marginBottom: 15,
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <TimeSpan>1 month</TimeSpan>
-                        <TimeSpan>3 Years</TimeSpan>
-                    </div>
-                </div>
-            </div>
-            <TransparentInfoDiv
-                labelData={`Estimated earning`}
-                rightLabelUnit={'MAHA'}
-                rightLabelValue={'~100.0'}
-                countUp
-                cEnd={9999}
-                cDuration={calcDuration}
-                cStart={currentCounter}
-            />
+  return (
+    <StakingDiv>
+      <div>
+        <OneLineInput style={{ margin: '0px' }}>
+          <div>
+            <InputLabel style={{ marginTop: '12px' }}>
+              {props?.sliderLabel || 'Select how long would you like to stake'}
+            </InputLabel>
+          </div>
+          <InputNoDisplay>
+            <InternalSpan>{sliderValue} months</InternalSpan>
+          </InputNoDisplay>
+        </OneLineInput>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          color: 'white',
+          flexDirection: 'row',
+          width: '100%',
+          paddingLeft: '16px',
+          marginTop: '5px',
+        }}
+      >
+        <div className={sliderClasses.root}>
+          <PrettoRestrictSlider
+            defaultValue={1}
+            getAriaValueText={valuetext}
+            valueLabelFormat={valuetext}
+            onChange={handleSliderChange}
+            aria-label="pretto slider"
+            step={1}
+            marks
+            min={1}
+            max={36}
+            valueLabelDisplay="off"
+          />
+          <div
+            style={{
+              marginTop: -15,
+              marginLeft: -15,
+              marginBottom: 15,
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <TimeSpan>1 month</TimeSpan>
+            <TimeSpan>3 Years</TimeSpan>
+          </div>
+        </div>
+      </div>
+      <TransparentInfoDiv
+        labelData={`Estimated earning`}
+        rightLabelUnit={'MAHA'}
+        rightLabelValue={'~100.0'}
+        countUp
+        cEnd={9999}
+        cDuration={calcDuration}
+        cStart={currentCounter}
+      />
 
-            <TransparentInfoDiv
-                labelData={`ROR`}
-                rightLabelValue={String(10 * sliderValue) + '%'}
-            />
+      <TransparentInfoDiv labelData={`ROR`} rightLabelValue={String(10 * sliderValue) + '%'} />
 
-            <TransparentInfoDiv
-                labelData={`APY`}
-                rightLabelValue={String(10 * sliderValue) + '%'}
-            />
-        </StakingDiv>
-    )
-}
+      <TransparentInfoDiv labelData={`APY`} rightLabelValue={String(10 * sliderValue) + '%'} />
+    </StakingDiv>
+  );
+};
 
 const TcContainer = styled.div`
   margin-top: 24px;
@@ -179,7 +174,7 @@ const RightTopCard = styled.div`
 
 const RightBottomCard = styled.div`
   margin-top: 16px;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     margin-top: 24px;
   }
 `;

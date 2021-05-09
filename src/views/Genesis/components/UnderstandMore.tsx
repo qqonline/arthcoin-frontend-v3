@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 
-
-
 type props = {
   stats?: boolean;
   dataObj?: string[];
@@ -40,11 +38,10 @@ export default UnderstandMore;
 
 const CustomInfoCard = styled.div`
   margin-top: 16px;
-  @media(max-width: 600px) {
+  @media (max-width: 600px) {
     margin-top: 24px;
   }
-`
-
+`;
 
 const ListLi = styled.li``;
 
