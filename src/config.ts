@@ -152,4 +152,4 @@ export const stakingContracts: StakingContract[] = [
   },
 ];
 
-export default configurations['development'];
+export default configurations['staging'];
