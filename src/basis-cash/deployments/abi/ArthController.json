@@ -3,7 +3,7 @@
     "inputs": [
       {
         "internalType": "contract IERC20",
-        "name": "_ARTH",
+        "name": "_arth",
         "type": "address"
       },
       {
