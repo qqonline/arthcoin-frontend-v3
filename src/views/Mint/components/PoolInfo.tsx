@@ -41,7 +41,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${getDisplayBalance(collatearlPrice, 18)}</InputLabelSpanRight>
+            <InputLabelSpanRight>${getDisplayBalance(collatearlPrice, 6)}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>

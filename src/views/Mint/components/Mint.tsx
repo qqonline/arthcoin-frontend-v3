@@ -17,7 +17,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
-import { CustomSnack } from '../../../components/SnackBar';
+import MintModal from './MintModal';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
@@ -38,93 +38,6 @@ import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
-const OrangeCheckBox = withStyles({
-  root: {
-    color: 'rgba(255, 255, 255, 0.32)',
-    '&$checked': {
-      color: '#FF7F57',
-    },
-  },
-  checked: {
-    color: 'white',
-  },
-})((props: CheckboxProps) => <Checkbox {...props} />);
-
-const useSliderStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      // color: 'white'
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }),
-);
-
-function valuetext(value: number) {
-  return `${value}`;
-}
-
-const PrettoRestrictSlider = withStyles({
-  root: {
-    // color: 'white',
-    height: 15,
-    width: '95%',
-  },
-  thumb: {
-    height: 10,
-    width: 10,
-    // backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    color: '#FFA981',
-    marginTop: -3.5,
-    marginLeft: -3,
-    '&:focus, &:hover, &$active': {
-      boxShadow: 'inherit',
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: 'calc(-100% - 5px)',
-    // color: '#FF7F57',
-  },
-  marked: {
-    color: 'red',
-  },
-  markLabel: {
-    // color: 'green'
-  },
-  track: {
-    height: 3,
-    borderRadius: 3,
-    color: '#FFA981',
-    // top: '2%'
-  },
-  rail: {
-    height: 3,
-    borderRadius: 3,
-    color: '#D74D26',
-    // background:'red'
-    // border: '1px solid'
-  },
-  markLabelActive: {
-    fontStyle: 'normal',
-    fontWeight: 300,
-    fontSize: '12px',
-    lineHeight: '130%',
-    textAlign: 'center',
-    color: 'rgba(255, 255, 255, 0.88)',
-  },
-  mark: {
-    // height: '3px',
-    // width: '3px',
-    // borderRadius: '50%',
-    color: 'transparent',
-  },
-})(Slider);
-const DEFAULT_CALC = 1440;
-
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
 }
@@ -133,20 +46,16 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const { account, connect } = useWallet();
 
   const core = useCore();
-  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
 
   const [arthxValue, setArthxValue] = useState<string>('0');
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber();
+  const colletralRatio = mintCR.div(10000).toNumber() - 30;
 
-  const [checked, setChecked] = React.useState(false);
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
-  const sliderClasses = useSliderStyles();
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
@@ -163,11 +72,13 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxValue('0');
       setArthValue('0');
     }
+
     let check = ValidateNumber(val);
     setCollateralValue(check ? val : String(Number(val)));
     if (!check) return;
+
     const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
+    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
 
     const arthxShareValueInCollatTerms =
       ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
@@ -180,21 +91,25 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
       .div(1e6);
 
-    setArthxValue(getDisplayBalance(finalArthxValue, 18, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 18, 3));
+    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '') setArthValue('0');
+    if (val === '') {
+      setArthValue('0');
+      setCollateralValue('0');
+    }
 
     setArthxValue(val);
+
     const valueInNumber = Number(val);
-    if (valueInNumber) {
-      let colletralTemp =
-        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
-      setCollateralValue(colletralTemp.toString());
-      setArthValue(String(colletralTemp + valueInNumber));
-    }
+    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
+
+    let colletralTemp =
+      (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
+    setCollateralValue(colletralTemp.toString());
+    setArthValue(String(colletralTemp + valueInNumber));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -203,51 +118,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       setCollateralValue('0');
     }
     setArthValue(val);
+
     const valueInNumber = Number(val);
+    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
+
     if (valueInNumber) {
       setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
       setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
     }
-  };
-
-  const handleCheck = (event: any) => {
-    setChecked(event.target.checked);
-  };
-
-  const handleSliderChange = (event: any, value: any) => {
-    setSliderValue(value);
-    setDuration(DEFAULT_CALC - value * value);
-  };
-
-  const mintARTH = useMintARTH(
-    selectedCollateralCoin,
-    Number(collateralValue),
-    Number(arthxValue),
-    Number(arthValue),
-    mintingFee,
-    0.1,
-  );
-
-  const handleMint = () => {
-    // setOpenModal(2);
-    mintARTH(() => {
-      setOpenModal(2);
-      setSuccessModal(true);
-    });
-
-    // let options = {
-    //   content: () =>
-    //     CustomSnack({
-    //       onClose: props.closeSnackbar,
-    //       type: 'green',
-    //       data1: `Minting ${mintColl} ARTH`,
-    //     }),
-    // };
-    // props.enqueueSnackbar('timepass', options);
-    // setTimeout(() => {
-    //   setSuccessModal(true);
-    // }, 3000);
-    // mintARTH();
   };
 
   const arthxBalance = useTokenBalance(core.ARTHX);
@@ -280,206 +158,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   return (
     <>
-      <CustomModal
-        closeButton
-        handleClose={() => setOpenModal(0)}
-        open={openModal === 1}
-        modalTitleStyle={{}}
-        modalContainerStyle={{}}
-        modalBodyStyle={{}}
-        title={`Confirm Mint`}
-      >
-        <>
-          <TransparentInfoDiv
-            labelData={`Your collateral supply`}
-            rightLabelUnit={selectedCollateralCoin}
-            rightLabelValue={collateralValue.toString()}
-          />
-
-          <TransparentInfoDiv
-            labelData={`Your share supply`}
-            rightLabelUnit={'ARTHX'}
-            rightLabelValue={arthxValue.toString()}
-          />
-
-          <TransparentInfoDiv
-            labelData={`Trading Fee`}
-            rightLabelUnit={'ARTH'}
-            rightLabelValue={getDisplayBalance(tradingFee, 6)}
-          />
-
-          <Divider
-            style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              margin: '15px 0px',
-            }}
-            // variant={'middle'}
-          />
-
-          <TransparentInfoDiv
-            labelData={`You will mint`}
-            // labelToolTipData={'testing'}
-            rightLabelUnit={'ARTH'}
-            rightLabelValue={arthValue.toString()}
-          />
-
-          <CheckboxDiv>
-            <FormControlLabel
-              value=""
-              checked={checked}
-              control={
-                <OrangeCheckBox
-                  icon={<CheckBoxOutlineBlankIcon fontSize={'inherit'} />}
-                  checkedIcon={
-                    <CheckIcon
-                      style={{
-                        background: '#FF7F57',
-                        color: 'white',
-                        borderRadius: '6px',
-                      }}
-                      fontSize={'inherit'}
-                    />
-                  }
-                  size={'medium'}
-                />
-              }
-              label="Stake $ARTH and earn more rewards"
-              labelPlacement="end"
-              onChange={handleCheck}
-            />
-          </CheckboxDiv>
-          {checked && (
-            <StakingDiv>
-              <div>
-                <OneLineInput style={{ margin: '0px' }}>
-                  <div>
-                    <InputLabel style={{ marginTop: '12px' }}>
-                      Select how long would you like to stake
-                    </InputLabel>
-                  </div>
-                  <InputNoDisplay>
-                    <InternalSpan>{sliderValue} months</InternalSpan>
-                  </InputNoDisplay>
-                </OneLineInput>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  color: 'white',
-                  flexDirection: 'row',
-                  width: '100%',
-                  paddingLeft: '16px',
-                  marginTop: '5px',
-                }}
-              >
-                <div className={sliderClasses.root}>
-                  <PrettoRestrictSlider
-                    // defaultValue={sliderValue ?? 1}
-                    // onChange={handleSliderChange}
-                    // // valueLabelFormat={valueLabelFormat}
-                    // getAriaValueText={valuetext}
-                    // aria-labelledby="discrete-slider-small-steps"
-                    // step={1}
-                    // min={1}
-                    // max={36}
-                    // valueLabelDisplay="on"
-                    // // marks={marks}
-                    // ValueLabelComponent={"strong"}
-                    defaultValue={1}
-                    getAriaValueText={valuetext}
-                    valueLabelFormat={valuetext}
-                    // ValueLabelComponent={'span'}
-                    // value={sliderValue}
-                    onChange={handleSliderChange}
-                    aria-label="pretto slider"
-                    step={1}
-                    marks
-                    min={1}
-                    max={36}
-                    valueLabelDisplay="off"
-                  />
-                  <div
-                    style={{
-                      marginTop: -15,
-                      marginLeft: -15,
-                      marginBottom: 15,
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <TimeSpan>1 month</TimeSpan>
-                    <TimeSpan>3 Years</TimeSpan>
-                  </div>
-                </div>
-              </div>
-              <TransparentInfoDiv
-                labelData={`Realtime earning`}
-                // labelToolTipData={'testing'}
-                rightLabelUnit={'MAHA'}
-                rightLabelValue={'~100.0'}
-                countUp
-                cEnd={10}
-                cDuration={calcDuration}
-                cStart={0}
-              />
-
-              <TransparentInfoDiv
-                labelData={`ROR`}
-                // labelToolTipData={'testing'}
-                // rightLabelUnit={''}
-                rightLabelValue={String(10 * sliderValue) + '%'}
-              />
-
-              <TransparentInfoDiv
-                labelData={`APY`}
-                // labelToolTipData={'testing'}
-                // rightLabelUnit={'MAHA'}
-                rightLabelValue={String(10 * sliderValue) + '%'}
-              />
-            </StakingDiv>
-          )}
-          <div
-            style={{
-              flexDirection: 'column-reverse',
-              display: 'flex',
-              width: '100%',
-              marginTop: '10%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8,
-            }}
-          >
-            <div style={{ flex: 1, width: '100%', marginTop: 10 }}>
-              <Button
-                variant={'transparent'}
-                text="Cancel"
-                size={'lg'}
-                onClick={() => {
-                  setOpenModal(0);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'red',
-                        data1: `Minting ${collateralValue} ARTH cancelled`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                }}
-              />
-            </div>
-            <div style={{ width: '100%' }}>
-              <Button
-                text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
-                // textStyles={{ color: '#F5F5F5' }}
-                size={'lg'}
-                onClick={handleMint}
-              />
-            </div>
-          </div>
-        </>
-      </CustomModal>
+      <MintModal
+        arthxValue={arthxValue}
+        collateralValue={collateralValue}
+        selectedCollateralCoin={selectedCollateralCoin}
+        arthValue={arthValue}
+        openModal={openModal}
+        onClose={() => setOpenModal(0)}
+      />
       <Grid container style={{ marginTop: '24px' }} spacing={2}>
         <Grid item lg={1} />
         <Grid item lg={5} md={12} sm={12} xs={12}>
