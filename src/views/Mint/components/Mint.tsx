@@ -52,8 +52,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [arthValue, setArthValue] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber() - 10;
-  const arthxRatio = mintCR.div(10000).toNumber() - 10;
+  const colletralRatio = mintCR.div(10000).toNumber();
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
