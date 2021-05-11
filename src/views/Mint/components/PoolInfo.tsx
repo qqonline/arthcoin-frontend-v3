@@ -9,6 +9,7 @@ import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPo
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import prettyNumber from '../../../components/PrettyNumber';
 
 interface IProps {
   selectedCollateralCoin: string;
@@ -71,7 +72,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Pool Balance</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(poolBalance, 6)}</InputLabelSpanRight>
+            <InputLabelSpanRight>{prettyNumber(getDisplayBalance(poolBalance, 6))}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         {/* <div style={{ marginBottom: '12px' }}>

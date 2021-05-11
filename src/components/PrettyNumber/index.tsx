@@ -2,10 +2,10 @@
 import * as _ from 'underscore';
 
 const suffixes: any = {
-  '3': 'k',
-  '12': 'tn',
-  '6': 'mn',
-  '9': 'bn',
+  '3': 'K',
+  '12': 'TN',
+  '6': 'MN',
+  '9': 'BN',
 };
 
 const millify = (

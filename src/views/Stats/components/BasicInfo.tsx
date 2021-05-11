@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 import CustomToolTip from '../../../components/CustomTooltip';
 import { Link } from 'react-router-dom';
+import prettyNumber from '../../../components/PrettyNumber';
 
 type props = {};
 
@@ -17,7 +18,7 @@ const BasicInfo: React.FC<props> = (props) => {
                 Available to mint
                 <CustomToolTip />
               </TextWithIcon>
-              <BeforeChip>54.76M</BeforeChip>
+              <BeforeChip>{prettyNumber(54760000)}</BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} alt="arrow" style={{ cursor: 'pointer' }} />
@@ -31,7 +32,7 @@ const BasicInfo: React.FC<props> = (props) => {
                 Pool Balance
                 <CustomToolTip />
               </TextWithIcon>
-              <BeforeChip>157.89M</BeforeChip>
+              <BeforeChip>{prettyNumber(157800000)}</BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} alt="arrow" style={{ cursor: 'pointer' }} />
