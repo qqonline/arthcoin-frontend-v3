@@ -11,12 +11,13 @@ const CustomDropDown: React.FC<InputProps> = (props) => {
   const { dropDownValues, ondropDownValueChange } = props;
   return (
     <CustomDropDownContainer>
-      {dropDownValues.map((item) => {
+      {dropDownValues.map((item, index) => {
         return (
           <CustomDropDownLi
             onClick={() => {
               ondropDownValueChange(item);
             }}
+            key={index}
           >
             <TokenSymbol symbol={item} size={25} />
             <CustomDropDownLiText>{item}</CustomDropDownLiText>

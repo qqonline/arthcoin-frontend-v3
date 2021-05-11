@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 import TokenSymbol from '../TokenSymbol';
@@ -29,6 +29,7 @@ type props = {
   to?: string;
   Istate?: 'default' | 'error' | 'warning';
   msg?: string;
+  DisableMsg?:string;
 };
 
 interface ICStatesInterface {
@@ -53,6 +54,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     disabled,
     Istate = 'default',
     msg = '',
+    DisableMsg = '',
   } = props;
   const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: Istate, IMsg: msg });
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -98,110 +100,144 @@ const CustomInputContainer: React.FC<props> = (props) => {
     }
   };
 
+  const IConatinerStyle = () => {
+    let returnObj: CSSProperties = {}
+    if (props.dontShowBackgroundContainer){
+      returnObj['padding'] = '0px';
+      returnObj['backgroundColor'] = 'transparent';
+    }
+    if (DisableMsg !== "") {
+      returnObj['opacity'] = "0.32";
+    }
+    return returnObj;
+  }
+
   return (
-    <IConatiner
-      style={
-        props.dontShowBackgroundContainer
-          ? { padding: '0px', backgroundColor: 'transparent' }
-          : {}
-      }
-    >
-      <ILabelContainer>
-        <ILabelLeft>
-          <ILabel>{ILabelValue}</ILabel>
-          {ILabelInfoValue !== '' && Redirection()}
-        </ILabelLeft>
-        <ILabelRight>
-          {showBalance && <ILabelBalance>{`Balance  ${IBalanceValue}`}</ILabelBalance>}
-        </ILabelRight>
-      </ILabelContainer>
-      <IFieldConatiner className={`input-${ICStates.IState}`}>
-        <InputBase
-          inputMode={props?.inputMode}
-          placeholder={DefaultValue || '0'}
-          defaultValue={DefaultValue ? DefaultValue : 0}
-          value={DefaultValue}
-          inputProps={{ 'aria-label': 'naked' }}
-          disabled={props?.disabled}
-          style={{
-            padding: '8px 12px',
-            color: '#FFFFFF',
-            flex: 1,
-            fontFamily: 'Inter !important',
-          }}
-          type={'number'}
-          onChange={(event) => {
-            const proceed = checkForErrors(event.target.value);
-            if (proceed) props?.setText(event.target.value);
-          }}
-        />
-        {tagText !== '' && (
-          <MaxTagConatiner
+    <div style={{position: 'relative'}}>
+      {DisableMsg !== '' && <TotalDisable><DMsg>{DisableMsg}</DMsg></TotalDisable>}
+      <IConatiner style={IConatinerStyle()}>
+        <ILabelContainer>
+          <ILabelLeft>
+            <ILabel>{ILabelValue}</ILabel>
+            {ILabelInfoValue !== '' && Redirection()}
+          </ILabelLeft>
+          <ILabelRight>
+            {showBalance && <ILabelBalance>{`Balance  ${IBalanceValue}`}</ILabelBalance>}
+          </ILabelRight>
+        </ILabelContainer>
+        <IFieldConatiner className={`input-${ICStates.IState}`}>
+          <InputBase
+            inputMode={props?.inputMode}
+            placeholder={DefaultValue || '0'}
+            defaultValue={DefaultValue ? DefaultValue : 0}
+            value={DefaultValue}
+            inputProps={{ 'aria-label': 'naked' }}
+            disabled={props?.disabled}
+            style={{
+              padding: '8px 12px',
+              color: '#FFFFFF',
+              flex: 1,
+              fontFamily: 'Inter !important',
+            }}
+            type={'number'}
+            onChange={(event) => {
+              const proceed = checkForErrors(event.target.value);
+              if (proceed) props?.setText(event.target.value);
+            }}
+          />
+          {tagText !== '' && (
+            <MaxTagConatiner
+              onClick={() => {
+                props?.setText(IBalanceValue.toString());
+              }}
+            >
+              {tagText}
+            </MaxTagConatiner>
+          )}
+          <IFieldRightContainer
             onClick={() => {
-              props?.setText(IBalanceValue.toString());
+              if (hasDropDown) setModalOpen(!modalOpen);
             }}
           >
-            {tagText}
-          </MaxTagConatiner>
-        )}
-        <IFieldRightContainer
-          onClick={() => {
-            if (hasDropDown) setModalOpen(!modalOpen);
-          }}
-        >
-          {/*<Select
-            width='500px'
-            style={{
-              background: 'red'
-            }}
-            options={options}
-            defaultValue={options[0]}
-            components={{ Option: IconOption, Menu }}
-            menuColor='red'
-          />*/}
-          <IFieldRightContainerLogo>
-            {multiIcons && symbols ? (
-              <LLabel>
-                {symbols.map((s) => (
-                  <TokenSymbol key={s} symbol={s} size={25} style={{ zIndex: 2 }} />
-                ))}
-                {/* <TokenSymbol symbol={symbol2} size={25} style={{ zIndex: 1, marginLeft: -5 }} /> */}
-                {/* <LPairLabel>{liquidityPair.pairName}</LPairLabel> */}
-              </LLabel>
-            ) : (
-              <TokenSymbol symbol={LogoSymbol} size={25} />
-            )}
-          </IFieldRightContainerLogo>
-          <IFieldRightContainerText>{SymbolText}</IFieldRightContainerText>
-          {hasDropDown && (
-            <IFieldRightContainerDropDown>
-              {/*<KeyboardArrowDown fontSize='default' />*/}
-              <img alt="arrow" src={DownArrow} height={20} style={{ marginLeft: 10 }} />
-            </IFieldRightContainerDropDown>
-          )}
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <BackgroundAbsolute
-              onClick={() => {
-                setModalOpen(!modalOpen);
+            {/*<Select
+              width='500px'
+              style={{
+                background: 'red'
               }}
-            />
-          )}
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <CustomDropDown
-              dropDownValues={dropDownValues}
-              ondropDownValueChange={ondropDownValueChange}
-            />
-          )}
-        </IFieldRightContainer>
-      </IFieldConatiner>
-      {ICStates.IMsg !== '' && (
-        <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>
-      )}
-    </IConatiner>
+              options={options}
+              defaultValue={options[0]}
+              components={{ Option: IconOption, Menu }}
+              menuColor='red'
+            />*/}
+            <IFieldRightContainerLogo>
+              {multiIcons && symbols ? (
+                <LLabel>
+                  {symbols.map((s, index) => (
+                    <TokenSymbol key={s} symbol={s} size={25} style={index === 1? { zIndex: 2, marginLeft: -5 }: { zIndex: 2 }} />
+                  ))}
+                </LLabel>
+              ) : (
+                <TokenSymbol symbol={LogoSymbol} size={25} />
+              )}
+            </IFieldRightContainerLogo>
+            <IFieldRightContainerText>{SymbolText}</IFieldRightContainerText>
+            {hasDropDown && (
+              <IFieldRightContainerDropDown>
+                {/*<KeyboardArrowDown fontSize='default' />*/}
+                <img alt="arrow" src={DownArrow} height={20} style={{ marginLeft: 10 }} />
+              </IFieldRightContainerDropDown>
+            )}
+            {modalOpen && hasDropDown && ondropDownValueChange && (
+              <BackgroundAbsolute
+                onClick={() => {
+                  setModalOpen(!modalOpen);
+                }}
+              />
+            )}
+            {modalOpen && hasDropDown && ondropDownValueChange && (
+              <CustomDropDown
+                dropDownValues={dropDownValues}
+                ondropDownValueChange={ondropDownValueChange}
+              />
+            )}
+          </IFieldRightContainer>
+        </IFieldConatiner>
+        {ICStates.IMsg !== '' && (
+          <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>
+        )}
+      </IConatiner>
+    </div>
   );
 };
 
 export default CustomInputContainer;
+
+const TotalDisable = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.16);
+  box-sizing: border-box;
+  border-radius: 12px;
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FFFFFF29;
+`;
+
+const DMsg = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin-bottom: 0;
+`
+
 const HrefLink = styled.a`
   z-index: 1;
 `;

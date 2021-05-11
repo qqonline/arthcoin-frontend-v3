@@ -52,8 +52,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [arthValue, setArthValue] = useState<string>('0');
 
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber() - 10;
-  const arthxRatio = mintCR.div(10000).toNumber() - 10;
+  const colletralRatio = mintCR.div(10000).toNumber();
+  const arthxRatio = mintCR.div(10000).toNumber();
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
@@ -70,8 +70,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
+      setCollateralValue('');
       setArthxValue('0');
       setArthValue('0');
+      return;
     }
 
     let check = ValidateNumber(val);
@@ -79,35 +81,66 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (!check) return;
 
     const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
+    if (!valueInNumber) return;
 
-    const arthxShareValueInCollatTerms =
-      ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
+    //ARTHX Calculation
+    var arthxShareValueInCollatTerms: number = 0;
+    if (!arthxToGMUPrice.eq(0)) {
+      arthxShareValueInCollatTerms =
+        ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
 
-    const finalArthxValue = collateralToGMUPrice
-      .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
-      .div(arthxToGMUPrice);
+      const finalArthxValue = collateralToGMUPrice
+        .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
+        .div(arthxToGMUPrice);
 
+      setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
+    }
+
+    //ARTH Calculation
     const finalArthValue = collateralToGMUPrice
       .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
       .div(1e6);
 
-    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
     if (val === '') {
-      setArthValue('0');
       setCollateralValue('0');
+      setArthxValue('');
+      setArthValue('0');
+      return;
     }
 
-    setArthxValue(val);
+    let check = ValidateNumber(val);
+    setArthxValue(check ? val : String(Number(val)));
+    if (!check) return;
 
     const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
+    if (!valueInNumber) return;
 
-    const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
+    //Colletral Calculation
+    var colletralValueInCollatTerms: number = 0;
+    if (!arthxToGMUPrice.eq(0)) {
+      colletralValueInCollatTerms =
+        ((100 * valueInNumber) / colletralRatio) * ((colletralRatio) / 100);
+
+      const finalColletralValue = collateralToGMUPrice
+        .mul(Math.floor(colletralValueInCollatTerms * 1e6))
+        .div(arthxToGMUPrice);
+
+      setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
+    }
+
+    //ARTH Calculation
+    const finalArthValue = collateralToGMUPrice
+      .mul(Math.floor((colletralValueInCollatTerms + valueInNumber) * 1e6))
+      .div(1e6);
+
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+
+
+    /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
       .mul(1e6)
       .div(arthxToGMUPrice);
     const arthxGMUValueInNumber = arthxGMUValue.toNumber();
@@ -125,22 +158,40 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     // .div(arthxToGMUPrice);
 
     setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));*/
   };
 
   const onARTHValueChange = async (val: string) => {
     if (val === '') {
-      setArthxValue('0');
       setCollateralValue('0');
+      setArthxValue('0');
+      setArthValue('');
+      return;
     }
-    setArthValue(val);
+
+    let check = ValidateNumber(val);
+    setArthValue(check ? val : String(Number(val)));
+    if (!check) return;
 
     const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0) || collateralToGMUPrice.eq(0)) return;
+    if (!valueInNumber) return;
 
-    if (valueInNumber) {
-      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
-      setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
+    //Calc Colletaral
+    if (!collateralToGMUPrice.eq(0)) {
+      const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
+      const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
+        .mul(1e6)
+        .div(collateralToGMUPrice);
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3))
+    }
+
+    //Calc ARTHX
+    if (!arthxToGMUPrice.eq(0)) {
+      const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
+      const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
+        .mul(1e6)
+        .div(arthxToGMUPrice);
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3))
     }
   };
 
@@ -223,7 +274,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
-                Istate={'warning'}
+                // Istate={'warning'}
                 // StateMsg={'Warning message goes here'}
               />
               <PlusMinusArrow>
@@ -245,9 +296,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
-                Istate={'error'}
+                // Istate={'error'}
                 // StateMsg={'ERROR message goes here'}
-                // DisableMsg={'Currently Collateral ratio is 100%'}
+                DisableMsg={colletralRatio === 100? 'Currently Collateral ratio is 100%': ''}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
