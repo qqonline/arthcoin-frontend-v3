@@ -430,7 +430,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={true}
                 setText={onCollateralValueChange}
                 dropDownValues={collateralTypes}
-                ondropDownValueChange={setSelectedReceiveRedeemCoin}
+                ondropDownValueChange={(data) => {
+                  setSelectedReceiveRedeemCoin(data)
+                  setTimeout(() => {
+                    onCollateralValueChange(collateralValue.toString())
+                  }, 1000)
+                }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
               />

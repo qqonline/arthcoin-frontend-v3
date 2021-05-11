@@ -267,6 +267,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={(data: string) => {
                   setSelectedCollateralCoin(data);
+                  setTimeout(() => {
+                    onCollateralValueChange(collateralValue.toString())
+                  }, 1000)
                 }}
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
