@@ -46,7 +46,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     LogoSymbol,
     hasDropDown,
     SymbolText,
-    tagText,
+    tagText = '',
     dropDownValues,
     ondropDownValueChange,
     multiIcons = false,
