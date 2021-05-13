@@ -49,12 +49,13 @@ export class BasisCash {
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
+      console.log('error nameDeployment', name, deployment);
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 
-    this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH');
-    this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
-    this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX');
+    this.ARTH = new ERC20(deployments.MockArth.address, provider, 'ARTH');
+    this.MAHA = new ERC20(deployments.MockMaha.address, provider, 'MAHA');
+    this.ARTHX = new ERC20(deployments.MockArthx.address, provider, 'ARTHX');
 
     this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI');
     this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT');
