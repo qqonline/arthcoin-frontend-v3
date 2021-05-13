@@ -192,7 +192,7 @@ code {
 }
 
 @media (max-width: 600px){
-  .gdHKYe{
+  .gdHKYe, .fFjhWu{
     padding: 0 16px !important;
   }
 }
@@ -204,9 +204,7 @@ code {
 @keyframes spin { 100% { -webkit-transform: rotate(180deg); transform:rotate(180deg); } }
 
 .chakra-home {
-  animation: chakra-animate 50s infinite linear;
-  /* border: 1px solid; */
-  /* background-image: url('./assets/svg/chakra.svg'); */
+  /*animation: chakra-animate 50s infinite linear;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -217,10 +215,21 @@ code {
   position: fixed;
   top: 40px;
   z-index: -1;
+  width: 100%;*/
+
+  /*-webkit-animation: chakra-animate 50s linear infinite;*/
+  /* animation: chakra-animate 50s linear infinite; */
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: fixed;
+  top: 55%;
+  z-index: -1;
   width: 100%;
-  /* -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite; */
 }
 
 .gradient-red-1-home {
