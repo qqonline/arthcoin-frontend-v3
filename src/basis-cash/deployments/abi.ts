@@ -9,9 +9,7 @@ export const GMUOracle = require('./abi/GMUOracle.json')
 export const IERC20 = require('./abi/IERC20.json')
 export const IWETH = require('./abi/IWETH.json')
 export const MahaToken = require('./abi/MahaToken.json')
-export const MockArth = require('./abi/MockArth.json')
-export const MockArthx = require('./abi/MockArthx.json')
-export const MockMaha = require('./abi/MockMaha.json')
+
 export const Multicall = require('./abi/Multicall.json')
 export const Oracle = require('./abi/Oracle.json')
 export const SimpleOracle = require('./abi/SimpleOracle.json')
@@ -38,9 +36,7 @@ const ret: IABIS = {
   IERC20,
   IWETH,
   MahaToken,
-  MockArth,
-  MockArthx,
-  MockMaha,
+
   Multicall,
   Oracle,
   SimpleOracle,
