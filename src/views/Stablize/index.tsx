@@ -10,12 +10,14 @@ import { useParams } from 'react-router-dom';
 
 export default () => {
   const core = useCore();
-  const { stabilizeType } = useParams<{ stabilizeType: 'buyback' | 'recollateralize' }>()
-  const [type, setType] = useState<'buyback' | 'recollateralize'>(stabilizeType || 'buyback');
+  const { stabilizeType } = useParams<{ stabilizeType: 'buyback' | 'recollateralize' }>();
+  const [type, setType] = useState<'buyback' | 'recollateralize'>(
+    stabilizeType || 'recollateralize',
+  );
 
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const isMobile = useMediaQuery({ query: '(max-device-width: 600px)' })
+  const isMobile = useMediaQuery({ query: '(max-device-width: 600px)' });
 
   // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
@@ -29,16 +31,10 @@ export default () => {
         mobile={isMobile ? true : false}
       />
       <Container size="lg">
-        {type === "buyback" &&
-          <BuyBack
-            onChange={() => setType('recollateralize')}
-          />
-        }
-        {type === "recollateralize" &&
-          <Recollatateralize
-            onChange={() => setType('buyback')}
-          />
-        }
+        {type === 'buyback' && <BuyBack onChange={() => setType('recollateralize')} />}
+        {type === 'recollateralize' && (
+          <Recollatateralize onChange={() => setType('buyback')} />
+        )}
       </Container>
     </>
   );

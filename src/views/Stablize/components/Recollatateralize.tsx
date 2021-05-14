@@ -19,6 +19,7 @@ import { useWallet } from 'use-wallet';
 import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedeemRewards';
 
 type Iprops = {
   onChange: () => void;
@@ -48,6 +49,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     core.tokens[selectedCollateral],
     collateralPool.address,
   );
+
+  const arthxRewards = useArthxRedeemRewards();
 
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
   const isWalletConnected = !!account;
@@ -110,7 +113,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            342.450K <HardChip>ARTHX</HardChip>{' '}
+            {getDisplayBalance(arthxRewards)} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -244,11 +247,11 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
-                      Estimated Discount 1 hour later
+                      Maximum Discount
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>~5%</InputLabelSpanRight>
+                  <InputLabelSpanRight>30%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '12px' }}>
@@ -259,7 +262,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice)}</InputLabelSpanRight>
+                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6)}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <RightTopCardHeader style={{ marginTop: 20 }}>
