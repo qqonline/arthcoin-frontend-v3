@@ -71,6 +71,18 @@
     "address": "0x769Fd314495c036d50FE4ACBEA24513643f45f91",
     "abi": "ArthPoolRouter"
   },
+  "MockArth": {
+    "address": "0x6e347f5C3671f33448F481a99A8e12ce29Bf23Ce",
+    "abi": "MockArth"
+  },
+  "MockArthx": {
+    "address": "0x56712919cc444f83bFD5D2F8717c97640eaa5E94",
+    "abi": "MockArthx"
+  },
+  "MockMaha": {
+    "address": "0x433F61BeBb840571B1721e29DF58e51328aFccB7",
+    "abi": "MockMaha"
+  },
   "UniswapV2Factory": {
     "address": "0x61A6145a0fA8BD34afBaA36e7BA2422252509619",
     "abi": "UniswapV2Factory"

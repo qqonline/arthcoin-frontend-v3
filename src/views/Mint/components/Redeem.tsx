@@ -93,7 +93,133 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     });
   };
 
+  const onCollateralValueChange = async (val: string) => {
+    if (val === '') {
+      setCollateralValue('');
+      setArthxValue('0');
+      setArthValue('0');
+      return;
+    }
+
+    let check = ValidateNumber(val);
+    setCollateralValue(check ? val : String(Number(val)));
+    if (!check) return;
+
+    const valueInNumber = Number(val);
+    if (!valueInNumber) return;
+
+    //ARTHX Calculation
+    var arthxShareValueInCollatTerms: number = 0;
+    if (!arthxToGMUPrice.eq(0)) {
+      arthxShareValueInCollatTerms =
+        ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
+
+      const finalArthxValue = collateralToGMUPrice
+        .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
+        .div(arthxToGMUPrice);
+
+      setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
+    }
+
+    //ARTH Calculation
+    const finalArthValue = collateralToGMUPrice
+      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
+      .div(1e6);
+
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+  };
+
   const onARTHXValueChange = async (val: string) => {
+    if (val === '') {
+      setCollateralValue('0');
+      setArthxValue('');
+      setArthValue('0');
+      return;
+    }
+
+    let check = ValidateNumber(val);
+    setArthxValue(check ? val : String(Number(val)));
+    if (!check) return;
+
+    const valueInNumber = Number(val);
+    if (!valueInNumber) return;
+
+    //Colletral Calculation
+    var colletralValueInCollatTerms: number = 0;
+    if (!arthxToGMUPrice.eq(0)) {
+      colletralValueInCollatTerms =
+        ((100 * valueInNumber) / colletralRatio) * ((colletralRatio) / 100);
+
+      const finalColletralValue = collateralToGMUPrice
+        .mul(Math.floor(colletralValueInCollatTerms * 1e6))
+        .div(arthxToGMUPrice);
+
+      setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
+    }
+
+    //ARTH Calculation
+    const finalArthValue = collateralToGMUPrice
+      .mul(Math.floor((colletralValueInCollatTerms + valueInNumber) * 1e6))
+      .div(1e6);
+
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+
+
+    /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
+      .mul(1e6)
+      .div(arthxToGMUPrice);
+    const arthxGMUValueInNumber = arthxGMUValue.toNumber();
+
+    const collateralGMUValue =
+      ((100 * arthxGMUValueInNumber) / (100 - colletralRatio)) * (colletralRatio / 100);
+
+    const finalCollateralValue = BigNumber.from(1e6)
+      .mul(Math.floor(collateralGMUValue * 1e6))
+      .div(collateralToGMUPrice);
+
+    const finalArthValue = arthxGMUValue.add(
+      finalCollateralValue.mul(collateralToGMUPrice).div(1e6),
+    );
+    // .div(arthxToGMUPrice);
+
+    setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 6, 3));*/
+  };
+
+  const onARTHValueChange = async (val: string) => {
+    if (val === '') {
+      setCollateralValue('0');
+      setArthxValue('0');
+      setArthValue('');
+      return;
+    }
+
+    let check = ValidateNumber(val);
+    setArthValue(check ? val : String(Number(val)));
+    if (!check) return;
+
+    const valueInNumber = Number(val);
+    if (!valueInNumber) return;
+
+    //Calc Colletaral
+    if (!collateralToGMUPrice.eq(0)) {
+      const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
+      const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
+        .mul(1e6)
+        .div(collateralToGMUPrice);
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3))
+    }
+
+    //Calc ARTHX
+    if (!arthxToGMUPrice.eq(0)) {
+      const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
+      const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
+        .mul(1e6)
+        .div(arthxToGMUPrice);
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3))
+    }
+  };
+  /*const onARTHXValueChange = async (val: string) => {
     if (val === '') setArthValue('0');
 
     setArthxValue(val);
@@ -141,7 +267,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
       setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
     }
-  };
+  };*/
 
   const tradingFee = useMemo(() => {
     const mintingAmount = BigNumber.from(Math.floor(Number(collateralValue) * 1e6));
@@ -304,7 +430,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 hasDropDown={true}
                 setText={onCollateralValueChange}
                 dropDownValues={collateralTypes}
-                ondropDownValueChange={setSelectedReceiveRedeemCoin}
+                ondropDownValueChange={(data) => {
+                  setSelectedReceiveRedeemCoin(data)
+                  setTimeout(() => {
+                    onCollateralValueChange(collateralValue.toString())
+                  }, 1000)
+                }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
               />
@@ -321,6 +452,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTHX'}
                 setText={onARTHXValueChange}
                 tagText={'MAX'}
+                DisableMsg={colletralRatio === 100? 'Currently Collateral ratio is 100%': ''}
               />
               <div>
                 <OneLineInputwomargin>

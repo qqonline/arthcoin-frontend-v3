@@ -1,5 +1,6 @@
 export const ArthController = require('./abi/ArthController.json')
 export const ArthPool = require('./abi/ArthPool.json')
+export const ArthPoolLibrary = require('./abi/ArthPoolLibrary.json')
 export const ArthPoolRouter = require('./abi/ArthPoolRouter.json')
 export const ARTHShares = require('./abi/ARTHShares.json')
 export const ARTHStablecoin = require('./abi/ARTHStablecoin.json')
@@ -8,7 +9,11 @@ export const GMUOracle = require('./abi/GMUOracle.json')
 export const IERC20 = require('./abi/IERC20.json')
 export const IWETH = require('./abi/IWETH.json')
 export const MahaToken = require('./abi/MahaToken.json')
+export const MockArth = require('./abi/MockArth.json')
+export const MockArthx = require('./abi/MockArthx.json')
+export const MockMaha = require('./abi/MockMaha.json')
 export const Multicall = require('./abi/Multicall.json')
+export const Oracle = require('./abi/Oracle.json')
 export const SimpleOracle = require('./abi/SimpleOracle.json')
 export const UniswapPairOracle = require('./abi/UniswapPairOracle.json')
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json')
@@ -23,6 +28,7 @@ type IABIS = {
 const ret: IABIS = {
   ArthController,
   ArthPool,
+  ArthPoolLibrary,
   ArthPoolRouter,
   ARTHShares,
   ARTHStablecoin,
@@ -32,7 +38,11 @@ const ret: IABIS = {
   IERC20,
   IWETH,
   MahaToken,
+  MockArth,
+  MockArthx,
+  MockMaha,
   Multicall,
+  Oracle,
   SimpleOracle,
   UniswapPairOracle,
   UniswapV2Factory,
