@@ -151,7 +151,7 @@ const Home: React.FC = () => {
                             <PercentCardValue>50% (50,000 USDT)</PercentCardValue>
                           </PercentCardInfo>
 
-                          <PercentCardInfo>
+                          {/* <PercentCardInfo>
                             <PercentCardLabel>
                               <div
                                 style={{
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
                               <OpacitySpan>ETH</OpacitySpan>
                             </PercentCardLabel>
                             <PercentCardValue>20% (50,000 ETH)</PercentCardValue>
-                          </PercentCardInfo>
+                          </PercentCardInfo> */}
 
                           <PercentCardInfo>
                             <PercentCardLabel>
@@ -181,7 +181,7 @@ const Home: React.FC = () => {
                             <PercentCardValue>10% (50,000 USDC)</PercentCardValue>
                           </PercentCardInfo>
 
-                          <PercentCardInfo>
+                          {/* <PercentCardInfo>
                             <PercentCardLabel>
                               <div
                                 style={{
@@ -209,7 +209,7 @@ const Home: React.FC = () => {
                               <OpacitySpan>MAHA</OpacitySpan>
                             </PercentCardLabel>
                             <PercentCardValue>10% (50,000 MAHA)</PercentCardValue>
-                          </PercentCardInfo>
+                          </PercentCardInfo>*/}
                         </PercentCard>
                       </Grid>
                     </Grid>

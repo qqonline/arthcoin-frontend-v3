@@ -18,7 +18,7 @@ import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import { BigNumber } from '@ethersproject/bignumber';
@@ -148,7 +148,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     var colletralValueInCollatTerms: number = 0;
     if (!arthxToGMUPrice.eq(0)) {
       colletralValueInCollatTerms =
-        ((100 * valueInNumber) / colletralRatio) * ((colletralRatio) / 100);
+        ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
       const finalColletralValue = collateralToGMUPrice
         .mul(Math.floor(colletralValueInCollatTerms * 1e6))
@@ -163,7 +163,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6);
 
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-
 
     /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
       .mul(1e6)
@@ -207,7 +206,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
         .mul(1e6)
         .div(collateralToGMUPrice);
-      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3))
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
     }
 
     //Calc ARTHX
@@ -216,7 +215,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
         .mul(1e6)
         .div(arthxToGMUPrice);
-      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3))
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
     }
   };
   /*const onARTHXValueChange = async (val: string) => {
@@ -431,10 +430,10 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={onCollateralValueChange}
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={(data) => {
-                  setSelectedReceiveRedeemCoin(data)
+                  setSelectedReceiveRedeemCoin(data);
                   setTimeout(() => {
-                    onCollateralValueChange(collateralValue.toString())
-                  }, 1000)
+                    onCollateralValueChange(collateralValue.toString());
+                  }, 1000);
                 }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
@@ -452,7 +451,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTHX'}
                 setText={onARTHXValueChange}
                 tagText={'MAX'}
-                DisableMsg={colletralRatio === 100? 'Currently Collateral ratio is 100%': ''}
+                DisableMsg={colletralRatio === 100 ? 'Currently Collateral ratio is 100%' : ''}
               />
               <div>
                 <OneLineInputwomargin>

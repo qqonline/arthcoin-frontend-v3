@@ -8,13 +8,13 @@ export default () => {
 
   const fetchValue = useCallback(async () => {
     const contract = core.contracts.ArthController
-    console.log(await contract.estimateRecollateralizeRewards())
-    setValue(await contract.estimateRecollateralizeRewards());
+    console.log(await contract.getRecollateralizationDiscount())
+    setValue(await contract.getRecollateralizationDiscount());
   }, [core.contracts]);
 
   useEffect(() => {
     fetchValue().catch((err) =>
-      console.error(`Failed to fetch controller.estimateRecollateralizeRewards: ${err}`),
+      console.error(`Failed to fetch controller.getRecollateralizationDiscount: ${err}`),
     );
   }, [fetchValue]);
 

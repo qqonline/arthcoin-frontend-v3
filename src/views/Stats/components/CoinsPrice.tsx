@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useARTHOraclePrice from '../../../hooks/state/useARTHOraclePrice';
-import useMAHAOraclePrice from '../../../hooks/state/useMAHAOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
+import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 

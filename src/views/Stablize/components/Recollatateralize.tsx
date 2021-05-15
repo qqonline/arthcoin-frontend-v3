@@ -1,25 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import useCore from '../../../hooks/useCore';
-import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { useWallet } from 'use-wallet';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
-import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './InfoDiv';
+import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
 import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomModal from '../../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import { useWallet } from 'use-wallet';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import Grid from '@material-ui/core/Grid';
+import RecollaterlizeModal from './RecollaterlizeModal';
 import SlippageContainer from '../../../components/SlippageContainer';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import styled from 'styled-components';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedeemRewards';
+import useCore from '../../../hooks/useCore';
+import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 type Iprops = {
   onChange: () => void;
@@ -43,6 +41,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
+  const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   const [approveStatus, approve] = useApprove(
@@ -113,7 +112,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {getDisplayBalance(arthxRewards)} <HardChip>ARTHX</HardChip>{' '}
+            {getDisplayBalance(arthxRewards, 6, 6)} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -229,7 +228,9 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>Current Discount</TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>0.2%</InputLabelSpanRight>
+                  <InputLabelSpanRight>
+                    {getDisplayBalance(recollateralizationDiscount, 6, 6)}%
+                  </InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '8px' }}>
@@ -279,17 +280,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <InputLabelSpanRight>0.2%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
-              <div style={{ marginBottom: '12px' }}>
-                <OneLineInput>
-                  <div style={{ flex: 1 }}>
-                    <TextForInfoTitle>
-                      MAHA Reward
-                      <CustomToolTip />
-                    </TextForInfoTitle>
-                  </div>
-                  <InputLabelSpanRight>5%</InputLabelSpanRight>
-                </OneLineInput>
-              </div>
             </RightTopCard>
           </Grid>
         </Grid>
@@ -297,89 +287,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
           {buyBackContainer()}
         </Grid>
       </Grid>
-      <CustomModal
-        closeButton
-        handleClose={() => setOpenModal(false)}
-        open={openModal}
-        modalTitleStyle={{}}
-        modalContainerStyle={{}}
-        modalBodyStyle={{}}
-        title={`Confirm Recollateralize ARTH`}
-      >
-        <div>
-          <TransparentInfoDiv
-            labelData={`Your will deposit`}
-            rightLabelUnit={selectedCollateral}
-            rightLabelValue={collateralAmount.toString()}
-          />
-
-          <Divider
-            style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              margin: '15px 0px',
-            }}
-            // variant={'middle'}
-          />
-
-          <TransparentInfoDiv
-            labelData={`And receive`}
-            // labelToolTipData={'testing'}
-            rightLabelUnit={'ARTHX'}
-            rightLabelValue={receiveShare.toString()}
-          />
-
-          <TransparentInfoDiv
-            labelData={`Along with a bonus of`}
-            // labelToolTipData={'testing'}
-            rightLabelUnit={'ARTHX'}
-            rightLabelValue={receiveBonus.toString()}
-          />
-
-          <Grid container spacing={2} style={{ marginTop: '32px' }}>
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              <Button
-                variant={'transparent'}
-                text="Cancel"
-                size={'lg'}
-                onClick={() => {
-                  setOpenModal(false);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'red',
-                        data1: `Recollateralize for ${collateralAmount} ARTH cancelled`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                }}
-                // onClick={handleClose}
-              />
-            </Grid>
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              <Button
-                text={'Recollateralize'}
-                // textStyles={{ color: '#F5F5F5' }}
-                size={'lg'}
-                onClick={() => {
-                  // setType('Redeem')
-                  setOpenModal(false);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'green',
-                        data1: `Recollateralize for ${collateralAmount} ARTH:- processing`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                  props.onChange();
-                }}
-              />
-            </Grid>
-          </Grid>
-        </div>
-      </CustomModal>
+      <RecollaterlizeModal
+        receiveBonus={Number(receiveBonus)}
+        receiveShare={Number(receiveShare)}
+        collateralAmount={Number(collateralAmount)}
+        selectedCollateral={selectedCollateral}
+        openModal={openModal}
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   );
 };
