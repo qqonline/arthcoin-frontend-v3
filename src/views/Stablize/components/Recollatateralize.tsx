@@ -18,6 +18,7 @@ import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedee
 import useCore from '../../../hooks/useCore';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import { createImportSpecifier } from 'typescript';
 
 type Iprops = {
   onChange: () => void;
@@ -65,12 +66,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveBonus('0');
     }
     let check = ValidateNumber(val);
+
     setCollateralAmount(check ? val : String(Number(val)));
     if (!check) return;
+    const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
     const valInNumber = Number(val);
     if (valInNumber) {
-      setReceiveBonus(String(valInNumber * bonusRatio));
-      setReceiveShare(String(valInNumber * shareRatio));
+      setReceiveShare(String(valInNumber));
+      setReceiveBonus(String(valInNumber * discount));
     }
   };
 
@@ -229,7 +232,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                     <TextForInfoTitle>Current Discount</TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>
-                    {getDisplayBalance(recollateralizationDiscount, 6, 6)}%
+                    {getDisplayBalance(recollateralizationDiscount, 4, 4)}%
                   </InputLabelSpanRight>
                 </OneLineInput>
               </div>
