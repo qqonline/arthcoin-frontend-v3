@@ -63,7 +63,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
       setReceiveBonus('0');
     }
     let check = ValidateNumber(val);
-    setCollateralAmount(check ? val : String(Number(val)));
+    setCollateralAmount(check ? val : String(val));
     if (!check) return;
     const valInNumber = Number(val);
     if (valInNumber) {

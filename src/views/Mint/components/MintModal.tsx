@@ -231,7 +231,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             rightLabelValue={arthValue.toString()}
           />
 
-          <CheckboxDiv>
+          {/*<CheckboxDiv>
             <FormControlLabel
               value=""
               checked={checked}
@@ -255,7 +255,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
               labelPlacement="end"
               onChange={handleCheck}
             />
-          </CheckboxDiv>
+          </CheckboxDiv>*/}
           {checked && (
             <StakingDiv>
               <div>

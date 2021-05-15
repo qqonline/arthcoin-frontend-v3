@@ -8,7 +8,7 @@ export default function (stakingContract: string, amount: number, depositToken: 
   const addTransaction = useTransactionAdder();
   const core = useCore();
 
-  const action = useCallback(async (): Promise<void> => {
+  const action = useCallback(async (callback: () => void): Promise<void> => {
     const contract = core.contracts[stakingContract]
 
     const decmals = BigNumber.from(10).pow(15)
@@ -16,9 +16,12 @@ export default function (stakingContract: string, amount: number, depositToken: 
     console.log(contract.address, BigNumber.from(Math.floor(amount * 1000)).mul(decmals).toString())
     console.log(await contract.stakingToken())
     const response = await contract.stake(BigNumber.from(Math.floor(amount * 1000)).mul(decmals))
+    console.log('response', response);
     addTransaction(response, {
       summary: `Stake ${amount} ${depositToken}`
     });
+
+    callback()
 
   }, [core.contracts, stakingContract, amount, addTransaction, depositToken]);
 

@@ -399,7 +399,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTH successful!'}
-        subTitle={'View Transaction'}
+        subTitle={''}
         subsubTitle={
           'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
         }

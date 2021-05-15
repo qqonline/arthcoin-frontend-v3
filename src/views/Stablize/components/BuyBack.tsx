@@ -63,7 +63,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
       setReceiveAmount('0');
     }
     let check = ValidateNumber(val);
-    setRedeemAmount(check ? val : String(Number(val)));
+    setRedeemAmount(check ? val : String(val));
     if (!check) return;
     const valInNumber = Number(val);
     if (valInNumber) {
