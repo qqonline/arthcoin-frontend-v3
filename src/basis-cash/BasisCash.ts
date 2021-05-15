@@ -49,7 +49,6 @@ export class BasisCash {
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
-      console.log('error nameDeployment', name, deployment);
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 

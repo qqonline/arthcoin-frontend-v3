@@ -21,9 +21,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
   symbol,
   address,
   liquidity,
-  supplyLabel = 'Total Supply',
+  supplyLabel = 'Circulating Supply',
   stat,
-  uniswapInputAddress,
 }) => {
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
@@ -36,13 +35,13 @@ const HomeCard: React.FC<HomeCardProps> = ({
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}
           >
             <span className="margin-bottom-5">{title}</span>
-            <SubTitle>{`${title} on Etherscan`}</SubTitle>
+            <SubTitle href={tokenUrl}>{`${title} on Etherscan`}</SubTitle>
           </div>
         </CardHeader>
 
         <CardContent>
           <CardSection>
-            <TextWithIcon>{title} Price</TextWithIcon>
+            <TextWithIcon>Price</TextWithIcon>
             {stat ? (
               <StyledValue>
                 {stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}
@@ -52,7 +51,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             )}
           </CardSection>
           <CardSection>
-            <TextWithIcon>{title} Liquidity</TextWithIcon>
+            <TextWithIcon>Liquidity</TextWithIcon>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
           </CardSection>
           <CardSection>
@@ -64,7 +63,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
         </CardContent>
         <UniswapLink
           target="_blank"
-          href={`https://app.uniswap.org/#/swap?inputCurrency=${uniswapInputAddress}&outputCurrency=${address}`}
+          href={`https://app.uniswap.org/#/swap?inputCurrency=${address}`}
         >
           <LinkText>
             Buy {symbol} from Uniswap <CallMadeIcon style={{ fontSize: 15 }} />
@@ -195,7 +194,7 @@ const Card = styled.div`
   backdrop-filter: blur(70px);
   border-radius: 12px;
 `;
-const SubTitle = styled.div`
+const SubTitle = styled.a`
   font-style: normal;
   font-weight: 300;
   font-size: 12px;
