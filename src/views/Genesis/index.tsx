@@ -383,9 +383,9 @@ const Genesis = (props: WithSnackbarProps) => {
                   >
                     {type === 'Swap' && <ActiveTab />}
                     {type !== 'Swap' ? (
-                      <TabText>Swap ARTH for ARTH</TabText>
+                      <TabText>Swap ARTH</TabText>
                     ) : (
-                      <TabTextActive>Swap ARTH for ARTH</TabTextActive>
+                      <TabTextActive>Swap ARTH</TabTextActive>
                     )}
                   </TabContainer>
                   <SlippageContainer
@@ -412,7 +412,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateralCoin}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(ValidateNumber(val) ? val : String(Number(val)));
+                      setCollateralValue(ValidateNumber(val) ? val : String(val));
                     }}
                     tagText={'MAX'}
                   />
@@ -428,7 +428,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(ValidateNumber(val) ? val : String(Number(val)));
+                      setArthValue(ValidateNumber(val) ? val : String(val));
                     }}
                   />
                 )}

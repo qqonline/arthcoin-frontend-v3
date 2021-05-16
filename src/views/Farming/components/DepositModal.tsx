@@ -34,6 +34,12 @@ export default (props: IProps) => {
     contract.address,
   );
 
+  const handleStaking = () => {
+    stake(() => {
+      window.location.reload()
+    });
+  }
+
   return (
     <CustomModal
       closeButton
@@ -72,7 +78,7 @@ export default (props: IProps) => {
           </OneLine>
         </OneLine>
 
-        <DynamicSlider onSliderChange={setSliderValue} />
+        {/*<DynamicSlider onSliderChange={setSliderValue} />*/}
 
         <Grid
           container
@@ -97,7 +103,7 @@ export default (props: IProps) => {
                 onClick={approve}
               />
             ) : (
-              <Button text={'Deposit'} size={'lg'} onClick={stake} />
+              <Button text={'Deposit'} size={'lg'} onClick={handleStaking} />
             )}
           </Grid>
         </Grid>

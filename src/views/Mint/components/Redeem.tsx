@@ -538,7 +538,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Redeeming ARTH successful!'}
-        subTitle={'View Transaction'}
+        subTitle={''}
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
         buttonText={'Checkout Staking Pools'}
         // buttonType={'default'}
