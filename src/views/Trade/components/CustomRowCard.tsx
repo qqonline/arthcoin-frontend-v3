@@ -3,67 +3,78 @@ import styled from 'styled-components';
 import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
+import useCore from '../../../hooks/useCore';
+import { TradingPairs } from '../../../basis-cash/types';
 
-interface FarmCard {
-  id: number,
-  pair: [string, string],
-  liquidity: string;
-  volume: string;
-  onClickLink: string;
+interface IProps {
+  info: TradingPairs;
 }
 
-const CustomRowCard = (props: FarmCard) => {
+const CustomRowCard = (props: IProps) => {
+  const core = useCore();
+
+  const token1 = core.tokens[props.info.tokens[0]];
+  const token2 = core.tokens[props.info.tokens[1]];
+  const link = `https://app.uniswap.org/#/add/v2/${token1.address}/${token2.address}`;
+  const tradelink = `https://app.uniswap.org/#/swap?inputCurrency=${token1.address}&outputCurrency=${token2.address}&use=V2`;
 
   return (
     <CustomCardGrid>
-      <Grid container style={{ padding: '32px 32px', position: 'relative' }} alignItems={'center'}>
+      <Grid
+        container
+        style={{ padding: '32px 32px', position: 'relative' }}
+        alignItems={'center'}
+      >
         {/* <CardIcon src={farmingSVG} height={32} /> */}
         <Grid item lg={3} style={{ display: 'flex' }}>
           <div>
-            <TokenSymbol symbol={props?.pair[0]} size={45} />
-            <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} />
+            <TokenSymbol symbol={props?.info.tokens[0]} size={45} />
+            <TokenSymbol
+              symbol={props?.info.tokens[1]}
+              size={45}
+              style={{ marginLeft: '-12px' }}
+            />
           </div>
           <div style={{ marginLeft: '16px' }}>
-            <TableMainTextStyle>
-              {`${props?.pair[0]} - ${props?.pair[1]}`}
-            </TableMainTextStyle>
-            <AddLiquidityButton onClick={() => { }}>
+            <TableMainTextStyle>{`${props?.info.tokens[0]} - ${props?.info.tokens[1]}`}</TableMainTextStyle>
+            <AddLiquidityButton
+              onClick={() => {
+                window.open(link, '_blank');
+              }}
+            >
               Add Liquidity
             </AddLiquidityButton>
           </div>
         </Grid>
         <Grid item lg={3}>
-          <TableMainTextStyle>
-            {props?.liquidity}
-          </TableMainTextStyle>
+          {/* <TableMainTextStyle>{props?.liquidity}</TableMainTextStyle> */}
         </Grid>
         <Grid item lg={3}>
-          <TableMainTextStyle>
-            {props?.volume}
-          </TableMainTextStyle>
+          {/* <TableMainTextStyle>{props?.volume}</TableMainTextStyle> */}
         </Grid>
-        <Grid item lg={1}/>
+        <Grid item lg={1} />
         <Grid item lg={2}>
           <Button
             text="Trade"
             size={'sm'}
-            // onClick={() => props.onButtonClick('Deposit')}
-            href={props?.onClickLink}
+            onClick={() => {
+              window.open(tradelink, '_blank');
+            }}
           />
         </Grid>
       </Grid>
     </CustomCardGrid>
-  )
-}
+  );
+};
 
 const CustomCardGrid = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-sizing: border-box;
   border-radius: 12px;
   margin: 8px 0px;
   position: relative;
-`
+`;
 
 const TableMainTextStyle = styled.p`
   font-family: Inter;
@@ -71,10 +82,10 @@ const TableMainTextStyle = styled.p`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.88;
   margin: 0;
-`
+`;
 
 const AddLiquidityButton = styled.p`
   font-family: Inter;
@@ -82,9 +93,9 @@ const AddLiquidityButton = styled.p`
   font-weight: 300;
   font-size: 14px;
   line-height: 140%;
-  color: #FF7F57;
+  color: #ff7f57;
+  cursor: pointer;
   margin: 0;
-`
+`;
 
 export default CustomRowCard;
-

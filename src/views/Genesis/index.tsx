@@ -18,24 +18,32 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { CustomSnack } from '../../components/SnackBar';
+import { getDisplayBalance } from '../../utils/formatBalance';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { useWallet } from 'use-wallet';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import BondingDiscount from './components/BondingDiscount';
 import Countdown from 'react-countdown';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
+import CustomToolTip from '../../components/CustomTooltip';
 import HtmlTooltip from '../../components/HtmlTooltip';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
+import SlippageContainer from '../../components/SlippageContainer';
 import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
+import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
+import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useCore from '../../hooks/useCore';
-import CustomToolTip from '../../components/CustomTooltip';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import SlippageContainer from '../../components/SlippageContainer';
-import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
+import useRedeemARTH from '../../hooks/callbacks/pools/useRedeemARTH';
+import useTokenBalance from '../../hooks/state/useTokenBalance';
+import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
+import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
+import { BigNumber } from '@ethersproject/bignumber';
 
 // const HtmlTooltip = withStyles((theme1 : Theme) => ({
 //   tooltip: {
@@ -180,18 +188,17 @@ const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
 
-  const [mintColl, setCollateralValue] = useState<string>('0.0');
+  const [collateralValue, setCollateralValue] = useState<string>('0.0');
   const [arthValue, setArthValue] = useState<string>('0.0');
   const [balance] = useState<number>(0);
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [calendarLink, setLink] = useState('');
-
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const [successModal, setSuccessModal] = useState<boolean>(false);
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState<string>('ETH');
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const [timerHeader, setHeader] = useState<boolean>(false);
 
@@ -217,8 +224,41 @@ const Genesis = (props: WithSnackbarProps) => {
     'The discount decreases over time as more collateral is committed.',
   ];
 
-  const committedCollateral = useGlobalCollateralValue();
+  const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
+  const currentToken = core.tokens[currentCoin];
+  const currentValue = type === 'Commit' ? collateralValue : arthValue;
+
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
+  const { account, connect } = useWallet();
+  const arthBalance = useTokenBalance(core.ARTH);
+  const arthPendingRaise = useGlobalCollateralValue();
+  const arthxPrice = useARTHXOraclePrice();
+  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const committedCollateral = useGlobalCollateralValue();
+
+  const arthxRecieve = useMemo(() => {
+    if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
+    return arthxPrice.mul(Number(arthValue));
+  }, [arthValue, arthxPrice, collateralValue, type]);
+
+  const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
+
+  const redeemARTH = useRedeemARTH(
+    selectedCollateral,
+    Number(arthValue),
+    Number(arthxRecieve),
+    0,
+  );
+
+  const recollateralize = usePerformRecollateralize(
+    selectedCollateral,
+    BigNumber.from(Math.floor(Number(collateralValue) * 1e6)),
+    BigNumber.from(0),
+  );
+
+  const isApproved = approveStatus === ApprovalState.APPROVED;
+  const isApproving = approveStatus === ApprovalState.PENDING;
 
   return (
     <>
@@ -233,9 +273,9 @@ const Genesis = (props: WithSnackbarProps) => {
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your will commit`}
-            rightLabelUnit={type === 'Commit' ? selectedCollateralCoin : 'ARTH'}
-            rightLabelValue={mintColl.toString()}
+            labelData={`Your will transfer`}
+            rightLabelUnit={currentCoin}
+            rightLabelValue={currentValue.toString()}
           />
 
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
@@ -243,7 +283,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={'1000.00'}
+            rightLabelValue={getDisplayBalance(arthxRecieve, 6)}
           />
 
           <Grid
@@ -267,7 +307,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Minting ${mintColl} ARTH cancelled`,
+                        data1: `Transaction cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -279,19 +319,8 @@ const Genesis = (props: WithSnackbarProps) => {
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
                 onClick={() => {
-                  setOpenModal(2);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'green',
-                        data1: `${type}ing ${type === 'Commit' ? 'collateral' : 'ARTH'}`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                  setTimeout(() => {
-                    setSuccessModal(true);
-                  }, 3000);
+                  if (type === 'Commit') recollateralize(() => setOpenModal(2));
+                  else redeemARTH(() => setOpenModal(2));
                 }}
               />
             </Grid>
@@ -350,7 +379,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     Amount Remaining to Raise
                     <CustomToolTip />
                   </TextForInfoTitle>
-                  <BeforeChipDark>21M</BeforeChipDark>
+                  <BeforeChipDark>{getDisplayBalance(arthPendingRaise)}</BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
@@ -391,7 +420,6 @@ const Genesis = (props: WithSnackbarProps) => {
                   <SlippageContainer
                     defaultRate={selectedRate}
                     onRateChange={(data) => {
-                      console.log('rates', data);
                       setSelectedRate(data);
                     }}
                   />
@@ -401,15 +429,15 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={`${balance}`}
+                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
                     ILabelInfoValue={''}
                     // value={mintColl.toString()}
-                    DefaultValue={mintColl.toString()}
-                    LogoSymbol={selectedCollateralCoin}
+                    DefaultValue={collateralValue.toString()}
+                    LogoSymbol={selectedCollateral}
                     hasDropDown={true}
                     dropDownValues={collateralTypes}
                     ondropDownValueChange={setSelectedCollateralCoin}
-                    SymbolText={selectedCollateralCoin}
+                    SymbolText={selectedCollateral}
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setCollateralValue(ValidateNumber(val) ? val : String(val));
@@ -419,7 +447,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
-                    IBalanceValue={`Balance ${balance}`}
+                    IBalanceValue={getDisplayBalance(arthBalance)}
                     ILabelInfoValue={''}
                     // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
@@ -430,6 +458,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : String(val));
                     }}
+                    tagText={'MAX'}
                   />
                 )}
                 <PlusMinusArrow>
@@ -446,19 +475,36 @@ const Genesis = (props: WithSnackbarProps) => {
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
-                        <BeforeChip className={'custom-mahadao-chip'}>2,000</BeforeChip>
+                        <BeforeChip className={'custom-mahadao-chip'}>
+                          {getDisplayBalance(arthxRecieve, 6)}
+                        </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                   </ReceiveContainer>
                 </div>
-                <Button
-                  text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                  size={'lg'}
-                  variant={'default'}
-                  disabled={false}
-                  onClick={() => setOpenModal(1)}
-                />
+                {!!!account ? (
+                  <Button
+                    text={'Connect Wallet'}
+                    size={'lg'}
+                    onClick={() => connect('injected')}
+                  />
+                ) : !isApproved ? (
+                  <Button
+                    text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
+                    size={'lg'}
+                    disabled={isApproving}
+                    onClick={approve}
+                  />
+                ) : (
+                  <Button
+                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                    size={'lg'}
+                    variant={'default'}
+                    disabled={false}
+                    onClick={() => setOpenModal(1)}
+                  />
+                )}
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>

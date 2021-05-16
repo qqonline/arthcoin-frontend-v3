@@ -2,17 +2,19 @@ import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 import useCore from '../../useCore';
+import useSlippage from '../../useSlippage'
+import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees'
 
 export default function (
   collateralToken: string,
   arthAmount: number,
   arthxAmount: number,
-  collatearlOutMin: number,
-  redeemFee: BigNumber,
-  slippage: number,
+  collatearlOutMin: number
 ) {
   const addTransaction = useTransactionAdder();
   const core = useCore();
+  const redeemFee = usePoolRedeemFees(collateralToken);
+  // const slippage = useSlippage();
 
   const collateralAmountAfterFees = useMemo(() => {
     const mintingAmount = BigNumber.from(Math.floor(Number(collatearlOutMin) * 1e6));

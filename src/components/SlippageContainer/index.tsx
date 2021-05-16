@@ -10,7 +10,7 @@ export interface InputProps {
   onRateChange: (data: number) => void;
 }
 
-interface Irates{
+interface Irates {
   id: number;
   text: string;
   rate: number;
@@ -37,12 +37,12 @@ const rates: Irates[] = [
     text: 'Custom',
     rate: 0.0,
   },
-]
+];
 
 const SlippageContainer: React.FC<InputProps> = (props) => {
   const { defaultRate, onRateChange } = props;
-  const [ modalOpen, setOpenModal ] = useState<boolean>(false);
-  const [selectedRate, setSelectedRate ] = useState<number>(1);
+  const [modalOpen, setOpenModal] = useState<boolean>(false);
+  const [selectedRate, setSelectedRate] = useState<number>(1);
   const [customRate, setCustomRate] = useState<string>('0.00');
 
   useEffect(() => {
@@ -53,32 +53,31 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
         setSelectedRate(2);
       } else if (props.defaultRate === 1.0) {
         setSelectedRate(3);
-      } else if (props.defaultRate === 0.00) {
-
+      } else if (props.defaultRate === 0.0) {
       } else {
         setSelectedRate(4);
-        setCustomRate(props.defaultRate.toString())
+        setCustomRate(props.defaultRate.toString());
       }
     }
-  }, [modalOpen])
+  }, [modalOpen, props.defaultRate]);
 
   const onRateClick = (data: Irates) => {
     setSelectedRate(data.id);
     if (data.id !== 4) {
       onRateChange(data.rate);
     } else {
-      setCustomRate('0.00')
+      setCustomRate('0.00');
     }
-  }
+  };
 
   const onInputChange = (value: string) => {
     setCustomRate(value);
-    if (Number(value)){
-      onRateChange(Number(value))
+    if (Number(value)) {
+      onRateChange(Number(value));
     } else {
-      console.log('warning', value)
+      console.log('warning', value);
     }
-  }
+  };
 
   const CustomRateField = () => {
     return (
@@ -108,51 +107,61 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
         </InputDiv>
         <PerDiv>%</PerDiv>
       </IField>
-    )
-  }
+    );
+  };
 
   return (
     <MainContainer>
-      {modalOpen && <BackgroundAbsolute
-        onClick={() => {
-          setOpenModal(!modalOpen);
-        }}
-      />}
+      {modalOpen && (
+        <BackgroundAbsolute
+          onClick={() => {
+            setOpenModal(!modalOpen);
+          }}
+        />
+      )}
       <CustomDiv>
-        <img src={settings} height={20} onClick={() => setOpenModal(!modalOpen)}/>
-        {modalOpen && <CustomSlippageBox>
-          <CTitle>
-            Slippage Tolerance
-            <CustomToolTip />
-          </CTitle>
-          <ButtonsBox>
-            {rates.map((data) => {
-              if (data.id !== 4) {
-                return (
-                  <ButtonItem
-                    key={data.id}
-                    style={data.id === selectedRate? {border: '1px solid white'}: {}}
-                    onClick={() => onRateClick(data)}>
-                    <ButtonText>
-                      {data.text}
-                    </ButtonText>
-                  </ButtonItem>)
-              } else {
-                return (
-                  <ButtonItem
-                    key={data.id}
-                    style={data.id === selectedRate ? { border: '1px solid white', marginRight: 0 } : { marginRight: 0 }}
-                    onClick={() => onRateClick(data)}>
-                    {data.id === selectedRate?
-                      CustomRateField():
-                      <ButtonText>
-                        {data.text}
-                      </ButtonText>}
-                  </ButtonItem>)
-              }
-            })}
-          </ButtonsBox>
-        </CustomSlippageBox>}
+        <img src={settings} height={20} onClick={() => setOpenModal(!modalOpen)} />
+        {modalOpen && (
+          <CustomSlippageBox>
+            <CTitle>
+              Slippage Tolerance
+              <CustomToolTip />
+            </CTitle>
+            <ButtonsBox>
+              {rates.map((data) => {
+                if (data.id !== 4) {
+                  return (
+                    <ButtonItem
+                      key={data.id}
+                      style={data.id === selectedRate ? { border: '1px solid white' } : {}}
+                      onClick={() => onRateClick(data)}
+                    >
+                      <ButtonText>{data.text}</ButtonText>
+                    </ButtonItem>
+                  );
+                } else {
+                  return (
+                    <ButtonItem
+                      key={data.id}
+                      style={
+                        data.id === selectedRate
+                          ? { border: '1px solid white', marginRight: 0 }
+                          : { marginRight: 0 }
+                      }
+                      onClick={() => onRateClick(data)}
+                    >
+                      {data.id === selectedRate ? (
+                        CustomRateField()
+                      ) : (
+                        <ButtonText>{data.text}</ButtonText>
+                      )}
+                    </ButtonItem>
+                  );
+                }
+              })}
+            </ButtonsBox>
+          </CustomSlippageBox>
+        )}
       </CustomDiv>
     </MainContainer>
   );
@@ -164,7 +173,7 @@ const MainContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-`
+`;
 const BackgroundAbsolute = styled.div`
   position: fixed;
   top: 0;
@@ -178,10 +187,10 @@ const BackgroundAbsolute = styled.div`
 const CustomDiv = styled.div`
   position: relative;
   cursor: pointer;
-`
+`;
 
 const CustomSlippageBox = styled.div`
-  background: linear-gradient(180deg, #48423E 0%, #373030 100%);
+  background: linear-gradient(180deg, #48423e 0%, #373030 100%);
   border-radius: 12px;
   padding: 24px;
   width: 106px;
@@ -191,7 +200,7 @@ const CustomSlippageBox = styled.div`
   min-width: max-content;
   z-index: 12;
   box-shadow: 0px 12px 24px -4px rgba(0, 0, 0, 0.12), 0px 16px 20px rgba(0, 0, 0, 0.25);
-`
+`;
 
 const CTitle = styled.div`
   font-family: Inter;
@@ -201,12 +210,12 @@ const CTitle = styled.div`
   line-height: 24px;
   color: rgba(255, 255, 255, 0.88);
   margin-bottom: 12px;
-`
+`;
 
 const ButtonsBox = styled.div`
   display: flex;
   flex-direction: row;
-`
+`;
 
 const ButtonItem = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -219,7 +228,7 @@ const ButtonItem = styled.div`
   align-items: center;
   margin-right: 8px;
   cursor: pointer;
-`
+`;
 
 const ButtonText = styled.span`
   font-family: Inter;
@@ -228,7 +237,7 @@ const ButtonText = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-`
+`;
 
 const IField = styled.div`
   display: flex;
@@ -236,11 +245,11 @@ const IField = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
-`
+`;
 
 const InputDiv = styled.div`
   flex: 1;
-`
+`;
 
 const PerDiv = styled.span`
   font-family: Inter;
@@ -249,5 +258,4 @@ const PerDiv = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-`
-
+`;

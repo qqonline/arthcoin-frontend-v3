@@ -28,6 +28,11 @@ export interface StakingContract {
   categories: string[];
 }
 
+export interface TradingPairs {
+  tokens: [string, string];
+  paltform: 'uniswapV2' | 'uniswapV3' | 'quickswap' | 'sushiswap';
+}
+
 export interface TokenStat {
   priceInDAI: BigNumber;
   totalSupply: BigNumber;

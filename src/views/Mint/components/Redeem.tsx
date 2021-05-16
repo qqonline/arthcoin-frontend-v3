@@ -82,8 +82,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     Number(arthValue),
     Number(arthxValue),
     Number(collateralValue),
-    redeemFee,
-    0.1,
   );
 
   const handleRedeem = () => {

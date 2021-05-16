@@ -1,7 +1,7 @@
 import { ChainId } from '@uniswap/sdk';
 import { Configuration } from './basis-cash/config';
 import { CollateralPool } from './basis-cash';
-import { StakingContract } from './basis-cash/types';
+import { StakingContract, TradingPairs } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
@@ -151,5 +151,26 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arth'],
   },
 ];
+
+
+export const tradingPairs: TradingPairs[] = [
+  {
+    tokens: ['MAHA', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['MAHA', 'ARTH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['ARTH', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['ARTHX', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+];
+
 
 export default configurations['development'];

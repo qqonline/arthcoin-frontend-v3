@@ -10,15 +10,15 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
   const addTransaction = useTransactionAdder();
   const core = useCore();
 
-  const action = useCallback(async (): Promise<void> => {
+  const action = useCallback(async (callback?: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
 
-    console.log(collateralAmount.toString(), arthxOutMin)
     const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMin)
     addTransaction(response, {
       summary: `Recollateralize ${getDisplayBalance(collateralAmount)} ${collateralToken}`
     });
 
+    if (callback) callback()
   }, [core, collateralToken, collateralAmount, arthxOutMin, addTransaction]);
 
   // TODO: do something about the apprve
