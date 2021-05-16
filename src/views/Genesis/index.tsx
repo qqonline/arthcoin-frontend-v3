@@ -44,17 +44,7 @@ import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
 import { BigNumber } from '@ethersproject/bignumber';
-
-// const HtmlTooltip = withStyles((theme1 : Theme) => ({
-//   tooltip: {
-//     backgroundColor: theme.color.dark[200],
-//     color: 'white',
-//     fontWeight: 300,
-//     fontSize: '13px',
-//     borderRadius: '6px',
-//     padding: '20px',
-//   },
-// }))(Tooltip);
+import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 
 withStyles({
   root: {
@@ -79,10 +69,6 @@ makeStyles((theme: Theme) =>
     },
   }),
 );
-
-// function valueLabelFormat(value: number) {
-//   return marks.findIndex((mark: any) => mark.value === value) + 1;
-// }
 
 withStyles({
   root: {
@@ -135,37 +121,9 @@ withStyles({
     color: 'rgba(255, 255, 255, 0.88)',
   },
   mark: {
-    // height: '3px',
-    // width: '3px',
-    // borderRadius: '50%',
     color: 'transparent',
   },
 })(Slider);
-
-// const HtmlTooltip = withStyles((theme) => ({
-//   tooltip: {
-//     backgroundColor: '#f5f5f9',
-//     color: 'rgba(0, 0, 0, 0.87)',
-//     maxWidth: 220,
-//     fontSize: theme.typography.pxToRem(12),
-//     border: '1px solid #dadde9',
-//   },
-// }))(Tooltip);
-
-const bondingDiscount = [
-  {
-    label: 'Current discount',
-    value: '30%',
-  },
-  {
-    label: 'Starting ARTHX Price',
-    value: '0.01$',
-  },
-  {
-    label: 'Discounted ARTHX Price',
-    value: '0.007$',
-  },
-];
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -190,7 +148,6 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const [collateralValue, setCollateralValue] = useState<string>('0.0');
   const [arthValue, setArthValue] = useState<string>('0.0');
-  const [balance] = useState<number>(0);
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -200,8 +157,23 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
+  const recollateralizationDiscount = useRecollateralizationDiscount();
   const [timerHeader, setHeader] = useState<boolean>(false);
 
+  const bondingDiscount = [
+    {
+      label: 'Current discount',
+      value: `${getDisplayBalance(recollateralizationDiscount, 4, 4)}%`,
+    },
+    {
+      label: 'Starting ARTHX Price',
+      value: '0.01$',
+    },
+    {
+      label: 'Discounted ARTHX Price',
+      value: '0.007$',
+    },
+  ];
   useEffect(() => {
     const onClick = () => {
       let event: TCalendarEvent = {
@@ -361,7 +333,7 @@ const Genesis = (props: WithSnackbarProps) => {
             </PageSubHeading>
             {calendarLink && (
               <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
-                <img src={calendar} height={24} />
+                <img src={calendar} alt="calendar" height={24} />
                 <span style={{ marginLeft: 8 }}>Add to Calendar</span>
               </HeaderButton>
             )}
