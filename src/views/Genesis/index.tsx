@@ -218,7 +218,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to ARTHX/ETH LPs.',
+    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers',
     'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
     'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral',
     'The discount decreases over time as more collateral is committed.',

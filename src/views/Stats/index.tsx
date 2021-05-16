@@ -159,7 +159,7 @@ const Home: React.FC = () => {
                                 <OpacitySpan>{b.name}</OpacitySpan>
                               </PercentCardLabel>
                               <PercentCardValue>
-                                {Math.floor(b.percentage)}% ({Math.floor(b.amount)} {b.name})
+                                {Math.floor(b.amount)} - {Math.floor(b.percentage)}%
                               </PercentCardValue>
                             </PercentCardInfo>
                           ))}
