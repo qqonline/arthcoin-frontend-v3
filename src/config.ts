@@ -41,7 +41,7 @@ const configurations: { [env: string]: Configuration } = {
     etherscanUrl: 'https://etherscan.io',
     defaultProvider:
       'https://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
-    deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
+    deployments: require('./basis-cash/deployments/mainnet.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-22T15:00:00Z'),
     refreshInterval: 3000,

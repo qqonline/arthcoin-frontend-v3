@@ -362,6 +362,20 @@
   },
   {
     "inputs": [],
+    "name": "MAHAARTHOracle",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapPairOracle",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "_ARTHETHOracle",
     "outputs": [
       {
@@ -759,6 +773,20 @@
   },
   {
     "inputs": [],
+    "name": "mahaArthOracleAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "mintCollateralRatio",
     "outputs": [
       {
@@ -830,20 +858,6 @@
   {
     "inputs": [],
     "name": "priceTarget",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "recollatFee",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1316,6 +1330,19 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      }
+    ],
+    "name": "setMAHARTHOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_arthOracleAddress",
         "type": "address"
       },
@@ -1335,11 +1362,6 @@
       {
         "internalType": "uint256",
         "name": "_mintingFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_recollatFee",
         "type": "uint256"
       },
       {
@@ -1413,19 +1435,6 @@
       }
     ],
     "name": "setBuybackFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "fee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setRecollatFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1611,20 +1620,6 @@
   },
   {
     "inputs": [],
-    "name": "getRecollatFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "getBuybackFee",
     "outputs": [
       {
@@ -1711,11 +1706,6 @@
     "inputs": [],
     "name": "getARTHInfo",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "",

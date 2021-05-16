@@ -9,7 +9,8 @@ export const GMUOracle = require('./abi/GMUOracle.json')
 export const IERC20 = require('./abi/IERC20.json')
 export const IWETH = require('./abi/IWETH.json')
 export const MahaToken = require('./abi/MahaToken.json')
-
+export const Faucet = require('./abi/Faucet.json')
+export const Genesis = require('./abi/Genesis.json')
 export const Multicall = require('./abi/Multicall.json')
 export const Oracle = require('./abi/Oracle.json')
 export const SimpleOracle = require('./abi/SimpleOracle.json')
@@ -34,9 +35,10 @@ const ret: IABIS = {
   GMUOracle,
   UniswapV2Pair,
   IERC20,
+  Faucet,
   IWETH,
   MahaToken,
-
+  Genesis,
   Multicall,
   Oracle,
   SimpleOracle,

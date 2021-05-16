@@ -24,7 +24,7 @@ const GreenRadio = withStyles({
       color: '#FF7F57',
     },
   },
-  checked: {}
+  checked: {},
 })(Radio);
 
 const Boardrooms = () => {
@@ -32,7 +32,7 @@ const Boardrooms = () => {
   const [selectedTestToken, setSelectedTestToken] = useState<string>('');
   const [accountAddress, setAccountAddress] = useState<string>('');
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const [ICStates, setICStates] = useState<ICStatesInterface>({IState: 'default', IMsg: ''})
+  const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: 'default', IMsg: '' });
 
   const RadioButtonList: IRadioButtonList[] = [
     {
@@ -44,12 +44,8 @@ const Boardrooms = () => {
       key: 'MAHA',
     },
     {
-      label: 'ETH',
-      key: 'ETH',
-    },
-    {
-      label: 'WBTC',
-      key: 'WBTC',
+      label: 'ARTHX',
+      key: 'ARTHX',
     },
     {
       label: 'USDT',
@@ -58,21 +54,21 @@ const Boardrooms = () => {
     {
       label: 'USDC',
       key: 'USDC',
-    }
-  ]
+    },
+  ];
 
   const handleChange = (val: string) => {
     setSelectedTestToken(val);
   };
 
   useEffect(() => {
-    console.log(accountAddress.length)
+    console.log(accountAddress.length);
     if (selectedTestToken !== '' && accountAddress.length > 16) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
     }
-  }, [selectedTestToken, accountAddress])
+  }, [selectedTestToken, accountAddress]);
 
   return (
     <>
@@ -80,9 +76,7 @@ const Boardrooms = () => {
       <Container size="lg">
         <div>
           <PageHeading>ARTH faucet</PageHeading>
-          <PageSubHeading>
-            Get tokens to test ARTH V2.0
-          </PageSubHeading>
+          <PageSubHeading>Get tokens to test ARTH V2.0</PageSubHeading>
         </div>
         <Grid container>
           <Grid item lg={3}></Grid>
@@ -100,24 +94,19 @@ const Boardrooms = () => {
                         name="radio-button-demo"
                         inputProps={{ 'aria-label': data.key }}
                       />
-                      <SecondaryText onClick={() => {handleChange(data.key)}}>{data.label}</SecondaryText>
+                      <SecondaryText
+                        onClick={() => {
+                          handleChange(data.key);
+                        }}
+                      >
+                        {data.label}
+                      </SecondaryText>
                     </RadioConatiner>
                   </Grid>
                 ))}
               </Grid>
-              <Grid container lg={12} style={{marginTop: '4px'}}>
-                <PrimaryText>Enter your account address</PrimaryText>
-                <AddressInput
-                  className={`input-${ICStates.IState}`}
-                  placeholder={'account address'}
-                  onChange={(event) => {
-                    setAccountAddress(event.target.value);
-                  }}
-                  value={accountAddress}
-                />
-                {ICStates.IMsg !== '' && <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>}
-              </Grid>
-              <Grid container lg={12} style={{marginTop: '32px'}}>
+
+              <Grid container lg={12} style={{ marginTop: '32px' }}>
                 <Grid item lg={4} md={4} sm={6} xs={6}>
                   <Button
                     variant={'default'}
@@ -135,7 +124,7 @@ const Boardrooms = () => {
       </Container>
     </>
   );
-}
+};
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
@@ -182,7 +171,7 @@ const RadioConatiner = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
-`
+`;
 
 const PrimaryText = styled.p`
   font-family: Inter;
@@ -192,7 +181,7 @@ const PrimaryText = styled.p`
   line-height: 20px;
   color: rgba(255, 255, 255, 0.88);
   margin-bottom: 12px;
-`
+`;
 
 const SecondaryText = styled.p`
   font-family: Inter;
@@ -203,7 +192,7 @@ const SecondaryText = styled.p`
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 0;
   cursor: pointer;
-`
+`;
 
 const AddressInput = styled.input`
   background: #151414;
@@ -216,6 +205,6 @@ const AddressInput = styled.input`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  color: #FFFFFF;
-`
+  color: #ffffff;
+`;
 export default Boardrooms;
