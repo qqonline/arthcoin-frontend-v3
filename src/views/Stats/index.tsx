@@ -9,8 +9,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useCore from '../../hooks/useCore';
 import { useMediaQuery } from 'react-responsive';
-import arrowRight from '../../assets/svg/arrowRight.svg';
-import arrowRightDisabled from '../../assets/svg/arrowRightDisabed.svg';
+import usePoolBalances from '../../hooks/state/pools/usePoolBalances';
 import CollateralRatio from './components/CollateralRatio';
 import PieChart from './components/PieChart';
 import BondingDiscount from './components/BondingDiscount';
@@ -21,6 +20,8 @@ import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
 import CustomToolTip from '../../components/CustomTooltip';
 import { Link } from 'react-router-dom';
+import { BigNumber } from '@ethersproject/bignumber';
+import { getDisplayBalance } from '../../utils/formatBalance';
 
 const Home: React.FC = () => {
   const core = useCore();
@@ -46,6 +47,16 @@ const Home: React.FC = () => {
   const cashAddr = useMemo(() => core.ARTH.address, [core]);
   const shareAddr = useMemo(() => core.MAHA.address, [core]);
   const bondAddr = useMemo(() => core.ARTHX.address, [core]);
+
+  const balances = usePoolBalances();
+
+  const totalCollateral = balances.reduce((p, c) => p.add(c.balance), BigNumber.from(0));
+
+  const formattedBalances = balances.map((b) => ({
+    name: b.poolToken,
+    amount: Number(getDisplayBalance(b.balance, 6)),
+    percentage: Number(getDisplayBalance(b.balance.mul(1e8).div(totalCollateral), 6)),
+  }));
 
   return (
     <Page>
@@ -130,86 +141,28 @@ const Home: React.FC = () => {
                       }}
                     >
                       <Grid item sm={12} md={6} lg={6}>
-                        {/* <div style={{ marginRight: 25, background: 'black' }}> */}
-                        <PieChart />
-                        {/* </div> */}
+                        <PieChart balances={formattedBalances} />
                       </Grid>
                       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                         <PercentCard>
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#D74D26',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>USDT</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>50% (50,000 USDT)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          {/* <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#F7653B',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>ETH</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>20% (50,000 ETH)</PercentCardValue>
-                          </PercentCardInfo> */}
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FF7F57',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>USDC</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 USDC)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          {/* <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FFA981',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>WBTC</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 WBTC)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FEE2D5',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>MAHA</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 MAHA)</PercentCardValue>
-                          </PercentCardInfo>*/}
+                          {formattedBalances.map((b) => (
+                            <PercentCardInfo>
+                              <PercentCardLabel>
+                                <div
+                                  style={{
+                                    height: 14,
+                                    width: 14,
+                                    background: '#D74D26',
+                                    borderRadius: 7,
+                                  }}
+                                />
+                                <OpacitySpan>{b.name}</OpacitySpan>
+                              </PercentCardLabel>
+                              <PercentCardValue>
+                                {Math.floor(b.percentage)}% ({Math.floor(b.amount)} {b.name})
+                              </PercentCardValue>
+                            </PercentCardInfo>
+                          ))}
                         </PercentCard>
                       </Grid>
                     </Grid>
