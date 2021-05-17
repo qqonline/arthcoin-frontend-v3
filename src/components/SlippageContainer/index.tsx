@@ -125,7 +125,7 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
           <CustomSlippageBox>
             <CTitle>
               Slippage Tolerance
-              <CustomToolTip />
+              <CustomToolTip toolTipText={'loreum ipsum'} />
             </CTitle>
             <ButtonsBox>
               {rates.map((data) => {

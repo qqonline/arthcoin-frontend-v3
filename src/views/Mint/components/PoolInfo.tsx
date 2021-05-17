@@ -50,7 +50,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Mint Collateral Ratio
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>{getDisplayBalance(mintCR, 4, 2)}%</InputLabelSpanRight>
@@ -61,7 +61,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Redeem Collateral Ratio
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>{getDisplayBalance(redeemCR, 4, 2)}%</InputLabelSpanRight>
@@ -90,7 +90,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Stability Fee
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>1%</InputLabelSpanRight>
@@ -101,7 +101,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Trading Fee
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>0.1%</InputLabelSpanRight>

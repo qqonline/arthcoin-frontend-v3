@@ -125,7 +125,7 @@ const Home: React.FC = () => {
                 <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <CustomToolTip />
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid

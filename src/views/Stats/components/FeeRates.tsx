@@ -18,7 +18,7 @@ const BondingDiscount: React.FC<props> = () => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Trading fee
-              <CustomToolTip />
+              <CustomToolTip toolTipText={'loreum ipsum'} />
             </TextWithIcon>
           </div>
           <OneLine>
@@ -30,7 +30,7 @@ const BondingDiscount: React.FC<props> = () => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Stability fee
-              <CustomToolTip />
+              <CustomToolTip toolTipText={'loreum ipsum'} />
             </TextWithIcon>
           </div>
           <OneLine>

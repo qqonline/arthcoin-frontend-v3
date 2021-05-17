@@ -16,7 +16,7 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Available to mint
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
               <BeforeChip>{prettyNumber(54760000)}</BeforeChip>
             </div>
@@ -30,7 +30,7 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Pool Balance
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
               <BeforeChip>{prettyNumber(157800000)}</BeforeChip>
             </div>

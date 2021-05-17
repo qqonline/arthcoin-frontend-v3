@@ -349,14 +349,14 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
                     Amount Remaining to Raise
-                    <CustomToolTip />
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>{getDisplayBalance(arthPendingRaise)}</BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip />
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>{getDisplayBalance(committedCollateral)}</BeforeChipDark>
                 </OneLineInputwomargin>

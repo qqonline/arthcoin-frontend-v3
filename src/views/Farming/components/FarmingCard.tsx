@@ -13,6 +13,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
 import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
 import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
+import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
 
 interface IProps {
   mode?: ModeProps;
