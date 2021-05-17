@@ -81,7 +81,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle style={{ justifyContent: 'flex-start' }}>
             Buyback
-            <CustomToolTip />
+            <CustomToolTip toolTipText={'loreum ipsum'} />
           </HeaderTitle>
           <HeaderSubtitle>
             <TextForInfoTitle>Buyback is not needed for now</TextForInfoTitle>
@@ -99,7 +99,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
           <HeaderTitle>
             <div>
               {'Add Collateral'}
-              <CustomToolTip />
+              <CustomToolTip toolTipText={'loreum ipsum'} />
             </div>
             <SlippageContainer
               defaultRate={selectedRate}
@@ -149,7 +149,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             <OneLineInputwomargin>
               <PrimaryText>
                 + Bonus
-                <CustomToolTip />
+                <CustomToolTip toolTipText={'loreum ipsum'} />
               </PrimaryText>
               <OneLineInputwomargin>
                 <BeforeHardChip>{receiveBonus}</BeforeHardChip>
@@ -215,7 +215,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     <div>
       <Grid container>
         <Grid container lg={8} md={12} sm={12} xs={12}>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
+          <Grid item lg={6} md={12} sm={12} xs={12} style={{zIndex: 1}}>
             {recollatateralizeConatiner()}
           </Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -270,7 +270,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       Bonus Rate
-                      <CustomToolTip />
+                      <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>0.2%</InputLabelSpanRight>
@@ -281,7 +281,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       MAHA Reward
-                      <CustomToolTip />
+                      <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>5%</InputLabelSpanRight>
@@ -471,7 +471,6 @@ const LeftTopCardChecked = styled.div`
 
 const RightTopCard = styled.div`
   height: 519px;
-  z-index: -1;
   margin-left: -5px;
   @media (max-width: 600px) {
     margin-left: 0;

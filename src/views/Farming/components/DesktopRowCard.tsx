@@ -167,6 +167,7 @@ const AddLiquidityButton = styled.p`
   line-height: 140%;
   color: #ff7f57;
   margin: 0;
+  cursor: pointer;
 `;
 
 const DayText = styled.p`

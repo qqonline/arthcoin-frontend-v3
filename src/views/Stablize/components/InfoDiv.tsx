@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import InfoIcon from '@material-ui/icons/Info';
+import CustomToolTip from '../../../components/CustomTooltip';
 
 interface IProps {
   labelData: string;
@@ -16,10 +17,7 @@ const TransparentInfoDiv = (props: IProps) => {
       <InfoSpan>
         {props.labelData}
         {props.labelToolTipData && (
-          <InfoIcon
-            fontSize="small"
-            style={{ marginLeft: 2, marginTop: -2, transform: 'scale(0.8)' }}
-          />
+          <CustomToolTip toolTipText={props.labelToolTipData} />
         )}
       </InfoSpan>
       <LabelInfoData>

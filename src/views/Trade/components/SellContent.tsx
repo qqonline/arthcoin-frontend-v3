@@ -194,7 +194,7 @@ const SellContent = (props: WithSnackbarProps) => {
               <div style={{ flex: 1 }}>
                 <TextWithIcon>
                   Trading fee
-                  <CustomToolTip />
+                  <CustomToolTip toolTipText={'loreum ipsum'} />
                 </TextWithIcon>
               </div>
               <OneLineInputwomargin>

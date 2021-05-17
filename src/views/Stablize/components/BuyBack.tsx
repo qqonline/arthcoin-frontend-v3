@@ -79,7 +79,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
           <HeaderTitle>
             <div>
               Buyback
-              <CustomToolTip />
+              <CustomToolTip toolTipText={'loreum ipsum'} />
             </div>
             <SlippageContainer
               defaultRate={selectedRate}
@@ -181,7 +181,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle style={{ justifyContent: 'flex-start' }}>
             {'Recollatateralize'}
-            <CustomToolTip />
+            <CustomToolTip toolTipText={'loreum ipsum'} />
           </HeaderTitle>
           <HeaderSubtitle>
             <TextForInfoTitle>The Protocol is currently collateralised</TextForInfoTitle>
@@ -196,7 +196,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     <div>
       <Grid container>
         <Grid container lg={8} md={12} sm={12} xs={12}>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
+          <Grid item lg={6} md={12} sm={12} xs={12} style={{zIndex: 1}}>
             {buyBackContainer()}
           </Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -207,7 +207,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
                       Trading Fee
-                      <CustomToolTip />
+                      <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>0.1%</InputLabelSpanRight>
@@ -367,7 +367,6 @@ const LeftTopCardChecked = styled.div`
 
 const RightTopCard = styled.div`
   height: 516px;
-  z-index: -1;
   margin-left: -5px;
   @media (max-width: 600px) {
     margin-left: 0;

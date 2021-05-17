@@ -74,7 +74,7 @@ const Home: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px', alignItems: 'center' }}>
           <TextForInfoTitle>
             Collateral Ratio
-            <CustomToolTip />
+            <CustomToolTip toolTipText={'loreum ipsum'} />
           </TextForInfoTitle>
           {/* </div> */}
           <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>
@@ -180,7 +180,7 @@ const Home: React.FC = () => {
                 <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <CustomToolTip />
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid

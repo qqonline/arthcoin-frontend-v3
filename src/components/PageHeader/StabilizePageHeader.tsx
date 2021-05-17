@@ -11,6 +11,7 @@ import { createStyles, Theme, withStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useGlobalCollateralRatio from '../../hooks/state/useGlobalCollateralRatio';
+import CustomToolTip from '../CustomTooltip';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
@@ -86,7 +87,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                 {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
                 <TextForInfoTitle>
                   Collateral Ratio
-                  <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                  <CustomToolTip toolTipText={'loreum ipsum'} />
                 </TextForInfoTitle>
                 {/* </div> */}
                 <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4, 2)}%</PercentNumber>
@@ -98,7 +99,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                   <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px' }}>
                     <TextForInfoTitle>
                       Collateral Ratio
-                  <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />
+                      <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                     {/* </div> */}
                     <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4)}%</PercentNumber>
