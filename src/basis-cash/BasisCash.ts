@@ -29,6 +29,7 @@ export class BasisCash {
   USDC: ERC20;
   WBTC: ERC20;
   WETH: ERC20;
+  PoolToken: ERC20;
 
   ArthWethLP: ERC20;
   MahaWethLP: ERC20;
@@ -68,7 +69,7 @@ export class BasisCash {
     this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
     this.ArthxWethLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-ETH LP');
     this.ArthWethLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-ETH LP');
-
+    this.PoolToken = new ERC20(deployments.PoolToken?.address, provider, 'ARTH-RT');
 
     this.tokens = {
       ARTH: this.ARTH,
@@ -133,6 +134,7 @@ export class BasisCash {
       this.USDT,
       this.WBTC,
       this.USDT,
+      this.PoolToken,
       this.ArthMahaLP,
       this.MahaWethLP,
       this.ArthxWethLP,

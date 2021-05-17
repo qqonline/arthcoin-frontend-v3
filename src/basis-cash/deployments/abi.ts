@@ -16,6 +16,8 @@ export const Oracle = require('./abi/Oracle.json')
 export const SimpleOracle = require('./abi/SimpleOracle.json')
 export const UniswapPairOracle = require('./abi/UniswapPairOracle.json')
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json')
+export const PoolToken = require('./abi/PoolToken.json')
+
 export const UniswapV2Pair = require('./abi/UniswapV2Pair.json')
 export const UniswapV2Router02 = require('./abi/UniswapV2Router02.json')
 
@@ -34,6 +36,7 @@ const ret: IABIS = {
   BoostedStaking,
   Faucet,
   Genesis,
+  PoolToken,
   GMUOracle,
   IERC20,
   IWETH,

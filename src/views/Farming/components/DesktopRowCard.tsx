@@ -27,6 +27,10 @@ type IProps = {
   // open?: boolean;
   // lockedStake?: string;
   // earned?: string;
+  rates: {
+    maha: BigNumber;
+    arthx: BigNumber;
+  };
   onDepositClick: () => void;
   onWithdrawClick: () => void;
   onClaimClick: () => void;
@@ -35,6 +39,7 @@ type IProps = {
 export default (props: IProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
+  const pow = BigNumber.from(10).pow(18);
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
 
@@ -125,9 +130,19 @@ export default (props: IProps) => {
             Earned:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
               {/* TODO: have some kind of rate added here */}
-              {getDisplayBalance(props.claimableBalance)} ARTHX
+              {getDisplayBalance(
+                props.claimableBalance.mul(props.rates.maha).div(pow),
+                18,
+                6,
+              )}{' '}
+              ARTHX
               {' + '}
-              {getDisplayBalance(props.claimableBalance)} MAHA
+              {getDisplayBalance(
+                props.claimableBalance.mul(props.rates.arthx).div(pow),
+                18,
+                6,
+              )}{' '}
+              MAHA
             </TableMainTextStyle>
             <WithdrawClaimButton onClick={props.onClaimClick}>
               Claim Rewards
