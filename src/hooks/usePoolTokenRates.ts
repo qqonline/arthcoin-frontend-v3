@@ -7,9 +7,9 @@ export default () => {
   const core = useCore();
 
   const fetchCashPrice = useCallback(async () => {
-    const { Treasury } = core.contracts;
-    setPrice(await Treasury.getArthMahaOraclePrice());
-  }, [core]);
+    // const { Treasury } = core.contracts;
+    // setPrice(await Treasury.getArthMahaOraclePrice());
+  }, []);
 
   useEffect(() => {
     fetchCashPrice().catch((err) => console.error(`Failed to fetch ARTHB price: ${err.stack}`));

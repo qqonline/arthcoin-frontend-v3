@@ -9,7 +9,7 @@ export default function (stakingContract: string) {
 
   const action = useCallback(async (): Promise<void> => {
     const contract = core.contracts[stakingContract]
-    const response = await contract.getReward()
+    const response = await contract.getRewardAndDistribute()
     addTransaction(response, {
       summary: `Claim Rewards`
     });
