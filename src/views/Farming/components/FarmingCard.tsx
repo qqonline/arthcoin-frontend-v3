@@ -31,6 +31,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const claimableBalance = useStakingRewards(pool.contract);
   const onClaim = useStakingClaim(pool.contract);
 
+  const [mahaRate, arthxRate] = usePoolTokenRates();
+
   const [onPresentWithdrawModal, onDismissWithdrawModal] = useModal(
     <WithdrawModal
       pool={pool}
