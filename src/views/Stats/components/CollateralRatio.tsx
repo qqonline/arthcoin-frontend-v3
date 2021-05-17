@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useCore from '../../../hooks/useCore';
 import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
-import useGlobalCollateralRatio from '../../../hooks/state/useGlobalCollateralRatio';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 import CustomToolTip from '../../../components/CustomTooltip';
 import { getDisplayBalance } from '../../../utils/formatBalance';
