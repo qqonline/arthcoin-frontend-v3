@@ -8,7 +8,7 @@ export default (collateralPoolToken: string) => {
 
   const fetchValue = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    setValue(await controller.getRecollatFee());
+    setValue(await controller.getRedemptionFee());
   }, [core]);
 
   useEffect(() => {

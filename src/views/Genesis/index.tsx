@@ -41,10 +41,12 @@ import useCore from '../../hooks/useCore';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import useRedeemARTH from '../../hooks/callbacks/pools/useRedeemARTH';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
-import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
+import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
 import { BigNumber } from '@ethersproject/bignumber';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
+import prettyNumber from '../../components/PrettyNumber';
+import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 
 withStyles({
   root: {
@@ -203,11 +205,14 @@ const Genesis = (props: WithSnackbarProps) => {
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const { account, connect } = useWallet();
   const arthBalance = useTokenBalance(core.ARTH);
-  const arthPendingRaise = useGlobalCollateralValue();
+  const arthCirculatingSupply = useARTHCirculatingSupply();
   const arthxPrice = useARTHXOraclePrice();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
+  const percentageCompleted = usePercentageCompleted();
+
+  const percentageCompletedNum = percentageCompleted.div(1e14).toString();
 
   const arthxRecieve = useMemo(() => {
     if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
@@ -312,9 +317,12 @@ const Genesis = (props: WithSnackbarProps) => {
         {!timerHeader ? (
           <PageSubHeading>
             <div style={{}}>
-              <BorderLinearProgress variant="determinate" value={0} />
+              <BorderLinearProgress
+                variant="determinate"
+                value={Number(percentageCompletedNum)}
+              />
             </div>
-            <HeaderSpan>0% Completed</HeaderSpan>
+            <HeaderSpan>{percentageCompletedNum}% Completed</HeaderSpan>
           </PageSubHeading>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -348,17 +356,21 @@ const Genesis = (props: WithSnackbarProps) => {
               <CustomInfoCardDetails>
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
-                    Amount Remaining to Raise
+                    ARTH Circulating Supply
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
-                  <BeforeChipDark>{getDisplayBalance(arthPendingRaise)}</BeforeChipDark>
+                  <BeforeChipDark>
+                    {prettyNumber(getDisplayBalance(arthCirculatingSupply))}
+                  </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
-                  <BeforeChipDark>{getDisplayBalance(committedCollateral)}</BeforeChipDark>
+                  <BeforeChipDark>
+                    {prettyNumber(getDisplayBalance(committedCollateral, 16))}
+                  </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
             </CustomInfoCard>

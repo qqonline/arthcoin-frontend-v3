@@ -6,7 +6,6 @@ export const ARTHShares = require('./abi/ARTHShares.json')
 export const ARTHStablecoin = require('./abi/ARTHStablecoin.json')
 export const BoostedStaking = require('./abi/BoostedStaking.json')
 export const Faucet = require('./abi/Faucet.json')
-export const Genesis = require('./abi/Genesis.json')
 export const GMUOracle = require('./abi/GMUOracle.json')
 export const IERC20 = require('./abi/IERC20.json')
 export const IWETH = require('./abi/IWETH.json')
@@ -35,7 +34,6 @@ const ret: IABIS = {
   ARTHStablecoin,
   BoostedStaking,
   Faucet,
-  Genesis,
   PoolToken,
   GMUOracle,
   IERC20,

@@ -612,6 +612,20 @@
   },
   {
     "inputs": [],
+    "name": "bondingCurve",
+    "outputs": [
+      {
+        "internalType": "contract IBondingCurve",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "buyBackPaused",
     "outputs": [
       {
@@ -683,6 +697,20 @@
   {
     "inputs": [],
     "name": "genesisSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "genesisTimestamp",
     "outputs": [
       {
         "internalType": "uint256",
@@ -773,6 +801,20 @@
   },
   {
     "inputs": [],
+    "name": "isARTHXGenesActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "isColalteralRatioPaused",
     "outputs": [
       {
@@ -807,6 +849,34 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "maxGenesisDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "maxRecollateralizeDiscount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1122,6 +1192,13 @@
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "deactivateGenesis",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "bool",
@@ -1195,6 +1272,19 @@
       }
     ],
     "name": "setRecollateralizeCollateralRatio",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IBondingCurve",
+        "name": "curve",
+        "type": "address"
+      }
+    ],
+    "name": "setBondingCurve",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1536,6 +1626,34 @@
   },
   {
     "inputs": [],
+    "name": "getIsGenesisActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getARTHXGenesisPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "getARTHXPrice",
     "outputs": [
       {
@@ -1705,6 +1823,20 @@
   {
     "inputs": [],
     "name": "getTargetCollateralValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getPercentCollateralized",
     "outputs": [
       {
         "internalType": "uint256",
