@@ -214,8 +214,28 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const percentageCompletedNum = percentageCompleted.div(1e14).toString();
 
-  const arthxRecieve = useMemo(() => {
+  /*const arthxRecieve = useMemo(() => {
     if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
+    return arthxPrice.mul(Math.floor(Number(arthValue)));
+  }, [arthValue, arthxPrice, collateralValue, type]);*/
+
+  /*const arthxRecieve = useMemo(() => {
+    if (type === 'Commit')
+      if (arthxPrice.gt(0) && Number(collateralValue)) {
+        const temp = Number(arthxPrice.toString()) / 1e6;
+        return Number(collateralValue) / temp;
+      }
+    return arthxPrice.mul(Math.floor(Number(arthValue)));
+  }, [arthValue, arthxPrice, collateralValue, type]);*/
+
+  // not sure
+  const arthxRecieve = useMemo(() => {
+    if (type === 'Commit')
+      if (arthxPrice.gt(0) && Number(collateralValue)) {
+        return BigNumber.from(Number(collateralValue) * 1e6)
+          .mul(1e6)
+          .div(arthxPrice)
+      }
     return arthxPrice.mul(Math.floor(Number(arthValue)));
   }, [arthValue, arthxPrice, collateralValue, type]);
 
