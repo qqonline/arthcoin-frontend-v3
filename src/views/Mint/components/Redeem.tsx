@@ -303,12 +303,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             rightLabelValue={getDisplayBalance(tradingFee, 6)}
           />
 
-          <TransparentInfoDiv
+          {/* <TransparentInfoDiv
             labelData={`Stability Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={'0.05'}
-          />
+          /> */}
 
           <Divider
             style={{
