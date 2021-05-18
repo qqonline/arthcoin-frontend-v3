@@ -19,6 +19,7 @@ import useCore from '../../../hooks/useCore';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { createImportSpecifier } from 'typescript';
+import { BigNumber } from '@ethersproject/bignumber';
 
 type Iprops = {
   onChange: () => void;
@@ -72,8 +73,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
     const valInNumber = Number(val);
     if (valInNumber) {
-      setReceiveShare(String(valInNumber));
-      setReceiveBonus(String(valInNumber * discount));
+      const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
+      const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
+        .mul(1e6)
+        .div(arthxPrice);
+      setReceiveShare(getDisplayBalance(amountBN, 6));
+      setReceiveBonus(getDisplayBalance(discountBN, 6));
     }
   };
 

@@ -47,6 +47,8 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import prettyNumber from '../../components/PrettyNumber';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
+import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
 
 withStyles({
   root: {
@@ -163,6 +165,9 @@ const Genesis = (props: WithSnackbarProps) => {
   const [timerHeader, setHeader] = useState<boolean>(false);
   const arthxPrice = useARTHXOraclePrice();
 
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
+
   const bondingDiscount = [
     {
       label: 'Current discount',
@@ -215,8 +220,10 @@ const Genesis = (props: WithSnackbarProps) => {
   const percentageCompletedNum = percentageCompleted.div(1e14).toString();
 
   const arthxRecieve = useMemo(() => {
-    if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
+    if (arthxPrice.eq(0)) return BigNumber.from(0);
+    if (type === 'Commit')
+      return BigNumber.from(Number(collateralValue)).mul(1e12).div(arthxPrice);
+    return BigNumber.from(Number(arthValue)).mul(1e12).div(arthxPrice);
   }, [arthValue, arthxPrice, collateralValue, type]);
 
   const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
@@ -480,13 +487,27 @@ const Genesis = (props: WithSnackbarProps) => {
                     onClick={approve}
                   />
                 ) : (
-                  <Button
-                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={false}
-                    onClick={() => setOpenModal(1)}
-                  />
+                  <>
+                    <Button
+                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                      size={'lg'}
+                      variant={'default'}
+                      disabled={false}
+                      onClick={() => setOpenModal(1)}
+                    />
+
+                    <br />
+
+                    {redeemableBalances[0].gt(0) ||
+                      (redeemableBalances[1].gt(0) && (
+                        <Button
+                          text={'Collect Redeemption'}
+                          size={'lg'}
+                          variant={'default'}
+                          onClick={collectRedeemption}
+                        />
+                      ))}
+                  </>
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>
