@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type props = {
   stats?: boolean;
 };
 
 const BondingDiscount: React.FC<props> = (props: props) => {
+  const discount = useRecollateralizationDiscount();
+
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       {props.stats ? (
@@ -29,7 +33,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>12%</BeforeChip>
+            <BeforeChip>{getDisplayBalance(discount, 6)}%</BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
@@ -38,7 +42,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
             <TextWithIcon>Minimum discount</TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>0.75%</BeforeChip>
+            <BeforeChip>0.075%</BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>

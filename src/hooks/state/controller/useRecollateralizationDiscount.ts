@@ -8,7 +8,6 @@ export default () => {
 
   const fetchValue = useCallback(async () => {
     const contract = core.contracts.ArthController
-    console.log(await contract.getRecollateralizationDiscount())
     setValue(await contract.getRecollateralizationDiscount());
   }, [core.contracts]);
 

@@ -39,7 +39,7 @@ import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useCore from '../../hooks/useCore';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
-import useRedeemARTH from '../../hooks/callbacks/pools/useRedeemARTH';
+import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
@@ -216,16 +216,15 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const arthxRecieve = useMemo(() => {
     if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
-    return arthxPrice.mul(Number(arthValue));
+    return arthxPrice.mul(Math.floor(Number(arthValue)));
   }, [arthValue, arthxPrice, collateralValue, type]);
 
   const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
 
-  const redeemARTH = useRedeemARTH(
+  const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     Number(arthValue),
-    Number(arthxRecieve),
-    0,
+    arthxRecieve,
   );
 
   const recollateralize = usePerformRecollateralize(
