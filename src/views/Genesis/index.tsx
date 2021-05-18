@@ -222,9 +222,30 @@ const Genesis = (props: WithSnackbarProps) => {
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.eq(0)) return BigNumber.from(0);
     if (type === 'Commit')
-      return BigNumber.from(Number(collateralValue)).mul(1e12).div(arthxPrice);
+      return BigNumber.from(Number(collateralValue)).mul(1e10).div(arthxPrice);
     return BigNumber.from(Number(arthValue)).mul(1e12).div(arthxPrice);
   }, [arthValue, arthxPrice, collateralValue, type]);
+
+  // const onColleteralChange = (val: string) => {
+  //   if (val === '') {
+  //     setReceiveShare('0');
+  //     setReceiveBonus('0');
+  //   }
+  //   let check = ValidateNumber(val);
+
+  //   setCollateralAmount(check ? val : String(Number(val)));
+  //   if (!check) return;
+  //   const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
+  //   const valInNumber = Number(val);
+  //   if (valInNumber) {
+  //     const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
+  //     const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
+  //       .mul(1e6)
+  //       .div(arthxPrice);
+  //     setReceiveShare(getDisplayBalance(amountBN, 6));
+  //     setReceiveBonus(getDisplayBalance(discountBN, 6));
+  //   }
+  // };
 
   const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
 

@@ -73,7 +73,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
     const valInNumber = Number(val);
     if (valInNumber) {
-      const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
+      const amountBN = BigNumber.from(valInNumber).mul(1e10).div(arthxPrice);
       const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
         .mul(1e6)
         .div(arthxPrice);
