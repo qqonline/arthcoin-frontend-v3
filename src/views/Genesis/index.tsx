@@ -212,7 +212,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
 
-  const percentageCompletedNum = percentageCompleted.div(1e14).toString();
+  const percentageCompletedNum = percentageCompleted.div(1e14).div(1e2).toString(); // Equivalent to .mul(100).div(1e18)
 
   const arthxRecieve = useMemo(() => {
     if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
@@ -368,7 +368,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(committedCollateral, 16))}
+                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>

@@ -73,7 +73,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>Pool Balance</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {prettyNumber(getDisplayBalance(poolBalance, 16))}
+              {prettyNumber(getDisplayBalance(poolBalance, 18))}
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
