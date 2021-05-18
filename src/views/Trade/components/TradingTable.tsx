@@ -56,10 +56,10 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
             <CustomTableHeading>Pair</CustomTableHeading>
           </Grid>
           <Grid item lg={3}>
-            <CustomTableHeading>Liquidity</CustomTableHeading>
+            {/* <CustomTableHeading>Liquidity</CustomTableHeading> */}
           </Grid>
           <Grid item lg={3}>
-            <CustomTableHeading>Volume (24 hours)</CustomTableHeading>
+            {/* <CustomTableHeading>Volume (24 hours)</CustomTableHeading> */}
           </Grid>
           <Grid item lg={3}></Grid>
         </Grid>
