@@ -19,6 +19,7 @@ import useCore from '../../../hooks/useCore';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { createImportSpecifier } from 'typescript';
+import { BigNumber } from '@ethersproject/bignumber';
 
 type Iprops = {
   onChange: () => void;
@@ -72,8 +73,21 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
     const valInNumber = Number(val);
     if (valInNumber) {
-      setReceiveShare(String(valInNumber));
+      // setReceiveShare(String(valInNumber));
       setReceiveBonus(String(valInNumber * discount));
+
+      //yash method 1
+      const tempArthx = Number(arthxPrice.toString()) / 1e6
+      const ReceiveShareTemp = valInNumber / tempArthx
+      console.log(tempArthx, ReceiveShareTemp)
+
+      //method last
+      //?? precision issue while converting to big number
+      /*let ReceiveShareTemp = BigNumber.from(valInNumber)
+        .mul(1e6)
+        .div(arthxPrice)
+      console.log(ReceiveShareTemp.toString(), valInNumber)*/
+      setReceiveShare(String(ReceiveShareTemp));
     }
   };
 
