@@ -62,6 +62,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const redeemCR = useRedeemCollateralRatio();
   const colletralRatio = redeemCR.div(10000).toNumber();
+  console.log(redeemCR, colletralRatio)
 
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
@@ -442,6 +443,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
+                DisableMsg={colletralRatio === 0 ? 'Currently Redeem Collateral ratio is 0%' : ''}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
