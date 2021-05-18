@@ -12,6 +12,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
+import CountUp from 'react-countup';
 
 type IProps = {
   pool: StakingContract;
@@ -52,7 +53,19 @@ export default (props: IProps) => {
   const tokenBalance = useTokenBalance(depositTokenContract);
 
   const isWalletConnected = !!account;
-
+  // all 4 variables below && <Countup/> tag - needs review @steven
+  const initEarnedARTHX = Number(getDisplayBalance(
+    props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
+    18,
+    6,
+  ))
+  const initEarnedMAHA = Number(getDisplayBalance(
+    props.claimableBalance.mul(props.rates.arthx).div(pow),
+    18,
+    6,
+  ))
+  const rate = 5;
+  const addedFactor = (basevalue: number) => basevalue * rate * 3600;
   return (
     <CustomCardGrid>
       <Grid
@@ -117,7 +130,7 @@ export default (props: IProps) => {
           )}
         </Grid>
       </Grid>
-      {props.stakedBalance.gt(0) && (
+      {true && (
         <DepositInfoContainer>
           <div style={{ display: 'flex' }}>
             Your Locked state:
@@ -130,18 +143,42 @@ export default (props: IProps) => {
             Earned:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
               {/* TODO: have some kind of rate added here */}
-              {getDisplayBalance(
+              <CountUp
+                start={initEarnedARTHX}
+                end={initEarnedARTHX + addedFactor(initEarnedARTHX)}
+                delay={0}
+                decimals={6}
+                duration={3600}
+                preserveValue={true}
+                onUpdate={() => {
+                  console.log('test');
+                }}
+              />
+              {/* {getDisplayBalance(
                 props.claimableBalance.mul(props.rates.maha).div(pow),
                 18,
                 6,
-              )}{' '}
+              )}*/}
+              {' '}
               ARTHX
               {' + '}
-              {getDisplayBalance(
+              <CountUp
+                start={initEarnedMAHA}
+                end={initEarnedMAHA + addedFactor(initEarnedMAHA)}
+                delay={0}
+                decimals={6}
+                duration={3600}
+                preserveValue={true}
+                onUpdate={() => {
+                  console.log('test');
+                }}
+              />
+              {/* {getDisplayBalance(
                 props.claimableBalance.mul(props.rates.arthx).div(pow),
                 18,
                 6,
-              )}{' '}
+              )} */}
+              {' '}
               MAHA
             </TableMainTextStyle>
             <WithdrawClaimButton onClick={props.onClaimClick}>
