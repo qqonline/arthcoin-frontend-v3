@@ -569,7 +569,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
         buttonText={'Checkout Staking Pools'}
         // buttonType={'default'}
-        buttonHref={'/farming'}
+        buttonHref={'/#/farming'}
       />
     </>
   );
