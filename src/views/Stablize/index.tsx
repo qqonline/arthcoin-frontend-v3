@@ -31,10 +31,10 @@ export default () => {
         mobile={isMobile ? true : false}
       />
       <Container size="lg">
-        {type === 'buyback' && <BuyBack onChange={() => setType('recollateralize')} />}
-        {type === 'recollateralize' && (
-          <Recollatateralize onChange={() => setType('buyback')} />
-        )}
+        {/* {type === 'buyback' && <BuyBack onChange={() => setType('recollateralize')} />}
+        {type === 'recollateralize' && ( */}
+        <Recollatateralize onChange={() => setType('buyback')} />
+        {/* )} */}
       </Container>
     </>
   );

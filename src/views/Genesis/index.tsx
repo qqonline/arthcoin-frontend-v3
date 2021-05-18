@@ -161,6 +161,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const [timerHeader, setHeader] = useState<boolean>(false);
+  const arthxPrice = useARTHXOraclePrice();
 
   const bondingDiscount = [
     {
@@ -173,7 +174,7 @@ const Genesis = (props: WithSnackbarProps) => {
     },
     {
       label: 'Discounted ARTHX Price',
-      value: '0.007$',
+      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
     },
   ];
   useEffect(() => {
@@ -206,7 +207,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const { account, connect } = useWallet();
   const arthBalance = useTokenBalance(core.ARTH);
   const arthCirculatingSupply = useARTHCirculatingSupply();
-  const arthxPrice = useARTHXOraclePrice();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
