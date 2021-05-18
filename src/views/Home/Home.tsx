@@ -4,9 +4,10 @@ import Modal from '../../components/NewModal/index';
 import './styles/index.sass';
 import './footer.css';
 import warning from '../../assets/svg/warning.svg';
-
+import rightArrow from './images/polygon.svg'
+import arthLogo from './img/arth-coin-1.svg'
 const Home: React.FC = () => {
-  const [openModal, toggleModal] = useState(true);
+  const [openModal, toggleModal] = useState(false);
   const handleClose = () => {
     toggleModal(false);
   };
@@ -55,7 +56,7 @@ const Home: React.FC = () => {
         </ModalHyperLink>
       </Modal>
       <div id="header-gradient"></div>
-      <div className="chakra"></div>
+      {/*<div className="chakra"></div>*/}
       <div className="gradient-red-1"></div>
       <div className="gradient-red-2"></div>
       <div className="gradient-black-1"></div>
@@ -68,26 +69,61 @@ const Home: React.FC = () => {
         >
           <span className="main-title">Timeless value</span>
           <br />
-          World’s first non-depreciating money.
+          <span className="title-brand-name">ARTH</span>
+          <br />
+          World’s first non-inflationary money.
+          <div className="action-buttons">
+
+          </div>
         </div>
-        <div className="title-down-text">
+        {/*<div className="title-down-text">
           <div className="line"></div>
           <div className="text-slide-right">
             <p>
               ARTH.Empowering billions with a <br /> new currency, governed by you.
             </p>
           </div>
-        </div>
+        </div>*/}
 
-        <div id="padding-top-30">
+        <div className="button-container">
           <a
             target="_blank"
             href="https://mahaswap.com/"
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
-            <button className="button-small">Buy ARTH Now →</button>
+            <button className="button-small-bg">Buy ARTH →</button>
           </a>
+          <a
+            target="_blank"
+            href="https://mahaswap.com/"
+            id="no-txt-decoration"
+            rel="noopener noreferrer"
+            style={{marginRight: '40px'}}
+          >
+            <button className="button-small-transparent">
+              <img src={rightArrow} height={20} style={{marginRight: '8px'}}/>
+              Imagine. Arth
+            </button>
+          </a>
+        </div>
+      </section>
+      <section id="section-main-info">
+        <div
+          className="main-conatiner"
+          data-aos="fade-up"
+          data-aos-duration="2000"
+          data-aos-once="true"
+        >
+          <img src={arthLogo} height={45} className="info-logo"/>
+          <br/>
+          <p className='main-heading'>Arth. Never lose buying power of your money.</p>
+          <br/>
+          <p className='section-description'>
+            Arth is designed to fight depreciation of wealth & help you pay less for more.
+            Your purchasing power increases as you preserve Arth. No matter the fluctuation in the market,
+            the value of your money never drops.
+          </p>
         </div>
       </section>
       <section id="section-three-features">
