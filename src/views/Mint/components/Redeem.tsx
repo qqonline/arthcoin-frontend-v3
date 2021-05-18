@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
 import { CustomSnack } from '../../../components/SnackBar';
 import { Divider } from '@material-ui/core';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import Button from '../../../components/Button';
@@ -12,21 +14,22 @@ import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import Grid from '@material-ui/core/Grid';
 import plus from '../../../assets/svg/plus.svg';
 import PoolInfo from './PoolInfo';
+import SlippageContainer from '../../../components/SlippageContainer';
 import styled from 'styled-components';
 import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useCore from '../../../hooks/useCore';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
-import { BigNumber } from '@ethersproject/bignumber';
-import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
-import SlippageContainer from '../../../components/SlippageContainer';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
-import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
+import useCore from '../../../hooks/useCore';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
+import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
+import useRedeemAlgorithmicARTH from '../../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
+
+import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
+
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -82,11 +85,17 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
   const arthxToGMUPrice = useARTHXOraclePrice();
 
-  const redeemARTH = useRedeemARTH(
+  // const redeemARTH = useRedeemARTH(
+  //   selectedCollateral,
+  //   Number(arthValue),
+  //   Number(arthxValue),
+  //   Number(collateralValue),
+  // );
+
+  const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     Number(arthValue),
-    Number(arthxValue),
-    Number(collateralValue),
+    BigNumber.from(0),
   );
 
   const collectRedeemption = useCollectRedemption(selectedCollateral);
