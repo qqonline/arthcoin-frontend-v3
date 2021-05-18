@@ -505,12 +505,12 @@ const Genesis = (props: WithSnackbarProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTH successful!'}
-        subTitle={'View Transaction'}
+        // subTitle={'View Transaction'}
         subsubTitle={'You should consider stake your ARTH to earn higher APY'}
-        subTitleLink={'https://arthcoin.com/#/'}
+        subTitleLink={'/#/farming'}
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        buttonHref={'https://arthcoin.com/#/'}
+        buttonHref={'/#/farming'}
       />
     </>
   );

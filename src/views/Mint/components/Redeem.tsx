@@ -25,10 +25,13 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
 }
+
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
@@ -48,6 +51,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   );
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
+
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
 
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
@@ -83,6 +88,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     Number(arthxValue),
     Number(collateralValue),
   );
+
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   const handleRedeem = () => {
     redeemARTH(() => {
@@ -514,13 +521,23 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         <br />
                       </>
                     )}
-                    <Button
-                      text={'Redeem'}
-                      size={'lg'}
-                      variant={'default'}
-                      disabled={!isArthMahaApproved}
-                      onClick={() => setOpenModal(1)}
-                    />
+
+                    {redeemableBalances[0].gt(0) || redeemableBalances[1].gt(0) ? (
+                      <Button
+                        text={'Collect Redeemption'}
+                        size={'lg'}
+                        variant={'default'}
+                        onClick={collectRedeemption}
+                      />
+                    ) : (
+                      <Button
+                        text={'Redeem'}
+                        size={'lg'}
+                        variant={'default'}
+                        disabled={!isArthMahaApproved}
+                        onClick={() => setOpenModal(1)}
+                      />
+                    )}
                   </>
                 )}
               </div>
