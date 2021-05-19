@@ -160,20 +160,28 @@ const Genesis = (props: WithSnackbarProps) => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const recollateralizationDiscount = useRecollateralizationDiscount();
+  const arthxPrice = useARTHXOraclePrice();
+
   const [timerHeader, setHeader] = useState<boolean>(false);
+
+  const calculateDiscountedPrice = (discount: BigNumber, price: BigNumber) => {
+    const nonDiscountPercent = BigNumber.from('1000000').sub(discount);
+
+    return price.mul(nonDiscountPercent).div(1e6);
+  }
 
   const bondingDiscount = [
     {
       label: 'Current discount',
-      value: `${getDisplayBalance(recollateralizationDiscount, 4, 4)}%`,
+      value: `${getDisplayBalance(recollateralizationDiscount, 4, 3)}%`,
     },
     {
       label: 'Starting ARTHX Price',
-      value: '0.01$',
+      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
     },
     {
       label: 'Discounted ARTHX Price',
-      value: '0.007$',
+      value: `${getDisplayBalance(calculateDiscountedPrice(recollateralizationDiscount, arthxPrice), 6, 4)}$`
     },
   ];
   useEffect(() => {
@@ -206,7 +214,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const { account, connect } = useWallet();
   const arthBalance = useTokenBalance(core.ARTH);
   const arthCirculatingSupply = useARTHCirculatingSupply();
-  const arthxPrice = useARTHXOraclePrice();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
