@@ -6,6 +6,9 @@ import './footer.css';
 import warning from '../../assets/svg/warning.svg';
 import rightArrow from './images/polygon.svg'
 import arthLogo from './img/arth-coin-1.svg'
+import arthLogobg from './images/logo/ARTH-bg.svg'
+import USDLogo from './images/logo/USD.svg'
+
 const Home: React.FC = () => {
   const [openModal, toggleModal] = useState(false);
   const handleClose = () => {
@@ -126,96 +129,6 @@ const Home: React.FC = () => {
           </p>
         </div>
       </section>
-      <section id="section-three-features">
-        <div className="card-deck row">
-          <div className="col-12 col-md-4">
-            <div
-              className="card height-100"
-              data-aos="fade-up"
-              data-aos-duration="500"
-              data-aos-once="true"
-            >
-              <div
-                className="img-container img-container-head"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <img
-                  src={require('./img/feature-icon/f-icon-1.svg')}
-                  className="img-top"
-                  alt="..."
-                />
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">Preserve Wealth</h5>
-                <p className="card-text">
-                  No more erosion of hard-earned wealth due to inflation. ARTH protects and
-                  increases your purchasing power shielding your financial life from the effects
-                  of excessive money printing.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-4">
-            <div
-              className="card height-100"
-              data-aos="fade-up"
-              data-aos-duration="1000"
-              data-aos-once="true"
-            >
-              <div
-                className="img-container img-container-head"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <img
-                  src={require('./img/feature-icon/f-icon-2.svg')}
-                  className="img-top"
-                  alt="..."
-                />
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">Value Stable</h5>
-                <p className="card-text">
-                  ARTH is pegged against a Global Measurement Unit consisting of a
-                  well-diversified, anti-correlated, carefully curated basket of assets to
-                  provide ARTH users a lasting stability of intrinsic value.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-4">
-            <div
-              className="card height-100"
-              data-aos="fade-up"
-              data-aos-duration="1500"
-              data-aos-once="true"
-            >
-              <div
-                className="img-container img-container-head"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <img
-                  src={require('./img/feature-icon/f-icon-4.svg')}
-                  className="img-top"
-                  alt="..."
-                />
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">Elastic Supply</h5>
-                <p className="card-text">
-                  Arth has an elastic supply, which means its supply can easily grow or shrink
-                  to meet the current market demand
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       <div
         className="outer-div"
         style={{
@@ -265,25 +178,122 @@ const Home: React.FC = () => {
             >
               <div className="para-text" id="margin-27px-less">
                 <div className="pitch">
-                  Fighting Depreciation
+                  <span className="main-title">Fighting Inflation</span>
                   <br />
-                  World's first valuecoin
+                  World’s first valuecoin
                 </div>
                 <div className="side-text">
-                  ARTH is a decentralized algorithmic currency that aims to fight depreciation.
-                  Irrespective of which direction the market moves, ARTH coin holders will never
-                  lose their buying power.
+                  Arth is a decentralized algorithmic currency that aims to
+                  fight inflation irrespective of which direction the market moves,
+                  ARTH coin holders will never lose their purchasing power.
                 </div>
                 <div className="side-text">
-                  ARTH gives you financial freedom with no volatility as it’s a value-stable
-                  currency that you control. ARTH means wealth creation, one of the foremost
-                  goals of human life.
+                  Arth gives you financial freedom with no volatility as
+                  it’s a value-stable currency that you control.
+                  Arth means wealth creation, one of the foremost goals of human life.
                 </div>
               </div>
             </div>
           </div>
         </section>
       </div>
+      <section id="section-rate-info">
+        <div className="upper-color-div">
+          <p className="main-title">Your money should work for you, not against you</p>
+        </div>
+        <div className="rate-main-container">
+          <div className="left-container">
+            <p className="title">Value over time to buy one cup of coffee</p>
+            <p className="sub-title">Compare value with years <span className="tag">2010</span></p>
+          </div>
+          <div className="right-container">
+            <div className="rate-card">
+              <div className="rate-input">
+                <div className="rate-value-card">
+                  <span className="value positive">$1.2</span>
+                  <img src={arthLogobg} height={36}/>
+                </div>
+                <p className="input-label">ARTH Value Coin</p>
+              </div>
+              <div className="rate-input">
+                <div className="rate-value-card">
+                  <span className="value negative">$2.1</span>
+                  <img src={USDLogo} height={36}/>
+                </div>
+                <p className="input-label">Fiat Currency</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section id="section-two-features">
+        <p className="title">
+          Arth is the future of money filling up
+          your wallet soon with the maximum buying power
+        </p>
+        <div className="card-deck row">
+          <div className="col-lg-6 col-sm-12">
+            <div
+              className="card height-100"
+              data-aos="fade-up"
+              data-aos-duration="500"
+              data-aos-once="true"
+            >
+              <div
+                className="img-container img-container-head"
+                data-aos="fade-up"
+                data-aos-duration="2000"
+                data-aos-once="true"
+              >
+                <img
+                  src={require('./img/feature-icon/f-icon-1.svg')}
+                  className="img-top"
+                  alt="..."
+                />
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">Preserve Buying Power</h5>
+                <p className="card-text">
+                  No more erosion of hard-earned wealth due to inflation. ARTH protects and
+                  increases your purchasing power shielding your financial life from the effects
+                  of excessive money printing.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-sm-12">
+            <div
+              className="card height-100"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              data-aos-once="true"
+            >
+              <div
+                className="img-container img-container-head"
+                data-aos="fade-up"
+                data-aos-duration="2000"
+                data-aos-once="true"
+              >
+                <img
+                  src={require('./img/feature-icon/f-icon-5.svg')}
+                  className="img-top"
+                  alt="..."
+                />
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">Promote Social good</h5>
+                <p className="card-text">
+                  Protecting generations of hard-earned wealth for billions around the world,
+                  including for social, environmental and governance causes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* This is for Chart */}
       <section
         id="section-arth-backed"
