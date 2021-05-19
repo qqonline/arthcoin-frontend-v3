@@ -129,74 +129,66 @@ const Home: React.FC = () => {
           </p>
         </div>
       </section>
-      <div
-        className="outer-div"
-        style={{
-          background:
-            'linear-gradient(360deg, rgba(22, 22, 22, 0.8) 29.94%, rgba(22, 22, 22, 0.510647) 72.76%, rgba(22, 22, 22, 0) 102.62%)',
-        }}
-      >
-        <section id="section-token-logos">
-          <div className="coin-arth row">
+      <section id="section-token-logos">
+        <div className="coin-arth row">
+          <div
+            className="col-12 col-md-6 token"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
             <div
-              className="col-12 col-md-6 token"
+              className="icon-section"
               data-aos="fade-up"
-              data-aos-duration="1000"
+              data-aos-duration="2000"
               data-aos-once="true"
             >
-              <div
-                className="icon-section"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <div className="pulse1"></div>
-                <div className="pulse2"></div>
-                <div className="pulse3"></div>
-                <div className="pulse4"></div>
-                <div className="pulse5"></div>
-                <div className="pulse6"></div>
-                <div className="pulse7"></div>
-                <img
-                  src={require('./img/arthborderlines.svg')}
-                  alt="frame"
-                  className="rightpara-leftfig-img"
-                />
-                <img
-                  src={require('./img/arthframe.svg')}
-                  alt="frame"
-                  style={{ marginTop: '5px', marginLeft: '3px' }}
-                  className="rightpara-leftfig-img-inner arth"
-                />
-              </div>
+              <div className="pulse1"></div>
+              <div className="pulse2"></div>
+              <div className="pulse3"></div>
+              <div className="pulse4"></div>
+              <div className="pulse5"></div>
+              <div className="pulse6"></div>
+              <div className="pulse7"></div>
+              <img
+                src={require('./img/arthborderlines.svg')}
+                alt="frame"
+                className="rightpara-leftfig-img"
+              />
+              <img
+                src={require('./img/arthframe.svg')}
+                alt="frame"
+                style={{ marginTop: '5px', marginLeft: '3px' }}
+                className="rightpara-leftfig-img-inner arth"
+              />
             </div>
-            <div
-              className="col-12 col-md-6 side-para"
-              data-aos="fade-up"
-              data-aos-duration="1000"
-              data-aos-once="true"
-            >
-              <div className="para-text" id="margin-27px-less">
-                <div className="pitch">
-                  <span className="main-title">Fighting Inflation</span>
-                  <br />
-                  World’s first valuecoin
-                </div>
-                <div className="side-text">
-                  Arth is a decentralized algorithmic currency that aims to
-                  fight inflation irrespective of which direction the market moves,
-                  ARTH coin holders will never lose their purchasing power.
-                </div>
-                <div className="side-text">
-                  Arth gives you financial freedom with no volatility as
-                  it’s a value-stable currency that you control.
-                  Arth means wealth creation, one of the foremost goals of human life.
-                </div>
+          </div>
+          <div
+            className="col-12 col-md-6 side-para"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
+            <div className="para-text" id="margin-27px-less">
+              <div className="pitch">
+                <span className="main-title">Fighting Inflation</span>
+                <br />
+                World’s first valuecoin
+              </div>
+              <div className="side-text">
+                Arth is a decentralized algorithmic currency that aims to
+                fight inflation irrespective of which direction the market moves,
+                ARTH coin holders will never lose their purchasing power.
+              </div>
+              <div className="side-text">
+                Arth gives you financial freedom with no volatility as
+                it’s a value-stable currency that you control.
+                Arth means wealth creation, one of the foremost goals of human life.
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
       <section id="section-rate-info">
         <div className="upper-color-div">
           <p className="main-title">Your money should work for you, not against you</p>
@@ -226,9 +218,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-
-
       <section id="section-two-features">
         <p className="title">
           Arth is the future of money filling up
@@ -290,6 +279,53 @@ const Home: React.FC = () => {
                   including for social, environmental and governance causes.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section-technology">
+        <div className="main-container">
+          <p className="title">Technology</p>
+          <p className="subtitle">
+            Arth is an algorithmic value-stable coin built using
+            robust strategies like vault optimization,
+            auto collateralisation ratio, automatic rebalancing mechanism,
+            anti-correlated asset selection, purchasing power pegging,
+            oracle pricefeeds and more. </p>
+          <div className="tech-container">
+            <div className="feature-image">
+              <img
+                src={require('./img/feature-icon/Cross-borader transactions.svg')}
+                alt="..."
+                height={250}
+              />
+            </div>
+            <div className="tech-info">
+              <p className="info-title">Cross-chain liquidity</p>
+              <p className="info-desc">
+                Arth is compatible with tokens and currencies from other
+                blockchains to create a massive liquidity pool across the chains.
+                You can stake, lend, borrow, trade Arth across chains. (coming soon)
+              </p>
+            </div>
+          </div>
+          <div className="tech-container">
+            <div className="feature-image">
+              <img
+                src={require('./img/feature-icon/Cross-chain liquidity.svg')}
+                alt="..."
+                height={250}
+              />
+            </div>
+            <div className="tech-info">
+              <p className="info-title">Cross-border transactions</p>
+              <p className="info-desc">
+                Deployed on Layer 2 Protocol,
+                Arth offers transactions speed of less than 3 seconds to cross the border from your wallet
+                to another across the globe.
+                The very near future version of Arth shall be a cross-chain solution that brings
+                the power of value coin to other blockchains like Ethereum and more
+              </p>
             </div>
           </div>
         </div>
