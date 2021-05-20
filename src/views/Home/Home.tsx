@@ -330,8 +330,39 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* This is for Chart */}
-      <section
+      <section id="section-revolution">
+        <div className="main-container">
+          <p className="title">Lead the revolution</p>
+          <p className="subtitle">
+            Arth eliminates price instability and value erosion.
+            Control your financial future, increase your money’s worth.
+          </p>
+          <div className="cards-container row">
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A revolutionary medium of exchange whose purchasing power grows with you.
+                </span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A timeless store of value that is preserved across the generations.
+                </span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A decentralised Money that is governed by the community, and by you.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* <section
         id="section-arth-backed"
         data-aos="fade-up"
         className="hide-pie-on-phone"
@@ -370,7 +401,7 @@ const Home: React.FC = () => {
             <li>5% Bitcoin</li>
           </ul>
         </div>
-      </section>
+      </section>*/}
       {/* <section className="arth-section" id="arth-tech">
         <div
           className="arth-heading arth-heading-regular"
@@ -503,7 +534,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section> */}
-      <section
+      {/*<section
         className="text-center"
         id="arth-section-title"
         data-aos="fade-up"
@@ -526,7 +557,7 @@ const Home: React.FC = () => {
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
-      </section>
+      </section>*/}
       {/* Footers */}
       <footer>
         <div className="footer-content">
