@@ -60,7 +60,7 @@ const Home: React.FC = () => {
       </Modal>
       <div id="header-gradient"></div>
       {/*<div className="chakra"></div>*/}
-      <div className="gradient-red-1"></div>
+      {/*<div className="gradient-red-1"></div>*/}
       <div className="gradient-red-2"></div>
       <div className="gradient-black-1"></div>
       <section id="section-title">
@@ -282,6 +282,14 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section id="section-application">
+        <p className="title">Application & Usage</p>
+        <p className="subtitle">
+          Arth is for students, shoppers, tourists, businessmen, employees,
+          passengers, institutions & governments. Anyone exchanging value.
+        </p>
+        <div className="planet-container"></div>
       </section>
       <section id="section-technology">
         <div className="main-container">
