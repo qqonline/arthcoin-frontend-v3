@@ -1,5 +1,11 @@
-import { Deployments } from './deployments';
 import { ChainId } from '@uniswap/sdk';
+
+export type Deployments = {
+  [contractName: string]: {
+    address: string;
+    abi: string;
+  }
+}
 
 export type Configuration = {
   chainId: ChainId;

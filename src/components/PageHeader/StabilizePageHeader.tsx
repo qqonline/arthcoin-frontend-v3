@@ -1,4 +1,3 @@
-
 import { KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import useGlobalCollateralRatio from '../../hooks/state/useGlobalCollateralRatio';
+import useGlobalCollateralRatio from '../../hooks/state/controller/useGlobalCollateralRatio';
 import CustomToolTip from '../CustomTooltip';
 
 interface PageHeaderProps {
@@ -29,7 +28,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     root: {
       height: 24,
       borderRadius: 12,
-      width: 200
+      width: 200,
     },
     colorPrimary: {
       backgroundColor: '#D9D5D3',
@@ -49,51 +48,64 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
   learnMoreLink,
   parentLink,
   parentLinkTitle,
-  mobile
+  mobile,
 }) => {
-
   const isDesktopOrLaptop = useMediaQuery({ query: '(min-device-width: 800px)' });
 
-  const globalCR = useGlobalCollateralRatio()
+  const globalCR = useGlobalCollateralRatio();
 
   return (
     <StyledPageHeader>
       <Container size="lg">
         <StyledPageContent>
           <StyledTextContainer>
-            {(isDesktopOrLaptop && parentLink) && (
+            {isDesktopOrLaptop && parentLink && (
               <StyledNav>
                 <StyledNavLink to={parentLink}>{parentLinkTitle}</StyledNavLink>
                 <KeyboardArrowRight style={{ color: theme.color.grey[500] }} />
                 <StyledNavTitle>{title}</StyledNavTitle>
               </StyledNav>
             )}
-            <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: mobile ? 'flex-start' : 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: mobile ? 'column' : 'row',
+                justifyContent: 'space-between',
+                alignItems: mobile ? 'flex-start' : 'center',
+              }}
+            >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <StyledTitle>{title}</StyledTitle>
                 <StyledSubtitle>
                   {subtitle}
-                  {learnMoreLink && <LearnMore href={learnMoreLink} target="">
-                    &nbsp; Learn more.
-                                </LearnMore>}
+                  {learnMoreLink && (
+                    <LearnMore href={learnMoreLink} target="">
+                      &nbsp; Learn more.
+                    </LearnMore>
+                  )}
                 </StyledSubtitle>
                 {secondParaTitle && <SecondParaTitle>{secondParaTitle}</SecondParaTitle>}
                 {secondParaDescription && (
                   <SecondParaDescription>{secondParaDescription}</SecondParaDescription>
                 )}
-
               </div>
-              {!mobile ? <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
-                {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
-                <TextForInfoTitle>
-                  Collateral Ratio
-                  <CustomToolTip toolTipText={'loreum ipsum'} />
-                </TextForInfoTitle>
-                {/* </div> */}
-                <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4, 2)}%</PercentNumber>
-                <BorderLinearProgress variant="determinate" value={Number(getDisplayBalance(globalCR, 4))} />
-              </div>
-                :
+              {!mobile ? (
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
+                  {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
+                  <TextForInfoTitle>
+                    Collateral Ratio
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                  </TextForInfoTitle>
+                  {/* </div> */}
+                  <PercentNumber style={{ margin: '0px 12px' }}>
+                    {getDisplayBalance(globalCR, 4, 2)}%
+                  </PercentNumber>
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={Number(getDisplayBalance(globalCR, 4))}
+                  />
+                </div>
+              ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: 40 }}>
                   {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
                   <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px' }}>
@@ -102,11 +114,16 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                       <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                     {/* </div> */}
-                    <PercentNumber style={{ margin: '0px 12px' }}>{getDisplayBalance(globalCR, 4)}%</PercentNumber>
+                    <PercentNumber style={{ margin: '0px 12px' }}>
+                      {getDisplayBalance(globalCR, 4)}%
+                    </PercentNumber>
                   </div>
-                  <BorderLinearProgress variant="determinate" value={Number(getDisplayBalance(globalCR, 4, 2))} />
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={Number(getDisplayBalance(globalCR, 4, 2))}
+                  />
                 </div>
-              }
+              )}
             </div>
           </StyledTextContainer>
           <ALignRightOnMobile>{icon}</ALignRightOnMobile>
@@ -116,16 +133,15 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
   );
 };
 
-
 const TextForInfoTitle = styled.div`
   font-family: Inter;
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.64;
-`
+`;
 
 const ALignRightOnMobile = styled.div`
   align-self: center;
@@ -155,17 +171,17 @@ const StyledNav = styled.div`
 `;
 
 const PercentNumber = styled.span`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-line-height: 24px;
-text-align: right;
-color: rgba(255, 255, 255, 0.88);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.88);
 `;
 
 const StyledNavLink = styled(Link)`
-  color: ${props => props.theme.color.grey[400]};
+  color: ${(props) => props.theme.color.grey[400]};
   font-size: 14px;
   margin-right: -4px;
   &:hover {
@@ -192,7 +208,11 @@ const StyledPageHeader = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  background: linear-gradient(180deg, #${(props) => props.theme.color.dark[200]} 0%, rgba(42, 40, 39, 0) 100%);
+  background: linear-gradient(
+    180deg,
+    #${(props) => props.theme.color.dark[200]} 0%,
+    rgba(42, 40, 39, 0) 100%
+  );
   // padding-bottom: 40px;
   // padding-top: 40px;
   // padding-left: 15px;
@@ -244,7 +264,6 @@ const StyledTitle = styled.h1`
   z-index: 1;
   margin: 0;
   padding: 0;
-
 `;
 
 const LearnMore = styled.a`

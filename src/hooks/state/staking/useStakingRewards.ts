@@ -8,6 +8,7 @@ export default (stakingContract: string) => {
 
   const fetchValue = useCallback(async () => {
     const contract = core.contracts[stakingContract]
+    console.log(await contract.earned(core.myAccount), 'ss', stakingContract)
     setValue(await contract.earned(core.myAccount));
   }, [core.contracts, core.myAccount, stakingContract]);
 

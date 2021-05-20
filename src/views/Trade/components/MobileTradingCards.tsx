@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
@@ -7,113 +7,121 @@ import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
 import InfoIcon from '@material-ui/icons/Info';
+import { TradingPairs } from '../../../basis-cash/types';
+import useCore from '../../../hooks/useCore';
 
-interface FarmCard {
-    id: number,
-    pair: [string, string],
-    liquidity: string;
-    volume: string;
-    onClickLink: string;
+interface IProps {
+  info: TradingPairs;
 }
 
-export default (props: FarmCard) => {
-    // const logos = [bank.earnTokenName];
-    // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
-    // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
-    // else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
-    // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');
-    // else logos.push(bank.depositTokenName);
-    return (
-        <StyledCardWrapper>
-            <Card>
-                <CardContent>
-                    <StyledContent>
-                        <div style={{ marginTop: 10 }} />
-                        <CardHeaderDiv>
-                            <div
-                                style={{
-                                    flexDirection: 'row',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                }}
-                            >
-                                <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-                                    <TokenSymbol symbol={props?.pair[0]} size={44} style={{}} />
-                                </div>
-                                <div
-                                    style={{
-                                        // zIndex: 4,
-                                        position: 'absolute',
-                                        left: 30,
-                                        background: '#2A2827',
-                                        borderRadius: 36,
-                                    }}
-                                >
-                                    <TokenSymbol symbol={props?.pair[1]} size={44} style={{}} />
-                                </div>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
-                                <StyledTitle>{`${props.pair[0]} - ${props.pair[1]}`}</StyledTitle>
-                                <StyledSubTitle>Add Liquidity</StyledSubTitle>
-                            </div>
-                        </CardHeaderDiv>
-                        <Grid
-                            container
-                            style={{ display: 'flex', width: '100%', height: 'fit-content', marginTop: 20 }}
-                        >
-                            <Grid
-                                item
-                                xs={12}
-                                direction={'row'}
-                                justify={'space-between'}
-                                style={{ display: 'flex', marginTop: 5 }}
-                            >
-                                <DescriptionDiv>
-                                    Liquidity
-                                <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                                </DescriptionDiv>
-                                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                                    <MainSpan>
-                                        {props?.liquidity}
-                                    </MainSpan>
-                                    {/* <SecondSpan>{'100'}</SecondSpan> */}
-                                </div>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={12}
-                                direction={'row'}
-                                justify={'space-between'}
-                                style={{ display: 'flex', marginTop: 15 }}
-                            >
-                                <DescriptionDiv>
-                                    Volume
-                                <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                                </DescriptionDiv>
-                                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                                    <MainSpan>{props?.volume}</MainSpan>
-                                </div>
-                            </Grid>
-                        </Grid>
-                        <ButtonContainer>
-                            <div style={{ marginTop: 15 }}>
-                                <Button
-                                    size={'sm'}
-                                    text={'Trade'}
-                                    //   onClick={() => {
-                                    //     props.onButtonClick('Deposit');
-                                    //   }}
-                                    href={props?.onClickLink}
-                                />
-                            </div>
-                        </ButtonContainer>
-                    </StyledContent>
-                </CardContent>
-            </Card>
-        </StyledCardWrapper>
-    );
+export default (props: IProps) => {
+  const core = useCore();
+  // const logos = [bank.earnTokenName];
+  // if (bank.depositTokenName === 'ARTH_DAI-UNI-LPv2') logos.push('ARTH', 'DAI');
+  // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LPv1') logos.push('ARTH', 'DAI');
+  // else if (bank.depositTokenName === 'MAHA_ETH-UNI-LPv2') logos.push('MAHA', 'ETH');
+  // else if (bank.depositTokenName === 'ARTH_DAI-MAHA-LP') logos.push('ARTH', 'DAI');
+  // else logos.push(bank.depositTokenName);
+
+  const token1 = core.tokens[props.info.tokens[0]];
+  const token2 = core.tokens[props.info.tokens[1]];
+  const link = `https://app.uniswap.org/#/add/v2/${token1.address}/${token2.address}`;
+  const tradelink = `https://app.uniswap.org/#/swap?inputCurrency=${token1.address}&outputCurrency=${token2.address}&use=V2`;
+
+  return (
+    <StyledCardWrapper>
+      <Card>
+        <CardContent>
+          <StyledContent>
+            <div style={{ marginTop: 10 }} />
+            <CardHeaderDiv>
+              <div
+                style={{
+                  flexDirection: 'row',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                }}
+              >
+                <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
+                  <TokenSymbol symbol={props?.info.tokens[0]} size={44} style={{}} />
+                </div>
+                <div
+                  style={{
+                    // zIndex: 4,
+                    position: 'absolute',
+                    left: 30,
+                    background: '#2A2827',
+                    borderRadius: 36,
+                  }}
+                >
+                  <TokenSymbol symbol={props?.info.tokens[1]} size={44} style={{}} />
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
+                <StyledTitle>{`${props.info.tokens[0]} - ${props.info.tokens[1]}`}</StyledTitle>
+                <StyledSubTitle
+                  onClick={() => {
+                    window.open(link, '_blank');
+                  }}
+                >
+                  Add Liquidity
+                </StyledSubTitle>
+              </div>
+            </CardHeaderDiv>
+            <Grid
+              container
+              style={{ display: 'flex', width: '100%', height: 'fit-content', marginTop: 20 }}
+            >
+              <Grid
+                item
+                xs={12}
+                direction={'row'}
+                justify={'space-between'}
+                style={{ display: 'flex', marginTop: 5 }}
+              >
+                <DescriptionDiv>
+                  Liquidity
+                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                </DescriptionDiv>
+                <div style={{ flexDirection: 'column', display: 'flex' }}>
+                  {/* <MainSpan>{props.info.liquidity}</MainSpan> */}
+                  {/* <SecondSpan>{'100'}</SecondSpan> */}
+                </div>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                direction={'row'}
+                justify={'space-between'}
+                style={{ display: 'flex', marginTop: 15 }}
+              >
+                <DescriptionDiv>
+                  Volume
+                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                </DescriptionDiv>
+                <div style={{ flexDirection: 'column', display: 'flex' }}>
+                  {/* <MainSpan>{props?.volume}</MainSpan> */}
+                </div>
+              </Grid>
+            </Grid>
+            <ButtonContainer>
+              <div style={{ marginTop: 15 }}>
+                <Button
+                  size={'sm'}
+                  text={'Trade'}
+                  onClick={() => {
+                    window.open(tradelink, '_blank');
+                  }}
+                />
+              </div>
+            </ButtonContainer>
+          </StyledContent>
+        </CardContent>
+      </Card>
+    </StyledCardWrapper>
+  );
 };
 
 // const CardIcon = styled.div`
@@ -371,5 +379,6 @@ const StyledSubTitle = styled.div`
   font-size: 14px;
   line-height: 140%;
   color: #ff7f57;
+  cursor: pointer;
   opacity: 0.88;
 `;

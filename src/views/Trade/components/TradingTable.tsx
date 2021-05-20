@@ -9,59 +9,30 @@ import { useMediaQuery } from 'react-responsive';
 import MobileTradingCards from './MobileTradingCards';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { CustomSnack } from '../../../components/SnackBar';
+import { tradingPairs } from '../../../config';
 interface ModeProps {
-  id: number, name: string, count: number
+  id: number;
+  name: string;
+  count: number;
 }
 
 interface FarmCard {
-  id: number,
-  pair: [string, string],
+  id: number;
+  pair: [string, string];
   liquidity: string;
   volume: string;
-  onClickLink: string;
 }
 interface IProps {
   mode?: ModeProps;
 }
 const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
-  console.log(props.mode)
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const [openModal, setOpenModal] = useState<boolean>(true);
-  let dummyJSON: FarmCard[] = [
-    {
-      id: 1,
-      pair: ['MAHA', 'ARTH'],
-      liquidity: '$2.6b',
-      volume: '$43,474,449',
-      onClickLink: 'https://google.com'
-    },
-    {
-      id: 2,
-      pair: ['MAHA', 'ARTHX'],
-      liquidity: '$2.65m',
-      volume: '$434,749',
-      onClickLink: 'https://google.com'
-    },
-    {
-      id: 3,
-      pair: ['USDT', 'ARTH'],
-      liquidity: '$2.6m',
-      volume: '$43,474,449',
-      onClickLink: 'https://google.com'
-    },
-  ]
-  const [data, setData] = useState<FarmCard[]>(dummyJSON)
-
-  // const [action, setAction] = useState<'Deposit' | 'Withdraw' | 'Claim' | ''>('');
-
 
   const MobileCardRender = () => {
     return (
       <>
-        {data.map(cardData => (
-          <MobileTradingCards
-            {...cardData}
-          />
+        {tradingPairs.map((cardData) => (
+          <MobileTradingCards info={cardData} />
         ))}
       </>
     );
@@ -70,10 +41,8 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
   const DesktopCardRender = () => {
     return (
       <div>
-        {data.map(cardData => (
-          <CustomRowCard
-            {...cardData}
-          />
+        {tradingPairs.map((cardData) => (
+          <CustomRowCard info={cardData} />
         ))}
       </div>
     );
@@ -98,7 +67,7 @@ const BankCardsV2 = (props: WithSnackbarProps & IProps) => {
       {!isMobile ? DesktopCardRender() : MobileCardRender()}
     </DataContainer>
   );
-}
+};
 
 const DataContainer = styled.div`
   background: rgba(255, 255, 255, 0.02);
@@ -114,14 +83,14 @@ const DataContainer = styled.div`
 `;
 
 const CustomTableHeading = styled.span`
-font-family: Inter;
-font-style: normal;
-font-weight: 600;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: rgba(255, 255, 255, 0.32);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.32);
   // opacity: 0.64;
   text-align: left;
 `;

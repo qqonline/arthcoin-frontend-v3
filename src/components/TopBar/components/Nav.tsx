@@ -14,7 +14,7 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/mint/mint">
         Mint/Redeem
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stabilize/buyback">
+      <StyledLink exact activeClassName="active" to="/stabilize/recollateralize">
         Stabilize
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/farming">

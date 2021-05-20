@@ -38,6 +38,7 @@ const TransparentInfoDiv = (props: IProps) => {
                 start={props?.cStart}
                 end={props.cEnd}
                 delay={0}
+                decimals={5}
                 duration={props.cDuration}
                 preserveValue={true}
                 onUpdate={() => {
@@ -134,4 +135,5 @@ const TransInfoDiv = styled.div`
   display: flex;
   align-items: center;
 `;
+
 export default TransparentInfoDiv;

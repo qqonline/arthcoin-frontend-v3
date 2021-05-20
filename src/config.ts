@@ -1,7 +1,7 @@
 import { ChainId } from '@uniswap/sdk';
 import { Configuration } from './basis-cash/config';
 import { CollateralPool } from './basis-cash';
-import { StakingContract } from './basis-cash/types';
+import { StakingContract, TradingPairs } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
@@ -41,7 +41,7 @@ const configurations: { [env: string]: Configuration } = {
     etherscanUrl: 'https://etherscan.io',
     defaultProvider:
       'https://ancient-young-wave.quiknode.io/f13a565e-d520-49bb-8109-b6278531d848/TD7pzD7xEEC-ppMyv475dYkhgEYWh-Ev4zyPEiGValWQ76lrBPMuGhoJjLflw3KRBvt1ytsJ4IrpXajUC5XbkQ==/',
-    deployments: require('./basis-cash/deployments/deployments.mainnet.json'),
+    deployments: require('./basis-cash/deployments/mainnet.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-22T15:00:00Z'),
     refreshInterval: 3000,
@@ -151,5 +151,26 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arth'],
   },
 ];
+
+
+export const tradingPairs: TradingPairs[] = [
+  {
+    tokens: ['MAHA', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['MAHA', 'ARTH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['ARTH', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+  {
+    tokens: ['ARTHX', 'WETH'],
+    paltform: 'uniswapV2'
+  },
+];
+
 
 export default configurations['staging'];

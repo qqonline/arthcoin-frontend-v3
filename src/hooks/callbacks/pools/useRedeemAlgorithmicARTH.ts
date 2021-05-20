@@ -8,28 +8,25 @@ import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees'
 export default function (
   collateralToken: string,
   arthAmount: number,
-  arthxAmount: number,
-  collatearlOutMin: number
+  arthxOutMin: BigNumber
 ) {
   const addTransaction = useTransactionAdder();
   const core = useCore();
   const redeemFee = usePoolRedeemFees(collateralToken);
   // const slippage = useSlippage();
 
-  const collateralAmountAfterFees = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(collatearlOutMin) * 1e6));
-    return mintingAmount.mul(BigNumber.from(1e6).sub(redeemFee)).div(1e6);
-  }, [collatearlOutMin, redeemFee]);
+  const arthXAmountAfterFees = useMemo(() => {
+    return arthxOutMin.mul(BigNumber.from(1e6).sub(redeemFee)).div(1e6);
+  }, [arthxOutMin, redeemFee]);
 
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
       const decimals = BigNumber.from(10).pow(16)
 
-
-      const response = await pool.redeem1t1ARTH(
+      const response = await pool.redeemAlgorithmicARTH(
         BigNumber.from(Math.floor(arthAmount * 100)).mul(decimals),
-        0, // collateralAmountAfterFees,
+        arthXAmountAfterFees
       );
 
       addTransaction(response, {
@@ -38,7 +35,7 @@ export default function (
 
       callback();
     },
-    [core, collateralToken, arthAmount, addTransaction],
+    [core, collateralToken, arthAmount, arthXAmountAfterFees, addTransaction],
   );
 
   return action;

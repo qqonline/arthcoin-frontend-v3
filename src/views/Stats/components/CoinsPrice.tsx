@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useARTHOraclePrice from '../../../hooks/state/useARTHOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
+import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 
@@ -10,6 +11,7 @@ type props = {};
 const CoinsPrice: React.FC<props> = (props) => {
   const arthxPrice = useARTHXOraclePrice();
   const arthPrice = useARTHOraclePrice();
+  const mahaPrice = useMAHAOraclePrice();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -20,7 +22,7 @@ const CoinsPrice: React.FC<props> = (props) => {
             <TargetPriceTag>Target Price: $1.00</TargetPriceTag>
           </div>
           <div>
-            <BeforeChip>${getDisplayBalance(arthPrice, 6, 2)}</BeforeChip>
+            <BeforeChip>${getDisplayBalance(arthPrice, 6, 6)}</BeforeChip>
             {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>
@@ -30,8 +32,8 @@ const CoinsPrice: React.FC<props> = (props) => {
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
-            <BeforeChip>${getDisplayBalance(arthxPrice, 6, 2)}</BeforeChip>
-            <PercentChange>+0.15%</PercentChange>
+            <BeforeChip>${getDisplayBalance(arthxPrice, 6, 6)}</BeforeChip>
+            {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>
         <OneLine>
@@ -40,8 +42,8 @@ const CoinsPrice: React.FC<props> = (props) => {
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
-            <BeforeChip>0.2%</BeforeChip>
-            <PercentChange>+0.15%</PercentChange>
+            <BeforeChip>${getDisplayBalance(mahaPrice, 6, 6)}</BeforeChip>
+            {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>
       </CustomInfoCardDetails>

@@ -7,9 +7,9 @@ export default (collateralPoolToken: string) => {
   const core = useCore();
 
   const fetchValue = useCallback(async () => {
-    const pool = core.getCollatearalPool(collateralPoolToken);
-    setValue(await pool.mintingFee());
-  }, [collateralPoolToken, core]);
+    const controller = core.contracts.ArthController;
+    setValue(await controller.getMintingFee());
+  }, [core]);
 
   useEffect(() => {
     fetchValue().catch((err) =>

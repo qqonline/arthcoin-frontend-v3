@@ -23,7 +23,7 @@
       },
       {
         "internalType": "address",
-        "name": "_arthControllerAddress",
+        "name": "arthControllerAddress",
         "type": "address"
       },
       {
@@ -343,6 +343,56 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldTimelock",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newTimelock",
+        "type": "address"
+      }
+    ],
+    "name": "UpdateOwnerAndTimelock",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "old",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "current",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateRewardRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "user",
@@ -391,6 +441,19 @@
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "arthController",
+    "outputs": [
+      {
+        "internalType": "contract IARTHController",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -608,19 +671,6 @@
   },
   {
     "inputs": [],
-    "name": "poolWeight",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -738,7 +788,7 @@
     "name": "rewardsToken",
     "outputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IPoolToken",
         "name": "",
         "type": "address"
       }
@@ -1343,6 +1393,13 @@
   {
     "inputs": [],
     "name": "getReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRewardAndDistribute",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

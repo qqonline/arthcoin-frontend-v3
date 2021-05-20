@@ -18,17 +18,20 @@ import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import { BigNumber } from '@ethersproject/bignumber';
 import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
 }
+
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
@@ -49,6 +52,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
@@ -57,6 +62,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const redeemCR = useRedeemCollateralRatio();
   const colletralRatio = redeemCR.div(10000).toNumber();
+  console.log(redeemCR, colletralRatio)
 
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
@@ -82,9 +88,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     Number(arthValue),
     Number(arthxValue),
     Number(collateralValue),
-    redeemFee,
-    0.1,
   );
+
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   const handleRedeem = () => {
     redeemARTH(() => {
@@ -148,7 +154,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     var colletralValueInCollatTerms: number = 0;
     if (!arthxToGMUPrice.eq(0)) {
       colletralValueInCollatTerms =
-        ((100 * valueInNumber) / colletralRatio) * ((colletralRatio) / 100);
+        ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
       const finalColletralValue = collateralToGMUPrice
         .mul(Math.floor(colletralValueInCollatTerms * 1e6))
@@ -163,7 +169,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6);
 
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-
 
     /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
       .mul(1e6)
@@ -207,7 +212,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
         .mul(1e6)
         .div(collateralToGMUPrice);
-      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3))
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
     }
 
     //Calc ARTHX
@@ -216,7 +221,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
         .mul(1e6)
         .div(arthxToGMUPrice);
-      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3))
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
     }
   };
   /*const onARTHXValueChange = async (val: string) => {
@@ -299,12 +304,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             rightLabelValue={getDisplayBalance(tradingFee, 6)}
           />
 
-          <TransparentInfoDiv
+          {/* <TransparentInfoDiv
             labelData={`Stability Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={'0.05'}
-          />
+          /> */}
 
           <Divider
             style={{
@@ -431,13 +436,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={onCollateralValueChange}
                 dropDownValues={collateralTypes}
                 ondropDownValueChange={(data) => {
-                  setSelectedReceiveRedeemCoin(data)
+                  setSelectedReceiveRedeemCoin(data);
                   setTimeout(() => {
-                    onCollateralValueChange(collateralValue.toString())
-                  }, 1000)
+                    onCollateralValueChange(collateralValue.toString());
+                  }, 1000);
                 }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
+                DisableMsg={colletralRatio === 0 ? 'Currently Redeem Collateral ratio is 0%' : ''}
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -452,7 +458,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTHX'}
                 setText={onARTHXValueChange}
                 tagText={'MAX'}
-                DisableMsg={colletralRatio === 100? 'Currently Collateral ratio is 100%': ''}
+                DisableMsg={colletralRatio === 100 ? 'Currently Collateral ratio is 100%' : ''}
               />
               <div>
                 <OneLineInputwomargin>
@@ -517,13 +523,23 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         <br />
                       </>
                     )}
-                    <Button
-                      text={'Redeem'}
-                      size={'lg'}
-                      variant={'default'}
-                      disabled={!isArthMahaApproved}
-                      onClick={() => setOpenModal(1)}
-                    />
+
+                    {redeemableBalances[0].gt(0) || redeemableBalances[1].gt(0) ? (
+                      <Button
+                        text={'Collect Redeemption'}
+                        size={'lg'}
+                        variant={'default'}
+                        onClick={collectRedeemption}
+                      />
+                    ) : (
+                      <Button
+                        text={'Redeem'}
+                        size={'lg'}
+                        variant={'default'}
+                        disabled={!isArthMahaApproved}
+                        onClick={() => setOpenModal(1)}
+                      />
+                    )}
                   </>
                 )}
               </div>

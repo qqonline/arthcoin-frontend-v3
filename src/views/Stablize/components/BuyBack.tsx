@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import useCore from '../../../hooks/useCore';
-import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
-import arrowDown from '../../../assets/svg/arrowDown.svg';
+import { CustomSnack } from '../../../components/SnackBar';
 import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './InfoDiv';
-import MinorInputContainer from './MinorInputContainer';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { useWallet } from 'use-wallet';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import arrowDown from '../../../assets/svg/arrowDown.svg';
+import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { CustomSnack } from '../../../components/SnackBar';
 import CustomToolTip from '../../../components/CustomTooltip';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import { useWallet } from 'use-wallet';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
-import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
+import Grid from '@material-ui/core/Grid';
+import MinorInputContainer from './MinorInputContainer';
+import React, { useEffect, useMemo, useState } from 'react';
 import SlippageContainer from '../../../components/SlippageContainer';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import styled from 'styled-components';
+import TransparentInfoDiv from './InfoDiv';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
+import useCore from '../../../hooks/useCore';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 type Iprops = {
   onChange: () => void;
@@ -196,7 +196,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     <div>
       <Grid container>
         <Grid container lg={8} md={12} sm={12} xs={12}>
-          <Grid item lg={6} md={12} sm={12} xs={12} style={{zIndex: 1}}>
+          <Grid item lg={6} md={12} sm={12} xs={12} style={{ zIndex: 1 }}>
             {buyBackContainer()}
           </Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>

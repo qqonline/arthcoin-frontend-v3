@@ -4,7 +4,7 @@ import Button from '../../../components/Button';
 import CustomToolTip from '../../../components/CustomTooltip';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
@@ -72,7 +72,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Pool Balance</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{prettyNumber(getDisplayBalance(poolBalance, 6))}</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {prettyNumber(getDisplayBalance(poolBalance, 16))}
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         {/* <div style={{ marginBottom: '12px' }}>

@@ -5,36 +5,20 @@ import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import plus from '../../../assets/svg/plus.svg';
-import {
-  Checkbox,
-  CheckboxProps,
-  createStyles,
-  Divider,
-  FormControlLabel,
-  makeStyles,
-  Slider,
-  Theme,
-  withStyles,
-} from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 import MintModal from './MintModal';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckIcon from '@material-ui/icons/Check';
 import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomModal from '../../../components/CustomModal';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import PoolInfo from './PoolInfo';
-import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useARTHXOraclePrice from '../../../hooks/state/useARTHXOraclePrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
@@ -122,7 +106,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     var colletralValueInCollatTerms: number = 0;
     if (!arthxToGMUPrice.eq(0)) {
       colletralValueInCollatTerms =
-        ((100 * valueInNumber) / colletralRatio) * ((colletralRatio) / 100);
+        ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
       const finalColletralValue = collateralToGMUPrice
         .mul(Math.floor(colletralValueInCollatTerms * 1e6))
@@ -137,7 +121,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6);
 
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-
 
     /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
       .mul(1e6)
@@ -181,7 +164,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
         .mul(1e6)
         .div(collateralToGMUPrice);
-      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3))
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
     }
 
     //Calc ARTHX
@@ -190,7 +173,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
         .mul(1e6)
         .div(arthxToGMUPrice);
-      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3))
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
     }
   };
 
@@ -268,8 +251,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ondropDownValueChange={(data: string) => {
                   setSelectedCollateralCoin(data);
                   setTimeout(() => {
-                    onCollateralValueChange(collateralValue.toString())
-                  }, 1000)
+                    onCollateralValueChange(collateralValue.toString());
+                  }, 1000);
                 }}
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
@@ -300,7 +283,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 }}
                 // Istate={'error'}
                 // StateMsg={'ERROR message goes here'}
-                DisableMsg={colletralRatio === 100? 'Currently Collateral ratio is 100%': ''}
+                DisableMsg={colletralRatio === 100 ? 'Currently Collateral ratio is 100%' : ''}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />

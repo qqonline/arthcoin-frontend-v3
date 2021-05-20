@@ -301,7 +301,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -314,7 +315,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -327,7 +329,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -340,7 +343,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -406,7 +410,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -430,7 +435,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -487,16 +493,17 @@
   },
   {
     "inputs": [],
-    "name": "arthAddress",
+    "name": "arth",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract IARTH",
         "name": "",
         "type": "address"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -515,7 +522,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -569,6 +577,20 @@
   },
   {
     "inputs": [],
+    "name": "controller",
+    "outputs": [
+      {
+        "internalType": "contract IARTHController",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "decimals",
     "outputs": [
       {
@@ -578,7 +600,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -615,7 +638,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -634,7 +658,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -653,7 +678,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -695,7 +721,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -732,7 +759,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -751,7 +779,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -764,7 +793,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -777,7 +807,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -790,7 +821,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -803,7 +835,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -908,7 +941,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -921,7 +955,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -934,7 +969,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -947,7 +983,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -960,7 +997,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -973,7 +1011,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [

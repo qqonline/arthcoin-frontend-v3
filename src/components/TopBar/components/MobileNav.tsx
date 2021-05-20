@@ -61,19 +61,44 @@ const MobileNav = (props: props) => {
     <StyledNav>
       {!walletInfo ? (
         <div style={{ width: '100%', background: '#1e1d1d', marginTop: -2 }}>
-          <StyledLink exact activeClassName="active" to="/genesis" onClick={() => props.onClick()}>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/genesis"
+            onClick={() => props.onClick()}
+          >
             Genesis
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/stats" onClick={() => props.onClick()}>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/stats"
+            onClick={() => props.onClick()}
+          >
             Analytics
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/mint/mint" onClick={() => props.onClick()}>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/mint/mint"
+            onClick={() => props.onClick()}
+          >
             Mint/Redeem
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/stabilize/buyback" onClick={() => props.onClick()}>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/stabilize"
+            onClick={() => props.onClick()}
+          >
             Stabilize
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/farming" onClick={() => props.onClick()}>
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/farming"
+            onClick={() => props.onClick()}
+          >
             Farming
           </StyledLink>
           <StyledLink exact activeClassName="active" to="/faucet">
@@ -131,7 +156,7 @@ const MobileNav = (props: props) => {
             text={walletInfo ? 'Disconnect' : 'Connect'}
             onClick={() => {
               if (!walletInfo) {
-                setDisconnect(true)
+                setDisconnect(true);
               }
               setWallet(!walletInfo);
             }}

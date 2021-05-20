@@ -300,19 +300,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "_recollateralizeDiscountCruve",
-    "outputs": [
-      {
-        "internalType": "contract ICurve",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -591,19 +578,6 @@
       }
     ],
     "name": "setBuyBackCollateralBuffer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract ICurve",
-        "name": "curve",
-        "type": "address"
-      }
-    ],
-    "name": "setRecollateralizationCurve",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -914,19 +888,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "estimateRecollateralizeRewards",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -999,19 +960,6 @@
   {
     "inputs": [],
     "name": "getTargetCollateralValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getRecollateralizationDiscount",
     "outputs": [
       {
         "internalType": "uint256",

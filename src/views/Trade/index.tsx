@@ -1,125 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
-// import useCore from '../../hooks/useCore';
 import Grid from '@material-ui/core/Grid';
 import uniswapLogo from '../../assets/svg/uniswapLogo.svg';
 import shushiswap from '../../assets/svg/sushiswapLogo.svg';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CallMadeIcon from '@material-ui/icons/CallMade';
-import SellContent from './components/SellContent';
-import BuyContent from './components/BuyContent';
+import PageHeader from '../../components/PageHeader';
+import TradingCards from './components/TradingTable';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  // const core = useCore();
+  // const basisCash = useBasisCash();
 
-  const [type, setType] = useState<'Buy' | 'Sell'>('Buy');
-
-  const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
-
-  // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
-  // if (!core) return <div />;
-
-  const TabContent = () => {
-    return (
-      <Grid container>
-        <Grid item lg={3} sm={'auto'}></Grid>
-        <Grid item lg={6} md={12} sm={12} xs={12}>
-          <LeftTopCard className={'custom-mahadao-container'}>
-            <LeftTopCardHeader className={'custom-mahadao-container-header'}>
-              <TabContainer onClick={() => setType('Buy')}>
-                {type === 'Buy' && <ActiveTab />}
-                {type === 'Buy'? <TabTextActive>Buy</TabTextActive>: <TabText>Buy</TabText>}
-              </TabContainer>
-              <TabContainer onClick={() => setType('Sell')}>
-                {type === 'Sell' && <ActiveTab />}
-                {type === 'Sell'? <TabTextActive>Sell</TabTextActive>: <TabText>Sell</TabText>}
-              </TabContainer>
-            </LeftTopCardHeader>
-            {type === 'Buy' && <BuyContent />}
-            {type === 'Sell' && <SellContent />}
-          </LeftTopCard>
-        </Grid>
-        <Grid item lg={3} sm={'auto'}></Grid>
-      </Grid>
-    );
-  };
+  // // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
+  // if (!basisCash) return <div />;
 
   return (
     <>
       <GradientDiv />
       <Container size="lg">
-        <div>
-          <PageHeading>TRADE</PageHeading>
-          <PageSubHeading>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </PageSubHeading>
-        </div>
-        <Grid container>
-          <Grid item lg={3}></Grid>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
-            <RadioSelectionConatiner>
-              <RadioSubConatiner
-                onClick={() => {
-                  if (selectedSwap === 'Sushiswap') {
-                    setSelectedSwap('Uniswap');
-                  }
-                }}
-              >
-                {selectedSwap === 'Uniswap' && <ActiveRadio />}
-                <RadioText>
-                  <RadioLogo>
-                    <img src={uniswapLogo} style={{ marginTop: '-6px' }} />
-                  </RadioLogo>
-                  Uniswap
-                </RadioText>
-              </RadioSubConatiner>
-              <RadioSubConatiner
-                onClick={() => {
-                  if (selectedSwap === 'Uniswap') {
-                    setSelectedSwap('Sushiswap');
-                  }
-                }}
-              >
-                {selectedSwap === 'Sushiswap' && <ActiveRadio />}
-                <RadioText>
-                  <RadioLogo>
-                    <img src={shushiswap} />
-                  </RadioLogo>
-                  Sushiswap
-                </RadioText>
-              </RadioSubConatiner>
-            </RadioSelectionConatiner>
+        <PageHeader
+          title="Trade"
+          subtitle="Trade different pair of MAHA, ARTH, ARTHX and Collaterals"
+          // learnMoreLink="#"
+        />
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <TradingCards />
           </Grid>
-          <Grid item lg={3}></Grid>
-        </Grid>
-        {TabContent()}
-        <Grid container>
-          <Grid item lg={3} sm={'auto'}></Grid>
-          <Grid item lg={6} md={12} sm={12} xs={12}>
-            <CustomInfoCard className={'custom-mahadao-box'}>
-              <CustomInfoCardDetails>
-                <Grid container>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <InfoBoxTitle>ETH-ARTH Uniswap pool</InfoBoxTitle>
-                    <InfoBoxSubTitle>Provide liquidity to ETH-ARTH on uniswap</InfoBoxSubTitle>
-                  </Grid>
-                </Grid>
-              </CustomInfoCardDetails>
-              <CustomInfoCardButton>
-                <img src={uniswapLogo} style={{ marginTop: '-6px', marginRight: '10px' }} />
-                <span>Add liquidity on Uniswap</span>
-                <CallMadeIcon style={{ fontSize: 15, marginLeft: '10px' }} />
-              </CustomInfoCardButton>
-            </CustomInfoCard>
-          </Grid>
-          <Grid item lg={3} sm={'auto'}></Grid>
         </Grid>
       </Container>
     </>
   );
-}
+};
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);

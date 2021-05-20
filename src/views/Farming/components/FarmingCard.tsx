@@ -13,6 +13,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
 import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
 import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
+import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
 
 interface IProps {
   mode?: ModeProps;
@@ -30,6 +31,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const stakedBalance = useStakingBalance(pool.contract);
   const claimableBalance = useStakingRewards(pool.contract);
   const onClaim = useStakingClaim(pool.contract);
+
+  const rates = usePoolTokenRates();
 
   const [onPresentWithdrawModal, onDismissWithdrawModal] = useModal(
     <WithdrawModal
@@ -56,6 +59,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
           pool={pool}
           claimableBalance={claimableBalance}
           stakedBalance={stakedBalance}
+          rates={rates}
           onDepositClick={onPresentDepositModal}
           onClaimClick={onClaim}
           onWithdrawClick={onPresentWithdrawModal}

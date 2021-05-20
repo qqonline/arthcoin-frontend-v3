@@ -3,18 +3,21 @@ import { useTransactionAdder } from '../../../state/transactions/hooks';
 import useCore from '../../useCore';
 
 
-export default function (stakingContract: string) {
+export default function (collateralToken: string) {
   const addTransaction = useTransactionAdder();
   const core = useCore();
 
   const action = useCallback(async (): Promise<void> => {
-    const contract = core.contracts[stakingContract]
-    const response = await contract.getRewardAndDistribute()
+    const pool = core.getCollatearalPool(collateralToken)
+
+    const response = await pool.collectRedemption()
     addTransaction(response, {
-      summary: `Claim Rewards`
+      summary: `Collect redeemption ARTH`
     });
 
-  }, [core.contracts, stakingContract, addTransaction]);
+  }, [core, collateralToken, addTransaction]);
+
+  // TODO: do something about the apprve
 
   return action;
 }

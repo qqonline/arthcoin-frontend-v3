@@ -9,12 +9,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useCore from '../../hooks/useCore';
 import { useMediaQuery } from 'react-responsive';
-import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import arrowRight from '../../assets/svg/arrowRight.svg';
-import arrowRightDisabled from '../../assets/svg/arrowRightDisabed.svg';
-import HtmlTooltip from '../../components/HtmlTooltip';
-import HTMLInfoIcon from '../../assets/img/ToolTipColored.svg';
+import usePoolBalances from '../../hooks/state/pools/usePoolBalances';
+import CollateralRatio from './components/CollateralRatio';
 import PieChart from './components/PieChart';
 import BondingDiscount from './components/BondingDiscount';
 import RewardRates from './components/RewardRates';
@@ -24,23 +20,8 @@ import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
 import CustomToolTip from '../../components/CustomTooltip';
 import { Link } from 'react-router-dom';
-
-const BorderLinearProgress = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      height: 25,
-      borderRadius: 12.5,
-      width: '85%',
-    },
-    colorPrimary: {
-      backgroundColor: '#D9D5D3',
-    },
-    bar: {
-      borderRadius: 0,
-      backgroundColor: '#F7653B',
-    },
-  }),
-)(LinearProgress);
+import { BigNumber } from '@ethersproject/bignumber';
+import { getDisplayBalance } from '../../utils/formatBalance';
 
 const Home: React.FC = () => {
   const core = useCore();
@@ -67,24 +48,15 @@ const Home: React.FC = () => {
   const shareAddr = useMemo(() => core.MAHA.address, [core]);
   const bondAddr = useMemo(() => core.ARTHX.address, [core]);
 
-  const CollateralRatio = () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
-        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px', alignItems: 'center' }}>
-          <TextForInfoTitle>
-            Collateral Ratio
-            <CustomToolTip toolTipText={'loreum ipsum'} />
-          </TextForInfoTitle>
-          {/* </div> */}
-          <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>
-            50%
-          </PercentNumber>
-        </div>
-        <BorderLinearProgress variant="determinate" value={50} />
-      </div>
-    );
-  };
+  const balances = usePoolBalances();
+
+  const totalCollateral = balances.reduce((p, c) => p.add(c.balance), BigNumber.from(0));
+
+  const formattedBalances = balances.map((b) => ({
+    name: b.poolToken,
+    amount: Number(getDisplayBalance(b.balance, 6)),
+    percentage: Number(getDisplayBalance(b.balance.mul(1e8).div(totalCollateral), 6)),
+  }));
 
   return (
     <Page>
@@ -111,54 +83,23 @@ const Home: React.FC = () => {
                     paddingBottom: '24px',
                   }}
                 >
-                  <Grid item sm={12} md={6} lg={6}>
-                    {CollateralRatio()}
-                  </Grid>
-                  <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
-                    <PercentCard>
-                      <PercentCardInfo style={{ marginTop: 15 }}>
-                        <PercentCardLabel>
-                          <div
-                            style={{
-                              height: 14,
-                              width: 14,
-                              background: '#F7653B',
-                              borderRadius: 7,
-                            }}
-                          />
-                          <OpacitySpan>Collateral</OpacitySpan>
-                        </PercentCardLabel>
-                        <PercentCardValue>86%</PercentCardValue>
-                      </PercentCardInfo>
-
-                      <PercentCardInfo>
-                        <PercentCardLabel>
-                          <div
-                            style={{
-                              height: 14,
-                              width: 14,
-                              background: '#D9D5D3',
-                              borderRadius: 7,
-                            }}
-                          />
-                          <OpacitySpan>ARTHX</OpacitySpan>
-                        </PercentCardLabel>
-                        <PercentCardValue>14%</PercentCardValue>
-                      </PercentCardInfo>
-                    </PercentCard>
-                  </Grid>
+                  <CollateralRatio />
                 </Grid>
                 <div className="border-bottom" />
-                <Grid item sm={12} md={12} lg={12}>
+                {/* <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
-                    <InfoDiv style={{ marginTop: '24px' }}>Recollatearlize the protocol to receive ARTHX</InfoDiv>
+                    <InfoDiv style={{ marginTop: '24px' }}>
+                      Recollatearlize the protocol to receive ARTHX
+                    </InfoDiv>
                     <HeaderSubtitle>
                       342.450K <HardChip>ARTHX</HardChip>{' '}
                       <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
                     </HeaderSubtitle>
                     <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
-                        <ToLink to={'/stabilize/recollateralize'}><ButtonText style={{color: '#F7653B'}}>Recollateralize</ButtonText></ToLink>
+                        <ToLink to={'/stabilize/recollateralize'}>
+                          <ButtonText style={{ color: '#F7653B' }}>Recollateralize</ButtonText>
+                        </ToLink>
                         <img src={arrowRight} height={18} style={{ marginLeft: 8 }} />
                       </IconButtons>
                       <div
@@ -170,12 +111,16 @@ const Home: React.FC = () => {
                         }}
                       />
                       <IconButtons style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
-                        <ToLink to={'/stabilize/buyback'}><ButtonText style={{color: 'rgba(255, 255, 255, 0.16)'}}>Buyback</ButtonText></ToLink>
+                        <ToLink to={'/stabilize/buyback'}>
+                          <ButtonText style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
+                            Buyback
+                          </ButtonText>
+                        </ToLink>
                         <img src={arrowRightDisabled} height={18} style={{ marginLeft: 8 }} />
                       </IconButtons>
                     </ButtonDiv>
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <div className="border-bottom width-100" />
                 <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
@@ -196,86 +141,28 @@ const Home: React.FC = () => {
                       }}
                     >
                       <Grid item sm={12} md={6} lg={6}>
-                        {/* <div style={{ marginRight: 25, background: 'black' }}> */}
-                        <PieChart />
-                        {/* </div> */}
+                        <PieChart balances={formattedBalances} />
                       </Grid>
                       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                         <PercentCard>
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#D74D26',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>USDT</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>50% (50,000 USDT)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#F7653B',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>ETH</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>20% (50,000 ETH)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FF7F57',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>USDC</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 USDC)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FFA981',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>WBTC</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 WBTC)</PercentCardValue>
-                          </PercentCardInfo>
-
-                          <PercentCardInfo>
-                            <PercentCardLabel>
-                              <div
-                                style={{
-                                  height: 14,
-                                  width: 14,
-                                  background: '#FEE2D5',
-                                  borderRadius: 7,
-                                }}
-                              />
-                              <OpacitySpan>MAHA</OpacitySpan>
-                            </PercentCardLabel>
-                            <PercentCardValue>10% (50,000 MAHA)</PercentCardValue>
-                          </PercentCardInfo>
+                          {formattedBalances.map((b) => (
+                            <PercentCardInfo>
+                              <PercentCardLabel>
+                                <div
+                                  style={{
+                                    height: 14,
+                                    width: 14,
+                                    background: '#D74D26',
+                                    borderRadius: 7,
+                                  }}
+                                />
+                                <OpacitySpan>{b.name}</OpacitySpan>
+                              </PercentCardLabel>
+                              <PercentCardValue>
+                                {Math.floor(b.amount)} - {Math.floor(b.percentage)}%
+                              </PercentCardValue>
+                            </PercentCardInfo>
+                          ))}
                         </PercentCard>
                       </Grid>
                     </Grid>
@@ -286,7 +173,7 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
-            <BasicInfo />
+            {/* <BasicInfo /> */}
             <StakeBox />
           </Grid>
         </Grid>
@@ -307,8 +194,7 @@ const Home: React.FC = () => {
               title="MAHA"
               uniswapInputAddress={core.MAHA.address}
               symbol="MAHA"
-              liquidity="$87,783,601"
-              supplyLabel="Circulating Supply"
+              // liquidity="$87,783,601"
               address={shareAddr}
               stat={share}
             />
@@ -317,9 +203,8 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTH"
               symbol="ARTH"
-              liquidity="$2,462,492"
+              // liquidity="$2,462,492"
               uniswapInputAddress={core.ARTH.address}
-              supplyLabel="Circulating Supply"
               address={cashAddr}
               stat={cash}
             />
@@ -328,7 +213,7 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTHX"
               symbol="ARTHX"
-              liquidity={'$2,462,492'}
+              // liquidity={'$2,462,492'}
               uniswapInputAddress={core.ARTHX.address}
               address={bondAddr}
               stat={bond}
@@ -345,7 +230,7 @@ const Home: React.FC = () => {
 const ToLink = styled(Link)`
   z-index: 1;
   colo
-`
+`;
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
@@ -366,9 +251,7 @@ const FaqTitle = styled.div`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
-const Card = styled.div`
-
-`;
+const Card = styled.div``;
 const PercentCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -466,7 +349,7 @@ const HeaderSubtitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-   margin: 12px 0px 22px 0px;
+  margin: 12px 0px 22px 0px;
 `;
 
 const HardChip = styled.div`
@@ -507,7 +390,6 @@ const ButtonText = styled.div`
   font-size: 14px;
   line-height: 20px;
   text-align: center;
-  
 `;
 
 const TitleString = styled.div`

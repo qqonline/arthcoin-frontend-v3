@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import InfoIcon from '@material-ui/icons/Info';
-import HtmlTooltip from '../../../components/HtmlTooltip';
+
 import CustomToolTip from '../../../components/CustomTooltip';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type props = {};
 
-const BondingDiscount: React.FC<props> = (props) => {
+const BondingDiscount: React.FC<props> = () => {
+  const mintingFees = usePoolMintingFees('');
+
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardHeader>Fee rates</CustomInfoCardHeader>
@@ -19,7 +22,7 @@ const BondingDiscount: React.FC<props> = (props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>0.1%</BeforeChip>
+            <BeforeChip>{getDisplayBalance(mintingFees, 4)}%</BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
@@ -32,6 +35,19 @@ const BondingDiscount: React.FC<props> = (props) => {
           </div>
           <OneLine>
             <BeforeChip>1%</BeforeChip>
+            {/*<TagChips>ETH</TagChips>*/}
+          </OneLine>
+        </OneLine>
+
+        <OneLine>
+          <div style={{ flex: 1 }}>
+            <TextWithIcon>
+              Pool Minting fee
+              <CustomToolTip />
+            </TextWithIcon>
+          </div>
+          <OneLine>
+            <BeforeChip>{getDisplayBalance(mintingFees, 3)}%</BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>

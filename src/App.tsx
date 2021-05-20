@@ -32,7 +32,7 @@ import { SnackbarProvider } from 'notistack';
 import Genesis from './views/Genesis';
 import BuyBack from './views/Stablize/components/BuyBack';
 import Recollatateralize from './views/Stablize/components/Recollatateralize';
-import TemporaryTrade from './views/Temporary Trade';
+import TemporaryTrade from './views/Trade';
 
 const Providers: React.FC = ({ children }) => {
   return (

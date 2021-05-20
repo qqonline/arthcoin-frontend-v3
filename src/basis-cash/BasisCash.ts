@@ -29,6 +29,7 @@ export class BasisCash {
   USDC: ERC20;
   WBTC: ERC20;
   WETH: ERC20;
+  PoolToken: ERC20;
 
   ArthWethLP: ERC20;
   MahaWethLP: ERC20;
@@ -49,13 +50,12 @@ export class BasisCash {
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
-      console.log('error nameDeployment', name, deployment);
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 
-    this.ARTH = new ERC20(deployments.MockArth.address, provider, 'ARTH');
-    this.MAHA = new ERC20(deployments.MockMaha.address, provider, 'MAHA');
-    this.ARTHX = new ERC20(deployments.MockArthx.address, provider, 'ARTHX');
+    this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH');
+    this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
+    this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX');
 
     this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI');
     this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT');
@@ -69,7 +69,7 @@ export class BasisCash {
     this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
     this.ArthxWethLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-ETH LP');
     this.ArthWethLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-ETH LP');
-
+    this.PoolToken = new ERC20(deployments.PoolToken?.address, provider, 'ARTH-RT');
 
     this.tokens = {
       ARTH: this.ARTH,
@@ -134,6 +134,7 @@ export class BasisCash {
       this.USDT,
       this.WBTC,
       this.USDT,
+      this.PoolToken,
       this.ArthMahaLP,
       this.MahaWethLP,
       this.ArthxWethLP,

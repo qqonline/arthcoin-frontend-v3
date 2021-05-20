@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
-import useCore from '../useCore';
+import useCore from '../../useCore';
 
 export default () => {
   const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
@@ -8,7 +8,7 @@ export default () => {
 
   const fetchCashPrice = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    setPrice(await controller.getARTHXPrice());
+    setPrice(await controller.getMAHAPrice());
   }, [core.contracts.ArthController]);
 
   useEffect(() => {
