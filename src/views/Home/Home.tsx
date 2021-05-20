@@ -561,8 +561,36 @@ const Home: React.FC = () => {
       {/* Footers */}
       <footer>
         <div className="footer-content">
+          <div className="top-most">
+            <div className="msg">
+              <p className="title">
+                Arth. Money Reinvented
+              </p>
+              <p className="subtitle">
+                Join the mission as we establish a new standard of money. A better money.
+              </p>
+            </div>
+            <div className="action-button">
+              <button className="button-small-bg">Buy ARTH Now</button>
+            </div>
+          </div>
           <div className="row bottom-most">
-            <div className="col-12 col-sm-6">
+            <div className="col-12 col-sm-6 bottom-left">
+              <FooterEnd>
+                <div className="dialog-class">
+                  {/*<span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>*/}
+                  <img
+                    src={require('./images/mainlogo.svg')}
+                    alt="mahadao-logo"
+                    width="140px"
+                  />
+                </div>
+                <StyledLink href="https://docs.arthcoin.com" target="_blank">
+                  Arth GitBook
+                </StyledLink>
+              </FooterEnd>
+            </div>
+            <div className="col-12 col-sm-6 bottom-right">
               <div className="social-items">
                 <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
                   <button className="button3">
@@ -614,21 +642,6 @@ const Home: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="col-12 col-sm-6">
-              <FooterEnd>
-                <StyledLink href="https://docs.arthcoin.com" target="_blank">
-                  Arth GitBook
-                </StyledLink>
-                <div className="dialog-class">
-                  <span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>
-                  <img
-                    src={require('./images/mainlogo.svg')}
-                    alt="mahadao-logo"
-                    width="140px"
-                  />
-                </div>
-              </FooterEnd>
-            </div>
           </div>
           <div id="footer-gradient"></div>
         </div>
@@ -636,6 +649,7 @@ const Home: React.FC = () => {
     </div>
   );
 };
+
 const FooterEnd = styled.div`
   font-family: 'Syne', sans-serif;
   text-align: center;
@@ -643,9 +657,8 @@ const FooterEnd = styled.div`
   float: right;
   color: #ababab;
   font-size: 18px;
-  padding-top: 22px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   @media (max-width: 768px) {
@@ -655,13 +668,14 @@ const FooterEnd = styled.div`
 const StyledLink = styled.a`
   font-weight: bold;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
   color: #ffffff;
   margin-right: 32px;
   cursor: pointer;
   color: #ffffff;
   opacity: 0.64;
+  margin-left: 20px;
   &:hover {
     opacity: 0.88;
     color: #ffffff;
