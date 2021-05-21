@@ -130,7 +130,7 @@ export default (props: IProps) => {
           )}
         </Grid>
       </Grid>
-      {true && (
+      {props.stakedBalance.gt(0) && (
         <DepositInfoContainer>
           <div style={{ display: 'flex' }}>
             Your Locked state:

@@ -150,8 +150,8 @@ const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
 
-  const [collateralValue, setCollateralValue] = useState<string>('0.0');
-  const [arthValue, setArthValue] = useState<string>('0.0');
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [arthValue, setArthValue] = useState<string>('0');
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -469,7 +469,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(ValidateNumber(val) ? val : String(val));
+                      setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />
@@ -485,7 +485,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(ValidateNumber(val) ? val : String(val));
+                      setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />

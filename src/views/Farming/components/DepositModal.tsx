@@ -11,6 +11,7 @@ import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposi
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
 import DynamicSlider from '../../../components/DynamicSlider';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   onCancel: () => void;
@@ -62,7 +63,7 @@ export default (props: IProps) => {
           SymbolText={symbol}
           setText={(t) => {
             console.log(t);
-            setValue(String(t));
+            setValue(ValidateNumber(t) ? t : '0');
           }}
           inputMode={'decimal'}
           tagText={'MAX'}

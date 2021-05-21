@@ -109,7 +109,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
-      setCollateralValue('');
+      setCollateralValue('0');
       setArthxValue('0');
       setArthValue('0');
       return;
@@ -124,7 +124,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
     //ARTHX Calculation
     var arthxShareValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0)) {
+    if (!arthxToGMUPrice.eq(0) && valueInNumber) {
       arthxShareValueInCollatTerms =
         ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
 
@@ -146,7 +146,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const onARTHXValueChange = async (val: string) => {
     if (val === '') {
       setCollateralValue('0');
-      setArthxValue('');
+      setArthxValue('0');
       setArthValue('0');
       return;
     }
@@ -156,11 +156,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     if (!check) return;
 
     const valueInNumber = Number(val);
-    if (!valueInNumber) return;
+    // if (!valueInNumber) return;
 
     //Colletral Calculation
     var colletralValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0)) {
+    if (!arthxToGMUPrice.eq(0) && valueInNumber) {
       colletralValueInCollatTerms =
         ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
@@ -201,21 +201,23 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const onARTHValueChange = async (val: string) => {
     if (val === '') {
+      console.log('andar')
       setCollateralValue('0');
       setArthxValue('0');
-      setArthValue('');
+      setArthValue('0');
       return;
     }
 
     let check = ValidateNumber(val);
+    console.log('val', val, check, String(Number(val)))
     setArthValue(check ? val : String(Number(val)));
     if (!check) return;
 
     const valueInNumber = Number(val);
-    if (!valueInNumber) return;
+    // if (!valueInNumber) return;
 
     //Calc Colletaral
-    if (!collateralToGMUPrice.eq(0)) {
+    if (!collateralToGMUPrice.eq(0) && valueInNumber) {
       const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
       const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
         .mul(1e6)
@@ -324,7 +326,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -509,8 +511,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isArthApproved
                                 ? `Approved ARTH`
                                 : !isArthApproving
-                                ? `Approve ARTH`
-                                : 'Approving...'
+                                  ? `Approve ARTH`
+                                  : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isArthApproving || isArthApproved}
@@ -522,8 +524,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isMAHAApproved
                                 ? 'Approved MAHA'
                                 : !isMAHAApproving
-                                ? `Approve MAHA`
-                                : 'Approving...'
+                                  ? `Approve MAHA`
+                                  : 'Approving...'
                             }
                             size={'lg'}
                             disabled={isMAHAApproving || isMAHAApproved}

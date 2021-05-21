@@ -65,6 +65,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     if (val === '') {
       setReceiveShare('0');
       setReceiveBonus('0');
+      setCollateralAmount('0');
+      return
     }
     let check = ValidateNumber(val);
 

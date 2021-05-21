@@ -53,7 +53,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
-      setCollateralValue('');
+      setCollateralValue('0');
       setArthxValue('0');
       setArthValue('0');
       return;
@@ -90,7 +90,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const onARTHXValueChange = async (val: string) => {
     if (val === '') {
       setCollateralValue('0');
-      setArthxValue('');
+      setArthxValue('0');
       setArthValue('0');
       return;
     }
@@ -147,7 +147,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '') {
       setCollateralValue('0');
       setArthxValue('0');
-      setArthValue('');
+      setArthValue('0');
       return;
     }
 
