@@ -515,8 +515,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isArthApproving || isArthApproved}
+                            disabled={isArthApproved || Number(arthValue) === 0}
                             onClick={approveCollat}
+                            loading={isArthApproving}
                           />
                           <div style={{ padding: 5 }} />
                           <Button
@@ -528,8 +529,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isMAHAApproving || isMAHAApproved}
+                            disabled={isMAHAApproved}
                             onClick={approveARTHX}
+                            loading={isMAHAApproving}
                           />
                         </ApproveButtonContainer>
                         <br />

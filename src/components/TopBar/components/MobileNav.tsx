@@ -91,7 +91,7 @@ const MobileNav = (props: props) => {
           <StyledLink
             exact
             activeClassName="active"
-            to="/stabilize"
+            to="/stabilize/recollateralize"
             onClick={() => props.onClick()}
           >
             Stabilize

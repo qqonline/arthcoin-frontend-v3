@@ -207,7 +207,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                     </>
                   )}
                   <Button
-                    text={'Recollatateralize'}
+                    text={'Recollateralize'}
                     disabled={!isARTHXApproved}
                     size={'lg'}
                     onClick={() => {

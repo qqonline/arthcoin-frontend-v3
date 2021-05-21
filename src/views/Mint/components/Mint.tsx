@@ -338,8 +338,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isCollatApproving || isCollatApproved}
+                              disabled={isCollatApproved || Number(collateralValue) === 0}
                               onClick={approveCollat}
+                              loading={isCollatApproving}
                             />
                             <div style={{ padding: 5 }} />
                             <Button
@@ -351,8 +352,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isARTHXApproving || isARTHXApproved}
+                              disabled={isARTHXApproved || Number(arthValue) === 0}
                               onClick={approveARTHX}
+                              loading={isARTHXApproving}
                             />
                           </ApproveButtonContainer>
                           <br />

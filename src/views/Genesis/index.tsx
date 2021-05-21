@@ -198,9 +198,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers',
+    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers.',
     'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
-    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral',
+    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
     'The discount decreases over time as more collateral is committed.',
   ];
 
@@ -522,8 +522,9 @@ const Genesis = (props: WithSnackbarProps) => {
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
-                    disabled={isApproving}
+                    disabled={isApproving || (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)}
                     onClick={approve}
+                    loading={isApproving}
                   />
                 ) : (
                   <>
