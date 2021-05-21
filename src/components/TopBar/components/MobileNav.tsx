@@ -149,18 +149,15 @@ const MobileNav = (props: props) => {
           )}
         </div>
       ) : (
-        <WalletInternal disconnect={disconnect} />
+        <WalletInternal disconnect={disconnect} walletInfo={walletInfo} setWalletInfo={(val: boolean) => setWallet(val)} />
       )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
-          <Button
+          {!walletInfo && <Button
             variant={'transparent'}
-            text={walletInfo ? 'Disconnect' : !account ? 'Connect' : 'Wallet Info'}
+            text={!account ? 'Connect' : 'Wallet Info'}
             onClick={async () => {
-              if (walletInfo) {
-                setDisconnect(true)
-              }
               if (!account) {
                 await connect('injected')
                   .then(() => {
@@ -170,7 +167,7 @@ const MobileNav = (props: props) => {
                 setWallet(!walletInfo);
               }
             }}
-          />
+          />}
         </div>
       </StyledButton>
     </StyledNav>

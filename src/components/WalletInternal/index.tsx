@@ -24,13 +24,15 @@ interface IProps {
     //     arthxDollars: number;
     // }
     disconnect?: boolean;
+    setWalletInfo: (val: boolean) => void;
+    walletInfo: boolean
 }
 export const WalletInternal = (props: IProps) => {
 
 
     const isMobile = useMediaQuery({ 'maxWidth': '600px' })
     const core = useCore();
-    const { account } = useWallet();
+    const { account, reset } = useWallet();
 
     const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props.disconnect);
 
@@ -83,9 +85,11 @@ export const WalletInternal = (props: IProps) => {
                                 <Button
                                     text={'Disconnect'}
                                     size={'lg'}
-                                    onClick={() => {
+                                    onClick={async () => {
                                         // Disconnect wallet code here
                                         onClose();
+                                        props.setWalletInfo(false)
+                                        await reset()
                                     }}
                                 />
                             </Grid>
@@ -142,6 +146,16 @@ export const WalletInternal = (props: IProps) => {
                     <DollarValue>
                         {/* ${props?.walletData?.arthxDollars} */}
                     </DollarValue>
+                </StyledRows>
+
+                <StyledRows style={{ marginBottom: -5 }}>
+                    <Button
+                        variant={'transparent'}
+                        text={'Disconnect'}
+                        onClick={async () => {
+                            setConfirmationModal(true)
+                        }}
+                    />
                 </StyledRows>
             </Container>
         </>
