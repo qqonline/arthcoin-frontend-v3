@@ -47,6 +47,8 @@ import { BigNumber } from '@ethersproject/bignumber';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import prettyNumber from '../../components/PrettyNumber';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
+import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
 
 withStyles({
   root: {
@@ -161,6 +163,10 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const [timerHeader, setHeader] = useState<boolean>(false);
+  const arthxPrice = useARTHXOraclePrice();
+
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   const bondingDiscount = [
     {
@@ -173,7 +179,7 @@ const Genesis = (props: WithSnackbarProps) => {
     },
     {
       label: 'Discounted ARTHX Price',
-      value: '0.007$',
+      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
     },
   ];
   useEffect(() => {
@@ -206,7 +212,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const { account, connect } = useWallet();
   const arthBalance = useTokenBalance(core.ARTH);
   const arthCirculatingSupply = useARTHCirculatingSupply();
-  const arthxPrice = useARTHXOraclePrice();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
@@ -238,6 +243,27 @@ const Genesis = (props: WithSnackbarProps) => {
       }
     return arthxPrice.mul(Math.floor(Number(arthValue)));
   }, [arthValue, arthxPrice, collateralValue, type]);
+
+  // const onColleteralChange = (val: string) => {
+  //   if (val === '') {
+  //     setReceiveShare('0');
+  //     setReceiveBonus('0');
+  //   }
+  //   let check = ValidateNumber(val);
+
+  //   setCollateralAmount(check ? val : String(Number(val)));
+  //   if (!check) return;
+  //   const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
+  //   const valInNumber = Number(val);
+  //   if (valInNumber) {
+  //     const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
+  //     const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
+  //       .mul(1e6)
+  //       .div(arthxPrice);
+  //     setReceiveShare(getDisplayBalance(amountBN, 6));
+  //     setReceiveBonus(getDisplayBalance(discountBN, 6));
+  //   }
+  // };
 
   const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
 
@@ -500,13 +526,27 @@ const Genesis = (props: WithSnackbarProps) => {
                     onClick={approve}
                   />
                 ) : (
-                  <Button
-                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={false}
-                    onClick={() => setOpenModal(1)}
-                  />
+                  <>
+                    <Button
+                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                      size={'lg'}
+                      variant={'default'}
+                      disabled={false}
+                      onClick={() => setOpenModal(1)}
+                    />
+
+                    <br />
+
+                    {redeemableBalances[0].gt(0) ||
+                      (redeemableBalances[1].gt(0) && (
+                        <Button
+                          text={'Collect Redeemption'}
+                          size={'lg'}
+                          variant={'default'}
+                          onClick={collectRedeemption}
+                        />
+                      ))}
+                  </>
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>

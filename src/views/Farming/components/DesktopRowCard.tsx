@@ -44,7 +44,7 @@ export default (props: IProps) => {
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
 
-  const tokenAddresses = tokens.map((t) => t.address);
+  const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
   const uniswapLink = `https://app.uniswap.org/#/add/v2/${tokenAddresses.join('/')}`;
 
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;

@@ -15,8 +15,12 @@ const CustomRowCard = (props: IProps) => {
 
   const token1 = core.tokens[props.info.tokens[0]];
   const token2 = core.tokens[props.info.tokens[1]];
-  const link = `https://app.uniswap.org/#/add/v2/${token1.address}/${token2.address}`;
-  const tradelink = `https://app.uniswap.org/#/swap?inputCurrency=${token1.address}&outputCurrency=${token2.address}&use=V2`;
+
+  const address1 = token1.symbol === 'WETH' ? 'ETH' : token1.address;
+  const address2 = token2.symbol === 'WETH' ? 'ETH' : token2.address;
+
+  const link = `https://app.uniswap.org/#/add/v2/${address1}/${address2}`;
+  const tradelink = `https://app.uniswap.org/#/swap?inputCurrency=${address1}&outputCurrency=${address2}&use=V2`;
 
   return (
     <CustomCardGrid>

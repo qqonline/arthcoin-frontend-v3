@@ -11,27 +11,24 @@ type props = {
 const CustomToolTip: React.FC<props> = (props) => {
   const { toolTipText, iconStyle } = props;
 
-  if (!toolTipText){
-    return (
-      <InfoIcon
-        fontSize="default"
-        style={{ transform: 'scale(0.6)'}}/>
-    )
+  return <div />;
+
+  if (!toolTipText) {
+    return <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />;
   }
 
   return (
     <HtmlTooltip
       title={
         <React.Fragment>
-          <ToolTipFont>
-            {toolTipText}
-          </ToolTipFont>
+          <ToolTipFont>{toolTipText}</ToolTipFont>
         </React.Fragment>
       }
     >
       <InfoIcon
         fontSize="default"
-        style={{ transform: 'scale(0.6)', cursor: 'pointer', marginBottom: '2px'}}/>
+        style={{ transform: 'scale(0.6)', cursor: 'pointer', marginBottom: '2px' }}
+      />
     </HtmlTooltip>
   );
 };

@@ -388,7 +388,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         }
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        buttonTo={'/farming'}
+        buttonTo={'/#/farming'}
       />
     </>
   );

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Container from '../../components/Container';
 import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import { withStyles } from '@material-ui/core/styles';
-import { CustomSnack } from '../../components/SnackBar';
+
+import useFaucetClaim from '../../hooks/callbacks/useFaucetClaim';
 import Button from '../../components/Button';
+import { useWallet } from 'use-wallet';
 
 interface IRadioButtonList {
   label: string;
@@ -17,58 +17,11 @@ interface ICStatesInterface {
   IMsg: string;
 }
 
-const GreenRadio = withStyles({
-  root: {
-    color: 'rgba(255, 255, 255, 0.32)',
-    '&$checked': {
-      color: '#FF7F57',
-    },
-  },
-  checked: {},
-})(Radio);
-
 const Boardrooms = () => {
-  useEffect(() => window.scrollTo(0, 0), []);
-  const [selectedTestToken, setSelectedTestToken] = useState<string>('');
-  const [accountAddress, setAccountAddress] = useState<string>('');
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: 'default', IMsg: '' });
+  const { account, connect } = useWallet();
 
-  const RadioButtonList: IRadioButtonList[] = [
-    {
-      label: 'ARTH',
-      key: 'ARTH',
-    },
-    {
-      label: 'MAHA',
-      key: 'MAHA',
-    },
-    {
-      label: 'ARTHX',
-      key: 'ARTHX',
-    },
-    {
-      label: 'USDT',
-      key: 'USDT',
-    },
-    {
-      label: 'USDC',
-      key: 'USDC',
-    },
-  ];
-
-  const handleChange = (val: string) => {
-    setSelectedTestToken(val);
-  };
-
-  useEffect(() => {
-    console.log(accountAddress.length);
-    if (selectedTestToken !== '' && accountAddress.length > 16) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [selectedTestToken, accountAddress]);
+  const claimTokens = useFaucetClaim();
+  const isWalletConnected = !!account;
 
   return (
     <>
@@ -82,39 +35,24 @@ const Boardrooms = () => {
           <Grid item lg={3}></Grid>
           <Grid item lg={6} md={12} sm={12} xs={12}>
             <CustomInfoCard className={'custom-mahadao-box'}>
-              <PrimaryText>Select Test Token</PrimaryText>
-              <Grid container lg={12}>
-                {RadioButtonList.map((data) => (
-                  <Grid lg={4} md={4} sm={6} xs={6} key={data.key}>
-                    <RadioConatiner>
-                      <GreenRadio
-                        checked={selectedTestToken === data.key}
-                        onChange={(event: any) => handleChange(event.target.value)}
-                        value={data.key}
-                        name="radio-button-demo"
-                        inputProps={{ 'aria-label': data.key }}
-                      />
-                      <SecondaryText
-                        onClick={() => {
-                          handleChange(data.key);
-                        }}
-                      >
-                        {data.label}
-                      </SecondaryText>
-                    </RadioConatiner>
-                  </Grid>
-                ))}
-              </Grid>
+              <PrimaryText>Claim your Test Tokens here</PrimaryText>
 
               <Grid container lg={12} style={{ marginTop: '32px' }}>
                 <Grid item lg={4} md={4} sm={6} xs={6}>
-                  <Button
-                    variant={'default'}
-                    text="Submit"
-                    size={'sm'}
-                    onClick={() => {}}
-                    disabled={buttonDisabled}
-                  />
+                  {!isWalletConnected ? (
+                    <Button
+                      text={'Connect Wallet'}
+                      size={'lg'}
+                      onClick={() => connect('injected')}
+                    />
+                  ) : (
+                    <Button
+                      variant={'default'}
+                      text="Submit"
+                      size={'sm'}
+                      onClick={claimTokens}
+                    />
+                  )}
                 </Grid>
               </Grid>
             </CustomInfoCard>

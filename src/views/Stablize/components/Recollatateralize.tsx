@@ -73,21 +73,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
     const valInNumber = Number(val);
     if (valInNumber) {
-      // setReceiveShare(String(valInNumber));
-      setReceiveBonus(String(valInNumber * discount));
-
-      //yash method 1
-      const tempArthx = Number(arthxPrice.toString()) / 1e6
-      const ReceiveShareTemp = valInNumber / tempArthx
-      console.log(tempArthx, ReceiveShareTemp)
-
-      //method last
-      //?? precision issue while converting to big number
-      /*let ReceiveShareTemp = BigNumber.from(valInNumber)
+      const amountBN = BigNumber.from(valInNumber).mul(1e10).div(arthxPrice);
+      const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
         .mul(1e6)
-        .div(arthxPrice)
-      console.log(ReceiveShareTemp.toString(), valInNumber)*/
-      setReceiveShare(String(ReceiveShareTemp));
+        .div(arthxPrice);
+      setReceiveShare(getDisplayBalance(amountBN, 6));
+      setReceiveBonus(getDisplayBalance(discountBN, 6));
     }
   };
 
