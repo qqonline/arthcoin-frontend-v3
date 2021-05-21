@@ -247,7 +247,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <OneLineInput>
                   <div style={{ flex: 1 }}>
                     <TextForInfoTitle>
-                      Minimum discount
+                      Minimum Discount
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
