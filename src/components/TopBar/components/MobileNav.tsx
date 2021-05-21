@@ -9,6 +9,7 @@ import AccountButton from './AccountButton';
 import ExpandMore from '../../../assets/img/ExpandMore.svg';
 import Button from '../../Button';
 import { WalletInternal } from '../../WalletInternal';
+import { useWallet } from 'use-wallet';
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -40,7 +41,9 @@ interface props {
   onClick: () => void;
 }
 const MobileNav = (props: props) => {
-  // const { walletInfo: Wallet } = props
+  // const { walletInfo: Wallet } = props  
+  const { account, connect } = useWallet();
+
   const [netWrokType, setNetworkType] = React.useState('mainnet');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNetworkType(event.target.value as string);
@@ -146,19 +149,26 @@ const MobileNav = (props: props) => {
           )}
         </div>
       ) : (
-        <WalletInternal walletData={dummyWallet} disconnect={disconnect} />
+        <WalletInternal disconnect={disconnect} />
       )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
           <Button
             variant={'transparent'}
-            text={walletInfo ? 'Disconnect' : 'Connect'}
-            onClick={() => {
-              if (!walletInfo) {
-                setDisconnect(true);
+            text={walletInfo ? 'Disconnect' : !account ? 'Connect' : 'Wallet Info'}
+            onClick={async () => {
+              if (walletInfo) {
+                setDisconnect(true)
               }
-              setWallet(!walletInfo);
+              if (!account) {
+                await connect('injected')
+                  .then(() => {
+                    setWallet(!walletInfo);
+                  })
+              } else {
+                setWallet(!walletInfo);
+              }
             }}
           />
         </div>
