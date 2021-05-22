@@ -143,6 +143,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
             type={'number'}
             onChange={(event) => {
               const proceed = checkForErrors(event.target.value);
+              if (Number(event.target.value) && Number(event.target.value) < 0) return
               if (proceed) props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
             }}
           />
