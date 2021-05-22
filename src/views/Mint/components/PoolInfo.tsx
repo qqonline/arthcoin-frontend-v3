@@ -139,6 +139,7 @@ const OneLineInput = styled.div`
   margin: 5px 0 10px 0;
 `;
 
+
 const TextForInfoTitle = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -148,6 +149,7 @@ const TextForInfoTitle = styled.div`
   color: #ffffff;
   opacity: 0.64;
 `;
+
 
 const InputLabelSpanRight = styled.span`
   font-family: Inter;
@@ -159,12 +161,14 @@ const InputLabelSpanRight = styled.span`
   margin-right: 5px;
 `;
 
+
 const RightBottomCard = styled.div`
   margin-top: 16px;
   @media (max-width: 600px) {
     margin-top: 24px;
   }
 `;
+
 
 const RightBottomCardTitle = styled.div`
   padding: 0;
