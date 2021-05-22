@@ -1,15 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import useCore from '../../../hooks/useCore';
+import { useWallet } from 'use-wallet';
 import Grid from '@material-ui/core/Grid';
+import { BigNumber } from '@ethersproject/bignumber';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+
+import useCore from '../../../hooks/useCore';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import plus from '../../../assets/svg/plus.svg';
-import { BigNumber } from '@ethersproject/bignumber';
 import MintModal from './MintModal';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import { useWallet } from 'use-wallet';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import PoolInfo from './PoolInfo';
@@ -22,14 +23,17 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import SlippageContainer from '../../../components/SlippageContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
+
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
 }
+
+
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const { account, connect } = useWallet();
-
+  
   const core = useCore();
+  const { account, connect } = useWallet();
 
   const [arthxValue, setArthxValue] = useState<string>('0');
   const [collateralValue, setCollateralValue] = useState<string>('0');
@@ -195,6 +199,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
   const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
+  
   const isCollatArthxApproved = useMemo(() => {
     return isARTHXApproved && !!account && isCollatApproved;
   }, [account, isARTHXApproved, isCollatApproved]);
@@ -203,6 +208,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const mintingAmount = BigNumber.from(Math.floor(Number(arthValue) * 1e6));
     return mintingAmount.mul(mintingFee).div(1e6);
   }, [arthValue, mintingFee]);
+
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
   return (
