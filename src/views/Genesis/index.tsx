@@ -193,8 +193,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const calcExpectReceiveAmount = (price: BigNumber, amount: number | string) => (
     BigNumber.from(Number(amount))
-      .mul(BigNumber.from(10))
-      .pow(6)  // TODO: replace with a decimal variable representing decimals of token.
+      .mul(
+        BigNumber.from(10).pow(6)
+      )
       .mul(1e6)
       .div(price)
   );
