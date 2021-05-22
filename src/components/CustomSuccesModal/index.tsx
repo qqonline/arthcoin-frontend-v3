@@ -20,7 +20,7 @@ export interface InputProps {
   subsubTitle?: string;
 
   //Buttons Props
-  buttonText: string;
+  buttonText?: string;
   buttonType?: 'default' | 'transparent' | 'outlined' | 'rounded';
   buttonHref?: string; /* if want to redirect button to other website */
   buttonTo?: string; /* if want to redirect to other page */
@@ -31,7 +31,7 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
 
   let buttonRedirection: object;
 
-  if (buttonHref){
+  if (buttonHref) {
     buttonRedirection = {
       href: buttonHref
     }
@@ -68,7 +68,7 @@ const CustomSuccessModal: React.FC<InputProps> = (props) => {
             {subTitle}
           </ContentSubtitle>
         </ContentConatiner>
-        <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()} {...buttonRedirection}/>
+        {buttonText && <Button text={buttonText} size={'lg'} variant={buttonType} onClick={() => setModalOpen()} {...buttonRedirection} />}
       </MainContainer>
 
     </CustomModal>

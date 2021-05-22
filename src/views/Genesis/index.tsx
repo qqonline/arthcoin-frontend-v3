@@ -206,12 +206,12 @@ const Genesis = (props: WithSnackbarProps) => {
 
     if (type === 'Commit' && Number(collateralValue))
       return calcExpectReceiveAmount(arthxPrice, collateralValue);
-    
+
     return calcExpectReceiveAmount(arthxPrice, arthValue);
   }, [arthValue, arthxPrice, collateralValue, type]);
 
   const [approveStatus, approve] = useApprove(
-    currentToken, 
+    currentToken,
     collateralPool.address
   );
 
@@ -255,6 +255,18 @@ const Genesis = (props: WithSnackbarProps) => {
 
   return (
     <>
+      <CustomSuccessModal
+        modalOpen={openModal === 2}
+        setModalOpen={() => setOpenModal(0)}
+        title={type === 'Commit' ? 'Committing collateral!' : 'Swapping ARTH'}
+        // subTitle={'View Transaction'}
+        subsubTitle={
+          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+        }
+        buttonText={'Stake your ARTH'}
+        buttonType={'default'}
+        buttonTo={'/farming'}
+      />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -462,7 +474,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   />
                 )}
                 <PlusMinusArrow>
-                  <img src={arrowDown} alt={'Arrow down'}/>
+                  <img src={arrowDown} alt={'Arrow down'} />
                 </PlusMinusArrow>
                 <div style={{ marginBottom: '32px' }}>
                   <TextWithIcon style={{ marginBottom: '12px' }}>You Receive</TextWithIcon>

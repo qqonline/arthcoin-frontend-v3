@@ -17,6 +17,7 @@ interface IProps {
   pool: StakingContract;
   onCancel: () => void;
   onWithdraw?: () => void;
+  toggleSuccessModal?: () => void;
   isMobile: boolean;
 }
 
@@ -76,7 +77,7 @@ export default (props: IProps) => {
           <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button text={'Withdraw'} size={'lg'} onClick={withdraw} />
+          <Button text={'Withdraw'} size={'lg'} onClick={() => withdraw().then(props?.toggleSuccessModal).finally(props.onCancel)} />
         </Grid>
       </Grid>
     </CustomModal>
