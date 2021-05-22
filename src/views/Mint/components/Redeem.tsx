@@ -234,55 +234,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
     }
   };
-  /*const onARTHXValueChange = async (val: string) => {
-    if (val === '') setArthValue('0');
-
-    setArthxValue(val);
-    const valueInNumber = Number(val);
-    if (valueInNumber) {
-      let colletralTemp =
-        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
-      setCollateralValue(colletralTemp.toString());
-      setArthValue(String(colletralTemp + valueInNumber));
-    }
-  };
-
-  const onCollateralValueChange = async (val: string) => {
-    if (val === '') {
-      setArthxValue('0');
-      setArthValue('0');
-    }
-    setCollateralValue(val);
-    const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
-
-    const arthxShareValueInCollatTerms =
-      ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
-
-    const finalArthxValue = collateralToGMUPrice
-      .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
-      .div(arthxToGMUPrice);
-
-    const finalArthValue = collateralToGMUPrice
-      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
-      .div(1e6);
-
-    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-  };
-
-  const onARTHValueChange = async (val: string) => {
-    if (val === '') {
-      setArthxValue('0');
-      setCollateralValue('0');
-    }
-    setArthValue(val);
-    const valueInNumber = Number(val);
-    if (valueInNumber) {
-      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
-      setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
-    }
-  };*/
 
   const tradingFee = useMemo(() => {
     const mintingAmount = BigNumber.from(Math.floor(Number(collateralValue) * 1e6));
