@@ -185,10 +185,6 @@ const Genesis = (props: WithSnackbarProps) => {
     onClick();
   }, []);
 
-  const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
-  const currentToken = core.tokens[currentCoin];
-  const currentValue = type === 'Commit' ? collateralValue : arthValue;
-
   const calcPercentageCompleted = (percent: BigNumber): string => (
     percent
       .div(BigNumber.from(10).pow(16))
@@ -196,7 +192,9 @@ const Genesis = (props: WithSnackbarProps) => {
   );
 
   const calcExpectReceiveAmount = (price: BigNumber, amount: number | string) => (
-    BigNumber.from(Number(amount) * 1e6)
+    BigNumber.from(Number(amount))
+      .mul(BigNumber.from(10))
+      .pow(6)  // TODO: replace with a decimal variable representing decimals of token.
       .mul(1e6)
       .div(price)
   );
@@ -209,6 +207,10 @@ const Genesis = (props: WithSnackbarProps) => {
     
     return calcExpectReceiveAmount(arthxPrice, arthValue);
   }, [arthValue, arthxPrice, collateralValue, type]);
+
+  const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
+  const currentToken = core.tokens[currentCoin];
+  const currentValue = type === 'Commit' ? collateralValue : arthValue;
 
   const [approveStatus, approve] = useApprove(
     currentToken, 
