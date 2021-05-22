@@ -294,9 +294,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 // DefaultValue={'0'}
-                LogoSymbol={'ARTHX'}
+                LogoSymbol={'ARTH'}
                 hasDropDown={false}
-                SymbolText={'ARTHX'}
+                SymbolText={'ARTH'}
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
