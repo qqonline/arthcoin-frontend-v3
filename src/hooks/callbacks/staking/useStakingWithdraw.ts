@@ -17,7 +17,7 @@ export default function (stakingContract: string, amount: number, depositToken: 
     console.log(await contract.stakingToken())
     const response = await contract.withdraw(BigNumber.from(Math.floor(amount * 1000)).mul(decmals))
     addTransaction(response, {
-      summary: `Wtihdraw ${amount} ${depositToken}`
+      summary: `Withdraw ${amount} ${depositToken}`
     });
 
   }, [core.contracts, stakingContract, amount, addTransaction, depositToken]);

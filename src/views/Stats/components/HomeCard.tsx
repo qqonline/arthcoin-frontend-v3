@@ -39,7 +39,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
           </div>
         </CardHeader>
 
-        <CardContent>
+        {/* <CardContent>
           <CardSection>
             <TextWithIcon>Price</TextWithIcon>
             {stat ? (
@@ -60,7 +60,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </StyledSupplyLabel>
             {stat ? <StyledValue>{getDisplayBalance(stat.totalSupply)}</StyledValue> : '-'}
           </CardSection>
-        </CardContent>
+        </CardContent> */}
         <UniswapLink
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${address}`}

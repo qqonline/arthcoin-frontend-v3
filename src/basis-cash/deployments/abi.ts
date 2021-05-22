@@ -16,8 +16,7 @@ export const SimpleOracle = require('./abi/SimpleOracle.json')
 export const UniswapPairOracle = require('./abi/UniswapPairOracle.json')
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json')
 export const PoolToken = require('./abi/PoolToken.json')
-export const MockChainlinkAggregatorV3 = require('./abi/MockChainlinkAggregatorV3.json')
-
+export const MockChainlinkAggregatorV3 = require('./abi/MockChainlinkAggregatorV3')
 export const UniswapV2Pair = require('./abi/UniswapV2Pair.json')
 export const UniswapV2Router02 = require('./abi/UniswapV2Router02.json')
 
@@ -25,6 +24,7 @@ export const UniswapV2Router02 = require('./abi/UniswapV2Router02.json')
 type IABIS = {
   [key: string]: any[]
 }
+
 
 const ret: IABIS = {
   ArthController,
@@ -47,7 +47,8 @@ const ret: IABIS = {
   UniswapV2Factory,
   UniswapV2Pair,
   UniswapV2Router02,
-  MockChainlinkAggregatorV3,
+  MockChainlinkAggregatorV3
 }
+
 
 export default ret

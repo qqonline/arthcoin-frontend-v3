@@ -9,6 +9,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import CustomModal from '../../../components/CustomModal';
 import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   mode?: ModeProps;
@@ -50,7 +51,7 @@ export default (props: IProps) => {
         SymbolText={symbol}
         setText={(t) => {
           console.log(t);
-          setValue(String(t));
+          setValue(ValidateNumber(t) ? t : '0');
         }}
         inputMode={'decimal'}
         tagText={'MAX'}

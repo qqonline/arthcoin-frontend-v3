@@ -8,20 +8,40 @@ import TokenSymbol from '../TokenSymbol';
 import CustomModal from '../CustomModal';
 import Button from '../Button';
 import { useMediaQuery } from 'react-responsive';
+import useCore from '../../hooks/useCore';
+import { useWallet } from 'use-wallet';
+import useTokenBalanceOf from '../../hooks/state/useTokenBalanceOf';
+import { getDisplayBalance } from '../../utils/formatBalance';
 
 interface IProps {
-    walletData?: {
-        accountNumber: string;
-        mahaTokens: number;
-        mahaDollars: number;
-        arthTokens: number;
-        arthDollars: number;
-        arthxTokens: number;
-        arthxDollars: number;
-    }
+    // walletData?: {
+    //     accountNumber: string;
+    //     mahaTokens: number;
+    //     mahaDollars: number;
+    //     arthTokens: number;
+    //     arthDollars: number;
+    //     arthxTokens: number;
+    //     arthxDollars: number;
+    // }
     disconnect?: boolean;
+    setWalletInfo: (val: boolean) => void;
+    walletInfo: boolean
 }
 export const WalletInternal = (props: IProps) => {
+
+
+    const isMobile = useMediaQuery({ 'maxWidth': '600px' })
+    const core = useCore();
+    const { account, reset } = useWallet();
+
+    const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props.disconnect);
+
+    const arthBalance = useTokenBalanceOf(core.ARTH, account);
+    const mahaBalance = useTokenBalanceOf(core.MAHA, account);
+    const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
+    const onClose = () => {
+        setConfirmationModal(false)
+    }
 
     const truncateMiddle = function (fullStr: string = '12345678922500025', strLen: number, separator?: string) {
         if (fullStr.length <= strLen) return fullStr;
@@ -35,11 +55,6 @@ export const WalletInternal = (props: IProps) => {
 
         return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
     };
-    const isMobile = useMediaQuery({ 'maxWidth': '600px' })
-    const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props?.disconnect || false);
-    const onClose = () => {
-        setConfirmationModal(false)
-    }
     return (
         <>
             <Container style={{ background: '#1e1d1d', marginTop: -2 }}>
@@ -53,8 +68,8 @@ export const WalletInternal = (props: IProps) => {
                     title={`Disconnect Wallet`}
                 >
                     <div>
-                        <PrimaryText>Are you sure you want to disconnect {truncateMiddle(props?.walletData?.accountNumber, 15)} ?</PrimaryText>
-                        <SecondaryText>0xf77D777462d0cb38A67D7535761980D1</SecondaryText>
+                        <PrimaryText>Are you sure you want to disconnect {truncateMiddle(account, 15)} ?</PrimaryText>
+                        <SecondaryText>{account}</SecondaryText>
                         <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
                             <Grid item lg={6} md={6} sm={12} xs={12}>
                                 <Button
@@ -70,8 +85,11 @@ export const WalletInternal = (props: IProps) => {
                                 <Button
                                     text={'Disconnect'}
                                     size={'lg'}
-                                    onClick={() => {
+                                    onClick={async () => {
+                                        // Disconnect wallet code here
                                         onClose();
+                                        props.setWalletInfo(false)
+                                        await reset()
                                     }}
                                 />
                             </Grid>
@@ -87,7 +105,7 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <img height={32} src={metamask} />
                         </IconButton>
-                        <span>{truncateMiddle(props?.walletData?.accountNumber, 15)}</span>
+                        <span>{truncateMiddle(account, 15)}</span>
                         <IconButton>
                             <img height={24} src={copy} />
                         </IconButton>
@@ -99,10 +117,10 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'MAHA'} size={44} />
                         </IconButton>
-                        <span>{props?.walletData?.mahaTokens} MAHA</span>
+                        <span>{getDisplayBalance(mahaBalance)} MAHA</span>
                     </RowName>
                     <DollarValue>
-                        ${props?.walletData?.mahaDollars}
+                        {/* ${props?.walletData?.mahaDollars} */}
                     </DollarValue>
                 </StyledRows>
 
@@ -111,10 +129,10 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'ARTH'} size={44} />
                         </IconButton>
-                        <span>{props?.walletData?.arthTokens} ARTH</span>
+                        <span>{getDisplayBalance(arthBalance)} ARTH</span>
                     </RowName>
                     <DollarValue>
-                        ${props?.walletData?.arthDollars}
+                        {/* ${props?.walletData?.arthDollars} */}
                     </DollarValue>
                 </StyledRows>
 
@@ -123,11 +141,21 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'ARTHX'} size={44} />
                         </IconButton>
-                        <span>{props?.walletData?.arthxTokens} ARTHX</span>
+                        <span>{getDisplayBalance(arthxBalance)} ARTHX</span>
                     </RowName>
                     <DollarValue>
-                        ${props?.walletData?.arthxDollars}
+                        {/* ${props?.walletData?.arthxDollars} */}
                     </DollarValue>
+                </StyledRows>
+
+                <StyledRows style={{ marginBottom: -5 }}>
+                    <Button
+                        variant={'transparent'}
+                        text={'Disconnect'}
+                        onClick={async () => {
+                            setConfirmationModal(true)
+                        }}
+                    />
                 </StyledRows>
             </Container>
         </>

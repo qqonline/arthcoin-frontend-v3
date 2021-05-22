@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { CSSProperties, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
@@ -5,6 +6,7 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
+import { correctString } from './RegexValidation';
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
@@ -29,7 +31,7 @@ type props = {
   to?: string;
   Istate?: 'default' | 'error' | 'warning';
   msg?: string;
-  DisableMsg?:string;
+  DisableMsg?: string;
 };
 
 interface ICStatesInterface {
@@ -102,7 +104,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
   const IConatinerStyle = () => {
     let returnObj: CSSProperties = {}
-    if (props.dontShowBackgroundContainer){
+    if (props.dontShowBackgroundContainer) {
       returnObj['padding'] = '0px';
       returnObj['backgroundColor'] = 'transparent';
     }
@@ -113,7 +115,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
   }
 
   return (
-    <div style={{position: 'relative'}}>
+    <div style={{ position: 'relative' }}>
       {DisableMsg !== '' && <TotalDisable><DMsg>{DisableMsg}</DMsg></TotalDisable>}
       <IConatiner style={IConatinerStyle()}>
         <ILabelContainer>
@@ -129,10 +131,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <InputBase
             inputMode={props?.inputMode}
             placeholder={DefaultValue || '0'}
-            defaultValue={DefaultValue ? DefaultValue : 0}
+            defaultValue={DefaultValue}
             value={DefaultValue}
             inputProps={{ 'aria-label': 'naked' }}
-            disabled={props?.disabled}
             style={{
               padding: '8px 12px',
               color: '#FFFFFF',
@@ -142,7 +143,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
             type={'number'}
             onChange={(event) => {
               const proceed = checkForErrors(event.target.value);
-              if (proceed) props?.setText(event.target.value);
+              if (proceed) props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
             }}
           />
           {tagText !== '' && (
@@ -173,7 +174,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
               {multiIcons && symbols ? (
                 <LLabel>
                   {symbols.map((s, index) => (
-                    <TokenSymbol key={s} symbol={s} size={25} style={index === 1? { zIndex: 2, marginLeft: -5 }: { zIndex: 2 }} />
+                    <TokenSymbol key={s} symbol={s} size={25} style={index === 1 ? { zIndex: 2, marginLeft: -5 } : { zIndex: 2 }} />
                   ))}
                 </LLabel>
               ) : (

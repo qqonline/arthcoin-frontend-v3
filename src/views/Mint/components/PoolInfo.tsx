@@ -114,7 +114,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
         </RightBottomCardTitle>
         <Grid container style={{ marginTop: '16px' }}>
           <Grid item lg={4}>
-            <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
+            <Button text={'Earn Rewards'} size={'sm'} to={'/farming'}/>
           </Grid>
         </Grid>
       </RightBottomCard>

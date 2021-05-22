@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
-import Container from '../../components/Container';
+import { Link } from 'react-router-dom';
+import Countdown from 'react-countdown';
 import Grid from '@material-ui/core/Grid';
-import InfoIcon from '@material-ui/icons/Info';
-import Button from '../../components/Button';
-import arrowDown from '../../assets/svg/arrowDown.svg';
-import calendar from '../../assets/svg/calendar.svg';
+import { useMediaQuery } from 'react-responsive';
 import {
   Checkbox,
   CheckboxProps,
@@ -17,21 +16,22 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
+import { BigNumber } from '@ethersproject/bignumber';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
+
+import Container from '../../components/Container';
+import Button from '../../components/Button';
+import arrowDown from '../../assets/svg/arrowDown.svg';
+import calendar from '../../assets/svg/calendar.svg';
 import { CustomSnack } from '../../components/SnackBar';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import { Link } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
-import { useWallet } from 'use-wallet';
 import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
 import BondingDiscount from './components/BondingDiscount';
-import Countdown from 'react-countdown';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
 import CustomToolTip from '../../components/CustomTooltip';
-import HtmlTooltip from '../../components/HtmlTooltip';
-import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 import SlippageContainer from '../../components/SlippageContainer';
 import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
@@ -43,10 +43,12 @@ import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgor
 import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
-import { BigNumber } from '@ethersproject/bignumber';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import prettyNumber from '../../components/PrettyNumber';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
+import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
+
 
 withStyles({
   root: {
@@ -127,6 +129,7 @@ withStyles({
   },
 })(Slider);
 
+
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -144,12 +147,13 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
+
 const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
 
-  const [collateralValue, setCollateralValue] = useState<string>('0.0');
-  const [arthValue, setArthValue] = useState<string>('0.0');
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [arthValue, setArthValue] = useState<string>('0');
 
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -160,28 +164,24 @@ const Genesis = (props: WithSnackbarProps) => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const recollateralizationDiscount = useRecollateralizationDiscount();
+  const [timerHeader, setHeader] = useState<boolean>(false);
   const arthxPrice = useARTHXOraclePrice();
 
-  const [timerHeader, setHeader] = useState<boolean>(false);
-
-  const calculateDiscountedPrice = (discount: BigNumber, price: BigNumber) => {
-    const nonDiscountPercent = BigNumber.from('1000000').sub(discount);
-
-    return price.mul(nonDiscountPercent).div(1e6);
-  }
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   const bondingDiscount = [
     {
       label: 'Current discount',
-      value: `${getDisplayBalance(recollateralizationDiscount, 4, 3)}%`,
+      value: `${getDisplayBalance(recollateralizationDiscount, 4, 2)}%`,
     },
     {
       label: 'Starting ARTHX Price',
-      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
+      value: '0.01$',
     },
     {
       label: 'Discounted ARTHX Price',
-      value: `${getDisplayBalance(calculateDiscountedPrice(recollateralizationDiscount, arthxPrice), 6, 4)}$`
+      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
     },
   ];
   useEffect(() => {
@@ -200,9 +200,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers',
+    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers.',
     'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
-    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral',
+    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
     'The discount decreases over time as more collateral is committed.',
   ];
 
@@ -219,12 +219,54 @@ const Genesis = (props: WithSnackbarProps) => {
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
 
-  const percentageCompletedNum = percentageCompleted.div(1e14).div(1e2).toString(); // Equivalent to .mul(100).div(1e18)
+  const percentageCompletedNum = percentageCompleted
+    .div(BigNumber.from(10).pow(16))
+    .toString();
 
-  const arthxRecieve = useMemo(() => {
+  /*const arthxRecieve = useMemo(() => {
     if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
     return arthxPrice.mul(Math.floor(Number(arthValue)));
+  }, [arthValue, arthxPrice, collateralValue, type]);*/
+
+  /*const arthxRecieve = useMemo(() => {
+    if (type === 'Commit')
+      if (arthxPrice.gt(0) && Number(collateralValue)) {
+        const temp = Number(arthxPrice.toString()) / 1e6;
+        return Number(collateralValue) / temp;
+      }
+    return arthxPrice.mul(Math.floor(Number(arthValue)));
+  }, [arthValue, arthxPrice, collateralValue, type]);*/
+
+  const arthxRecieve = useMemo(() => {
+    if (type === 'Commit')
+      if (arthxPrice.gt(0) && Number(collateralValue)) {
+        return BigNumber.from(Number(collateralValue) * 1e6)
+          .mul(1e6)
+          .div(arthxPrice)
+      }
+    return arthxPrice.mul(Math.floor(Number(arthValue)));
   }, [arthValue, arthxPrice, collateralValue, type]);
+
+  // const onColleteralChange = (val: string) => {
+  //   if (val === '') {
+  //     setReceiveShare('0');
+  //     setReceiveBonus('0');
+  //   }
+  //   let check = ValidateNumber(val);
+
+  //   setCollateralAmount(check ? val : String(Number(val)));
+  //   if (!check) return;
+  //   const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
+  //   const valInNumber = Number(val);
+  //   if (valInNumber) {
+  //     const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
+  //     const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
+  //       .mul(1e6)
+  //       .div(arthxPrice);
+  //     setReceiveShare(getDisplayBalance(amountBN, 6));
+  //     setReceiveBonus(getDisplayBalance(discountBN, 6));
+  //   }
+  // };
 
   const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
 
@@ -430,7 +472,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(ValidateNumber(val) ? val : String(val));
+                      setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />
@@ -446,7 +488,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(ValidateNumber(val) ? val : String(val));
+                      setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />
@@ -483,17 +525,32 @@ const Genesis = (props: WithSnackbarProps) => {
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
-                    disabled={isApproving}
+                    disabled={isApproving || (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)}
                     onClick={approve}
+                    loading={isApproving}
                   />
                 ) : (
-                  <Button
-                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={false}
-                    onClick={() => setOpenModal(1)}
-                  />
+                  <>
+                    <Button
+                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                      size={'lg'}
+                      variant={'default'}
+                      disabled={false}
+                      onClick={() => setOpenModal(1)}
+                    />
+
+                    <br />
+
+                    {redeemableBalances[0].gt(0) ||
+                      (redeemableBalances[1].gt(0) && (
+                        <Button
+                          text={'Collect Redeemption'}
+                          size={'lg'}
+                          variant={'default'}
+                          onClick={collectRedeemption}
+                        />
+                      ))}
+                  </>
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>
@@ -522,6 +579,7 @@ const Genesis = (props: WithSnackbarProps) => {
     </>
   );
 };
+
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);

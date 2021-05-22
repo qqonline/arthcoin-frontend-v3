@@ -53,7 +53,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '') {
-      setCollateralValue('');
+      setCollateralValue('0');
       setArthxValue('0');
       setArthValue('0');
       return;
@@ -90,7 +90,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const onARTHXValueChange = async (val: string) => {
     if (val === '') {
       setCollateralValue('0');
-      setArthxValue('');
+      setArthxValue('0');
       setArthValue('0');
       return;
     }
@@ -147,7 +147,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '') {
       setCollateralValue('0');
       setArthxValue('0');
-      setArthValue('');
+      setArthValue('0');
       return;
     }
 
@@ -294,9 +294,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 // DefaultValue={'0'}
-                LogoSymbol={'ARTH'}
+                LogoSymbol={'ARTHX'}
                 hasDropDown={false}
-                SymbolText={'ARTH'}
+                SymbolText={'ARTHX'}
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
@@ -338,8 +338,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isCollatApproving || isCollatApproved}
+                              disabled={isCollatApproved || Number(collateralValue) === 0}
                               onClick={approveCollat}
+                              loading={isCollatApproving}
                             />
                             <div style={{ padding: 5 }} />
                             <Button
@@ -351,8 +352,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isARTHXApproving || isARTHXApproved}
+                              disabled={isARTHXApproved || Number(arthValue) === 0}
                               onClick={approveARTHX}
+                              loading={isARTHXApproving}
                             />
                           </ApproveButtonContainer>
                           <br />
@@ -388,7 +390,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         }
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
-        buttonTo={'/farming'}
+        buttonTo={'/#/farming'}
       />
     </>
   );
