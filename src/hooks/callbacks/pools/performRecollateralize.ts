@@ -15,7 +15,7 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
 
     const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMin)
     addTransaction(response, {
-      summary: `Recollateralize ${getDisplayBalance(collateralAmount)} ${collateralToken}`
+      summary: `Recollateralize ${getDisplayBalance(collateralAmount, 6, 3)} ${collateralToken}`
     });
 
     if (callback) callback()

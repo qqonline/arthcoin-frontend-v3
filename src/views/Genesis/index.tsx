@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Countdown from 'react-countdown';
 import Grid from '@material-ui/core/Grid';
-import { useMediaQuery } from 'react-responsive';
 import {
   Checkbox,
   CheckboxProps,
@@ -16,20 +14,25 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
+import { useMediaQuery } from 'react-responsive';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import React, { useEffect, useMemo, useState } from 'react';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 
-import Container from '../../components/Container';
+import useCore from '../../hooks/useCore';
 import Button from '../../components/Button';
-import arrowDown from '../../assets/svg/arrowDown.svg';
+import Container from '../../components/Container';
 import calendar from '../../assets/svg/calendar.svg';
+import arrowDown from '../../assets/svg/arrowDown.svg';
 import { CustomSnack } from '../../components/SnackBar';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
+import prettyNumber from '../../components/PrettyNumber';
 import BondingDiscount from './components/BondingDiscount';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useTokenBalance from '../../hooks/state/useTokenBalance';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import CustomModal from '../../components/CustomModal';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
 import CustomToolTip from '../../components/CustomTooltip';
 import SlippageContainer from '../../components/SlippageContainer';
@@ -37,14 +40,11 @@ import TransparentInfoDiv from './components/InfoDiv';
 import UnderstandMore from './components/UnderstandMore';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
-import useCore from '../../hooks/useCore';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
-import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import prettyNumber from '../../components/PrettyNumber';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
@@ -62,11 +62,11 @@ withStyles({
   },
 })((props: CheckboxProps) => <Checkbox {...props} />);
 
+
 makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-      // color: 'white'
     },
     margin: {
       height: theme.spacing(3),
@@ -74,16 +74,15 @@ makeStyles((theme: Theme) =>
   }),
 );
 
+
 withStyles({
   root: {
-    // color: 'white',
     height: 15,
     width: '95%',
   },
   thumb: {
     height: 10,
     width: 10,
-    // backgroundColor: '#fff',
     border: '2px solid currentColor',
     color: '#FFA981',
     marginTop: -3.5,
@@ -95,26 +94,21 @@ withStyles({
   active: {},
   valueLabel: {
     left: 'calc(-100% - 5px)',
-    // color: '#FF7F57',
   },
   marked: {
     color: 'red',
   },
   markLabel: {
-    // color: 'green'
   },
   track: {
     height: 3,
     borderRadius: 3,
     color: '#FFA981',
-    // top: '2%'
   },
   rail: {
     height: 3,
     borderRadius: 3,
     color: '#D74D26',
-    // background:'red'
-    // border: '1px solid'
   },
   markLabelActive: {
     fontStyle: 'normal',
@@ -150,25 +144,88 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
-  const core = useCore();
 
-  const [collateralValue, setCollateralValue] = useState<string>('0');
-  const [arthValue, setArthValue] = useState<string>('0');
-
-  const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [calendarLink, setLink] = useState('');
-  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
-  const [successModal, setSuccessModal] = useState<boolean>(false);
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
-  const recollateralizationDiscount = useRecollateralizationDiscount();
+  const [calendarLink, setLink] = useState('');
+  const [arthValue, setArthValue] = useState<string>('0');
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
+  const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [timerHeader, setHeader] = useState<boolean>(false);
-  const arthxPrice = useARTHXOraclePrice();
 
-  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const core = useCore();
+  const { account, connect } = useWallet();
+  const arthxPrice = useARTHXOraclePrice();
+  const recollateralizationDiscount = useRecollateralizationDiscount();
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const collectRedeemption = useCollectRedemption(selectedCollateral);
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const arthBalance = useTokenBalance(core.ARTH);
+  const arthCirculatingSupply = useARTHCirculatingSupply();
+  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const committedCollateral = useGlobalCollateralValue();
+  const percentageCompleted = usePercentageCompleted();
+
+  useEffect(() => {
+    const onClick = () => {
+      let event: TCalendarEvent = {
+        name: 'ARTH-v2 Genesis',
+        location: 'Online',
+        details: 'Genesis',
+        startsAt: new Date('1 may 2021 12:30:00').toString(),
+        endsAt: new Date('1 may 2021 20:30:00').toString(),
+      };
+      setLink(makeUrls(event).google);
+    };
+    onClick();
+  }, []);
+
+  const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
+  const currentToken = core.tokens[currentCoin];
+  const currentValue = type === 'Commit' ? collateralValue : arthValue;
+
+  const calcPercentageCompleted = (percent: BigNumber): string => (
+    percent
+      .div(BigNumber.from(10).pow(16))
+      .toString()
+  );
+
+  const calcExpectReceiveAmount = (price: BigNumber, amount: number | string) => (
+    BigNumber.from(Number(amount) * 1e6)
+      .mul(1e6)
+      .div(price)
+  );
+
+  const arthxRecieve = useMemo(() => {
+    if (arthxPrice.lte(0)) return BigNumber.from(0);
+
+    if (type === 'Commit' && Number(collateralValue))
+      return calcExpectReceiveAmount(arthxPrice, collateralValue);
+    
+    return calcExpectReceiveAmount(arthxPrice, arthValue);
+  }, [arthValue, arthxPrice, collateralValue, type]);
+
+  const [approveStatus, approve] = useApprove(
+    currentToken, 
+    collateralPool.address
+  );
+
+  const redeemARTH = useRedeemAlgorithmicARTH(
+    selectedCollateral,
+    Number(arthValue),
+    arthxRecieve,
+  );
+
+  const recollateralize = usePerformRecollateralize(
+    selectedCollateral,
+    BigNumber.from(Math.floor(Number(collateralValue) * 1e6)),
+    arthxRecieve,
+  );
 
   const bondingDiscount = [
     {
@@ -184,19 +241,6 @@ const Genesis = (props: WithSnackbarProps) => {
       value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
     },
   ];
-  useEffect(() => {
-    const onClick = () => {
-      let event: TCalendarEvent = {
-        name: 'ARTH-v2 Genesis',
-        location: 'Online',
-        details: 'Genesis',
-        startsAt: new Date('1 may 2021 12:30:00').toString(),
-        endsAt: new Date('1 may 2021 20:30:00').toString(),
-      };
-      setLink(makeUrls(event).google);
-    };
-    onClick();
-  }, []);
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
@@ -205,82 +249,6 @@ const Genesis = (props: WithSnackbarProps) => {
     'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
     'The discount decreases over time as more collateral is committed.',
   ];
-
-  const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
-  const currentToken = core.tokens[currentCoin];
-  const currentValue = type === 'Commit' ? collateralValue : arthValue;
-
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
-  const { account, connect } = useWallet();
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthCirculatingSupply = useARTHCirculatingSupply();
-  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const committedCollateral = useGlobalCollateralValue();
-  const percentageCompleted = usePercentageCompleted();
-
-  const percentageCompletedNum = percentageCompleted
-    .div(BigNumber.from(10).pow(16))
-    .toString();
-
-  /*const arthxRecieve = useMemo(() => {
-    if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);*/
-
-  /*const arthxRecieve = useMemo(() => {
-    if (type === 'Commit')
-      if (arthxPrice.gt(0) && Number(collateralValue)) {
-        const temp = Number(arthxPrice.toString()) / 1e6;
-        return Number(collateralValue) / temp;
-      }
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);*/
-
-  const arthxRecieve = useMemo(() => {
-    if (type === 'Commit')
-      if (arthxPrice.gt(0) && Number(collateralValue)) {
-        return BigNumber.from(Number(collateralValue) * 1e6)
-          .mul(1e6)
-          .div(arthxPrice)
-      }
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);
-
-  // const onColleteralChange = (val: string) => {
-  //   if (val === '') {
-  //     setReceiveShare('0');
-  //     setReceiveBonus('0');
-  //   }
-  //   let check = ValidateNumber(val);
-
-  //   setCollateralAmount(check ? val : String(Number(val)));
-  //   if (!check) return;
-  //   const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
-  //   const valInNumber = Number(val);
-  //   if (valInNumber) {
-  //     const amountBN = BigNumber.from(valInNumber).mul(1e12).div(arthxPrice);
-  //     const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
-  //       .mul(1e6)
-  //       .div(arthxPrice);
-  //     setReceiveShare(getDisplayBalance(amountBN, 6));
-  //     setReceiveBonus(getDisplayBalance(discountBN, 6));
-  //   }
-  // };
-
-  const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
-
-  const redeemARTH = useRedeemAlgorithmicARTH(
-    selectedCollateral,
-    Number(arthValue),
-    arthxRecieve,
-  );
-
-  const recollateralize = usePerformRecollateralize(
-    selectedCollateral,
-    BigNumber.from(Math.floor(Number(collateralValue) * 1e6)),
-    BigNumber.from(0),
-  );
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
@@ -367,10 +335,10 @@ const Genesis = (props: WithSnackbarProps) => {
             <div style={{}}>
               <BorderLinearProgress
                 variant="determinate"
-                value={Number(percentageCompletedNum)}
+                value={Number(calcPercentageCompleted(percentageCompleted))}
               />
             </div>
-            <HeaderSpan>{percentageCompletedNum}% Completed</HeaderSpan>
+            <HeaderSpan>{calcPercentageCompleted(percentageCompleted)}% Completed</HeaderSpan>
           </PageSubHeading>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -494,7 +462,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   />
                 )}
                 <PlusMinusArrow>
-                  <img src={arrowDown} />
+                  <img src={arrowDown} alt={'Arrow down'}/>
                 </PlusMinusArrow>
                 <div style={{ marginBottom: '32px' }}>
                   <TextWithIcon style={{ marginBottom: '12px' }}>You Receive</TextWithIcon>
@@ -585,7 +553,6 @@ const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   height: 270px;
   position: absolute;
-  // border: 1px solid;
   width: 100%;
   z-index: -5;
 `;
@@ -600,12 +567,6 @@ const CustomInfoCard = styled.div`
 const CustomInfoCardDetails = styled.div``;
 
 const StyledNavLink = styled(Link)`
-  // color: ${(props) => props.theme.color.grey[400]};
-  // font-size: 14px;
-  // margin-right: -4px;
-  // &:hover {
-  //   color: white !important;
-  // }
   background: rgba(97, 134, 242, 0.32);
   border-radius: 8px;
   font-family: Inter;
@@ -685,6 +646,7 @@ const HeaderButton = styled.div`
   max-width: 200px;
   cursor: pointer;
 `;
+
 const ToolTipFont = styled.p`
   padding: 0;
   margin: 0;
