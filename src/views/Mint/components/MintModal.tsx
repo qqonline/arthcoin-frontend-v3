@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import Button from '../../../components/Button';
 import {
   Checkbox,
   CheckboxProps,
@@ -12,17 +11,24 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
+import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
-import { CustomSnack } from '../../../components/SnackBar';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckIcon from '@material-ui/icons/Check';
+import { parseUnits } from 'ethers/lib/utils';
+
+import useCore from '../../../hooks/useCore';
+import Button from '../../../components/Button';
+import { CustomSnack } from '../../../components/SnackBar';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 import CustomModal from '../../../components/CustomModal';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import TransparentInfoDiv from './InfoDiv';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 
 const OrangeCheckBox = withStyles({
   root: {
@@ -109,6 +115,7 @@ const PrettoRestrictSlider = withStyles({
     color: 'transparent',
   },
 })(Slider);
+
 const DEFAULT_CALC = 1440;
 
 interface IProps {
@@ -121,25 +128,47 @@ interface IProps {
 }
 
 const MintModal = (props: WithSnackbarProps & IProps) => {
-  useEffect(() => window.scrollTo(0, 0), []);
-
-  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
-
   const {
     openModal,
     onClose,
     arthxValue,
     collateralValue,
     arthValue,
-    selectedCollateralCoin,
+    selectedCollateralCoin
   } = props;
 
+  useEffect(() => window.scrollTo(0, 0), []);
+
+  const core = useCore();
+  const { account } = useWallet();
+    
+  const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
   const [checked, setChecked] = React.useState(false);
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  
   const sliderClasses = useSliderStyles();
-
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+  const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
+  const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
+  const [arthXApproveStatus, ] = useApprove(
+    core.ARTHX, 
+    collateralPool.address
+  );
+  const [collatApproveStatus, ] = useApprove(
+    core.tokens[selectedCollateralCoin],
+    collateralPool.address,
+  );
+
+  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED;
+  const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
+
+  const isCollatArthxApproved = useMemo(() => {
+    if (!Number(arthxValue) && Number(collateralValue)) return !!account && isCollatApproved;
+    else if (Number(arthxValue) && !Number(collateralValue)) return !!account && isARTHXApproved;
+
+    return isARTHXApproved && !!account && isCollatApproved;
+  }, [isARTHXApproved, account, collateralValue, arthxValue, isCollatApproved]);
 
   const handleCheck = (event: any) => {
     setChecked(event.target.checked);
@@ -182,9 +211,13 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
   };
 
   const tradingFee = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(arthValue) * 1e6));
-    return mintingAmount.mul(mintingFee).div(1e6);
-  }, [arthValue, mintingFee]);
+    return BigNumber
+      .from(
+        parseUnits(`${arthValue}`, tokenDecimals)
+      )
+      .mul(mintingFee)
+      .div(1e6);
+  }, [arthValue, tokenDecimals, mintingFee]);
 
   return (
     <>
@@ -380,6 +413,11 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             </div>
             <div style={{ width: '100%' }}>
               <Button
+                disabled={
+                  !Number(arthValue) || 
+                  !isCollatArthxApproved ||
+                  !(Number(collateralValue) || Number(arthxValue))
+                }
                 text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}

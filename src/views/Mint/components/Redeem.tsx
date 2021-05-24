@@ -167,22 +167,22 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    let colletralValueInCollatTerms: number = 0;
+    let colletralValueInARTHXTerms: number = 0;
     if (!collateralToGMUPrice.eq(0) && redeemCR.gt(0)) {
-      colletralValueInCollatTerms =
+      colletralValueInARTHXTerms =
         ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
-      const finalColletralValue = collateralToGMUPrice
+      const finalColletralValue = arthxToGMUPrice
         .mul(BigNumber.from(
-          parseUnits(`${colletralValueInCollatTerms}`, tokenDecimals)
+          parseUnits(`${colletralValueInARTHXTerms}`, tokenDecimals)
         ))
-        .div(arthxToGMUPrice);
+        .div(collateralToGMUPrice);
       setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
     }
     
-    const finalArthValue = collateralToGMUPrice
+    const finalArthValue = arthxToGMUPrice
       .mul(BigNumber.from(
-        parseUnits(`${colletralValueInCollatTerms + valueInNumber}`, tokenDecimals)
+        parseUnits(`${colletralValueInARTHXTerms + valueInNumber}`, tokenDecimals)
       ))
       .div(1e6);
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));

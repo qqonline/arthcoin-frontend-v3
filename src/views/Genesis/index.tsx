@@ -320,6 +320,11 @@ const Genesis = (props: WithSnackbarProps) => {
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
+                disabled={
+                  !isApproved || 
+                  !Number(currentValue) || 
+                  !Number(arthxRecieve)
+                }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
                 onClick={() => {
@@ -511,7 +516,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
-                      disabled={type === 'Commit' ? Number(collateralValue) <= 0 : Number(arthValue) <= 0}
+                      disabled={type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}

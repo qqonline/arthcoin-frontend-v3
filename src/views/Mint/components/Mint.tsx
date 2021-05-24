@@ -75,8 +75,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   }, [account, isARTHXApproved, isCollatApproved]);
 
   const tradingFee = useMemo(() => {
-    const mintingAmount = BigNumber.from(parseUnits(`${arthValue}`, tokenDecimals));
-    return mintingAmount.mul(mintingFee).div(1e6);
+    return BigNumber
+      .from(parseUnits(`${arthValue}`, tokenDecimals))
+      .mul(mintingFee)
+      .div(1e6);
   }, [arthValue, tokenDecimals, mintingFee]);
 
   useEffect(() => window.scrollTo(0, 0), []);
@@ -129,21 +131,21 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    let colletralValueInCollatTerms: number = 0;
+    let colletralValueInARTHXTerms: number = 0;
     if (!collateralToGMUPrice.eq(0) && mintCR.gt(0)) {
-      colletralValueInCollatTerms = ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
+      colletralValueInARTHXTerms = ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
-      const finalColletralValue = collateralToGMUPrice
+      const finalColletralValue = arthxToGMUPrice
         .mul(BigNumber.from(
-          parseUnits(`${colletralValueInCollatTerms}`, tokenDecimals)
+          parseUnits(`${colletralValueInARTHXTerms}`, tokenDecimals)
         ))
-        .div(arthxToGMUPrice);
+        .div(collateralToGMUPrice);
       setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
     }
 
-    const finalArthValue = collateralToGMUPrice
+    const finalArthValue = arthxToGMUPrice
       .mul(BigNumber.from(
-        parseUnits(`${colletralValueInCollatTerms + valueInNumber}`, tokenDecimals)
+        parseUnits(`${colletralValueInARTHXTerms + valueInNumber}`, tokenDecimals)
       ))
       .div(1e6);
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
