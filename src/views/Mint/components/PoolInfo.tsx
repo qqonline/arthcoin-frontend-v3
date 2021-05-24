@@ -13,6 +13,7 @@ import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPool
 import prettyNumber from '../../../components/PrettyNumber';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 
 interface IProps {
   selectedCollateralCoin: string;
@@ -25,6 +26,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
   const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
+  const stabilityFee = useStabilityFee();
   const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
 
   return (
@@ -94,7 +96,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>1%</InputLabelSpanRight>
+            <InputLabelSpanRight>{getDisplayBalance(stabilityFee, 2, 2)}%</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
