@@ -12,12 +12,11 @@ import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRa
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import prettyNumber from '../../../components/PrettyNumber';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
-
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 
 interface IProps {
   selectedCollateralCoin: string;
 }
-
 
 export default ({ selectedCollateralCoin }: IProps) => {
   const mintCR = useMintCollateralRatio();
@@ -25,6 +24,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
   const redeemCR = useRedeemCollateralRatio();
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+  const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
   const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
 
   return (
@@ -101,11 +101,22 @@ export default ({ selectedCollateralCoin }: IProps) => {
           <OneLineInput>
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
-                Trading Fee
+                Minting Fee
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>{getDisplayBalance(mintingFee, 4, 3)}%</InputLabelSpanRight>
+          </OneLineInput>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <OneLineInput>
+            <div style={{ flex: 1 }}>
+              <TextForInfoTitle>
+                Redeeming Fee
+                <CustomToolTip toolTipText={'loreum ipsum'} />
+              </TextForInfoTitle>
+            </div>
+            <InputLabelSpanRight>{getDisplayBalance(redeemingFee, 4, 3)}%</InputLabelSpanRight>
           </OneLineInput>
         </div>
       </RightTopCard>
@@ -123,13 +134,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
   );
 };
 
-
 const RightTopCard = styled.div`
   @media (max-width: 600px) {
     margin-top: 8px;
   }
 `;
-
 
 const OneLineInput = styled.div`
   display: flex;
@@ -138,7 +147,6 @@ const OneLineInput = styled.div`
   justify-content: flex-start;
   margin: 5px 0 10px 0;
 `;
-
 
 const TextForInfoTitle = styled.div`
   font-family: Inter;
@@ -150,7 +158,6 @@ const TextForInfoTitle = styled.div`
   opacity: 0.64;
 `;
 
-
 const InputLabelSpanRight = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -161,14 +168,12 @@ const InputLabelSpanRight = styled.span`
   margin-right: 5px;
 `;
 
-
 const RightBottomCard = styled.div`
   margin-top: 16px;
   @media (max-width: 600px) {
     margin-top: 24px;
   }
 `;
-
 
 const RightBottomCardTitle = styled.div`
   padding: 0;
