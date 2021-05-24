@@ -2,11 +2,13 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
+
 import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
 import { correctString } from './RegexValidation';
+
 type props = {
   ILabelValue: string;
   IBalanceValue: string;
@@ -38,6 +40,7 @@ interface ICStatesInterface {
   IState: 'default' | 'error' | 'warning';
   IMsg: string;
 }
+
 const CustomInputContainer: React.FC<props> = (props) => {
   const {
     ILabelValue,
@@ -131,7 +134,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <InputBase
             inputMode={props?.inputMode}
             placeholder={DefaultValue || '0'}
-            defaultValue={DefaultValue}
+            // defaultValue={DefaultValue}
             value={DefaultValue}
             inputProps={{ 'aria-label': 'naked' }}
             style={{

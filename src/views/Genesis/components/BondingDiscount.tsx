@@ -17,8 +17,8 @@ const BondingDiscount: React.FC<props> = (props: props) => {
         <CustomInfoCardHeader>Bonding Curve Discount on ARTHX</CustomInfoCardHeader>
       )}
       <CustomInfoCardDetails>
-        {props?.dataObj?.map((obj) => (
-          <OneLine>
+        {props?.dataObj?.map((obj, i) => (
+          <OneLine key={i}>
             <div style={{ flex: 1 }}>
               <TextWithIcon>
                 {obj.label}

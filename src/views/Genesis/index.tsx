@@ -511,10 +511,10 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
+                      disabled={type === 'Commit' ? Number(collateralValue) <= 0 : Number(arthValue) <= 0}
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}
-                      disabled={false}
                       onClick={() => setOpenModal(1)}
                     />
 
