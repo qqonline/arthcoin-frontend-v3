@@ -96,9 +96,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   // );
 
   const tradingFee = useMemo(() => {
-    const mintingAmount = BigNumber.from(parseUnits(`${collateralValue}`, tokenDecimals));
-    return mintingAmount.mul(redeemFee).div(1e6);
-  }, [collateralValue, tokenDecimals, redeemFee]);
+    const valueOnWhichToChargeFee = redeemCR.eq(1e6) ? collateralValue : arthValue;
+
+    return BigNumber
+      .from(parseUnits(`${valueOnWhichToChargeFee}`, tokenDecimals))
+      .mul(redeemFee)
+      .div(1e6)
+  }, [collateralValue, arthValue, redeemCR, tokenDecimals, redeemFee]);
 
   const stabilityFeeAmount = useMemo(() => {
    return BigNumber
