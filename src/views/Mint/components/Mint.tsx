@@ -69,10 +69,13 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
   const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
-  
+
   const isCollatArthxApproved = useMemo(() => {
+    if (!Number(arthxValue) && Number(collateralValue)) return !!account && isCollatApproved;
+    else if (Number(arthxValue) && !Number(collateralValue)) return !!account && isARTHXApproved;
+
     return isARTHXApproved && !!account && isCollatApproved;
-  }, [account, isARTHXApproved, isCollatApproved]);
+  }, [isARTHXApproved, account, collateralValue, arthxValue, isCollatApproved]);
 
   const tradingFee = useMemo(() => {
     return BigNumber
@@ -345,7 +348,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                         variant={'default'}
                         disabled={
                           !isCollatArthxApproved ||
-                          Number(arthValue) <= 0
+                          !Number(arthValue) ||
+                          !(Number(collateralValue) || Number(arthxValue))
                         }
                         onClick={() => setOpenModal(1)}
                       />
