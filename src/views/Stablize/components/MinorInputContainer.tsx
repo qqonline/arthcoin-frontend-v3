@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
-import TokenSymbol from '../../../components/TokenSymbol';
 
+import TokenSymbol from '../../../components/TokenSymbol';
 import CustomDropDown from '../../../components/CustomDropDown';
 import DownArrow from '../../../assets/img/ArrowDown.svg';
 

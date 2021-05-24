@@ -6,6 +6,7 @@ import checkmark from '../../../assets/svg/checkmark.svg';
 interface IProps {
   subText: string;
 }
+
 const CollaterallizeCheckmark = (props: IProps) => {
   return (
     <div

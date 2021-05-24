@@ -1,26 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components';
+import { BigNumber } from '@ethersproject/bignumber';
+import { parseUnits } from 'ethers/lib/utils';
+
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomToolTip from '../../../components/CustomTooltip';
-import Grid from '@material-ui/core/Grid';
 import RecollaterlizeModal from './RecollaterlizeModal';
 import SlippageContainer from '../../../components/SlippageContainer';
-import styled from 'styled-components';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedeemRewards';
 import useCore from '../../../hooks/useCore';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { createImportSpecifier } from 'typescript';
-import { BigNumber } from '@ethersproject/bignumber';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 type Iprops = {
   onChange: () => void;
@@ -28,65 +31,65 @@ type Iprops = {
 
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
-
   const { account, connect } = useWallet();
 
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
-
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
 
-  const shareRatio = 2;
-  const bonusRatio = 4;
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
-
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-
   const [approveStatus, approve] = useApprove(
     core.tokens[selectedCollateral],
     collateralPool.address,
   );
-
   const arthxRewards = useArthxRedeemRewards();
+  const arthxPrice = useARTHXOraclePrice();
+  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
+
+  useEffect(() => window.scrollTo(0, 0), []);
+
+  const onColleteralChange = (val: string) => {
+    if (val === '' || collateralGMUPrice.lte(0)) {
+      setReceiveShare('0');
+      setReceiveBonus('0');
+      setCollateralAmount('0');
+      return;
+    }
+
+    const check: boolean = ValidateNumber(val);
+    setCollateralAmount(check ? val : String(Number(val)));
+    if (!check) return;
+    const valueInNumber: number = Number(val);
+    if (!valueInNumber) return;
+
+    if (arthxPrice.gt(0)) {
+      const amountBN = collateralGMUPrice
+        .mul(BigNumber.from(
+          parseUnits(`${valueInNumber}`, tokenDecimals)
+        ))
+        .div(arthxPrice);
+
+      const discountBN = amountBN
+        .mul(recollateralizationDiscount)
+        .div(1e6);
+
+      setReceiveShare(getDisplayBalance(amountBN, 6, 3));
+      setReceiveBonus(getDisplayBalance(discountBN, 6, 3));
+    }
+  };
 
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
   const isWalletConnected = !!account;
   const isARTHXApproving = approveStatus === ApprovalState.PENDING;
 
-  const arthxPrice = useARTHXOraclePrice();
-
-  useEffect(() => window.scrollTo(0, 0), []);
-
-  const onColleteralChange = (val: string) => {
-    if (val === '') {
-      setReceiveShare('0');
-      setReceiveBonus('0');
-      setCollateralAmount('0');
-      return
-    }
-    let check = ValidateNumber(val);
-
-    setCollateralAmount(check ? val : String(Number(val)));
-    if (!check) return;
-    const discount = Number(recollateralizationDiscount.toNumber() / 1e6);
-    const valInNumber = Number(val);
-    if (valInNumber) {
-      const amountBN = BigNumber.from(valInNumber).mul(1e10).div(arthxPrice);
-      const discountBN = BigNumber.from(Math.floor(valInNumber * discount * 1e6))
-        .mul(1e6)
-        .div(arthxPrice);
-      setReceiveShare(getDisplayBalance(amountBN, 6));
-      setReceiveBonus(getDisplayBalance(discountBN, 6));
-    }
-  };
-
-  // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
 
   const buyBackContainer = () => {
@@ -118,13 +121,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             <SlippageContainer
               defaultRate={selectedRate}
               onRateChange={(data) => {
-                console.log('rates', data);
                 setSelectedRate(data);
               }}
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {getDisplayBalance(arthxRewards, 6, 6)} <HardChip>ARTHX</HardChip>{' '}
+            {getDisplayBalance(arthxRewards, 6, 3)} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -133,7 +135,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             ILabelValue={'Enter Collateral'}
             IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
             ILabelInfoValue={''}
-            DefaultValue={collateralAmount.toString()}
+            DefaultValue={collateralAmount}
             hasDropDown={true}
             LogoSymbol={selectedCollateral}
             dropDownValues={collateralTypes}
@@ -202,7 +204,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                           !isARTHXApproving ? `Approve ${selectedCollateral}` : 'Approving...'
                         }
                         size={'lg'}
-                        disabled={isARTHXApproving}
+                        disabled={isARTHXApproving || !Number(collateralAmount)}
                         onClick={approve}
                       />
                       <br />
@@ -210,7 +212,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   )}
                   <Button
                     text={'Recollateralize'}
-                    disabled={!isARTHXApproved}
+                    disabled={!isARTHXApproved || !Number(collateralAmount)}
                     size={'lg'}
                     onClick={() => {
                       setOpenModal(true);
@@ -241,7 +243,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                     <TextForInfoTitle>Current Discount</TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>
-                    {getDisplayBalance(recollateralizationDiscount, 4, 4)}%
+                    {getDisplayBalance(recollateralizationDiscount, 4, 3)}%
                   </InputLabelSpanRight>
                 </OneLineInput>
               </div>
@@ -253,7 +255,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>0.75%</InputLabelSpanRight>
+                  <InputLabelSpanRight>0 - 3%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '8px' }}>
@@ -264,7 +266,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>30%</InputLabelSpanRight>
+                  <InputLabelSpanRight>75%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '12px' }}>
@@ -275,7 +277,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6)}</InputLabelSpanRight>
+                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6, 4)}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <RightTopCardHeader style={{ marginTop: 20 }}>
