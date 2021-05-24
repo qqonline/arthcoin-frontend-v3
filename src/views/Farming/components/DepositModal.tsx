@@ -17,7 +17,7 @@ interface IProps {
   onCancel: () => void;
   onDeposit?: () => void;
   isMobile: boolean;
-
+  toggleSuccessModal?: () => void;
   tokenBalance: BigNumber;
   pool: StakingContract;
 }
@@ -37,7 +37,8 @@ export default (props: IProps) => {
 
   const handleStaking = () => {
     stake(() => {
-      window.location.reload()
+      props?.toggleSuccessModal();
+      props.onCancel()
     });
   }
 

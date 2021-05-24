@@ -17,6 +17,7 @@ interface IProps {
   openModal: boolean;
   selectedCollateral: string;
   onClose: () => void;
+  toggleSuccessModal?: () => void;
 }
 
 const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
@@ -27,6 +28,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     selectedCollateral,
     receiveShare,
     collateralAmount,
+    toggleSuccessModal
   } = props;
 
   const arthxAmountAfterFees = useMemo(() => {
@@ -66,7 +68,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
             background: 'rgba(255, 255, 255, 0.08)',
             margin: '15px 0px',
           }}
-          // variant={'middle'}
+        // variant={'middle'}
         />
 
         <TransparentInfoDiv
@@ -101,7 +103,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
                 };
                 props.enqueueSnackbar('timepass', options);
               }}
-              // onClick={handleClose}
+            // onClick={handleClose}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -110,8 +112,10 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
               // textStyles={{ color: '#F5F5F5' }}
               size={'lg'}
               onClick={() => {
-                recollateralize();
-                onClose();
+                recollateralize(() => {
+                  onClose();
+                  toggleSuccessModal();
+                });
               }}
             />
           </Grid>

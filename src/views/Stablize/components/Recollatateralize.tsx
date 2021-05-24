@@ -20,6 +20,7 @@ import useRecollateralizationDiscount from '../../../hooks/state/controller/useR
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { createImportSpecifier } from 'typescript';
 import { BigNumber } from '@ethersproject/bignumber';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
 type Iprops = {
   onChange: () => void;
@@ -35,6 +36,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
 
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [successModal, setSuccessModal] = useState<boolean>(false);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
 
   const shareRatio = 2;
@@ -304,6 +306,19 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         selectedCollateral={selectedCollateral}
         openModal={openModal}
         onClose={() => setOpenModal(false)}
+        toggleSuccessModal={() => { setSuccessModal(!successModal) }}
+      />
+      <CustomSuccessModal
+        modalOpen={successModal}
+        setModalOpen={() => setSuccessModal(false)}
+        title={'Recollateralize'}
+        // subTitle={'View Transaction'}
+        subsubTitle={
+          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+        }
+        buttonText={'Stake your ARTH'}
+        buttonType={'default'}
+        buttonTo={'/farming'}
       />
     </div>
   );
