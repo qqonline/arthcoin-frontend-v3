@@ -96,7 +96,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (!valueInNumber) return;
 
     let arthxShareValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0)) {
+    if (!arthxToGMUPrice.eq(0) && mintCR.lt(1e6)) {
       arthxShareValueInCollatTerms = ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
 
       const finalArthxValue = collateralToGMUPrice
@@ -130,7 +130,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (!valueInNumber) return;
 
     let colletralValueInCollatTerms: number = 0;
-    if (!collateralToGMUPrice.eq(0)) {
+    if (!collateralToGMUPrice.eq(0) && mintCR.gt(0)) {
       colletralValueInCollatTerms = ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
       const finalColletralValue = collateralToGMUPrice
@@ -163,19 +163,23 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
-    const finalCollateralValue = BigNumber
-      .from(parseUnits(`${collateralValueInCollatTerms}`, tokenDecimals))
-      .mul(1e6)
-      .div(collateralToGMUPrice);
-    setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
+    if (mintCR.gt(0)) {
+      const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
+      const finalCollateralValue = BigNumber
+        .from(parseUnits(`${collateralValueInCollatTerms}`, tokenDecimals))
+        .mul(1e6)
+        .div(collateralToGMUPrice);
+      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
+    }
     
-    const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
-    const finalarthxShareValue = BigNumber
-      .from(parseUnits(`${arthsShareInCollatTerms}`, tokenDecimals))
-      .mul(1e6)
-      .div(arthxToGMUPrice);
-    setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
+    if (mintCR.lt(1e6)) {
+      const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
+      const finalarthxShareValue = BigNumber
+        .from(parseUnits(`${arthsShareInCollatTerms}`, tokenDecimals))
+        .mul(1e6)
+        .div(arthxToGMUPrice);
+      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
+    }
   };
 
   return (
