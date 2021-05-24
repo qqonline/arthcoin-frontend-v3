@@ -558,7 +558,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
-                      disabled={type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
+                      disabled={!isApproved || type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}

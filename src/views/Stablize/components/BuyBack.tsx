@@ -1,20 +1,21 @@
-import { CustomSnack } from '../../../components/SnackBar';
-import { Divider } from '@material-ui/core';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import Grid from '@material-ui/core/Grid';
+import { Divider } from '@material-ui/core';
+import React, { useEffect, useMemo, useState } from 'react';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import styled from 'styled-components';
+
+import { CustomSnack } from '../../../components/SnackBar';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
 import CustomToolTip from '../../../components/CustomTooltip';
-import Grid from '@material-ui/core/Grid';
 import MinorInputContainer from './MinorInputContainer';
-import React, { useEffect, useMemo, useState } from 'react';
 import SlippageContainer from '../../../components/SlippageContainer';
-import styled from 'styled-components';
 import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
@@ -32,44 +33,41 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
-
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
 
-  const arthxBalance = useTokenBalance(core.ARTHX);
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
-
   useEffect(() => window.scrollTo(0, 0), []);
 
+  const arthxBalance = useTokenBalance(core.ARTHX);
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
   const arthxPrice = useARTHXOraclePrice();
-
   const [approveStatus, approve] = useApprove(core.ARTHX, collateralPool.address);
+  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral);
 
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
   const isWalletConnected = !!account;
   const isARTHXApproving = approveStatus === ApprovalState.PENDING;
 
   const ratio = 100;
-  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral);
+ 
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
 
-  // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   if (!core) return <div />;
 
   const onRedeemValueChange = (val: string) => {
     if (val === '') {
       setReceiveAmount('0');
     }
+
     let check = ValidateNumber(val);
     setRedeemAmount(check ? val : String(val));
     if (!check) return;
     const valInNumber = Number(val);
-    if (valInNumber) {
-      const temp = String(valInNumber * ratio);
-      setReceiveAmount(temp);
-    }
+    if (!valInNumber) return;
+
+    const temp = String(valInNumber * ratio);
+    setReceiveAmount(temp);
   };
 
   const buyBackContainer = () => {
@@ -84,7 +82,6 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             <SlippageContainer
               defaultRate={selectedRate}
               onRateChange={(data) => {
-                console.log('rates', data);
                 setSelectedRate(data);
               }}
             />

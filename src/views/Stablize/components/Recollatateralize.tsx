@@ -204,7 +204,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                           !isARTHXApproving ? `Approve ${selectedCollateral}` : 'Approving...'
                         }
                         size={'lg'}
-                        disabled={isARTHXApproving || !Number(collateralAmount)}
+                        disabled={
+                          isARTHXApproving ||
+                          !Number(collateralAmount) || 
+                          !Number(receiveBonus) || 
+                          !Number(receiveShare)
+                        }
                         onClick={approve}
                       />
                       <br />
@@ -212,7 +217,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   )}
                   <Button
                     text={'Recollateralize'}
-                    disabled={!isARTHXApproved || !Number(collateralAmount)}
+                    disabled={
+                      !isARTHXApproved || 
+                      !Number(collateralAmount) || 
+                      !Number(receiveBonus) || 
+                      !Number(receiveShare)
+                    }
                     size={'lg'}
                     onClick={() => {
                       setOpenModal(true);
