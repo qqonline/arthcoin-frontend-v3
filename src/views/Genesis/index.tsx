@@ -50,6 +50,7 @@ import useRecollateralizationDiscount from '../../hooks/state/controller/useReco
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
+import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
 
 withStyles({
   root: {
@@ -166,6 +167,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
+  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
   useEffect(() => {
     const onClick = () => {
@@ -189,21 +191,47 @@ const Genesis = (props: WithSnackbarProps) => {
       .toString()
   );
 
-  const calcExpectReceiveAmount = (price: BigNumber, amount: number | string, decimals: number) => (
-    BigNumber
-      .from(parseUnits(`${amount}`, decimals))
-      .mul(1e6)
-      .div(price)
-  );
+  const calcDiscountOnCommit = (amount: BigNumber, discoun: BigNumber) => amount.mul(discoun).div(1e6);
 
+  const calcExpectReceiveAmount = (
+    inAssetPrice: BigNumber,
+    outAssetprice: BigNumber, 
+    amount: number | string, 
+    inAssetdecimals: number) => (
+      inAssetPrice
+      .mul(
+        BigNumber.from(parseUnits(`${amount}`, inAssetdecimals)
+      ))
+      .div(outAssetprice)
+  );
+  
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
     if (type === 'Commit' && Number(collateralValue))
-      return calcExpectReceiveAmount(arthxPrice, collateralValue, tokenDecimals);
+      return calcExpectReceiveAmount(
+        collateralGMUPrice,
+        arthxPrice, 
+        collateralValue, 
+        tokenDecimals
+      );
 
-    return calcExpectReceiveAmount(arthxPrice, arthValue, tokenDecimals);
-  }, [arthValue, arthxPrice, collateralValue, tokenDecimals, type]);
+    return calcExpectReceiveAmount(
+      BigNumber.from(1e6),
+      arthxPrice, 
+      arthValue, 
+      tokenDecimals
+    );
+  }, [arthValue, collateralGMUPrice, arthxPrice, collateralValue, tokenDecimals, type]);
+
+  const arthxDiscount = useMemo(() => {
+    if (arthxPrice.lte(0)) return BigNumber.from(0);
+    return calcDiscountOnCommit(arthxRecieve, recollateralizationDiscount);
+  }, [arthxRecieve, arthxPrice, recollateralizationDiscount]);
+
+  const totalArthxRecieve = useMemo(() => {
+    return arthxRecieve.add(arthxDiscount)
+  }, [arthxDiscount, arthxRecieve]);
 
   const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
   const currentToken = core.tokens[currentCoin];
@@ -217,13 +245,13 @@ const Genesis = (props: WithSnackbarProps) => {
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     Number(arthValue),
-    arthxRecieve,
+    totalArthxRecieve,
   );
 
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
     BigNumber.from(parseUnits(collateralValue, tokenDecimals)),
-    arthxRecieve,
+    totalArthxRecieve,
   );
 
   const bondingDiscount = [
@@ -287,7 +315,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={getDisplayBalance(arthxRecieve, 6)}
+            rightLabelValue={getDisplayBalance(totalArthxRecieve, 6)}
           />
 
           <Grid
@@ -323,7 +351,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 disabled={
                   !isApproved || 
                   !Number(currentValue) || 
-                  !Number(arthxRecieve)
+                  !Number(totalArthxRecieve)
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -493,6 +521,20 @@ const Genesis = (props: WithSnackbarProps) => {
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
                           {getDisplayBalance(arthxRecieve, 6)}
+                        </BeforeChip>
+                        <TagChips>ARTHX</TagChips>
+                      </OneLineInputwomargin>
+                    </OneLineInputwomargin>
+                    <OneLineInputwomargin>
+                      <div style={{ flex: 1 }}>
+                        <TextWithIcon>
+                          + Bonus
+                          <CustomToolTip toolTipText={'loreum ipsum'} />
+                        </TextWithIcon>
+                      </div>
+                      <OneLineInputwomargin>
+                        <BeforeChip className={'custom-mahadao-chip'}>
+                          {getDisplayBalance(arthxDiscount, 6)}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
