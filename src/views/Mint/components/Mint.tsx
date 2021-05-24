@@ -104,7 +104,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           parseUnits(`${arthxShareValueInCollatTerms}`, tokenDecimals)
         ))
         .div(arthxToGMUPrice);
-
       setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
     }
 
@@ -113,7 +112,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         parseUnits(`${arthxShareValueInCollatTerms + valueInNumber}`, tokenDecimals)
       ))
       .div(1e6);
-
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
@@ -140,7 +138,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
           parseUnits(`${colletralValueInCollatTerms}`, tokenDecimals)
         ))
         .div(arthxToGMUPrice);
-
       setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
     }
 
@@ -149,7 +146,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         parseUnits(`${colletralValueInCollatTerms + valueInNumber}`, tokenDecimals)
       ))
       .div(1e6);
-
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
@@ -315,7 +311,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isCollatApproved || Number(collateralValue) === 0}
+                              disabled={isCollatApproved || !Number(collateralValue)}
                               onClick={approveCollat}
                               loading={isCollatApproving}
                             />
@@ -329,7 +325,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isARTHXApproved || Number(arthValue) === 0}
+                              disabled={isARTHXApproved || !Number(arthxValue)}
                               onClick={approveARTHX}
                               loading={isARTHXApproving}
                             />
@@ -341,7 +337,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                         text={'Mint'}
                         size={'lg'}
                         variant={'default'}
-                        disabled={!isCollatArthxApproved}
+                        disabled={
+                          !isCollatArthxApproved ||
+                          Number(arthValue) <= 0
+                        }
                         onClick={() => setOpenModal(1)}
                       />
                     </>

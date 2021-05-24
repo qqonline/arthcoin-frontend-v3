@@ -339,7 +339,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <SlippageContainer
                 defaultRate={selectedRate}
                 onRateChange={(data) => {
-                  console.log('rates', data);
                   setSelectedRate(data);
                 }}
               />
@@ -439,7 +438,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isArthApproved || Number(arthValue) === 0}
+                            disabled={isArthApproved || !!Number(arthValue)}
                             onClick={approveCollat}
                             loading={isArthApproving}
                           />
@@ -453,7 +452,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isMAHAApproved}
+                            disabled={isMAHAApproved || stabilityFeeAmount.gt(0)}
                             onClick={approveARTHX}
                             loading={isMAHAApproving}
                           />
@@ -474,7 +473,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         text={'Redeem'}
                         size={'lg'}
                         variant={'default'}
-                        disabled={!isArthMahaApproved}
+                        disabled={!isArthMahaApproved || !(Number(arthxValue) + Number(collateralValue))}
                         onClick={() => setOpenModal(1)}
                       />
                     )}
