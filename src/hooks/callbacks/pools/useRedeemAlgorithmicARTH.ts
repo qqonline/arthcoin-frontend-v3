@@ -1,5 +1,7 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
+import { parseUnits } from 'ethers/lib/utils';
+
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 import useCore from '../../useCore';
 import useSlippage from '../../useSlippage'
@@ -10,9 +12,9 @@ export default function (
   arthAmount: number,
   arthxOutMin: BigNumber
 ) {
-  const addTransaction = useTransactionAdder();
   const core = useCore();
   const redeemFee = usePoolRedeemFees(collateralToken);
+  const addTransaction = useTransactionAdder();
   // const slippage = useSlippage();
 
   const arthXAmountAfterFees = useMemo(() => {
@@ -22,15 +24,13 @@ export default function (
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
-      const decimals = BigNumber.from(10).pow(16)
-
       const response = await pool.redeemAlgorithmicARTH(
-        BigNumber.from(Math.floor(arthAmount * 100)).mul(decimals),
+        BigNumber.from(parseUnits(`${arthAmount}`, 18)),
         arthXAmountAfterFees
       );
 
       addTransaction(response, {
-        summary: `Redeem ARTH`,
+        summary: `Redeem ${arthAmount} ARTH`,
       });
 
       callback();

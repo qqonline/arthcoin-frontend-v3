@@ -53,15 +53,15 @@ export class BasisCash {
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
     }
 
-    this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH');
-    this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA');
-    this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX');
+    this.ARTH = new ERC20(deployments.ARTHStablecoin.address, provider, 'ARTH', 18);
+    this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA', 18);
+    this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX', 18);
 
-    this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI');
-    this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT');
-    this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC');
-    this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC');
-    this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH');
+    this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI', 18);
+    this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT', 6);
+    this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC', 6);
+    this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 18);
+    this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH', 18);
 
     this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 

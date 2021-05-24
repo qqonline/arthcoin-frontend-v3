@@ -14,6 +14,7 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
+import { parseUnits } from 'ethers/lib/utils';
 import { useMediaQuery } from 'react-responsive';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
@@ -24,20 +25,21 @@ import useCore from '../../hooks/useCore';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import calendar from '../../assets/svg/calendar.svg';
+import TransparentInfoDiv from './components/InfoDiv';
+import CustomModal from '../../components/CustomModal';
 import arrowDown from '../../assets/svg/arrowDown.svg';
 import { CustomSnack } from '../../components/SnackBar';
 import prettyNumber from '../../components/PrettyNumber';
 import BondingDiscount from './components/BondingDiscount';
+import CustomToolTip from '../../components/CustomTooltip';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
-import CustomInputContainer from '../../components/CustomInputContainer';
-import CustomModal from '../../components/CustomModal';
-import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
-import CustomSuccessModal from '../../components/CustomSuccesModal';
-import CustomToolTip from '../../components/CustomTooltip';
 import SlippageContainer from '../../components/SlippageContainer';
-import TransparentInfoDiv from './components/InfoDiv';
+import CustomSuccessModal from '../../components/CustomSuccesModal';
+import CustomInputContainer from '../../components/CustomInputContainer';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 import UnderstandMore from './components/UnderstandMore';
+import useTokenDecimals from '../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
@@ -48,7 +50,6 @@ import useRecollateralizationDiscount from '../../hooks/state/controller/useReco
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
-
 
 withStyles({
   root: {
@@ -62,7 +63,6 @@ withStyles({
   },
 })((props: CheckboxProps) => <Checkbox {...props} />);
 
-
 makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -73,7 +73,6 @@ makeStyles((theme: Theme) =>
     },
   }),
 );
-
 
 withStyles({
   root: {
@@ -123,7 +122,6 @@ withStyles({
   },
 })(Slider);
 
-
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -141,10 +139,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress);
 
-
 const Genesis = (props: WithSnackbarProps) => {
-  useEffect(() => window.scrollTo(0, 0), []);
-
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const [calendarLink, setLink] = useState('');
@@ -164,6 +159,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const collectRedeemption = useCollectRedemption(selectedCollateral);
   const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
   const arthBalance = useTokenBalance(core.ARTH);
   const arthCirculatingSupply = useARTHCirculatingSupply();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
@@ -182,6 +178,8 @@ const Genesis = (props: WithSnackbarProps) => {
       };
       setLink(makeUrls(event).google);
     };
+
+    window.scrollTo(0, 0)
     onClick();
   }, []);
 
@@ -191,11 +189,9 @@ const Genesis = (props: WithSnackbarProps) => {
       .toString()
   );
 
-  const calcExpectReceiveAmount = (price: BigNumber, amount: number | string) => (
-    BigNumber.from(Number(amount))
-      .mul(
-        BigNumber.from(10).pow(6)
-      )
+  const calcExpectReceiveAmount = (price: BigNumber, amount: number | string, decimals: number) => (
+    BigNumber
+      .from(parseUnits(`${amount}`, decimals))
       .mul(1e6)
       .div(price)
   );
@@ -204,10 +200,10 @@ const Genesis = (props: WithSnackbarProps) => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
     if (type === 'Commit' && Number(collateralValue))
-      return calcExpectReceiveAmount(arthxPrice, collateralValue);
+      return calcExpectReceiveAmount(arthxPrice, collateralValue, tokenDecimals);
 
-    return calcExpectReceiveAmount(arthxPrice, arthValue);
-  }, [arthValue, arthxPrice, collateralValue, type]);
+    return calcExpectReceiveAmount(arthxPrice, arthValue, tokenDecimals);
+  }, [arthValue, arthxPrice, collateralValue, tokenDecimals, type]);
 
   const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
   const currentToken = core.tokens[currentCoin];
@@ -226,7 +222,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
-    BigNumber.from(Math.floor(Number(collateralValue) * 1e6)),
+    BigNumber.from(parseUnits(collateralValue, tokenDecimals)),
     arthxRecieve,
   );
 
