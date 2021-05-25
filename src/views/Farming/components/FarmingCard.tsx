@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MobileRowCard from './MobileRowCard';
 import DesktopRowCard from './DesktopRowCard';
 import WithdrawModal from './WithdrawModal';
@@ -55,13 +55,16 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
     />,
   );
 
+  useEffect(() => {
+    if (successModal) window.location.reload()
+  }, [successModal])
+
   return (
     <div>
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => {
           setSuccessModal(false)
-          window.location.reload()
         }}
         title={'Transaction Success!'}
         // subTitle={'View Transaction'}
