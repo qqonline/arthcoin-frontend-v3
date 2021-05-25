@@ -3,6 +3,10 @@
   margin: 0 auto
   margin-bottom: 250px
 
+  @media (max-width: 600px)
+    margin-bottom: 80px
+    max-width: 100%
+
   .title
     font-family: $font-family-heading
     font-style: normal
@@ -11,6 +15,9 @@
     line-height: 44px
     text-align: center
     color: #FFFFFF
+
+    @media (max-width: 600px)
+      font-size: 24px
 
   .subtitle
     font-family: $font-family-body
@@ -24,6 +31,8 @@
     margin-bottom: 40px
 
   .cards-container
+    @media (max-width: 600px)
+      padding: 0 24px !important
 
     .custom-col
       padding: 10px !important

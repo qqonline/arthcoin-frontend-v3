@@ -1,16 +1,18 @@
 #section-main-info
   max-width: $max-width
   margin: 0 auto
-  padding: 0 30px
+  padding: 0 16px
   margin-bottom: 250px
 
   @media (max-width: 600px)
-    margin-bottom: 60px
+    margin-bottom: 120px
 
   .main-conatiner
     text-align: center
     max-width: 90%
     margin: auto
+    @media (max-width: 600px)
+      max-width: 100%
 
     .info-logo
       margin-bottom: 30px
@@ -23,6 +25,10 @@
       line-height: 40px
       color: #FFFFFF
       margin-bottom: 0
+      @media (max-width: 600px)
+        margin-bottom: 24px
+        font-size: 24px
+        line-height: 32px
 
     .section-description
       font-family: $font-family-body

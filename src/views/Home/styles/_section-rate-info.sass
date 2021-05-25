@@ -1,9 +1,16 @@
 #section-rate-info
   margin: 0 auto 160px auto
+  @media (max-width: 600px)
+    margin-bottom: 80px
+    height: 879px
+
 
   .upper-color-div
     background: linear-gradient(93.11deg, #E3457F 0%, #EB8527 97.99%, #FF8506 97.99%)
     height: 332px
+    @media (max-width: 600px)
+      height: 621px
+      padding: 0 16px
 
   .main-title
     font-family: $font-family-heading
@@ -14,6 +21,10 @@
     text-align: center
     padding-top: 64px
     color: #FFFFFF
+    padding-bottom: 0
+    @media (max-width: 600px)
+      font-size: 28px
+      line-height: 40px
 
   .rate-main-container
     width: $max-width
@@ -30,6 +41,13 @@
     flex-direction: row
     align-items: center
     align-content: center
+    @media (max-width: 600px)
+      flex-direction: column
+      width: auto
+      top: -373px
+      padding: 56px 24px
+      margin: 0 16px
+      height: 631px
 
   .left-container
     flex: 0.7
@@ -42,6 +60,10 @@
       line-height: 40px
       margin-bottom: 24px
       color: #FFFFFF
+      @media (max-width: 600px)
+        font-size: 24px
+        line-height: 32px
+        margin-bottom: 24px
 
     .sub-title
       font-family: $font-family-body
@@ -50,6 +72,10 @@
       font-size: 24px
       line-height: 32px
       color: rgba(255, 255, 255, 0.64)
+      @media (max-width: 600px)
+        font-size: 16px
+        line-height: 24px
+        font-weight: 600
 
     .tag
       background: rgba(255, 255, 255, 0.08)
@@ -62,10 +88,16 @@
       line-height: 32px
       color: #FFFFFF
       padding: 2px 8px
-
+      @media (max-width: 600px)
+        font-size: 16px
+        line-height: 24px
+        font-weight: 600
 
   .right-container
     flex: 0.3
+    @media (max-width: 600px)
+      flex: 1
+      padding: 0 20px
 
     .rate-card
       background: #151414

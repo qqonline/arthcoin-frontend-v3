@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../components/NewModal/index';
 import './styles/index.sass';
-import './footer.css';
 import warning from '../../assets/svg/warning.svg';
 import rightArrow from './images/polygon.svg'
 import arthLogo from './img/arth-coin-1.svg'
@@ -102,7 +101,6 @@ const Home: React.FC = () => {
             href="https://mahaswap.com/"
             id="no-txt-decoration"
             rel="noopener noreferrer"
-            style={{marginRight: '40px'}}
           >
             <button className="button-small-transparent">
               <img src={rightArrow} height={20} style={{marginRight: '8px'}}/>
@@ -226,7 +224,7 @@ const Home: React.FC = () => {
         <div className="card-deck row">
           <div className="col-lg-6 col-sm-12">
             <div
-              className="card height-100"
+              className="card"
               data-aos="fade-up"
               data-aos-duration="500"
               data-aos-once="true"
@@ -255,7 +253,7 @@ const Home: React.FC = () => {
           </div>
           <div className="col-lg-6 col-sm-12">
             <div
-              className="card height-100"
+              className="card"
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-once="true"
@@ -602,50 +600,32 @@ const Home: React.FC = () => {
               <div className="social-items">
                 <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
                   <button className="button3">
-                    <i
-                      className="fab fa-twitter"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
+                    <i className="fab fa-twitter"/>
                   </button>
                 </a>
                 <a id="social-medium" href="https://medium.com/mahadao">
                   <button className="button3">
-                    <i
-                      className="fab fa-medium"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
+                    <i className="fab fa-medium"/>
                   </button>
                 </a>
                 <a id="social-telegram" href="https://t.me/MahaDAO">
                   <button className="button3">
-                    <i
-                      className="fab fa-telegram-plane"
-                      style={{ marginTop: '12px', marginLeft: '10px' }}
-                    ></i>
+                    <i className="fab fa-telegram-plane"/>
                   </button>
                 </a>
                 <a id="social-github" href="https://github.com/mahadao">
                   <button className="button3">
-                    <i
-                      className="fab fa-github"
-                      style={{ marginTop: '11.5px', marginLeft: '11.5px' }}
-                    ></i>
+                    <i className="fab fa-github"/>
                   </button>
                 </a>
                 <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
                   <button className="button3">
-                    <i
-                      className="fab fa-reddit"
-                      style={{ marginTop: '10.5px', marginLeft: '10.5px' }}
-                    ></i>
+                    <i className="fab fa-reddit"/>
                   </button>
                 </a>
                 <a id="social-discord" href="https://discord.gg/V6sr3fe">
                   <button className="button3">
-                    <i
-                      className="fab fa-discord"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
+                    <i className="fab fa-discord"/>
                   </button>
                 </a>
               </div>
@@ -670,7 +650,9 @@ const FooterEnd = styled.div`
   align-items: center;
   width: 100%;
   @media (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 const StyledLink = styled.a`
@@ -690,9 +672,7 @@ const StyledLink = styled.a`
     text-decoration: none;
   }
   @media (max-width: 768px) {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    margin-top: 0px;
+    margin: 0;
   }
 `;
 const ModalText = styled.div`
