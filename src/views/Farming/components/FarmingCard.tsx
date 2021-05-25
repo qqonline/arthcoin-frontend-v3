@@ -9,11 +9,11 @@ import { ModeProps } from '../index';
 import DepositModal from './DepositModal';
 import { StakingContract } from '../../../basis-cash';
 import useModal from '../../../hooks/useModal';
+import ClaimModal from './ClaimModal';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
 import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
-import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
 import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
@@ -33,9 +33,19 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
 
   const stakedBalance = useStakingBalance(pool.contract);
   const claimableBalance = useStakingRewards(pool.contract);
-  const onClaim = useStakingClaim(pool.contract);
 
   const rates = usePoolTokenRates();
+
+  const [onPresentClaimModal, onDismissClaimModal] = useModal(
+    <ClaimModal
+      pool={pool}
+      claimableBalance={claimableBalance}
+      isMobile={isMobile}
+      onCancel={() => onDismissClaimModal()}
+      rates={rates}
+      toggleSuccessModal={() => { setSuccessModal(!successModal) }}
+    />,
+  );
 
   const [onPresentWithdrawModal, onDismissWithdrawModal] = useModal(
     <WithdrawModal
@@ -77,14 +87,14 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
           stakedBalance={stakedBalance}
           rates={rates}
           onDepositClick={onPresentDepositModal}
-          onClaimClick={onClaim}
+          onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}
         />
       ) : (
         <MobileRowCard
           pool={pool}
           onDepositClick={onPresentDepositModal}
-          onClaimClick={onClaim}
+          onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}
         />
       )}

@@ -87,9 +87,6 @@ export class BasisCash {
       ArthWethLP: this.ArthWethLP,
     };
 
-    console.log(this.tokens)
-
-
     // this.arthDai = new UniswapPair(
     //   deployments.ArthDaiMLP.address,
     //   provider,
@@ -145,8 +142,6 @@ export class BasisCash {
       if (token && token.address) token.connect(this.signer);
     }
 
-    console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
-
     // this.multicall.addCalls([
     //   {
     //     key: 'BALANCE_OF_ARTH',
@@ -191,7 +186,6 @@ export class BasisCash {
 
   gasOptions(gas: BigNumber): Overrides {
     const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
-    console.log(`⛽️ Gas multiplied: ${gas} -> ${multiplied}`);
     return {
       gasLimit: BigNumber.from(multiplied),
     };

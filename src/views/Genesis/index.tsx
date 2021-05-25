@@ -251,7 +251,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     Number(arthValue),
-    totalArthxRecieve,
+    arthxRecieve,
   );
 
   const recollateralize = usePerformRecollateralize(
@@ -321,7 +321,13 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={Number(getDisplayBalance(totalArthxRecieve, 18, 3)).toLocaleString()}
+            rightLabelValue={
+              Number(getDisplayBalance(
+                type === 'Commit' ? totalArthxRecieve : arthxRecieve,
+                18, 
+                3
+              )).toLocaleString()
+            }
           />
 
           <Grid
@@ -357,7 +363,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 disabled={
                   !isApproved || 
                   !Number(currentValue) || 
-                  !Number(totalArthxRecieve)
+                  type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve)
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -531,20 +537,23 @@ const Genesis = (props: WithSnackbarProps) => {
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
-                    <OneLineInputwomargin>
-                      <div style={{ flex: 1 }}>
-                        <TextWithIcon>
-                          + Bonus
-                          <CustomToolTip toolTipText={'loreum ipsum'} />
-                        </TextWithIcon>
-                      </div>
+                    {
+                      type === 'Commit' && 
                       <OneLineInputwomargin>
-                        <BeforeChip className={'custom-mahadao-chip'}>
-                          {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                        </BeforeChip>
-                        <TagChips>ARTHX</TagChips>
+                        <div style={{ flex: 1 }}>
+                          <TextWithIcon>
+                            + Bonus
+                            <CustomToolTip toolTipText={'loreum ipsum'} />
+                          </TextWithIcon>
+                        </div>
+                        <OneLineInputwomargin>
+                          <BeforeChip className={'custom-mahadao-chip'}>
+                            {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                          </BeforeChip>
+                          <TagChips>ARTHX</TagChips>
+                        </OneLineInputwomargin>
                       </OneLineInputwomargin>
-                    </OneLineInputwomargin>
+                    }
                   </ReceiveContainer>
                 </div>
                 {!!!account ? (
@@ -557,7 +566,10 @@ const Genesis = (props: WithSnackbarProps) => {
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
-                    disabled={isApproving || (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)}
+                    disabled={
+                      isApproving || 
+                      (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)
+                    }
                     onClick={approve}
                     loading={isApproving}
                   />
@@ -570,9 +582,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       variant={'default'}
                       onClick={() => setOpenModal(1)}
                     />
-
                     <br />
-
                     {redeemableBalances[0].gt(0) ||
                       (redeemableBalances[1].gt(0) && (
                         <Button
@@ -589,7 +599,6 @@ const Genesis = (props: WithSnackbarProps) => {
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
             {/* Deep's code here */}
-
             <BondingDiscount dataObj={bondingDiscount} />
             <UnderstandMore dataObj={understandMore} />
           </Grid>
@@ -611,7 +620,6 @@ const Genesis = (props: WithSnackbarProps) => {
     </>
   );
 };
-
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
@@ -679,6 +687,7 @@ const StartsIn = styled.div`
   color: rgba(255, 255, 255, 0.88);
   opacity: 0.64;
 `;
+
 const PageSubHeading = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -735,7 +744,9 @@ const LeftTopCardHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
 const LeftTopCardContainer = styled.div``;
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
