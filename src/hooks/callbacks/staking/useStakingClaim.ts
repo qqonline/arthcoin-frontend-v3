@@ -15,7 +15,7 @@ export default function (stakingContract: string) {
       summary: `Claim Rewards`
     });
 
-    callback();
+    if (callback) callback();
   }, [core.contracts, stakingContract, addTransaction]);
 
   return action;

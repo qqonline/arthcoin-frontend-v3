@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
+
+import config from '../../../config'
 import useCore from '../../useCore';
 
 export default (stakingContract: string) => {
@@ -18,7 +20,7 @@ export default (stakingContract: string) => {
 
     const interval = setInterval(() => (
       fetchValue().catch((err) => console.error(`Failed to fetch staking balance: ${err}`))
-    ), 30 * 1000);
+    ), config.refreshInterval);
 
     return () => clearInterval(interval);
   }, [fetchValue]);

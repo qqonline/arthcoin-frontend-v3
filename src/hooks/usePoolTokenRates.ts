@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 
+import config from '../config';
 import useCore from './useCore';
 
 export default () => {
@@ -28,7 +29,7 @@ export default () => {
 
     const interval = setInterval(() => (
       fetchCashPrice().catch((err) => console.error(`Failed to fetch PoolToken price: ${err.stack}`))
-    ), 30 * 1000);
+    ), config.refreshInterval);
 
     return () => clearInterval(interval);
   }, [setValue, core, fetchCashPrice]);
