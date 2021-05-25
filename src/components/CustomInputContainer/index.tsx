@@ -127,7 +127,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
             {ILabelInfoValue !== '' && Redirection()}
           </ILabelLeft>
           <ILabelRight>
-            {showBalance && <ILabelBalance>{`Balance  ${IBalanceValue}`}</ILabelBalance>}
+            {showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>}
           </ILabelRight>
         </ILabelContainer>
         <IFieldConatiner className={`input-${ICStates.IState}`}>

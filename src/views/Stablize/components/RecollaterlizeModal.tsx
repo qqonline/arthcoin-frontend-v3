@@ -73,7 +73,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
         <TransparentInfoDiv
           labelData={`Your will deposit`}
           rightLabelUnit={selectedCollateral}
-          rightLabelValue={collateralAmount.toString()}
+          rightLabelValue={Number(collateralAmount).toLocaleString()}
         />
 
         <Divider
@@ -88,14 +88,14 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
           labelData={`And receive`}
           // labelToolTipData={'testing'}
           rightLabelUnit={'ARTHX'}
-          rightLabelValue={receiveShare.toString()}
+          rightLabelValue={Number(receiveShare).toLocaleString()}
         />
 
         <TransparentInfoDiv
           labelData={`Along with a bonus of`}
           // labelToolTipData={'testing'}
           rightLabelUnit={'ARTHX'}
-          rightLabelValue={receiveBonus.toString()}
+          rightLabelValue={Number(receiveBonus).toLocaleString()}
         />
 
         <Grid container spacing={2} style={{ marginTop: '32px' }}>

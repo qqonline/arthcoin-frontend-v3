@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+
 import MobileRowCard from './MobileRowCard';
 import DesktopRowCard from './DesktopRowCard';
 import WithdrawModal from './WithdrawModal';
-import { useMediaQuery } from 'react-responsive';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { ModeProps } from '../index';
 import DepositModal from './DepositModal';
 import { StakingContract } from '../../../basis-cash';
@@ -22,10 +23,11 @@ interface IProps {
 }
 
 const FarmingCard = (props: WithSnackbarProps & IProps) => {
+  const [successModal, setSuccessModal] = useState(false)
+  const pool = props.cardData;
+
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const pool = props.cardData;
-  const [successModal, setSuccessModal] = useState(false)
   const depositTokenContract = core.tokens[pool.depositToken];
   const tokenBalance = useTokenBalance(depositTokenContract);
 
@@ -54,10 +56,6 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
-
-  // useEffect(() => {
-  //   if (successModal) window.location.reload()
-  // }, [successModal])
 
   return (
     <div>

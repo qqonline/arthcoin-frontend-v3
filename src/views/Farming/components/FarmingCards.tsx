@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+
 import { ModeProps } from '../index';
 import FarmingCard from './FarmingCard';
 import { stakingContracts } from '../../../config';

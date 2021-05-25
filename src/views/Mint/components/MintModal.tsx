@@ -234,19 +234,19 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`Your collateral supply`}
             rightLabelUnit={selectedCollateralCoin}
-            rightLabelValue={collateralValue.toString()}
+            rightLabelValue={Number(collateralValue).toLocaleString()}
           />
 
           <TransparentInfoDiv
             labelData={`Your share supply`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={arthxValue.toString()}
+            rightLabelValue={Number(arthxValue).toLocaleString()}
           />
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={getDisplayBalance(tradingFee, 6)}
+            rightLabelValue={Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}
           />
 
           <Divider
@@ -261,7 +261,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             labelData={`You will mint`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={arthValue.toString()}
+            rightLabelValue={Number(arthValue).toLocaleString()}
           />
 
           {/*<CheckboxDiv>

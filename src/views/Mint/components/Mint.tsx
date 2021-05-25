@@ -293,7 +293,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
-                      <BeforeChip>{getDisplayBalance(tradingFee, 6)}</BeforeChip>
+                      <BeforeChip>{Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}</BeforeChip>
                       <TagChips>ARTH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>

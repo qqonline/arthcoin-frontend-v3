@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import { ModeProps } from '../index';
@@ -10,6 +11,7 @@ import CustomModal from '../../../components/CustomModal';
 import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
   mode?: ModeProps;
@@ -25,6 +27,7 @@ export default (props: IProps) => {
   const [val, setValue] = useState<string>('0');
   const symbol = props.pool.depositTokenSymbols.join('-');
 
+  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
   const withdraw = useStakingWithdraw(
     props.pool.contract,
     Number(val),
@@ -43,7 +46,7 @@ export default (props: IProps) => {
     >
       <CustomInputContainer
         ILabelValue={`How much ${symbol} would you like to withdraw?`}
-        IBalanceValue={getDisplayBalance(props.stakedBalance)}//just pass the balance here
+        IBalanceValue={getDisplayBalance(props.stakedBalance)}
         showBalance={false}
         ILabelInfoValue={''}
         DefaultValue={String(val)}
@@ -51,7 +54,6 @@ export default (props: IProps) => {
         hasDropDown={false}
         SymbolText={symbol}
         setText={(t) => {
-          console.log(t);
           setValue(ValidateNumber(t) ? t : '0');
         }}
         inputMode={'decimal'}
@@ -63,7 +65,7 @@ export default (props: IProps) => {
       <OneLine>
         <div style={{ flex: 1 }}></div>
         <OneLine>
-          <BeforeChip>Staked Amount: {getDisplayBalance(props.stakedBalance)}</BeforeChip>
+          <BeforeChip>Staked Amount: {Number(getDisplayBalance(props.stakedBalance, tokenDecimals)).toLocaleString()}</BeforeChip>
           <TagChips>{symbol}</TagChips>
         </OneLine>
       </OneLine>
@@ -77,7 +79,12 @@ export default (props: IProps) => {
           <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button text={'Withdraw'} size={'lg'} onClick={() => withdraw().then(props?.toggleSuccessModal).finally(props.onCancel)} />
+          <Button 
+            text={'Withdraw'} 
+            size={'lg'}
+            disabled={!Number(val)}
+            onClick={() => withdraw().then(props?.toggleSuccessModal).finally(props.onCancel)} 
+          />
         </Grid>
       </Grid>
     </CustomModal>

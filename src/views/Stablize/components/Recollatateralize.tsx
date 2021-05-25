@@ -126,7 +126,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {getDisplayBalance(arthxRewards, 6, 3)} <HardChip>ARTHX</HardChip>{' '}
+            {Number(getDisplayBalance(arthxRewards, 6, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -158,7 +158,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             <OneLineInputwomargin style={{ marginBottom: '10px' }}>
               <PrimaryText>ARTH Share</PrimaryText>
               <OneLineInputwomargin>
-                <BeforeHardChip>{receiveShare}</BeforeHardChip>
+                <BeforeHardChip>{Number(receiveShare).toLocaleString()}</BeforeHardChip>
                 <HardChip>ARTHX</HardChip>
               </OneLineInputwomargin>
             </OneLineInputwomargin>
@@ -168,7 +168,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </PrimaryText>
               <OneLineInputwomargin>
-                <BeforeHardChip>{receiveBonus}</BeforeHardChip>
+                <BeforeHardChip>{Number(receiveBonus).toLocaleString()}</BeforeHardChip>
                 <HardChip>ARTHX</HardChip>
               </OneLineInputwomargin>
             </OneLineInputwomargin>
@@ -285,7 +285,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6, 4)}</InputLabelSpanRight>
+                  <InputLabelSpanRight>${Number(getDisplayBalance(arthxPrice, 6, 4)).toLocaleString()}</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <RightTopCardHeader style={{ marginTop: 20 }}>
