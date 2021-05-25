@@ -151,6 +151,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [timerHeader, setHeader] = useState<boolean>(false);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
   const core = useCore();
   const { account, connect } = useWallet();
@@ -361,6 +362,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 disabled={
+                  isInputFieldError ||
                   !isApproved || 
                   !Number(currentValue) || 
                   type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve)
@@ -499,6 +501,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                   />
                 ) : (
                   <CustomInputContainer
@@ -515,6 +518,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                   />
                 )}
                 <PlusMinusArrow>
@@ -567,6 +571,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
                     disabled={
+                      isInputFieldError ||
                       isApproving || 
                       (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)
                     }
@@ -576,7 +581,11 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
-                      disabled={!isApproved || type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
+                      disabled={
+                        isInputFieldError ||
+                        !isApproved || 
+                        type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)
+                      }
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}
