@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Countdown from 'react-countdown';
@@ -20,16 +20,6 @@ type IProps = {
   pool: StakingContract;
   stakedBalance: BigNumber;
   claimableBalance: BigNumber;
-  // pair: [string, string];
-  // deposited?: boolean;
-  // walletValue: string;
-  // walletUnit: string;
-  // apy: string;
-  // poolDur: string;
-  // poolEndDate: number;
-  // open?: boolean;
-  // lockedStake?: string;
-  // earned?: string;
   rates: {
     maha: BigNumber;
     arthx: BigNumber;
@@ -54,20 +44,21 @@ export default (props: IProps) => {
   const isWalletConnected = !!account;
   
   const pow = BigNumber.from(10).pow(18);
-  // all 4 variables below && <Countup/> tag - needs review @steven
-  const initEarnedARTHX = Number(getDisplayBalance(
-    props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
-    18,
-    6,
-  ));
-  const initEarnedMAHA = Number(getDisplayBalance(
-    props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
-    18,
-    6,
-  ));
+  const initEarnedARTHX = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
 
-  const rate = 5;
-  const addedFactor = (basevalue: number) => basevalue * rate * 3600;
+  const initEarnedMAHA = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
   
   return (
     <CustomCardGrid>
@@ -146,7 +137,7 @@ export default (props: IProps) => {
             Earned:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
               {/* TODO: have some kind of rate added here */}
-              <CountUp
+              {/* <CountUp
                 start={initEarnedARTHX}
                 end={initEarnedARTHX + addedFactor(initEarnedARTHX)}
                 delay={0}
@@ -156,16 +147,12 @@ export default (props: IProps) => {
                 onUpdate={() => {
                   console.log('test');
                 }}
-              />
-              {/* {getDisplayBalance(
-                props.claimableBalance.mul(props.rates.maha).div(pow),
-                18,
-                6,
-              )}*/}
+              /> */}
+              {initEarnedARTHX.toLocaleString()}
               {' '}
               ARTHX
               {' + '}
-              <CountUp
+              {/* <CountUp
                 start={initEarnedMAHA}
                 end={initEarnedMAHA + addedFactor(initEarnedMAHA)}
                 delay={0}
@@ -175,12 +162,8 @@ export default (props: IProps) => {
                 onUpdate={() => {
                   console.log('test');
                 }}
-              />
-              {/* {getDisplayBalance(
-                props.claimableBalance.mul(props.rates.arthx).div(pow),
-                18,
-                6,
-              )} */}
+              /> */}
+              {initEarnedMAHA.toLocaleString()}
               {' '}
               MAHA
             </TableMainTextStyle>

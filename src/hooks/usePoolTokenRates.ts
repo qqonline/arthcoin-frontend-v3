@@ -25,6 +25,12 @@ export default () => {
 
   useEffect(() => {
     fetchCashPrice().catch((err) => console.error(`Failed to fetch PoolToken price: ${err.stack}`));
+
+    const interval = setInterval(() => (
+      fetchCashPrice().catch((err) => console.error(`Failed to fetch PoolToken price: ${err.stack}`))
+    ), 30 * 1000);
+
+    return () => clearInterval(interval);
   }, [setValue, core, fetchCashPrice]);
 
   return value
