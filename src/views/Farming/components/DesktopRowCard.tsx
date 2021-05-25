@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
 import Countdown from 'react-countdown';
+import { useWallet } from 'use-wallet';
+import { BigNumber } from '@ethersproject/bignumber';
+import CountUp from 'react-countup';
+
+import TokenSymbol from '../../../components/TokenSymbol';
+import Button from '../../../components/Button';
 import uniswapSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import { useWallet } from 'use-wallet';
-import { BigNumber } from '@ethersproject/bignumber';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
-import CountUp from 'react-countup';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 type IProps = {
   pool: StakingContract;
@@ -40,32 +42,33 @@ type IProps = {
 export default (props: IProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
-  const pow = BigNumber.from(10).pow(18);
-
-  const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
-
-  const tokenAddresses = tokens.map((t) => t.address);
-  const uniswapLink = `https://app.uniswap.org/#/add/v2/${tokenAddresses.join('/')}`;
-
-  const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
   const tokenBalance = useTokenBalance(depositTokenContract);
+  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
+  const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
+  const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
+  const uniswapLink = `https://app.uniswap.org/#/add/v2/${tokenAddresses.join('/')}`;
+  const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
+  
+  const pow = BigNumber.from(10).pow(18);
   // all 4 variables below && <Countup/> tag - needs review @steven
   const initEarnedARTHX = Number(getDisplayBalance(
-    props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
+    props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
     18,
     6,
   ))
   const initEarnedMAHA = Number(getDisplayBalance(
-    props.claimableBalance.mul(props.rates.arthx).div(pow),
+    props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
     18,
     6,
   ))
+
   const rate = 5;
   const addedFactor = (basevalue: number) => basevalue * rate * 3600;
+  
   return (
     <CustomCardGrid>
       <Grid
@@ -101,7 +104,7 @@ export default (props: IProps) => {
           </div>
         </Grid>
         <Grid item lg={3}>
-          <TableMainTextStyle>{getDisplayBalance(tokenBalance)}</TableMainTextStyle>
+          <TableMainTextStyle>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</TableMainTextStyle>
         </Grid>
         <Grid item lg={2}>
           <TableMainTextStyle>{/* {props?.apy} */}</TableMainTextStyle>
@@ -130,12 +133,12 @@ export default (props: IProps) => {
           )}
         </Grid>
       </Grid>
-      {true && (
+      {props.stakedBalance.gt(0) && (
         <DepositInfoContainer>
           <div style={{ display: 'flex' }}>
             Your Locked state:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
-              {getDisplayBalance(props.stakedBalance)}
+              {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
             </TableMainTextStyle>
             <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
           </div>

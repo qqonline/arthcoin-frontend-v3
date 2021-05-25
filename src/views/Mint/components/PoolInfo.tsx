@@ -1,15 +1,19 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components';
+
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import Button from '../../../components/Button';
 import CustomToolTip from '../../../components/CustomTooltip';
-import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import prettyNumber from '../../../components/PrettyNumber';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 
 interface IProps {
   selectedCollateralCoin: string;
@@ -17,14 +21,13 @@ interface IProps {
 
 export default ({ selectedCollateralCoin }: IProps) => {
   const mintCR = useMintCollateralRatio();
+  const arthxPrice = useARTHXOraclePrice();
   const redeemCR = useRedeemCollateralRatio();
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
-
+  const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+  const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
+  const stabilityFee = useStabilityFee();
   const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
-
-  // console.log(poolBalance.toString());
-
-  const arthxPrice = useARTHXOraclePrice();
 
   return (
     <>
@@ -73,7 +76,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>Pool Balance</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {prettyNumber(getDisplayBalance(poolBalance, 16))}
+              {prettyNumber(getDisplayBalance(poolBalance, 18))}
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -93,18 +96,29 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>1%</InputLabelSpanRight>
+            <InputLabelSpanRight>{getDisplayBalance(stabilityFee, 2, 2)}%</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
           <OneLineInput>
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
-                Trading Fee
+                Minting Fee
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+            <InputLabelSpanRight>{getDisplayBalance(mintingFee, 4, 3)}%</InputLabelSpanRight>
+          </OneLineInput>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <OneLineInput>
+            <div style={{ flex: 1 }}>
+              <TextForInfoTitle>
+                Redeeming Fee
+                <CustomToolTip toolTipText={'loreum ipsum'} />
+              </TextForInfoTitle>
+            </div>
+            <InputLabelSpanRight>{getDisplayBalance(redeemingFee, 4, 3)}%</InputLabelSpanRight>
           </OneLineInput>
         </div>
       </RightTopCard>
@@ -114,7 +128,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
         </RightBottomCardTitle>
         <Grid container style={{ marginTop: '16px' }}>
           <Grid item lg={4}>
-            <Button text={'Earn Rewards'} size={'sm'} to={'farming'} />
+            <Button text={'Earn Rewards'} size={'sm'} to={'/farming'}/>
           </Grid>
         </Grid>
       </RightBottomCard>

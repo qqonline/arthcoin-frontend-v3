@@ -1,11 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
-import Container from '../../components/Container';
+import { Link } from 'react-router-dom';
+import Countdown from 'react-countdown';
 import Grid from '@material-ui/core/Grid';
-import InfoIcon from '@material-ui/icons/Info';
-import Button from '../../components/Button';
-import arrowDown from '../../assets/svg/arrowDown.svg';
-import calendar from '../../assets/svg/calendar.svg';
 import {
   Checkbox,
   CheckboxProps,
@@ -17,36 +14,43 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core';
-import { CustomSnack } from '../../components/SnackBar';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import { Link } from 'react-router-dom';
+import { parseUnits } from 'ethers/lib/utils';
 import { useMediaQuery } from 'react-responsive';
-import { useWallet } from 'use-wallet';
-import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
+import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import BondingDiscount from './components/BondingDiscount';
-import Countdown from 'react-countdown';
-import CustomInputContainer from '../../components/CustomInputContainer';
-import CustomModal from '../../components/CustomModal';
-import CustomSuccessModal from '../../components/CustomSuccesModal';
-import CustomToolTip from '../../components/CustomTooltip';
-import HtmlTooltip from '../../components/HtmlTooltip';
+import React, { useEffect, useMemo, useState } from 'react';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
-import SlippageContainer from '../../components/SlippageContainer';
+
+import useCore from '../../hooks/useCore';
+import Button from '../../components/Button';
+import Container from '../../components/Container';
+import calendar from '../../assets/svg/calendar.svg';
 import TransparentInfoDiv from './components/InfoDiv';
+import CustomModal from '../../components/CustomModal';
+import arrowDown from '../../assets/svg/arrowDown.svg';
+import { CustomSnack } from '../../components/SnackBar';
+import prettyNumber from '../../components/PrettyNumber';
+import BondingDiscount from './components/BondingDiscount';
+import CustomToolTip from '../../components/CustomTooltip';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useTokenBalance from '../../hooks/state/useTokenBalance';
+import SlippageContainer from '../../components/SlippageContainer';
+import CustomSuccessModal from '../../components/CustomSuccesModal';
+import CustomInputContainer from '../../components/CustomInputContainer';
+import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
 import UnderstandMore from './components/UnderstandMore';
+import useTokenDecimals from '../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
-import useCore from '../../hooks/useCore';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
-import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
-import { BigNumber } from '@ethersproject/bignumber';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import prettyNumber from '../../components/PrettyNumber';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
+import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
+import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
+import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
 
 withStyles({
   root: {
@@ -64,7 +68,6 @@ makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-      // color: 'white'
     },
     margin: {
       height: theme.spacing(3),
@@ -74,14 +77,12 @@ makeStyles((theme: Theme) =>
 
 withStyles({
   root: {
-    // color: 'white',
     height: 15,
     width: '95%',
   },
   thumb: {
     height: 10,
     width: 10,
-    // backgroundColor: '#fff',
     border: '2px solid currentColor',
     color: '#FFA981',
     marginTop: -3.5,
@@ -93,26 +94,21 @@ withStyles({
   active: {},
   valueLabel: {
     left: 'calc(-100% - 5px)',
-    // color: '#FF7F57',
   },
   marked: {
     color: 'red',
   },
   markLabel: {
-    // color: 'green'
   },
   track: {
     height: 3,
     borderRadius: 3,
     color: '#FFA981',
-    // top: '2%'
   },
   rail: {
     height: 3,
     borderRadius: 3,
     color: '#D74D26',
-    // background:'red'
-    // border: '1px solid'
   },
   markLabelActive: {
     fontStyle: 'normal',
@@ -145,37 +141,34 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  useEffect(() => window.scrollTo(0, 0), []);
-  const core = useCore();
-
-  const [collateralValue, setCollateralValue] = useState<string>('0.0');
-  const [arthValue, setArthValue] = useState<string>('0.0');
-
-  const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
-  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
-  const [calendarLink, setLink] = useState('');
-  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
-  const [successModal, setSuccessModal] = useState<boolean>(false);
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
-  const recollateralizationDiscount = useRecollateralizationDiscount();
+  const [calendarLink, setLink] = useState('');
+  const [arthValue, setArthValue] = useState<string>('0');
+  const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
+  const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [collateralValue, setCollateralValue] = useState<string>('0');
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [timerHeader, setHeader] = useState<boolean>(false);
 
-  const bondingDiscount = [
-    {
-      label: 'Current discount',
-      value: `${getDisplayBalance(recollateralizationDiscount, 4, 4)}%`,
-    },
-    {
-      label: 'Starting ARTHX Price',
-      value: '0.01$',
-    },
-    {
-      label: 'Discounted ARTHX Price',
-      value: '0.007$',
-    },
-  ];
+  const core = useCore();
+  const { account, connect } = useWallet();
+  const arthxPrice = useARTHXOraclePrice();
+  const recollateralizationDiscount = useRecollateralizationDiscount();
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
+  const redeemableBalances = useRedeemableBalances(selectedCollateral);
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
+  const arthBalance = useTokenBalance(core.ARTH);
+  const arthCirculatingSupply = useARTHCirculatingSupply();
+  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const committedCollateral = useGlobalCollateralValue();
+  const percentageCompleted = usePercentageCompleted();
+  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
+
   useEffect(() => {
     const onClick = () => {
       let event: TCalendarEvent = {
@@ -187,77 +180,126 @@ const Genesis = (props: WithSnackbarProps) => {
       };
       setLink(makeUrls(event).google);
     };
+
+    window.scrollTo(0, 0)
     onClick();
   }, []);
 
-  const understandMore = [
-    'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers',
-    'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
-    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral',
-    'The discount decreases over time as more collateral is committed.',
-  ];
+  const calcPercentageCompleted = (percent: BigNumber): string => (
+    percent
+      .div(BigNumber.from(10).pow(16))
+      .toString()
+  );
+
+  const calcDiscountOnCommit = (amount: BigNumber, discoun: BigNumber) => amount.mul(discoun).div(1e6);
+
+  const calcExpectReceiveAmount = (
+    inAssetPrice: BigNumber,
+    outAssetprice: BigNumber, 
+    amount: number | string, 
+    inAssetDecimals: number,
+    outAssetDecimals: number) => (
+      inAssetPrice
+      .mul(BigNumber.from(
+        parseUnits(`${amount}`, inAssetDecimals)
+      ))
+      .mul(
+        BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals)
+      )
+      .div(outAssetprice)
+  );
+  
+  const arthxRecieve = useMemo(() => {
+    if (arthxPrice.lte(0)) return BigNumber.from(0);
+
+    if (type === 'Commit' && Number(collateralValue))
+      return calcExpectReceiveAmount(
+        collateralGMUPrice,
+        arthxPrice, 
+        collateralValue, 
+        tokenDecimals,
+        18
+      );
+
+    return calcExpectReceiveAmount(
+      BigNumber.from(1e6),
+      arthxPrice, 
+      arthValue, 
+      18,
+      18
+    );
+  }, [arthValue, collateralGMUPrice, arthxPrice, collateralValue, tokenDecimals, type]);
+
+  const arthxDiscount = useMemo(() => {
+    if (arthxPrice.lte(0)) return BigNumber.from(0);
+    return calcDiscountOnCommit(arthxRecieve, recollateralizationDiscount);
+  }, [arthxRecieve, arthxPrice, recollateralizationDiscount]);
+
+  const totalArthxRecieve = useMemo(() => {
+    return arthxRecieve.add(arthxDiscount)
+  }, [arthxDiscount, arthxRecieve]);
 
   const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
   const currentToken = core.tokens[currentCoin];
   const currentValue = type === 'Commit' ? collateralValue : arthValue;
 
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
-  const { account, connect } = useWallet();
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthCirculatingSupply = useARTHCirculatingSupply();
-  const arthxPrice = useARTHXOraclePrice();
-  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const committedCollateral = useGlobalCollateralValue();
-  const percentageCompleted = usePercentageCompleted();
-
-  const percentageCompletedNum = percentageCompleted.div(1e14).toString();
-
-  /*const arthxRecieve = useMemo(() => {
-    if (type === 'Commit') return arthxPrice.mul(Number(collateralValue));
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);*/
-
-  /*const arthxRecieve = useMemo(() => {
-    if (type === 'Commit')
-      if (arthxPrice.gt(0) && Number(collateralValue)) {
-        const temp = Number(arthxPrice.toString()) / 1e6;
-        return Number(collateralValue) / temp;
-      }
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);*/
-
-  // not sure
-  const arthxRecieve = useMemo(() => {
-    if (type === 'Commit')
-      if (arthxPrice.gt(0) && Number(collateralValue)) {
-        return BigNumber.from(Number(collateralValue) * 1e6)
-          .mul(1e6)
-          .div(arthxPrice)
-      }
-    return arthxPrice.mul(Math.floor(Number(arthValue)));
-  }, [arthValue, arthxPrice, collateralValue, type]);
-
-  const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
+  const [approveStatus, approve] = useApprove(
+    currentToken,
+    collateralPool.address
+  );
 
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     Number(arthValue),
-    arthxRecieve,
+    totalArthxRecieve,
   );
 
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
-    BigNumber.from(Math.floor(Number(collateralValue) * 1e6)),
-    BigNumber.from(0),
+    BigNumber.from(parseUnits(collateralValue, tokenDecimals)),
+    totalArthxRecieve,
   );
+
+  const bondingDiscount = [
+    {
+      label: 'Current discount',
+      value: `${getDisplayBalance(recollateralizationDiscount, 4, 2)}%`,
+    },
+    {
+      label: 'Starting ARTHX Price',
+      value: '0.01$',
+    },
+    {
+      label: 'Discounted ARTHX Price',
+      value: `${Number(getDisplayBalance(arthxPrice, 6, 4)).toLocaleString()}$`,
+    },
+  ];
+
+  const understandMore = [
+    'Users can either commit collateral or swap ARTH to receive ARTHX.',
+    'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers.',
+    'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
+    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
+    'The discount decreases over time as more collateral is committed.',
+  ];
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
 
   return (
     <>
+      <CustomSuccessModal
+        modalOpen={openModal === 2}
+        setModalOpen={() => setOpenModal(0)}
+        title={type === 'Commit' ? 'Committing collateral!' : 'Swapping ARTH'}
+        // subTitle={'View Transaction'}
+        subsubTitle={
+          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+        }
+        buttonText={'Stake your ARTH'}
+        buttonType={'default'}
+        buttonTo={'/farming'}
+      />
       <CustomModal
         closeButton
         handleClose={() => setOpenModal(0)}
@@ -279,7 +321,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={getDisplayBalance(arthxRecieve, 6)}
+            rightLabelValue={Number(getDisplayBalance(totalArthxRecieve, 18, 3)).toLocaleString()}
           />
 
           <Grid
@@ -312,6 +354,11 @@ const Genesis = (props: WithSnackbarProps) => {
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
+                disabled={
+                  !isApproved || 
+                  !Number(currentValue) || 
+                  !Number(totalArthxRecieve)
+                }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
                 onClick={() => {
@@ -338,10 +385,10 @@ const Genesis = (props: WithSnackbarProps) => {
             <div style={{}}>
               <BorderLinearProgress
                 variant="determinate"
-                value={Number(percentageCompletedNum)}
+                value={Number(calcPercentageCompleted(percentageCompleted))}
               />
             </div>
-            <HeaderSpan>{percentageCompletedNum}% Completed</HeaderSpan>
+            <HeaderSpan>{calcPercentageCompleted(percentageCompleted)}% Completed</HeaderSpan>
           </PageSubHeading>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -388,7 +435,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(committedCollateral, 16))}
+                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
@@ -432,7 +479,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
+                    IBalanceValue={Number(getDisplayBalance(collateralBalnace, 6)).toLocaleString()}
                     ILabelInfoValue={''}
                     // value={mintColl.toString()}
                     DefaultValue={collateralValue.toString()}
@@ -443,14 +490,14 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setCollateralValue(ValidateNumber(val) ? val : String(val));
+                      setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />
                 ) : (
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
-                    IBalanceValue={getDisplayBalance(arthBalance)}
+                    IBalanceValue={Number(getDisplayBalance(arthBalance)).toLocaleString()}
                     ILabelInfoValue={''}
                     // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
@@ -459,13 +506,13 @@ const Genesis = (props: WithSnackbarProps) => {
                     SymbolText={'ARTH'}
                     inputMode={'numeric'}
                     setText={(val: string) => {
-                      setArthValue(ValidateNumber(val) ? val : String(val));
+                      setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                   />
                 )}
                 <PlusMinusArrow>
-                  <img src={arrowDown} />
+                  <img src={arrowDown} alt={'Arrow down'} />
                 </PlusMinusArrow>
                 <div style={{ marginBottom: '32px' }}>
                   <TextWithIcon style={{ marginBottom: '12px' }}>You Receive</TextWithIcon>
@@ -479,7 +526,21 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {getDisplayBalance(arthxRecieve, 6)}
+                          {Number(getDisplayBalance(arthxRecieve, 18, 3)).toLocaleString()}
+                        </BeforeChip>
+                        <TagChips>ARTHX</TagChips>
+                      </OneLineInputwomargin>
+                    </OneLineInputwomargin>
+                    <OneLineInputwomargin>
+                      <div style={{ flex: 1 }}>
+                        <TextWithIcon>
+                          + Bonus
+                          <CustomToolTip toolTipText={'loreum ipsum'} />
+                        </TextWithIcon>
+                      </div>
+                      <OneLineInputwomargin>
+                        <BeforeChip className={'custom-mahadao-chip'}>
+                          {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
@@ -496,17 +557,32 @@ const Genesis = (props: WithSnackbarProps) => {
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
-                    disabled={isApproving}
+                    disabled={isApproving || (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)}
                     onClick={approve}
+                    loading={isApproving}
                   />
                 ) : (
-                  <Button
-                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={false}
-                    onClick={() => setOpenModal(1)}
-                  />
+                  <>
+                    <Button
+                      disabled={!isApproved || type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
+                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                      size={'lg'}
+                      variant={'default'}
+                      onClick={() => setOpenModal(1)}
+                    />
+
+                    <br />
+
+                    {redeemableBalances[0].gt(0) ||
+                      (redeemableBalances[1].gt(0) && (
+                        <Button
+                          text={'Collect Redeemption'}
+                          size={'lg'}
+                          variant={'default'}
+                          onClick={collectRedeemption}
+                        />
+                      ))}
+                  </>
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>
@@ -536,11 +612,11 @@ const Genesis = (props: WithSnackbarProps) => {
   );
 };
 
+
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   height: 270px;
   position: absolute;
-  // border: 1px solid;
   width: 100%;
   z-index: -5;
 `;
@@ -555,12 +631,6 @@ const CustomInfoCard = styled.div`
 const CustomInfoCardDetails = styled.div``;
 
 const StyledNavLink = styled(Link)`
-  // color: ${(props) => props.theme.color.grey[400]};
-  // font-size: 14px;
-  // margin-right: -4px;
-  // &:hover {
-  //   color: white !important;
-  // }
   background: rgba(97, 134, 242, 0.32);
   border-radius: 8px;
   font-family: Inter;
@@ -640,6 +710,7 @@ const HeaderButton = styled.div`
   max-width: 200px;
   cursor: pointer;
 `;
+
 const ToolTipFont = styled.p`
   padding: 0;
   margin: 0;

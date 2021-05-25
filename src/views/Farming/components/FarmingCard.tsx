@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MobileRowCard from './MobileRowCard';
 import DesktopRowCard from './DesktopRowCard';
 import WithdrawModal from './WithdrawModal';
@@ -14,6 +14,7 @@ import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
 import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
 import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
 import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
 interface IProps {
   mode?: ModeProps;
@@ -24,7 +25,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const pool = props.cardData;
-
+  const [successModal, setSuccessModal] = useState(false)
   const depositTokenContract = core.tokens[pool.depositToken];
   const tokenBalance = useTokenBalance(depositTokenContract);
 
@@ -40,6 +41,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       stakedBalance={stakedBalance}
       isMobile={isMobile}
       onCancel={() => onDismissWithdrawModal()}
+      toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
 
@@ -49,11 +51,27 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       tokenBalance={tokenBalance}
       isMobile={isMobile}
       onCancel={() => onDismissDepositModal()}
+      toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
 
+  // useEffect(() => {
+  //   if (successModal) window.location.reload()
+  // }, [successModal])
+
   return (
     <div>
+      <CustomSuccessModal
+        modalOpen={successModal}
+        setModalOpen={() => {
+          setSuccessModal(false)
+        }}
+        title={'Transaction Success!'}
+        // subTitle={'View Transaction'}
+        subsubTitle={
+          'Your transaction is now being mined on the blockchain.'
+        }
+      />
       {!isMobile ? (
         <DesktopRowCard
           pool={pool}

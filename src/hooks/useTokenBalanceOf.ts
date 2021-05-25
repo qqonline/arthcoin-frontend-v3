@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import ERC20 from '../../src/basis-cash/ERC20';
-import useCore from '../../src/hooks/useCore';
-import config from '../../src/config';
+import ERC20 from '../basis-cash/ERC20';
+import useCore from './useCore';
+import config from '../config';
 
 const useTokenBalanceOf = (token: ERC20, address: string) => {
   const [balance, setBalance] = useState(BigNumber.from(0));

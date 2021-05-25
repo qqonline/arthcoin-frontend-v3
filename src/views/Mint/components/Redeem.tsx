@@ -1,32 +1,37 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CustomSnack } from '../../../components/SnackBar';
+import { BigNumber } from '@ethersproject/bignumber';
 import { Divider } from '@material-ui/core';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import { useWallet } from 'use-wallet';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components';
+import { parseUnits } from 'ethers/lib/utils';
+
+import { CustomSnack } from '../../../components/SnackBar';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import Button from '../../../components/Button';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomModal from '../../../components/CustomModal';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
-import Grid from '@material-ui/core/Grid';
 import plus from '../../../assets/svg/plus.svg';
 import PoolInfo from './PoolInfo';
-import styled from 'styled-components';
+import SlippageContainer from '../../../components/SlippageContainer';
 import TransparentInfoDiv from './InfoDiv';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useCore from '../../../hooks/useCore';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
-import { BigNumber } from '@ethersproject/bignumber';
-import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
-import SlippageContainer from '../../../components/SlippageContainer';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
-import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
+import useCore from '../../../hooks/useCore';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
+import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
+import useRedeemAlgorithmicARTH from '../../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
+import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -34,38 +39,41 @@ interface IProps {
 
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
+  
   const core = useCore();
   const { account, connect } = useWallet();
 
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthxValue, setArthxValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
-  // const [arthxValue, setArthxValue] = useState<string>('0');
-  // const [collateralValue, setCollateralValue] = useState<string>('0');
-  // const [arthValue, setArthValue] = useState<string>('0');
-
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
+  const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
+
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
     core.getDefaultCollateral(),
   );
-  const [successModal, setSuccessModal] = useState<boolean>(false);
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
-
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
   const redeemableBalances = useRedeemableBalances(selectedCollateral);
-
   const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
-
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-
   const redeemCR = useRedeemCollateralRatio();
   const colletralRatio = redeemCR.div(10000).toNumber();
-  console.log(redeemCR, colletralRatio)
-
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
+  const redeemFee = usePoolRedeemFees(selectedCollateral);
+  const stabilityFee = useStabilityFee();
+  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
+  const arthxToGMUPrice = useARTHXOraclePrice();
+  const collectRedeemption = useCollectRedemption(selectedCollateral);
+   const redeemARTH = useRedeemAlgorithmicARTH(
+    selectedCollateral,
+    Number(arthValue),
+    BigNumber.from(0),
+  );
 
   const isWalletConnected = !!account;
   const isMAHAApproving = mahaApproveStatus === ApprovalState.PENDING;
@@ -73,24 +81,35 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const isArthApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isArthApproving = arthApproveStatus === ApprovalState.PENDING;
+  
   const isArthMahaApproved = useMemo(() => isMAHAApproved && !!account && isArthApproved, [
     account,
     isMAHAApproved,
     isArthApproved,
   ]);
 
-  const redeemFee = usePoolRedeemFees(selectedCollateral);
-  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
-  const arthxToGMUPrice = useARTHXOraclePrice();
+  // const redeemARTH = useRedeemARTH(
+  //   selectedCollateral,
+  //   Number(arthValue),
+  //   Number(arthxValue),
+  //   Number(collateralValue),
+  // );
 
-  const redeemARTH = useRedeemARTH(
-    selectedCollateral,
-    Number(arthValue),
-    Number(arthxValue),
-    Number(collateralValue),
-  );
+  const tradingFee = useMemo(() => {
+    const valueOnWhichToChargeFee = redeemCR.eq(1e6) ? collateralValue : arthValue;
 
-  const collectRedeemption = useCollectRedemption(selectedCollateral);
+    return BigNumber
+      .from(parseUnits(`${valueOnWhichToChargeFee}`, tokenDecimals))
+      .mul(redeemFee)
+      .div(1e6)
+  }, [collateralValue, arthValue, redeemCR, tokenDecimals, redeemFee]);
+
+  const stabilityFeeAmount = useMemo(() => {
+   return BigNumber
+      .from(parseUnits(`${arthValue}`, 18))
+      .mul(stabilityFee)
+      .div(100);
+  }, [arthValue, stabilityFee]);
 
   const handleRedeem = () => {
     redeemARTH(() => {
@@ -98,186 +117,109 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setSuccessModal(true);
     });
   };
-
+  
   const onCollateralValueChange = async (val: string) => {
-    if (val === '') {
-      setCollateralValue('');
+    if (val === '' || collateralToGMUPrice.lte(0)) {
+      setCollateralValue('0');
       setArthxValue('0');
       setArthValue('0');
       return;
     }
 
-    let check = ValidateNumber(val);
+    let check: boolean = ValidateNumber(val);
     setCollateralValue(check ? val : String(Number(val)));
     if (!check) return;
-
-    const valueInNumber = Number(val);
+    const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    //ARTHX Calculation
-    var arthxShareValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0)) {
+    let arthxShareValueInCollatTerms: number = 0;
+    if (!arthxToGMUPrice.eq(0) && redeemCR.lt(1e6)) {
       arthxShareValueInCollatTerms =
         ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
 
       const finalArthxValue = collateralToGMUPrice
-        .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
+        .mul(BigNumber.from(
+          parseUnits(`${arthxShareValueInCollatTerms}`, tokenDecimals)
+        ))
         .div(arthxToGMUPrice);
-
       setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
     }
 
-    //ARTH Calculation
     const finalArthValue = collateralToGMUPrice
-      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
+      .mul(BigNumber.from(
+        parseUnits(`${arthxShareValueInCollatTerms + valueInNumber}`, tokenDecimals)
+      ))
       .div(1e6);
-
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '') {
+    if (val === '' || arthxToGMUPrice.lte(0)) {
       setCollateralValue('0');
-      setArthxValue('');
+      setArthxValue('0');
       setArthValue('0');
       return;
     }
 
-    let check = ValidateNumber(val);
+    let check: boolean = ValidateNumber(val);
     setArthxValue(check ? val : String(Number(val)));
     if (!check) return;
-
-    const valueInNumber = Number(val);
+    const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    //Colletral Calculation
-    var colletralValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0)) {
-      colletralValueInCollatTerms =
+    let colletralValueInARTHXTerms: number = 0;
+    if (!collateralToGMUPrice.eq(0) && redeemCR.gt(0)) {
+      colletralValueInARTHXTerms =
         ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
 
-      const finalColletralValue = collateralToGMUPrice
-        .mul(Math.floor(colletralValueInCollatTerms * 1e6))
-        .div(arthxToGMUPrice);
-
+      const finalColletralValue = arthxToGMUPrice
+        .mul(BigNumber.from(
+          parseUnits(`${colletralValueInARTHXTerms}`, tokenDecimals)
+        ))
+        .div(collateralToGMUPrice);
       setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
     }
-
-    //ARTH Calculation
-    const finalArthValue = collateralToGMUPrice
-      .mul(Math.floor((colletralValueInCollatTerms + valueInNumber) * 1e6))
+    
+    const finalArthValue = arthxToGMUPrice
+      .mul(BigNumber.from(
+        parseUnits(`${colletralValueInARTHXTerms + valueInNumber}`, tokenDecimals)
+      ))
       .div(1e6);
-
     setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-
-    /*const arthxGMUValue = BigNumber.from(valueInNumber * 1e6)
-      .mul(1e6)
-      .div(arthxToGMUPrice);
-    const arthxGMUValueInNumber = arthxGMUValue.toNumber();
-
-    const collateralGMUValue =
-      ((100 * arthxGMUValueInNumber) / (100 - colletralRatio)) * (colletralRatio / 100);
-
-    const finalCollateralValue = BigNumber.from(1e6)
-      .mul(Math.floor(collateralGMUValue * 1e6))
-      .div(collateralToGMUPrice);
-
-    const finalArthValue = arthxGMUValue.add(
-      finalCollateralValue.mul(collateralToGMUPrice).div(1e6),
-    );
-    // .div(arthxToGMUPrice);
-
-    setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));*/
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '') {
+    if (val === '' || collateralToGMUPrice.lte(0) || arthxToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthxValue('0');
-      setArthValue('');
+      setArthValue('0');
       return;
     }
 
-    let check = ValidateNumber(val);
+    let check: boolean = ValidateNumber(val);
     setArthValue(check ? val : String(Number(val)));
     if (!check) return;
-
-    const valueInNumber = Number(val);
+    const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    //Calc Colletaral
-    if (!collateralToGMUPrice.eq(0)) {
+    if (redeemCR.gt(0)) {
       const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
-      const finalCollateralValue = BigNumber.from(collateralValueInCollatTerms * 1e6)
+      const finalCollateralValue = BigNumber
+        .from(parseUnits(`${collateralValueInCollatTerms}`, tokenDecimals))
         .mul(1e6)
         .div(collateralToGMUPrice);
       setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
     }
 
-    //Calc ARTHX
-    if (!arthxToGMUPrice.eq(0)) {
+    if (redeemCR.lt(1e6)) {
       const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
-      const finalarthxShareValue = BigNumber.from(arthsShareInCollatTerms * 1e6)
+      const finalarthxShareValue = BigNumber
+        .from(parseUnits(`${arthsShareInCollatTerms}`, tokenDecimals))
         .mul(1e6)
         .div(arthxToGMUPrice);
       setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
     }
   };
-  /*const onARTHXValueChange = async (val: string) => {
-    if (val === '') setArthValue('0');
-
-    setArthxValue(val);
-    const valueInNumber = Number(val);
-    if (valueInNumber) {
-      let colletralTemp =
-        (await ((100 * valueInNumber) / (100 - colletralRatio))) * (colletralRatio / 100);
-      setCollateralValue(colletralTemp.toString());
-      setArthValue(String(colletralTemp + valueInNumber));
-    }
-  };
-
-  const onCollateralValueChange = async (val: string) => {
-    if (val === '') {
-      setArthxValue('0');
-      setArthValue('0');
-    }
-    setCollateralValue(val);
-    const valueInNumber = Number(val);
-    if (!valueInNumber || arthxToGMUPrice.eq(0)) return;
-
-    const arthxShareValueInCollatTerms =
-      ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
-
-    const finalArthxValue = collateralToGMUPrice
-      .mul(Math.floor(arthxShareValueInCollatTerms * 1e6))
-      .div(arthxToGMUPrice);
-
-    const finalArthValue = collateralToGMUPrice
-      .mul(Math.floor((arthxShareValueInCollatTerms + valueInNumber) * 1e6))
-      .div(1e6);
-
-    setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-  };
-
-  const onARTHValueChange = async (val: string) => {
-    if (val === '') {
-      setArthxValue('0');
-      setCollateralValue('0');
-    }
-    setArthValue(val);
-    const valueInNumber = Number(val);
-    if (valueInNumber) {
-      setCollateralValue(String(valueInNumber * (colletralRatio / 100)));
-      setArthxValue(String(valueInNumber * ((100 - colletralRatio) / 100)));
-    }
-  };*/
-
-  const tradingFee = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(collateralValue) * 1e6));
-    return mintingAmount.mul(redeemFee).div(1e6);
-  }, [collateralValue, redeemFee]);
 
   return (
     <>
@@ -316,7 +258,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               background: 'rgba(255, 255, 255, 0.08)',
               margin: '15px 0px',
             }}
-            // variant={'middle'}
+          // variant={'middle'}
           />
 
           <TransparentInfoDiv
@@ -405,7 +347,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <SlippageContainer
                 defaultRate={selectedRate}
                 onRateChange={(data) => {
-                  console.log('rates', data);
                   setSelectedRate(data);
                 }}
               />
@@ -443,7 +384,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 }}
                 SymbolText={selectedCollateral}
                 tagText={'MAX'}
-                DisableMsg={colletralRatio === 0 ? 'Currently Redeem Collateral ratio is 0%' : ''}
+                DisableMsg={
+                  colletralRatio === 0 ? 'Currently Redeem Collateral ratio is 0%' : ''
+                }
               />
               <PlusMinusArrow>
                 <img src={plus} alt="plus" />
@@ -479,7 +422,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     </TextWithIcon>
                   </div>
                   <OneLineInput>
-                    <BeforeChip>0.05</BeforeChip>
+                    <BeforeChip>{getDisplayBalance(stabilityFeeAmount, 2, 2)}</BeforeChip>
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
@@ -499,12 +442,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isArthApproved
                                 ? `Approved ARTH`
                                 : !isArthApproving
-                                ? `Approve ARTH`
-                                : 'Approving...'
+                                  ? `Approve ARTH`
+                                  : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isArthApproving || isArthApproved}
+                            disabled={isArthApproved || !Number(arthValue)}
                             onClick={approveCollat}
+                            loading={isArthApproving}
                           />
                           <div style={{ padding: 5 }} />
                           <Button
@@ -512,12 +456,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                               isMAHAApproved
                                 ? 'Approved MAHA'
                                 : !isMAHAApproving
-                                ? `Approve MAHA`
-                                : 'Approving...'
+                                  ? `Approve MAHA`
+                                  : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isMAHAApproving || isMAHAApproved}
+                            disabled={isMAHAApproved || stabilityFeeAmount.lte(0)}
                             onClick={approveARTHX}
+                            loading={isMAHAApproving}
                           />
                         </ApproveButtonContainer>
                         <br />
@@ -536,7 +481,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         text={'Redeem'}
                         size={'lg'}
                         variant={'default'}
-                        disabled={!isArthMahaApproved}
+                        disabled={
+                          !isArthMahaApproved || 
+                          !(Number(arthxValue) + Number(collateralValue)) ||
+                          !(Number(arthValue))
+                        }
                         onClick={() => setOpenModal(1)}
                       />
                     )}
@@ -559,7 +508,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
         buttonText={'Checkout Staking Pools'}
         // buttonType={'default'}
-        buttonHref={'/farming'}
+        buttonHref={'/#/farming'}
       />
     </>
   );

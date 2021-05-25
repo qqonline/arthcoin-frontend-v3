@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
 import BasisCashProvider from './contexts/BasisCashProvider';
 import ModalsProvider from './contexts/Modals';
 import Farming from './views/Farming';
@@ -112,7 +113,7 @@ const AppContent: React.FC = ({ children }) => {
   const core = useCore();
 
   // if (!!!account) return <UnlockWallet />;
-  if (!core) return <div>Loading</div>;
+  if (!core) return <div />;
 
   return (
     <ModalsProvider>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Container from '../../components/Container';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { useParams } from 'react-router-dom';
+
+import Container from '../../components/Container';
 import MintTabContent from './components/Mint';
 import RedeemTabContent from './components/Redeem';
-import { useParams } from 'react-router-dom';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   // @ts-ignore

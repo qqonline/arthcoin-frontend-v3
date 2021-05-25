@@ -20,7 +20,7 @@ interface props {
 const AccountModal: React.FC<props> = (props) => {
   const core = useCore();
 
-  const { account } = useWallet();
+  const { account, reset } = useWallet();
 
   const [ConfirmationModal, setConfirmationModal] = useState<boolean>(false);
 
@@ -56,7 +56,10 @@ const AccountModal: React.FC<props> = (props) => {
               <Button
                 text={'Disconnect'}
                 size={'lg'}
-                onClick={props.onClose}
+                onClick={() => {
+                  reset()
+                  props.onClose()
+                }}
               />
             </Grid>
           </Grid>

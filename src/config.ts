@@ -5,7 +5,7 @@ import { StakingContract, TradingPairs } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
-    networkName: 'Ganace',
+    networkName: 'Ganache',
     chainId: 1337,
     etherscanUrl: 'https://etherscan.io',
     defaultProvider: 'http://127.0.0.1:8545',
@@ -173,4 +173,4 @@ export const tradingPairs: TradingPairs[] = [
 ];
 
 
-export default configurations['staging'];
+export default configurations['development'];

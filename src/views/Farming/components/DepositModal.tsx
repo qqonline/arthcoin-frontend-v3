@@ -1,44 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import { BigNumber } from '@ethersproject/bignumber';
+
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
 import { StakingContract } from '../../../basis-cash';
-import { BigNumber } from '@ethersproject/bignumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCore from '../../../hooks/useCore';
 import DynamicSlider from '../../../components/DynamicSlider';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
   onCancel: () => void;
   onDeposit?: () => void;
   isMobile: boolean;
-
+  toggleSuccessModal?: () => void;
   tokenBalance: BigNumber;
   pool: StakingContract;
 }
 
 export default (props: IProps) => {
   const [val, setValue] = useState<string>('0');
-  const symbol = props.pool.depositTokenSymbols.join('-');
-  const core = useCore();
   const [sliderValue, setSliderValue] = useState<number>(0);
-  const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
+  
+  const core = useCore();
   const contract = core.contracts[props.pool.contract];
-
+  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
+  const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
   const [approveStatus, approve] = useApprove(
     core.tokens[props.pool.depositToken],
     contract.address,
   );
 
+  const symbol = props.pool.depositTokenSymbols.join('-');
   const handleStaking = () => {
     stake(() => {
-      window.location.reload()
+      props?.toggleSuccessModal();
+      props.onCancel()
     });
   }
+
+  const isApproved = approveStatus === ApprovalState.APPROVED;
+  const isApproving = approveStatus === ApprovalState.PENDING;
 
   return (
     <CustomModal
@@ -53,7 +61,7 @@ export default (props: IProps) => {
       <div>
         <CustomInputContainer
           ILabelValue={`How much ${symbol} would you like to supply?`}
-          IBalanceValue={getDisplayBalance(props.tokenBalance)}
+          IBalanceValue={getDisplayBalance(props.tokenBalance, tokenDecimals, 3)}
           showBalance={false}
           ILabelInfoValue={''}
           DefaultValue={String(val)}
@@ -61,8 +69,7 @@ export default (props: IProps) => {
           hasDropDown={false}
           SymbolText={symbol}
           setText={(t) => {
-            console.log(t);
-            setValue(String(t));
+            setValue(ValidateNumber(t) ? t : '0');
           }}
           inputMode={'decimal'}
           tagText={'MAX'}
@@ -73,7 +80,7 @@ export default (props: IProps) => {
         <OneLine>
           <div style={{ flex: 1 }}></div>
           <OneLine>
-            <BeforeChip>Balance: {getDisplayBalance(props.tokenBalance)}</BeforeChip>
+            <BeforeChip>Balance: {Number(getDisplayBalance(props.tokenBalance, tokenDecimals, 3)).toString()}</BeforeChip>
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
@@ -95,15 +102,27 @@ export default (props: IProps) => {
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
-            {approveStatus !== ApprovalState.APPROVED ? (
+            {!isApproved ? (
               <Button
-                disabled={approveStatus === ApprovalState.PENDING}
-                text={approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve'}
+                loading={isApproving}
+                text={isApproving ? 'Approving' : 'Approve'}
                 size={'lg'}
                 onClick={approve}
+                disabled={
+                  isApproved ||
+                  !Number(val)
+                }
               />
             ) : (
-              <Button text={'Deposit'} size={'lg'} onClick={handleStaking} />
+              <Button 
+                disabled={
+                  !isApproved ||
+                  !Number(val)
+                }
+                text={'Deposit'} 
+                size={'lg'} 
+                onClick={handleStaking} 
+              />
             )}
           </Grid>
         </Grid>

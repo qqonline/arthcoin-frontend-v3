@@ -9,6 +9,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import CustomModal from '../../../components/CustomModal';
 import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   mode?: ModeProps;
@@ -16,6 +17,7 @@ interface IProps {
   pool: StakingContract;
   onCancel: () => void;
   onWithdraw?: () => void;
+  toggleSuccessModal?: () => void;
   isMobile: boolean;
 }
 
@@ -50,7 +52,7 @@ export default (props: IProps) => {
         SymbolText={symbol}
         setText={(t) => {
           console.log(t);
-          setValue(String(t));
+          setValue(ValidateNumber(t) ? t : '0');
         }}
         inputMode={'decimal'}
         tagText={'MAX'}
@@ -75,7 +77,7 @@ export default (props: IProps) => {
           <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button text={'Withdraw'} size={'lg'} onClick={withdraw} />
+          <Button text={'Withdraw'} size={'lg'} onClick={() => withdraw().then(props?.toggleSuccessModal).finally(props.onCancel)} />
         </Grid>
       </Grid>
     </CustomModal>
