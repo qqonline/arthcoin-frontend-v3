@@ -146,11 +146,7 @@ export default (props: IProps) => {
                 end={initEarnedARTHX}
                 delay={0}
                 decimals={4}
-                duration={
-                  initEarnedARTHX <= 0
-                    ?  Math.floor(config.refreshInterval / 75)
-                    : Math.floor(config.refreshInterval / 50)
-                }
+                duration={Math.floor(config.refreshInterval / 20)}
                 preserveValue={true}
                 onUpdate={() => console.log()}
               />
@@ -162,11 +158,7 @@ export default (props: IProps) => {
                 end={initEarnedMAHA}
                 delay={0}
                 decimals={4}
-                duration={
-                  initEarnedMAHA <= 0
-                    ?  Math.floor(config.refreshInterval / 75)
-                    : Math.floor(config.refreshInterval / 50)
-                }
+                duration={Math.floor(config.refreshInterval / 20)}
                 preserveValue={true}
                 onUpdate={() => console.log()}
               />
