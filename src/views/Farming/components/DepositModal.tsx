@@ -31,13 +31,15 @@ export default (props: IProps) => {
   const core = useCore();
   const contract = core.contracts[props.pool.contract];
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
-  const stake = useStakingDeposit(props.pool.contract, Number(val), props.pool.depositToken);
   const [approveStatus, approve] = useApprove(
     core.tokens[props.pool.depositToken],
     contract.address,
   );
-
-  const symbol = props.pool.depositTokenSymbols.join('-');
+  const stake = useStakingDeposit(
+    props.pool.contract, 
+    Number(val), 
+    props.pool.depositToken
+  );
   const handleStaking = () => {
     stake(() => {
       props?.toggleSuccessModal();
@@ -45,6 +47,7 @@ export default (props: IProps) => {
     });
   }
 
+  const symbol = props.pool.depositTokenSymbols.join('-');
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
 

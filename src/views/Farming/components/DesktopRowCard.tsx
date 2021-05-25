@@ -59,12 +59,12 @@ export default (props: IProps) => {
     props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
     18,
     6,
-  ))
+  ));
   const initEarnedMAHA = Number(getDisplayBalance(
     props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
     18,
     6,
-  ))
+  ));
 
   const rate = 5;
   const addedFactor = (basevalue: number) => basevalue * rate * 3600;
