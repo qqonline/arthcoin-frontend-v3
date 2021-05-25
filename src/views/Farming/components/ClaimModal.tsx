@@ -1,18 +1,54 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
+import { BigNumber } from '@ethersproject/bignumber';
 
-import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
+import { StakingContract } from '../../../basis-cash';
+import TransparentInfoDiv from '../../Genesis/components/InfoDiv';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
 
 interface IProps {
+  toggleSuccessModal?: () => void;
+  pool: StakingContract;
   onCancel: () => void;
   onClaim?: () => void;
   isMobile: boolean;
+  claimableBalance: BigNumber,
+  rates: {
+    maha: BigNumber;
+    arthx: BigNumber;
+  };
 }
 
 export default (props: IProps) => {
+  const claim = useStakingClaim(props.pool.contract);
+  const handleClaim = () => {
+    claim(() => {
+      props?.toggleSuccessModal();
+      props.onCancel()
+    });
+  }
+
+  const pow = BigNumber.from(10).pow(18);
+  const initEarnedARTHX = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
+
+  const initEarnedMAHA = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
+  
+
   return (
     <CustomModal
       closeButton
@@ -21,89 +57,51 @@ export default (props: IProps) => {
       modalTitleStyle={{}}
       modalContainerStyle={{}}
       modalBodyStyle={{}}
-      title={`Stake Your Tokens`}
+      title={`Claim Your Rewards`}
     >
-      <div
-        style={{
-          background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          padding: '24px 32px',
-        }}
-      >
-        <CustomInputContainer
-          ILabelValue={'How much MAHA  would you like to claim?'}
-          IBalanceValue={''} //just pass the balance here
-          showBalance={false}
-          ILabelInfoValue={''}
-          DefaultValue={'0.00'}
-          LogoSymbol={'MAHA'}
-          hasDropDown={false}
-          SymbolText={'MAHA'}
-          setText={(val) => {}}
-          inputMode={'decimal'}
-          tagText={'MAX'}
-          dontShowBackgroundContainer={true}
-          multiIcons={false}
+      <>
+        <TransparentInfoDiv
+          labelData={`You will receive`}
+          rightLabelUnit={'ARTHX'}
+          rightLabelValue={Number(initEarnedARTHX).toLocaleString()}
         />
-        <OneLine>
-          <div style={{ flex: 1 }}></div>
-          <OneLine>
-            <BeforeChip>Earned Amount: 1000</BeforeChip>
-            <TagChips>MAHA</TagChips>
-          </OneLine>
-        </OneLine>
+
+        <TransparentInfoDiv
+          labelData={`You will receive`}
+          rightLabelUnit={'MAHA'}
+          rightLabelValue={Number(initEarnedMAHA).toLocaleString()}
+        />
+
         <Grid
           container
           spacing={2}
-          direction={props.isMobile ? 'column-reverse' : 'row'}
-          style={{ marginTop: '32px' }}
+          style={{
+            marginTop: '32px',
+            display: 'flex',
+            flexDirection: props.isMobile ? 'column-reverse' : 'row',
+          }}
         >
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               variant={'transparent'}
               text="Cancel"
               size={'lg'}
-              onClick={() => {
-                props.onCancel();
-              }}
+              onClick={props.onCancel}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Button text={'Clain'} size={'lg'} onClick={props.onClaim} />
+            <Button
+              disabled={
+                !Number(initEarnedARTHX) || 
+                !Number(initEarnedMAHA)
+              }
+              text={'Claim'}
+              size={'lg'}
+              onClick={handleClaim}
+            />
           </Grid>
         </Grid>
-      </div>
+      </>
     </CustomModal>
   );
 };
-
-const OneLine = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
-  margin: 5px 0;
-`;
-
-const BeforeChip = styled.span`
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.64);
-  margin-right: 5px;
-`;
-
-const TagChips = styled.div`
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 2px 8px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.64);
-`;

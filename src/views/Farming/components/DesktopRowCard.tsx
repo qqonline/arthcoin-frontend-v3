@@ -172,9 +172,13 @@ export default (props: IProps) => {
               {' '}
               MAHA
             </TableMainTextStyle>
-            <WithdrawClaimButton onClick={props.onClaimClick}>
-              Claim Rewards
-            </WithdrawClaimButton>
+            { 
+              (Number(initEarnedARTHX) ||  Number(initEarnedMAHA))
+              && 
+              <WithdrawClaimButton onClick={props.onClaimClick}>
+                Claim Rewards
+              </WithdrawClaimButton>
+            }
           </div>
         </DepositInfoContainer>
       )}
