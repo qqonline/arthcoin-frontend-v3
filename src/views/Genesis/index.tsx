@@ -197,11 +197,15 @@ const Genesis = (props: WithSnackbarProps) => {
     inAssetPrice: BigNumber,
     outAssetprice: BigNumber, 
     amount: number | string, 
-    inAssetdecimals: number) => (
+    inAssetDecimals: number,
+    outAssetDecimals: number) => (
       inAssetPrice
-      .mul(
-        BigNumber.from(parseUnits(`${amount}`, inAssetdecimals)
+      .mul(BigNumber.from(
+        parseUnits(`${amount}`, inAssetDecimals)
       ))
+      .mul(
+        BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals)
+      )
       .div(outAssetprice)
   );
   
@@ -213,14 +217,16 @@ const Genesis = (props: WithSnackbarProps) => {
         collateralGMUPrice,
         arthxPrice, 
         collateralValue, 
-        tokenDecimals
+        tokenDecimals,
+        18
       );
 
     return calcExpectReceiveAmount(
       BigNumber.from(1e6),
       arthxPrice, 
       arthValue, 
-      tokenDecimals
+      18,
+      18
     );
   }, [arthValue, collateralGMUPrice, arthxPrice, collateralValue, tokenDecimals, type]);
 
@@ -315,7 +321,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={getDisplayBalance(totalArthxRecieve, 6)}
+            rightLabelValue={getDisplayBalance(totalArthxRecieve, 18, 3)}
           />
 
           <Grid
@@ -520,7 +526,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {getDisplayBalance(arthxRecieve, 6)}
+                          {getDisplayBalance(arthxRecieve, 18, 3)}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
@@ -534,7 +540,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {getDisplayBalance(arthxDiscount, 6)}
+                          {getDisplayBalance(arthxDiscount, 18, 3)}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
