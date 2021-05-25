@@ -173,7 +173,7 @@ export default (props: IProps) => {
               MAHA
             </TableMainTextStyle>
             { 
-              (Number(initEarnedARTHX) ||  Number(initEarnedMAHA))
+              !!(Number(initEarnedARTHX) ||  Number(initEarnedMAHA))
               && 
               <WithdrawClaimButton onClick={props.onClaimClick}>
                 Claim Rewards
