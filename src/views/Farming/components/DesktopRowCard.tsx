@@ -138,7 +138,7 @@ export default (props: IProps) => {
           <div style={{ display: 'flex' }}>
             Your Locked state:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
-              {getDisplayBalance(props.stakedBalance)}
+              {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
             </TableMainTextStyle>
             <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
           </div>
