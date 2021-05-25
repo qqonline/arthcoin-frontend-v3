@@ -9,11 +9,10 @@ import useTokenDecimals from '../../useTokenDecimals';
 export default function (collateralToken: string, collateralAmount: BigNumber, arthxOutMin: BigNumber) {
   const addTransaction = useTransactionAdder();
   const core = useCore();
+  const decimals = useTokenDecimals(collateralToken)
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
-    const decimals = useTokenDecimals(collateralToken)
-    
     const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMin)
     
     addTransaction(response, {
@@ -21,7 +20,7 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
     });
 
     if (callback) callback()
-  }, [core, collateralToken, collateralAmount, arthxOutMin, addTransaction]);
+  }, [core, collateralToken, decimals, collateralAmount, arthxOutMin, addTransaction]);
 
   // TODO: do something about the apprve
 
