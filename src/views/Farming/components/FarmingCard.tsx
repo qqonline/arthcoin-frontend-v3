@@ -55,9 +55,9 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
     />,
   );
 
-  useEffect(() => {
-    if (successModal) window.location.reload()
-  }, [successModal])
+  // useEffect(() => {
+  //   if (successModal) window.location.reload()
+  // }, [successModal])
 
   return (
     <div>

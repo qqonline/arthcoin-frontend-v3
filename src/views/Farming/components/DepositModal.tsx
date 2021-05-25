@@ -43,9 +43,9 @@ export default (props: IProps) => {
     });
   }
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (approveStatus === ApprovalState.APPROVED) window.location.reload()
-  }, [approveStatus])*/
+  }, [approveStatus])
 
   return (
     <CustomModal
