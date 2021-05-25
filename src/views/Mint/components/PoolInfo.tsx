@@ -37,7 +37,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>ARTHX GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${getDisplayBalance(arthxPrice, 6)}</InputLabelSpanRight>
+            <InputLabelSpanRight>${Number(getDisplayBalance(arthxPrice, 6)).toLocaleString()}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -45,7 +45,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${getDisplayBalance(collatearlPrice, 6)}</InputLabelSpanRight>
+            <InputLabelSpanRight>${Number(getDisplayBalance(collatearlPrice, 6)).toLocaleString()}</InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>

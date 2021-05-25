@@ -81,20 +81,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const isArthApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isArthApproving = arthApproveStatus === ApprovalState.PENDING;
-  
-  const isArthMahaApproved = useMemo(() => isMAHAApproved && !!account && isArthApproved, [
-    account,
-    isMAHAApproved,
-    isArthApproved,
-  ]);
-
-  // const redeemARTH = useRedeemARTH(
-  //   selectedCollateral,
-  //   Number(arthValue),
-  //   Number(arthxValue),
-  //   Number(collateralValue),
-  // );
-
+    
   const tradingFee = useMemo(() => {
     const valueOnWhichToChargeFee = redeemCR.eq(1e6) ? collateralValue : arthValue;
 
@@ -117,6 +104,26 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       setSuccessModal(true);
     });
   };
+
+  const isArthMahaApproved = useMemo(() => {
+   if (stabilityFeeAmount.lte(0) && Number(arthValue)) return !!account && isArthApproved;
+   if (stabilityFeeAmount.gt(0) && !Number(arthValue)) return !!account && isArthApproved;
+
+   return isArthApproved && isMAHAApproved && !!account;
+  }, [
+    account,
+    isMAHAApproved,
+    isArthApproved,
+    stabilityFeeAmount,
+    arthValue
+  ]);
+
+  // const redeemARTH = useRedeemARTH(
+  //   selectedCollateral,
+  //   Number(arthValue),
+  //   Number(arthxValue),
+  //   Number(collateralValue),
+  // );
   
   const onCollateralValueChange = async (val: string) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
@@ -236,14 +243,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`Your redeem amount`}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={arthValue.toString()}
+            rightLabelValue={Number(arthValue).toLocaleString()}
           />
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={getDisplayBalance(tradingFee, 6)}
+            rightLabelValue={Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}
           />
 
           {/* <TransparentInfoDiv
@@ -265,14 +272,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             labelData={`You will receive collateral`}
             // labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={collateralValue}
+            rightLabelValue={Number(collateralValue).toLocaleString()}
           />
 
           <TransparentInfoDiv
             labelData={`You will receive share`}
             // labelToolTipData={'testing'}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={arthxValue}
+            rightLabelValue={Number(arthxValue).toLocaleString()}
           />
 
           <div
@@ -307,6 +314,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             </div>
             <div style={{ width: '100%' }}>
               <Button
+                disabled={
+                  !isArthMahaApproved || 
+                  !(Number(arthxValue) + Number(collateralValue)) ||
+                  !(Number(arthValue))
+                }
                 text={'Redeem ARTH'}
                 // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
@@ -409,7 +421,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <TextWithIcon>Trading Fee</TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
-                    <BeforeChip>{getDisplayBalance(tradingFee, 6)}</BeforeChip>
+                    <BeforeChip>{Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}</BeforeChip>
                     <TagChips>{selectedCollateral}</TagChips>
                   </OneLineInputwomargin>
                 </OneLineInputwomargin>
@@ -422,7 +434,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     </TextWithIcon>
                   </div>
                   <OneLineInput>
-                    <BeforeChip>{getDisplayBalance(stabilityFeeAmount, 2, 2)}</BeforeChip>
+                    <BeforeChip>{Number(getDisplayBalance(stabilityFeeAmount, 2, 2)).toLocaleString()}</BeforeChip>
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>
