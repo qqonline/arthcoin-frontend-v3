@@ -271,7 +271,7 @@ const Genesis = (props: WithSnackbarProps) => {
     },
     {
       label: 'Discounted ARTHX Price',
-      value: `${getDisplayBalance(arthxPrice, 6, 4)}$`,
+      value: `${Number(getDisplayBalance(arthxPrice, 6, 4)).toLocaleString()}$`,
     },
   ];
 
@@ -321,7 +321,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={getDisplayBalance(totalArthxRecieve, 18, 3)}
+            rightLabelValue={Number(getDisplayBalance(totalArthxRecieve, 18, 3)).toLocaleString()}
           />
 
           <Grid
@@ -479,7 +479,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
+                    IBalanceValue={Number(getDisplayBalance(collateralBalnace, 6)).toLocaleString()}
                     ILabelInfoValue={''}
                     // value={mintColl.toString()}
                     DefaultValue={collateralValue.toString()}
@@ -497,7 +497,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
-                    IBalanceValue={getDisplayBalance(arthBalance)}
+                    IBalanceValue={Number(getDisplayBalance(arthBalance)).toLocaleString()}
                     ILabelInfoValue={''}
                     // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
@@ -526,7 +526,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {getDisplayBalance(arthxRecieve, 18, 3)}
+                          {Number(getDisplayBalance(arthxRecieve, 18, 3)).toLocaleString()}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
@@ -540,7 +540,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {getDisplayBalance(arthxDiscount, 18, 3)}
+                          {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>

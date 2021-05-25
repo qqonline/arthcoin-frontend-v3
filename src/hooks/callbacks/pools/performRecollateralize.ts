@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 import useCore from '../../useCore';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-
+import useTokenDecimals from '../../useTokenDecimals';
 
 export default function (collateralToken: string, collateralAmount: BigNumber, arthxOutMin: BigNumber) {
   const addTransaction = useTransactionAdder();
@@ -12,7 +12,7 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
-    const decimals = 6;  // TODO: implement a decimal function returning deciamls of token.
+    const decimals = useTokenDecimals(collateralToken)
     
     const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMin)
     
