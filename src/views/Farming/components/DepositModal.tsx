@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { BigNumber } from '@ethersproject/bignumber';
@@ -42,6 +42,10 @@ export default (props: IProps) => {
       props.onCancel()
     });
   }
+
+  /*useEffect(() => {
+    if (approveStatus === ApprovalState.APPROVED) window.location.reload()
+  }, [approveStatus])*/
 
   return (
     <CustomModal
@@ -100,10 +104,11 @@ export default (props: IProps) => {
           <Grid item lg={6} md={6} sm={12} xs={12}>
             {approveStatus !== ApprovalState.APPROVED ? (
               <Button
-                disabled={approveStatus === ApprovalState.PENDING}
+                loading={approveStatus === ApprovalState.PENDING}
                 text={approveStatus === ApprovalState.PENDING ? 'Approving' : 'Approve'}
                 size={'lg'}
                 onClick={approve}
+                disabled={Number(val) && Number(val) <= 0}
               />
             ) : (
               <Button text={'Deposit'} size={'lg'} onClick={handleStaking} />
