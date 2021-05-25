@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import TokenSymbol from '../../../components/TokenSymbol';
 import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
 import Countdown from 'react-countdown';
+
+import TokenSymbol from '../../../components/TokenSymbol';
+import Button from '../../../components/Button';
 import farmingSVG from '../../../assets/svg/farming.svg';
 
 type props = {

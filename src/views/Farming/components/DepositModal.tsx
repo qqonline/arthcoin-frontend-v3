@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import { BigNumber } from '@ethersproject/bignumber';
+
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
 import { StakingContract } from '../../../basis-cash';
-import { BigNumber } from '@ethersproject/bignumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
