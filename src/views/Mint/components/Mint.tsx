@@ -319,7 +319,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={!isCollatApproved || !Number(collateralValue)}
+                              disabled={isCollatApproved || !Number(collateralValue)}
                               onClick={approveCollat}
                               loading={isCollatApproving}
                             />
@@ -333,7 +333,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={!isARTHXApproved || !Number(arthxValue)}
+                              disabled={isARTHXApproved || !Number(arthxValue)}
                               onClick={approveARTHX}
                               loading={isARTHXApproving}
                             />

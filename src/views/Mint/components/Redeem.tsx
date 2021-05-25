@@ -446,7 +446,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isArthApproved || !!Number(arthValue)}
+                            disabled={isArthApproved || !Number(arthValue)}
                             onClick={approveCollat}
                             loading={isArthApproving}
                           />
@@ -460,7 +460,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                             }
                             size={'lg'}
-                            disabled={isMAHAApproved || stabilityFeeAmount.gt(0)}
+                            disabled={isMAHAApproved || stabilityFeeAmount.lte(0)}
                             onClick={approveARTHX}
                             loading={isMAHAApproving}
                           />
