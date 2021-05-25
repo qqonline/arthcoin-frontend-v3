@@ -416,7 +416,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
                 disabled={
                   !Number(arthValue) || 
                   !isCollatArthxApproved ||
-                  !(Number(collateralValue) || Number(arthxValue))
+                  !(Number(collateralValue) + Number(arthxValue))
                 }
                 text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
                 // textStyles={{ color: '#F5F5F5' }}

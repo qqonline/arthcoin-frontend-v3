@@ -207,7 +207,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                         disabled={
                           isARTHXApproving ||
                           !Number(collateralAmount) || 
-                          !Number(receiveBonus) || 
                           !Number(receiveShare)
                         }
                         onClick={approve}
@@ -220,7 +219,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                     disabled={
                       !isARTHXApproved || 
                       !Number(collateralAmount) || 
-                      !Number(receiveBonus) || 
                       !Number(receiveShare)
                     }
                     size={'lg'}

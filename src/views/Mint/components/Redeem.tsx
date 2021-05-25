@@ -481,7 +481,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         text={'Redeem'}
                         size={'lg'}
                         variant={'default'}
-                        disabled={!isArthMahaApproved || !(Number(arthxValue) + Number(collateralValue))}
+                        disabled={
+                          !isArthMahaApproved || 
+                          !(Number(arthxValue) + Number(collateralValue)) ||
+                          !(Number(arthValue))
+                        }
                         onClick={() => setOpenModal(1)}
                       />
                     )}

@@ -348,7 +348,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                         disabled={
                           !isCollatArthxApproved ||
                           !Number(arthValue) ||
-                          !(Number(collateralValue) || Number(arthxValue))
+                          !(Number(collateralValue) + Number(arthxValue))
                         }
                         onClick={() => setOpenModal(1)}
                       />

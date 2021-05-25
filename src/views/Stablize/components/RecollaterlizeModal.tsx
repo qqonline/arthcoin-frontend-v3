@@ -1,14 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useMemo } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '../../../components/Button';
 import { Divider } from '@material-ui/core';
-import TransparentInfoDiv from './InfoDiv';
-import CustomModal from '../../../components/CustomModal';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { BigNumber } from '@ethersproject/bignumber';
+
+import useCore from '../../../hooks/useCore';
+import TransparentInfoDiv from './InfoDiv';
+import Button from '../../../components/Button';
+import CustomModal from '../../../components/CustomModal';
 import { CustomSnack } from '../../../components/SnackBar';
 import usePerformRecollateralize from '../../../hooks/callbacks/pools/performRecollateralize';
-import { BigNumber } from '@ethersproject/bignumber';
+import { parseUnits } from '@ethersproject/units';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 
 interface IProps {
   receiveBonus: number;
@@ -31,20 +35,29 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     toggleSuccessModal
   } = props;
 
-  const arthxAmountAfterFees = useMemo(() => {
-    const arthOutMin = receiveBonus + receiveShare;
+  useEffect(() => window.scrollTo(0, 0), []);
 
-    const mintingAmount = BigNumber.from(Math.floor(Number(arthOutMin))).mul(1e6);
-    return mintingAmount; // .mul(BigNumber.from(1e6).sub(mintingFee)).div(1e6);
-  }, [receiveBonus, receiveShare]);
+  const core = useCore();
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const [approveStatus] = useApprove(
+    core.tokens[selectedCollateral],
+    collateralPool.address,
+  );
+  
+  const arthxAmountAfterFees = useMemo(() => (
+    BigNumber.from(
+      parseUnits(`${receiveBonus + receiveShare}`, 18)
+    )
+  ), [receiveBonus, receiveShare]);
 
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
-    BigNumber.from(Math.floor(collateralAmount * 1e6)),
-    BigNumber.from(0),
+    BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
+    arthxAmountAfterFees,
   );
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  const isCollateralApproved = approveStatus === ApprovalState.APPROVED;
 
   return (
     <CustomModal
@@ -109,6 +122,11 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button
               text={'Recollateralize'}
+              disabled={
+                !isCollateralApproved || 
+                !Number(collateralAmount) ||
+                !Number(receiveShare)
+              }
               // textStyles={{ color: '#F5F5F5' }}
               size={'lg'}
               onClick={() => {
