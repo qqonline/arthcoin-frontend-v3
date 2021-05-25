@@ -20,14 +20,19 @@ interface IProps {
     maha: BigNumber;
     arthx: BigNumber;
   };
+  closeSuccessModal: () => void;
+  openSuccessModal: () => void;
 }
 
 export default (props: IProps) => {
   const claim = useStakingClaim(props.pool.contract);
   const handleClaim = () => {
     claim(() => {
-      props?.toggleSuccessModal();
-      props.onCancel()
+      props.onCancel();
+      props.openSuccessModal();
+      setTimeout(() => {
+        props.closeSuccessModal();
+      }, 5 * 1000)
     });
   }
 

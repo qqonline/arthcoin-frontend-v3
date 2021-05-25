@@ -21,6 +21,8 @@ interface IProps {
   isMobile: boolean;
   toggleSuccessModal?: () => void;
   tokenBalance: BigNumber;
+  closeSuccessModal: () => void;
+  openSuccessModal: () => void;
   pool: StakingContract;
 }
 
@@ -35,15 +37,20 @@ export default (props: IProps) => {
     core.tokens[props.pool.depositToken],
     contract.address,
   );
+
   const stake = useStakingDeposit(
     props.pool.contract, 
     Number(val), 
     props.pool.depositToken
   );
+
   const handleStaking = () => {
     stake(() => {
-      props?.toggleSuccessModal();
-      props.onCancel()
+      props.onCancel();
+      props.openSuccessModal();
+      setTimeout(() => {
+        props.closeSuccessModal();
+      }, 5 * 1000)
     });
   }
 
