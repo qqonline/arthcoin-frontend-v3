@@ -14,7 +14,7 @@ import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
-import useTokenDecimals from '../../hooks/useTokenDecimals';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 type IProps = {
   pool: StakingContract;
