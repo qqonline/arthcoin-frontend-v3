@@ -15,6 +15,12 @@ export default (stakingContract: string) => {
     fetchValue().catch((err) =>
       console.error(`Failed to fetch staking balance: ${err}`),
     );
+
+    const interval = setInterval(() => (
+      fetchValue().catch((err) => console.error(`Failed to fetch staking balance: ${err}`))
+    ), 30 * 1000);
+
+    return () => clearInterval(interval);
   }, [fetchValue]);
 
   return value;
