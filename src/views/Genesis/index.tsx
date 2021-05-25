@@ -479,7 +479,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={Number(getDisplayBalance(collateralBalnace, 6)).toLocaleString()}
+                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
                     ILabelInfoValue={''}
                     // value={mintColl.toString()}
                     DefaultValue={collateralValue.toString()}
@@ -497,7 +497,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
-                    IBalanceValue={Number(getDisplayBalance(arthBalance)).toLocaleString()}
+                    IBalanceValue={getDisplayBalance(arthBalance)}
                     ILabelInfoValue={''}
                     // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
