@@ -120,7 +120,12 @@ export default (props: IProps) => {
           {!isWalletConnected ? (
             <Button text={'Connect Wallet'} size={'lg'} onClick={() => connect('injected')} />
           ) : (
-            <Button text="Deposit" size={'sm'} onClick={props.onDepositClick} />
+            <Button
+              disabled={tokenBalance.lte(0)}
+              text="Deposit" 
+              size={'sm'} 
+              onClick={props.onDepositClick} 
+            />
           )}
         </Grid>
       </Grid>

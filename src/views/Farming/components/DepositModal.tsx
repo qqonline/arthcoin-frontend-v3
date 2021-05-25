@@ -83,7 +83,7 @@ export default (props: IProps) => {
         <OneLine>
           <div style={{ flex: 1 }}></div>
           <OneLine>
-            <BeforeChip>Balance: {Number(getDisplayBalance(props.tokenBalance, tokenDecimals, 3)).toString()}</BeforeChip>
+            <BeforeChip>Balance: {Number(getDisplayBalance(props.tokenBalance, tokenDecimals, 3)).toLocaleString()}</BeforeChip>
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
