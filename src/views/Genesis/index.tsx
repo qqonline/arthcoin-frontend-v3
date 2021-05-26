@@ -355,7 +355,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 disabled={
-                  percentageCompleted.gt(BigNumber.from(10).pow(16)) ||
+                  percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                   isInputFieldError ||
                   !isApproved || 
                   !Number(currentValue) || 
@@ -388,7 +388,7 @@ const Genesis = (props: WithSnackbarProps) => {
               <BorderLinearProgress
                 variant="determinate"
                 value={
-                  percentageCompleted.gt(BigNumber.from(10).pow(16))
+                  percentageCompleted.gt(BigNumber.from(10).pow(18))
                    ? 100
                    : Number(getDisplayBalance(percentageCompleted, 16, 3))
                 }
@@ -497,14 +497,14 @@ const Genesis = (props: WithSnackbarProps) => {
                     ondropDownValueChange={setSelectedCollateralCoin}
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(16))}
+                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
                     setText={(val: string) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                     errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                     DisableMsg={
-                      percentageCompleted.gt(BigNumber.from(10).pow(16))
+                      percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
                         : ''
                     }
@@ -519,7 +519,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(16))}
+                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
@@ -527,7 +527,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     tagText={'MAX'}
                     errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                     DisableMsg={
-                      percentageCompleted.gt(BigNumber.from(10).pow(16))
+                      percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
                         : ''
                     }
@@ -583,7 +583,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
                     disabled={
-                      percentageCompleted.gt(BigNumber.from(10).pow(16)) ||
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                       isInputFieldError ||
                       isApproving || 
                       (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)
@@ -598,7 +598,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       size={'lg'}
                       variant={'default'}
                       disabled={
-                        percentageCompleted.gt(BigNumber.from(10).pow(16)) ||
+                        percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                         isInputFieldError ||
                         !isApproved ||
                         (type === 'Commit' ? !Number(collateralValue) : !Number(arthValue))
