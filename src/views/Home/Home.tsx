@@ -73,9 +73,13 @@ const Home: React.FC = () => {
           <br />
           <span className="title-brand-name">ARTH</span>
           <br />
-          World’s first non-inflationary money.
-          <div className="action-buttons">
-
+          <div className="slogans">
+            <p className="slogan slogan1">World’s first non-inflationary money.</p>
+            <p className="slogan slogan2">ARTH protects you from fiat inflation.</p>
+            <p className="slogan slogan3">ARTH protects you from financial crises.</p>
+            <p className="slogan slogan4">ARTH is stable.</p>
+            <p className="slogan slogan5">ARTH is lighting fast.</p>
+            <p className="slogan slogan6">ARTH is the first stablecoin that is resistant to black swan events.</p>
           </div>
         </div>
         {/*<div className="title-down-text">

@@ -31,6 +31,7 @@
     font-size: 64px
     line-height: 100%
     color: #FB6257
+    font-weight: bold
     @media (max-width: 600px)
       font-size: 42px
       line-height: 44px
@@ -39,11 +40,6 @@
   .title-head
     color: #ffffff
     margin: calc(128px + 72px) auto 0px
-    font-size: 46px
-    line-height: 55px
-    font-weight: 700
-    font-style: normal
-    font-family: $font-family-heading
     text-align: center
     @media (max-width: 600px)
       font-size: 36px
@@ -100,3 +96,112 @@
   to
       padding-left: 20px
       width: 100%
+
+
+  .slogans
+    position: relative
+    min-height: 100px
+    @media (max-width: 600px)
+      min-height: 200px
+
+    .slogan
+      margin-bottom: 0
+      font-size: 46px
+      line-height: 55px
+      font-weight: 700
+      font-style: normal
+      text-align: center
+      font-family: $font-family-heading
+      position: absolute
+      top: 0
+      opacity: 0
+      width: 100%
+      backface-visibility: hidden
+      @media (max-width: 600px)
+        font-size: 42px
+        line-height: 44px
+
+    .slogan1
+      animation: slogan1 30s infinite
+
+    .slogan2
+      animation: slogan2 30s infinite
+
+    .slogan3
+      animation: slogan3 30s infinite
+
+    .slogan4
+      animation: slogan4 30s infinite
+
+    .slogan5
+      animation: slogan5 30s infinite
+
+    .slogan6
+      animation: slogan6 30s infinite
+
+      @keyframes slogan1
+        0%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        15%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        30%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
+      @keyframes slogan2
+        15%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        30%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        45%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
+      @keyframes slogan3
+        30%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        45%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        60%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
+      @keyframes slogan4
+        45%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        60%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        75%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
+      @keyframes slogan5
+        60%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        75%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        90%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
+      @keyframes slogan6
+        75%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+        90%
+          opacity: 1
+          transform: rotateX(0) skewX(0)
+        100%
+          opacity: 0
+          transform: rotateX(90deg) skewX(20deg)
+
