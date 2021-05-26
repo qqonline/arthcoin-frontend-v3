@@ -12,7 +12,6 @@ function useCatchError(): (promise: Promise<any>, message?: string) => void {
         // User denied transaction signature on MetaMask.
         return;
       }
-      console.error(`Uncaught exception: ${err.stack}`);
       addPopup({ error: { message, stack: err.stack } });
     });
   }, [addPopup]);
