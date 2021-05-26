@@ -355,11 +355,14 @@ const Genesis = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 disabled={
-                  percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                  // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                   isInputFieldError ||
                   !isApproved || 
                   !Number(currentValue) || 
-                  (type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve))
+                  (type === 'Commit' 
+                    ? !Number(totalArthxRecieve) || percentageCompleted.gt(BigNumber.from(10).pow(18)) :
+                    !Number(arthxRecieve)
+                  )
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -519,18 +522,18 @@ const Genesis = (props: WithSnackbarProps) => {
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
+                    // disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                     errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
-                    DisableMsg={
-                      percentageCompleted.gt(BigNumber.from(10).pow(18))
-                        ? 'Currently Genesis is 100% Completed'
-                        : ''
-                    }
+                    // DisableMsg={
+                    //   percentageCompleted.gt(BigNumber.from(10).pow(18))
+                    //     ? 'Currently Genesis is 100% Completed'
+                    //     : ''
+                    // }
                   />
                 )}
                 <PlusMinusArrow>
@@ -583,10 +586,12 @@ const Genesis = (props: WithSnackbarProps) => {
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
                     disabled={
-                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                       isInputFieldError ||
                       isApproving || 
-                      (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)
+                      (type === 'Commit' && Number(collateralValue) === 0) || 
+                      (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
+                      (type === 'Swap' && Number(arthValue) === 0)
                     }
                     onClick={approve}
                     loading={isApproving}
@@ -598,10 +603,13 @@ const Genesis = (props: WithSnackbarProps) => {
                       size={'lg'}
                       variant={'default'}
                       disabled={
-                        percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                        // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                         isInputFieldError ||
                         !isApproved ||
-                        (type === 'Commit' ? !Number(collateralValue) : !Number(arthValue))
+                        (type === 'Commit' 
+                          ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
+                          : !Number(arthValue)
+                        )
                       }
                       onClick={() => setOpenModal(1) }
                     />
