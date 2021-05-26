@@ -4,6 +4,7 @@ import { parseUnits } from 'ethers/lib/utils';
 
 import useCore from '../../useCore';
 import useTokenDecimals from '../../useTokenDecimals';
+import { useAddPopup } from '../../../state/application/hooks';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
@@ -14,6 +15,7 @@ export default function (
   slippage: number
 ) {
   const core = useCore();
+  const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
   const tokenDecimals = useTokenDecimals(collateralToken);
 
@@ -27,27 +29,32 @@ export default function (
   const action = useCallback(async (callback: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken);
 
-    let response;
     try {
-      response = await pool.mint1t1ARTH(
+      const response = await pool.mint1t1ARTH(
         BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
         arthAmountAfterFees
       );
-    } catch(e) {
-      response = null;
-    }
-   
-    if (response) addTransaction(response, {
-      summary: `Mint ${arthOutMin} ARTH`
-    });
+      
+      addTransaction(response, {
+        summary: `Mint ${arthOutMin} ARTH`
+      });
 
-    if (response) callback();
+      callback();
+    } catch(e) {
+      addPopup({
+        error: {
+          message: e.data.message,
+          stack: e.stack
+        }
+      });
+    }
   }, [
     core, 
     tokenDecimals, 
     collateralToken, 
     collateralAmount, 
     arthAmountAfterFees, 
+    addPopup,
     addTransaction, 
     arthOutMin
   ]);
