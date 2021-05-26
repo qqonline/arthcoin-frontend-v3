@@ -2,12 +2,11 @@ import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { parseUnits } from 'ethers/lib/utils';
 
-import { useTransactionAdder } from '../../../state/transactions/hooks';
 import useCore from '../../useCore';
-import useSlippage from '../../useSlippage'
-import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees'
+import useSlippage from '../../useSlippage';
 import useTokenDecimals from '../../useTokenDecimals';
-
+import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
+import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
   collateralToken: string,
@@ -20,11 +19,9 @@ export default function (
   const tokenDecimals = useTokenDecimals(collateralToken);
 
   const collateralAmountAfterFees = useMemo(() => {
-    const fee = BigNumber.from(1e6).sub(redeemFee);
-
     return BigNumber
       .from(parseUnits(`${arthAmount}`, 18))
-      .mul(fee)
+      .mul(BigNumber.from(1e6).sub(redeemFee))
       .div(BigNumber.from(10).pow(18 - tokenDecimals))
       .div(1e6);
   }, [arthAmount, redeemFee, tokenDecimals]);
