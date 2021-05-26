@@ -30,17 +30,17 @@ type Iprops = {
 };
 
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
-  const core = useCore();
-  const { account, connect } = useWallet();
-
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [successModal, setSuccessModal] = useState<boolean>(false);
-  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
+  const core = useCore();
+  const { account, connect } = useWallet();
+  const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const tokenDecimals = useTokenDecimals(selectedCollateral);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
@@ -75,14 +75,15 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         .mul(BigNumber.from(
           parseUnits(`${valueInNumber}`, tokenDecimals)
         ))
+        .mul(BigNumber.from(10).pow(18 - tokenDecimals))
         .div(arthxPrice);
 
       const discountBN = amountBN
         .mul(recollateralizationDiscount)
         .div(1e6);
 
-      setReceiveShare(getDisplayBalance(amountBN, 6, 3));
-      setReceiveBonus(getDisplayBalance(discountBN, 6, 3));
+      setReceiveShare(getDisplayBalance(amountBN, 18, 3));
+      setReceiveBonus(getDisplayBalance(discountBN, 18, 3));
     }
   };
 
@@ -126,14 +127,14 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {Number(getDisplayBalance(arthxRewards, 6, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
+            {Number(getDisplayBalance(arthxRewards, 18, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
         <LeftTopCardContainer className={'custom-mahadao-container-content'}>
           <CustomInputContainer
             ILabelValue={'Enter Collateral'}
-            IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
+            IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
             ILabelInfoValue={''}
             DefaultValue={collateralAmount}
             hasDropDown={true}
@@ -148,6 +149,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             }}
             inputMode={'decimal'}
             tagText={'MAX'}
+            errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
           />
 
           <PlusMinusArrow>
@@ -205,6 +207,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                         }
                         size={'lg'}
                         disabled={
+                          isInputFieldError ||
                           isARTHXApproving ||
                           !Number(collateralAmount) || 
                           !Number(receiveShare)
@@ -217,6 +220,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <Button
                     text={'Recollateralize'}
                     disabled={
+                      isInputFieldError ||
                       !isARTHXApproved || 
                       !Number(collateralAmount) || 
                       !Number(receiveShare)
@@ -310,6 +314,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         </Grid>
       </Grid>
       <RecollaterlizeModal
+        isInputFieldError={isInputFieldError}
         receiveBonus={Number(receiveBonus)}
         receiveShare={Number(receiveShare)}
         collateralAmount={Number(collateralAmount)}

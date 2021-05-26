@@ -13,10 +13,10 @@ export default function (
   arthxOutMin: BigNumber
 ) {
   const core = useCore();
-  const redeemFee = usePoolRedeemFees(collateralToken);
+  const slippage = useSlippage();
   const addTransaction = useTransactionAdder();
-  // const slippage = useSlippage();
-
+  const redeemFee = usePoolRedeemFees(collateralToken);
+  
   const arthXAmountAfterFees = useMemo(() => {
     return arthxOutMin.mul(BigNumber.from(1e6).sub(redeemFee)).div(1e6);
   }, [arthxOutMin, redeemFee]);

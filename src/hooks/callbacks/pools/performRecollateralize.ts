@@ -7,9 +7,9 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useTokenDecimals from '../../useTokenDecimals';
 
 export default function (collateralToken: string, collateralAmount: BigNumber, arthxOutMin: BigNumber) {
-  const addTransaction = useTransactionAdder();
   const core = useCore();
-  const decimals = useTokenDecimals(collateralToken)
+  const addTransaction = useTransactionAdder();
+  const decimals = useTokenDecimals(collateralToken);
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
@@ -19,7 +19,7 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
       summary: `Recollateralize ${getDisplayBalance(collateralAmount, decimals, 3)} ${collateralToken}`
     });
 
-    if (callback) callback()
+    if (callback) callback();
   }, [core, collateralToken, decimals, collateralAmount, arthxOutMin, addTransaction]);
 
   // TODO: do something about the apprve

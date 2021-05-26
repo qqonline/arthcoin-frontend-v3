@@ -15,6 +15,7 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 
 interface IProps {
+  isInputFieldError: boolean;
   receiveBonus: number;
   receiveShare: number;
   collateralAmount: number;
@@ -26,6 +27,7 @@ interface IProps {
 
 const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
   const {
+    isInputFieldError,
     openModal,
     onClose,
     receiveBonus,
@@ -123,6 +125,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
             <Button
               text={'Recollateralize'}
               disabled={
+                isInputFieldError ||
                 !isCollateralApproved || 
                 !Number(collateralAmount) ||
                 !Number(receiveShare)
