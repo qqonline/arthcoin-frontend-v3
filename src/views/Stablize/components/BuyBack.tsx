@@ -31,7 +31,7 @@ import usePerformBuyback from '../../../hooks/callbacks/pools/performBuyback';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
 type Iprops = {
-  onChange: () => void;
+  onChange?: () => void;
 };
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {

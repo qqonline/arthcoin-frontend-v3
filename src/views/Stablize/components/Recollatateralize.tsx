@@ -26,7 +26,7 @@ import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPool
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 type Iprops = {
-  onChange: () => void;
+  onChange?: () => void;
 };
 
 const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
