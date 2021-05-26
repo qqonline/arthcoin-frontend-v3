@@ -141,8 +141,6 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
-
   const [calendarLink, setLink] = useState('');
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -151,8 +149,10 @@ const Genesis = (props: WithSnackbarProps) => {
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [timerHeader, setHeader] = useState<boolean>(false);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
   const core = useCore();
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
   const { account, connect } = useWallet();
   const arthxPrice = useARTHXOraclePrice();
   const recollateralizationDiscount = useRecollateralizationDiscount();
@@ -191,7 +191,7 @@ const Genesis = (props: WithSnackbarProps) => {
       .toString()
   );
 
-  const calcDiscountOnCommit = (amount: BigNumber, discoun: BigNumber) => amount.mul(discoun).div(1e6);
+  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) => amount.mul(discount).div(1e6);
 
   const calcExpectReceiveAmount = (
     inAssetPrice: BigNumber,
@@ -313,7 +313,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`Your will transfer`}
             rightLabelUnit={currentCoin}
-            rightLabelValue={currentValue.toString()}
+            rightLabelValue={Number(currentValue).toLocaleString()}
           />
 
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
@@ -361,9 +361,10 @@ const Genesis = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 disabled={
+                  isInputFieldError ||
                   !isApproved || 
                   !Number(currentValue) || 
-                  type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve)
+                  (type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve))
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -499,6 +500,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                   />
                 ) : (
                   <CustomInputContainer
@@ -515,6 +517,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
                   />
                 )}
                 <PlusMinusArrow>
@@ -567,6 +570,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
                     disabled={
+                      isInputFieldError ||
                       isApproving || 
                       (type === 'Commit' && Number(collateralValue) === 0) || (type === 'Swap' && Number(arthValue) === 0)
                     }
@@ -576,11 +580,15 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
-                      disabled={!isApproved || type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)}
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}
-                      onClick={() => setOpenModal(1)}
+                      disabled={
+                        isInputFieldError ||
+                        !isApproved ||
+                        (type === 'Commit' ? !Number(collateralValue) : !Number(arthValue))
+                      }
+                      onClick={() => setOpenModal(1) }
                     />
                     <br />
                     {redeemableBalances[0].gt(0) ||

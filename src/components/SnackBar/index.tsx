@@ -27,7 +27,7 @@ export const CustomSnack = (snackObject: SnackObject) => (
     </SnackHeader>
     <SnackContent style={{ background: snackObject.type === 'red' ? '#BA1E38' : snackObject.type === 'green' ? '#178A50' : snackObject?.bgColor || '#178A50' }}>
       <BellIcon>
-        <img src={bellIcon} height={21} />
+        <img src={bellIcon} alt='Bell icon' height={21} />
       </BellIcon>
       <SnackData>
         <DataSpan>{snackObject.data1}</DataSpan>

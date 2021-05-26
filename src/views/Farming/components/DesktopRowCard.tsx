@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Countdown from 'react-countdown';
@@ -6,9 +6,9 @@ import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
 import CountUp from 'react-countup';
 
+import config from '../../../config';
 import TokenSymbol from '../../../components/TokenSymbol';
 import Button from '../../../components/Button';
-import uniswapSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
@@ -59,7 +59,7 @@ export default (props: IProps) => {
       6
     ))
   }, [props, pow]);
-  
+
   return (
     <CustomCardGrid>
       <Grid
@@ -141,34 +141,27 @@ export default (props: IProps) => {
           <div style={{ display: 'flex' }}>
             Earned:
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
-              {/* TODO: have some kind of rate added here */}
-              {/* <CountUp
-                start={initEarnedARTHX}
-                end={initEarnedARTHX + addedFactor(initEarnedARTHX)}
+              <CountUp
+                start={0}
+                end={initEarnedARTHX}
                 delay={0}
-                decimals={6}
-                duration={3600}
+                decimals={4}
+                duration={Math.floor(config.refreshInterval / 20)}
                 preserveValue={true}
-                onUpdate={() => {
-                  console.log('test');
-                }}
-              /> */}
-              {initEarnedARTHX.toLocaleString()}
+                onUpdate={() => console.log()}
+              />
               {' '}
               ARTHX
               {' + '}
-              {/* <CountUp
-                start={initEarnedMAHA}
-                end={initEarnedMAHA + addedFactor(initEarnedMAHA)}
+              <CountUp
+                start={0}
+                end={initEarnedMAHA}
                 delay={0}
-                decimals={6}
-                duration={3600}
+                decimals={4}
+                duration={Math.floor(config.refreshInterval / 20)}
                 preserveValue={true}
-                onUpdate={() => {
-                  console.log('test');
-                }}
-              /> */}
-              {initEarnedMAHA.toLocaleString()}
+                onUpdate={() => console.log()}
+              />
               {' '}
               MAHA
             </TableMainTextStyle>

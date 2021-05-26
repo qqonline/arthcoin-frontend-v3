@@ -34,6 +34,7 @@ type props = {
   Istate?: 'default' | 'error' | 'warning';
   msg?: string;
   DisableMsg?: string;
+  errorCallback?: (flag: boolean) => void;
 };
 
 interface ICStatesInterface {
@@ -94,6 +95,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
         IMsg: 'Amount canont be more than your balance',
       };
       setICStates(temp);
+      if (props.errorCallback) props.errorCallback(true);
       return true;
     } else {
       const temp: ICStatesInterface = {
@@ -101,6 +103,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
         IMsg: '',
       };
       setICStates(temp);
+      if (props.errorCallback) props.errorCallback(false);
       return true;
     }
   };

@@ -27,7 +27,6 @@ import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import TransparentInfoDiv from './InfoDiv';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useMintARTH from '../../../hooks/callbacks/pools/useMintARTH';
-import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 
 const OrangeCheckBox = withStyles({
@@ -119,7 +118,7 @@ const PrettoRestrictSlider = withStyles({
 const DEFAULT_CALC = 1440;
 
 interface IProps {
-  arthxValue: string;
+  isInputFieldError: boolean;
   collateralValue: string;
   openModal: 0 | 1 | 2;
   onClose: () => void;
@@ -129,46 +128,31 @@ interface IProps {
 
 const MintModal = (props: WithSnackbarProps & IProps) => {
   const {
+    isInputFieldError,
     openModal,
     onClose,
-    arthxValue,
     collateralValue,
     arthValue,
     selectedCollateralCoin
   } = props;
 
-  useEffect(() => window.scrollTo(0, 0), []);
-
-  const core = useCore();
-  const { account } = useWallet();
-    
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
   const [checked, setChecked] = React.useState(false);
   const [sliderValue, setSliderValue] = React.useState(1);
   const [successModal, setSuccessModal] = useState<boolean>(false);
-  
+
+  const core = useCore();
   const sliderClasses = useSliderStyles();
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
-  const [arthXApproveStatus, ] = useApprove(
-    core.ARTHX, 
-    collateralPool.address
-  );
-  const [collatApproveStatus, ] = useApprove(
+  const [collatApproveStatus,] = useApprove(
     core.tokens[selectedCollateralCoin],
     collateralPool.address,
   );
 
-  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED;
   const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
 
-  const isCollatArthxApproved = useMemo(() => {
-    if (!Number(arthxValue) && Number(collateralValue)) return !!account && isCollatApproved;
-    else if (Number(arthxValue) && !Number(collateralValue)) return !!account && isARTHXApproved;
-
-    return isARTHXApproved && !!account && isCollatApproved;
-  }, [isARTHXApproved, account, collateralValue, arthxValue, isCollatApproved]);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const handleCheck = (event: any) => {
     setChecked(event.target.checked);
@@ -182,42 +166,24 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
   const mintARTH = useMintARTH(
     selectedCollateralCoin,
     Number(collateralValue),
-    Number(arthxValue),
     Number(arthValue),
     mintingFee,
-    0.1,
+    0.1
   );
 
   const handleMint = () => {
-    // setOpenModal(2);
     mintARTH(() => {
       onClose();
       setSuccessModal(true);
     });
-
-    // let options = {
-    //   content: () =>
-    //     CustomSnack({
-    //       onClose: props.closeSnackbar,
-    //       type: 'green',
-    //       data1: `Minting ${mintColl} ARTH`,
-    //     }),
-    // };
-    // props.enqueueSnackbar('timepass', options);
-    // setTimeout(() => {
-    //   setSuccessModal(true);
-    // }, 3000);
-    // mintARTH();
   };
 
   const tradingFee = useMemo(() => {
     return BigNumber
-      .from(
-        parseUnits(`${arthValue}`, tokenDecimals)
-      )
+      .from(parseUnits(`${arthValue}`, 18))
       .mul(mintingFee)
       .div(1e6);
-  }, [arthValue, tokenDecimals, mintingFee]);
+  }, [arthValue, mintingFee]);
 
   return (
     <>
@@ -238,15 +204,9 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
           />
 
           <TransparentInfoDiv
-            labelData={`Your share supply`}
-            rightLabelUnit={'ARTHX'}
-            rightLabelValue={Number(arthxValue).toLocaleString()}
-          />
-
-          <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}
+            rightLabelValue={Number(getDisplayBalance(tradingFee, 18)).toLocaleString()}
           />
 
           <Divider
@@ -398,7 +358,6 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
                 size={'lg'}
                 onClick={() => {
                   onClose();
-
                   let options = {
                     content: () =>
                       CustomSnack({
@@ -414,12 +373,12 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             <div style={{ width: '100%' }}>
               <Button
                 disabled={
+                  isInputFieldError || 
                   !Number(arthValue) || 
-                  !isCollatArthxApproved ||
-                  !(Number(collateralValue) + Number(arthxValue))
+                  !isCollatApproved ||
+                  !(Number(collateralValue))
                 }
                 text={checked ? 'Confirm Mint and Stake' : 'Confirm Mint'}
-                // textStyles={{ color: '#F5F5F5' }}
                 size={'lg'}
                 onClick={handleMint}
               />

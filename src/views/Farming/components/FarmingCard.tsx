@@ -43,6 +43,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       isMobile={isMobile}
       onCancel={() => onDismissClaimModal()}
       rates={rates}
+      closeSuccessModal={() => setSuccessModal(false)}
+      openSuccessModal={() => setSuccessModal(true)}
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
@@ -53,6 +55,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       stakedBalance={stakedBalance}
       isMobile={isMobile}
       onCancel={() => onDismissWithdrawModal()}
+      closeSuccessModal={() => setSuccessModal(false)}
+      openSuccessModal={() => setSuccessModal(true)}
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
@@ -63,6 +67,8 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       tokenBalance={tokenBalance}
       isMobile={isMobile}
       onCancel={() => onDismissDepositModal()}
+      closeSuccessModal={() => setSuccessModal(false)}
+      openSuccessModal={() => setSuccessModal(true)}
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
     />,
   );
@@ -71,9 +77,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
     <div>
       <CustomSuccessModal
         modalOpen={successModal}
-        setModalOpen={() => {
-          setSuccessModal(false)
-        }}
+        setModalOpen={() => setSuccessModal(false)}
         title={'Transaction Success!'}
         // subTitle={'View Transaction'}
         subsubTitle={

@@ -12,7 +12,7 @@ const configurations: { [env: string]: Configuration } = {
     deployments: require('./basis-cash/deployments/development.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-21T15:00:00Z'),
-    refreshInterval: 3000,
+    refreshInterval: 30 * 1000,
     gasLimitMultiplier: 1.1,
     defaultCollateral: 'USDT',
     supportedCollaterals: ['USDT', 'USDC'],

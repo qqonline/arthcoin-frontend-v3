@@ -21,6 +21,8 @@ interface IProps {
   onWithdraw?: () => void;
   toggleSuccessModal?: () => void;
   isMobile: boolean;
+  closeSuccessModal: () => void;
+  openSuccessModal: () => void;
 }
 
 export default (props: IProps) => {
@@ -28,11 +30,22 @@ export default (props: IProps) => {
   const symbol = props.pool.depositTokenSymbols.join('-');
 
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
+  
   const withdraw = useStakingWithdraw(
     props.pool.contract,
     Number(val),
     props.pool.depositToken,
   );
+
+  const handleWithdraw = () => {
+    withdraw(() => {
+      props.onCancel();
+      props.openSuccessModal();
+      setTimeout(() => {
+        props.closeSuccessModal();
+      }, 5 * 1000)
+    });
+  }
 
   return (
     <CustomModal
@@ -83,7 +96,7 @@ export default (props: IProps) => {
             text={'Withdraw'} 
             size={'lg'}
             disabled={!Number(val)}
-            onClick={() => withdraw().then(props?.toggleSuccessModal).finally(props.onCancel)} 
+            onClick={handleWithdraw} 
           />
         </Grid>
       </Grid>

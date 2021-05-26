@@ -12,17 +12,18 @@ export default function (stakingContract: string, amount: number, depositToken: 
   const core = useCore();
   const tokenDecimals = useTokenDecimals(depositToken);
 
-  const action = useCallback(async (): Promise<void> => {
+  const action = useCallback(async (callback: () => void): Promise<void> => {
     const contract = core.contracts[stakingContract]
     
     const response = await contract.withdraw(BigNumber.from(
-        parseUnits(`${amount}`, tokenDecimals)
+      parseUnits(`${amount}`, tokenDecimals)
     ));
 
     addTransaction(response, {
       summary: `Withdraw ${amount} ${depositToken}`
     });
 
+    if (callback) callback();
   }, [core.contracts, tokenDecimals, stakingContract, amount, addTransaction, depositToken]);
 
   return action;

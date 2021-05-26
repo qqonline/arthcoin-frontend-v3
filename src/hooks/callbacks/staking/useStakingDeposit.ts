@@ -24,7 +24,7 @@ export default function (stakingContract: string, amount: number, depositToken: 
       summary: `Stake ${amount} ${depositToken}`
     });
 
-    callback();
+    if (callback) callback();
 
   }, [core.contracts, stakingContract, tokenDecimals, amount, addTransaction, depositToken]);
 
