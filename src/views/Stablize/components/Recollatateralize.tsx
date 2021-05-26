@@ -57,7 +57,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const onColleteralChange = (val: string) => {
-    if (val === '' || collateralGMUPrice.lte(0)) {
+    if (val === '' || collateralGMUPrice.lte(0) || arthxPrice.lte(0)) {
       setReceiveShare('0');
       setReceiveBonus('0');
       setCollateralAmount('0');
@@ -70,21 +70,20 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    if (arthxPrice.gt(0)) {
-      const amountBN = collateralGMUPrice
-        .mul(BigNumber.from(
-          parseUnits(`${valueInNumber}`, tokenDecimals)
-        ))
-        .mul(BigNumber.from(10).pow(18 - tokenDecimals))
-        .div(arthxPrice);
+  
+    const amountBN = collateralGMUPrice
+      .mul(BigNumber.from(
+        parseUnits(`${valueInNumber}`, tokenDecimals)
+      ))
+      .mul(BigNumber.from(10).pow(18 - tokenDecimals))
+      .div(arthxPrice);
 
-      const discountBN = amountBN
-        .mul(recollateralizationDiscount)
-        .div(1e6);
+    const discountBN = amountBN
+      .mul(recollateralizationDiscount)
+      .div(1e6);
 
-      setReceiveShare(getDisplayBalance(amountBN, 18, 3));
-      setReceiveBonus(getDisplayBalance(discountBN, 18, 3));
-    }
+    setReceiveShare(getDisplayBalance(amountBN, 18, 3));
+    setReceiveBonus(getDisplayBalance(discountBN, 18, 3));
   };
 
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
