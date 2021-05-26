@@ -231,7 +231,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             <div style={{ width: '100%' }}>
               <Button
                 disabled={
-                  redeemCR.eq(0) ||
+                  redeemCR.lt(1e6) ||
                   isInputFieldError ||
                   !isArthMahaApproved ||
                   !Number(collateralValue) ||
@@ -273,6 +273,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelInfoValue={''}
                 DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
+                disabled={redeemCR.lt(1e6)}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
@@ -280,7 +281,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 tagText={'MAX'}
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
-                  redeemCR.eq(0) 
+                  redeemCR.lt(1e6)
                     ? 'Currently Redeem Collateral ratio is 0%' 
                     : ''
                 }
@@ -302,10 +303,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     onCollateralValueChange(collateralValue.toString());
                   }, 1000);
                 }}
+                disabled={redeemCR.lt(1e6)}
                 SymbolText={selectedCollateral}
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
-                  redeemCR.eq(0) 
+                  redeemCR.lt(1e6) 
                     ? 'Currently Redeem Collateral ratio is 0%' 
                     : ''
                 }
@@ -353,7 +355,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                             }
                             size={'lg'}
                             disabled={
-                              redeemCR.eq(0) ||
+                              redeemCR.lt(1e6) ||
                               isInputFieldError || 
                               isArthApproved || 
                               !Number(arthValue)
@@ -372,7 +374,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                             }
                             size={'lg'}
                             disabled={
-                              redeemCR.eq(0) ||
+                              redeemCR.lt(1e6) ||
                               isInputFieldError || 
                               isMAHAApproved || 
                               stabilityFeeAmount.lte(0)
@@ -397,7 +399,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         size={'lg'}
                         variant={'default'}
                         disabled={
-                          redeemCR.eq(0) ||
+                          redeemCR.lt(1e6) ||
                           isInputFieldError ||
                           !isArthMahaApproved ||
                           !Number(collateralValue) ||

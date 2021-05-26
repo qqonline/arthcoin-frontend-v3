@@ -124,6 +124,7 @@ interface IProps {
   onClose: () => void;
   selectedCollateralCoin: string;
   arthValue: string;
+  mintCR: BigNumber;
 }
 
 const MintModal = (props: WithSnackbarProps & IProps) => {
@@ -133,7 +134,8 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
     onClose,
     collateralValue,
     arthValue,
-    selectedCollateralCoin
+    selectedCollateralCoin,
+    mintCR
   } = props;
 
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
@@ -373,6 +375,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             <div style={{ width: '100%' }}>
               <Button
                 disabled={
+                  mintCR.lt(1e6) ||
                   isInputFieldError || 
                   !Number(arthValue) || 
                   !isCollatApproved ||

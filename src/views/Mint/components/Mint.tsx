@@ -116,6 +116,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   return (
     <>
       <MintModal
+        mintCR={mintCR}
         isInputFieldError={isInputFieldError}
         collateralValue={collateralValue}
         selectedCollateralCoin={selectedCollateralCoin}
@@ -149,7 +150,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
                 ILabelInfoValue={''}
-                disabled={mintCR.eq(0)}
+                disabled={mintCR.lt(1e6)}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -160,6 +161,11 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     onCollateralValueChange(collateralValue.toString());
                   }, 1000);
                 }}
+                DisableMsg={
+                  mintCR.lt(1e6)
+                    ? 'Currently Mint Collateral ratio is not 100%'
+                    : ''
+                }
                 SymbolText={selectedCollateralCoin}
                 inputMode={'numeric'}
                 setText={(val: string) => {
@@ -177,11 +183,17 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 LogoSymbol={'ARTH'}
+                disabled={mintCR.lt(1e6)}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
+                DisableMsg={
+                  mintCR.lt(1e6)
+                    ? 'Currently Mint Collateral ratio is not 100%'
+                    : ''
+                }
               />
               <div>
                 <TcContainer>
@@ -221,6 +233,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                               }
                               size={'lg'}
                               disabled={
+                                mintCR.lt(1e6) || 
                                 isInputFieldError ||
                                 isCollatApproved || 
                                 !Number(collateralValue)
@@ -237,6 +250,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                           size={'lg'}
                           variant={'default'}
                           disabled={
+                            mintCR.lt(1e6) ||
                             isInputFieldError ||
                             !isCollatApproved ||
                             !Number(arthValue) ||
