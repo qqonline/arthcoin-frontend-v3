@@ -15,6 +15,7 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 
 interface IProps {
+  isInputFieldError: boolean;
   receiveBonus: number;
   receiveShare: number;
   collateralAmount: number;
@@ -26,6 +27,7 @@ interface IProps {
 
 const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
   const {
+    isInputFieldError,
     openModal,
     onClose,
     receiveBonus,
@@ -45,7 +47,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     collateralPool.address,
   );
   
-  const arthxAmountAfterFees = useMemo(() => (
+  const arthxAmountAfterDiscount = useMemo(() => (
     BigNumber.from(
       parseUnits(`${receiveBonus + receiveShare}`, 18)
     )
@@ -54,7 +56,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
     BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
-    arthxAmountAfterFees,
+    arthxAmountAfterDiscount,
   );
 
   const isCollateralApproved = approveStatus === ApprovalState.APPROVED;
@@ -123,6 +125,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
             <Button
               text={'Recollateralize'}
               disabled={
+                isInputFieldError ||
                 !isCollateralApproved || 
                 !Number(collateralAmount) ||
                 !Number(receiveShare)

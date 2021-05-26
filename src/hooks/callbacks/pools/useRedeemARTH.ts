@@ -1,44 +1,52 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
-import { useTransactionAdder } from '../../../state/transactions/hooks';
+import { parseUnits } from 'ethers/lib/utils';
+
 import useCore from '../../useCore';
-import useSlippage from '../../useSlippage'
-import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees'
+import useSlippage from '../../useSlippage';
+import useTokenDecimals from '../../useTokenDecimals';
+import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
+import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
   collateralToken: string,
-  arthAmount: number,
-  arthxAmount: number,
-  collatearlOutMin: number
+  arthAmount: number
 ) {
-  const addTransaction = useTransactionAdder();
   const core = useCore();
+  const slippage = useSlippage();
+  const addTransaction = useTransactionAdder();
   const redeemFee = usePoolRedeemFees(collateralToken);
-  // const slippage = useSlippage();
+  const tokenDecimals = useTokenDecimals(collateralToken);
 
   const collateralAmountAfterFees = useMemo(() => {
-    const mintingAmount = BigNumber.from(Math.floor(Number(collatearlOutMin) * 1e6));
-    return mintingAmount.mul(BigNumber.from(1e6).sub(redeemFee)).div(1e6);
-  }, [collatearlOutMin, redeemFee]);
+    return BigNumber
+      .from(parseUnits(`${arthAmount}`, 18))
+      .mul(BigNumber.from(1e6).sub(redeemFee))
+      .div(BigNumber.from(10).pow(18 - tokenDecimals))
+      .div(1e6);
+  }, [arthAmount, redeemFee, tokenDecimals]);
 
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
-      const decimals = BigNumber.from(10).pow(16)
 
-
-      const response = await pool.redeem1t1ARTH(
-        BigNumber.from(Math.floor(arthAmount * 100)).mul(decimals),
-        0, // collateralAmountAfterFees,
-      );
-
-      addTransaction(response, {
+      let response;
+      try {
+        response = await pool.redeem1t1ARTH(
+          BigNumber.from(parseUnits(`${arthAmount}`, 18)),
+          collateralAmountAfterFees,
+        );
+      } catch(e) {
+        response = null;
+      }
+      
+      if (response) addTransaction(response, {
         summary: `Redeem ARTH`,
       });
 
       callback();
     },
-    [core, collateralToken, arthAmount, addTransaction],
+    [core, collateralAmountAfterFees, collateralToken, arthAmount, addTransaction],
   );
 
   return action;

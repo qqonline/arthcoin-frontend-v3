@@ -4,6 +4,8 @@ import { Divider } from '@material-ui/core';
 import React, { useEffect, useMemo, useState } from 'react';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import styled from 'styled-components';
+import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import { CustomSnack } from '../../../components/SnackBar';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -22,42 +24,74 @@ import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
+import usePerformBuyback from '../../../hooks/callbacks/pools/performBuyback';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
 type Iprops = {
   onChange: () => void;
 };
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
-  const core = useCore();
-  const { account, connect } = useWallet();
-
   const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
   const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedRate, setSelectedRate] = useState<number>(0.0);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
+  const [successModal, setSuccessModal] = useState<boolean>(false);
+
+  const core = useCore();
+  const { account, connect } = useWallet();
   const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
-
-  useEffect(() => window.scrollTo(0, 0), []);
-
   const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const arthxPrice = useARTHXOraclePrice();
   const [approveStatus, approve] = useApprove(core.ARTHX, collateralPool.address);
   const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral);
+  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
+  const tokenDecimals = useTokenDecimals(selectedCollateral);
+  const buybackFee = useBuybackFee();
+
+  useEffect(() => window.scrollTo(0, 0), []);
+
+  const tradingFee = useMemo(() => {
+    return BigNumber
+      .from(parseUnits(`${receiveAmount}`, tokenDecimals))
+      .mul(buybackFee)
+      .div(1e6);
+  }, [receiveAmount, tokenDecimals, buybackFee]);
+
+  const collateralAmountAfterFees = useMemo(() => {
+    return BigNumber.from(parseUnits(`${receiveAmount}`, tokenDecimals)).sub(tradingFee);
+  }, [receiveAmount, tokenDecimals, tradingFee]);
+
+  const performBuyback = usePerformBuyback(
+    selectedCollateral,
+    BigNumber.from(parseUnits(`${redeemAmount}`, 18)),
+    collateralAmountAfterFees,
+  );
 
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
   const isWalletConnected = !!account;
   const isARTHXApproving = approveStatus === ApprovalState.PENDING;
-
-  const ratio = 100;
  
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
-
   if (!core) return <div />;
 
+  const handleBuyback = () => {
+    performBuyback(() => {
+      setOpenModal(false);
+      setSuccessModal(true);
+    });
+  };
+
   const onRedeemValueChange = (val: string) => {
-    if (val === '') {
+    if (val === '' || arthxPrice.lte(0) || collateralGMUPrice.lte(0)) {
+      setRedeemAmount('0');
       setReceiveAmount('0');
+      return;
     }
 
     let check = ValidateNumber(val);
@@ -66,8 +100,14 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     const valInNumber = Number(val);
     if (!valInNumber) return;
 
-    const temp = String(valInNumber * ratio);
-    setReceiveAmount(temp);
+    const amountBN = arthxPrice
+      .mul(BigNumber.from(
+        parseUnits(`${valInNumber}`, 18)
+      ))
+      .div(BigNumber.from(10).pow(18 - tokenDecimals))
+      .div(collateralGMUPrice);
+
+    setReceiveAmount(getDisplayBalance(amountBN, tokenDecimals, 3));
   };
 
   const buyBackContainer = () => {
@@ -87,7 +127,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {getDisplayBalance(collateralToBeBoughtBack, 18, 2)}{' '}
+            {Number(getDisplayBalance(collateralToBeBoughtBack, 18, 2)).toLocaleString()}{' '}
             <HardChip>{selectedCollateral}</HardChip>
             <br />
             <TextForInfoTitle>To be bought back</TextForInfoTitle>
@@ -105,6 +145,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             inputMode={'decimal'}
             setText={(val: string) => onRedeemValueChange(val)}
             tagText={'MAX'}
+            errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
           />
           <PlusMinusArrow>
             <img src={arrowDown} alt="arrow" />
@@ -126,11 +167,10 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                 <div style={{ flex: 1 }}>
                   <TextWithIcon>
                     Trading Fee
-                    {/*<InfoIcon fontSize='default' style={{ transform: 'scale(0.6)' }} />*/}
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
-                  <BeforeChip>0.05</BeforeChip>
+                  <BeforeChip>{Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}</BeforeChip>
                   <TagChips>{selectedCollateral}</TagChips>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
@@ -147,9 +187,14 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   {!isARTHXApproved && (
                     <>
                       <Button
-                        text={!isARTHXApproving ? `Approve ARTHX` : 'Approving...'}
+                        text={!isARTHXApproved ? `Approve ARTHX` : 'Approved ARTHX'}
                         size={'lg'}
-                        disabled={isARTHXApproving}
+                        disabled={
+                          isInputFieldError ||
+                          isARTHXApproved ||
+                          !Number(redeemAmount)
+                        }
+                        loading={isARTHXApproving}
                         onClick={approve}
                       />
                       <br />
@@ -157,7 +202,12 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   )}
                   <Button
                     text={'Buyback'}
-                    disabled={!isARTHXApproved}
+                    disabled={
+                      isInputFieldError ||
+                      !isARTHXApproved ||
+                      !Number(redeemAmount) ||
+                      !Number(receiveAmount)
+                    }
                     size={'lg'}
                     onClick={() => {
                       setOpenModal(true);
@@ -216,7 +266,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                     <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>
-                    ${getDisplayBalance(arthxPrice, 6, 6)}
+                    ${Number(getDisplayBalance(arthxPrice, 6, 6)).toLocaleString()}
                   </InputLabelSpanRight>
                 </OneLineInput>
               </div>
@@ -240,13 +290,13 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
           <TransparentInfoDiv
             labelData={`Your Share Amount`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={redeemAmount.toString()}
+            rightLabelValue={Number(redeemAmount).toLocaleString()}
           />
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={'0.05'}
+            rightLabelValue={Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}
           />
 
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
@@ -254,7 +304,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
           <TransparentInfoDiv
             labelData={`You will receive collateral`}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={receiveAmount.toString()}
+            rightLabelValue={Number(receiveAmount).toLocaleString()}
           />
 
           <Grid container spacing={2} style={{ marginTop: '32px' }}>
@@ -275,31 +325,25 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-                // onClick={handleClose}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 text={'Buyback'}
                 size={'lg'}
-                onClick={() => {
-                  setOpenModal(false);
-                  let options = {
-                    content: () =>
-                      CustomSnack({
-                        onClose: props.closeSnackbar,
-                        type: 'green',
-                        data1: `Buyback for ${redeemAmount} ARTH :- processing`,
-                      }),
-                  };
-                  props.enqueueSnackbar('timepass', options);
-                  props.onChange();
-                }}
+                onClick={handleBuyback}
               />
             </Grid>
           </Grid>
         </div>
       </CustomModal>
+      <CustomSuccessModal
+        modalOpen={successModal}
+        setModalOpen={() => setSuccessModal(false)}
+        title={'Buyback ARTHX successful!'}
+        subTitle={''}
+        subsubTitle={'Your collateral has now been boughtback for ARTHX'}
+      />
     </div>
   );
 };
