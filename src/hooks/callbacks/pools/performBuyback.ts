@@ -1,56 +1,27 @@
-import { BigNumber, ethers } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { useHasPendingApproval, useTransactionAdder } from '../../../state/transactions/hooks';
-import useAllowance from '../../state/useAllowance';
-import ERC20 from '../../../basis-cash/ERC20';
+import { BigNumber } from 'ethers';
+import { useCallback } from 'react';
 
-const APPROVE_AMOUNT = ethers.constants.MaxUint256;
-const APPROVE_BASE_AMOUNT = BigNumber.from('1000000000000000000000000');
+import useCore from '../../useCore';
+import { useTransactionAdder } from '../../../state/transactions/hooks';
 
-export enum ApprovalState {
-  UNKNOWN,
-  NOT_APPROVED,
-  PENDING,
-  APPROVED,
-}
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
-// returns a variable indicating the state of the approval and a function which approves if necessary or early returns
-export default function (token: ERC20, spender: string): [ApprovalState, () => Promise<void>] {
-  const pendingApproval = useHasPendingApproval(token?.address, spender);
-  const currentAllowance = useAllowance(token, spender, pendingApproval);
-
-  // check the current approval status
-  const approvalState: ApprovalState = useMemo(() => {
-    // we might not have enough data to know whether or not we need to approve
-    if (!currentAllowance) return ApprovalState.UNKNOWN;
-
-    // amountToApprove will be defined if currentAllowance is
-    return currentAllowance.lt(APPROVE_BASE_AMOUNT)
-      ? pendingApproval
-        ? ApprovalState.PENDING
-        : ApprovalState.NOT_APPROVED
-      : ApprovalState.APPROVED;
-  }, [currentAllowance, pendingApproval]);
-
+export default function (collateralToken: string, arthxAmount: BigNumber, collateralOutMin: BigNumber) {
+  const core = useCore();
   const addTransaction = useTransactionAdder();
 
-  const approve = useCallback(async (): Promise<void> => {
-    if (approvalState !== ApprovalState.NOT_APPROVED) {
-      console.error('approve was called unnecessarily');
-      return;
-    }
+  const action = useCallback(async (callback?: () => void): Promise<void> => {
+    const pool = core.getCollatearalPool(collateralToken)
+    const response = await pool.buyBackARTHX(arthxAmount, collateralOutMin)
 
-    const response = await token.approve(spender, APPROVE_AMOUNT);
     addTransaction(response, {
-      summary: `Approve ${token.symbol}`,
-      approval: {
-        tokenAddress: token.address,
-        spender: spender,
-      },
+      summary: `Buyback ${getDisplayBalance(arthxAmount, 18, 3)} ARTHX`
     });
-  }, [approvalState, token, spender, addTransaction]);
+
+    if (callback) callback();
+  }, [core, collateralToken, arthxAmount, collateralOutMin, addTransaction]);
 
   // TODO: do something about the apprve
 
-  return [approvalState, approve];
+  return action;
 }

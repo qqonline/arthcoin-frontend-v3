@@ -47,7 +47,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     collateralPool.address,
   );
   
-  const arthxAmountAfterFees = useMemo(() => (
+  const arthxAmountAfterDiscount = useMemo(() => (
     BigNumber.from(
       parseUnits(`${receiveBonus + receiveShare}`, 18)
     )
@@ -56,7 +56,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
   const recollateralize = usePerformRecollateralize(
     selectedCollateral,
     BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
-    arthxAmountAfterFees,
+    arthxAmountAfterDiscount,
   );
 
   const isCollateralApproved = approveStatus === ApprovalState.APPROVED;
