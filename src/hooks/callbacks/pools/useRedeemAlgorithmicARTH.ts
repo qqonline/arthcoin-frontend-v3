@@ -4,6 +4,7 @@ import { parseUnits } from 'ethers/lib/utils';
 
 import useCore from '../../useCore';
 import useSlippage from '../../useSlippage';
+import { useAddPopup } from '../../../state/application/hooks';
 import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
@@ -14,6 +15,7 @@ export default function (
 ) {
   const core = useCore();
   const slippage = useSlippage();
+  const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
   const redeemFee = usePoolRedeemFees(collateralToken);
   
@@ -26,18 +28,35 @@ export default function (
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
       const pool = core.getCollatearalPool(collateralToken);
-      const response = await pool.redeemAlgorithmicARTH(
-        BigNumber.from(parseUnits(`${arthAmount}`, 18)),
-        arthXAmountAfterFees
-      );
+      
+      try {
+        const response = await pool.redeemAlgorithmicARTH(
+          BigNumber.from(parseUnits(`${arthAmount}`, 18)),
+          arthXAmountAfterFees
+        );
 
-      addTransaction(response, {
-        summary: `Redeem ${arthAmount} ARTH`,
-      });
+        addTransaction(response, {
+          summary: `Redeem ${arthAmount} ARTH`,
+        });
 
-      callback();
+        if (callback) callback();
+      } catch(e) {
+        addPopup({
+          error: {
+            message: e.data.message,
+            stack: e.stack
+          }
+        });
+      }
     },
-    [core, collateralToken, arthAmount, arthXAmountAfterFees, addTransaction],
+    [
+      core, 
+      collateralToken, 
+      arthAmount, 
+      arthXAmountAfterFees, 
+      addTransaction,
+      addPopup
+    ],
   );
 
   return action;
