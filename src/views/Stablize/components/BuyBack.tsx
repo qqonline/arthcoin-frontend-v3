@@ -265,7 +265,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                       <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>0.1%</InputLabelSpanRight>
+                  <InputLabelSpanRight>{Number(getDisplayBalance(buybackFee, 4, 4)).toLocaleString()}%</InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '8px' }}>
