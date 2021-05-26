@@ -581,15 +581,15 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <>
                     <Button
-                      disabled={
-                        isInputFieldError ||
-                        !isApproved || 
-                        type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)
-                      }
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
                       variant={'default'}
-                      onClick={() => setOpenModal(1)}
+                      disabled={
+                        isInputFieldError ||
+                        !isApproved ||
+                        (type === 'Commit' ? !Number(collateralValue) : !Number(arthValue))
+                      }
+                      onClick={() => setOpenModal(1) }
                     />
                     <br />
                     {redeemableBalances[0].gt(0) ||
