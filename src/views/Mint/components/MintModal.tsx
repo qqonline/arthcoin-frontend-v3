@@ -168,7 +168,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
     Number(collateralValue),
     Number(arthValue),
     mintingFee,
-    0.1,
+    0.1
   );
 
   const handleMint = () => {

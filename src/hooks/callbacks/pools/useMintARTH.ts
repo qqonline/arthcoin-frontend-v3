@@ -29,17 +29,21 @@ export default function (
   const action = useCallback(async (callback: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken)
 
-    const response = await pool.mint1t1ARTH(
-      BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
-      arthAmountAfterFees
-    );
-
-    addTransaction(response, {
+    let response;
+    try {
+      response = await pool.mint1t1ARTH(
+        BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
+        arthAmountAfterFees
+      );
+    } catch(e) {
+      response = null;
+    }
+   
+    if (response) addTransaction(response, {
       summary: `Mint ${arthOutMin} ARTH`
     });
 
-    callback()
-
+    if (response) callback();
   }, [
     core, 
     tokenDecimals, 
