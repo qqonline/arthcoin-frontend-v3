@@ -141,8 +141,6 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
-
   const [calendarLink, setLink] = useState('');
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -154,6 +152,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
   const core = useCore();
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
   const { account, connect } = useWallet();
   const arthxPrice = useARTHXOraclePrice();
   const recollateralizationDiscount = useRecollateralizationDiscount();
@@ -192,7 +191,7 @@ const Genesis = (props: WithSnackbarProps) => {
       .toString()
   );
 
-  const calcDiscountOnCommit = (amount: BigNumber, discoun: BigNumber) => amount.mul(discoun).div(1e6);
+  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) => amount.mul(discount).div(1e6);
 
   const calcExpectReceiveAmount = (
     inAssetPrice: BigNumber,
@@ -314,7 +313,7 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`Your will transfer`}
             rightLabelUnit={currentCoin}
-            rightLabelValue={currentValue.toString()}
+            rightLabelValue={Number(currentValue).toLocaleString()}
           />
 
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
@@ -365,7 +364,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   isInputFieldError ||
                   !isApproved || 
                   !Number(currentValue) || 
-                  type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve)
+                  (type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve))
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
