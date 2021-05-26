@@ -50,11 +50,24 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     core.tokens[selectedCollateral],
     collateralPool.address,
   );
-  const arthxRewards = useArthxRedeemRewards();
+  const recollateralizableValue = useArthxRedeemRewards();
   const arthxPrice = useARTHXOraclePrice();
   const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
   useEffect(() => window.scrollTo(0, 0), []);
+
+  const arthxRecollateralizeAmount = useMemo(() => {
+    if (arthxPrice.lte(0) || recollateralizableValue.lte(0)) return BigNumber.from(0);
+    return recollateralizableValue.mul(1e6).div(arthxPrice);
+  }, [arthxPrice, recollateralizableValue]);
+
+  // const collateralRecollateralizeAmount = useMemo(() => {
+  //   if (collateralGMUPrice.lte(0) || recollateralizableValue.lte(0)) return BigNumber.from(0);
+  //   return recollateralizableValue
+  //     .mul(1e6)
+  //     .div(collateralGMUPrice)
+  //     .div(BigNumber.from(10).pow(18 - tokenDecimals));
+  // }, [collateralGMUPrice, tokenDecimals, recollateralizableValue]);
 
   const onColleteralChange = (val: string) => {
     if (val === '' || collateralGMUPrice.lte(0) || arthxPrice.lte(0)) {
@@ -126,7 +139,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {Number(getDisplayBalance(arthxRewards, 18, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
+            {Number(getDisplayBalance(arthxRecollateralizeAmount, 18, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -137,6 +150,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             ILabelInfoValue={''}
             DefaultValue={collateralAmount}
             hasDropDown={true}
+            disabled={recollateralizableValue.eq(0)}
             LogoSymbol={selectedCollateral}
             dropDownValues={collateralTypes}
             ondropDownValueChange={(data) => {
@@ -146,6 +160,11 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             setText={(val: string) => {
               onColleteralChange(val);
             }}
+            DisableMsg={
+              recollateralizableValue.eq(0)
+                ? 'Current pool has required collateral'
+                : ''
+            }
             inputMode={'decimal'}
             tagText={'MAX'}
             errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
@@ -206,6 +225,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                         }
                         size={'lg'}
                         disabled={
+                          recollateralizableValue.eq(0) ||
                           isInputFieldError ||
                           isARTHXApproving ||
                           !Number(collateralAmount) || 
@@ -219,6 +239,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                   <Button
                     text={'Recollateralize'}
                     disabled={
+                      recollateralizableValue.eq(0) ||
                       isInputFieldError ||
                       !isARTHXApproved || 
                       !Number(collateralAmount) || 
@@ -313,6 +334,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
         </Grid>
       </Grid>
       <RecollaterlizeModal
+        recollateralizableValue={recollateralizableValue}
         isInputFieldError={isInputFieldError}
         receiveBonus={Number(receiveBonus)}
         receiveShare={Number(receiveShare)}

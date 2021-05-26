@@ -23,6 +23,7 @@ interface IProps {
   selectedCollateral: string;
   onClose: () => void;
   toggleSuccessModal?: () => void;
+  recollateralizableValue: BigNumber;
 }
 
 const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
@@ -34,6 +35,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     selectedCollateral,
     receiveShare,
     collateralAmount,
+    recollateralizableValue,
     toggleSuccessModal
   } = props;
 
@@ -125,6 +127,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
             <Button
               text={'Recollateralize'}
               disabled={
+                recollateralizableValue.eq(0) ||
                 isInputFieldError ||
                 !isCollateralApproved || 
                 !Number(collateralAmount) ||

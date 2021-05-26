@@ -138,6 +138,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             ILabelValue={'Enter Amount'}
             IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
             ILabelInfoValue={''}
+            disabled={collateralToBeBoughtBack.eq(0)}
             DefaultValue={redeemAmount.toString()}
             hasDropDown={false}
             LogoSymbol={'ARTHX'}
@@ -146,6 +147,11 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             setText={(val: string) => onRedeemValueChange(val)}
             tagText={'MAX'}
             errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+            DisableMsg={
+              collateralToBeBoughtBack.eq(0)
+                ? 'Current pool has no collateral to be bought back.'
+                : ''
+            }
           />
           <PlusMinusArrow>
             <img src={arrowDown} alt="arrow" />
@@ -190,6 +196,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                         text={!isARTHXApproved ? `Approve ARTHX` : 'Approved ARTHX'}
                         size={'lg'}
                         disabled={
+                          collateralToBeBoughtBack.eq(0) ||
                           isInputFieldError ||
                           isARTHXApproved ||
                           !Number(redeemAmount)
@@ -203,6 +210,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   <Button
                     text={'Buyback'}
                     disabled={
+                      collateralToBeBoughtBack.eq(0) ||
                       isInputFieldError ||
                       !isARTHXApproved ||
                       !Number(redeemAmount) ||
@@ -329,6 +337,13 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
+                disabled={
+                  collateralToBeBoughtBack.eq(0) ||
+                  isInputFieldError ||
+                  !isARTHXApproved ||
+                  !Number(redeemAmount) ||
+                  !Number(receiveAmount)
+                }
                 text={'Buyback'}
                 size={'lg'}
                 onClick={handleBuyback}

@@ -1,14 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
+
 import useCore from '../../useCore';
 
 export default () => {
-  const [value, setValue] = useState(BigNumber.from(0));
   const core = useCore();
-
+  const [value, setValue] = useState(BigNumber.from(0));
+ 
   const fetchValue = useCallback(async () => {
     const contract = core.contracts.ArthController
-    setValue(await contract.estimateRecollateralizeRewards());
+    const targetValue = await contract.getTargetCollateralValue();
+    const currentGlobalValue = await contract.getGlobalCollateralValue();
+
+    targetValue.gte(currentGlobalValue)
+      ? setValue(targetValue.sub(currentGlobalValue))
+      : setValue(BigNumber.from(0));
   }, [core.contracts]);
 
   useEffect(() => {
