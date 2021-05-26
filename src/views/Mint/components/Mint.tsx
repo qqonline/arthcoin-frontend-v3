@@ -9,14 +9,12 @@ import { parseUnits } from 'ethers/lib/utils';
 import useCore from '../../../hooks/useCore';
 import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
-import plus from '../../../assets/svg/plus.svg';
 import MintModal from './MintModal';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import PoolInfo from './PoolInfo';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
@@ -30,66 +28,47 @@ interface IProps {
 }
 
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
-  const core = useCore();
-  const { account, connect } = useWallet();
-
-  const [arthxValue, setArthxValue] = useState<string>('0');
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
+  const core = useCore();
+  const { account, connect } = useWallet();
   const mintCR = useMintCollateralRatio();
-  const colletralRatio = mintCR.div(10000).toNumber();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
     core.getDefaultCollateral(),
   );
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  const arthxToGMUPrice = useARTHXOraclePrice();
   const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
-  const arthxBalance = useTokenBalance(core.ARTHX);
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
-  const [arthXApproveStatus, approveARTHX] = useApprove(
-    core.ARTHX, 
-    collateralPool.address
-  );
   const [collatApproveStatus, approveCollat] = useApprove(
     core.tokens[selectedCollateralCoin],
     collateralPool.address,
   );
 
-  const isWalletConnected = !!account;
-  const isARTHXApproving = arthXApproveStatus === ApprovalState.PENDING;
-  const isARTHXApproved = arthXApproveStatus === ApprovalState.APPROVED;
+  useEffect(() => window.scrollTo(0, 0), []);
 
+  const isWalletConnected = !!account;
   const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
   const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
 
-  const isCollatArthxApproved = useMemo(() => {
-    if (!Number(arthxValue) && Number(collateralValue)) return !!account && isCollatApproved;
-    else if (Number(arthxValue) && !Number(collateralValue)) return !!account && isARTHXApproved;
-
-    return isARTHXApproved && !!account && isCollatApproved;
-  }, [isARTHXApproved, account, collateralValue, arthxValue, isCollatApproved]);
-
   const tradingFee = useMemo(() => {
     return BigNumber
-      .from(parseUnits(`${arthValue}`, tokenDecimals))
+      .from(parseUnits(`${arthValue}`, 18))
       .mul(mintingFee)
       .div(1e6);
-  }, [arthValue, tokenDecimals, mintingFee]);
-
-  useEffect(() => window.scrollTo(0, 0), []);
+  }, [arthValue, mintingFee]);
 
   const onCollateralValueChange = async (val: string) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
-      setArthxValue('0');
       setArthValue('0');
       return;
     }
@@ -100,64 +79,20 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    let arthxShareValueInCollatTerms: number = 0;
-    if (!arthxToGMUPrice.eq(0) && mintCR.lt(1e6)) {
-      arthxShareValueInCollatTerms = ((100 * valueInNumber) / colletralRatio) * ((100 - colletralRatio) / 100);
-
-      const finalArthxValue = collateralToGMUPrice
-        .mul(BigNumber.from(
-          parseUnits(`${arthxShareValueInCollatTerms}`, tokenDecimals)
-        ))
-        .div(arthxToGMUPrice);
-      setArthxValue(getDisplayBalance(finalArthxValue, 6, 3));
-    }
-
     const finalArthValue = collateralToGMUPrice
       .mul(BigNumber.from(
-        parseUnits(`${arthxShareValueInCollatTerms + valueInNumber}`, tokenDecimals)
+        parseUnits(`${valueInNumber}`, tokenDecimals)
       ))
+      .mul(
+        BigNumber.from(10).pow(18 - tokenDecimals)
+      )
       .div(1e6);
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
-  };
-
-  const onARTHXValueChange = async (val: string) => {
-    if (val === '' || arthxToGMUPrice.lte(0)) {
-      setCollateralValue('0');
-      setArthxValue('0');
-      setArthValue('0');
-      return;
-    }
-
-    let check: boolean = ValidateNumber(val);
-    setArthxValue(check ? val : String(Number(val)));
-    if (!check) return;
-    const valueInNumber: number = Number(val);
-    if (!valueInNumber) return;
-
-    let colletralValueInARTHXTerms: number = 0;
-    if (!collateralToGMUPrice.eq(0) && mintCR.gt(0)) {
-      colletralValueInARTHXTerms = ((100 * valueInNumber) / colletralRatio) * (colletralRatio / 100);
-
-      const finalColletralValue = arthxToGMUPrice
-        .mul(BigNumber.from(
-          parseUnits(`${colletralValueInARTHXTerms}`, tokenDecimals)
-        ))
-        .div(collateralToGMUPrice);
-      setCollateralValue(getDisplayBalance(finalColletralValue, 6, 3));
-    }
-
-    const finalArthValue = arthxToGMUPrice
-      .mul(BigNumber.from(
-        parseUnits(`${colletralValueInARTHXTerms + valueInNumber}`, tokenDecimals)
-      ))
-      .div(1e6);
-    setArthValue(getDisplayBalance(finalArthValue, 6, 3));
+    setArthValue(getDisplayBalance(finalArthValue, 18));
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0) || arthxToGMUPrice.lte(0)) {
+    if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
-      setArthxValue('0');
       setArthValue('0');
       return;
     }
@@ -168,29 +103,20 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    if (mintCR.gt(0)) {
-      const collateralValueInCollatTerms = valueInNumber * (colletralRatio / 100);
-      const finalCollateralValue = BigNumber
-        .from(parseUnits(`${collateralValueInCollatTerms}`, tokenDecimals))
-        .mul(1e6)
-        .div(collateralToGMUPrice);
-      setCollateralValue(getDisplayBalance(finalCollateralValue, 6, 3));
-    }
-    
-    if (mintCR.lt(1e6)) {
-      const arthsShareInCollatTerms = valueInNumber * ((100 - colletralRatio) / 100);
-      const finalarthxShareValue = BigNumber
-        .from(parseUnits(`${arthsShareInCollatTerms}`, tokenDecimals))
-        .mul(1e6)
-        .div(arthxToGMUPrice);
-      setArthxValue(getDisplayBalance(finalarthxShareValue, 6, 3));
-    }
+    const finalCollateralValue = BigNumber
+      .from(parseUnits(`${valueInNumber}`, 18))
+      .mul(1e6)
+      .div(
+        BigNumber.from(10).pow(18 - tokenDecimals)
+      )
+      .div(collateralToGMUPrice);
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
   };
 
   return (
     <>
       <MintModal
-        arthxValue={arthxValue}
+        isInputFieldError={isInputFieldError}
         collateralValue={collateralValue}
         selectedCollateralCoin={selectedCollateralCoin}
         arthValue={arthValue}
@@ -221,9 +147,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
-                IBalanceValue={`${getDisplayBalance(collateralBalance, 6)}`}
+                IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
                 ILabelInfoValue={''}
-                // value={mintColl.toString()}
                 disabled={mintCR.eq(0)}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
@@ -240,31 +165,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 setText={(val: string) => {
                   onCollateralValueChange(val);
                 }}
-                // Istate={'warning'}
-                // StateMsg={'Warning message goes here'}
-              />
-              <PlusMinusArrow>
-                <img src={plus} alt="plus" />
-              </PlusMinusArrow>
-              <CustomInputContainer
-                ILabelValue={'Enter ARTHX'}
-                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
-                ILabelInfoValue={'How can I get ARTHX?'}
-                // disabled={mintCR.gte(1000000)}
-                href={'https://www.google.com/'}
-                DefaultValue={arthxValue.toString()}
-                // ILabelInfoValue={'How can i get it?'}
-                // DefaultValue={'0'}
-                LogoSymbol={'ARTHX'}
-                hasDropDown={false}
-                SymbolText={'ARTHX'}
-                inputMode={'decimal'}
-                setText={(val: string) => {
-                  onARTHXValueChange(val);
-                }}
-                // Istate={'error'}
-                // StateMsg={'ERROR message goes here'}
-                DisableMsg={colletralRatio === 100 ? 'Currently Collateral ratio is 100%' : ''}
+                tagText={'MAX'}
+                errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
               />
               <PlusMinusArrow>
                 <img src={arrowDown} alt="arrow" />
@@ -274,14 +176,12 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`${getDisplayBalance(arthBalance)}`}
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
-                // DefaultValue={'0'}
                 LogoSymbol={'ARTH'}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
-                tagText={'MAX'}
               />
               <div>
                 <TcContainer>
@@ -289,25 +189,26 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     <div style={{ flex: 1 }}>
                       <TextWithIcon>
                         Trading Fee
-                        {/*{*<InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />*}*/}
                       </TextWithIcon>
                     </div>
                     <OneLineInputwomargin>
-                      <BeforeChip>{Number(getDisplayBalance(tradingFee, 6)).toLocaleString()}</BeforeChip>
+                      <BeforeChip>
+                        {Number(getDisplayBalance(tradingFee, 18)).toLocaleString()}
+                      </BeforeChip>
                       <TagChips>ARTH</TagChips>
                     </OneLineInputwomargin>
                   </OneLineInputwomargin>
                 </TcContainer>
                 <div style={{ marginTop: '32px' }}>
-                  {!isWalletConnected ? (
-                    <Button
-                      text={'Connect Wallet'}
-                      size={'lg'}
-                      onClick={() => connect('injected')}
-                    />
-                  ) : (
-                    <>
-                      {!isCollatArthxApproved && (
+                  {
+                    !isWalletConnected ? (
+                      <Button
+                        text={'Connect Wallet'}
+                        size={'lg'}
+                        onClick={() => connect('injected')}
+                      />
+                    ) : (
+                      !isCollatApproved ? (
                         <>
                           <ApproveButtonContainer>
                             <Button
@@ -319,41 +220,33 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                                   : 'Approving...'
                               }
                               size={'lg'}
-                              disabled={isCollatApproved || !Number(collateralValue)}
+                              disabled={
+                                isInputFieldError ||
+                                isCollatApproved || 
+                                !Number(collateralValue)
+                              }
                               onClick={approveCollat}
                               loading={isCollatApproving}
-                            />
-                            <div style={{ padding: 5 }} />
-                            <Button
-                              text={
-                                isARTHXApproved
-                                  ? 'Approved ARTHX'
-                                  : !isARTHXApproving
-                                  ? `Approve ARTHX`
-                                  : 'Approving...'
-                              }
-                              size={'lg'}
-                              disabled={isARTHXApproved || !Number(arthxValue)}
-                              onClick={approveARTHX}
-                              loading={isARTHXApproving}
                             />
                           </ApproveButtonContainer>
                           <br />
                         </>
-                      )}
-                      <Button
-                        text={'Mint'}
-                        size={'lg'}
-                        variant={'default'}
-                        disabled={
-                          !isCollatArthxApproved ||
-                          !Number(arthValue) ||
-                          !(Number(collateralValue) + Number(arthxValue))
-                        }
-                        onClick={() => setOpenModal(1)}
-                      />
-                    </>
-                  )}
+                      ) : (
+                        <Button
+                          text={'Mint'}
+                          size={'lg'}
+                          variant={'default'}
+                          disabled={
+                            isInputFieldError ||
+                            !isCollatApproved ||
+                            !Number(arthValue) ||
+                            !(Number(collateralValue))
+                          }
+                          onClick={() => setOpenModal(1)}
+                        />
+                      )
+                    )
+                  }
                 </div>
               </div>
             </LeftTopCardContainer>
