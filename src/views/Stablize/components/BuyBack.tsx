@@ -36,8 +36,8 @@ type Iprops = {
 };
 
 const BuyBack = (props: WithSnackbarProps & Iprops) => {
-  const [redeemAmount, setRedeemAmount] = useState<string>('0.00');
-  const [receiveAmount, setReceiveAmount] = useState<string>('0.00');
+  const [redeemAmount, setRedeemAmount] = useState<string>('0');
+  const [receiveAmount, setReceiveAmount] = useState<string>('0');
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
@@ -78,7 +78,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const isARTHXApproved = approveStatus === ApprovalState.APPROVED;
   const isWalletConnected = !!account;
   const isARTHXApproving = approveStatus === ApprovalState.PENDING;
- 
+
   if (!core) return <div />;
 
   const handleBuyback = () => {
