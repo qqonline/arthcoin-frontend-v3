@@ -220,7 +220,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                       <Button
                         text={'Connect Wallet'}
                         size={'lg'}
-                        onClick={() => connect('injected')}
+                        onClick={() => connect('injected').then(() => {
+                          localStorage.removeItem('disconnectWallet')
+                        })}
                       />
                     ) : (
                       !isCollatApproved ? (

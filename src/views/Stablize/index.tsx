@@ -9,6 +9,7 @@ import StabilizePageHeader from '../../components/PageHeader/StabilizePageHeader
 import BuyBack from './components/BuyBack';
 import Recollatateralize from './components/Recollatateralize';
 import useArthxRedeemRewards from '../../hooks/state/controller/useArthxRedeemRewards';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 export default () => {
   const core = useCore();
@@ -17,7 +18,8 @@ export default () => {
   // const [type, setType] = useState<'buyback' | 'recollateralize'>(
   //   stabilizeType || 'recollateralize',
   // );
-  
+  WalletAutoConnect();
+
   const isMobile = useMediaQuery({ query: '(max-device-width: 600px)' });
   const recollateralizableValue = useArthxRedeemRewards();
 

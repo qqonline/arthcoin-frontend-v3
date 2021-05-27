@@ -162,6 +162,7 @@ const MobileNav = (props: props) => {
                 await connect('injected')
                   .then(() => {
                     setWallet(!walletInfo);
+                    localStorage.removeItem('disconnectWallet')
                   })
               } else {
                 setWallet(!walletInfo);

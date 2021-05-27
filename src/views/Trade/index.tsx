@@ -8,10 +8,12 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 import PageHeader from '../../components/PageHeader';
 import TradingCards from './components/TradingTable';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   // const basisCash = useBasisCash();
+  WalletAutoConnect();
 
   // // const isLaunched = Date.now() >= config.boardroomLaunchesAt.getTime();
   // if (!basisCash) return <div />;

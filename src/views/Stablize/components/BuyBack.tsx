@@ -192,7 +192,9 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                 <Button
                   text={'Connect Wallet'}
                   size={'lg'}
-                  onClick={() => connect('injected')}
+                  onClick={() => connect('injected').then(() => {
+                    localStorage.removeItem('disconnectWallet')
+                  })}
                 />
               ) : (
                 <>

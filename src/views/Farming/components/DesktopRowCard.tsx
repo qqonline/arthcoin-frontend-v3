@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Countdown from 'react-countdown';
@@ -42,7 +42,7 @@ export default (props: IProps) => {
   const uniswapLink = `https://app.uniswap.org/#/add/v2/${tokenAddresses.join('/')}`;
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
-  
+
   const pow = BigNumber.from(10).pow(18);
   const initEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
@@ -118,13 +118,16 @@ export default (props: IProps) => {
         </Grid>
         <Grid item lg={2}>
           {!isWalletConnected ? (
-            <Button text={'Connect Wallet'} size={'lg'} onClick={() => connect('injected')} />
+            <Button text={'Connect Wallet'} size={'lg'} onClick={() =>
+              connect('injected').then(() => {
+                localStorage.removeItem('disconnectWallet')
+              })} />
           ) : (
             <Button
               disabled={tokenBalance.lte(0)}
-              text="Deposit" 
-              size={'sm'} 
-              onClick={props.onDepositClick} 
+              text="Deposit"
+              size={'sm'}
+              onClick={props.onDepositClick}
             />
           )}
         </Grid>
@@ -165,9 +168,9 @@ export default (props: IProps) => {
               {' '}
               MAHA
             </TableMainTextStyle>
-            { 
-              !!(Number(initEarnedARTHX) ||  Number(initEarnedMAHA))
-              && 
+            {
+              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+              &&
               <WithdrawClaimButton onClick={props.onClaimClick}>
                 Claim Rewards
               </WithdrawClaimButton>
