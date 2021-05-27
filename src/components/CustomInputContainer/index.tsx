@@ -31,7 +31,8 @@ type props = {
   dontShowBackgroundContainer?: boolean;
   href?: string;
   to?: string;
-  Istate?: 'default' | 'error' | 'warning';
+  Istate?: 'default' | 'error';
+  IWarningstate?: 'default' | 'warning';
   msg?: string;
   DisableMsg?: string;
   errorCallback?: (flag: boolean) => void;
@@ -61,14 +62,23 @@ const CustomInputContainer: React.FC<props> = (props) => {
     Istate = 'default',
     msg = '',
     DisableMsg = '',
+    IWarningstate = 'default',
+    warningMsg = '',
   } = props;
+
   const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: Istate, IMsg: msg });
+  const [ICWarningStates, setICWarningStates] = useState<ICStatesInterface>({ IWarningstate: IWarningstate, IMsg: warningMsg });
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     let temp = { IState: Istate, IMsg: msg };
     setICStates(temp);
   }, [Istate, msg]);
+
+  useEffect(() => {
+    let temp = { IWarningstate: IWarningstate, IMsg: warningMsg };
+    setICWarningStates(temp);
+  }, [IWarningstate, warningMsg]);
 
   const Redirection = () => {
     if (props?.href) {
@@ -92,7 +102,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     if (Number(val) > Number(IBalanceValue)) {
       const temp: ICStatesInterface = {
         IState: 'error',
-        IMsg: 'Amount canont be more than your balance',
+        IMsg: 'Amount canont be more than your balance.',
       };
       setICStates(temp);
       if (props.errorCallback) props.errorCallback(true);
@@ -123,17 +133,17 @@ const CustomInputContainer: React.FC<props> = (props) => {
   const checkForDigitsCount = (event : any) => {
     if (!checkForAfterDecimalDigits(event.target.value)) {
       const temp: ICStatesInterface = {
-        IState: 'warning',
-        IMsg: 'only 10 digits before decimal and 6 digits after decimal is allowed',
+        IWarningState: 'warning',
+        IMsg: 'Only 10 digits before decimal and 6 digits after decimal is allowed.',
       };
-      setICStates(temp);
+      setICWarningStates(temp);
       return false;
     } else {
       const temp: ICStatesInterface = {
-        IState: 'default',
+        IWarningState: 'default',
         IMsg: '',
       };
-      setICStates(temp);
+      setICWarningStates(temp);
       return true;
     }
   }
@@ -231,7 +241,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
           </IFieldRightContainer>
         </IFieldConatiner>
         {ICStates.IMsg !== '' && (
-          <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>
+          <p className={`input-font-${ICStates.IState}`}>!{ICStates.IMsg}</p>
+        )}
+        {ICWarningStates.IMsg !== '' && (
+          <p className={`input-font-warning`}>Warning: {ICWarningStates.IMsg}</p>
         )}
       </IConatiner>
     </div>
