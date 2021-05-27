@@ -1,4 +1,4 @@
-import React, { useEffect, /*useState*/ } from 'react';
+import React, { useEffect, useState /*useState*/ } from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 // import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 export default () => {
   const core = useCore();
-  
+
   // const { stabilizeType } = useParams<{ stabilizeType: 'buyback' | 'recollateralize' }>();
   // const [type, setType] = useState<'buyback' | 'recollateralize'>(
   //   stabilizeType || 'recollateralize',
@@ -22,6 +22,12 @@ export default () => {
 
   const isMobile = useMediaQuery({ query: '(max-device-width: 600px)' });
   const recollateralizableValue = useArthxRedeemRewards();
+
+  // useEffect(() => {
+  //   setIsLoaded(true)
+  // }, [recollateralizableValue])
+
+  console.log('recollateralizableValue', recollateralizableValue);
 
   useEffect(() => window.scrollTo(0, 0), []);
 

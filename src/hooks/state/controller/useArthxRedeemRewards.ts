@@ -5,8 +5,8 @@ import useCore from '../../useCore';
 
 export default () => {
   const core = useCore();
-  const [value, setValue] = useState(BigNumber.from(0));
- 
+  const [value, setValue] = useState(BigNumber.from(1));
+
   const fetchValue = useCallback(async () => {
     const contract = core.contracts.ArthController
     const targetValue = await contract.getTargetCollateralValue();
