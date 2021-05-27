@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import useFaucetClaim from '../../hooks/callbacks/useFaucetClaim';
 import Button from '../../components/Button';
 import { useWallet } from 'use-wallet';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 interface IRadioButtonList {
   label: string;
@@ -19,6 +20,7 @@ interface ICStatesInterface {
 
 const Boardrooms = () => {
   const { account, connect } = useWallet();
+  WalletAutoConnect();
 
   const claimTokens = useFaucetClaim();
   const isWalletConnected = !!account;
@@ -43,7 +45,9 @@ const Boardrooms = () => {
                     <Button
                       text={'Connect Wallet'}
                       size={'lg'}
-                      onClick={() => connect('injected')}
+                      onClick={() => connect('injected').then(() => {
+                        localStorage.removeItem('disconnectWallet')
+                      })}
                     />
                   ) : (
                     <Button

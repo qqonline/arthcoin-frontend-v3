@@ -22,9 +22,11 @@ import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
 import CustomToolTip from '../../components/CustomTooltip';
 import { getDisplayBalance } from '../../utils/formatBalance';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 const Home: React.FC = () => {
   const core = useCore();
+  WalletAutoConnect();
   const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
   const fetchStats = useCallback(async () => {
     // const [cash, bond, share] = await Promise.all([

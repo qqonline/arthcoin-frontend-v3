@@ -12,10 +12,12 @@ import ImportPool from './components/ImportPool';
 import RemovePool from './components/RemovePool';
 import AddLiquidity from './components/AddLiquidity';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   useEffect(() => window.scrollTo(0, 0), []);
   const core = useCore();
+  WalletAutoConnect();
   const [action, setAction] = useState<'Details' | 'Import' | 'Add' | 'Remove'>('Details');
   const [selectedSwap, setSelectedSwap] = useState<'Uniswap' | 'Sushiswap'>('Uniswap');
   const [noLiquidity, setNoLiquidity] = useState<boolean>(false);

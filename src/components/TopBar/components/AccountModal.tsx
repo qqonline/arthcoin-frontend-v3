@@ -57,8 +57,10 @@ const AccountModal: React.FC<props> = (props) => {
                 text={'Disconnect'}
                 size={'lg'}
                 onClick={() => {
+                  localStorage.setItem('disconnectWallet', '1')
                   reset()
                   props.onClose()
+                  window.location.reload();
                 }}
               />
             </Grid>

@@ -6,11 +6,13 @@ import { useParams } from 'react-router-dom';
 import Container from '../../components/Container';
 import MintTabContent from './components/Mint';
 import RedeemTabContent from './components/Redeem';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   // @ts-ignore
   const { paramType } = useParams();
   useEffect(() => window.scrollTo(0, 0), []);
+  WalletAutoConnect();
   const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint');
 
   return (

@@ -51,6 +51,7 @@ import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply
 import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
 import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 withStyles({
   root: {
@@ -169,6 +170,8 @@ const Genesis = (props: WithSnackbarProps) => {
   const percentageCompleted = usePercentageCompleted();
   const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
+  WalletAutoConnect();
+
   useEffect(() => {
     const onClick = () => {
       let event: TCalendarEvent = {
@@ -189,11 +192,11 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const calcExpectReceiveAmount = (
     inAssetPrice: BigNumber,
-    outAssetprice: BigNumber, 
-    amount: number | string, 
+    outAssetprice: BigNumber,
+    amount: number | string,
     inAssetDecimals: number,
     outAssetDecimals: number) => (
-      inAssetPrice
+    inAssetPrice
       .mul(BigNumber.from(
         parseUnits(`${amount}`, inAssetDecimals)
       ))
@@ -202,23 +205,23 @@ const Genesis = (props: WithSnackbarProps) => {
       )
       .div(outAssetprice)
   );
-  
+
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
     if (type === 'Commit' && Number(collateralValue))
       return calcExpectReceiveAmount(
         collateralGMUPrice,
-        arthxPrice, 
-        collateralValue, 
+        arthxPrice,
+        collateralValue,
         tokenDecimals,
         18
       );
 
     return calcExpectReceiveAmount(
       BigNumber.from(1e6),
-      arthxPrice, 
-      arthValue, 
+      arthxPrice,
+      arthValue,
       18,
       18
     );
@@ -257,10 +260,9 @@ const Genesis = (props: WithSnackbarProps) => {
   const bondingDiscount = [
     {
       label: 'Current discount',
-      value: `${
-        Number(getDisplayBalance(recollateralizationDiscount, 4, 4))
+      value: `${Number(getDisplayBalance(recollateralizationDiscount, 4, 4))
           .toLocaleString('en-US', { maximumFractionDigits: 4 })
-      }%`,
+        }%`,
     },
     {
       label: 'Starting ARTHX Price',
@@ -268,10 +270,9 @@ const Genesis = (props: WithSnackbarProps) => {
     },
     {
       label: 'Discounted ARTHX Price',
-      value: `$${
-        Number(getDisplayBalance(arthxPrice, 6, 6))
-          .toLocaleString('en-US', { maximumFractionDigits: 6})
-      }`,
+      value: `$${Number(getDisplayBalance(arthxPrice, 6, 6))
+          .toLocaleString('en-US', { maximumFractionDigits: 6 })
+        }`,
     },
   ];
 
@@ -324,7 +325,7 @@ const Genesis = (props: WithSnackbarProps) => {
             rightLabelValue={
               Number(getDisplayBalance(
                 type === 'Commit' ? totalArthxRecieve : arthxRecieve,
-                18, 
+                18,
                 3
               )).toLocaleString()
             }
@@ -363,9 +364,9 @@ const Genesis = (props: WithSnackbarProps) => {
                 disabled={
                   // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                   isInputFieldError ||
-                  !isApproved || 
-                  !Number(currentValue) || 
-                  (type === 'Commit' 
+                  !isApproved ||
+                  !Number(currentValue) ||
+                  (type === 'Commit'
                     ? !Number(totalArthxRecieve) || percentageCompleted.gt(BigNumber.from(10).pow(18)) :
                     !Number(arthxRecieve)
                   )
@@ -398,8 +399,8 @@ const Genesis = (props: WithSnackbarProps) => {
                 variant="determinate"
                 value={
                   percentageCompleted.gt(BigNumber.from(10).pow(18))
-                   ? 100
-                   : Number(getDisplayBalance(percentageCompleted, 16, 3))
+                    ? 100
+                    : Number(getDisplayBalance(percentageCompleted, 16, 3))
                 }
               />
             </div>
@@ -514,7 +515,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                     DisableMsg={
                       percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
@@ -537,12 +538,12 @@ const Genesis = (props: WithSnackbarProps) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag)}}
-                    // DisableMsg={
-                    //   percentageCompleted.gt(BigNumber.from(10).pow(18))
-                    //     ? 'Currently Genesis is 100% Completed'
-                    //     : ''
-                    // }
+                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+                  // DisableMsg={
+                  //   percentageCompleted.gt(BigNumber.from(10).pow(18))
+                  //     ? 'Currently Genesis is 100% Completed'
+                  //     : ''
+                  // }
                   />
                 )}
                 <PlusMinusArrow>
@@ -566,7 +567,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                     {
-                      type === 'Commit' && 
+                      type === 'Commit' &&
                       <OneLineInputwomargin>
                         <div style={{ flex: 1 }}>
                           <TextWithIcon>
@@ -588,7 +589,9 @@ const Genesis = (props: WithSnackbarProps) => {
                   <Button
                     text={'Connect Wallet'}
                     size={'lg'}
-                    onClick={() => connect('injected')}
+                    onClick={() => connect('injected').then(() => {
+                      localStorage.removeItem('disconnectWallet')
+                    })}
                   />
                 ) : !isApproved ? (
                   <Button
@@ -597,8 +600,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     disabled={
                       // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                       isInputFieldError ||
-                      isApproving || 
-                      (type === 'Commit' && Number(collateralValue) === 0) || 
+                      isApproving ||
+                      (type === 'Commit' && Number(collateralValue) === 0) ||
                       (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
                       (type === 'Swap' && Number(arthValue) === 0)
                     }
@@ -615,12 +618,12 @@ const Genesis = (props: WithSnackbarProps) => {
                         // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                         isInputFieldError ||
                         !isApproved ||
-                        (type === 'Commit' 
+                        (type === 'Commit'
                           ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
                           : !Number(arthValue)
                         )
                       }
-                      onClick={() => setOpenModal(1) }
+                      onClick={() => setOpenModal(1)}
                     />
                     <br />
                     {redeemableBalances[0].gt(0) ||

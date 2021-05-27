@@ -7,7 +7,7 @@ import walletIcon from '../../../assets/svg/wallet-24.svg';
 import CustomModal from '../../CustomModal';
 import Loader from 'react-spinners/PulseLoader';
 
-interface AccountButtonProps {}
+interface AccountButtonProps { }
 
 const truncateMiddle = function (fullStr: string, strLen: number, separator: string) {
   if (fullStr.length <= strLen) return fullStr;
@@ -33,7 +33,11 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
         {!account ? (
           <Button
             variant="transparent"
-            onClick={() => connect('injected')}
+            onClick={() => {
+              connect('injected').then(() => {
+                localStorage.removeItem('disconnectWallet')
+              })
+            }}
             size="sm"
             text="Connect"
           />
