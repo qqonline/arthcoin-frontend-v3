@@ -88,7 +88,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               <SnackBarRedeemCancelled>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                <span className="margin-bottom-10">{content.txn?.summary || "Error"}</span>
+                    <span className="margin-bottom-10">{content.txn?.summary || content.error?.message}</span>
                 </div>
               </SnackBarRedeemCancelled>
             )}
