@@ -7,7 +7,7 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
-import { correctString } from './RegexValidation';
+import { checkForAfterDecimalDigits, correctString } from './RegexValidation';
 
 type props = {
   ILabelValue: string;
@@ -149,7 +149,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             type={'number'}
             onChange={(event) => {
               const proceed = checkForErrors(event.target.value);
-              if (Number(event.target.value) && Number(event.target.value) < 0) return
+              if (Number(event.target.value) && Number(event.target.value) < 0) return;
+              if (!checkForAfterDecimalDigits(event.target.value)) return;
               if (proceed) props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
             }}
           />
