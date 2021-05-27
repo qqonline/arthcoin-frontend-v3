@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../components/NewModal/index';
 import './styles/index.sass';
-import './footer.css';
 import warning from '../../assets/svg/warning.svg';
+import rightArrow from './images/polygon.svg'
+import arthLogo from './img/arth-coin-1.svg'
+import arthLogobg from './images/logo/ARTH-bg.svg'
+import USDLogo from './images/logo/USD.svg'
 
 const Home: React.FC = () => {
-  const [openModal, toggleModal] = useState(true);
+  const [openModal, toggleModal] = useState(false);
   const handleClose = () => {
     toggleModal(false);
   };
@@ -55,8 +58,8 @@ const Home: React.FC = () => {
         </ModalHyperLink>
       </Modal>
       <div id="header-gradient"></div>
-      <div className="chakra"></div>
-      <div className="gradient-red-1"></div>
+      {/*<div className="chakra"></div>*/}
+      {/*<div className="gradient-red-1"></div>*/}
       <div className="gradient-red-2"></div>
       <div className="gradient-black-1"></div>
       <section id="section-title">
@@ -68,33 +71,164 @@ const Home: React.FC = () => {
         >
           <span className="main-title">Timeless value</span>
           <br />
-          World’s first non-depreciating money.
+          <span className="title-brand-name">ARTH</span>
+          <br />
+          <div className="slogans">
+            <p className="slogan slogan1">World’s first non-inflationary money.</p>
+            <p className="slogan slogan2">ARTH protects you from fiat inflation.</p>
+            <p className="slogan slogan3">ARTH protects you from financial crises.</p>
+            <p className="slogan slogan4">ARTH is stable.</p>
+            <p className="slogan slogan5">ARTH is lighting fast.</p>
+            <p className="slogan slogan6">ARTH is the first stablecoin that is resistant to black swan events.</p>
+          </div>
         </div>
-        <div className="title-down-text">
+        {/*<div className="title-down-text">
           <div className="line"></div>
           <div className="text-slide-right">
             <p>
               ARTH.Empowering billions with a <br /> new currency, governed by you.
             </p>
           </div>
-        </div>
+        </div>*/}
 
-        <div id="padding-top-30">
+        <div className="button-container">
           <a
             target="_blank"
             href="https://mahaswap.com/"
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
-            <button className="button-small">Buy ARTH Now →</button>
+            <button className="button-small-bg">Buy ARTH →</button>
+          </a>
+          <a
+            target="_blank"
+            href="https://mahaswap.com/"
+            id="no-txt-decoration"
+            rel="noopener noreferrer"
+          >
+            <button className="button-small-transparent">
+              <img src={rightArrow} height={20} style={{marginRight: '8px'}}/>
+              Imagine. Arth
+            </button>
           </a>
         </div>
       </section>
-      <section id="section-three-features">
-        <div className="card-deck row">
-          <div className="col-12 col-md-4">
+      <section id="section-main-info">
+        <div
+          className="main-conatiner"
+          data-aos="fade-up"
+          data-aos-duration="2000"
+          data-aos-once="true"
+        >
+          <img src={arthLogo} height={45} className="info-logo"/>
+          <br/>
+          <p className='main-heading'>Arth. Never lose buying power of your money.</p>
+          <br/>
+          <p className='section-description'>
+            Arth is designed to fight depreciation of wealth & help you pay less for more.
+            Your purchasing power increases as you preserve Arth. No matter the fluctuation in the market,
+            the value of your money never drops.
+          </p>
+        </div>
+      </section>
+      <section id="section-token-logos">
+        <div className="coin-arth row">
+          <div
+            className="col-12 col-md-6 token"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
             <div
-              className="card height-100"
+              className="icon-section"
+              data-aos="fade-up"
+              data-aos-duration="2000"
+              data-aos-once="true"
+            >
+              <div className="pulse1"></div>
+              <div className="pulse2"></div>
+              <div className="pulse3"></div>
+              <div className="pulse4"></div>
+              <div className="pulse5"></div>
+              <div className="pulse6"></div>
+              <div className="pulse7"></div>
+              <img
+                src={require('./img/arthborderlines.svg')}
+                alt="frame"
+                className="rightpara-leftfig-img"
+              />
+              <img
+                src={require('./img/arthframe.svg')}
+                alt="frame"
+                style={{ marginTop: '5px', marginLeft: '3px' }}
+                className="rightpara-leftfig-img-inner arth"
+              />
+            </div>
+          </div>
+          <div
+            className="col-12 col-md-6 side-para"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
+            <div className="para-text" id="margin-27px-less">
+              <div className="pitch">
+                <span className="main-title">Fighting Inflation</span>
+                <br />
+                World’s first valuecoin
+              </div>
+              <div className="side-text">
+                Arth is a decentralized algorithmic currency that aims to
+                fight inflation irrespective of which direction the market moves,
+                ARTH coin holders will never lose their purchasing power.
+              </div>
+              <div className="side-text">
+                Arth gives you financial freedom with no volatility as
+                it’s a value-stable currency that you control.
+                Arth means wealth creation, one of the foremost goals of human life.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section-rate-info">
+        <div className="upper-color-div">
+          <p className="main-title">Your money should work for you, not against you</p>
+        </div>
+        <div className="rate-main-container">
+          <div className="left-container">
+            <p className="title">Value over time to buy one cup of coffee</p>
+            <p className="sub-title">Compare value with years <span className="tag">2010</span></p>
+          </div>
+          <div className="right-container">
+            <div className="rate-card">
+              <div className="rate-input">
+                <div className="rate-value-card">
+                  <span className="value positive">$1.2</span>
+                  <img src={arthLogobg} height={36}/>
+                </div>
+                <p className="input-label">ARTH Value Coin</p>
+              </div>
+              <div className="rate-input">
+                <div className="rate-value-card">
+                  <span className="value negative">$2.1</span>
+                  <img src={USDLogo} height={36}/>
+                </div>
+                <p className="input-label">Fiat Currency</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section-two-features">
+        <p className="title">
+          Arth is the future of money filling up
+          your wallet soon with the maximum buying power
+        </p>
+        <div className="card-deck row">
+          <div className="col-lg-6 col-sm-12">
+            <div
+              className="card"
               data-aos="fade-up"
               data-aos-duration="500"
               data-aos-once="true"
@@ -112,7 +246,7 @@ const Home: React.FC = () => {
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">Preserve Wealth</h5>
+                <h5 className="card-title">Preserve Buying Power</h5>
                 <p className="card-text">
                   No more erosion of hard-earned wealth due to inflation. ARTH protects and
                   increases your purchasing power shielding your financial life from the effects
@@ -121,9 +255,9 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-4">
+          <div className="col-lg-6 col-sm-12">
             <div
-              className="card height-100"
+              className="card"
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-once="true"
@@ -135,121 +269,110 @@ const Home: React.FC = () => {
                 data-aos-once="true"
               >
                 <img
-                  src={require('./img/feature-icon/f-icon-2.svg')}
+                  src={require('./img/feature-icon/f-icon-5.svg')}
                   className="img-top"
                   alt="..."
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title">Value Stable</h5>
+                <h5 className="card-title">Promote Social good</h5>
                 <p className="card-text">
-                  ARTH is pegged against a Global Measurement Unit consisting of a
-                  well-diversified, anti-correlated, carefully curated basket of assets to
-                  provide ARTH users a lasting stability of intrinsic value.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-4">
-            <div
-              className="card height-100"
-              data-aos="fade-up"
-              data-aos-duration="1500"
-              data-aos-once="true"
-            >
-              <div
-                className="img-container img-container-head"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <img
-                  src={require('./img/feature-icon/f-icon-4.svg')}
-                  className="img-top"
-                  alt="..."
-                />
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">Elastic Supply</h5>
-                <p className="card-text">
-                  Arth has an elastic supply, which means its supply can easily grow or shrink
-                  to meet the current market demand
+                  Protecting generations of hard-earned wealth for billions around the world,
+                  including for social, environmental and governance causes.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <div
-        className="outer-div"
-        style={{
-          background:
-            'linear-gradient(360deg, rgba(22, 22, 22, 0.8) 29.94%, rgba(22, 22, 22, 0.510647) 72.76%, rgba(22, 22, 22, 0) 102.62%)',
-        }}
-      >
-        <section id="section-token-logos">
-          <div className="coin-arth row">
-            <div
-              className="col-12 col-md-6 token"
-              data-aos="fade-up"
-              data-aos-duration="1000"
-              data-aos-once="true"
-            >
-              <div
-                className="icon-section"
-                data-aos="fade-up"
-                data-aos-duration="2000"
-                data-aos-once="true"
-              >
-                <div className="pulse1"></div>
-                <div className="pulse2"></div>
-                <div className="pulse3"></div>
-                <div className="pulse4"></div>
-                <div className="pulse5"></div>
-                <div className="pulse6"></div>
-                <div className="pulse7"></div>
-                <img
-                  src={require('./img/arthborderlines.svg')}
-                  alt="frame"
-                  className="rightpara-leftfig-img"
-                />
-                <img
-                  src={require('./img/arthframe.svg')}
-                  alt="frame"
-                  style={{ marginTop: '5px', marginLeft: '3px' }}
-                  className="rightpara-leftfig-img-inner arth"
-                />
+      <section id="section-application">
+        <p className="title">Application & Usage</p>
+        <p className="subtitle">
+          Arth is for students, shoppers, tourists, businessmen, employees,
+          passengers, institutions & governments. Anyone exchanging value.
+        </p>
+        <div className="planet-container"></div>
+      </section>
+      <section id="section-technology">
+        <div className="main-container">
+          <p className="title">Technology</p>
+          <p className="subtitle">
+            Arth is an algorithmic value-stable coin built using
+            robust strategies like vault optimization,
+            auto collateralisation ratio, automatic rebalancing mechanism,
+            anti-correlated asset selection, purchasing power pegging,
+            oracle pricefeeds and more. </p>
+          <div className="tech-container">
+            <div className="feature-image">
+              <img
+                src={require('./img/feature-icon/Cross-borader transactions.svg')}
+                alt="..."
+                height={250}
+              />
+            </div>
+            <div className="tech-info">
+              <p className="info-title">Cross-chain liquidity</p>
+              <p className="info-desc">
+                Arth is compatible with tokens and currencies from other
+                blockchains to create a massive liquidity pool across the chains.
+                You can stake, lend, borrow, trade Arth across chains. (coming soon)
+              </p>
+            </div>
+          </div>
+          <div className="tech-container">
+            <div className="feature-image">
+              <img
+                src={require('./img/feature-icon/Cross-chain liquidity.svg')}
+                alt="..."
+                height={250}
+              />
+            </div>
+            <div className="tech-info">
+              <p className="info-title">Cross-border transactions</p>
+              <p className="info-desc">
+                Deployed on Layer 2 Protocol,
+                Arth offers transactions speed of less than 3 seconds to cross the border from your wallet
+                to another across the globe.
+                The very near future version of Arth shall be a cross-chain solution that brings
+                the power of value coin to other blockchains like Ethereum and more
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="section-revolution">
+        <div className="main-container">
+          <p className="title">Lead the revolution</p>
+          <p className="subtitle">
+            Arth eliminates price instability and value erosion.
+            Control your financial future, increase your money’s worth.
+          </p>
+          <div className="cards-container row">
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A revolutionary medium of exchange whose purchasing power grows with you.
+                </span>
               </div>
             </div>
-            <div
-              className="col-12 col-md-6 side-para"
-              data-aos="fade-up"
-              data-aos-duration="1000"
-              data-aos-once="true"
-            >
-              <div className="para-text" id="margin-27px-less">
-                <div className="pitch">
-                  Fighting Depreciation
-                  <br />
-                  World's first valuecoin
-                </div>
-                <div className="side-text">
-                  ARTH is a decentralized algorithmic currency that aims to fight depreciation.
-                  Irrespective of which direction the market moves, ARTH coin holders will never
-                  lose their buying power.
-                </div>
-                <div className="side-text">
-                  ARTH gives you financial freedom with no volatility as it’s a value-stable
-                  currency that you control. ARTH means wealth creation, one of the foremost
-                  goals of human life.
-                </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A timeless store of value that is preserved across the generations.
+                </span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
+              <div className="Icard">
+                <span className="text">
+                  A decentralised Money that is governed by the community, and by you.
+                </span>
               </div>
             </div>
           </div>
-        </section>
-      </div>
-      {/* This is for Chart */}
-      <section
+        </div>
+      </section>
+      {/* <section
         id="section-arth-backed"
         data-aos="fade-up"
         className="hide-pie-on-phone"
@@ -288,7 +411,7 @@ const Home: React.FC = () => {
             <li>5% Bitcoin</li>
           </ul>
         </div>
-      </section>
+      </section>*/}
       {/* <section className="arth-section" id="arth-tech">
         <div
           className="arth-heading arth-heading-regular"
@@ -421,7 +544,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section> */}
-      <section
+      {/*<section
         className="text-center"
         id="arth-section-title"
         data-aos="fade-up"
@@ -444,77 +567,72 @@ const Home: React.FC = () => {
             <button className="button-small">Buy ARTH Now →</button>
           </a>
         </div>
-      </section>
+      </section>*/}
       {/* Footers */}
       <footer>
         <div className="footer-content">
-          <div className="row bottom-most">
-            <div className="col-12 col-sm-6">
-              <div className="social-items">
-                <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
-                  <button className="button3">
-                    <i
-                      className="fab fa-twitter"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
-                  </button>
-                </a>
-                <a id="social-medium" href="https://medium.com/mahadao">
-                  <button className="button3">
-                    <i
-                      className="fab fa-medium"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
-                  </button>
-                </a>
-                <a id="social-telegram" href="https://t.me/MahaDAO">
-                  <button className="button3">
-                    <i
-                      className="fab fa-telegram-plane"
-                      style={{ marginTop: '12px', marginLeft: '10px' }}
-                    ></i>
-                  </button>
-                </a>
-                <a id="social-github" href="https://github.com/mahadao">
-                  <button className="button3">
-                    <i
-                      className="fab fa-github"
-                      style={{ marginTop: '11.5px', marginLeft: '11.5px' }}
-                    ></i>
-                  </button>
-                </a>
-                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
-                  <button className="button3">
-                    <i
-                      className="fab fa-reddit"
-                      style={{ marginTop: '10.5px', marginLeft: '10.5px' }}
-                    ></i>
-                  </button>
-                </a>
-                <a id="social-discord" href="https://discord.gg/V6sr3fe">
-                  <button className="button3">
-                    <i
-                      className="fab fa-discord"
-                      style={{ marginTop: '12px', marginLeft: '12px' }}
-                    ></i>
-                  </button>
-                </a>
-              </div>
+          <div className="top-most">
+            <div className="msg">
+              <p className="title">
+                Arth. Money Reinvented
+              </p>
+              <p className="subtitle">
+                Join the mission as we establish a new standard of money. A better money.
+              </p>
             </div>
-            <div className="col-12 col-sm-6">
+            <div className="action-button">
+              <button className="button-small-bg">Buy ARTH Now</button>
+            </div>
+          </div>
+          <div className="row bottom-most">
+            <div className="col-12 col-sm-6 bottom-left">
               <FooterEnd>
-                <StyledLink href="https://docs.arthcoin.com" target="_blank">
-                  Arth GitBook
-                </StyledLink>
                 <div className="dialog-class">
-                  <span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>
+                  {/*<span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>*/}
                   <img
                     src={require('./images/mainlogo.svg')}
                     alt="mahadao-logo"
                     width="140px"
                   />
                 </div>
+                <StyledLink href="https://docs.arthcoin.com" target="_blank">
+                  Arth GitBook
+                </StyledLink>
               </FooterEnd>
+            </div>
+            <div className="col-12 col-sm-6 bottom-right">
+              <div className="social-items">
+                <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
+                  <button className="button3">
+                    <i className="fab fa-twitter"/>
+                  </button>
+                </a>
+                <a id="social-medium" href="https://medium.com/mahadao">
+                  <button className="button3">
+                    <i className="fab fa-medium"/>
+                  </button>
+                </a>
+                <a id="social-telegram" href="https://t.me/MahaDAO">
+                  <button className="button3">
+                    <i className="fab fa-telegram-plane"/>
+                  </button>
+                </a>
+                <a id="social-github" href="https://github.com/mahadao">
+                  <button className="button3">
+                    <i className="fab fa-github"/>
+                  </button>
+                </a>
+                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
+                  <button className="button3">
+                    <i className="fab fa-reddit"/>
+                  </button>
+                </a>
+                <a id="social-discord" href="https://discord.gg/V6sr3fe">
+                  <button className="button3">
+                    <i className="fab fa-discord"/>
+                  </button>
+                </a>
+              </div>
             </div>
           </div>
           <div id="footer-gradient"></div>
@@ -523,6 +641,7 @@ const Home: React.FC = () => {
     </div>
   );
 };
+
 const FooterEnd = styled.div`
   font-family: 'Syne', sans-serif;
   text-align: center;
@@ -530,34 +649,34 @@ const FooterEnd = styled.div`
   float: right;
   color: #ababab;
   font-size: 18px;
-  padding-top: 22px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   @media (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 const StyledLink = styled.a`
   font-weight: bold;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
   color: #ffffff;
   margin-right: 32px;
   cursor: pointer;
   color: #ffffff;
   opacity: 0.64;
+  margin-left: 20px;
   &:hover {
     opacity: 0.88;
     color: #ffffff;
     text-decoration: none;
   }
   @media (max-width: 768px) {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    margin-top: 0px;
+    margin: 0;
   }
 `;
 const ModalText = styled.div`

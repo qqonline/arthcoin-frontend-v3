@@ -19,8 +19,11 @@
   0%
     transform: translate(0, 0)
 
+  50%
+    transform: translate(0, -100px)
+
   100%
-    transform: translate(0, 600px)
+    transform: translate(0, 300px)
 
 .chakra
   $size: 1500px
@@ -34,7 +37,7 @@
   top: 50px
   z-index: -2
   width: $size
-  
+
 
 .gradient-red-1
   position: absolute
@@ -51,11 +54,16 @@
 .gradient-red-2
   position: absolute
   opacity: 0.5
-  top: 800px
+  top: 0
   left: -629px
   animation: up-down 10s infinite alternate
   background-image: url("../images/gradient-circle.png")
   background-size: cover
-  height: 1229px
-  width: 1229px
-  z-index: -2
+  height: 1238px
+  width: 1238px
+  z-index: -1
+  @media (max-width: 600px)
+    height: 619px
+    width: 619px
+    top: 150px
+    left: -350px
