@@ -120,6 +120,24 @@ const CustomInputContainer: React.FC<props> = (props) => {
     return returnObj;
   }
 
+  const checkForDigitsCount = (event : any) => {
+    if (!checkForAfterDecimalDigits(event.target.value)) {
+      const temp: ICStatesInterface = {
+        IState: 'warning',
+        IMsg: 'only 10 digits before decimal and 6 digits after decimal is allowed',
+      };
+      setICStates(temp);
+      return false;
+    } else {
+      const temp: ICStatesInterface = {
+        IState: 'default',
+        IMsg: '',
+      };
+      setICStates(temp);
+      return true;
+    }
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       {DisableMsg !== '' && <TotalDisable><DMsg>{DisableMsg}</DMsg></TotalDisable>}
@@ -150,20 +168,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             onChange={(event) => {
               const proceed = checkForErrors(event.target.value);
               if (Number(event.target.value) && Number(event.target.value) < 0) return;
-              if (!checkForAfterDecimalDigits(event.target.value)) {
-                const temp: ICStatesInterface = {
-                  IState: 'warning',
-                  IMsg: 'only 10 digits before decimal and 6 digits after decimal is allowed',
-                };
-                setICStates(temp);
-                return;
-              } else {
-                const temp: ICStatesInterface = {
-                  IState: 'default',
-                  IMsg: '',
-                };
-                setICStates(temp);
-              }
+              if (!checkForDigitsCount(event)) return;
+
               if (proceed) props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
             }}
           />
