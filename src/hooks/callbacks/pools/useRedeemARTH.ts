@@ -7,6 +7,7 @@ import useSlippage from '../../useSlippage';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
 import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
+import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
@@ -46,8 +47,8 @@ export default function (
       } catch(e) {
         addPopup({
           error: {
-            message: e.data.message,
-            stack: e.stack
+            message: formatErrorMessage(e?.data?.message || e?.message),
+            stack: e?.stack
           }
         });
       }

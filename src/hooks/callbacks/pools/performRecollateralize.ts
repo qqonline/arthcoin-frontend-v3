@@ -5,6 +5,7 @@ import useCore from '../../useCore';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (collateralToken: string, collateralAmount: BigNumber, arthxOutMin: BigNumber) {
@@ -27,8 +28,8 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
     } catch(e) {
       addPopup({
         error: {
-          message: e.data.message,
-          stack: e.stack
+          message: formatErrorMessage(e?.data?.message || e?.message),
+          stack: e?.stack
         }
       });
     }

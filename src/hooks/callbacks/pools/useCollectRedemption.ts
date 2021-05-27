@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import useCore from '../../useCore';
 import { useAddPopup } from '../../../state/application/hooks';
+import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (collateralToken: string) {
@@ -21,8 +22,8 @@ export default function (collateralToken: string) {
     } catch(e) {
       addPopup({
         error: {
-          message: e.data.message,
-          stack: e.stack
+          message: formatErrorMessage(e?.data?.message || e?.message),
+          stack: e?.stack
         }
       });
     }
