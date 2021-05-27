@@ -27,7 +27,7 @@ export default function (
       );
 
       addTransaction(response, {
-        summary: `Withdraw ${amount} ${depositToken}`
+        summary: `Withdraw ${amount.toLocaleString()} ${depositToken}`
       });
 
       if (callback) callback();

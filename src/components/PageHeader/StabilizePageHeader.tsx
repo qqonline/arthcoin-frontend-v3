@@ -98,7 +98,10 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                   </TextForInfoTitle>
                   {/* </div> */}
                   <PercentNumber style={{ margin: '0px 12px' }}>
-                    {getDisplayBalance(globalCR, 4, 2)}%
+                    {
+                      Number(getDisplayBalance(globalCR, 4, 4))
+                        .toLocaleString('en-US', {maximumFractionDigits: 4})
+                    }%
                   </PercentNumber>
                   <BorderLinearProgress
                     variant="determinate"

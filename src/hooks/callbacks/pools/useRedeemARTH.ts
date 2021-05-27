@@ -40,7 +40,7 @@ export default function (
         );
 
         addTransaction(response, {
-          summary: `Redeem ARTH`,
+          summary: `Redeem ${arthAmount.toLocaleString()} ARTH`,
         });
 
         if (callback) callback();

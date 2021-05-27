@@ -27,7 +27,7 @@ export default function (
       );
 
       addTransaction(response, {
-        summary: `Stake ${amount} ${depositToken}`
+        summary: `Stake ${amount.toLocaleString()} ${depositToken}`
       });
 
       if (callback) callback();

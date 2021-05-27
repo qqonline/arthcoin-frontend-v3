@@ -37,7 +37,7 @@ export default function (
       );
       
       addTransaction(response, {
-        summary: `Mint ${arthOutMin} ARTH`
+        summary: `Mint ${arthOutMin.toLocaleString()} ARTH`
       });
 
       callback();

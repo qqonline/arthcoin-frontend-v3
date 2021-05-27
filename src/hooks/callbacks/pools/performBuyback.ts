@@ -23,7 +23,7 @@ export default function (
       const response = await pool.buyBackARTHX(arthxAmount, collateralOutMin);
 
       addTransaction(response, {
-        summary: `Buyback ${getDisplayBalance(arthxAmount, 18, 3)} ARTHX`
+        summary: `Buyback ${Number(getDisplayBalance(arthxAmount, 18, 3)).toLocaleString()} ARTHX`
       });
 
       if (callback) callback();
