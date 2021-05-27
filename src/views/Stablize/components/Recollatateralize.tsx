@@ -24,6 +24,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import prettyNumber from '../../../components/PrettyNumber';
 
 type Iprops = {
   onChange?: () => void;
@@ -139,7 +140,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {Number(getDisplayBalance(arthxRecollateralizeAmount, 18, 3)).toLocaleString()} <HardChip>ARTHX</HardChip>{' '}
+            {prettyNumber(getDisplayBalance(arthxRecollateralizeAmount, 18, 3))} <HardChip>ARTHX</HardChip>{' '}
             <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
           </HeaderSubtitle>
         </LeftTopCardHeader>
@@ -309,7 +310,12 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                       {/* <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} /> */}
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>${Number(getDisplayBalance(arthxPrice, 6, 4)).toLocaleString()}</InputLabelSpanRight>
+                  <InputLabelSpanRight>
+                    ${
+                      Number(getDisplayBalance(arthxPrice, 6, 6))
+                        .toLocaleString('en-US', { maximumFractionDigits: 6 })
+                    }
+                  </InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <RightTopCardHeader style={{ marginTop: 20 }}>

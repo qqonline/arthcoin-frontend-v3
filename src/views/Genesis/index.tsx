@@ -257,15 +257,21 @@ const Genesis = (props: WithSnackbarProps) => {
   const bondingDiscount = [
     {
       label: 'Current discount',
-      value: `${getDisplayBalance(recollateralizationDiscount, 4, 2)}%`,
+      value: `${
+        Number(getDisplayBalance(recollateralizationDiscount, 4, 4))
+          .toLocaleString('en-US', { maximumFractionDigits: 4 })
+      }%`,
     },
     {
       label: 'Starting ARTHX Price',
-      value: '0.01$',
+      value: '$0.01',
     },
     {
       label: 'Discounted ARTHX Price',
-      value: `${Number(getDisplayBalance(arthxPrice, 6, 4)).toLocaleString()}$`,
+      value: `$${
+        Number(getDisplayBalance(arthxPrice, 6, 6))
+          .toLocaleString('en-US', { maximumFractionDigits: 6})
+      }`,
     },
   ];
 
@@ -398,7 +404,10 @@ const Genesis = (props: WithSnackbarProps) => {
               />
             </div>
             <HeaderSpan>
-              {Number(getDisplayBalance(percentageCompleted, 16, 3)).toLocaleString()}% Completed
+              {
+                Number(getDisplayBalance(percentageCompleted, 16, 3))
+                  .toLocaleString('en-US', { maximumFractionDigits: 2 })
+              }% Completed
             </HeaderSpan>
           </PageSubHeading>
         ) : (

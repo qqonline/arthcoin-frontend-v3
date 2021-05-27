@@ -174,14 +174,20 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             labelData={`Trading Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}
+            rightLabelValue={
+              Number(getDisplayBalance(tradingFee, tokenDecimals))
+                .toLocaleString('en-US', { maximumFractionDigits: tokenDecimals })
+            }
           />
 
           <TransparentInfoDiv
             labelData={`Stability Fee`}
             labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
-            rightLabelValue={Number(getDisplayBalance(stabilityFeeAmount, 2, 2)).toLocaleString()}
+            rightLabelValue={
+              Number(getDisplayBalance(stabilityFeeAmount, 2, 2))
+                .toLocaleString('en-US', { maximumFractionDigits: 2 })
+            }
           />
 
           <Divider
@@ -318,7 +324,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <TextWithIcon>Trading Fee</TextWithIcon>
                   </div>
                   <OneLineInputwomargin>
-                    <BeforeChip>{Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}</BeforeChip>
+                    <BeforeChip>
+                      {
+                        Number(getDisplayBalance(tradingFee, tokenDecimals))
+                          .toLocaleString('en-US', { maximumFractionDigits: tokenDecimals })
+                      }
+                    </BeforeChip>
                     <TagChips>{selectedCollateral}</TagChips>
                   </OneLineInputwomargin>
                 </OneLineInputwomargin>
@@ -330,7 +341,12 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     </TextWithIcon>
                   </div>
                   <OneLineInput>
-                    <BeforeChip>{Number(getDisplayBalance(stabilityFeeAmount, 2, 2)).toLocaleString()}</BeforeChip>
+                    <BeforeChip>
+                      {
+                        Number(getDisplayBalance(stabilityFeeAmount, 2, 2))
+                          .toLocaleString('en-US', { maximumFractionDigits: 2 })
+                      }
+                    </BeforeChip>
                     <TagChips>MAHA</TagChips>
                   </OneLineInput>
                 </OneLineInput>

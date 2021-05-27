@@ -29,6 +29,7 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
 import usePerformBuyback from '../../../hooks/callbacks/pools/performBuyback';
 import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import prettyNumber from '../../../components/PrettyNumber';
 
 type Iprops = {
   onChange?: () => void;
@@ -127,7 +128,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
             />
           </HeaderTitle>
           <HeaderSubtitle>
-            {Number(getDisplayBalance(collateralToBeBoughtBack, 18, 2)).toLocaleString()}{' '}
+            {prettyNumber(getDisplayBalance(collateralToBeBoughtBack, 18))}{' '}
             <HardChip>{selectedCollateral}</HardChip>
             <br />
             <TextForInfoTitle>To be bought back</TextForInfoTitle>
@@ -176,7 +177,12 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                   </TextWithIcon>
                 </div>
                 <OneLineInputwomargin>
-                  <BeforeChip>{Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}</BeforeChip>
+                  <BeforeChip>
+                    {
+                      Number(getDisplayBalance(tradingFee, tokenDecimals))
+                      .toLocaleString('en-US', {maximumFractionDigits: tokenDecimals})
+                    }
+                  </BeforeChip>
                   <TagChips>{selectedCollateral}</TagChips>
                 </OneLineInputwomargin>
               </OneLineInputwomargin>
@@ -265,7 +271,12 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                       <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
                   </div>
-                  <InputLabelSpanRight>{Number(getDisplayBalance(buybackFee, 4, 4)).toLocaleString()}%</InputLabelSpanRight>
+                  <InputLabelSpanRight>
+                    {
+                      Number(getDisplayBalance(buybackFee, 4, 4))
+                        .toLocaleString('en-US', { maximumFractionDigits: 4 })
+                    }%
+                  </InputLabelSpanRight>
                 </OneLineInput>
               </div>
               <div style={{ marginBottom: '8px' }}>
@@ -274,7 +285,10 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                     <TextForInfoTitle>ARTHX Oracle Price</TextForInfoTitle>
                   </div>
                   <InputLabelSpanRight>
-                    ${Number(getDisplayBalance(arthxPrice, 6, 6)).toLocaleString()}
+                    ${
+                      Number(getDisplayBalance(arthxPrice, 6, 6))
+                        .toLocaleString('en-US', { maximumFractionDigits: 6 })
+                    }
                   </InputLabelSpanRight>
                 </OneLineInput>
               </div>
@@ -304,7 +318,10 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={selectedCollateral}
-            rightLabelValue={Number(getDisplayBalance(tradingFee, tokenDecimals)).toLocaleString()}
+            rightLabelValue={
+              Number(getDisplayBalance(tradingFee, tokenDecimals))
+                .toLocaleString('en-US', { maximumFractionDigits: tokenDecimals })
+            }
           />
 
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />

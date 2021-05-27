@@ -208,7 +208,10 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
           <TransparentInfoDiv
             labelData={`Trading Fee`}
             rightLabelUnit={'ARTH'}
-            rightLabelValue={Number(getDisplayBalance(tradingFee, 18)).toLocaleString()}
+            rightLabelValue={
+              Number(getDisplayBalance(tradingFee, 18, 6))
+                .toLocaleString('en-US', { maximumFractionDigits: 6 })
+            }
           />
 
           <Divider

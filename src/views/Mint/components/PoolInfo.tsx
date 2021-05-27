@@ -37,7 +37,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>ARTHX GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${Number(getDisplayBalance(arthxPrice, 6)).toLocaleString()}</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              ${
+                Number(getDisplayBalance(arthxPrice, 6, 6))
+                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -45,7 +50,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>${Number(getDisplayBalance(collatearlPrice, 6)).toLocaleString()}</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              ${
+                Number(getDisplayBalance(collatearlPrice, 6, 6))
+                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -56,7 +66,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(mintCR, 4, 2)}%</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {
+                Number(getDisplayBalance(mintCR, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -67,7 +82,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(redeemCR, 4, 2)}%</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {
+                Number(getDisplayBalance(redeemCR, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -96,7 +116,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(stabilityFee, 2, 2)}%</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {
+                Number(getDisplayBalance(stabilityFee, 2, 2))
+                  .toLocaleString('en-US', { maximumFractionDigits: 2})
+              }%
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -107,7 +132,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(mintingFee, 4, 3)}%</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {
+                Number(getDisplayBalance(mintingFee, 4, 4))
+                  .toLocaleString('en-US', {maximumFractionDigits: 4})
+              }%
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -118,7 +148,12 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>{getDisplayBalance(redeemingFee, 4, 3)}%</InputLabelSpanRight>
+            <InputLabelSpanRight>
+              {
+                Number(getDisplayBalance(redeemingFee, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </InputLabelSpanRight>
           </OneLineInput>
         </div>
       </RightTopCard>
