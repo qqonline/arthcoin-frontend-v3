@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
 
 type props = {
   stats?: boolean;
@@ -33,7 +34,12 @@ const BondingDiscount: React.FC<props> = (props: props) => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>{getDisplayBalance(discount, 6)}%</BeforeChip>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(discount, 4, 4))
+                  .toLocaleString('en-US', {maximumFractionDigits: 4})
+              }%
+            </BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>

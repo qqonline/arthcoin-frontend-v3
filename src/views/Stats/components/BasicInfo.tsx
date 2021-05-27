@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 import CustomToolTip from '../../../components/CustomTooltip';
-import { Link } from 'react-router-dom';
 import prettyNumber from '../../../components/PrettyNumber';
 
 type props = {};

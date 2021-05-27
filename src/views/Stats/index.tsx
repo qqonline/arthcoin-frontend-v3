@@ -1,14 +1,16 @@
 import { OverviewData } from './types';
 import Container from '../../components/Container';
-
 import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
+import { BigNumber } from '@ethersproject/bignumber';
+import { useMediaQuery } from 'react-responsive';
+import styled from 'styled-components';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import HomeCard from './components/HomeCard';
 import Page from '../../components/Page';
 import PageHeader from '../../components/PageHeader';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import useCore from '../../hooks/useCore';
-import { useMediaQuery } from 'react-responsive';
 import usePoolBalances from '../../hooks/state/pools/usePoolBalances';
 import CollateralRatio from './components/CollateralRatio';
 import PieChart from './components/PieChart';
@@ -19,8 +21,6 @@ import CoinsPrice from './components/CoinsPrice';
 import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
 import CustomToolTip from '../../components/CustomTooltip';
-import { Link } from 'react-router-dom';
-import { BigNumber } from '@ethersproject/bignumber';
 import { getDisplayBalance } from '../../utils/formatBalance';
 
 const Home: React.FC = () => {

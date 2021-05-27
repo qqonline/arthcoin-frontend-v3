@@ -22,7 +22,12 @@ const CoinsPrice: React.FC<props> = (props) => {
             <TargetPriceTag>Target Price: $1.00</TargetPriceTag>
           </div>
           <div>
-            <BeforeChip>${getDisplayBalance(arthPrice, 6, 6)}</BeforeChip>
+            <BeforeChip>
+              ${
+                Number(getDisplayBalance(arthPrice, 6, 6))
+                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
+            </BeforeChip>
             {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>
@@ -32,7 +37,12 @@ const CoinsPrice: React.FC<props> = (props) => {
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
-            <BeforeChip>${getDisplayBalance(arthxPrice, 6, 6)}</BeforeChip>
+            <BeforeChip>
+              ${
+                Number(getDisplayBalance(arthxPrice, 6, 6))
+                  .toLocaleString('en-US', {maximumFractionDigits: 6})
+              }
+            </BeforeChip>
             {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>
@@ -42,7 +52,12 @@ const CoinsPrice: React.FC<props> = (props) => {
             {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
-            <BeforeChip>${getDisplayBalance(mahaPrice, 6, 6)}</BeforeChip>
+            <BeforeChip>
+              ${
+                Number(getDisplayBalance(mahaPrice, 6, 6))
+                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
+            </BeforeChip>
             {/* <PercentChange>+0.15%</PercentChange> */}
           </div>
         </OneLine>

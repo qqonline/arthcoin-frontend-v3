@@ -51,12 +51,15 @@ const CollateralRatio: React.FC = () => {
           </TextForInfoTitle>
           {/* </div> */}
           <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>
-            {getDisplayBalance(globalCR, 4, 0)}%
+            {
+              Number(getDisplayBalance(globalCR, 4, 4))
+                .toLocaleString('en-US', {maximumFractionDigits: 4})
+            }%
           </PercentNumber>
         </div>
         <BorderLinearProgress
           variant="determinate"
-          value={Number(getDisplayBalance(globalCR, 4, 2))}
+          value={Number(getDisplayBalance(globalCR, 4, 4))}
         />
       </div>
     );
@@ -93,7 +96,12 @@ const CollateralRatio: React.FC = () => {
               />
               <OpacitySpan>Collateral</OpacitySpan>
             </PercentCardLabel>
-            <PercentCardValue>{getDisplayBalance(globalCR, 4, 2)}%</PercentCardValue>
+            <PercentCardValue>
+              {
+                Number(getDisplayBalance(globalCR, 4, 4))
+                  .toLocaleString('en-US', {maximumFractionDigits: 4})
+              }
+            %</PercentCardValue>
           </PercentCardInfo>
 
           <PercentCardInfo>
@@ -109,7 +117,12 @@ const CollateralRatio: React.FC = () => {
               <OpacitySpan>ARTHX</OpacitySpan>
             </PercentCardLabel>
             <PercentCardValue>
-              {getDisplayBalance(BigNumber.from(1000000).sub(globalCR), 4, 2)}%
+              {
+                Number(
+                  getDisplayBalance(BigNumber.from(1000000).sub(globalCR), 4, 2)
+                )
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
             </PercentCardValue>
           </PercentCardInfo>
         </PercentCard>

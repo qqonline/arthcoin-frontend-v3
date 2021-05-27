@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 import CustomToolTip from '../../../components/CustomTooltip';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type props = {};
 
 const BondingDiscount: React.FC<props> = () => {
   const mintingFees = usePoolMintingFees('');
+  const stabilityFee = useStabilityFee();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -22,7 +24,12 @@ const BondingDiscount: React.FC<props> = () => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>{getDisplayBalance(mintingFees, 4)}%</BeforeChip>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(mintingFees, 4, 4))
+                  .toLocaleString('en-US', {maximumFractionDigits: 4})
+              }%
+            </BeforeChip>
             {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
@@ -34,7 +41,12 @@ const BondingDiscount: React.FC<props> = () => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>1%</BeforeChip>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(stabilityFee, 2, 2))
+                  .toLocaleString('en-US', { maximumFractionDigits: 2 })
+              }%
+            </BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
@@ -47,7 +59,12 @@ const BondingDiscount: React.FC<props> = () => {
             </TextWithIcon>
           </div>
           <OneLine>
-            <BeforeChip>{getDisplayBalance(mintingFees, 3)}%</BeforeChip>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(mintingFees, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </BeforeChip>
             {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
