@@ -7,7 +7,7 @@ import application from './application/reducer';
 import token from './token/reducer';
 import slippage from './slippage/reducer';
 
-const PERSISTED_KEYS: string[] = ['transactions', 'token'];
+const PERSISTED_KEYS: string[] = ['transactions', 'token', 'slippage'];
 
 const store = configureStore({
   reducer: {
@@ -16,7 +16,11 @@ const store = configureStore({
     token,
     slippage
   },
-  middleware: [...getDefaultMiddleware({ serializableCheck: false, thunk: false }), save({ states: PERSISTED_KEYS }), createLogger()],
+  middleware: [
+    ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
+    save({ states: PERSISTED_KEYS }),
+    createLogger()
+  ],
   preloadedState: load({ states: PERSISTED_KEYS }),
 });
 

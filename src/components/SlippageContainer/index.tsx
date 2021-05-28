@@ -126,11 +126,11 @@ const SlippageContainer: React.FC = () => {
                       }
                       onClick={() => data.id !== id && updateSlippage(data.id, 0.00)}
                     >
-                      {data.id === id ? (
-                        CustomRateField()
-                      ) : (
-                        <ButtonText>{data.text}</ButtonText>
-                      )}
+                      {
+                        data.id === id
+                          ? CustomRateField()
+                          : <ButtonText>{data.text}</ButtonText>
+                      }
                     </ButtonItem>
                   )}
                 )
