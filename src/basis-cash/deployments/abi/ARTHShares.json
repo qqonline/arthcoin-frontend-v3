@@ -270,37 +270,6 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "total",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "burned",
-        "type": "uint256"
-      }
-    ],
-    "name": "TaxCharged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "value",
         "type": "uint256"
       }
@@ -991,40 +960,26 @@
   },
   {
     "inputs": [],
+    "name": "taxController",
+    "outputs": [
+      {
+        "internalType": "contract ITaxController",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "taxCurve",
     "outputs": [
       {
         "internalType": "contract ITaxCurve",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "taxDestination",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "taxToBurnPercent",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1253,37 +1208,24 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_taxDestination",
-        "type": "address"
-      }
-    ],
-    "name": "setTaxDestination",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "percent",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTaxBurnPercent",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_controller",
         "type": "address"
       }
     ],
     "name": "setArthController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ITaxController",
+        "name": "newController",
+        "type": "address"
+      }
+    ],
+    "name": "setTaxController",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
