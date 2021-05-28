@@ -32,7 +32,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
   const core = useCore();
@@ -138,12 +137,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   <TabText>Redeem</TabText>
                 </TabContainer>
               </div>
-              <SlippageContainer
-                defaultRate={selectedRate}
-                onRateChange={(data) => {
-                  setSelectedRate(data);
-                }}
-              />
+              <SlippageContainer />
             </LeftTopCardHeader>
             <LeftTopCardContainer className={'custom-mahadao-container-content'}>
               <CustomInputContainer

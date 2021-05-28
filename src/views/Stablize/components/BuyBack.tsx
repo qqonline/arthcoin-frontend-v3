@@ -39,7 +39,6 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const [redeemAmount, setRedeemAmount] = useState<string>('0');
   const [receiveAmount, setReceiveAmount] = useState<string>('0');
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [successModal, setSuccessModal] = useState<boolean>(false);
 
@@ -120,12 +119,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
               Buyback
               <CustomToolTip toolTipText={'loreum ipsum'} />
             </div>
-            <SlippageContainer
-              defaultRate={selectedRate}
-              onRateChange={(data) => {
-                setSelectedRate(data);
-              }}
-            />
+            <SlippageContainer />
           </HeaderTitle>
           <HeaderSubtitle>
             {prettyNumber(getDisplayBalance(collateralToBeBoughtBack, 18))}{' '}

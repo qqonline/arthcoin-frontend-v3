@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TokenSymbol from '../TokenSymbol';
-import settings from '../../assets/svg/settingSlidder.svg';
-import CustomToolTip from '../CustomTooltip';
-import { InputBase } from '@material-ui/core';
+import React, {useState } from 'react';
 
-export interface InputProps {
-  defaultRate: number;
-  onRateChange: (data: number) => void;
-}
+import CustomToolTip from '../CustomTooltip';
+import settings from '../../assets/svg/settingSlidder.svg';
+import { useSlippage, useUpdateSlippage } from '../../state/slippage/hooks';
+import { ValidateNumber } from '../CustomInputContainer/RegexValidation';
 
 interface Irates {
   id: number;
@@ -39,44 +35,18 @@ const rates: Irates[] = [
   },
 ];
 
-const SlippageContainer: React.FC<InputProps> = (props) => {
-  const { defaultRate, onRateChange } = props;
+const SlippageContainer: React.FC = () => {
   const [modalOpen, setOpenModal] = useState<boolean>(false);
-  const [selectedRate, setSelectedRate] = useState<number>(1);
-  const [customRate, setCustomRate] = useState<string>('0.00');
 
-  useEffect(() => {
-    if (!modalOpen) {
-      if (props.defaultRate === 0.1) {
-        setSelectedRate(1);
-      } else if (props.defaultRate === 0.5) {
-        setSelectedRate(2);
-      } else if (props.defaultRate === 1.0) {
-        setSelectedRate(3);
-      } else if (props.defaultRate === 0.0) {
-      } else {
-        setSelectedRate(4);
-        setCustomRate(props.defaultRate.toString());
-      }
-    }
-  }, [modalOpen, props.defaultRate]);
-
-  const onRateClick = (data: Irates) => {
-    setSelectedRate(data.id);
-    if (data.id !== 4) {
-      onRateChange(data.rate);
-    } else {
-      setCustomRate('0.00');
-    }
-  };
+  const { id , value: slippage } = useSlippage();
+  const updateSlippage = useUpdateSlippage();
 
   const onInputChange = (value: string) => {
-    setCustomRate(value);
-    if (Number(value)) {
-      onRateChange(Number(value));
-    } else {
-      console.log('warning', value);
-    }
+    const check: boolean = ValidateNumber(value);
+    if (!check) return;
+
+    if (Number(value)) updateSlippage(4, Number(value));
+    else updateSlippage(4, 0.00);
   };
 
   const CustomRateField = () => {
@@ -85,8 +55,8 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
         <InputDiv>
           <input
             inputMode={'decimal'}
-            defaultValue={customRate}
-            value={customRate}
+            defaultValue={0}
+            value={slippage}
             style={{
               fontFamily: 'Inter !important',
               fontStyle: 'normal',
@@ -102,7 +72,8 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
             onChange={(event) => {
               onInputChange(event.target.value);
             }}
-            min={0}
+            min={0.000001}
+            max={100}
           />
         </InputDiv>
         <PerDiv>%</PerDiv>
@@ -120,7 +91,12 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
         />
       )}
       <CustomDiv>
-        <img src={settings} height={20} onClick={() => setOpenModal(!modalOpen)} />
+        <img 
+          src={settings} 
+          height={20} 
+          alt="Slippage icon" 
+          onClick={() => setOpenModal(!modalOpen)} 
+        />
         {modalOpen && (
           <CustomSlippageBox>
             <CTitle>
@@ -128,37 +104,37 @@ const SlippageContainer: React.FC<InputProps> = (props) => {
               <CustomToolTip toolTipText={'loreum ipsum'} />
             </CTitle>
             <ButtonsBox>
-              {rates.map((data) => {
-                if (data.id !== 4) {
-                  return (
-                    <ButtonItem
-                      key={data.id}
-                      style={data.id === selectedRate ? { border: '1px solid white' } : {}}
-                      onClick={() => onRateClick(data)}
-                    >
-                      <ButtonText>{data.text}</ButtonText>
-                    </ButtonItem>
+              {
+                rates.map((data: Irates) => {
+                  if (data.id !== 4) return (
+                      <ButtonItem
+                        key={data.id}
+                        style={data.id === id ? { border: '1px solid white' } : {}}
+                        onClick={() => updateSlippage(data.id, data.rate)}
+                      >
+                        <ButtonText>{data.text}</ButtonText>
+                      </ButtonItem>
                   );
-                } else {
+                  
                   return (
                     <ButtonItem
                       key={data.id}
                       style={
-                        data.id === selectedRate
+                        data.id === id
                           ? { border: '1px solid white', marginRight: 0 }
                           : { marginRight: 0 }
                       }
-                      onClick={() => onRateClick(data)}
+                      onClick={() => data.id !== id && updateSlippage(data.id, 0.00)}
                     >
-                      {data.id === selectedRate ? (
+                      {data.id === id ? (
                         CustomRateField()
                       ) : (
                         <ButtonText>{data.text}</ButtonText>
                       )}
                     </ButtonItem>
-                  );
-                }
-              })}
+                  )}
+                )
+              }
             </ButtonsBox>
           </CustomSlippageBox>
         )}
@@ -174,6 +150,7 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
 `;
+
 const BackgroundAbsolute = styled.div`
   position: fixed;
   top: 0;
