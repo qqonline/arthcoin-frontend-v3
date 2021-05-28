@@ -4,7 +4,7 @@ import React, {useState } from 'react';
 import CustomToolTip from '../CustomTooltip';
 import settings from '../../assets/svg/settingSlidder.svg';
 import { useSlippage, useUpdateSlippage } from '../../state/slippage/hooks';
-import { ValidateNumber } from '../CustomInputContainer/RegexValidation';
+import { ValidateNumber, correctString } from '../CustomInputContainer/RegexValidation';
 
 interface Irates {
   id: number;
@@ -42,12 +42,17 @@ const SlippageContainer: React.FC = () => {
   const updateSlippage = useUpdateSlippage();
 
   const onInputChange = (value: string) => {
+    if (value === '') {
+      updateSlippage(4, 0.00);
+      return;
+    }
+
     const check: boolean = ValidateNumber(value);
     if (!check) return;
 
-    if (Number(value)) updateSlippage(4, Number(value));
+    if (Number(value)) updateSlippage(4, Number(correctString(value)));
     else updateSlippage(4, 0.00);
-  };
+  }
 
   const CustomRateField = () => {
     return (
@@ -56,7 +61,7 @@ const SlippageContainer: React.FC = () => {
           <input
             inputMode={'decimal'}
             defaultValue={0}
-            value={slippage}
+            value={Number(correctString(`${slippage}`))}
             style={{
               fontFamily: 'Inter !important',
               fontStyle: 'normal',
