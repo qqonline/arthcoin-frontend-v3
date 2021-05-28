@@ -102,7 +102,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     if (Number(val) > Number(IBalanceValue)) {
       const temp: ICStatesInterface = {
         IState: 'error',
-        IMsg: 'Amount canont be more than your balance.',
+        IMsg: 'Amount cannot be more than your balance.',
       };
       setICStates(temp);
       if (props.errorCallback) props.errorCallback(true);
