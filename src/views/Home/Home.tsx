@@ -679,7 +679,7 @@ const StyledLink = styled.a`
     opacity: 0.88;
     color: #ffffff;
     text-decoration: none;
-    margin: 0;
+    margin-left: 40px;
   }
   @media (max-width: 768px) {
     margin: 0;

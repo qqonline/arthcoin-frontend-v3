@@ -312,7 +312,7 @@ const Genesis = (props: WithSnackbarProps) => {
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your will transfer`}
+            labelData={`You will transfer`}
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
