@@ -1,6 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
+
 import useCore from '../../useCore';
+import { useBlockNumber } from '../../../state/application/hooks';
 
 interface IBalances {
   poolToken: string
@@ -9,7 +11,9 @@ interface IBalances {
 
 export default () => {
   const [value, setValue] = useState<IBalances[]>([]);
+  
   const core = useCore();
+  const blockNumber = useBlockNumber();
 
   const fetchValue = useCallback(async () => {
     const promises = core.getCollateralTypes().map(collateralPoolToken => {
@@ -32,7 +36,7 @@ export default () => {
     fetchValue().catch((err) =>
       console.error(`Failed to fetch collateral pool balances: ${err}`),
     );
-  }, [fetchValue]);
+  }, [blockNumber, fetchValue]);
 
   return value;
 };
