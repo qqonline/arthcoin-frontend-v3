@@ -46,8 +46,10 @@ const SlippageContainer: React.FC = () => {
       updateSlippage(4, 0);
       return;
     }
+    if (Number(value) && Number(value) < 0) return;
     if (ValidateNumber(value) && checkForAfterDecimalDigits(value)){
-      updateSlippage(4, Number(correctString(value)));
+      let getCorrectString = await correctString(value)
+      updateSlippage(4, Number(getCorrectString));
     }
   }
 
@@ -73,7 +75,7 @@ const SlippageContainer: React.FC = () => {
             onChange={(event) => {
               onInputChange(event.target.value);
             }}
-            min={0.000001}
+            min={0.0001}
             max={100}
           />
         </InputDiv>
