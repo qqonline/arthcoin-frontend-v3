@@ -1,8 +1,7 @@
+import { useWallet } from 'use-wallet';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
-import {useWallet} from 'use-wallet';
 
-import config from '../../../config'
 import useCore from '../../useCore';
 
 export default (stakingContract: string) => {
@@ -23,12 +22,6 @@ export default (stakingContract: string) => {
   useEffect(() => {
     if (core.isUnlocked) {
       fetchValue().catch((err) => console.error(`Failed to fetch staking balance: ${err}`));
-
-      const interval = setInterval(() => (
-        fetchValue().catch((err) => console.error(`Failed to fetch staking balance: ${err}`))
-      ), config.refreshInterval);
-
-      return () => clearInterval(interval);
     }
   }, [core.isUnlocked, account, fetchValue]);
 
