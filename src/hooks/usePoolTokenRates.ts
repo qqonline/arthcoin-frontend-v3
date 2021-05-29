@@ -36,12 +36,6 @@ export default () => {
   useEffect(() => {
     if (core.isUnlocked) {
       fetchCashPrice().catch((err) => console.error(`Failed to fetch PoolToken price: ${err.stack}`));
-
-      const interval = setInterval(() => (
-        fetchCashPrice().catch((err) => console.error(`Failed to fetch PoolToken price: ${err.stack}`))
-      ), config.refreshInterval);
-
-      return () => clearInterval(interval);
     }
   }, [setValue, core, account, fetchCashPrice]);
 
