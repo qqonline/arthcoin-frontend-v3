@@ -54,6 +54,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       pool={pool}
       stakedBalance={stakedBalance}
       isMobile={isMobile}
+      claimableBalance={claimableBalance}
       onCancel={() => onDismissWithdrawModal()}
       closeSuccessModal={() => setSuccessModal(false)}
       openSuccessModal={() => setSuccessModal(true)}

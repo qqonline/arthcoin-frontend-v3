@@ -15,6 +15,7 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
   mode?: ModeProps;
+  claimableBalance: BigNumber;
   stakedBalance: BigNumber;
   pool: StakingContract;
   onCancel: () => void;
@@ -95,9 +96,17 @@ export default (props: IProps) => {
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button 
-            text={'Withdraw'} 
+            text={
+              props.claimableBalance.lte(0) 
+                ? 'Withdraw'
+                : 'You need to claim reward before withdrawal'
+            } 
             size={'lg'}
-            disabled={isInputFieldError || !Number(val)}
+            disabled={
+              props.claimableBalance.gt(0) || 
+              isInputFieldError || 
+              !Number(val)
+            }
             onClick={handleWithdraw} 
           />
         </Grid>
