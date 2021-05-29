@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import CloseIcon from '../../../assets/img/CloseIcon.svg';
 import { TransitionProps } from '@material-ui/core/transitions';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+
+import CloseIcon from '../../../assets/img/CloseIcon.svg';
 import { PopupContent } from '../../../state/application/actions';
+
 interface TxButtonProps {
   notificationCount?: number;
   open?: boolean;
   content?: PopupContent
   handleCancel?: Function;
 }
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
@@ -21,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 }));
+
 const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   notificationCount,
   open,
@@ -32,16 +36,19 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
 
   const isScucess = content?.txn?.success
   const isLoading = content?.txn?.loading
-
+  
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
+
     setOpen(false);
+
     if (handleCancel) {
       handleCancel();
     }
   };
+
   function SlideTransition(props: TransitionProps) {
     return <Slide {...props} direction="left" />;
   }
@@ -73,7 +80,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
-                  {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
+                  {/* <a href={''} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
                 </div>
               </SnackBarLoading>
             ) : isScucess ? (
@@ -81,7 +88,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
-                  {/* <a href={link} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
+                  {/* <a href={''} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
                 </div>
               </SnackBarRedeem>
             ) : (
@@ -104,6 +111,7 @@ const SnackBarInnerContainer = styled.div`
   align-items: center;
   padding: 10px 0px;
 `;
+
 const SnackBarRedeem = styled.div`
   background: #178a50;
   color: #ffffff;
@@ -129,6 +137,7 @@ const SnackBarLoading = styled.div`
   justify-content: start;
   align-items: center;
 `;
+
 const SnackBarRedeemCancelled = styled.div`
   background: #ba1e38;
   color: #ffffff;
@@ -141,6 +150,7 @@ const SnackBarRedeemCancelled = styled.div`
   justify-content: start;
   align-items: center;
 `;
+
 const NotificationCount = styled.div`
   font-weight: 600;
   font-size: 14px;
@@ -156,6 +166,7 @@ const NotificationCount = styled.div`
   align-items: center;
   background: rgba(255, 255, 255, 0.12);
 `;
+
 const SnackBarParent = styled.div`
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(70px);
