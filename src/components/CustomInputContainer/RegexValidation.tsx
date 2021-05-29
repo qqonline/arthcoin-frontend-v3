@@ -1,8 +1,13 @@
 export const NumberInputRegex = /^\d+(\.\d+)?$/;
 export const mediatoryRegex = /^[0]+\d+(\.\d+)?$/;
+export const RestrictDecimalsDigitsInputRegex = /^[0-9]{0,10}(\.[0-9]{0,6})?$/;
 
 export const ValidateNumber = (val: string) => {
   return NumberInputRegex.test(val)
+}
+
+export const checkForAfterDecimalDigits = (val: string) => {
+  return RestrictDecimalsDigitsInputRegex.test(val)
 }
 
 export const initZeroCheck = (val: string) => {

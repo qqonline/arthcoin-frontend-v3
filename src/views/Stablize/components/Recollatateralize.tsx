@@ -34,7 +34,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const [collateralAmount, setCollateralAmount] = useState<string>('0');
   const [receiveShare, setReceiveShare] = useState<string>('0');
   const [receiveBonus, setReceiveBonus] = useState<string>('0');
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
@@ -132,12 +131,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
               {'Add Collateral'}
               <CustomToolTip toolTipText={'loreum ipsum'} />
             </div>
-            <SlippageContainer
-              defaultRate={selectedRate}
-              onRateChange={(data) => {
-                setSelectedRate(data);
-              }}
-            />
+            <SlippageContainer />
           </HeaderTitle>
           <HeaderSubtitle>
             {prettyNumber(getDisplayBalance(arthxRecollateralizeAmount, 18, 3))} <HardChip>ARTHX</HardChip>{' '}

@@ -148,7 +148,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [collateralValue, setCollateralValue] = useState<string>('0');
-  const [selectedRate, setSelectedRate] = useState<number>(0.0);
   const [timerHeader, setHeader] = useState<boolean>(false);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
@@ -312,7 +311,7 @@ const Genesis = (props: WithSnackbarProps) => {
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your will transfer`}
+            labelData={`You will transfer`}
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
@@ -488,12 +487,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       <TabTextActive>Swap ARTH</TabTextActive>
                     )}
                   </TabContainer>
-                  <SlippageContainer
-                    defaultRate={selectedRate}
-                    onRateChange={(data) => {
-                      setSelectedRate(data);
-                    }}
-                  />
+                  <SlippageContainer />
                 </div>
               </LeftTopCardHeader>
               <LeftTopCardContainer className={'custom-mahadao-container-content'}>

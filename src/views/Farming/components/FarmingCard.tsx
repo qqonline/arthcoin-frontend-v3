@@ -97,6 +97,9 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       ) : (
         <MobileRowCard
           pool={pool}
+          claimableBalance={claimableBalance}
+          stakedBalance={stakedBalance}
+          rates={rates}
           onDepositClick={onPresentDepositModal}
           onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}

@@ -26,6 +26,7 @@ interface IProps {
 }
 
 export default (props: IProps) => {
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [val, setValue] = useState<string>('0');
   const symbol = props.pool.depositTokenSymbols.join('-');
 
@@ -74,6 +75,7 @@ export default (props: IProps) => {
         dontShowBackgroundContainer={true}
         multiIcons={true}
         symbols={props.pool.depositTokenSymbols}
+        errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
       />
       <OneLine>
         <div style={{ flex: 1 }}></div>
@@ -95,7 +97,7 @@ export default (props: IProps) => {
           <Button 
             text={'Withdraw'} 
             size={'lg'}
-            disabled={!Number(val)}
+            disabled={isInputFieldError || !Number(val)}
             onClick={handleWithdraw} 
           />
         </Grid>

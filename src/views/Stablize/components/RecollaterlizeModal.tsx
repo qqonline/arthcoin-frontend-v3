@@ -48,7 +48,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     core.tokens[selectedCollateral],
     collateralPool.address,
   );
-  
+
   const arthxAmountAfterDiscount = useMemo(() => (
     BigNumber.from(
       parseUnits(`${receiveBonus + receiveShare}`, 18)
@@ -75,7 +75,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
     >
       <div>
         <TransparentInfoDiv
-          labelData={`Your will deposit`}
+          labelData={`You will deposit`}
           rightLabelUnit={selectedCollateral}
           rightLabelValue={Number(collateralAmount).toLocaleString()}
         />
@@ -129,7 +129,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
               disabled={
                 recollateralizableValue.eq(0) ||
                 isInputFieldError ||
-                !isCollateralApproved || 
+                !isCollateralApproved ||
                 !Number(collateralAmount) ||
                 !Number(receiveShare)
               }

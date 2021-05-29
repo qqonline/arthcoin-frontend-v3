@@ -231,9 +231,9 @@ const Home: React.FC = () => {
           <div className="slogans">
             <p className="slogan slogan1">World’s first non-inflationary money.</p>
             <p className="slogan slogan2">ARTH protects you from fiat inflation.</p>
-            <p className="slogan slogan3">ARTH protects you from financial crises.</p>
+            <p className="slogan slogan3">ARTH protects you from financial crisis.</p>
             <p className="slogan slogan4">ARTH is stable.</p>
-            <p className="slogan slogan5">ARTH is lighting fast.</p>
+            <p className="slogan slogan5">ARTH is lightning fast.</p>
             <p className="slogan slogan6">ARTH is the first stablecoin that is resistant to black swan events.</p>
           </div>
         </div>
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
-            <button className="button-small-bg">Buy ARTH →</button>
+            <button className="button-small-bg">Buy ARTH</button>
           </a>
           <a
             target="_blank"
@@ -468,12 +468,15 @@ const Home: React.FC = () => {
               />
             </div>
             <div className="tech-info">
-              <p className="info-title">Cross-chain liquidity</p>
+              <p className="info-title">Cross-border transactions</p>
               <p className="info-desc">
-                Arth is compatible with tokens and currencies from other
-                blockchains to create a massive liquidity pool across the chains.
-                You can stake, lend, borrow, trade Arth across chains. (coming soon)
+                Deployed on Layer 2 Protocol,
+                Arth offers transactions speed of less than 3 seconds to cross the border from your wallet
+                to another across the globe.
+                The very near future version of Arth shall be a cross-chain solution that brings
+                the power of value coin to other blockchains like Ethereum and more
               </p>
+
             </div>
           </div>
           <div className="tech-container">
@@ -485,13 +488,11 @@ const Home: React.FC = () => {
               />
             </div>
             <div className="tech-info">
-              <p className="info-title">Cross-border transactions</p>
+              <p className="info-title">Cross-chain liquidity</p>
               <p className="info-desc">
-                Deployed on Layer 2 Protocol,
-                Arth offers transactions speed of less than 3 seconds to cross the border from your wallet
-                to another across the globe.
-                The very near future version of Arth shall be a cross-chain solution that brings
-                the power of value coin to other blockchains like Ethereum and more
+                Arth is compatible with tokens and currencies from other
+                blockchains to create a massive liquidity pool across the chains.
+                You can stake, lend, borrow, trade Arth across chains. (coming soon)
               </p>
             </div>
           </div>
@@ -744,16 +745,19 @@ const Home: React.FC = () => {
           <div className="row bottom-most">
             <div className="col-12 col-sm-6 bottom-left">
               <FooterEnd>
-                <div className="dialog-class">
-                  {/*<span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>*/}
-                  <img
-                    src={require('./images/mainlogo.svg')}
-                    alt="mahadao-logo"
-                    width="140px"
-                  />
-                </div>
+                {/*<div className="dialog-class">*/}
+                {/*  /!*<span style={{ whiteSpace: 'nowrap', marginRight: '15px' }}>POWERED BY</span>*!/*/}
+                {/*  <img*/}
+                {/*    src={require('./images/mainlogo.svg')}*/}
+                {/*    alt="mahadao-logo"*/}
+                {/*    width="140px"*/}
+                {/*  />*/}
+                {/*</div>*/}
+                <StyledLink href="https://mahadao.com/" target="_blank" style={{marginLeft: 0}}>
+                  MAHADAO
+                </StyledLink>
                 <StyledLink href="https://docs.arthcoin.com" target="_blank">
-                  Arth GitBook
+                  Whitepaper
                 </StyledLink>
               </FooterEnd>
             </div>
@@ -827,20 +831,22 @@ const FooterEnd = styled.div`
   }
 `;
 const StyledLink = styled.a`
-  font-weight: bold;
-  text-decoration: none;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
   font-size: 16px;
-  line-height: 22px;
-  color: #ffffff;
+  line-height: 150%;
+  opacity: 0.88;
+  color: rgba(255, 255, 255, 0.64);
   margin-right: 32px;
+  text-decoration: none;
   cursor: pointer;
-  color: #ffffff;
-  opacity: 0.64;
-  margin-left: 20px;
+  margin-left: 40px;
   &:hover {
     opacity: 0.88;
     color: #ffffff;
     text-decoration: none;
+    margin-left: 40px;
   }
   @media (max-width: 768px) {
     margin: 0;

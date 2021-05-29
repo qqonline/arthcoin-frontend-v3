@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
-
-import styled from 'styled-components';
+import React, { useEffect, useState, useMemo} from 'react';
 import { Grid } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
+import { BigNumber } from '@ethersproject/bignumber';
+import { useWallet } from 'use-wallet';
+import CountUp from 'react-countup';
+
+import config from '../../../config';
+import useCore from '../../../hooks/useCore';
+import styled from 'styled-components';
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
-import InfoIcon from '@material-ui/icons/Info';
 import farmingSVG from '../../../assets/svg/farming.svg';
 import { StakingContract } from '../../../basis-cash';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
-  pool: StakingContract;
-  onDepositClick: () => void;
-  onWithdrawClick: () => void;
-  onClaimClick: () => void;
-
   // const [open, setOpen] = useState<boolean>(props?.deposited);
   // useEffect(() => {
   //   setOpen(props?.deposited)
@@ -32,15 +35,51 @@ interface IProps {
   // earned?: string;
   // unclaimedRewards?: string;
   // rewards?: string;
+  pool: StakingContract;
+  stakedBalance: BigNumber;
+  claimableBalance: BigNumber;
+  rates: {
+    maha: BigNumber;
+    arthx: BigNumber;
+  };
+  onDepositClick: () => void;
+  onWithdrawClick: () => void;
+  onClaimClick: () => void;
   onButtonClick?: (data: 'Deposit' | 'Withdraw' | 'Claim' | '') => void;
 }
 
 export const MobileFarm = (props: IProps) => {
+  const core = useCore();
+  const { account, connect } = useWallet();
+
+  const depositTokenContract = core.tokens[props.pool.depositToken];
+  const tokenBalance = useTokenBalance(depositTokenContract);
+  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
+
+  const pow = BigNumber.from(10).pow(18);
+  const initEarnedARTHX = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
+
+  const initEarnedMAHA = useMemo(() => {
+    return Number(getDisplayBalance(
+      props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
+      18,
+      6
+    ))
+  }, [props, pow]);
+
+  const isWalletConnected = !!account;
+
   return (
     <StyledCardWrapper>
       <CardIcon>
         <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-          <img src={uniswap} height={32} />
+          <img src={uniswap} alt="Uniswap logo" height={32} />
         </div>
       </CardIcon>
       <Card>
@@ -101,7 +140,7 @@ export const MobileFarm = (props: IProps) => {
                   <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <MainSpan>{/* {props?.walletValue} {props?.walletUnit} */}</MainSpan>
+                  <MainSpan>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</MainSpan>
                   {/* <SecondSpan>{'100'}</SecondSpan> */}
                 </div>
               </Grid>
@@ -151,51 +190,94 @@ export const MobileFarm = (props: IProps) => {
             </Grid>
             <ButtonContainer>
               <div style={{ marginTop: 15 }}>
-                <Button size={'sm'} text={'Deposit'} onClick={props.onDepositClick} />
+                {!isWalletConnected ? (
+                  <Button text={'Connect Wallet'} size={'lg'} onClick={() =>
+                    connect('injected').then(() => {
+                      localStorage.removeItem('disconnectWallet')
+                    })} />
+                ) : (
+                  <Button
+                    disabled={tokenBalance.lte(0)}
+                    text="Deposit"
+                    size={'sm'}
+                    onClick={props.onDepositClick}
+                  />
+                )}
               </div>
             </ButtonContainer>
           </StyledContent>
         </CardContent>
-        {false ? (
-          <OpenableDiv>
-            <InfoDiv>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  textAlign: 'center',
-                  alignSelf: 'center',
-                }}
-              >
-                <InfoDivLeftSpan>Your Locked stake:</InfoDivLeftSpan>
-                {/* <InfoDivRightSpan>{props?.lockedStake}</InfoDivRightSpan> */}
-              </div>
-              <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
-            </InfoDiv>
-            <InfoDiv>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  textAlign: 'center',
-                  alignSelf: 'center',
-                }}
-              >
-                <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
-                {/* <InfoDivRightSpan>{props?. }</InfoDivRightSpan> */}
-              </div>
-              <Withdraw
-                onClick={() => {
-                  props.onButtonClick('Claim');
-                }}
-              >
-                Claim
-              </Withdraw>
-            </InfoDiv>
-          </OpenableDiv>
-        ) : (
-          <></>
-        )}
+        {
+          props.stakedBalance.gt(0) 
+            ? (
+              <OpenableDiv>
+                <InfoDiv>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <InfoDivLeftSpan>Your Locked stake: </InfoDivLeftSpan>
+                    <InfoDivRightSpan>
+                      {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
+                    </InfoDivRightSpan>
+                  </div>
+                  <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
+                </InfoDiv>
+                <InfoDiv>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
+                    <InfoDivRightSpan>
+                      <CountUp
+                        start={0}
+                        end={initEarnedARTHX}
+                        delay={0}
+                        decimals={4}
+                        duration={Math.floor(config.refreshInterval / 20)}
+                        preserveValue={true}
+                        onUpdate={() => console.log()}
+                      />
+                      {' '}
+                      ARTHX
+                      {' + '}
+                      <CountUp
+                        start={0}
+                        end={initEarnedMAHA}
+                        delay={0}
+                        decimals={4}
+                        duration={Math.floor(config.refreshInterval / 20)}
+                        preserveValue={true}
+                        onUpdate={() => console.log()}
+                      />
+                      {' '}
+                      MAHA
+                    </InfoDivRightSpan>
+                  </div>
+                  {
+                    !!(Number(initEarnedARTHX) || Number(initEarnedMAHA)) &&
+                    <Withdraw
+                      onClick={props.onClaimClick}
+                    >
+                      Claim
+                    </Withdraw>
+                  } 
+                </InfoDiv>
+              </OpenableDiv>
+            ) 
+            : (
+            <></>
+          )
+        }
       </Card>
     </StyledCardWrapper>
   );
