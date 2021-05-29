@@ -6,6 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { TransitionProps } from '@material-ui/core/transitions';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
+import config from '../../../config';
 import CloseIcon from '../../../assets/img/CloseIcon.svg';
 import { PopupContent } from '../../../state/application/actions';
 
@@ -80,7 +81,19 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
-                  {/* <a href={''} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
+                  {
+                    config.etherscanUrl !== '' && content.txn?.hash !== ''
+                    && 
+                    (
+                      <AnchorTag
+                        href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        View on Etherscan ↗
+                      </AnchorTag>
+                    )
+                  }
                 </div>
               </SnackBarLoading>
             ) : isScucess ? (
@@ -88,7 +101,19 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
-                  {/* <a href={''} rel="noopener noreferrer" target="_blank">View on Etherscan</a> */}
+                  {
+                    config.etherscanUrl !== '' && content.txn?.hash !== ''
+                    && 
+                    (
+                        <AnchorTag
+                          href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          View on Etherscan ↗
+                        </AnchorTag>
+                    )
+                  }
                 </div>
               </SnackBarRedeem>
             ) : (
@@ -105,6 +130,15 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
     </div>
   );
 };
+
+const AnchorTag = styled.a`
+  color: #ffffff;
+  &:hover {
+    color: #000000;
+    text-decoration: underline;
+  }
+`
+
 const SnackBarInnerContainer = styled.div`
   display: flex;
   justify-content: space-around;
