@@ -4,7 +4,7 @@ import React, {useState } from 'react';
 import CustomToolTip from '../CustomTooltip';
 import settings from '../../assets/svg/settingSlidder.svg';
 import { useSlippage, useUpdateSlippage } from '../../state/slippage/hooks';
-import { ValidateNumber, correctString } from '../CustomInputContainer/RegexValidation';
+import { ValidateNumber, correctString, checkForAfterDecimalDigits } from '../CustomInputContainer/RegexValidation';
 
 interface Irates {
   id: number;
@@ -41,17 +41,14 @@ const SlippageContainer: React.FC = () => {
   const { id , value: slippage } = useSlippage();
   const updateSlippage = useUpdateSlippage();
 
-  const onInputChange = (value: string) => {
+  const onInputChange = async (value: string) => {
     if (value === '') {
-      updateSlippage(4, 0.00);
+      updateSlippage(4, 0);
       return;
     }
-
-    const check: boolean = ValidateNumber(value);
-    if (!check) return;
-
-    if (Number(value)) updateSlippage(4, Number(correctString(value)));
-    else updateSlippage(4, 0.00);
+    if (ValidateNumber(value) && checkForAfterDecimalDigits(value)){
+      updateSlippage(4, Number(correctString(value)));
+    }
   }
 
   const CustomRateField = () => {
@@ -60,7 +57,6 @@ const SlippageContainer: React.FC = () => {
         <InputDiv>
           <input
             inputMode={'decimal'}
-            defaultValue={0}
             value={Number(correctString(`${slippage}`))}
             style={{
               fontFamily: 'Inter !important',
@@ -96,11 +92,11 @@ const SlippageContainer: React.FC = () => {
         />
       )}
       <CustomDiv>
-        <img 
-          src={settings} 
-          height={20} 
-          alt="Slippage icon" 
-          onClick={() => setOpenModal(!modalOpen)} 
+        <img
+          src={settings}
+          height={20}
+          alt="Slippage icon"
+          onClick={() => setOpenModal(!modalOpen)}
         />
         {modalOpen && (
           <CustomSlippageBox>
@@ -120,7 +116,7 @@ const SlippageContainer: React.FC = () => {
                         <ButtonText>{data.text}</ButtonText>
                       </ButtonItem>
                   );
-                  
+
                   return (
                     <ButtonItem
                       key={data.id}
