@@ -351,7 +351,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Transaction cancelled`,
+                        data1: `${type} ${Number(currentValue).toLocaleString()} ${currentCoin} cancelled`
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);

@@ -16,7 +16,7 @@ import { ValidateNumber } from '../../../components/CustomInputContainer/RegexVa
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
-  onCancel: () => void;
+  onCancel: (amount?: string, token?: string) => void;
   onDeposit?: () => void;
   isMobile: boolean;
   toggleSuccessModal?: () => void;
@@ -39,11 +39,21 @@ export default (props: IProps) => {
     contract.address,
   );
 
+  const symbol = props.pool.depositTokenSymbols.join('-');
+
   const stake = useStakingDeposit(
     props.pool.contract, 
     Number(val), 
-    props.pool.depositToken
+    props.pool.depositToken,
+    symbol
   );
+
+  const popupCancel = () => {
+    props.onCancel(
+      Number(String(val)).toLocaleString(),
+      symbol
+    )
+  }
 
   const handleStaking = () => {
     stake(() => {
@@ -55,14 +65,13 @@ export default (props: IProps) => {
     });
   }
 
-  const symbol = props.pool.depositTokenSymbols.join('-');
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
 
   return (
     <CustomModal
       closeButton
-      handleClose={props.onCancel}
+      handleClose={popupCancel}
       open={true}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
@@ -110,7 +119,7 @@ export default (props: IProps) => {
               variant={'transparent'}
               text="Cancel"
               size={'lg'}
-              onClick={props.onCancel}
+              onClick={popupCancel}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>

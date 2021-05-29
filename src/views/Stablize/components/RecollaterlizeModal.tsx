@@ -115,7 +115,7 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
                     CustomSnack({
                       onClose: props.closeSnackbar,
                       type: 'red',
-                      data1: `Recollateralize for ${collateralAmount} ARTH cancelled`,
+                      data1: `Recollateralize ${Number(collateralAmount).toLocaleString()} ${selectedCollateral} cancelled`,
                     }),
                 };
                 props.enqueueSnackbar('timepass', options);
