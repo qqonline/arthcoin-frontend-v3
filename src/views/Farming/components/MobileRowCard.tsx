@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo} from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useWallet } from 'use-wallet';
@@ -227,15 +227,15 @@ export const MobileFarm = (props: IProps) => {
                   </div>
                   <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
                 </InfoDiv>
+                <Divider
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    margin: '15px 0px',
+                  }}
+                variant={'middle'}
+                />
                 <InfoDiv>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      textAlign: 'center',
-                      alignSelf: 'center',
-                    }}
-                  >
+                  <div>
                     <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
                     <InfoDivRightSpan>
                       <CountUp
@@ -249,7 +249,9 @@ export const MobileFarm = (props: IProps) => {
                       />
                       {' '}
                       ARTHX
-                      {' + '}
+                    </InfoDivRightSpan>
+                    <InfoDivLeftSpan>+</InfoDivLeftSpan>
+                    <InfoDivRightSpan>
                       <CountUp
                         start={0}
                         end={initEarnedMAHA}
