@@ -75,10 +75,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
     setICStates(temp);
   }, [Istate, msg]);
 
-  useEffect(() => {
+ /* useEffect(() => {
     let temp = { IWarningstate: IWarningstate, IMsg: warningMsg };
     setICWarningStates(temp);
-  }, [IWarningstate, warningMsg]);
+  }, [IWarningstate, warningMsg]);*/
 
   const Redirection = () => {
     if (props?.href) {
@@ -98,7 +98,13 @@ const CustomInputContainer: React.FC<props> = (props) => {
     }
   };
 
-  const checkForErrors = async (val: string) => {
+  const checkForErrorAndWarning = async (val: string) => {
+    const Default: ICStatesInterface = {
+      IState: 'default',
+      IMsg: '',
+    };
+    //Check for Max amount
+    let MaxStatus = true
     if (Number(val) > Number(IBalanceValue)) {
       const temp: ICStatesInterface = {
         IState: 'error',
@@ -106,17 +112,38 @@ const CustomInputContainer: React.FC<props> = (props) => {
       };
       setICStates(temp);
       if (props.errorCallback) props.errorCallback(true);
-      return true;
+      MaxStatus = false
     } else {
+      setICStates(Default);
+    }
+
+    //Check for Max & Min amount
+    let DigitsStatus = true
+    if (!checkForAfterDecimalDigits(val)) {
+      const temp: ICStatesInterface = {
+        IWarningState: 'warning',
+        IMsg: 'Only 10 digits before decimal and 6 digits after decimal is allowed.',
+      };
+      setICWarningStates(temp);
+      DigitsStatus = false
+      console.log('into digit', DigitsStatus)
+    } else {
+      setICWarningStates(Default);
+    }
+
+
+    //Final Check
+    /*if (MaxStatus && DigitsStatus) {
       const temp: ICStatesInterface = {
         IState: 'default',
         IMsg: '',
       };
       setICStates(temp);
       if (props.errorCallback) props.errorCallback(false);
-      return true;
-    }
-  };
+    }*/
+
+    return DigitsStatus
+  }
 
   const IConatinerStyle = () => {
     let returnObj: CSSProperties = {}
@@ -128,24 +155,6 @@ const CustomInputContainer: React.FC<props> = (props) => {
       returnObj['opacity'] = "0.32";
     }
     return returnObj;
-  }
-
-  const checkForDigitsCount = (event : any) => {
-    if (!checkForAfterDecimalDigits(event.target.value)) {
-      const temp: ICStatesInterface = {
-        IWarningState: 'warning',
-        IMsg: 'Only 10 digits before decimal and 6 digits after decimal is allowed.',
-      };
-      setICWarningStates(temp);
-      return false;
-    } else {
-      const temp: ICStatesInterface = {
-        IWarningState: 'default',
-        IMsg: '',
-      };
-      setICWarningStates(temp);
-      return true;
-    }
   }
 
   return (
@@ -176,17 +185,19 @@ const CustomInputContainer: React.FC<props> = (props) => {
             }}
             type={'number'}
             onChange={(event) => {
-              const proceed = checkForErrors(event.target.value);
-              if (Number(event.target.value) && Number(event.target.value) < 0) return;
-              if (!checkForDigitsCount(event)) return;
-
-              if (proceed) props?.setText(event.target.value.length > 1 ? correctString(event.target.value) : event.target.value);
+              const value = event.target.value;
+              if (Number(value) && Number(value) <= 0) return;
+              checkForErrorAndWarning(value).then((data) => {
+                if (data) props?.setText(value.length > 1 ? correctString(value) : value);
+              })
             }}
           />
           {tagText !== '' && (
             <MaxTagConatiner
               onClick={() => {
-                props?.setText(IBalanceValue.toString());
+                checkForErrorAndWarning(IBalanceValue.toString()).then((data) => {
+                  if (data) props?.setText(IBalanceValue.toString());
+                });
               }}
             >
               {tagText}
@@ -241,10 +252,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
           </IFieldRightContainer>
         </IFieldConatiner>
         {ICStates.IMsg !== '' && (
-          <p className={`input-font-${ICStates.IState}`}>!{ICStates.IMsg}</p>
+          <p className={`input-font-${ICStates.IState}`}>{ICStates.IMsg}</p>
         )}
         {ICWarningStates.IMsg !== '' && (
-          <p className={`input-font-warning`}>Warning: {ICWarningStates.IMsg}</p>
+          <p className={`input-font-warning`}>{ICWarningStates.IMsg}</p>
         )}
       </IConatiner>
     </div>
