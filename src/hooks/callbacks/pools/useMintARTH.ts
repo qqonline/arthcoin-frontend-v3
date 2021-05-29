@@ -3,6 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { parseUnits } from 'ethers/lib/utils';
 
 import useCore from '../../useCore';
+import useApplySlippage from '../../useApplySlippage';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
@@ -20,12 +21,14 @@ export default function (
   const addTransaction = useTransactionAdder();
   const tokenDecimals = useTokenDecimals(collateralToken);
 
-  const arthAmountAfterFees = useMemo(() => {
+  const arthOutMinAfterFees = useMemo(() => {
     return BigNumber
       .from(parseUnits(`${arthOutMin}`, 18))
       .mul(BigNumber.from(1e6).sub(mintingFee))
       .div(1e6);
   }, [arthOutMin, mintingFee]);
+
+  const arthOutMinAfterSlippage = useApplySlippage(arthOutMinAfterFees);
 
   const action = useCallback(async (callback: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken);
@@ -33,7 +36,7 @@ export default function (
     try {
       const response = await pool.mint1t1ARTH(
         BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
-        arthAmountAfterFees
+        arthOutMinAfterSlippage
       );
       
       addTransaction(response, {
@@ -54,7 +57,7 @@ export default function (
     tokenDecimals, 
     collateralToken, 
     collateralAmount, 
-    arthAmountAfterFees, 
+    arthOutMinAfterSlippage,
     addPopup,
     addTransaction, 
     arthOutMin

@@ -2,23 +2,29 @@ import { BigNumber } from 'ethers';
 import { useCallback } from 'react';
 
 import useCore from '../../useCore';
+import useApplySlippage from '../../useApplySlippage';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
-export default function (collateralToken: string, collateralAmount: BigNumber, arthxOutMin: BigNumber) {
+export default function (
+  collateralToken: string, 
+  collateralAmount: BigNumber, 
+  arthxOutMin: BigNumber
+) {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
   const decimals = useTokenDecimals(collateralToken);
+  const arthxOutMinAfterSlippage = useApplySlippage(arthxOutMin);
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken);
     
     try {
-      const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMin);
+      const response = await pool.recollateralizeARTH(collateralAmount, arthxOutMinAfterSlippage);
       
       addTransaction(response, {
         summary: `Recollateralize ${Number(getDisplayBalance(collateralAmount, decimals, 3)).toLocaleString()} ${collateralToken}`
@@ -39,7 +45,7 @@ export default function (collateralToken: string, collateralAmount: BigNumber, a
     decimals,
     addPopup,
     collateralAmount, 
-    arthxOutMin, 
+    arthxOutMinAfterSlippage,
     addTransaction
   ]);
 
