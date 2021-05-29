@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../components/NewModal/index';
 import './styles/index.sass';
@@ -7,12 +7,167 @@ import rightArrow from './images/polygon.svg'
 import arthLogo from './img/arth-coin-1.svg'
 import arthLogobg from './images/logo/ARTH-bg.svg'
 import USDLogo from './images/logo/USD.svg'
+import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
+import { useMediaQuery } from 'react-responsive';
+
+const useSliderStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      // color: 'white'
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
+);
+
+function valuetext(value: number) {
+  return `${value}`;
+}
+
+const PrettoRestrictSlider = withStyles({
+  root: {
+    // color: 'white',
+    height: 15,
+    width: '95%',
+  },
+  thumb: {
+    height: 10,
+    width: 10,
+    // backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    color: '#FFA981',
+    marginTop: -3.5,
+    marginLeft: -3,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-100% - 5px)',
+    // color: '#FF7F57',
+  },
+  marked: {
+    color: 'red',
+  },
+  markLabel: {
+    // color: 'green'
+  },
+  track: {
+    height: 3,
+    borderRadius: 3,
+    color: '#FFA981',
+    // top: '2%'
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    color: '#D74D26',
+    // background:'red'
+    // border: '1px solid'
+  },
+  markLabelActive: {
+    fontStyle: 'normal',
+    fontWeight: 300,
+    fontSize: '12px',
+    lineHeight: '130%',
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.88)',
+  },
+  mark: {
+    // height: '3px',
+    // width: '3px',
+    // borderRadius: '50%',
+    color: 'transparent',
+  },
+})(Slider);
+
+const DEFAULT_CALC = 1440;
+
 
 const Home: React.FC = () => {
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const [openModal, toggleModal] = useState(false);
+  const sliderClasses = useSliderStyles();
+  const [sliderValue, setSliderValue] = React.useState(1990);
+  const [arthValue, setArth] = useState(1.2);
+  const [fiatValue, setFiat] = useState(0.6);
+  let sliderRef = useRef<any>()
   const handleClose = () => {
     toggleModal(false);
   };
+
+  const handleCoffeeValues = (val: number | string) => {
+    setFiat(0.6 + (Number(val) - 1990) * 0.2)
+    setArth(1.2 - ((Number(val) - 1990) / 23.3) * 0.1)
+  }
+  const handleSliderChange = (event: any, value: any) => {
+    // event.preventDefault()
+    // console.log(event)
+    handleCoffeeValues(value)
+    setSliderValue(value);
+    // setDuration(DEFAULT_CALC - value * value);
+  };
+
+  // useEffect(() => {
+  //   sliderRef.current.addEventListener('touchmove', handleSliderChange, { passive: true })
+  //   sliderRef.current.addEventListener('touchstart', handleSliderChange, { passive: true })
+  // }, [])
+
+  const SliderUI = () => {
+    return (
+      <div
+        className="scrollslider"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          color: 'white',
+          flexDirection: 'row',
+          width: isMobile ? '95%' : '75%',
+          paddingLeft: '16px',
+          marginTop: '5px',
+        }}
+      >
+        <div className={sliderClasses.root}>
+          <PrettoRestrictSlider
+            ref={ref => sliderRef.current = ref}
+            onScrollCapture={(event) => {
+              console.log('scroll event', event)
+            }}
+            defaultValue={sliderValue}
+            getAriaValueText={valuetext}
+            valueLabelFormat={valuetext}
+            // ValueLabelComponent={'span'}
+            value={sliderValue}
+            onChange={handleSliderChange}
+            // aria-label="pretto slider"
+            // step={1}
+            // marks
+            min={1990}
+            max={2060}
+            valueLabelDisplay="off"
+          />
+          <div
+            style={{
+              marginTop: -15,
+              marginLeft: -15,
+              marginBottom: 15,
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <TimeSpan>1990</TimeSpan>
+            <TimeSpan>2060</TimeSpan>
+          </div>
+        </div>
+      </div>
+
+    )
+  }
+
+
   return (
     <div>
       <Modal
@@ -22,9 +177,9 @@ const Home: React.FC = () => {
         }
         open={openModal}
         handleClose={handleClose}
-        // titleLogo={
-        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
-        // }
+      // titleLogo={
+      //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+      // }
       >
         <ModalText>
           <b>
@@ -107,7 +262,7 @@ const Home: React.FC = () => {
             rel="noopener noreferrer"
           >
             <button className="button-small-transparent">
-              <img src={rightArrow} height={20} style={{marginRight: '8px'}}/>
+              <img src={rightArrow} height={20} style={{ marginRight: '8px' }} />
               Imagine. Arth
             </button>
           </a>
@@ -120,10 +275,10 @@ const Home: React.FC = () => {
           data-aos-duration="2000"
           data-aos-once="true"
         >
-          <img src={arthLogo} height={45} className="info-logo"/>
-          <br/>
+          <img src={arthLogo} height={45} className="info-logo" />
+          <br />
           <p className='main-heading'>Arth. Never lose buying power of your money.</p>
-          <br/>
+          <br />
           <p className='section-description'>
             Arth is designed to fight depreciation of wealth & help you pay less for more.
             Your purchasing power increases as you preserve Arth. No matter the fluctuation in the market,
@@ -197,22 +352,24 @@ const Home: React.FC = () => {
         </div>
         <div className="rate-main-container">
           <div className="left-container">
+            {/* slider Space */}
             <p className="title">Value over time to buy one cup of coffee</p>
-            <p className="sub-title">Compare value with years <span className="tag">2010</span></p>
+            <p className="sub-title">Compare value with years <span className="tag">{sliderValue}</span></p>
+            <SliderUI />
           </div>
           <div className="right-container">
             <div className="rate-card">
               <div className="rate-input">
                 <div className="rate-value-card">
-                  <span className="value positive">$1.2</span>
-                  <img src={arthLogobg} height={36}/>
+                  <span className="value positive">${arthValue.toFixed(2)}</span>
+                  <img src={arthLogobg} height={36} />
                 </div>
                 <p className="input-label">ARTH Value Coin</p>
               </div>
               <div className="rate-input">
                 <div className="rate-value-card">
-                  <span className="value negative">$2.1</span>
-                  <img src={USDLogo} height={36}/>
+                  <span className="value negative">${fiatValue.toFixed(2)}</span>
+                  <img src={USDLogo} height={36} />
                 </div>
                 <p className="input-label">Fiat Currency</p>
               </div>
@@ -608,32 +765,32 @@ const Home: React.FC = () => {
               <div className="social-items">
                 <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
                   <button className="button3">
-                    <i className="fab fa-twitter"/>
+                    <i className="fab fa-twitter" />
                   </button>
                 </a>
                 <a id="social-medium" href="https://medium.com/mahadao">
                   <button className="button3">
-                    <i className="fab fa-medium"/>
+                    <i className="fab fa-medium" />
                   </button>
                 </a>
                 <a id="social-telegram" href="https://t.me/MahaDAO">
                   <button className="button3">
-                    <i className="fab fa-telegram-plane"/>
+                    <i className="fab fa-telegram-plane" />
                   </button>
                 </a>
                 <a id="social-github" href="https://github.com/mahadao">
                   <button className="button3">
-                    <i className="fab fa-github"/>
+                    <i className="fab fa-github" />
                   </button>
                 </a>
                 <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
                   <button className="button3">
-                    <i className="fab fa-reddit"/>
+                    <i className="fab fa-reddit" />
                   </button>
                 </a>
                 <a id="social-discord" href="https://discord.gg/V6sr3fe">
                   <button className="button3">
-                    <i className="fab fa-discord"/>
+                    <i className="fab fa-discord" />
                   </button>
                 </a>
               </div>
@@ -645,6 +802,16 @@ const Home: React.FC = () => {
     </div>
   );
 };
+
+const TimeSpan = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.88);
+`;
+
 
 const FooterEnd = styled.div`
   font-family: 'Syne', sans-serif;
