@@ -84,6 +84,7 @@ const PrettoRestrictSlider = withStyles({
   },
 })(Slider);
 
+
 const DEFAULT_CALC = 1440;
 
 
@@ -103,70 +104,10 @@ const Home: React.FC = () => {
     setFiat(0.6 + (Number(val) - 1990) * 0.2)
     setArth(1.2 - ((Number(val) - 1990) / 23.3) * 0.1)
   }
-  const handleSliderChange = (event: any, value: any) => {
-    // event.preventDefault()
-    // console.log(event)
+  const handleSliderChange = (ev: any, value?: any) => {
     handleCoffeeValues(value)
     setSliderValue(value);
-    // setDuration(DEFAULT_CALC - value * value);
   };
-
-  // useEffect(() => {
-  //   sliderRef.current.addEventListener('touchmove', handleSliderChange, { passive: true })
-  //   sliderRef.current.addEventListener('touchstart', handleSliderChange, { passive: true })
-  // }, [])
-
-  const SliderUI = () => {
-    return (
-      <div
-        className="scrollslider"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          color: 'white',
-          flexDirection: 'row',
-          width: isMobile ? '95%' : '75%',
-          paddingLeft: '16px',
-          marginTop: '5px',
-        }}
-      >
-        <div className={sliderClasses.root}>
-          <PrettoRestrictSlider
-            ref={ref => sliderRef.current = ref}
-            onScrollCapture={(event) => {
-              console.log('scroll event', event)
-            }}
-            defaultValue={sliderValue}
-            getAriaValueText={valuetext}
-            valueLabelFormat={valuetext}
-            // ValueLabelComponent={'span'}
-            value={sliderValue}
-            onChange={handleSliderChange}
-            // aria-label="pretto slider"
-            // step={1}
-            // marks
-            min={1990}
-            max={2060}
-            valueLabelDisplay="off"
-          />
-          <div
-            style={{
-              marginTop: -15,
-              marginLeft: -15,
-              marginBottom: 15,
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <TimeSpan>1990</TimeSpan>
-            <TimeSpan>2060</TimeSpan>
-          </div>
-        </div>
-      </div>
-
-    )
-  }
-
 
   return (
     <div>
@@ -355,7 +296,33 @@ const Home: React.FC = () => {
             {/* slider Space */}
             <p className="title">Value over time to buy one cup of coffee</p>
             <p className="sub-title">Compare value with years <span className="tag">{sliderValue}</span></p>
-            <SliderUI />
+            <div style={{ width: isMobile ? '95%' : '75%', paddingInlineStart: isMobile ? 15 : 0 }}>
+              <PrettoRestrictSlider
+                defaultValue={1990}
+                getAriaValueText={valuetext}
+                valueLabelFormat={valuetext}
+                onChange={handleSliderChange}
+                // aria-label="pretto slider"
+                step={1}
+                marks
+                min={1990}
+                max={2060}
+                valueLabelDisplay="off"
+              />
+              <div
+                style={{
+                  marginTop: -15,
+                  marginLeft: -15,
+                  marginBottom: 15,
+                  display: 'flex',
+                  // width: '99%',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <TimeSpan>1990</TimeSpan>
+                <TimeSpan>2060</TimeSpan>
+              </div>
+            </div>
           </div>
           <div className="right-container">
             <div className="rate-card">
@@ -753,7 +720,7 @@ const Home: React.FC = () => {
                 {/*    width="140px"*/}
                 {/*  />*/}
                 {/*</div>*/}
-                <StyledLink href="https://mahadao.com/" target="_blank" style={{marginLeft: 0}}>
+                <StyledLink href="https://mahadao.com/" target="_blank" style={{ marginLeft: 0 }}>
                   MAHADAO
                 </StyledLink>
                 <StyledLink href="https://docs.arthcoin.com" target="_blank">

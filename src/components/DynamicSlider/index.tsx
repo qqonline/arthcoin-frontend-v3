@@ -68,7 +68,7 @@ const PrettoRestrictSlider = withStyles({
 const DEFAULT_CALC = 1440;
 
 interface IProps {
-  onSliderChange?: (val: any) => void;
+  onSliderChange: (val: any) => void;
   sliderLabel?: string;
 }
 
