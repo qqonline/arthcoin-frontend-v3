@@ -72,13 +72,13 @@ export default (props: IProps) => {
         <TransparentInfoDiv
           labelData={`You will receive`}
           rightLabelUnit={'ARTHX'}
-          rightLabelValue={Number(initEarnedARTHX).toLocaleString()}
+          rightLabelValue={Number(initEarnedARTHX).toLocaleString('en-US', { maximumFractionDigits: 6 })}
         />
 
         <TransparentInfoDiv
           labelData={`You will receive`}
           rightLabelUnit={'MAHA'}
-          rightLabelValue={Number(initEarnedMAHA).toLocaleString()}
+          rightLabelValue={Number(initEarnedMAHA).toLocaleString('en-US', {maximumFractionDigits: 6})}
         />
 
         <Grid

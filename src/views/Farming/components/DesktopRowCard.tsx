@@ -43,7 +43,9 @@ export default (props: IProps) => {
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
 
+  const ratePerMillisecond = 0.0001;
   const pow = BigNumber.from(10).pow(18);
+
   const initEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
@@ -157,25 +159,27 @@ export default (props: IProps) => {
                     Earned:
                     <TableMainTextStyle style = {{ marginLeft: '10px' }}>
                       <CountUp
-                      start={0}
                       end={initEarnedARTHX}
-                      delay={0}
-                      decimals={4}
-                      duration={3600}
+                      delay={0.01}
+                      decimals={3}
+                      redraw={false}
+                      duration={initEarnedARTHX / ratePerMillisecond}
                       preserveValue={true}
-                      onUpdate={() => console.log()}
+                      formattingFn={(val: number) => val.toLocaleString('en-US', {maximumFractionDigits: 6})}
+                      onUpdate={() => {}}
                       />
                       {' '}
                       ARTHX
                       {' + '}
                       <CountUp
-                        start={0}
                         end={initEarnedMAHA}
-                        delay={0}
-                        decimals={4}
-                        duration={3600}
+                        delay={0.01}
+                        redraw={false}
+                        decimals={3}
+                        duration={initEarnedMAHA / ratePerMillisecond}
                         preserveValue={true}
-                        onUpdate={() => console.log()}
+                        formattingFn={(val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6 })}
+                        onUpdate={() => {}}
                       />
                       {' '}
                       MAHA
