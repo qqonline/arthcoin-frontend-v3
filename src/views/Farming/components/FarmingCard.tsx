@@ -33,7 +33,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const tokenBalance = useTokenBalance(depositTokenContract);
 
   const stakedBalance = useStakingBalance(pool.contract);
-  const claimableBalance = useStakingRewards(pool.contract);
+  const [initialClaimableBalance, claimableBalance] = useStakingRewards(pool.contract);
 
   const rates = usePoolTokenRates();
 
@@ -132,6 +132,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       {!isMobile ? (
         <DesktopRowCard
           pool={pool}
+          initialClaimableBalance={initialClaimableBalance}
           claimableBalance={claimableBalance}
           stakedBalance={stakedBalance}
           rates={rates}
@@ -142,6 +143,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       ) : (
         <MobileRowCard
           pool={pool}
+          initialClaimableBalance={initialClaimableBalance}
           claimableBalance={claimableBalance}
           stakedBalance={stakedBalance}
           rates={rates}

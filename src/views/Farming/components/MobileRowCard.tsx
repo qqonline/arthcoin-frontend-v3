@@ -37,6 +37,7 @@ interface IProps {
   // rewards?: string;
   pool: StakingContract;
   stakedBalance: BigNumber;
+  initialClaimableBalance: BigNumber;
   claimableBalance: BigNumber;
   rates: {
     maha: BigNumber;
@@ -56,8 +57,22 @@ export const MobileFarm = (props: IProps) => {
   const tokenBalance = useTokenBalance(depositTokenContract);
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
+  const ratePerMillisecond = 0.001;
   const pow = BigNumber.from(10).pow(18);
-  const initEarnedARTHX = useMemo(() => {
+  
+  const initEarnedARTHX = Number(getDisplayBalance(
+    props?.initialClaimableBalance?.mul(props?.rates?.arthx).div(pow),
+    18,
+    6
+  ));
+
+  const initEarnedMAHA = Number(getDisplayBalance(
+    props?.initialClaimableBalance?.mul(props?.rates?.maha).div(pow),
+    18,
+    6
+  ));
+
+  const currentEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
       18,
@@ -65,7 +80,7 @@ export const MobileFarm = (props: IProps) => {
     ))
   }, [props, pow]);
 
-  const initEarnedMAHA = useMemo(() => {
+  const currentEarnedMAHA = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
       18,
@@ -220,7 +235,7 @@ export const MobileFarm = (props: IProps) => {
                     </InfoDivRightSpan>
                   </div>
                   {
-                    !(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+                    !(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
                       ? (
                         <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
                       )
@@ -238,34 +253,52 @@ export const MobileFarm = (props: IProps) => {
                 />
                 <InfoDiv>
                     {
-                      !!(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+                    !!(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
                         ? (
                         <div>
                             <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
                             <InfoDivRightSpan>
-                              <CountUp
-                                start={0}
-                                end={initEarnedARTHX}
-                                delay={0}
-                                decimals={4}
-                                duration={3600}
-                                preserveValue={true}
-                                onUpdate={() => console.log()}
-                              />
+                            <CountUp
+                              end={initEarnedARTHX}
+                              delay={0.01}
+                              decimals={3}
+                              redraw={true}
+                              duration={initEarnedARTHX / ratePerMillisecond}
+                              preserveValue={true}
+                              formattingFn={
+                                (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                              }
+                            >
+                              {
+                                ({ countUpRef, start, update }) => {
+                                  if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
+                                  return <span ref={countUpRef} />
+                                }
+                              }
+                            </CountUp>
                               {' '}
                               ARTHX
                             </InfoDivRightSpan>
                             <InfoDivLeftSpan>+</InfoDivLeftSpan>
                             <InfoDivRightSpan>
-                              <CountUp
-                                start={0}
-                                end={initEarnedMAHA}
-                                delay={0}
-                                decimals={4}
-                                duration={3600}
-                                preserveValue={true}
-                                onUpdate={() => console.log()}
-                              />
+                            <CountUp
+                              end={initEarnedMAHA}
+                              delay={0.01}
+                              redraw={true}
+                              decimals={3}
+                              duration={initEarnedMAHA / ratePerMillisecond}
+                              preserveValue={true}
+                              formattingFn={
+                                (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                              }
+                            >
+                              {
+                                ({ countUpRef, start, update }) => {
+                                  if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
+                                  return <span ref={countUpRef} />
+                                }
+                              }
+                            </CountUp>
                               {' '}
                               MAHA
                             </InfoDivRightSpan>

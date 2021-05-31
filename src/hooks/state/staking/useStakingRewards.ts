@@ -7,6 +7,7 @@ import { useBlockNumber } from '../../../state/application/hooks';
 
 export default (stakingContract: string) => {
   const [value, setValue] = useState(BigNumber.from(0));
+  const [initialValue, setInitialValue] = useState(BigNumber.from(0));
   
   const core = useCore();
   const {account} = useWallet();
@@ -18,9 +19,10 @@ export default (stakingContract: string) => {
       return;
     }
 
-    const contract = core.contracts[stakingContract]
-    setValue(await contract.earned(core.myAccount));
-  }, [core.contracts, account, core.myAccount, stakingContract]);
+    const contract = core.contracts[stakingContract];
+    if (initialValue.eq(0)) setInitialValue(await contract.earned(core.myAccount));
+    else setValue(await contract.earned(core.myAccount));
+  }, [core.contracts, initialValue, account, core.myAccount, stakingContract]);
 
   useEffect(() => {
     if (core.isUnlocked) {
@@ -30,5 +32,5 @@ export default (stakingContract: string) => {
     }
   }, [core.isUnlocked, account, blockNumber, fetchValue]);
 
-  return value;
+  return [initialValue, value];
 };

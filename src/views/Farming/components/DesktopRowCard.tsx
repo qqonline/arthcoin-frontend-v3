@@ -19,6 +19,7 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 type IProps = {
   pool: StakingContract;
   stakedBalance: BigNumber;
+  initialClaimableBalance: BigNumber;
   claimableBalance: BigNumber;
   rates: {
     maha: BigNumber;
@@ -43,10 +44,22 @@ export default (props: IProps) => {
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
 
-  const ratePerMillisecond = 0.0001;
+  const ratePerMillisecond = 0.005;
   const pow = BigNumber.from(10).pow(18);
 
-  const initEarnedARTHX = useMemo(() => {
+  const initEarnedARTHX = Number(getDisplayBalance(
+    props?.initialClaimableBalance?.mul(props?.rates?.arthx).div(pow),
+    18,
+    6
+  ));
+
+  const initEarnedMAHA = Number(getDisplayBalance(
+    props?.initialClaimableBalance?.mul(props?.rates?.maha).div(pow),
+      18,
+      6
+  ));
+
+  const currentEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
       18,
@@ -54,7 +67,7 @@ export default (props: IProps) => {
     ))
   }, [props, pow]);
 
-  const initEarnedMAHA = useMemo(() => {
+  const currentEarnedMAHA = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.maha).div(pow),
       18,
@@ -142,7 +155,7 @@ export default (props: IProps) => {
               {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
             </TableMainTextStyle>
             {
-              !(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+              !(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
                 ? (
                   <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
                 )
@@ -153,34 +166,50 @@ export default (props: IProps) => {
           </div>
           <div style={{ display: 'flex' }}>
             {
-              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA)) 
+              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
                 ? (
                   <>
                     Earned:
                     <TableMainTextStyle style = {{ marginLeft: '10px' }}>
                       <CountUp
-                      end={initEarnedARTHX}
-                      delay={0.01}
-                      decimals={3}
-                      redraw={false}
-                      duration={initEarnedARTHX / ratePerMillisecond}
-                      preserveValue={true}
-                      formattingFn={(val: number) => val.toLocaleString('en-US', {maximumFractionDigits: 6})}
-                      onUpdate={() => {}}
-                      />
+                        end={initEarnedARTHX}
+                        delay={0.01}
+                        decimals={3}
+                        redraw={true}
+                        duration={initEarnedARTHX / ratePerMillisecond}
+                        preserveValue={true}
+                        formattingFn={
+                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                        }
+                      >
+                        {
+                          ({ countUpRef, start, update }) => {
+                            if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
+                            return <span ref={countUpRef} />
+                          }
+                        }
+                      </CountUp>
                       {' '}
                       ARTHX
                       {' + '}
                       <CountUp
                         end={initEarnedMAHA}
                         delay={0.01}
-                        redraw={false}
+                        redraw={true}
                         decimals={3}
                         duration={initEarnedMAHA / ratePerMillisecond}
                         preserveValue={true}
-                        formattingFn={(val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6 })}
-                        onUpdate={() => {}}
-                      />
+                        formattingFn={
+                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                        }
+                      >
+                        {
+                          ({ countUpRef, start, update }) => {
+                            if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
+                            return <span ref={countUpRef} />
+                          }
+                        }
+                      </CountUp>
                       {' '}
                       MAHA
                     </TableMainTextStyle>
@@ -192,9 +221,9 @@ export default (props: IProps) => {
                 : (
                   <>
                     Earned: {
-                    initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                    initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 6 })
                     } ARTHX + {
-                      initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                      initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 6 })
                     } MAHA
                   </>
                 )
