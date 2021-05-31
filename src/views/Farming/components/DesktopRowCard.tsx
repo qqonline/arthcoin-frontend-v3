@@ -139,41 +139,61 @@ export default (props: IProps) => {
             <TableMainTextStyle style={{ marginLeft: '10px' }}>
               {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
             </TableMainTextStyle>
-            <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
+            {
+              !(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+                ? (
+                  <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
+                )
+                : (
+                  <></>
+                )
+            } 
           </div>
           <div style={{ display: 'flex' }}>
-            Earned:
-            <TableMainTextStyle style={{ marginLeft: '10px' }}>
-              <CountUp
-                start={0}
-                end={initEarnedARTHX}
-                delay={0}
-                decimals={4}
-                duration={Math.floor(config.refreshInterval / 20)}
-                preserveValue={true}
-                onUpdate={() => console.log()}
-              />
-              {' '}
-              ARTHX
-              {' + '}
-              <CountUp
-                start={0}
-                end={initEarnedMAHA}
-                delay={0}
-                decimals={4}
-                duration={Math.floor(config.refreshInterval / 20)}
-                preserveValue={true}
-                onUpdate={() => console.log()}
-              />
-              {' '}
-              MAHA
-            </TableMainTextStyle>
             {
-              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA))
-              &&
-              <WithdrawClaimButton onClick={props.onClaimClick}>
-                Claim Rewards
-              </WithdrawClaimButton>
+              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA)) 
+                ? (
+                  <>
+                    Earned:
+                    <TableMainTextStyle style = {{ marginLeft: '10px' }}>
+                      <CountUp
+                      start={0}
+                      end={initEarnedARTHX}
+                      delay={0}
+                      decimals={4}
+                      duration={3600}
+                      preserveValue={true}
+                      onUpdate={() => console.log()}
+                      />
+                      {' '}
+                      ARTHX
+                      {' + '}
+                      <CountUp
+                        start={0}
+                        end={initEarnedMAHA}
+                        delay={0}
+                        decimals={4}
+                        duration={3600}
+                        preserveValue={true}
+                        onUpdate={() => console.log()}
+                      />
+                      {' '}
+                      MAHA
+                    </TableMainTextStyle>
+                    <WithdrawClaimButton onClick={props.onClaimClick}>
+                      Claim Rewards
+                    </WithdrawClaimButton>
+                  </>
+                ) 
+                : (
+                  <>
+                    Earned: {
+                    initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                    } ARTHX + {
+                      initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                    } MAHA
+                  </>
+                )
             }
           </div>
         </DepositInfoContainer>

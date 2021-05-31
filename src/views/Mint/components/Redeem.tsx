@@ -226,7 +226,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Redeeming ${arthValue} ARTH cancelled`,
+                        data1: `Redeeming ${Number(arthValue).toLocaleString()} ARTH cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);

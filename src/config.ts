@@ -85,19 +85,19 @@ export const stakingContracts: StakingContract[] = [
     sort: 0,
     categories: ['all', 'arth'],
   },
-  {
-    platform: 'uniswap',
-    contract: 'StakeARTHMAHA',
-    kind: 'vested',
-    depositToken: 'ArthWethLP',
-    depositTokenSymbols: ['MAHA', 'WETH'],
-    depositTokenKind: 'single',
-    earnTokenName: 'ARTHX',
-    finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
-    sort: 0,
-    categories: ['all', 'maha'],
-  },
+  // { // NOT yet deployed.
+  //   platform: 'uniswap',
+  //   contract: 'StakeARTHMAHA',
+  //   kind: 'vested',
+  //   depositToken: 'ArthWethLP',
+  //   depositTokenSymbols: ['MAHA', 'WETH'],
+  //   depositTokenKind: 'single',
+  //   earnTokenName: 'ARTHX',
+  //   finished: false,
+  //   networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+  //   sort: 0,
+  //   categories: ['all', 'maha'],
+  // },
   {
     platform: 'uniswap',
     contract: 'StakeARTHXWETH',
@@ -154,10 +154,10 @@ export const stakingContracts: StakingContract[] = [
 
 
 export const tradingPairs: TradingPairs[] = [
-  {
-    tokens: ['MAHA', 'WETH'],
-    paltform: 'uniswapV2'
-  },
+  // { // NOT yet deployed
+  //   tokens: ['MAHA', 'WETH'],
+  //   paltform: 'uniswapV2'
+  // },
   {
     tokens: ['MAHA', 'ARTH'],
     paltform: 'uniswapV2'

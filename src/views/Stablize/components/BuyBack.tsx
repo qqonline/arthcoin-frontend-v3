@@ -341,7 +341,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Buyback for ${redeemAmount} ARTH cancelled`,
+                        data1: `Buyback ${Number(redeemAmount).toLocaleString()} ${selectedCollateral} cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);

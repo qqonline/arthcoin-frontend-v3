@@ -12,7 +12,7 @@ import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
 interface IProps {
   toggleSuccessModal?: () => void;
   pool: StakingContract;
-  onCancel: () => void;
+  onCancel: (showPopup: boolean) => void;
   onClaim?: () => void;
   isMobile: boolean;
   claimableBalance: BigNumber,
@@ -28,7 +28,7 @@ export default (props: IProps) => {
   const claim = useStakingClaim(props.pool.contract);
   const handleClaim = () => {
     claim(() => {
-      props.onCancel();
+      props.onCancel(false);
       props.openSuccessModal();
       setTimeout(() => {
         props.closeSuccessModal();
@@ -54,10 +54,14 @@ export default (props: IProps) => {
   }, [props, pow]);
   
 
+  const popupClose = () => {
+    props.onCancel(true);
+  }
+
   return (
     <CustomModal
       closeButton
-      handleClose={props.onCancel}
+      handleClose={popupClose}
       open={true}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
@@ -91,7 +95,7 @@ export default (props: IProps) => {
               variant={'transparent'}
               text="Cancel"
               size={'lg'}
-              onClick={props.onCancel}
+              onClick={popupClose}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>

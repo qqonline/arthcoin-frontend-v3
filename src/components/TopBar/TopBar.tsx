@@ -75,7 +75,7 @@ const TopBar: React.FC = () => {
             </div>
             <HideonPhone>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                {/* <TxButton /> */}
+                <TxButton />
                 {network.name !== '' && (
                   <CustomNetwork>
                     <ColorIcon colorCode={network.color} />

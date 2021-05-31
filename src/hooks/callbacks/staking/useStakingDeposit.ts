@@ -11,7 +11,8 @@ import { useTransactionAdder } from '../../../state/transactions/hooks';
 export default function (
   stakingContract: string, 
   amount: number, 
-  depositToken: string
+  depositToken: string,
+  symbol: string
 ) {
   const core = useCore();
   const addPopup = useAddPopup();
@@ -27,7 +28,7 @@ export default function (
       );
 
       addTransaction(response, {
-        summary: `Stake ${amount.toLocaleString()} ${depositToken}`
+        summary: `Stake ${amount.toLocaleString()} ${symbol}`
       });
 
       if (callback) callback();
@@ -46,7 +47,7 @@ export default function (
     amount,
     addPopup,
     addTransaction, 
-    depositToken
+    symbol
   ]);
 
   return action;

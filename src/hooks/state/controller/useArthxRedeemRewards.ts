@@ -2,10 +2,13 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../../useCore';
+import { useBlockNumber } from '../../../state/application/hooks';
 
 export default () => {
-  const core = useCore();
   const [value, setValue] = useState(BigNumber.from(1));
+
+  const core = useCore();
+  const blockNumber = useBlockNumber();
 
   const fetchValue = useCallback(async () => {
     const contract = core.contracts.ArthController
@@ -21,7 +24,7 @@ export default () => {
     fetchValue().catch((err) =>
       console.error(`Failed to fetch controller.estimateRecollateralizeRewards: ${err}`),
     );
-  }, [fetchValue]);
+  }, [blockNumber, fetchValue]);
 
   return value;
 };

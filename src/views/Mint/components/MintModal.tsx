@@ -368,7 +368,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `Minting ${collateralValue} ARTH cancelled`,
+                        data1: `Minting ${Number(collateralValue).toLocaleString()} ARTH cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);

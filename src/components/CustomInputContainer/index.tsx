@@ -114,6 +114,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
       if (props.errorCallback) props.errorCallback(true);
       MaxStatus = false
     } else {
+      if (props.errorCallback) props.errorCallback(false);
       setICStates(Default);
     }
 

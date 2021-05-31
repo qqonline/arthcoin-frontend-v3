@@ -10,7 +10,6 @@ export default function Updater(): null {
   const { ethereum, chainId } = useWallet();
 
   const dispatch = useDispatch();
-
   const windowVisible = useIsWindowVisible();
 
   const [state, setState] = useState<{

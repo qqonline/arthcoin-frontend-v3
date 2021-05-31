@@ -5,6 +5,7 @@ import useModal from '../../../hooks/useModal';
 import TxModal from './TxModal';
 import transcationIcon from '../../../assets/img/transcation.png';
 import HtmlTooltip from '../../../components/HtmlTooltip';
+
 interface TxButtonProps {}
 
 const TxButton: React.FC<TxButtonProps> = () => {
@@ -13,6 +14,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
   const [onPresentTransactionModal, onDismissTransactionModal] = useModal(
     <TxModal onDismiss={() => onDismissTransactionModal()} />,
   );
+  
   return (
     <>
       {!!account && (
@@ -39,7 +41,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
 };
 
 const StyledTxButton = styled.div`
-  margin-right: ${(props) => props.theme.spacing[4]}px;
+  margin-right: 12px;
   display: flex;
   justify-content: center;
   align-items: center;

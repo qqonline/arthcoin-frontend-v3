@@ -15,9 +15,10 @@ import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
   mode?: ModeProps;
+  claimableBalance: BigNumber;
   stakedBalance: BigNumber;
   pool: StakingContract;
-  onCancel: () => void;
+  onCancel: (amount?: string, token?: string) => void;
   onWithdraw?: () => void;
   toggleSuccessModal?: () => void;
   isMobile: boolean;
@@ -36,7 +37,15 @@ export default (props: IProps) => {
     props.pool.contract,
     Number(val),
     props.pool.depositToken,
+    symbol
   );
+
+  const popupCancel = () => {
+    props.onCancel(
+      Number(String(val)).toLocaleString(),
+      symbol
+    )
+  }
 
   const handleWithdraw = () => {
     withdraw(() => {
@@ -51,7 +60,7 @@ export default (props: IProps) => {
   return (
     <CustomModal
       closeButton
-      handleClose={props.onCancel}
+      handleClose={popupCancel}
       open={true}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
@@ -91,13 +100,21 @@ export default (props: IProps) => {
         style={{ marginTop: '32px' }}
       >
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
+          <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={popupCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button 
-            text={'Withdraw'} 
+            text={
+              props.claimableBalance.lte(0) 
+                ? 'Withdraw'
+                : 'You need to claim reward before withdrawal'
+            } 
             size={'lg'}
-            disabled={isInputFieldError || !Number(val)}
+            disabled={
+              props.claimableBalance.gt(0) || 
+              isInputFieldError || 
+              !Number(val)
+            }
             onClick={handleWithdraw} 
           />
         </Grid>

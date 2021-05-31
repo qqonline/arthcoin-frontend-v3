@@ -1,16 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useWallet } from 'use-wallet';
 import { BigNumber } from 'ethers';
+import { useWallet } from 'use-wallet';
+import { useCallback, useEffect, useState } from 'react';
 
-import ERC20 from '../../basis-cash/ERC20';
 import useCore from '../useCore';
-import config from '../../config';
+import ERC20 from '../../basis-cash/ERC20';
+import {useBlockNumber} from '../../state/application/hooks';
 
 const useTokenBalanceOf = (token: ERC20, address: string) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
+  
   const core = useCore();
   const { account } = useWallet();
-
+  const blockNumber = useBlockNumber();
+  
   const fetchBalance = useCallback(async () => {
     if (!account) {
       setBalance(BigNumber.from(0))
@@ -27,11 +29,8 @@ const useTokenBalanceOf = (token: ERC20, address: string) => {
           `Failed to fetch token balance of ${address} for ${token.address}: ${err.stack} `,
         ),
       );
-
-      let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
-      return () => clearInterval(refreshInterval);
     }
-  }, [address, account, core.isUnlocked, fetchBalance, token]);
+  }, [address, blockNumber, account, core.isUnlocked, fetchBalance, token]);
 
   return balance;
 };

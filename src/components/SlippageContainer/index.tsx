@@ -46,10 +46,11 @@ const SlippageContainer: React.FC = () => {
       updateSlippage(4, 0);
       return;
     }
+
     if (Number(value) && Number(value) < 0) return;
+    
     if (ValidateNumber(value) && checkForAfterDecimalDigits(value)){
-      let getCorrectString = await correctString(value)
-      updateSlippage(4, Number(getCorrectString));
+      updateSlippage(4, Number(await correctString(value)));
     }
   }
 

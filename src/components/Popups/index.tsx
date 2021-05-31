@@ -1,22 +1,23 @@
-import React from 'react'
-import { useActivePopups } from '../../state/application/hooks'
+import React from 'react';
+
+import { useActivePopups } from '../../state/application/hooks';
 import TranscationSnackbar from '../../components/TopBar/components/TranscationSnackbar';
 
 
 export default function Popups() {
-  // get all popups
-  const activePopups = useActivePopups()
+  const activePopups = useActivePopups();
 
   return (
     <>
-      {activePopups.map(p => (
-
-        <TranscationSnackbar
-        notificationCount={1}
-        open
-        content={p.content}
-/>
-      ))}
+      {
+        activePopups.map((p, i) => (
+          <TranscationSnackbar
+            notificationCount={i+1}
+            open
+            content={p.content}
+          />
+        ))
+      }
     </>
   )
   // return (

@@ -1,27 +1,31 @@
+import { Trash } from 'react-feather';
+import styled from 'styled-components';
+import { Divider } from '@material-ui/core';
 import React, { useMemo, useState } from 'react';
-import Modal from '../../NewModal/index';
+
 import Label from '../../Label';
 import Button from '../../Button';
-import { TransactionDetails } from '../../../state/transactions/reducer';
-import styled from 'styled-components';
-import Transaction from './Transaction';
-// import ModalActions from '../../ModalActions';
 import Spacer from '../../Spacer';
+import Transaction from './Transaction';
+import Modal from '../../NewModal/index';
+import { TransactionDetails } from '../../../state/transactions/reducer';
 import {
   isTransactionRecent,
   useAllTransactions,
   useClearAllTransactions,
 } from '../../../state/transactions/hooks';
-import { Trash } from 'react-feather';
+
 
 const MAX_TRANSACTION_HISTORY = 10;
+
 interface props {
   onDismiss?: Function;
 }
 
 const TxModal: React.FC<props> = ({ onDismiss }) => {
-  const allTransactions = useAllTransactions();
   const [openModal, toggleModal] = useState(true);
+
+  const allTransactions = useAllTransactions();
   const { clearAllTransactions } = useClearAllTransactions();
 
   const sortedRecentTransactions = useMemo(() => {
@@ -33,8 +37,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
   const confirmed = sortedRecentTransactions
     .filter((tx) => tx.receipt)
     .slice(0, MAX_TRANSACTION_HISTORY);
-
-  const isEmpty = confirmed?.length + pending?.length === 0;
+  
   const handleClose = () => {
     toggleModal(false);
     onDismiss();
@@ -42,41 +45,62 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
 
   return (
     <Modal title="Transactions" open={openModal} handleClose={handleClose}>
-      <StyledTitleArea>
-        {confirmed?.length > 0 && (
-          <StyledClearIconWrapper>
-            <Trash onClick={clearAllTransactions} size="16" />
-          </StyledClearIconWrapper>
-        )}
-      </StyledTitleArea>
-      {pending?.length > 0 && (
-        <>
-          <Label text="Pending transactions" />
-          <StyledTransactionList>
-            {pending.map((tx) => (
-              <Transaction key={tx.hash} tx={tx} />
-            ))}
-          </StyledTransactionList>
-          <Spacer size="sm" />
-        </>
-      )}
-      {confirmed?.length > 0 && (
-        <>
-          <Label text="Recent transactions" />
-          <StyledTransactionList>
-            {confirmed.map((tx) => (
-              <Transaction key={tx.hash} tx={tx} />
-            ))}
-          </StyledTransactionList>
-        </>
-      )}
-      {isEmpty && (
-        <div className="margin-top-bottom-20">
-          <Label text="No transactions." color="#777" />
-        </div>
-      )}
+      {
+        pending?.length > 0
+          ? (
+            <>
+              <Label text="Pending transactions" />
+              <StyledTransactionList>
+                {pending.map((tx) => (
+                  <Transaction key={tx.hash} tx={tx} />
+                ))}
+              </StyledTransactionList>
+              <Spacer size="sm" />
+            </>
+          ) : (
+            <div className="margin-top-bottom-20">
+              <Label text="No pending transactions." color="#777" />
+            </div>
+          )
+      }
+      {
+        confirmed?.length > 0
+          ? (
+            <>
+              <Divider
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  margin: '15px 0px',
+                }}
+              />
+              <StyledTitleArea style={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
+                <Label text="Recent transactions" />
+                {"  "}
+                <StyledClearIconWrapper>
+                  <Trash onClick={clearAllTransactions} size="16" />
+                </StyledClearIconWrapper>
+              </StyledTitleArea>
+              <StyledTransactionList>
+                {confirmed.map((tx) => (
+                  <Transaction key={tx.hash} tx={tx} />
+                ))}
+              </StyledTransactionList>
+            </>
+          )
+          : (
+            <div className="margin-top-bottom-20">
+              <Label text="No recent transactions." color="#777" />
+            </div>
+          )
+      }
 
-      {false && <Button text="Close" onClick={handleClose} />}
+      <Divider
+        style={{
+          background: 'rgba(255, 255, 255, 0.08)',
+          margin: '15px 0px',
+        }}
+      />
+      <Button text="Close" onClick={handleClose} />
     </Modal>
   );
 };

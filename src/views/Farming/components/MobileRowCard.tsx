@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo} from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useWallet } from 'use-wallet';
@@ -212,65 +212,80 @@ export const MobileFarm = (props: IProps) => {
             ? (
               <OpenableDiv>
                 <InfoDiv>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      textAlign: 'center',
-                      alignSelf: 'center',
-                    }}
-                  >
+                  <div>
                     <InfoDivLeftSpan>Your Locked stake: </InfoDivLeftSpan>
                     <InfoDivRightSpan>
                       {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
-                    </InfoDivRightSpan>
-                  </div>
-                  <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
-                </InfoDiv>
-                <InfoDiv>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      textAlign: 'center',
-                      alignSelf: 'center',
-                    }}
-                  >
-                    <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
-                    <InfoDivRightSpan>
-                      <CountUp
-                        start={0}
-                        end={initEarnedARTHX}
-                        delay={0}
-                        decimals={4}
-                        duration={Math.floor(config.refreshInterval / 20)}
-                        preserveValue={true}
-                        onUpdate={() => console.log()}
-                      />
-                      {' '}
-                      ARTHX
-                      {' + '}
-                      <CountUp
-                        start={0}
-                        end={initEarnedMAHA}
-                        delay={0}
-                        decimals={4}
-                        duration={Math.floor(config.refreshInterval / 20)}
-                        preserveValue={true}
-                        onUpdate={() => console.log()}
-                      />
-                      {' '}
-                      MAHA
+                      {' ' + props.pool.depositTokenSymbols.join('-')}
                     </InfoDivRightSpan>
                   </div>
                   {
-                    !!(Number(initEarnedARTHX) || Number(initEarnedMAHA)) &&
-                    <Withdraw
-                      onClick={props.onClaimClick}
-                    >
-                      Claim
-                    </Withdraw>
-                  } 
+                    !(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+                      ? (
+                        <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
+                      )
+                      : (
+                        <></>
+                      )
+                  }
+                </InfoDiv>
+                <Divider
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    margin: '15px 0px',
+                  }}
+                variant={'middle'}
+                />
+                <InfoDiv>
+                    {
+                      !!(Number(initEarnedARTHX) || Number(initEarnedMAHA))
+                        ? (
+                        <div>
+                            <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
+                            <InfoDivRightSpan>
+                              <CountUp
+                                start={0}
+                                end={initEarnedARTHX}
+                                delay={0}
+                                decimals={4}
+                                duration={3600}
+                                preserveValue={true}
+                                onUpdate={() => console.log()}
+                              />
+                              {' '}
+                              ARTHX
+                            </InfoDivRightSpan>
+                            <InfoDivLeftSpan>+</InfoDivLeftSpan>
+                            <InfoDivRightSpan>
+                              <CountUp
+                                start={0}
+                                end={initEarnedMAHA}
+                                delay={0}
+                                decimals={4}
+                                duration={3600}
+                                preserveValue={true}
+                                onUpdate={() => console.log()}
+                              />
+                              {' '}
+                              MAHA
+                            </InfoDivRightSpan>
+                            <Withdraw
+                              onClick={props.onClaimClick}
+                            >
+                              Claim
+                            </Withdraw>
+                        </div>
+                        )
+                      : (
+                        <>
+                          Earned: {
+                            initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                          } ARTHX + {
+                            initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 4 })
+                          } MAHA
+                        </>
+                      )
+                    }
                 </InfoDiv>
               </OpenableDiv>
             ) 
