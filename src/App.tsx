@@ -56,6 +56,13 @@ const App: React.FC = () => {
     AOS.init();
   }, []);
 
+  const makeUnPassive = (ev: any) => {
+    ev.preventDefault()
+  }
+  useEffect(() => {
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true })
+    return () => document.body.removeEventListener('touchmove', makeUnPassive)
+  }, [])
   return (
     <Providers>
       <Router>

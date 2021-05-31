@@ -103,18 +103,22 @@ const Home: React.FC = () => {
     setFiat(0.6 + (Number(val) - 1990) * 0.2)
     setArth(1.2 - ((Number(val) - 1990) / 23.3) * 0.1)
   }
-  const handleSliderChange = (event: any, value: any) => {
-    // event.preventDefault()
-    // console.log(event)
+  const handleSliderChange = (ev: any, value?: any) => {
+
+    // ev.preventDefault()
+    // console.log(ev, value)
     handleCoffeeValues(value)
     setSliderValue(value);
     // setDuration(DEFAULT_CALC - value * value);
   };
 
-  // useEffect(() => {
-  //   sliderRef.current.addEventListener('touchmove', handleSliderChange, { passive: true })
-  //   sliderRef.current.addEventListener('touchstart', handleSliderChange, { passive: true })
-  // }, [])
+
+  useEffect(() => {
+    // sliderRef.current.addEventListener('touchmove', makeUnPassive, { passive: true })
+    // sliderRef.current.addEventListener('touchstart', makeUnPassive, { passive: true })
+    // document.body.addEventListener('touchstart', makeUnPassive, { passive: true })
+    // document.body.addEventListener('touchmove', makeUnPassive, true)
+  }, [])
 
   const SliderUI = () => {
     return (
@@ -132,6 +136,7 @@ const Home: React.FC = () => {
       >
         <div className={sliderClasses.root}>
           <PrettoRestrictSlider
+            className={'scrollslider'}
             ref={ref => sliderRef.current = ref}
             onScrollCapture={(event) => {
               console.log('scroll event', event)
@@ -753,7 +758,7 @@ const Home: React.FC = () => {
                 {/*    width="140px"*/}
                 {/*  />*/}
                 {/*</div>*/}
-                <StyledLink href="https://mahadao.com/" target="_blank" style={{marginLeft: 0}}>
+                <StyledLink href="https://mahadao.com/" target="_blank" style={{ marginLeft: 0 }}>
                   MAHADAO
                 </StyledLink>
                 <StyledLink href="https://docs.arthcoin.com" target="_blank">
