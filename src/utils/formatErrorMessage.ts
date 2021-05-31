@@ -5,7 +5,12 @@ export default (message: string): string => {
   if (message.includes('slippage')) return 'Slippage limit reached';
   if (message.includes('user denied transaction')) return 'Transaction cancelled';
   if (message.includes('paused')) return 'This action is paused';
-
+  if (message.includes('balance < required')) return 'Balance < Required';
+  if (message.includes('overflow')) return 'Error';
+  
   // Fail safes like overflows etc.;
-  return 'Error';
+  // return 'Error';
+
+  // For testing to know errors.
+  return message[0].toUpperCase() + message.slice(1).toLowerCase();
 };

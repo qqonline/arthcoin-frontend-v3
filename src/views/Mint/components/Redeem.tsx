@@ -305,7 +305,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 }}
                 disabled={redeemCR.lt(1e6)}
                 SymbolText={selectedCollateral}
-                errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
                   redeemCR.lt(1e6) 
                     ? 'Currently Redeem Collateral ratio is 0%' 

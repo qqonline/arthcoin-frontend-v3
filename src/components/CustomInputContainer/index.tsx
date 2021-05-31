@@ -75,11 +75,6 @@ const CustomInputContainer: React.FC<props> = (props) => {
     setICStates(temp);
   }, [Istate, msg]);
 
- /* useEffect(() => {
-    let temp = { IWarningstate: IWarningstate, IMsg: warningMsg };
-    setICWarningStates(temp);
-  }, [IWarningstate, warningMsg]);*/
-
   const Redirection = () => {
     if (props?.href) {
       return (
@@ -103,22 +98,21 @@ const CustomInputContainer: React.FC<props> = (props) => {
       IState: 'default',
       IMsg: '',
     };
-    //Check for Max amount
-    let MaxStatus = true
-    if (Number(val) > Number(IBalanceValue)) {
-      const temp: ICStatesInterface = {
-        IState: 'error',
-        IMsg: 'Amount cannot be more than your balance.',
-      };
-      setICStates(temp);
-      if (props.errorCallback) props.errorCallback(true);
-      MaxStatus = false
-    } else {
-      if (props.errorCallback) props.errorCallback(false);
-      setICStates(Default);
+    
+    if (props.errorCallback) {
+      if (Number(val) > Number(IBalanceValue)) {
+        const temp: ICStatesInterface = {
+          IState: 'error',
+          IMsg: 'Amount cannot be more than your balance.',
+        };
+        setICStates(temp);
+        props.errorCallback(true);
+      } else {
+        props.errorCallback(false);
+        setICStates(Default);
+      }
     }
 
-    //Check for Max & Min amount
     let DigitsStatus = true
     if (!checkForAfterDecimalDigits(val)) {
       const temp: ICStatesInterface = {
@@ -127,21 +121,9 @@ const CustomInputContainer: React.FC<props> = (props) => {
       };
       setICWarningStates(temp);
       DigitsStatus = false
-      console.log('into digit', DigitsStatus)
     } else {
       setICWarningStates(Default);
     }
-
-
-    //Final Check
-    /*if (MaxStatus && DigitsStatus) {
-      const temp: ICStatesInterface = {
-        IState: 'default',
-        IMsg: '',
-      };
-      setICStates(temp);
-      if (props.errorCallback) props.errorCallback(false);
-    }*/
 
     return DigitsStatus
   }
@@ -175,7 +157,6 @@ const CustomInputContainer: React.FC<props> = (props) => {
           <InputBase
             inputMode={props?.inputMode}
             placeholder={DefaultValue || '0'}
-            // defaultValue={DefaultValue}
             value={DefaultValue}
             inputProps={{ 'aria-label': 'naked' }}
             style={{

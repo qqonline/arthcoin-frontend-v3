@@ -87,7 +87,7 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'MAHA'} size={44} />
               </IconButton>
-              <span>{getDisplayBalance(mahaBalance)} MAHA</span>
+              <span>{Number(getDisplayBalance(mahaBalance)).toLocaleString()} MAHA</span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.mahaDollars}</DollarValue> */}
           </StyledRows>
@@ -97,7 +97,7 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTH'} size={44} />
               </IconButton>
-              <span>{getDisplayBalance(arthBalance)} ARTH</span>
+              <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTH</span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.arthDollars}</DollarValue> */}
           </StyledRows>
@@ -107,7 +107,7 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTHX'} size={44} />
               </IconButton>
-              <span>{getDisplayBalance(arthxBalance)} ARTHX</span>
+              <span>{Number(getDisplayBalance(arthxBalance)).toLocaleString()} ARTHX</span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.arthxDollars}</DollarValue> */}
           </StyledRows>
