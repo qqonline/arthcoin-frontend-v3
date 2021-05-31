@@ -62,7 +62,7 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
         </RowFixed>
         <IconWrapper pending={pending} success={success}>
           {pending ? (
-            <MiniLoader />
+            <MiniLoader stroke='white' />
           ) : success ? (
             <CheckCircle size="16" />
           ) : (
