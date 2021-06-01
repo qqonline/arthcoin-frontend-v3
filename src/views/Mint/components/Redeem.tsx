@@ -399,7 +399,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     )}
                     {redeemableBalances[0].gt(0) || redeemableBalances[1].gt(0) ? (
                       <Button
-                        text={'Collect Redeemption'}
+                        text={'Redemption'}
                         size={'lg'}
                         variant={'default'}
                         onClick={collectRedeemption}

@@ -379,8 +379,8 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
               <Button
                 disabled={
                   mintCR.lt(1e6) ||
-                  isInputFieldError || 
-                  !Number(arthValue) || 
+                  isInputFieldError ||
+                  !Number(arthValue) ||
                   !isCollatApproved ||
                   !(Number(collateralValue))
                 }
@@ -399,7 +399,7 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
         title={'Minting ARTH successful!'}
         // subTitle={'View Transaction'}
         subsubTitle={
-          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+          'Your transaction is now being minted on the blockchain. You should consider staking your tokens to earn extra rewards!'
         }
         buttonText={'Stake your ARTH'}
         buttonType={'default'}
