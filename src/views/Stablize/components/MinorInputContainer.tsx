@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputBase } from '@material-ui/core';
 
+import DownArrow from '../../../assets/img/ArrowDown.svg';
+
 import TokenSymbol from '../../../components/TokenSymbol';
 import CustomDropDown from '../../../components/CustomDropDown';
-import DownArrow from '../../../assets/img/ArrowDown.svg';
+
 
 type props = {
   ILabelValue: string;
@@ -100,8 +102,6 @@ const MinorInputContainer: React.FC<props> = (props) => {
   );
 };
 
-export default MinorInputContainer;
-
 const BackgroundAbsolute = styled.div`
   position: fixed;
   top: 0;
@@ -194,3 +194,5 @@ const IFieldRightContainerText = styled.span`
 const IFieldRightContainerDropDown = styled.span`
   margin-left: 5px;
 `;
+
+export default MinorInputContainer;

@@ -6,25 +6,28 @@ import styled from 'styled-components';
 import { BigNumber } from '@ethersproject/bignumber';
 import { parseUnits } from 'ethers/lib/utils';
 
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
+
 import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
-import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomToolTip from '../../../components/CustomTooltip';
 import RecollaterlizeModal from './RecollaterlizeModal';
+import CustomToolTip from '../../../components/CustomTooltip';
 import SlippageContainer from '../../../components/SlippageContainer';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+
+import useCore from '../../../hooks/useCore';
+import prettyNumber from '../../../components/PrettyNumber';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
-import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedeemRewards';
-import useCore from '../../../hooks/useCore';
-import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import useTokenDecimals from '../../../hooks/useTokenDecimals';
-import prettyNumber from '../../../components/PrettyNumber';
+import useArthxRedeemRewards from '../../../hooks/state/controller/useArthxRedeemRewards';
+import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+
 
 type Iprops = {
   onChange?: () => void;
@@ -60,14 +63,6 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     if (arthxPrice.lte(0) || recollateralizableValue.lte(0)) return BigNumber.from(0);
     return recollateralizableValue.mul(1e6).div(arthxPrice);
   }, [arthxPrice, recollateralizableValue]);
-
-  // const collateralRecollateralizeAmount = useMemo(() => {
-  //   if (collateralGMUPrice.lte(0) || recollateralizableValue.lte(0)) return BigNumber.from(0);
-  //   return recollateralizableValue
-  //     .mul(1e6)
-  //     .div(collateralGMUPrice)
-  //     .div(BigNumber.from(10).pow(18 - tokenDecimals));
-  // }, [collateralGMUPrice, tokenDecimals, recollateralizableValue]);
 
   const onColleteralChange = (val: string) => {
     if (val === '' || collateralGMUPrice.lte(0) || arthxPrice.lte(0)) {

@@ -3,16 +3,17 @@ import Grid from '@material-ui/core/Grid';
 import { Divider } from '@material-ui/core';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { BigNumber } from '@ethersproject/bignumber';
+import { parseUnits } from '@ethersproject/units';
 
-import useCore from '../../../hooks/useCore';
 import TransparentInfoDiv from './InfoDiv';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
 import { CustomSnack } from '../../../components/SnackBar';
-import usePerformRecollateralize from '../../../hooks/callbacks/pools/performRecollateralize';
-import { parseUnits } from '@ethersproject/units';
+
+import useCore from '../../../hooks/useCore';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import usePerformRecollateralize from '../../../hooks/callbacks/pools/performRecollateralize';
 
 interface IProps {
   isInputFieldError: boolean;

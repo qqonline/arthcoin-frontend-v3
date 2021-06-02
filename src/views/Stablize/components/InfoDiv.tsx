@@ -39,7 +39,6 @@ const InfoSpan = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-  // margin: 10px 30px;
   text-align: center;
 `;
 
@@ -54,9 +53,7 @@ const LabelInfoText = styled.div`
 `;
 
 const LabelInfoData = styled.div`
-  // background: yellow;
   padding: 3px 4px;
-  // height: fit-content;
   width: fit-content;
   justify-content: space-between;
   display: flex;
@@ -75,7 +72,6 @@ const LabelInfoDataChip = styled.div`
   border-radius: 4px;
   padding: 3px 4px;
   height: fit-content;
-  // justify-content: space-between;
   display: flex;
   align-items: center;
   font-family: Inter;
@@ -99,12 +95,10 @@ const LabelInfoDataChipText = styled.div`
 `;
 
 const TransInfoDiv = styled.div`
-  // background: rgba(255, 255, 255, 0.08);
-  // border-radius: 6px;
-  // padding: 6px 4px;
   height: fit-content;
   justify-content: space-between;
   display: flex;
   align-items: center;
 `;
+
 export default TransparentInfoDiv;

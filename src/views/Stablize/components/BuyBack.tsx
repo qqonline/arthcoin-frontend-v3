@@ -7,29 +7,31 @@ import styled from 'styled-components';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from '@ethersproject/bignumber';
 
-import { CustomSnack } from '../../../components/SnackBar';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
+
+import TransparentInfoDiv from './InfoDiv';
 import Button from '../../../components/Button';
 import CollaterallizeCheckmark from './Collaterallize';
-import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomModal from '../../../components/CustomModal';
-import CustomToolTip from '../../../components/CustomTooltip';
 import MinorInputContainer from './MinorInputContainer';
+import CustomModal from '../../../components/CustomModal';
+import { CustomSnack } from '../../../components/SnackBar';
+import prettyNumber from '../../../components/PrettyNumber';
+import CustomToolTip from '../../../components/CustomTooltip';
 import SlippageContainer from '../../../components/SlippageContainer';
-import TransparentInfoDiv from './InfoDiv';
-import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
-import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+
 import useCore from '../../../hooks/useCore';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
 import usePerformBuyback from '../../../hooks/callbacks/pools/performBuyback';
-import CustomSuccessModal from '../../../components/CustomSuccesModal';
-import prettyNumber from '../../../components/PrettyNumber';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import useCollateralPoolExcessCollat from '../../../hooks/state/pools/useCollateralPoolExcessCollat';
 
 type Iprops = {
   onChange?: () => void;
@@ -375,9 +377,11 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
     </div>
   );
 };
+
 const TcContainer = styled.div`
   margin-top: 24px;
 `;
+
 const HeaderTitle = styled.div`
   font-family: Inter;
   font-style: normal;
@@ -420,9 +424,8 @@ const HardChip = styled.div`
   margin-left: 4px;
   margin-right: 4px;
 `;
+
 const LeftTopCard = styled.div`
-  //height: 560px;
-  // padding: 32px;
 `;
 
 const LeftTopCardChecked = styled.div`
@@ -453,10 +456,12 @@ const RightTopCardHeader = styled.div`
   color: #ffffff;
   margin: 12px 0;
 `;
+
 const LeftTopCardHeader = styled.div`
   padding-top: 32px;
   padding-bottom: 32px;
 `;
+
 const LeftTopCardContainer = styled.div``;
 const PlusMinusArrow = styled.div`
   width: 100%;
