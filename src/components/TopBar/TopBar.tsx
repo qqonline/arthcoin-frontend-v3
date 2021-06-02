@@ -215,7 +215,7 @@ const StyledTopBar = styled.div`
   //background: #151414;
   ox-sizing: border-box;
   margin: 0 auto;
-  width: max-content;
+  width: 100%;
   background: rgba(0, 0, 0, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -272,10 +272,14 @@ const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
-  justify-content: space-between;
+  justify-content: center;
   //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   flex-wrap: wrap;
+  @media (max-width: 600px){
+    justify-content: space-between;
+    padding: 0 16px;
+  }
 `;
 const ColorIcon = styled.div`
   background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};

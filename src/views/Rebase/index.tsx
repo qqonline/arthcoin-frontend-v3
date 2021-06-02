@@ -120,6 +120,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const arthCirculatingSupply = useARTHCirculatingSupply();
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
+  const rebasePercentage = percentageCompleted.gt(BigNumber.from(100))? BigNumber.from(0): BigNumber.from(100).sub(percentageCompleted)
 
   WalletAutoConnect();
 
@@ -185,18 +186,16 @@ const Genesis = (props: WithSnackbarProps) => {
             <BorderLinearProgress
               variant="determinate"
               value={
-                20
-                // percentageCompleted.gt(BigNumber.from(10).pow(18))
-                //   ? 100
-                //   : Number(getDisplayBalance(percentageCompleted, 16, 3))
+                rebasePercentage.gt(BigNumber.from(10).pow(18))
+                  ? 100
+                  : Number(getDisplayBalance(rebasePercentage, 16, 3))
               }
             />
           </div>
           <HeaderSpan>
             {
-              20
-              // Number(getDisplayBalance(percentageCompleted, 16, 3))
-              //   .toLocaleString('en-US', { maximumFractionDigits: 2 })
+              Number(getDisplayBalance(rebasePercentage, 16, 3))
+                .toLocaleString('en-US', { maximumFractionDigits: 2 })
             }% Rebase
           </HeaderSpan>
         </PageSubHeading>
@@ -210,11 +209,11 @@ const Genesis = (props: WithSnackbarProps) => {
               <CustomInfoCardDetails>
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
-                    ARTH Circulating Supply
+                    Amount Remaining to Raise
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(arthCirculatingSupply))}
+                    {prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
