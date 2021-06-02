@@ -1,64 +1,68 @@
-import { OverviewData } from './types';
-import Container from '../../components/Container';
-import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
-import { BigNumber } from '@ethersproject/bignumber';
-import { useMediaQuery } from 'react-responsive';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import { useMediaQuery } from 'react-responsive';
 
-import HomeCard from './components/HomeCard';
 import Page from '../../components/Page';
-import PageHeader from '../../components/PageHeader';
-import useCore from '../../hooks/useCore';
-import usePoolBalances from '../../hooks/state/pools/usePoolBalances';
-import CollateralRatio from './components/CollateralRatio';
+import HomeCard from './components/HomeCard';
 import PieChart from './components/PieChart';
-import BondingDiscount from './components/BondingDiscount';
-import RewardRates from './components/RewardRates';
 import FeeRates from './components/FeeRates';
-import CoinsPrice from './components/CoinsPrice';
-import BasicInfo from './components/BasicInfo';
 import StakeBox from './components/StakeBox';
+import BasicInfo from './components/BasicInfo';
+import CoinsPrice from './components/CoinsPrice';
+import RewardRates from './components/RewardRates';
+import Container from '../../components/Container';
+import PageHeader from '../../components/PageHeader';
+import BondingDiscount from './components/BondingDiscount';
+import CollateralRatio from './components/CollateralRatio';
 import CustomToolTip from '../../components/CustomTooltip';
-import { getDisplayBalance } from '../../utils/formatBalance';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
-const Home: React.FC = () => {
-  const core = useCore();
-  WalletAutoConnect();
-  const [{ cash, bond, share }, setStats] = useState<OverviewData>({});
-  const fetchStats = useCallback(async () => {
-    // const [cash, bond, share] = await Promise.all([
-    //   // core.getCashStat(),
-    //   // core.getBondStat(),
-    //   // core.getShareStat(),
-    // ]);
-    // // console.log('bond', bond)
-    // setStats({ cash, bond, share });
-  }, []);
+import arrowRight from '../../assets/svg/arrowRight.svg';
+import arrowRightDisabled from '../../assets/svg/arrowRightDisabed.svg';
 
-  useEffect(() => {
-    if (core) {
-      fetchStats().catch((err) => console.error(err.stack));
-      // @ts-ignore
-    }
-  }, [core, fetchStats]);
+import { colors } from './types';
+import useCore from '../../hooks/useCore';
+import prettyNumber from '../../components/PrettyNumber';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
+import useTargetCollateralValue from '../../hooks/state/useTargetCollateralValue';
+import useAllPoolCollateralValue from '../../hooks/state/pools/useAllPoolCollateralValue';
+
+const Home: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
-  const cashAddr = useMemo(() => core.ARTH.address, [core]);
-  const shareAddr = useMemo(() => core.MAHA.address, [core]);
-  const bondAddr = useMemo(() => core.ARTHX.address, [core]);
+  const core = useCore();
+  const allPoolsValue = useAllPoolCollateralValue();
+  const globalCollateralValue = useGlobalCollateralValue();
+  const targetCollateralValue = useTargetCollateralValue();
 
-  const balances = usePoolBalances();
+  WalletAutoConnect();
 
-  const totalCollateral = balances.reduce((p, c) => p.add(c.balance), BigNumber.from(0));
+  const arthAddress = useMemo(() => core.ARTH.address, [core]);
+  const mahaAddress = useMemo(() => core.MAHA.address, [core]);
+  const arthxAddress = useMemo(() => core.ARTHX.address, [core]);
 
-  const formattedBalances = balances.map((b) => ({
-    name: b.poolToken,
-    amount: Number(getDisplayBalance(b.balance, 6)),
-    percentage: Number(getDisplayBalance(b.balance.mul(1e8).div(totalCollateral), 6)),
-  }));
+  const stabilizeState = useMemo(() => {
+    return (
+      globalCollateralValue.eq(targetCollateralValue)
+      ? 'none'
+      : globalCollateralValue.lt(targetCollateralValue)
+        ? 'recollateralize'
+        : 'buyback'
+    );
+  }, [globalCollateralValue, targetCollateralValue]);
+
+  const formattedPoolValues = useMemo(() => {
+    if (globalCollateralValue.eq(0)) return [];
+
+    return allPoolsValue.map(p => ({
+      name: p.poolToken,
+      amount: Number(getDisplayBalance(p.value)),
+      percentage: Number(getDisplayBalance(p.value.mul(1e8).div(globalCollateralValue), 6)),
+    }))
+  }, [allPoolsValue, globalCollateralValue]);
 
   return (
     <Page>
@@ -80,7 +84,6 @@ const Home: React.FC = () => {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    // justifyContent: 'center',
                     flexDirection: isMobile ? 'column' : 'row',
                     paddingBottom: '24px',
                   }}
@@ -88,21 +91,62 @@ const Home: React.FC = () => {
                   <CollateralRatio />
                 </Grid>
                 <div className="border-bottom" />
-                {/* <Grid item sm={12} md={12} lg={12}>
+                <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
                     <InfoDiv style={{ marginTop: '24px' }}>
-                      Recollatearlize the protocol to receive ARTHX
+                      {
+                        stabilizeState === 'none'
+                          ? 'Protocol is currently collateralized'
+                          : stabilizeState === 'recollateralize'
+                              ? 'Recollatearlize the protocol to receive ARTHX'
+                              : 'Buyback from the protocol to receive collateral'
+                      }
                     </InfoDiv>
                     <HeaderSubtitle>
-                      342.450K <HardChip>ARTHX</HardChip>{' '}
-                      <TextForInfoTitle>Rewards to claim</TextForInfoTitle>
+                      ${
+                        prettyNumber(
+                          stabilizeState === 'none'
+                            ? 0
+                            : stabilizeState === 'recollateralize'
+                              ? getDisplayBalance(targetCollateralValue.sub(globalCollateralValue))
+                              : getDisplayBalance(globalCollateralValue.sub(targetCollateralValue))
+                        )
+                      }
+                      <TextForInfoTitle>
+                        &nbsp;{
+                          stabilizeState === 'none'
+                            ? 'To Claim'
+                            : stabilizeState === 'recollateralize'
+                                ? 'Worth Rewards To Claim'
+                                : 'Worth Collateral To Claim'
+                        }
+                      </TextForInfoTitle>
                     </HeaderSubtitle>
                     <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
-                        <ToLink to={'/stabilize/recollateralize'}>
-                          <ButtonText style={{ color: '#F7653B' }}>Recollateralize</ButtonText>
+                        <ToLink 
+                          to={'/stabilize/recollateralize'}
+                        >
+                          <ButtonText 
+                            style={
+                              stabilizeState !== 'recollateralize' 
+                                ? {  color : 'rgba(255, 255, 255, 0.16)'}  
+                                : { color: '#F7653B' }
+                              }
+                          >
+                            Recollateralize
+                          </ButtonText>
                         </ToLink>
-                        <img src={arrowRight} height={18} style={{ marginLeft: 8 }} />
+                        <img 
+                          alt='Arrow right' 
+                          src={
+                            stabilizeState === 'recollateralize'
+                              ? arrowRight
+                              : arrowRightDisabled
+                          }
+                          height={18} 
+                          style={{ marginLeft: 8 }} 
+                        />
                       </IconButtons>
                       <div
                         style={{
@@ -114,15 +158,28 @@ const Home: React.FC = () => {
                       />
                       <IconButtons style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
                         <ToLink to={'/stabilize/buyback'}>
-                          <ButtonText style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
+                          <ButtonText style={
+                            stabilizeState !== 'buyback'
+                              ? { color: 'rgba(255, 255, 255, 0.16)' }
+                              : { color: '#F7653B' }
+                          }>
                             Buyback
                           </ButtonText>
                         </ToLink>
-                        <img src={arrowRightDisabled} height={18} style={{ marginLeft: 8 }} />
+                        <img 
+                          alt='Arrow right' 
+                          src={
+                            stabilizeState === 'buyback'
+                              ? arrowRight
+                              : arrowRightDisabled
+                          }
+                          height={18} 
+                          style={{ marginLeft: 8 }} 
+                        />
                       </IconButtons>
                     </ButtonDiv>
                   </Grid>
-                </Grid> */}
+                </Grid>
                 <div className="border-bottom width-100" />
                 <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
@@ -138,33 +195,38 @@ const Home: React.FC = () => {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        // justifyContent: 'center',
                         flexDirection: isMobile ? 'column' : 'row',
                       }}
                     >
                       <Grid item sm={12} md={6} lg={6}>
-                        <PieChart balances={formattedBalances} />
+                        <PieChart balances={formattedPoolValues} />
                       </Grid>
                       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
                         <PercentCard>
-                          {formattedBalances.map((b) => (
-                            <PercentCardInfo>
-                              <PercentCardLabel>
-                                <div
-                                  style={{
-                                    height: 14,
-                                    width: 14,
-                                    background: '#D74D26',
-                                    borderRadius: 7,
-                                  }}
-                                />
-                                <OpacitySpan>{b.name}</OpacitySpan>
-                              </PercentCardLabel>
-                              <PercentCardValue>
-                                {Math.floor(b.amount)} - {Math.floor(b.percentage)}%
-                              </PercentCardValue>
-                            </PercentCardInfo>
-                          ))}
+                          {
+                            formattedPoolValues.map((b, i) => (
+                              <PercentCardInfo>
+                                <PercentCardLabel>
+                                  <div
+                                    style={{
+                                      height: 14,
+                                      width: 14,
+                                      background: colors[i],
+                                      borderRadius: 7,
+                                    }}
+                                  />
+                                  <OpacitySpan>{b.name}</OpacitySpan>
+                                </PercentCardLabel>
+                                <PercentCardValue>
+                                  ${
+                                    Number(b.amount).toLocaleString('en-US', { maximumFractionDigits: 3 })
+                                  } - {
+                                    Number(b.percentage).toLocaleString('en-US', {maximumFractionDigits: 2})
+                                  }%
+                                </PercentCardValue>
+                              </PercentCardInfo>
+                            ))
+                          }
                         </PercentCard>
                       </Grid>
                     </Grid>
@@ -175,7 +237,7 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
-            {/* <BasicInfo /> */}
+            <BasicInfo poolCollateralValue={globalCollateralValue} />
             <StakeBox />
           </Grid>
         </Grid>
@@ -196,29 +258,26 @@ const Home: React.FC = () => {
               title="MAHA"
               uniswapInputAddress={core.MAHA.address}
               symbol="MAHA"
-              // liquidity="$87,783,601"
-              address={shareAddr}
-              stat={share}
+              liquidity="$87,783,601"
+              address={mahaAddress}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="ARTH"
               symbol="ARTH"
-              // liquidity="$2,462,492"
+              liquidity="$2,462,492"
               uniswapInputAddress={core.ARTH.address}
-              address={cashAddr}
-              stat={cash}
+              address={arthAddress}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="ARTHX"
               symbol="ARTHX"
-              // liquidity={'$2,462,492'}
+              liquidity={'$2,462,492'}
               uniswapInputAddress={core.ARTHX.address}
-              address={bondAddr}
-              stat={bond}
+              address={arthxAddress}
             />
           </Grid>
         </Grid>
@@ -253,6 +312,7 @@ const FaqTitle = styled.div`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
+
 const Card = styled.div``;
 const PercentCard = styled.div`
   display: flex;
@@ -403,4 +463,5 @@ const TitleString = styled.div`
   color: #ffffff;
   opacity: 0.88;
 `;
+
 export default Home;

@@ -1,17 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
-import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
-import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
+import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 
-type props = {};
-
-const CoinsPrice: React.FC<props> = (props) => {
-  const arthxPrice = useARTHXOraclePrice();
+const CoinsPrice: React.FC = () => {
   const arthPrice = useARTHOraclePrice();
   const mahaPrice = useMAHAOraclePrice();
+  const arthxPrice = useARTHXOraclePrice();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -28,13 +26,12 @@ const CoinsPrice: React.FC<props> = (props) => {
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
-            {/* <PercentChange>+0.15%</PercentChange> */}
+            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
         <OneLine>
           <div>
             <TextWithIcon>ARTHX Oracle Price</TextWithIcon>
-            {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
             <BeforeChip>
@@ -43,13 +40,12 @@ const CoinsPrice: React.FC<props> = (props) => {
                   .toLocaleString('en-US', {maximumFractionDigits: 6})
               }
             </BeforeChip>
-            {/* <PercentChange>+0.15%</PercentChange> */}
+            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
         <OneLine>
           <div>
             <TextWithIcon>MAHA Price</TextWithIcon>
-            {/*<TargetPriceTag>Target Price: $1.20</TargetPriceTag>*/}
           </div>
           <div>
             <BeforeChip>
@@ -58,15 +54,13 @@ const CoinsPrice: React.FC<props> = (props) => {
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
-            {/* <PercentChange>+0.15%</PercentChange> */}
+            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
       </CustomInfoCardDetails>
     </CustomInfoCard>
   );
 };
-
-export default CoinsPrice;
 
 const CustomInfoCard = styled.div`
   @media (max-width: 600px) {
@@ -96,6 +90,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -147,3 +142,5 @@ const TargetPriceTag = styled.p`
   margin: 0;
   padding: 2px 4px;
 `;
+
+export default CoinsPrice;

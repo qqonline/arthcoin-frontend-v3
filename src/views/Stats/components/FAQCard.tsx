@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import ArrowUp from '../../../assets/img/ArrowUp.svg';
 import ArrowDown from '../../../assets/img/ArrowDown.svg';
 
 interface FaqProps {
-  question: string;
   answer: string;
+  question: string;
 }
 
 const FAQCard: React.FC<FaqProps> = ({ question, answer }) => {
@@ -24,6 +25,7 @@ const FAQCard: React.FC<FaqProps> = ({ question, answer }) => {
     </FaqCard>
   );
 };
+
 const AnswerTitle = styled.div`
   font-style: normal;
   font-weight: 300;
@@ -33,11 +35,13 @@ const AnswerTitle = styled.div`
   margin-top: 32px;
   opacity: 0.88;
 `;
+
 const FaqCard = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-sizing: border-box;
   padding: 36px 32px;
 `;
+
 const QuestionDiv = styled.div`
   display: flex;
   cursor: pointer;
@@ -54,4 +58,5 @@ const QuestionTitle = styled.div`
   color: #ffffff;
   opacity: 0.88;
 `;
+
 export default FAQCard;

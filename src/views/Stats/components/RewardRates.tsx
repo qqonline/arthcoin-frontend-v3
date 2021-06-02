@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
+
 import HtmlTooltip from '../../../components/HtmlTooltip';
 import CustomToolTip from '../../../components/CustomTooltip';
 
-type props = {};
-
-const BondingDiscount: React.FC<props> = (props) => {
+const BondingDiscount: React.FC = () => {
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardHeader>Reward rates</CustomInfoCardHeader>
@@ -20,7 +19,6 @@ const BondingDiscount: React.FC<props> = (props) => {
           </div>
           <OneLine>
             <BeforeChip>0.2%</BeforeChip>
-            {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
@@ -32,15 +30,12 @@ const BondingDiscount: React.FC<props> = (props) => {
           </div>
           <OneLine>
             <BeforeChip>150%</BeforeChip>
-            {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
       </CustomInfoCardDetails>
     </CustomInfoCard>
   );
 };
-
-export default BondingDiscount;
 
 const CustomInfoCard = styled.div`
   min-height: 220px;
@@ -49,6 +44,7 @@ const CustomInfoCard = styled.div`
     margin-top: 8px;
   }
 `;
+
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -81,6 +77,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -105,3 +102,5 @@ const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
 `;
+
+export default BondingDiscount;

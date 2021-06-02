@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TokenStat } from '../../../basis-cash/types';
-import TokenSymbol from '../../../components/TokenSymbol';
-import config from '../../../config';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import CallMadeIcon from '@material-ui/icons/CallMade';
+
+import TokenSymbol from '../../../components/TokenSymbol';
+
+import config from '../../../config';
+import { TokenStat } from '../../../basis-cash/types';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 
 interface HomeCardProps {
   title: string;
@@ -38,18 +40,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             <SubTitle href={tokenUrl}>{`${title} on Etherscan`}</SubTitle>
           </div>
         </CardHeader>
-
-        {/* <CardContent>
-          <CardSection>
-            <TextWithIcon>Price</TextWithIcon>
-            {stat ? (
-              <StyledValue>
-                {stat.priceInDAI.eq(0) ? '-' : `$${getDisplayBalance(stat.priceInDAI)}`}
-              </StyledValue>
-            ) : (
-              '-'
-            )}
-          </CardSection>
+        <CardContent>
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
             {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
@@ -60,7 +51,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </StyledSupplyLabel>
             {stat ? <StyledValue>{getDisplayBalance(stat.totalSupply)}</StyledValue> : '-'}
           </CardSection>
-        </CardContent> */}
+        </CardContent>
         <UniswapLink
           target="_blank"
           href={`https://app.uniswap.org/#/swap?inputCurrency=${address}`}
@@ -125,7 +116,6 @@ const CardContent = styled.div`
   display: flex;
   padding: 0px 32px 32px 32px;
   align-items: self-start;
-  //margin: 0 15px 15px;
   flex-direction: column;
   @media (max-width: 600px) {
     padding: 0px 16px 16px 16px;
@@ -179,10 +169,11 @@ const StyledSupplyLabel = styled.a`
     color: #f7653b;
   }
 `;
+
 const Card = styled.div`
   padding: 5px 0;
   color: #eee;
-  position: relative; /*  */
+  position: relative;
   background-clip: padding-box;
   border: 1px solid;
   border-image-source: linear-gradient(
@@ -194,6 +185,7 @@ const Card = styled.div`
   backdrop-filter: blur(70px);
   border-radius: 12px;
 `;
+
 const SubTitle = styled.a`
   font-style: normal;
   font-weight: 300;
@@ -211,4 +203,5 @@ const TextWithIcon = styled.div`
   color: rgba(255, 255, 255, 0.64);
   margin: 5px 0;
 `;
+
 export default HomeCard;

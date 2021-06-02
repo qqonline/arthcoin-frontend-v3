@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Button from '../../../components/Button';
 import Grid from '@material-ui/core/Grid';
 
-type props = {};
+import Button from '../../../components/Button';
 
-const StakeBox: React.FC<props> = (props) => {
+const StakeBox: React.FC = () => {
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardDetails>
@@ -25,8 +24,6 @@ const StakeBox: React.FC<props> = (props) => {
     </CustomInfoCard>
   );
 };
-
-export default StakeBox;
 
 const ButtonConatiner = styled.div`
   @media (max-width: 600px) {
@@ -72,6 +69,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -96,3 +94,5 @@ const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
 `;
+
+export default StakeBox;

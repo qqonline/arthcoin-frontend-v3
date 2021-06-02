@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { BigNumber } from '@ethersproject/bignumber';
+
+import prettyNumber from '../../../components/PrettyNumber';
+import CustomToolTip from '../../../components/CustomTooltip';
 
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
-import CustomToolTip from '../../../components/CustomTooltip';
-import prettyNumber from '../../../components/PrettyNumber';
 
-type props = {};
+import { getDisplayBalance } from '../../../utils/formatBalance';
+
+type props = {
+  poolCollateralValue: BigNumber;
+};
 
 const BasicInfo: React.FC<props> = (props) => {
   return (
@@ -30,10 +36,14 @@ const BasicInfo: React.FC<props> = (props) => {
           <OneLine>
             <div>
               <TextWithIcon>
-                Pool Balance
+                Protocol Collateral Value
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
-              <BeforeChip>{prettyNumber(157800000)}</BeforeChip>
+              <BeforeChip>
+                {
+                  prettyNumber(getDisplayBalance(props.poolCollateralValue))
+                }
+              </BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} alt="arrow" style={{ cursor: 'pointer' }} />
