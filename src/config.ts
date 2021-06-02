@@ -1,6 +1,7 @@
 import { ChainId } from '@uniswap/sdk';
-import { Configuration } from './basis-cash/config';
+
 import { CollateralPool } from './basis-cash';
+import { Configuration } from './basis-cash/config';
 import { StakingContract, TradingPairs } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
