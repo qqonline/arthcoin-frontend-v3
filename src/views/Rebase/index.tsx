@@ -14,18 +14,18 @@ import {
 } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import useCore from '../../hooks/useCore';
 import Container from '../../components/Container';
 import prettyNumber from '../../components/PrettyNumber';
-import CustomToolTip from '../../components/CustomTooltip';
-import { getDisplayBalance } from '../../utils/formatBalance';
 import UnderstandMore from './components/UnderstandMore';
+import CustomToolTip from '../../components/CustomTooltip';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
-import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
-import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 withStyles({
   root: {
@@ -116,29 +116,21 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  const core = useCore();
-  const arthCirculatingSupply = useARTHCirculatingSupply();
-  const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
-  const rebasePercentage = percentageCompleted.gt(BigNumber.from(100))? BigNumber.from(0): BigNumber.from(100).sub(percentageCompleted)
+  const committedCollateral = useGlobalCollateralValue();
+  const arthCirculatingSupply = useARTHCirculatingSupply();
 
   WalletAutoConnect();
 
-  /*useEffect(() => {
-    const onClick = () => {
-      let event: TCalendarEvent = {
-        name: 'ARTH-v2 Genesis',
-        location: 'Online',
-        details: 'Genesis',
-        startsAt: new Date('1 may 2021 12:30:00').toString(),
-        endsAt: new Date('1 may 2021 20:30:00').toString(),
-      };
-      setLink(makeUrls(event).google);
-    };
-
-    window.scrollTo(0, 0)
-    onClick();
-  }, []);*/
+  const rebasePercentage = useMemo(() => {
+    const percentScale = BigNumber.from(10).pow(18);
+    
+    return (
+      percentageCompleted.gt(percentScale)
+        ? BigNumber.from(0) 
+        : percentScale.sub(percentageCompleted)
+    );
+  }, [percentageCompleted]);
 
   const understandMore = [
     'A Rebase is a last resort mechanism where the circulating supply of a token is adjusted so that it forces the current market price to meet the target price. The first rebase token that was introduced was Ampleforth.',
@@ -174,12 +166,6 @@ const Genesis = (props: WithSnackbarProps) => {
             <PageSubSubHeading>
               For 100 ARTH it would value 80 ARTH at 20% rebase
             </PageSubSubHeading>
-            {/*{calendarLink && (
-              <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
-                <img src={calendar} alt="calendar" height={24} />
-                <span style={{ marginLeft: 8 }}>Add to Calendar</span>
-              </HeaderButton>
-            )}*/}
           </div>
         <PageSubHeading>
           <div style={{}}>
