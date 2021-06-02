@@ -260,7 +260,6 @@ const Home: React.FC = () => {
               title="MAHA"
               uniswapInputAddress={core.MAHA.address}
               symbol="MAHA"
-              liquidity="$87,783,601"
               address={mahaAddress}
             />
           </Grid>
@@ -268,7 +267,6 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTH"
               symbol="ARTH"
-              liquidity="$2,462,492"
               uniswapInputAddress={core.ARTH.address}
               address={arthAddress}
             />
@@ -277,7 +275,6 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTHX"
               symbol="ARTHX"
-              liquidity={'$2,462,492'}
               uniswapInputAddress={core.ARTHX.address}
               address={arthxAddress}
             />

@@ -5,28 +5,29 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 import TokenSymbol from '../../../components/TokenSymbol';
 
 import config from '../../../config';
-import { TokenStat } from '../../../basis-cash/types';
+import useTotalSupply from '../../../hooks/useTotalSupply';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useUniswapLiquidity from '../../../hooks/useUniswapLiquidity';
+import useCirculatingSupply from '../../../hooks/useCirculatingSupply';
 
 interface HomeCardProps {
   title: string;
   symbol: string;
-  supplyLabel?: string;
   address: string;
-  liquidity?: string;
   uniswapInputAddress: string;
-  stat?: TokenStat;
 }
 
 const HomeCard: React.FC<HomeCardProps> = ({
   title,
   symbol,
   address,
-  liquidity,
-  supplyLabel = 'Circulating Supply',
-  stat,
 }) => {
+  const totalSupply = useTotalSupply(symbol);
+  const liquidity = useUniswapLiquidity(symbol);
+  const circulatingSupply = useCirculatingSupply(symbol);
+
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
+  
   return (
     <Wrapper>
       <Card className={'custom-mahadao-box'}>
@@ -43,13 +44,34 @@ const HomeCard: React.FC<HomeCardProps> = ({
         <CardContent>
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
-            {liquidity ? <StyledValue>{liquidity}</StyledValue> : '-'}
+            <StyledValue>
+              {
+                Number(getDisplayBalance(liquidity))
+                  .toLocaleString('en-US', { maximumFractionDigits: 3 })
+              }
+            </StyledValue>
           </CardSection>
           <CardSection>
             <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
-              {supplyLabel}
+              Circulating Supply
             </StyledSupplyLabel>
-            {stat ? <StyledValue>{getDisplayBalance(stat.totalSupply)}</StyledValue> : '-'}
+            <StyledValue>
+              {
+                Number(getDisplayBalance(circulatingSupply))
+                  .toLocaleString('en-US', { maximumFractionDigits: 3 })
+              }
+            </StyledValue>
+          </CardSection>
+          <CardSection>
+            <StyledSupplyLabel href={tokenUrl} target="_blank" color={'#ffffff99'}>
+              Total Supply
+            </StyledSupplyLabel>
+            <StyledValue>
+              {
+                Number(getDisplayBalance(totalSupply))
+                  .toLocaleString('en-US', { maximumFractionDigits: 3})
+              }
+            </StyledValue>
           </CardSection>
         </CardContent>
         <UniswapLink
