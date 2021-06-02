@@ -219,15 +219,7 @@ export const MobileFarm = (props: IProps) => {
                       {' ' + props.pool.depositTokenSymbols.join('-')}
                     </InfoDivRightSpan>
                   </div>
-                  {
-                    !(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
-                      ? (
-                        <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
-                      )
-                      : (
-                        <></>
-                      )
-                  }
+                  <Withdraw onClick={props.onWithdrawClick}>Withdraw</Withdraw>
                 </InfoDiv>
                 <Divider
                   style={{
@@ -242,10 +234,14 @@ export const MobileFarm = (props: IProps) => {
                       <InfoDivRightSpan>
                       <CountUp
                         end={initEarnedARTHX}
-                        delay={0.01}
-                        decimals={3}
+                        delay={0}
+                        decimals={6}
                         redraw={true}
-                        duration={initEarnedARTHX / ratePerMillisecond}
+                        duration={
+                          initEarnedARTHX
+                            ? initEarnedARTHX / ratePerMillisecond
+                            : 1500
+                        }
                         preserveValue={true}
                         formattingFn={
                           (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
@@ -265,10 +261,14 @@ export const MobileFarm = (props: IProps) => {
                       <InfoDivRightSpan>
                       <CountUp
                         end={initEarnedMAHA}
-                        delay={0.01}
+                        delay={0}
                         redraw={true}
-                        decimals={3}
-                        duration={initEarnedMAHA / ratePerMillisecond}
+                        decimals={6}
+                        duration={
+                          initEarnedMAHA
+                            ? initEarnedMAHA / ratePerMillisecond
+                            : 1500
+                        }
                         preserveValue={true}
                         formattingFn={
                           (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })

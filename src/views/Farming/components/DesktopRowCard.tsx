@@ -167,11 +167,11 @@ export default (props: IProps) => {
                   <CountUp
                     end={initEarnedARTHX}
                     delay={0}
-                    decimals={3}
+                    decimals={6}
                     redraw={true}
                     duration={
-                      initEarnedMAHA
-                        ? initEarnedMAHA / ratePerMillisecond
+                      initEarnedARTHX
+                        ? initEarnedARTHX / ratePerMillisecond
                         : 1500
                     }
                     preserveValue={true}
@@ -193,7 +193,7 @@ export default (props: IProps) => {
                     end={initEarnedMAHA}
                     delay={0}
                     redraw={true}
-                    decimals={3}
+                    decimals={6}
                     duration={
                       initEarnedMAHA
                         ? initEarnedMAHA / ratePerMillisecond
