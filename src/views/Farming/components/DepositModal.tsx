@@ -53,9 +53,6 @@ export default (props: IProps) => {
     stake(() => {
       props.onCancel();
       props.openSuccessModal();
-      setTimeout(() => {
-        props.closeSuccessModal();
-      }, 5 * 1000)
     });
   }
 
