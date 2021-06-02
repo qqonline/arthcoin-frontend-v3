@@ -65,7 +65,7 @@ const TopBar: React.FC = () => {
   return (
     <TopBarContainer>
       <StyledTopBar>
-        <Container size="lg">
+        {/*<Container size="lg">*/}
           <StyledTopBarInner>
             <div className="dialog-class">
               <Logo />
@@ -150,7 +150,7 @@ const TopBar: React.FC = () => {
             </HideOnBigScreen>
             {showMobileMenu && <MobileNav onClick={() => toggleMobileMenu(false)} />}
           </StyledTopBarInner>
-        </Container>
+        {/*</Container>*/}
       </StyledTopBar>
       {showWarning && (
         <ShowWarning>
@@ -213,6 +213,9 @@ const StyledTopBar = styled.div`
   // top: 0;
 
   //background: #151414;
+  ox-sizing: border-box;
+  margin: 0 auto;
+  width: max-content;
   background: rgba(0, 0, 0, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -270,7 +273,7 @@ const StyledTopBarInner = styled.div`
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
   justify-content: space-between;
-  max-width: ${(props) => props.theme.siteWidth}px;
+  //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   flex-wrap: wrap;
 `;

@@ -170,6 +170,9 @@ const Genesis = (props: WithSnackbarProps) => {
                 }}
               />
             </PageSubHeading>
+            <PageSubSubHeading>
+              For 100 ARTH it would value 80 ARTH at 20% rebase
+            </PageSubSubHeading>
             {/*{calendarLink && (
               <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
                 <img src={calendar} alt="calendar" height={24} />
@@ -182,19 +185,22 @@ const Genesis = (props: WithSnackbarProps) => {
             <BorderLinearProgress
               variant="determinate"
               value={
-                percentageCompleted.gt(BigNumber.from(10).pow(18))
-                  ? 100
-                  : Number(getDisplayBalance(percentageCompleted, 16, 3))
+                20
+                // percentageCompleted.gt(BigNumber.from(10).pow(18))
+                //   ? 100
+                //   : Number(getDisplayBalance(percentageCompleted, 16, 3))
               }
             />
           </div>
           <HeaderSpan>
             {
-              Number(getDisplayBalance(percentageCompleted, 16, 3))
-                .toLocaleString('en-US', { maximumFractionDigits: 2 })
-            }% Completed
+              20
+              // Number(getDisplayBalance(percentageCompleted, 16, 3))
+              //   .toLocaleString('en-US', { maximumFractionDigits: 2 })
+            }% Rebase
           </HeaderSpan>
         </PageSubHeading>
+
       </div>
       <Container size="lg">
         <Grid container>
@@ -306,10 +312,21 @@ const PageSubHeading = styled.div`
   line-height: 150%;
   color: rgba(255, 255, 255, 0.64);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const PageSubSubHeading = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 20px;
 `;
 
 const HeaderButton = styled.div`
