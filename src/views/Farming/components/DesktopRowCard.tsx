@@ -1,20 +1,20 @@
-import React, { useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
-import Grid from '@material-ui/core/Grid';
-import Countdown from 'react-countdown';
-import { useWallet } from 'use-wallet';
-import { BigNumber } from '@ethersproject/bignumber';
 import CountUp from 'react-countup';
+import styled from 'styled-components';
+import React, { useMemo } from 'react';
+import { useWallet } from 'use-wallet';
+import Grid from '@material-ui/core/Grid';
+import { BigNumber } from '@ethersproject/bignumber';
 
-import config from '../../../config';
-import TokenSymbol from '../../../components/TokenSymbol';
 import Button from '../../../components/Button';
-import { StakingContract } from '../../../basis-cash';
-import useCore from '../../../hooks/useCore';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { getDisplayBalance } from '../../../utils/formatBalance';
+import TokenSymbol from '../../../components/TokenSymbol';
+
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
+
+import useCore from '../../../hooks/useCore';
+import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 type IProps = {
   pool: StakingContract;
@@ -44,7 +44,7 @@ export default (props: IProps) => {
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
 
-  const ratePerMillisecond = 0.005;
+  const ratePerMillisecond = 0.1;
   const pow = BigNumber.from(10).pow(18);
 
   const initEarnedARTHX = Number(getDisplayBalance(
@@ -82,31 +82,34 @@ export default (props: IProps) => {
         style={{ padding: '32px 32px', position: 'relative' }}
         alignItems={'center'}
       >
-        {props.pool.platform === 'uniswap' && <CardIcon src={uniswap} height={32} />}
-        <Grid item lg={3} style={{ display: 'flex' }}>
-          <div>
-            {props.pool.depositTokenSymbols.map((token, index) => (
-              <TokenSymbol
-                symbol={token}
-                size={44}
-                style={index === 1 ? { marginLeft: '-6px' } : {}}
-              />
-            ))}
-            {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
-          </div>
-          <div style={{ marginLeft: '16px' }}>
-            <TableMainTextStyle>
-              {props.pool.depositTokenSymbols.join(' - ')}
-            </TableMainTextStyle>
-            {props.pool.platform === 'uniswap' ? (
-              <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
-                Add Liquidity
-              </AddLiquidityButton>
-            ) : (
-              <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
-                View Etherscan
-              </AddLiquidityButton>
-            )}
+        {
+          props.pool.platform === 'uniswap' && 
+          <CardIcon src={uniswap} height={32} />}
+          <Grid item lg={3} style={{ display: 'flex' }}>
+            <div>
+              {props.pool.depositTokenSymbols.map((token, index) => (
+                <TokenSymbol
+                  symbol={token}
+                  size={44}
+                  style={index === 1 ? { marginLeft: '-6px' } : {}}
+                />
+              ))}
+              {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
+            </div>
+            <div style={{ marginLeft: '16px' }}>
+              <TableMainTextStyle>
+                {props.pool.depositTokenSymbols.join(' - ')}
+              </TableMainTextStyle>
+              {props.pool.platform === 'uniswap' ? (
+                <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
+                  Add Liquidity
+                </AddLiquidityButton>
+              ) : (
+                <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
+                  View Etherscan
+                </AddLiquidityButton>
+              )
+          }
           </div>
         </Grid>
         <Grid item lg={3}>
@@ -147,90 +150,78 @@ export default (props: IProps) => {
           )}
         </Grid>
       </Grid>
-      {props.stakedBalance.gt(0) && (
-        <DepositInfoContainer>
-          <div style={{ display: 'flex' }}>
-            Your Locked state:
-            <TableMainTextStyle style={{ marginLeft: '10px' }}>
-              {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
-            </TableMainTextStyle>
-            {
-              !(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
-                ? (
-                  <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
-                )
-                : (
-                  <></>
-                )
-            } 
-          </div>
-          <div style={{ display: 'flex' }}>
-            {
-              !!(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
-                ? (
-                  <>
-                    Earned:
-                    <TableMainTextStyle style = {{ marginLeft: '10px' }}>
-                      <CountUp
-                        end={initEarnedARTHX}
-                        delay={0.01}
-                        decimals={3}
-                        redraw={true}
-                        duration={initEarnedARTHX / ratePerMillisecond}
-                        preserveValue={true}
-                        formattingFn={
-                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                        }
-                      >
-                        {
-                          ({ countUpRef, start, update }) => {
-                            if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
-                            return <span ref={countUpRef} />
-                          }
-                        }
-                      </CountUp>
-                      {' '}
-                      ARTHX
-                      {' + '}
-                      <CountUp
-                        end={initEarnedMAHA}
-                        delay={0.01}
-                        redraw={true}
-                        decimals={3}
-                        duration={initEarnedMAHA / ratePerMillisecond}
-                        preserveValue={true}
-                        formattingFn={
-                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                        }
-                      >
-                        {
-                          ({ countUpRef, start, update }) => {
-                            if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
-                            return <span ref={countUpRef} />
-                          }
-                        }
-                      </CountUp>
-                      {' '}
-                      MAHA
-                    </TableMainTextStyle>
-                    <WithdrawClaimButton onClick={props.onClaimClick}>
-                      Claim Rewards
-                    </WithdrawClaimButton>
-                  </>
-                ) 
-                : (
-                  <>
-                    Earned: {
-                    initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 6 })
-                    } ARTHX + {
-                      initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 6 })
-                    } MAHA
-                  </>
-                )
-            }
-          </div>
-        </DepositInfoContainer>
-      )}
+      {
+        props.stakedBalance.gt(0) && (
+          <DepositInfoContainer>
+            <div style={{ display: 'flex' }}>
+              Your Locked state:
+              <TableMainTextStyle style={{ marginLeft: '10px' }}>
+                {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
+              </TableMainTextStyle>  
+              <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
+            </div>
+            <div style={{ display: 'flex' }}>              
+              <>
+                Earned:
+                <TableMainTextStyle style = {{ marginLeft: '10px' }}>
+                  <CountUp
+                    end={initEarnedARTHX}
+                    delay={0}
+                    decimals={3}
+                    redraw={true}
+                    duration={
+                      initEarnedMAHA
+                        ? initEarnedMAHA / ratePerMillisecond
+                        : 1500
+                    }
+                    preserveValue={true}
+                    formattingFn={
+                      (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                    }
+                  >
+                    {
+                      ({ countUpRef, start, update }) => {
+                        if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
+                        return <span ref={countUpRef} />
+                      }
+                    }
+                  </CountUp>
+                  {' '}
+                  ARTHX
+                  {' + '}
+                  <CountUp
+                    end={initEarnedMAHA}
+                    delay={0}
+                    redraw={true}
+                    decimals={3}
+                    duration={
+                      initEarnedMAHA
+                        ? initEarnedMAHA / ratePerMillisecond
+                        : 1500
+                    }
+                    preserveValue={true}
+                    formattingFn={
+                      (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                    }
+                  >
+                    {
+                      ({ countUpRef, start, update }) => {
+                        if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
+                        return <span ref={countUpRef} />
+                      }
+                    }
+                  </CountUp>
+                  {' '}
+                  MAHA
+                </TableMainTextStyle>
+                <WithdrawClaimButton onClick={props.onClaimClick}>
+                  Claim Rewards
+                </WithdrawClaimButton>
+              </>
+            </div>
+          </DepositInfoContainer>
+        )
+      }
     </CustomCardGrid>
   );
 };

@@ -16,7 +16,7 @@ import { ValidateNumber } from '../../../components/CustomInputContainer/RegexVa
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 
 interface IProps {
-  onCancel: (amount?: string, token?: string) => void;
+  onCancel: () => void;
   onDeposit?: () => void;
   isMobile: boolean;
   toggleSuccessModal?: () => void;
@@ -48,13 +48,6 @@ export default (props: IProps) => {
     symbol
   );
 
-  const popupCancel = () => {
-    props.onCancel(
-      Number(String(val)).toLocaleString(),
-      symbol
-    )
-  }
-
   const handleStaking = () => {
     stake(() => {
       props.onCancel();
@@ -71,7 +64,7 @@ export default (props: IProps) => {
   return (
     <CustomModal
       closeButton
-      handleClose={popupCancel}
+      handleClose={props.onCancel}
       open={true}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
@@ -119,7 +112,7 @@ export default (props: IProps) => {
               variant={'transparent'}
               text="Cancel"
               size={'lg'}
-              onClick={popupCancel}
+              onClick={props.onCancel}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>

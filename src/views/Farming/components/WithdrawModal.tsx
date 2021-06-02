@@ -18,7 +18,7 @@ interface IProps {
   claimableBalance: BigNumber;
   stakedBalance: BigNumber;
   pool: StakingContract;
-  onCancel: (amount?: string, token?: string) => void;
+  onCancel: () => void;
   onWithdraw?: () => void;
   toggleSuccessModal?: () => void;
   isMobile: boolean;
@@ -40,13 +40,6 @@ export default (props: IProps) => {
     symbol
   );
 
-  const popupCancel = () => {
-    props.onCancel(
-      Number(String(val)).toLocaleString(),
-      symbol
-    )
-  }
-
   const handleWithdraw = () => {
     withdraw(() => {
       props.onCancel();
@@ -60,7 +53,7 @@ export default (props: IProps) => {
   return (
     <CustomModal
       closeButton
-      handleClose={popupCancel}
+      handleClose={props.onCancel}
       open={true}
       modalTitleStyle={{}}
       modalContainerStyle={{}}
@@ -100,14 +93,14 @@ export default (props: IProps) => {
         style={{ marginTop: '32px' }}
       >
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={popupCancel} />
+          <Button variant={'transparent'} text="Cancel" size={'lg'} onClick={props.onCancel} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button 
             text={
               props.claimableBalance.lte(0) 
                 ? 'Withdraw'
-                : 'You need to claim reward before withdrawal'
+                : 'You have unclaimed rewards'
             } 
             size={'lg'}
             disabled={
