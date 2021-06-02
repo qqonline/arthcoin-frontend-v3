@@ -75,6 +75,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
     setICStates(temp);
   }, [Istate, msg]);
 
+  useEffect(() => {
+    checkForErrorAndWarning(DefaultValue);
+  }, [DefaultValue])
+
   const Redirection = () => {
     if (props?.href) {
       return (
@@ -98,7 +102,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
       IState: 'default',
       IMsg: '',
     };
-    
+
     if (props.errorCallback) {
       if (Number(val) > Number(IBalanceValue)) {
         const temp: ICStatesInterface = {
