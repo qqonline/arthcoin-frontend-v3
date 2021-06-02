@@ -6,6 +6,7 @@ import TokenSymbol from '../../../components/TokenSymbol';
 
 import config from '../../../config';
 import useTotalSupply from '../../../hooks/useTotalSupply';
+import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useUniswapLiquidity from '../../../hooks/useUniswapLiquidity';
 import useCirculatingSupply from '../../../hooks/useCirculatingSupply';
@@ -46,8 +47,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             <TextWithIcon>Liquidity</TextWithIcon>
             <StyledValue>
               {
-                Number(getDisplayBalance(liquidity))
-                  .toLocaleString('en-US', { maximumFractionDigits: 3 })
+                prettyNumber(getDisplayBalance(liquidity))
               }
             </StyledValue>
           </CardSection>
@@ -57,8 +57,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </StyledSupplyLabel>
             <StyledValue>
               {
-                Number(getDisplayBalance(circulatingSupply))
-                  .toLocaleString('en-US', { maximumFractionDigits: 3 })
+                prettyNumber(getDisplayBalance(circulatingSupply))
               }
             </StyledValue>
           </CardSection>
@@ -68,8 +67,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             </StyledSupplyLabel>
             <StyledValue>
               {
-                Number(getDisplayBalance(totalSupply))
-                  .toLocaleString('en-US', { maximumFractionDigits: 3})
+                prettyNumber(getDisplayBalance(totalSupply))
               }
             </StyledValue>
           </CardSection>
