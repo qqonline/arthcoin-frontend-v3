@@ -11,7 +11,8 @@ import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 
 type props = {
-  poolCollateralValue: BigNumber;
+  targetCollateralValue: BigNumber;
+  globalCollateralValue: BigNumber;
 };
 
 const BasicInfo: React.FC<props> = (props) => {
@@ -25,7 +26,15 @@ const BasicInfo: React.FC<props> = (props) => {
                 Available to mint
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
-              <BeforeChip>{prettyNumber(54760000)}</BeforeChip>
+              <BeforeChip>
+                ${
+                  prettyNumber(getDisplayBalance(
+                    props.targetCollateralValue.gt(props.globalCollateralValue)
+                      ? props.targetCollateralValue.sub(props.globalCollateralValue)
+                      : BigNumber.from(0)
+                  ))
+                }
+              </BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>
               <img src={arrowRightWhite} alt="arrow" style={{ cursor: 'pointer' }} />
@@ -40,8 +49,8 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
               <BeforeChip>
-                {
-                  prettyNumber(getDisplayBalance(props.poolCollateralValue))
+                ${
+                  prettyNumber(getDisplayBalance(props.globalCollateralValue))
                 }
               </BeforeChip>
             </div>

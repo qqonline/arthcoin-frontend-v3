@@ -102,26 +102,25 @@ const Home: React.FC = () => {
                               : 'Buyback from the protocol to receive collateral'
                       }
                     </InfoDiv>
-                    <HeaderSubtitle>
-                      ${
-                        prettyNumber(
-                          stabilizeState === 'none'
-                            ? 0
-                            : stabilizeState === 'recollateralize'
+                    {
+                      stabilizeState !== 'none' &&
+                      <HeaderSubtitle>
+                        ${
+                          prettyNumber(
+                            stabilizeState === 'recollateralize'
                               ? getDisplayBalance(targetCollateralValue.sub(globalCollateralValue))
                               : getDisplayBalance(globalCollateralValue.sub(targetCollateralValue))
-                        )
-                      }
-                      <TextForInfoTitle>
-                        &nbsp;{
-                          stabilizeState === 'none'
-                            ? 'To Claim'
-                            : stabilizeState === 'recollateralize'
-                                ? 'Worth Rewards To Claim'
-                                : 'Worth Collateral To Claim'
+                          )
                         }
-                      </TextForInfoTitle>
-                    </HeaderSubtitle>
+                        <TextForInfoTitle>
+                          &nbsp;{
+                            stabilizeState === 'recollateralize'
+                              ? 'Worth Rewards To Claim'
+                              : 'Worth Collateral To Claim'
+                          }
+                        </TextForInfoTitle>
+                      </HeaderSubtitle>
+                    }
                     <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
                         <ToLink 
@@ -237,7 +236,10 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
-            <BasicInfo poolCollateralValue={globalCollateralValue} />
+            <BasicInfo 
+              targetCollateralValue={targetCollateralValue}
+              globalCollateralValue={globalCollateralValue}
+            />
             <StakeBox />
           </Grid>
         </Grid>
@@ -297,7 +299,6 @@ const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   height: 270px;
   position: absolute;
-  // border: 1px solid;
   width: 100%;
   z-index: -50;
 `;
@@ -321,7 +322,6 @@ const PercentCard = styled.div`
   width: 100%;
   align-items: center;
   height: fit-content;
-  // border: 0.5px solid;
 `;
 
 const PercentCardInfo = styled.div`
@@ -346,7 +346,6 @@ const InfoDiv = styled.div`
 const PercentCardLabel = styled.div`
   display: flex;
   flex-direction: row;
-  // justify-content space-between;
   width: fit-content;
   font-family: Inter;
   font-style: normal;
@@ -365,8 +364,6 @@ const OpacitySpan = styled.span`
 const PercentCardValue = styled.div`
   display: flex;
   flex-direction: row;
-  // justify-content space-between;
-  // width: 100%;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
@@ -429,7 +426,6 @@ const HardChip = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  // height: 10px;
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
@@ -439,7 +435,6 @@ const ButtonDiv = styled.div`
 const IconButtons = styled.div`
   width: fit-content;
   display: flex;
-  // justify-content: space-evenly;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
