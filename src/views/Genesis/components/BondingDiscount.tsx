@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
+
 import HtmlTooltip from '../../../components/HtmlTooltip';
 
 type props = {
@@ -11,33 +12,32 @@ type props = {
 const BondingDiscount: React.FC<props> = (props: props) => {
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
-      {props.stats ? (
         <CustomStatsInfoCardHeader>Bonding Curve Discount on ARTHX</CustomStatsInfoCardHeader>
-      ) : (
-        <CustomInfoCardHeader>Bonding Curve Discount on ARTHX</CustomInfoCardHeader>
-      )}
       <CustomInfoCardDetails>
-        {props?.dataObj?.map((obj, i) => (
-          <OneLine key={i}>
-            <div style={{ flex: 1 }}>
-              <TextWithIcon>
-                {obj.label}
-                {/*<HtmlTooltip
-                title={
-                  <React.Fragment>
-                    <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
-                  </React.Fragment>
-                }>
-                <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
-              </HtmlTooltip>*/}
-              </TextWithIcon>
-            </div>
-            <OneLine>
-              <BeforeChip>{obj.value}</BeforeChip>
-              {/*<TagChips>ARTH</TagChips>*/}
+        {
+          props?.dataObj?.map((obj, i) => (
+            <OneLine key={i}>
+              <div style={{ flex: 1 }}>
+                <TextWithIcon>
+                  {obj.label}
+                  <HtmlTooltip
+                  title={
+                    <React.Fragment>
+                      <ToolTipFont>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                      </ToolTipFont>
+                    </React.Fragment>
+                  }>
+                  <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
+                </HtmlTooltip>
+                </TextWithIcon>
+              </div>
+              <OneLine>
+                <BeforeChip>{obj.value}</BeforeChip>
+              </OneLine>
             </OneLine>
-          </OneLine>
-        ))}
+          ))
+        }
       </CustomInfoCardDetails>
     </CustomInfoCard>
   );
@@ -55,6 +55,7 @@ const CustomInfoCardHeader = styled.p`
   color: #ffffff;
   margin-bottom: 24px;
 `;
+
 const CustomStatsInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -86,6 +87,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;

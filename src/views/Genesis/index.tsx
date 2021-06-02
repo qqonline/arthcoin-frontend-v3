@@ -21,37 +21,39 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { useEffect, useMemo, useState } from 'react';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 
-import useCore from '../../hooks/useCore';
+import calendar from '../../assets/svg/calendar.svg';
+import arrowDown from '../../assets/svg/arrowDown.svg';
+
 import Button from '../../components/Button';
 import Container from '../../components/Container';
-import calendar from '../../assets/svg/calendar.svg';
 import TransparentInfoDiv from './components/InfoDiv';
 import CustomModal from '../../components/CustomModal';
-import arrowDown from '../../assets/svg/arrowDown.svg';
 import { CustomSnack } from '../../components/SnackBar';
 import prettyNumber from '../../components/PrettyNumber';
+import UnderstandMore from './components/UnderstandMore';
 import BondingDiscount from './components/BondingDiscount';
 import CustomToolTip from '../../components/CustomTooltip';
-import { getDisplayBalance } from '../../utils/formatBalance';
-import useTokenBalance from '../../hooks/state/useTokenBalance';
 import SlippageContainer from '../../components/SlippageContainer';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 import CustomInputContainer from '../../components/CustomInputContainer';
 import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
-import UnderstandMore from './components/UnderstandMore';
+
+import useCore from '../../hooks/useCore';
 import useTokenDecimals from '../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useTokenBalance from '../../hooks/state/useTokenBalance';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
-import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
-import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
-import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
-import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
 import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
 import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
-import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
+import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
+import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
+import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 
 withStyles({
   root: {
@@ -151,9 +153,10 @@ const Genesis = (props: WithSnackbarProps) => {
   const [timerHeader, setHeader] = useState<boolean>(false);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
-  const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const { account, connect } = useWallet();
+
+  const core = useCore();
+  const { account, connect } = useWallet(); 
   const arthxPrice = useARTHXOraclePrice();
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
@@ -496,7 +499,6 @@ const Genesis = (props: WithSnackbarProps) => {
                     ILabelValue={'Enter Collateral'}
                     IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
                     ILabelInfoValue={''}
-                    // value={mintColl.toString()}
                     DefaultValue={collateralValue.toString()}
                     LogoSymbol={selectedCollateral}
                     hasDropDown={true}

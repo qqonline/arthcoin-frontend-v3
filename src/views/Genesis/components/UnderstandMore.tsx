@@ -21,9 +21,11 @@ const UnderstandMore: React.FC<props> = (props: props) => {
       <CustomInfoCardHeader>Understand how Genesis works</CustomInfoCardHeader>
       <CustomInfoCardDetails>
         <ul>
-          {props?.dataObj?.map((obj) => (
-            <ListItem key={obj} value={obj} />
-          ))}
+          {
+            props?.dataObj?.map((obj) => (
+              <ListItem key={obj} value={obj} />
+            ))
+          }
         </ul>
         <LearnMore>
           <span>Go to ARTH v2 announcement article to learn more</span>
@@ -46,14 +48,12 @@ const CustomInfoCard = styled.div`
 const ListLi = styled.li``;
 
 const ListSpan = styled.span`
-  // padding: 80px 0;
   font-family: Inter;
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 150%;
   color: rgba(255, 255, 255, 0.88);
-  // text-align: left;
 `;
 
 const LearnMore = styled.div`
@@ -67,8 +67,6 @@ const LearnMore = styled.div`
   color: #f7653b;
   margin-top: 10px;
   cursor: pointer;
-  //   color: #f7653b;
-  //   opacity: 0.88;
   align-items: center;
   &:hover {
     color: #f7653b;
