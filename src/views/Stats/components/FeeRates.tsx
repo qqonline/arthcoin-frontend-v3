@@ -10,8 +10,8 @@ import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 
 const BondingDiscount: React.FC = () => {
-  const stabilityFee = useStabilityFee();
   const buybackFee = useBuybackFee();
+  const stabilityFee = useStabilityFee();
   const mintingFee = usePoolMintingFees('');
   const redeemingFee = usePoolRedeemFees('');
 

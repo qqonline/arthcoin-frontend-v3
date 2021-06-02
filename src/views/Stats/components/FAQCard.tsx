@@ -11,15 +11,20 @@ interface FaqProps {
 
 const FAQCard: React.FC<FaqProps> = ({ question, answer }) => {
   const [showAnswer, toggleAnswer] = React.useState(false);
+
   return (
     <FaqCard>
       <QuestionDiv onClick={() => toggleAnswer(!showAnswer)}>
         <QuestionTitle>{question}</QuestionTitle>
-        {showAnswer ? (
-          <img src={ArrowUp} width="24px" alt="ArrowUp" />
-        ) : (
-          <img src={ArrowDown} width="24px" alt="ArrowUp" />
-        )}
+        {
+          showAnswer 
+            ? (
+              <img src={ArrowUp} width="24px" alt="ArrowUp" />
+            )
+            : (
+              <img src={ArrowDown} width="24px" alt="ArrowUp" />
+            )
+        }
       </QuestionDiv>
       {showAnswer && <AnswerTitle>{answer}</AnswerTitle>}
     </FaqCard>

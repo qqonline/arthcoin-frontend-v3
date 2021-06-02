@@ -45,7 +45,7 @@ const BasicInfo: React.FC<props> = (props) => {
           <OneLine>
             <div>
               <TextWithIcon>
-                Protocol Collateral Value
+                Total Collateral Value
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
               <BeforeChip>
@@ -64,8 +64,6 @@ const BasicInfo: React.FC<props> = (props) => {
   );
 };
 
-export default BasicInfo;
-
 const ToLink = styled(Link)`
   z-index: 1;
 `
@@ -77,7 +75,6 @@ const CustomInfoCard = styled.div`
     margin-top: 24px;
   }
 `;
-
 
 const CustomInfoCardDetails = styled.div`
   display: flex;
@@ -104,6 +101,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -112,7 +110,6 @@ const BeforeChip = styled.span`
   line-height: 24px;
   color: #ffffff;
 `;
-
 
 const OneCardRight = styled.div`
   flex: 0.5;
@@ -135,3 +132,5 @@ const OneCardLeft = styled.div`
     margin: 0 24px;
   }
 `;
+
+export default BasicInfo;

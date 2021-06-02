@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import InfoIcon from '@material-ui/icons/Info';
+
+import HtmlTooltip from '../../../components/HtmlTooltip';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
@@ -19,14 +22,14 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Current discount
-              {/*<HtmlTooltip
+              <HtmlTooltip
                 title={
                   <React.Fragment>
                     <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
                   </React.Fragment>
                 }>
                 <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
-              </HtmlTooltip>*/}
+              </HtmlTooltip>
             </TextWithIcon>
           </div>
           <OneLine>

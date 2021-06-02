@@ -29,6 +29,7 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import useTargetCollateralValue from '../../hooks/state/useTargetCollateralValue';
 import useAllPoolCollateralValue from '../../hooks/state/pools/useAllPoolCollateralValue';
+import useAllPoolExcessCollateralValue from '../../hooks/state/pools/useAllPoolAccessCollateral';
 
 const Home: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
@@ -37,6 +38,7 @@ const Home: React.FC = () => {
   const allPoolsValue = useAllPoolCollateralValue();
   const globalCollateralValue = useGlobalCollateralValue();
   const targetCollateralValue = useTargetCollateralValue();
+  const allPoolsExcessCollateralValue = useAllPoolExcessCollateralValue();
 
   WalletAutoConnect();
 
@@ -109,7 +111,7 @@ const Home: React.FC = () => {
                           prettyNumber(
                             stabilizeState === 'recollateralize'
                               ? getDisplayBalance(targetCollateralValue.sub(globalCollateralValue))
-                              : getDisplayBalance(globalCollateralValue.sub(targetCollateralValue))
+                              : getDisplayBalance(allPoolsExcessCollateralValue)
                           )
                         }
                         <TextForInfoTitle>
@@ -218,7 +220,7 @@ const Home: React.FC = () => {
                                 </PercentCardLabel>
                                 <PercentCardValue>
                                   ${
-                                    Number(b.amount).toLocaleString('en-US', { maximumFractionDigits: 3 })
+                                    prettyNumber(b.amount)
                                   } - {
                                     Number(b.percentage).toLocaleString('en-US', {maximumFractionDigits: 2})
                                   }%

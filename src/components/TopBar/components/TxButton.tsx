@@ -41,7 +41,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
 };
 
 const StyledTxButton = styled.div`
-  margin-right: 12px;
+  margin-right: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
