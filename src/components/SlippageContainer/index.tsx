@@ -4,7 +4,11 @@ import React, {useState } from 'react';
 import CustomToolTip from '../CustomTooltip';
 import settings from '../../assets/svg/settingSlidder.svg';
 import { useSlippage, useUpdateSlippage } from '../../state/slippage/hooks';
-import { ValidateNumber, correctString, checkForAfterDecimalDigits } from '../CustomInputContainer/RegexValidation';
+import {
+  ValidateNumber,
+  correctString,
+  checkForAfterDecimalDigitsSlippage,
+} from '../CustomInputContainer/RegexValidation';
 
 interface Irates {
   id: number;
@@ -47,9 +51,9 @@ const SlippageContainer: React.FC = () => {
       return;
     }
 
-    if (Number(value) && Number(value) < 0) return;
+    if (Number(value) && (Number(value) < 0 || Number(value) > 100)) return;
 
-    if (ValidateNumber(value) && checkForAfterDecimalDigits(value)){
+    if (ValidateNumber(value) && checkForAfterDecimalDigitsSlippage(value)){
       updateSlippage(4, Number(await correctString(value)));
     }
   }
