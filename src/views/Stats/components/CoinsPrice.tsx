@@ -26,7 +26,6 @@ const CoinsPrice: React.FC = () => {
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
-            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
         <OneLine>
@@ -40,7 +39,6 @@ const CoinsPrice: React.FC = () => {
                   .toLocaleString('en-US', {maximumFractionDigits: 6})
               }
             </BeforeChip>
-            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
         <OneLine>
@@ -54,7 +52,6 @@ const CoinsPrice: React.FC = () => {
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
-            <PercentChange>+0.15%</PercentChange>
           </div>
         </OneLine>
       </CustomInfoCardDetails>
