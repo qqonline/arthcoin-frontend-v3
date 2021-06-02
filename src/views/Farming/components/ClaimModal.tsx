@@ -4,8 +4,9 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
-import { StakingContract } from '../../../basis-cash';
 import TransparentInfoDiv from '../../Genesis/components/InfoDiv';
+
+import { StakingContract } from '../../../basis-cash';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useStakingClaim from '../../../hooks/callbacks/staking/useStakingClaim';
 
@@ -68,15 +69,19 @@ export default (props: IProps) => {
         <TransparentInfoDiv
           labelData={`You will receive`}
           rightLabelUnit={'ARTHX'}
-          rightLabelValue={Number(initEarnedARTHX).toLocaleString('en-US', { maximumFractionDigits: 6 })}
+          rightLabelValue={
+            Number(initEarnedARTHX)
+              .toLocaleString('en-US', { maximumFractionDigits: 6 })
+          }
         />
-
         <TransparentInfoDiv
           labelData={`You will receive`}
           rightLabelUnit={'MAHA'}
-          rightLabelValue={Number(initEarnedMAHA).toLocaleString('en-US', {maximumFractionDigits: 6})}
+          rightLabelValue={
+            Number(initEarnedMAHA)
+              .toLocaleString('en-US', {maximumFractionDigits: 6})
+          }
         />
-
         <Grid
           container
           spacing={2}

@@ -1,40 +1,26 @@
-import React, { useEffect, useState, useMemo} from 'react';
-import { Grid, Divider } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import { BigNumber } from '@ethersproject/bignumber';
-import { useWallet } from 'use-wallet';
 import CountUp from 'react-countup';
-
-import config from '../../../config';
-import useCore from '../../../hooks/useCore';
+import React, {useMemo} from 'react';
+import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
-import Button from '../../../components/Button';
+import InfoIcon from '@material-ui/icons/Info';
+import { Grid, Divider } from '@material-ui/core';
+import { BigNumber } from '@ethersproject/bignumber';
+
+import farmingSVG from '../../../assets/svg/farming.svg';
+import uniswap from '../../../assets/svg/UniswapWhite.svg';
+
 import Card from '../../../components/Card';
+import Button from '../../../components/Button';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
-import farmingSVG from '../../../assets/svg/farming.svg';
+
+import useCore from '../../../hooks/useCore';
 import { StakingContract } from '../../../basis-cash';
-import uniswap from '../../../assets/svg/UniswapWhite.svg';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
 
 interface IProps {
-  // const [open, setOpen] = useState<boolean>(props?.deposited);
-  // useEffect(() => {
-  //   setOpen(props?.deposited)
-  // }, [props])
-  // pair: [string, string];
-  // walletValue: string;
-  // walletUnit: string;
-  // apy: string;
-  // poolDur: string;
-  // poolEndDate: number;
-  // deposited?: boolean;
-  // lockedStake?: string;
-  // earned?: string;
-  // unclaimedRewards?: string;
-  // rewards?: string;
   pool: StakingContract;
   stakedBalance: BigNumber;
   initialClaimableBalance: BigNumber;
@@ -120,7 +106,6 @@ export const MobileFarm = (props: IProps) => {
                 </div>
                 <div
                   style={{
-                    // zIndex: 4,
                     position: 'absolute',
                     left: 30,
                     background: '#2A2827',

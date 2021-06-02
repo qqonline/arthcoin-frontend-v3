@@ -1,17 +1,18 @@
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
-
-import CustomInputContainer from '../../../components/CustomInputContainer';
-import Button from '../../../components/Button';
-import { ModeProps } from '../index';
-import { StakingContract } from '../../../basis-cash';
 import { BigNumber } from '@ethersproject/bignumber';
+
+import { ModeProps } from '../index';
+import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
-import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+
+import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useStakingWithdraw from '../../../hooks/callbacks/staking/useStakingWithdraw';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
 interface IProps {
   mode?: ModeProps;

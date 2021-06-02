@@ -1,13 +1,13 @@
+import styled from 'styled-components';
 import React, { useState } from 'react';
+import { Grid } from '@material-ui/core';
 
-import PageHeader from '../../components/PageHeader';
 import Container from '../../components/Container';
 import FarmingCards from './components/FarmingCards';
-
-import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
-import { stakingContracts } from '../../config';
+import PageHeader from '../../components/PageHeader';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+
+import { stakingContracts } from '../../config';
 
 export interface ModeProps {
   id: string;
@@ -17,7 +17,9 @@ export interface ModeProps {
 
 const Banks = () => {
   let initMode = { id: 'all', name: 'All', count: 3 };
+  
   const [mode, setMode] = useState<ModeProps>(initMode);
+  
   WalletAutoConnect();
 
   let headerList: ModeProps[] = [
@@ -49,7 +51,6 @@ const Banks = () => {
       <PageHeader
         title="Farming"
         subtitle="Earn rewards by staking your tokens and helping the protocol grow."
-        // learnMoreLink="#"
       />
       <Container size="lg">
         <div style={{ position: 'relative', display: 'flex' }}>
@@ -150,4 +151,5 @@ const Text2 = styled.p`
   color: #ffffff;
   margin: 0px 5px;
 `;
+
 export default Banks;

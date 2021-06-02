@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 
+import { ModeProps } from '../index';
+import ClaimModal from './ClaimModal';
+import DepositModal from './DepositModal';
+import WithdrawModal from './WithdrawModal';
 import MobileRowCard from './MobileRowCard';
 import DesktopRowCard from './DesktopRowCard';
-import WithdrawModal from './WithdrawModal';
-import { ModeProps } from '../index';
-import DepositModal from './DepositModal';
-import { StakingContract } from '../../../basis-cash';
-import useModal from '../../../hooks/useModal';
-import ClaimModal from './ClaimModal';
+
 import useCore from '../../../hooks/useCore';
+import useModal from '../../../hooks/useModal';
+import { StakingContract } from '../../../basis-cash';
+import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
 import useStakingBalance from '../../../hooks/state/staking/useStakingBalance';
 import useStakingRewards from '../../../hooks/state/staking/useStakingRewards';
-import usePoolTokenRates from '../../../hooks/usePoolTokenRates';
-import CustomSuccessModal from '../../../components/CustomSuccesModal';
 
 interface IProps {
   mode?: ModeProps;

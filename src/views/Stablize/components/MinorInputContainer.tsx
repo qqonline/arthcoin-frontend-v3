@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import React, { useState } from 'react';
 import { InputBase } from '@material-ui/core';
 
 import DownArrow from '../../../assets/img/ArrowDown.svg';

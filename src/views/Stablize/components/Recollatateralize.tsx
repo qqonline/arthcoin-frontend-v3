@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useWallet } from 'use-wallet';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
-import { BigNumber } from '@ethersproject/bignumber';
+import { useWallet } from 'use-wallet';
+import Grid from '@material-ui/core/Grid';
 import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from '@ethersproject/bignumber';
+import React, { useEffect, useMemo, useState } from 'react';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 

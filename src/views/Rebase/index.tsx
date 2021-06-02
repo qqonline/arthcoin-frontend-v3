@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Countdown from 'react-countdown';
@@ -14,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import React, {useMemo} from 'react';
 
 import Container from '../../components/Container';
 import prettyNumber from '../../components/PrettyNumber';

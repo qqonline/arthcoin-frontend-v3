@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { BigNumber } from '@ethersproject/bignumber';
 
-import CustomInputContainer from '../../../components/CustomInputContainer';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
-import { StakingContract } from '../../../basis-cash';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
-import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
-import useCore from '../../../hooks/useCore';
 import DynamicSlider from '../../../components/DynamicSlider';
+import CustomInputContainer from '../../../components/CustomInputContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+
+import useCore from '../../../hooks/useCore';
+import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useStakingDeposit from '../../../hooks/callbacks/staking/useStakingDeposit';
 
 interface IProps {
   onCancel: () => void;

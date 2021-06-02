@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Divider } from '@material-ui/core';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { BigNumber } from '@ethersproject/bignumber';
+import React, { useEffect, useMemo } from 'react';
 import { parseUnits } from '@ethersproject/units';
+import { BigNumber } from '@ethersproject/bignumber';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 import TransparentInfoDiv from './InfoDiv';
 import Button from '../../../components/Button';
