@@ -9,6 +9,7 @@ import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+import useAvailableToMint from '../../../hooks/state/pools/useAvailableToMint';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
@@ -27,6 +28,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
   const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
   const stabilityFee = useStabilityFee();
   const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  const availableToMint = useAvailableToMint(selectedCollateralCoin);
 
   return (
     <>
@@ -88,7 +90,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>Available to Mint</TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
+                <InputLabelSpanRight>{prettyNumber(getDisplayBalance(availableToMint, 18, 3))}</InputLabelSpanRight>
               </OneLineInput>
             </div>
         <div style={{ marginBottom: '12px' }}>

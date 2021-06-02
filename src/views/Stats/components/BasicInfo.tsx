@@ -9,6 +9,7 @@ import CustomToolTip from '../../../components/CustomTooltip';
 import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useAllPoolAvailableToMint from '../../../hooks/state/pools/useAllPoolAvailableToMint';
 
 type props = {
   targetCollateralValue: BigNumber;
@@ -16,6 +17,8 @@ type props = {
 };
 
 const BasicInfo: React.FC<props> = (props) => {
+  const totalAvailableToMint = useAllPoolAvailableToMint();
+
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardDetails>
@@ -27,12 +30,14 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextWithIcon>
               <BeforeChip>
-                ${
+                {
                   prettyNumber(getDisplayBalance(
-                    props.globalCollateralValue.gt(props.targetCollateralValue)
-                      ? props.globalCollateralValue.sub(props.targetCollateralValue)
-                      : BigNumber.from(0)
+                    totalAvailableToMint,
+                    18,
+                    6
                   ))
+                }{
+                  ' ARTH'
                 }
               </BeforeChip>
             </div>

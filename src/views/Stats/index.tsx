@@ -206,7 +206,7 @@ const Home: React.FC = () => {
                         <PercentCard>
                           {
                             formattedPoolValues.map((b, i) => (
-                              <PercentCardInfo>
+                              <PercentCardInfo key={b.name}>
                                 <PercentCardLabel>
                                   <div
                                     style={{
