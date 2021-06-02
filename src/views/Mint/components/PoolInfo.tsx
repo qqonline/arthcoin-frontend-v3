@@ -1,6 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
 
 import Button from '../../../components/Button';
 import CustomToolTip from '../../../components/CustomTooltip';

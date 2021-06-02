@@ -1,49 +1,37 @@
 import { BigNumber } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { parseUnits } from 'ethers/lib/utils';
+import { useCallback } from 'react';
 
 import useCore from '../../useCore';
 import useApplySlippage from '../../useApplySlippage';
-import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
   collateralToken: string, 
-  collateralAmount: number,
-  arthOutMin: number, 
-  mintingFee: BigNumber, 
-  slippage: number
+  collateralAmount: BigNumber,
+  arthOutMin: BigNumber
 ) {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
-  const tokenDecimals = useTokenDecimals(collateralToken);
-
-  const arthOutMinAfterFees = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${arthOutMin}`, 18))
-      .mul(BigNumber.from(1e6).sub(mintingFee))
-      .div(1e6);
-  }, [arthOutMin, mintingFee]);
-
-  const arthOutMinAfterSlippage = useApplySlippage(arthOutMinAfterFees);
+  const arthOutMinAfterSlippage = useApplySlippage(arthOutMin);
 
   const action = useCallback(async (callback: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken);
 
     try {
       const response = await pool.mint1t1ARTH(
-        BigNumber.from(parseUnits(`${collateralAmount}`, tokenDecimals)),
+        collateralAmount,
         arthOutMinAfterSlippage
       );
       
       addTransaction(response, {
-        summary: `Mint ${arthOutMin.toLocaleString()} ARTH`
+        summary: `Mint ${Number(getDisplayBalance(arthOutMin)).toLocaleString()} ARTH`
       });
 
-      callback();
+      if (callback) callback();
     } catch(e) {
       addPopup({
         error: {
@@ -53,8 +41,7 @@ export default function (
       });
     }
   }, [
-    core, 
-    tokenDecimals, 
+    core,  
     collateralToken, 
     collateralAmount, 
     arthOutMinAfterSlippage,

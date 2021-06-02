@@ -1,34 +1,21 @@
 import { BigNumber } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { parseUnits } from 'ethers/lib/utils';
+import { useCallback} from 'react';
 
 import useCore from '../../useCore';
 import useApplySlippage from '../../useApplySlippage';
-import useTokenDecimals from '../../useTokenDecimals';
 import { useAddPopup } from '../../../state/application/hooks';
-import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
   collateralToken: string,
-  arthAmount: number
+  arthAmount: BigNumber,
+  collateralOutMin: BigNumber
 ) {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
-  const redeemFee = usePoolRedeemFees(collateralToken);
-  const tokenDecimals = useTokenDecimals(collateralToken);
-
-  const collateralOutMinAfterFees = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${arthAmount}`, 18))
-      .mul(BigNumber.from(1e6).sub(redeemFee))
-      .div(BigNumber.from(10).pow(18 - tokenDecimals))
-      .div(1e6);
-  }, [arthAmount, redeemFee, tokenDecimals]);
-
-  const collateralOutMinAfterSlippage = useApplySlippage(collateralOutMinAfterFees);
+  const collateralOutMinAfterSlippage = useApplySlippage(collateralOutMin);
 
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
@@ -36,7 +23,7 @@ export default function (
 
       try {
         const response = await pool.redeem1t1ARTH(
-          BigNumber.from(parseUnits(`${arthAmount}`, 18)),
+          arthAmount,
           collateralOutMinAfterSlippage,
         );
 

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
-import Container from '../../components/Container';
 import MintTabContent from './components/Mint';
+import Container from '../../components/Container';
 import RedeemTabContent from './components/Redeem';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 

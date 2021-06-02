@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import Grid from '@material-ui/core/Grid';
+import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { parseUnits } from 'ethers/lib/utils';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 
@@ -123,6 +123,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         selectedCollateralCoin={selectedCollateralCoin}
         arthValue={arthValue}
         openModal={openModal}
+        tradingFee={tradingFee}
         onClose={() => setOpenModal(0)}
       />
       <Grid container style={{ marginTop: '24px' }} spacing={2}>

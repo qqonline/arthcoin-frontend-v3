@@ -1,7 +1,7 @@
 import React from 'react';
+import CountUp from 'react-countup';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
-import CountUp from 'react-countup';
 
 interface IProps {
   labelData: string;

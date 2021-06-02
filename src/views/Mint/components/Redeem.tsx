@@ -61,20 +61,27 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const stabilityFee = useStabilityFee();
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
   const collectRedeemption = useCollectRedemption(selectedCollateral);
-  const redeemARTH = useRedeemARTH(
-    selectedCollateral,
-    Number(arthValue),
-  );
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   const tradingFee = useMemo(() => {
     return BigNumber
-      .from(parseUnits(`${arthValue}`, 18))
+      .from(parseUnits(`${collateralValue}`, tokenDecimals))
       .mul(redeemFee)
-      .div(BigNumber.from(10).pow(18 - tokenDecimals))
       .div(1e6)
-  }, [arthValue, tokenDecimals, redeemFee]);
+  }, [collateralValue, tokenDecimals, redeemFee]);
+
+  const collateralOutMinAfterFee = useMemo(() => {
+    return BigNumber
+      .from(parseUnits(`${collateralValue}`, tokenDecimals))
+      .sub(tradingFee);
+  }, [tradingFee, collateralValue, tokenDecimals]);
+
+  const redeemARTH = useRedeemARTH(
+    selectedCollateral,
+    BigNumber.from(parseUnits(`${arthValue}`, 18)),
+    collateralOutMinAfterFee
+  );
 
   const stabilityFeeAmount = useMemo(() => {
     return BigNumber
