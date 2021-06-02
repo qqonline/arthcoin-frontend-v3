@@ -258,7 +258,7 @@ const Home: React.FC = () => {
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <HomeCard
               title="MAHA"
-              uniswapInputAddress={core.MAHA.address}
+              uniswapInputAddress={mahaAddress}
               symbol="MAHA"
               address={mahaAddress}
             />
@@ -267,7 +267,7 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTH"
               symbol="ARTH"
-              uniswapInputAddress={core.ARTH.address}
+              uniswapInputAddress={arthAddress}
               address={arthAddress}
             />
           </Grid>
@@ -275,7 +275,7 @@ const Home: React.FC = () => {
             <HomeCard
               title="ARTHX"
               symbol="ARTHX"
-              uniswapInputAddress={core.ARTHX.address}
+              uniswapInputAddress={arthxAddress}
               address={arthxAddress}
             />
           </Grid>
