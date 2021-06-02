@@ -4,6 +4,7 @@ import { useCallback} from 'react';
 import useCore from '../../useCore';
 import useApplySlippage from '../../useApplySlippage';
 import { useAddPopup } from '../../../state/application/hooks';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
@@ -28,7 +29,7 @@ export default function (
         );
 
         addTransaction(response, {
-          summary: `Redeem ${arthAmount.toLocaleString()} ARTH`,
+          summary: `Redeem ${Number(getDisplayBalance(arthAmount)).toLocaleString()} ARTH`,
         });
 
         if (callback) callback();

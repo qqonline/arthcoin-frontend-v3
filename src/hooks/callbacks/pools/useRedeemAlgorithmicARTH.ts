@@ -1,31 +1,22 @@
 import { BigNumber } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { parseUnits } from 'ethers/lib/utils';
+import { useCallback } from 'react';
 
 import useCore from '../../useCore';
 import useApplySlippage from '../../useApplySlippage';
 import { useAddPopup } from '../../../state/application/hooks';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 import formatErrorMessage from '../../../utils/formatErrorMessage';
-import usePoolRedeemFees from '../../state/pools/usePoolRedeemFees';
 import { useTransactionAdder } from '../../../state/transactions/hooks';
 
 export default function (
   collateralToken: string,
-  arthAmount: number,
+  arthAmount: BigNumber,
   arthxOutMin: BigNumber
 ) {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
-  const redeemFee = usePoolRedeemFees(collateralToken);
-  
-  const arthxOutMinAfterFees = useMemo(() => {
-    return arthxOutMin
-      .mul(BigNumber.from(1e6).sub(redeemFee))
-      .div(1e6);
-  }, [arthxOutMin, redeemFee]);
-
-  const arthxOutMinAfterSlippage = useApplySlippage(arthxOutMinAfterFees);
+  const arthxOutMinAfterSlippage = useApplySlippage(arthxOutMin);
 
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
@@ -33,12 +24,12 @@ export default function (
       
       try {
         const response = await pool.redeemAlgorithmicARTH(
-          BigNumber.from(parseUnits(`${arthAmount}`, 18)),
+          arthAmount,
           arthxOutMinAfterSlippage
         );
 
         addTransaction(response, {
-          summary: `Redeem ${arthAmount.toLocaleString()} ARTH`,
+          summary: `Redeem ${Number(getDisplayBalance(arthAmount).toLocaleString())} ARTH`,
         });
 
         if (callback) callback();

@@ -43,6 +43,7 @@ import useCore from '../../hooks/useCore';
 import useTokenDecimals from '../../hooks/useTokenDecimals';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
+import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
@@ -152,7 +153,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [timerHeader, setHeader] = useState<boolean>(false);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
-
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const core = useCore();
@@ -170,6 +170,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralPool = core.getCollatearalPool(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
+  const redeemFee = usePoolRedeemFees(selectedCollateral);
   const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
   WalletAutoConnect();
@@ -208,6 +209,13 @@ const Genesis = (props: WithSnackbarProps) => {
       .div(outAssetprice)
   );
 
+  const tradingFee = useMemo(() => {
+    return BigNumber
+      .from(parseUnits(`${arthValue}`, 18))
+      .mul(redeemFee)
+      .div(1e6);
+  }, [arthValue, redeemFee]);
+
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
@@ -223,11 +231,19 @@ const Genesis = (props: WithSnackbarProps) => {
     return calcExpectReceiveAmount(
       BigNumber.from(1e6),
       arthxPrice,
-      arthValue,
+      Number(arthValue) - Number(getDisplayBalance(tradingFee, 18, 6)),
       18,
       18
     );
-  }, [arthValue, collateralGMUPrice, arthxPrice, collateralValue, tokenDecimals, type]);
+  }, [
+    arthValue, 
+    tradingFee, 
+    collateralGMUPrice, 
+    arthxPrice, 
+    collateralValue, 
+    tokenDecimals, 
+    type
+  ]);
 
   const arthxDiscount = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
@@ -249,7 +265,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
-    Number(arthValue),
+    BigNumber.from(parseUnits(`${arthValue}`, 18)),
     arthxRecieve,
   );
 
@@ -318,9 +334,18 @@ const Genesis = (props: WithSnackbarProps) => {
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
-
+          {
+            type !== 'Commit' &&
+            <TransparentInfoDiv
+              labelData={`Trading Fee`}
+              rightLabelUnit={'ARTH'}
+              rightLabelValue={
+                Number(getDisplayBalance(tradingFee, 18, 6))
+                  .toLocaleString('en-US', {maximumFractionDigits: 6})
+                }
+            />
+          }
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
-
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
@@ -332,7 +357,6 @@ const Genesis = (props: WithSnackbarProps) => {
               )).toLocaleString()
             }
           />
-
           <Grid
             container
             spacing={2}
@@ -563,21 +587,42 @@ const Genesis = (props: WithSnackbarProps) => {
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                     {
-                      type === 'Commit' &&
-                      <OneLineInputwomargin>
-                        <div style={{ flex: 1 }}>
-                          <TextWithIcon>
-                            + Bonus
+                      type === 'Commit'
+                        ? (
+                          <OneLineInputwomargin>
+                            <div style={{ flex: 1 }}>
+                              <TextWithIcon>
+                                + Bonus
                             <CustomToolTip toolTipText={'loreum ipsum'} />
-                          </TextWithIcon>
-                        </div>
-                        <OneLineInputwomargin>
-                          <BeforeChip className={'custom-mahadao-chip'}>
-                            {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                          </BeforeChip>
-                          <TagChips>ARTHX</TagChips>
-                        </OneLineInputwomargin>
-                      </OneLineInputwomargin>
+                              </TextWithIcon>
+                            </div>
+                            <OneLineInputwomargin>
+                              <BeforeChip className={'custom-mahadao-chip'}>
+                                {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                              </BeforeChip>
+                              <TagChips>ARTHX</TagChips>
+                            </OneLineInputwomargin>
+                          </OneLineInputwomargin>
+                        )
+                        : (
+                          <OneLineInputwomargin>
+                            <div style={{ flex: 1 }}>
+                              <TextWithIcon>
+                                - Trading Fee
+                            <CustomToolTip toolTipText={'loreum ipsum'} />
+                              </TextWithIcon>
+                            </div>
+                            <OneLineInputwomargin>
+                              <BeforeChip className={'custom-mahadao-chip'}>
+                                {
+                                  Number(getDisplayBalance(tradingFee, 18, 6))
+                                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
+                                }
+                              </BeforeChip>
+                              <TagChips>ARTH</TagChips>
+                            </OneLineInputwomargin>
+                          </OneLineInputwomargin>
+                        )
                     }
                   </ReceiveContainer>
                 </div>
