@@ -11,9 +11,10 @@ import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 const Boardrooms = (props: WithSnackbarProps) => {
   // @ts-ignore
   const { paramType } = useParams();
+  const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint');
+
   useEffect(() => window.scrollTo(0, 0), []);
   WalletAutoConnect();
-  const [type, setType] = useState<'mint' | 'redeem'>(paramType || 'mint');
 
   return (
     <>
@@ -25,7 +26,6 @@ const Boardrooms = (props: WithSnackbarProps) => {
         {type === 'redeem' && (
           <RedeemTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />
         )}
-        {/* </LeftTopCard> */}
       </Container>
     </>
   );
@@ -35,7 +35,6 @@ const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
   height: 270px;
   position: absolute;
-  // border: 1px solid;
   width: 100%;
   z-index: -5;
 `;

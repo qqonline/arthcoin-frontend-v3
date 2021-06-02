@@ -1,34 +1,36 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { BigNumber } from '@ethersproject/bignumber';
-import { Divider } from '@material-ui/core';
-import { useWallet } from 'use-wallet';
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import { useWallet } from 'use-wallet';
+import Grid from '@material-ui/core/Grid';
+import { Divider } from '@material-ui/core';
 import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from '@ethersproject/bignumber';
+import React, { useEffect, useMemo, useState } from 'react';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 
-import { CustomSnack } from '../../../components/SnackBar';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
-import Button from '../../../components/Button';
-import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomModal from '../../../components/CustomModal';
-import CustomSuccessModal from '../../../components/CustomSuccesModal';
+
 import PoolInfo from './PoolInfo';
-import SlippageContainer from '../../../components/SlippageContainer';
 import TransparentInfoDiv from './InfoDiv';
+import Button from '../../../components/Button';
+import CustomModal from '../../../components/CustomModal';
+import { CustomSnack } from '../../../components/SnackBar';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import SlippageContainer from '../../../components/SlippageContainer';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+
+import useCore from '../../../hooks/useCore';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
+import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
-import useCore from '../../../hooks/useCore';
-import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
-import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
-import useRedeemARTH from '../../../hooks/callbacks/pools/useRedeemARTH';
-import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import useTokenDecimals from '../../../hooks/useTokenDecimals';
-import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -52,7 +54,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const redeemCR = useRedeemCollateralRatio();
+  const redeemCR = useGlobalCollateralRatio();
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
   const redeemFee = usePoolRedeemFees(selectedCollateral);
@@ -443,8 +445,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   );
 };
 
-export default withSnackbar(RedeemTabContent);
-
 const OneLineInputwomargin = styled.div`
   display: flex;
   flex-direction: row;
@@ -552,3 +552,5 @@ const TagChips = styled.div`
 const ApproveButtonContainer = styled.div`
   display: flex;
 `;
+
+export default withSnackbar(RedeemTabContent);

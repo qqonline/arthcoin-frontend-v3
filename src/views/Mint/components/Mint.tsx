@@ -6,22 +6,24 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { parseUnits } from 'ethers/lib/utils';
 
-import useCore from '../../../hooks/useCore';
-import Button from '../../../components/Button';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
-import MintModal from './MintModal';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import CustomInputContainer from '../../../components/CustomInputContainer';
-import CustomSuccessModal from '../../../components/CustomSuccesModal';
+
 import PoolInfo from './PoolInfo';
+import MintModal from './MintModal';
+import Button from '../../../components/Button';
+import SlippageContainer from '../../../components/SlippageContainer';
+import CustomSuccessModal from '../../../components/CustomSuccesModal';
+import CustomInputContainer from '../../../components/CustomInputContainer';
+import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
+
+import useCore from '../../../hooks/useCore';
+import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
-import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
-import useTokenBalance from '../../../hooks/state/useTokenBalance';
-import SlippageContainer from '../../../components/SlippageContainer';
-import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
-import useTokenDecimals from '../../../hooks/useTokenDecimals';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -36,7 +38,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const core = useCore();
   const { account, connect } = useWallet();
-  const mintCR = useMintCollateralRatio();
+  const mintCR = useGlobalCollateralRatio();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
     core.getDefaultCollateral(),
@@ -287,8 +289,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   );
 };
 
-export default withSnackbar(MintTabContent);
-
 const TcContainer = styled.div`
   margin-top: 24px;
 `;
@@ -466,3 +466,5 @@ const CheckboxDiv = styled.div`
   color: rgba(255, 255, 255, 0.88);
   margin: 15px 0px 0px 0px;
 `;
+
+export default withSnackbar(MintTabContent);

@@ -409,8 +409,6 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
   );
 };
 
-export default withSnackbar(MintModal);
-
 const StakingDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -481,3 +479,5 @@ const CheckboxDiv = styled.div`
   color: rgba(255, 255, 255, 0.88);
   margin: 15px 0px 0px 0px;
 `;
+
+export default withSnackbar(MintModal);

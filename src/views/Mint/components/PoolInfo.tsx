@@ -2,27 +2,26 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 
-import { getDisplayBalance } from '../../../utils/formatBalance';
 import Button from '../../../components/Button';
 import CustomToolTip from '../../../components/CustomTooltip';
-import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
-import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
-import useMintCollateralRatio from '../../../hooks/state/useMintCollateralRatio';
-import useRedeemCollateralRatio from '../../../hooks/state/useRedeemCollateralRatio';
-import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+
 import prettyNumber from '../../../components/PrettyNumber';
-import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import { getDisplayBalance } from '../../../utils/formatBalance';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 interface IProps {
   selectedCollateralCoin: string;
 }
 
 export default ({ selectedCollateralCoin }: IProps) => {
-  const mintCR = useMintCollateralRatio();
+  const cr = useGlobalCollateralRatio();
   const arthxPrice = useARTHXOraclePrice();
-  const redeemCR = useRedeemCollateralRatio();
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
   const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
@@ -62,29 +61,13 @@ export default ({ selectedCollateralCoin }: IProps) => {
           <OneLineInput>
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
-                Mint Collateral Ratio
+                Collateral Ratio
                 <CustomToolTip toolTipText={'loreum ipsum'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
               {
-                Number(getDisplayBalance(mintCR, 4, 4))
-                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
-            </InputLabelSpanRight>
-          </OneLineInput>
-        </div>
-        <div style={{ marginBottom: '12px' }}>
-          <OneLineInput>
-            <div style={{ flex: 1 }}>
-              <TextForInfoTitle>
-                Redeem Collateral Ratio
-                <CustomToolTip toolTipText={'loreum ipsum'} />
-              </TextForInfoTitle>
-            </div>
-            <InputLabelSpanRight>
-              {
-                Number(getDisplayBalance(redeemCR, 4, 4))
+                Number(getDisplayBalance(cr, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </InputLabelSpanRight>
@@ -100,14 +83,14 @@ export default ({ selectedCollateralCoin }: IProps) => {
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
-        {/* <div style={{ marginBottom: '12px' }}>
+        <div style={{ marginBottom: '12px' }}>
               <OneLineInput>
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>Available to Mint</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>$54.7M</InputLabelSpanRight>
               </OneLineInput>
-            </div> */}
+            </div>
         <div style={{ marginBottom: '12px' }}>
           <OneLineInput>
             <div style={{ flex: 1 }}>
