@@ -48,7 +48,7 @@ const SlippageContainer: React.FC = () => {
     }
 
     if (Number(value) && Number(value) < 0) return;
-    
+
     if (ValidateNumber(value) && checkForAfterDecimalDigits(value)){
       updateSlippage(4, Number(await correctString(value)));
     }
@@ -168,6 +168,7 @@ const BackgroundAbsolute = styled.div`
 const CustomDiv = styled.div`
   position: relative;
   cursor: pointer;
+  z-index: 15;
 `;
 
 const CustomSlippageBox = styled.div`
