@@ -18,7 +18,6 @@ export type Configuration = {
   defaultCollateral: string;
   supportedCollaterals: string[];
   arthTradingPairs: string[];
-  mahaTradingPairs: string[];
   arthxTradingPairs: string[];
 
   genesisLaunchDate: Date;
