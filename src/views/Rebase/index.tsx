@@ -1,0 +1,472 @@
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Countdown from 'react-countdown';
+import Grid from '@material-ui/core/Grid';
+import {
+  Checkbox,
+  CheckboxProps,
+  createStyles,
+  LinearProgress,
+  makeStyles,
+  Slider,
+  Theme,
+  withStyles,
+} from '@material-ui/core';
+import { BigNumber } from '@ethersproject/bignumber';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
+import React from 'react';
+
+import useCore from '../../hooks/useCore';
+import Container from '../../components/Container';
+import prettyNumber from '../../components/PrettyNumber';
+import CustomToolTip from '../../components/CustomTooltip';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import UnderstandMore from './components/UnderstandMore';
+import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
+import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
+import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+
+withStyles({
+  root: {
+    color: 'rgba(255, 255, 255, 0.32)',
+    '&$checked': {
+      color: '#FF7F57',
+    },
+  },
+  checked: {
+    color: 'white',
+  },
+})((props: CheckboxProps) => <Checkbox {...props} />);
+
+makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
+);
+
+withStyles({
+  root: {
+    height: 15,
+    width: '95%',
+  },
+  thumb: {
+    height: 10,
+    width: 10,
+    border: '2px solid currentColor',
+    color: '#FFA981',
+    marginTop: -3.5,
+    marginLeft: -3,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-100% - 5px)',
+  },
+  marked: {
+    color: 'red',
+  },
+  markLabel: {
+  },
+  track: {
+    height: 3,
+    borderRadius: 3,
+    color: '#FFA981',
+  },
+  rail: {
+    height: 3,
+    borderRadius: 3,
+    color: '#D74D26',
+  },
+  markLabelActive: {
+    fontStyle: 'normal',
+    fontWeight: 300,
+    fontSize: '12px',
+    lineHeight: '130%',
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.88)',
+  },
+  mark: {
+    color: 'transparent',
+  },
+})(Slider);
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 10,
+      borderRadius: 5,
+      width: 200,
+    },
+    colorPrimary: {
+      backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: '#F7653B',
+    },
+  }),
+)(LinearProgress);
+
+const Genesis = (props: WithSnackbarProps) => {
+  const core = useCore();
+  const arthCirculatingSupply = useARTHCirculatingSupply();
+  const committedCollateral = useGlobalCollateralValue();
+  const percentageCompleted = usePercentageCompleted();
+
+  WalletAutoConnect();
+
+  /*useEffect(() => {
+    const onClick = () => {
+      let event: TCalendarEvent = {
+        name: 'ARTH-v2 Genesis',
+        location: 'Online',
+        details: 'Genesis',
+        startsAt: new Date('1 may 2021 12:30:00').toString(),
+        endsAt: new Date('1 may 2021 20:30:00').toString(),
+      };
+      setLink(makeUrls(event).google);
+    };
+
+    window.scrollTo(0, 0)
+    onClick();
+  }, []);*/
+
+  const understandMore = [
+    'A Rebase is a last resort mechanism where the circulating supply of a token is adjusted so that it forces the current market price to meet the target price. The first rebase token that was introduced was Ampleforth.',
+    'Rebase tokens work by changing the balance of a user\'s wallet so that the amount in the user\'s wallet changes but the net value stays the same.',
+  ];
+
+  return (
+    <>
+      <GradientDiv />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '40px 0px',
+        }}
+      >
+        <PageHeading>{'REBASE'}</PageHeading>
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <PageSubHeading>
+              <StartsIn>Starts in</StartsIn>
+              <Countdown
+                date={Date.now() + 550000000}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  return (
+                    <HeaderSpan>
+                      {days}d : {hours}h : {minutes}m : {seconds}s
+                    </HeaderSpan>
+                  );
+                }}
+              />
+            </PageSubHeading>
+            {/*{calendarLink && (
+              <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
+                <img src={calendar} alt="calendar" height={24} />
+                <span style={{ marginLeft: 8 }}>Add to Calendar</span>
+              </HeaderButton>
+            )}*/}
+          </div>
+        <PageSubHeading>
+          <div style={{}}>
+            <BorderLinearProgress
+              variant="determinate"
+              value={
+                percentageCompleted.gt(BigNumber.from(10).pow(18))
+                  ? 100
+                  : Number(getDisplayBalance(percentageCompleted, 16, 3))
+              }
+            />
+          </div>
+          <HeaderSpan>
+            {
+              Number(getDisplayBalance(percentageCompleted, 16, 3))
+                .toLocaleString('en-US', { maximumFractionDigits: 2 })
+            }% Completed
+          </HeaderSpan>
+        </PageSubHeading>
+      </div>
+      <Container size="lg">
+        <Grid container>
+          <Grid item lg={3} />
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <CustomInfoCard className={'custom-mahadao-box'}>
+              <CustomInfoCardDetails>
+                <OneLineInputwomargin style={{ marginBottom: '20px' }}>
+                  <TextForInfoTitle>
+                    ARTH Circulating Supply
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                  </TextForInfoTitle>
+                  <BeforeChipDark>
+                    {prettyNumber(getDisplayBalance(arthCirculatingSupply))}
+                  </BeforeChipDark>
+                </OneLineInputwomargin>
+                <OneLineInputwomargin>
+                  <TextForInfoTitle>
+                    Commited Collateral
+                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                  </TextForInfoTitle>
+                  <BeforeChipDark>
+                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
+                  </BeforeChipDark>
+                </OneLineInputwomargin>
+              </CustomInfoCardDetails>
+            </CustomInfoCard>
+            <UnderstandMore dataObj={understandMore} />
+          </Grid>
+          <Grid item lg={3} />
+        </Grid>
+      </Container>
+    </>
+  );
+};
+
+const GradientDiv = styled.div`
+  background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
+  height: 270px;
+  position: absolute;
+  width: 100%;
+  z-index: -5;
+`;
+
+const CustomInfoCard = styled.div`
+  margin-bottom: 16px;
+  @media (max-width: 600px) {
+    margin-bottom: 24px;
+  }
+`;
+
+const CustomInfoCardDetails = styled.div``;
+
+const StyledNavLink = styled(Link)`
+  background: rgba(97, 134, 242, 0.32);
+  border-radius: 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 200px;
+  cursor: pointer;
+`;
+
+const PageHeading = styled.p`
+  font-family: Syne;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const HeaderSpan = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  margin: 0 0 0 8px;
+  color: #ffffff;
+`;
+const StartsIn = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  opacity: 0.64;
+`;
+
+const PageSubHeading = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.64);
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const HeaderButton = styled.div`
+  background: rgba(97, 134, 242, 0.32);
+  border-radius: 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 200px;
+  cursor: pointer;
+`;
+
+const ToolTipFont = styled.p`
+  padding: 0;
+  margin: 0;
+`;
+
+const OneLineInputwomargin = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const LeftTopCard = styled.div`
+  @media (max-width: 600px) {
+    margin-bottom: 8px;
+  }
+`;
+
+const LeftTopCardHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const LeftTopCardContainer = styled.div``;
+
+const TabContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 12px;
+  height: 80px;
+  z-index: 1;
+  cursor: pointer;
+  flex: 0.5;
+  position: relative;
+`;
+
+const TabText = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.64);
+`;
+
+const TabTextActive = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`;
+
+const ActiveTab = styled.div`
+  position: absolute;
+  padding: 32px 12px;
+  background: linear-gradient(180deg, rgba(244, 127, 87, 0) 0%, #fd565620);
+  height: 80px;
+  z-index: 0;
+  border-bottom: 2px solid #fd5656;
+  width: 100%;
+`;
+
+const PlusMinusArrow = styled.div`
+  width: 100%;
+  border-radius: 1.33px;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  margin: 12px 0;
+`;
+
+const ReceiveContainer = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+`;
+
+const TextWithIcon = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.7);
+`;
+
+const TextForInfoTitle = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #ffffff;
+  opacity: 0.64;
+`;
+
+const BeforeChip = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.64);
+  margin-right: 5px;
+`;
+
+const BeforeChipDark = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffffff;
+`;
+
+const TagChips = styled.div`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.64);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 4px;
+`;
+
+export default withSnackbar(Genesis);

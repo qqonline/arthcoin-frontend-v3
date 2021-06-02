@@ -12,6 +12,8 @@ import Farming from './views/Farming';
 import Home from './views/Home';
 import Stats from './views/Stats';
 import Faucet from './views/Faucet';
+import Rebase from './views/Rebase';
+
 import Page from './components/Page';
 
 import TopBar from './components/TopBar';
@@ -107,6 +109,11 @@ const App: React.FC = () => {
           <Route path="/faucet">
             <Page>
               <Faucet />
+            </Page>
+          </Route>
+          <Route path="/rebase">
+            <Page>
+              <Rebase />
             </Page>
           </Route>
           {/* <Redirect to="/staking" /> */}

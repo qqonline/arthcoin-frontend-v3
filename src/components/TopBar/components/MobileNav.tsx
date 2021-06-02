@@ -41,7 +41,7 @@ interface props {
   onClick: () => void;
 }
 const MobileNav = (props: props) => {
-  // const { walletInfo: Wallet } = props  
+  // const { walletInfo: Wallet } = props
   const { account, connect } = useWallet();
 
   const [netWrokType, setNetworkType] = React.useState('mainnet');
@@ -106,6 +106,9 @@ const MobileNav = (props: props) => {
           </StyledLink>
           <StyledLink exact activeClassName="active" to="/faucet">
             Faucet
+          </StyledLink>
+          <StyledLink exact activeClassName="active" to="/rebase">
+            Rebase
           </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
