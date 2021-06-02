@@ -173,4 +173,4 @@ export const tradingPairs: TradingPairs[] = [
 ];
 
 
-export default configurations['staging'];
+export default configurations['development'];
