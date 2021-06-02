@@ -29,8 +29,8 @@ const BasicInfo: React.FC<props> = (props) => {
               <BeforeChip>
                 ${
                   prettyNumber(getDisplayBalance(
-                    props.targetCollateralValue.gt(props.globalCollateralValue)
-                      ? props.targetCollateralValue.sub(props.globalCollateralValue)
+                    props.globalCollateralValue.gt(props.targetCollateralValue)
+                      ? props.globalCollateralValue.sub(props.targetCollateralValue)
                       : BigNumber.from(0)
                   ))
                 }
