@@ -21,6 +21,7 @@ import Page from './components/Page';
 import Genesis from './views/Genesis';
 import Farming from './views/Farming';
 import Stablize from './views/Stablize';
+import Rebase from './views/Rebase';
 import TopBar from './components/TopBar';
 import Popups from './components/Popups';
 import TemporaryTrade from './views/Trade';
@@ -115,6 +116,11 @@ const App: React.FC = () => {
           <Route path="/faucet">
             <Page>
               <Faucet />
+            </Page>
+          </Route>
+          <Route path="/rebase">
+            <Page>
+              <Rebase />
             </Page>
           </Route>
         </Switch>
