@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 
-import { CustomSnack } from '../../../components/SnackBar';
 import MobileRowCard from './MobileRowCard';
 import DesktopRowCard from './DesktopRowCard';
 import WithdrawModal from './WithdrawModal';
@@ -42,20 +41,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       pool={pool}
       claimableBalance={claimableBalance}
       isMobile={isMobile}
-      onCancel={(showPopup: boolean) => {
-        onDismissClaimModal();
-        if (showPopup) {
-          let options = {
-            content: () =>
-              CustomSnack({
-                onClose: props.closeSnackbar,
-                type: 'red',
-                data1: `Claim rewards cancelled`,
-              }),
-          };
-          props.enqueueSnackbar('timepass', options);
-        }
-      }}
+      onCancel={() => onDismissClaimModal()}
       rates={rates}
       closeSuccessModal={() => setSuccessModal(false)}
       openSuccessModal={() => setSuccessModal(true)}
@@ -69,22 +55,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       stakedBalance={stakedBalance}
       isMobile={isMobile}
       claimableBalance={claimableBalance}
-      onCancel={(amount?: string, token?: string) => {
-        onDismissWithdrawModal();
-        if (amount && token) {
-          let options = {
-            content: () =>
-              CustomSnack({
-                onClose: props.closeSnackbar,
-                type: 'red',
-                data1: Number(amount)
-                  ? `Withdraw ${amount} ${token} cancelled`
-                  : `Withdraw ${token} cancelled`,
-              }),
-          };
-          props.enqueueSnackbar('timepass', options);
-        }
-      }}
+      onCancel={() => onDismissWithdrawModal()}
       closeSuccessModal={() => setSuccessModal(false)}
       openSuccessModal={() => setSuccessModal(true)}
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
@@ -96,22 +67,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
       pool={pool}
       tokenBalance={tokenBalance}
       isMobile={isMobile}
-      onCancel={(amount?: string, token?: string) => {
-        onDismissDepositModal();
-        if (amount && token) {
-          const options = {
-            content: () =>
-              CustomSnack({
-                onClose: props.closeSnackbar,
-                type: 'red',
-                data1: Number(amount)
-                  ? `Deposit ${amount} ${token} cancelled`
-                  : `Deposit ${token} cancelled`
-              }),
-          };
-          props.enqueueSnackbar('timepass', options);
-        }
-      }}
+      onCancel={() => onDismissDepositModal()}
       closeSuccessModal={() => setSuccessModal(false)}
       openSuccessModal={() => setSuccessModal(true)}
       toggleSuccessModal={() => { setSuccessModal(!successModal) }}
@@ -124,7 +80,6 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Transaction Success!'}
-        // subTitle={'View Transaction'}
         subsubTitle={
           'Your transaction is now being mined on the blockchain.'
         }

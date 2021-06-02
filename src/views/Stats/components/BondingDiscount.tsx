@@ -13,11 +13,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
-      {props.stats ? (
-        <CustomStatsInfoCardHeader>Bonding Curve Discount on ARTHX</CustomStatsInfoCardHeader>
-      ) : (
-        <CustomInfoCardHeader>Bonding Curve Discount on ARTHX</CustomInfoCardHeader>
-      )}
+      <CustomInfoCardHeader>Bonding Curve Discount on ARTHX</CustomInfoCardHeader>
       <CustomInfoCardDetails>
         <OneLine>
           <div style={{ flex: 1 }}>
@@ -40,7 +36,6 @@ const BondingDiscount: React.FC<props> = (props: props) => {
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
               }%
             </BeforeChip>
-            {/*<TagChips>ARTH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
@@ -49,7 +44,6 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           </div>
           <OneLine>
             <BeforeChip>0.075%</BeforeChip>
-            {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
         <OneLine>
@@ -58,7 +52,6 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           </div>
           <OneLine>
             <BeforeChip>30%</BeforeChip>
-            {/*<TagChips>0.06%</TagChips>*/}
           </OneLine>
         </OneLine>
       </CustomInfoCardDetails>
@@ -66,14 +59,13 @@ const BondingDiscount: React.FC<props> = (props: props) => {
   );
 };
 
-export default BondingDiscount;
-
 const CustomInfoCard = styled.div`
   min-height: 220px;
   @media (max-width: 600px) {
     margin-top: 8px;
   }
 `;
+
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -83,6 +75,7 @@ const CustomInfoCardHeader = styled.p`
   color: #ffffff;
   margin-bottom: 24px;
 `;
+
 const CustomStatsInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -114,6 +107,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -138,3 +132,5 @@ const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
 `;
+
+export default BondingDiscount;

@@ -2,15 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 import CustomToolTip from '../../../components/CustomTooltip';
-import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
-import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
+import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
+import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
+import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 
-type props = {};
-
-const BondingDiscount: React.FC<props> = () => {
-  const mintingFees = usePoolMintingFees('');
+const BondingDiscount: React.FC = () => {
   const stabilityFee = useStabilityFee();
+  const buybackFee = useBuybackFee();
+  const mintingFee = usePoolMintingFees('');
+  const redeemingFee = usePoolRedeemFees('');
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -19,18 +22,49 @@ const BondingDiscount: React.FC<props> = () => {
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
-              Trading fee
+              Mint Fee
               <CustomToolTip toolTipText={'loreum ipsum'} />
             </TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>
               {
-                Number(getDisplayBalance(mintingFees, 4, 4))
+                Number(getDisplayBalance(mintingFee, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
               }%
             </BeforeChip>
-            {/*<TagChips>ARTH</TagChips>*/}
+          </OneLine>
+        </OneLine>
+        <OneLine>
+          <div style={{ flex: 1 }}>
+            <TextWithIcon>
+              Redeem Fee
+              <CustomToolTip toolTipText={'loreum ipsum'} />
+            </TextWithIcon>
+          </div>
+          <OneLine>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(redeemingFee, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </BeforeChip>
+          </OneLine>
+        </OneLine>
+        <OneLine>
+          <div style={{ flex: 1 }}>
+            <TextWithIcon>
+              Buyback Fee
+              <CustomToolTip toolTipText={'loreum ipsum'} />
+            </TextWithIcon>
+          </div>
+          <OneLine>
+            <BeforeChip>
+              {
+                Number(getDisplayBalance(buybackFee, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
+              }%
+            </BeforeChip>
           </OneLine>
         </OneLine>
         <OneLine>
@@ -47,42 +81,12 @@ const BondingDiscount: React.FC<props> = () => {
                   .toLocaleString('en-US', { maximumFractionDigits: 2 })
               }%
             </BeforeChip>
-            {/*<TagChips>ETH</TagChips>*/}
           </OneLine>
         </OneLine>
-
-        <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Pool Minting fee
-              <CustomToolTip />
-            </TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>
-              {
-                Number(getDisplayBalance(mintingFees, 4, 4))
-                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
-            </BeforeChip>
-            {/*<TagChips>ETH</TagChips>*/}
-          </OneLine>
-        </OneLine>
-        {/*<OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>Your pool share</TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>1.08</BeforeChip>
-            <TagChips>0.06%</TagChips>
-          </OneLine>
-        </OneLine>*/}
       </CustomInfoCardDetails>
     </CustomInfoCard>
   );
 };
-
-export default BondingDiscount;
 
 const CustomInfoCard = styled.div`
   min-height: 220px;
@@ -92,6 +96,7 @@ const CustomInfoCard = styled.div`
     margin-bottom: 8px;
   }
 `;
+
 const CustomInfoCardHeader = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -124,6 +129,7 @@ const TextWithIcon = styled.div`
   opacity: 0.64;
   vertical-align: center;
 `;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -148,3 +154,5 @@ const ToolTipFont = styled.p`
   padding: 0px;
   margin: 0px;
 `;
+
+export default BondingDiscount;

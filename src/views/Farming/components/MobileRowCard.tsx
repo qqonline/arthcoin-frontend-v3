@@ -252,73 +252,59 @@ export const MobileFarm = (props: IProps) => {
                 variant={'middle'}
                 />
                 <InfoDiv>
-                    {
-                    !!(Number(initEarnedARTHX) || Number(initEarnedMAHA) || !Number(currentEarnedARTHX) || !Number(currentEarnedMAHA))
-                        ? (
-                        <div>
-                            <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
-                            <InfoDivRightSpan>
-                            <CountUp
-                              end={initEarnedARTHX}
-                              delay={0.01}
-                              decimals={3}
-                              redraw={true}
-                              duration={initEarnedARTHX / ratePerMillisecond}
-                              preserveValue={true}
-                              formattingFn={
-                                (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                              }
-                            >
-                              {
-                                ({ countUpRef, start, update }) => {
-                                  if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
-                                  return <span ref={countUpRef} />
-                                }
-                              }
-                            </CountUp>
-                              {' '}
-                              ARTHX
-                            </InfoDivRightSpan>
-                            <InfoDivLeftSpan>+</InfoDivLeftSpan>
-                            <InfoDivRightSpan>
-                            <CountUp
-                              end={initEarnedMAHA}
-                              delay={0.01}
-                              redraw={true}
-                              decimals={3}
-                              duration={initEarnedMAHA / ratePerMillisecond}
-                              preserveValue={true}
-                              formattingFn={
-                                (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                              }
-                            >
-                              {
-                                ({ countUpRef, start, update }) => {
-                                  if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
-                                  return <span ref={countUpRef} />
-                                }
-                              }
-                            </CountUp>
-                              {' '}
-                              MAHA
-                            </InfoDivRightSpan>
-                            <Withdraw
-                              onClick={props.onClaimClick}
-                            >
-                              Claim
-                            </Withdraw>
-                        </div>
-                        )
-                      : (
-                        <>
-                          Earned: {
-                            initEarnedARTHX.toLocaleString('en-US', { maximumFractionDigits: 4 })
-                          } ARTHX + {
-                            initEarnedMAHA.toLocaleString('en-US', { maximumFractionDigits: 4 })
-                          } MAHA
-                        </>
-                      )
-                    }
+                  <div>
+                      <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
+                      <InfoDivRightSpan>
+                      <CountUp
+                        end={initEarnedARTHX}
+                        delay={0.01}
+                        decimals={3}
+                        redraw={true}
+                        duration={initEarnedARTHX / ratePerMillisecond}
+                        preserveValue={true}
+                        formattingFn={
+                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                        }
+                      >
+                        {
+                          ({ countUpRef, start, update }) => {
+                            if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
+                            return <span ref={countUpRef} />
+                          }
+                        }
+                      </CountUp>
+                        {' '}
+                        ARTHX
+                      </InfoDivRightSpan>
+                      <InfoDivLeftSpan>+</InfoDivLeftSpan>
+                      <InfoDivRightSpan>
+                      <CountUp
+                        end={initEarnedMAHA}
+                        delay={0.01}
+                        redraw={true}
+                        decimals={3}
+                        duration={initEarnedMAHA / ratePerMillisecond}
+                        preserveValue={true}
+                        formattingFn={
+                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
+                        }
+                      >
+                        {
+                          ({ countUpRef, start, update }) => {
+                            if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
+                            return <span ref={countUpRef} />
+                          }
+                        }
+                      </CountUp>
+                        {' '}
+                        MAHA
+                      </InfoDivRightSpan>
+                      <Withdraw
+                        onClick={props.onClaimClick}
+                      >
+                        Claim
+                      </Withdraw>
+                  </div>
                 </InfoDiv>
               </OpenableDiv>
             ) 

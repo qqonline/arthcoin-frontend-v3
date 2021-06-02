@@ -1,13 +1,14 @@
-import { Configuration } from './config';
-import { ContractName } from './types';
-import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import { TransactionResponse } from '@ethersproject/providers';
+import { BigNumber, Contract, ethers, Overrides } from 'ethers';
+
 import ERC20 from './ERC20';
+import Multicall from './Mulitcall';
+import ABIS from './deployments/abi';
+import { ContractName } from './types';
+import UniswapPair from './UniswapPair';
+import { Configuration } from './config';
 import { getDefaultProvider } from '../utils/provider';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
-import Multicall from './Mulitcall';
-import UniswapPair from './UniswapPair';
-import ABIS from './deployments/abi';
 
 /**
  * An API module of ARTH contracts.
@@ -40,13 +41,20 @@ export class BasisCash {
     [name: string]: ERC20;
   };
 
+  tradingPairs: {
+    [name: string]: ERC20[];
+  }
+
+  assetLockContracts: {
+    [name: string]: Array<Contract | ERC20>;
+  }
+  
   multicall: Multicall;
 
   constructor(cfg: Configuration) {
     const { deployments } = cfg;
     const provider = getDefaultProvider();
 
-    // loads contracts from deployments
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
@@ -87,26 +95,14 @@ export class BasisCash {
       ArthWethLP: this.ArthWethLP,
     };
 
-    // this.arthDai = new UniswapPair(
-    //   deployments.ArthDaiMLP.address,
-    //   provider,
-    //   'ARTH-DAI-LP'
-    // );
-
-    // this.arthEth = new UniswapPair(
-    //   deployments.ArthEthMLP.address,
-    //   provider,
-    //   'ARTH-ETH-LP'
-    // );
-
-    // this.mahaEth = new UniswapPair(
-    //   deployments.MahaEthLP.address,
-    //   provider,
-    //   'MAHA-ETH'
-    // );
-
     this.config = cfg;
     this.provider = provider;
+
+    this.tradingPairs = {
+      'ARTH': [this.ArthMahaLP, this.ArthWethLP],
+      'MAHA': [this.ArthMahaLP, this.MahaWethLP],
+      'ARTHX': [this.ArthxWethLP]
+    }
   }
 
   /**
@@ -141,30 +137,32 @@ export class BasisCash {
     for (const token of tokens) {
       if (token && token.address) token.connect(this.signer);
     }
-
-    // this.multicall.addCalls([
-    //   {
-    //     key: 'BALANCE_OF_ARTH',
-    //     target: this.ARTH.address,
-    //     call: ['balanceOf(address)(uint256)', this.myAccount],
-    //     convertResult: val => val / 10 ** 18
-    //   }, {
-    //     key: 'BALANCE_OF_ARTHB',
-    //     target: this.ARTHB.address,
-    //     call: ['balanceOf(address)(uint256)', this.myAccount],
-    //     convertResult: val => val / 10 ** 18
-    //   }, {
-    //     key: 'BALANCE_OF_MAHA',
-    //     target: this.MAHA.address,
-    //     call: ['balanceOf(address)(uint256)', this.myAccount],
-    //     convertResult: val => val / 10 ** 18
-    //   }, {
-    //     key: 'BALANCE_OF_DAI',
-    //     target: this.DAI.address,
-    //     call: ['balanceOf(address)(uint256)', this.myAccount],
-    //     convertResult: val => val / 10 ** 18
-    //   }
-    // ])
+    
+    /*
+      this.multicall.addCalls([
+        {
+          key: 'BALANCE_OF_ARTH',
+          target: this.ARTH.address,
+          call: ['balanceOf(address)(uint256)', this.myAccount],
+          convertResult: val => val / 10 ** 18
+        }, {
+          key: 'BALANCE_OF_ARTHB',
+          target: this.ARTHB.address,
+          call: ['balanceOf(address)(uint256)', this.myAccount],
+          convertResult: val => val / 10 ** 18
+        }, {
+          key: 'BALANCE_OF_MAHA',
+          target: this.MAHA.address,
+          call: ['balanceOf(address)(uint256)', this.myAccount],
+          convertResult: val => val / 10 ** 18
+        }, {
+          key: 'BALANCE_OF_DAI',
+          target: this.DAI.address,
+          call: ['balanceOf(address)(uint256)', this.myAccount],
+          convertResult: val => val / 10 ** 18
+        }
+      ])
+    */
   }
 
   get isUnlocked(): boolean {
@@ -173,8 +171,9 @@ export class BasisCash {
 
   getCollateralTypes = () => this.config.supportedCollaterals;
   getDefaultCollateral = () => this.config.defaultCollateral;
-  getARTHTradingPairs = () => this.config.arthTradingPairs;
-  getARTHXTradingPairs = () => this.config.arthxTradingPairs;
+  getARTHTradingPairs = () => this.tradingPairs['ARTH'];
+  getMAHATradingPairs = () => this.tradingPairs['MAHA'];
+  getARTHXTradingPairs = () => this.tradingPairs['ARTHX'];
 
   getCollatearalPool = (collateral: string) => {
     if (collateral === 'USDT') return this.contracts.Pool_USDT;

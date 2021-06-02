@@ -635,7 +635,6 @@ const Genesis = (props: WithSnackbarProps) => {
             </LeftTopCard>
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
-            {/* Deep's code here */}
             <BondingDiscount dataObj={bondingDiscount} />
             <UnderstandMore dataObj={understandMore} />
           </Grid>
@@ -715,6 +714,7 @@ const HeaderSpan = styled.span`
   margin: 0 0 0 8px;
   color: #ffffff;
 `;
+
 const StartsIn = styled.div`
   font-family: Inter;
   font-style: normal;

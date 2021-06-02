@@ -1,15 +1,14 @@
-import Grid from '@material-ui/core/Grid';
-
 import React from 'react';
 import styled from 'styled-components';
-import useCore from '../../../hooks/useCore';
-import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { useMediaQuery } from 'react-responsive';
-import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
+import { BigNumber } from '@ethersproject/bignumber';
+import { createStyles, LinearProgress, Theme, withStyles } from '@material-ui/core';
 
 import CustomToolTip from '../../../components/CustomTooltip';
+
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import { BigNumber } from '@ethersproject/bignumber';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -29,14 +28,12 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const CollateralRatio: React.FC = () => {
-  const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const globalCR = useGlobalCollateralRatio();
 
   const CollateralRatioPercentage = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
         <div
           style={{
             display: 'flex',
@@ -49,7 +46,6 @@ const CollateralRatio: React.FC = () => {
             Collateral Ratio
             <CustomToolTip />
           </TextForInfoTitle>
-          {/* </div> */}
           <PercentNumber style={!isMobile ? { margin: '5px 0px 0px 10px' } : { margin: '6px' }}>
             {
               Number(getDisplayBalance(globalCR, 4, 4))
@@ -74,13 +70,14 @@ const CollateralRatio: React.FC = () => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        // justifyContent: 'center',
         flexDirection: isMobile ? 'column' : 'row',
         paddingBottom: '24px',
       }}
     >
       <Grid item sm={12} md={6} lg={6}>
-        {CollateralRatioPercentage()}
+        {
+          CollateralRatioPercentage()
+        }
       </Grid>
       <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
         <PercentCard>
@@ -138,7 +135,6 @@ const PercentCard = styled.div`
   width: 100%;
   align-items: center;
   height: fit-content;
-  // border: 0.5px solid;
 `;
 
 const PercentCardInfo = styled.div`
@@ -152,7 +148,6 @@ const PercentCardInfo = styled.div`
 const PercentCardLabel = styled.div`
   display: flex;
   flex-direction: row;
-  // justify-content space-between;
   width: fit-content;
   font-family: Inter;
   font-style: normal;
@@ -171,8 +166,6 @@ const OpacitySpan = styled.span`
 const PercentCardValue = styled.div`
   display: flex;
   flex-direction: row;
-  // justify-content space-between;
-  // width: 100%;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
