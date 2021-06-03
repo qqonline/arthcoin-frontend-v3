@@ -43,6 +43,9 @@ const StyledContainer = styled.div<StyledContainerProps>`
   background: ${props => props.backgroundColor};
   margin: ${props => props.margin};
   width: 100%;
+  @media (max-width: 600px) {
+    padding: 0 16px;
+  }
 `
 
 export default Container
