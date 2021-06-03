@@ -88,8 +88,10 @@ export const WalletInternal = (props: IProps) => {
                                     onClick={async () => {
                                         // Disconnect wallet code here
                                         onClose();
+                                        localStorage.setItem('disconnectWallet', '1')
+                                        reset()
                                         props.setWalletInfo(false)
-                                        await reset()
+                                        window.location.reload();
                                     }}
                                 />
                             </Grid>
