@@ -78,7 +78,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-  
+
     const amountBN = collateralGMUPrice
       .mul(BigNumber.from(
         parseUnits(`${valueInNumber}`, tokenDecimals)
@@ -102,7 +102,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
 
   const buyBackContainer = () => {
     return (
-      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: 519 }}>
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: '100%' }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle style={{ justifyContent: 'flex-start' }}>
             Buyback
@@ -220,7 +220,7 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                           recollateralizableValue.eq(0) ||
                           isInputFieldError ||
                           isARTHXApproving ||
-                          !Number(collateralAmount) || 
+                          !Number(collateralAmount) ||
                           !Number(receiveShare)
                         }
                         onClick={approve}
@@ -233,8 +233,8 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
                     disabled={
                       recollateralizableValue.eq(0) ||
                       isInputFieldError ||
-                      !isARTHXApproved || 
-                      !Number(collateralAmount) || 
+                      !isARTHXApproved ||
+                      !Number(collateralAmount) ||
                       !Number(receiveShare)
                     }
                     size={'lg'}
@@ -446,7 +446,7 @@ const LeftTopCardChecked = styled.div`
 `;
 
 const RightTopCard = styled.div`
-  height: 519px;
+  height: 100%;
   margin-left: -5px;
   @media (max-width: 600px) {
     margin-left: 0;

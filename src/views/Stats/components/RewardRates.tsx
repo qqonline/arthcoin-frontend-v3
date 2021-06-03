@@ -38,7 +38,7 @@ const BondingDiscount: React.FC = () => {
 };
 
 const CustomInfoCard = styled.div`
-  min-height: 220px;
+  min-height: 262px;
   @media (max-width: 600px) {
     min-height: auto;
     margin-top: 8px;

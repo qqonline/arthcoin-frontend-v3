@@ -236,7 +236,7 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
 
   const recollatateralizeConatiner = () => {
     return (
-      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: 536 }}>
+      <LeftTopCardChecked className={'custom-mahadao-box'} style={{ height: '100%' }}>
         <LeftTopCardHeader className={'custom-mahadao-container-header'}>
           <HeaderTitle style={{ justifyContent: 'flex-start' }}>
             {'Recollatateralize'}
@@ -438,7 +438,7 @@ const LeftTopCardChecked = styled.div`
 `;
 
 const RightTopCard = styled.div`
-  height: 516px;
+  height: 100%;
   margin-left: -5px;
   @media (max-width: 600px) {
     margin-left: 0;
