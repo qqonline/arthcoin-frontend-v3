@@ -272,12 +272,12 @@ const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
-  justify-content: center;
+  justify-content: space-between;
   //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
+  padding: 0 24px;
   flex-wrap: wrap;
   @media (max-width: 600px){
-    justify-content: space-between;
     padding: 0 16px;
   }
 `;
