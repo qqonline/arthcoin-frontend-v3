@@ -12,6 +12,9 @@ import useCore from '../../hooks/useCore';
 import { useWallet } from 'use-wallet';
 import useTokenBalanceOf from '../../hooks/state/useTokenBalanceOf';
 import { getDisplayBalance } from '../../utils/formatBalance';
+import HtmlTooltip from '../HtmlTooltip';
+
+import Toast from 'react-bootstrap/Toast'
 
 interface IProps {
     // walletData?: {
@@ -39,6 +42,7 @@ export const WalletInternal = (props: IProps) => {
     const arthBalance = useTokenBalanceOf(core.ARTH, account);
     const mahaBalance = useTokenBalanceOf(core.MAHA, account);
     const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
+    const [toolTipText, settoolTipText] = useState<string>('copy')
     const onClose = () => {
         setConfirmationModal(false)
     }
@@ -108,9 +112,20 @@ export const WalletInternal = (props: IProps) => {
                             <img height={32} src={metamask} />
                         </IconButton>
                         <span>{truncateMiddle(account, 15)}</span>
-                        <IconButton>
+                      <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            <span>{toolTipText}</span>
+                          </React.Fragment>
+                        }
+                      >
+                        <IconButton onClick={() => {
+                          navigator.clipboard.writeText(account.toString())
+                          settoolTipText('Copied!')
+                        }}>
                             <img height={24} src={copy} />
                         </IconButton>
+                      </HtmlTooltip>
                     </AccountDetails>
                 </StyledLink>
 
@@ -119,7 +134,7 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'MAHA'} size={44} />
                         </IconButton>
-                        <span>{getDisplayBalance(mahaBalance)} MAHA</span>
+                        <span>{Number(getDisplayBalance(mahaBalance)).toLocaleString()} MAHA</span>
                     </RowName>
                     <DollarValue>
                         {/* ${props?.walletData?.mahaDollars} */}
@@ -131,7 +146,7 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'ARTH'} size={44} />
                         </IconButton>
-                        <span>{getDisplayBalance(arthBalance)} ARTH</span>
+                        <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTH</span>
                     </RowName>
                     <DollarValue>
                         {/* ${props?.walletData?.arthDollars} */}
@@ -143,7 +158,7 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'ARTHX'} size={44} />
                         </IconButton>
-                        <span>{getDisplayBalance(arthxBalance)} ARTHX</span>
+                        <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTHX</span>
                     </RowName>
                     <DollarValue>
                         {/* ${props?.walletData?.arthxDollars} */}

@@ -12,6 +12,7 @@ import CustomModal from '../../CustomModal';
 import useTokenBalanceOf from '../../../hooks/state/useTokenBalanceOf';
 import { useWallet } from 'use-wallet';
 import { truncateMiddle } from '../../../utils/formatBalance';
+import HtmlTooltip from '../../HtmlTooltip';
 
 interface props {
   onClose: () => void;
@@ -27,6 +28,7 @@ const AccountModal: React.FC<props> = (props) => {
   const arthBalance = useTokenBalanceOf(core.ARTH, account);
   const mahaBalance = useTokenBalanceOf(core.MAHA, account);
   const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
+  const [toolTipText, settoolTipText] = useState<string>('Copy')
 
   return (
     <MainDiv>
@@ -76,9 +78,21 @@ const AccountModal: React.FC<props> = (props) => {
                 <img height={32} src={metamask} alt="metamask" />
               </IconButton>
               <span>{truncateMiddle(account, 15)}</span>
-              <IconButton>
+              <HtmlTooltip
+                title={
+                  <React.Fragment>
+                    <span>{toolTipText}</span>
+                  </React.Fragment>
+                }
+              >
+                <IconButton onClick={() => {
+                  navigator.clipboard.writeText(account.toString())
+                  settoolTipText('Copied!')
+                }}>
                 <img height={24} src={copy} alt="copy" />
-              </IconButton>
+                </IconButton>
+              </HtmlTooltip>
+
             </AccountDetails>
           </StyledLink>
           <div style={{ height: '4px', width: '100%' }} />
@@ -169,7 +183,6 @@ const MainDiv = styled.div`
 const PositionDiv = styled.div`
   box-sizing: border-box;
   margin: 0px auto;
-  max-width: 1200px;
   padding: 0px 24px;
   width: 100%;
   position: relative;
@@ -229,7 +242,6 @@ const StyledRows = styled.div`
 const RowName = styled.div`
   display: flex;
   align-items: center;
-  justify-content: baseline;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
