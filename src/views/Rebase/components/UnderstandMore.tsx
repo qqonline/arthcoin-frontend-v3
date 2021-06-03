@@ -26,7 +26,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
           ))}
         </ul>
         <LearnMore>
-          <span>Go to ARTH V 2.0 article to learn more</span>
+          <a href={'https://docs.arthcoin.com/arth-201/rebase-mechanism'} target={"_blank"}>Go to ARTH V 2.0 article to learn more</a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
       </CustomInfoCardDetails>
@@ -73,6 +73,10 @@ const LearnMore = styled.div`
   &:hover {
     color: #f7653b;
     opacity: 0.88;
+  }
+  a {
+    color: #f7653b;
+    text-decoration: none;
   }
 `;
 
