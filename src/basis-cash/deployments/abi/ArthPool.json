@@ -719,59 +719,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "arthxAmountD18",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "arthOutMin",
-        "type": "uint256"
-      }
-    ],
-    "name": "mintAlgorithmicARTH",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "collateralAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "arthxAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "arthOutMin",
-        "type": "uint256"
-      }
-    ],
-    "name": "mintFractionalARTH",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "arthAmount",
         "type": "uint256"
       },
@@ -782,29 +729,6 @@
       }
     ],
     "name": "redeem1t1ARTH",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "arthAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "arthxOutMin",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "collateralOutMin",
-        "type": "uint256"
-      }
-    ],
-    "name": "redeemFractionalARTH",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -908,19 +832,6 @@
   {
     "inputs": [],
     "name": "getARTHMAHAPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getGlobalCR",
     "outputs": [
       {
         "internalType": "uint256",

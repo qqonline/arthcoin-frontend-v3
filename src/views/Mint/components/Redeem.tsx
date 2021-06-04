@@ -30,7 +30,7 @@ import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useRedeemableBalances from '../../../hooks/state/pools/useRedeemableBalances';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useCollectRedemption from '../../../hooks/callbacks/pools/useCollectRedemption';
-import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
+import useMintRedeemCollateralRatio from '../../../hooks/state/useMintRedeemCollateralRatio';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -54,7 +54,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const redeemCR = useGlobalCollateralRatio();
+  const redeemCR = useMintRedeemCollateralRatio();
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
   const redeemFee = usePoolRedeemFees(selectedCollateral);
@@ -291,7 +291,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
                   redeemCR.lt(1e6)
-                    ? 'Currently Redeem Collateral ratio is 0%' 
+                    ? 'Currently Redeem Collateral ratio is not 100%' 
                     : ''
                 }
               />
@@ -316,7 +316,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={selectedCollateral}
                 DisableMsg={
                   redeemCR.lt(1e6) 
-                    ? 'Currently Redeem Collateral ratio is 0%' 
+                    ? 'Currently Redeem Collateral ratio is not 100%' 
                     : ''
                 }
               />

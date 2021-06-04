@@ -23,7 +23,7 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
+import useMintRedeemCollateralRatio from '../../../hooks/state/useMintRedeemCollateralRatio';
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -38,7 +38,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
 
   const core = useCore();
   const { account, connect } = useWallet();
-  const mintCR = useGlobalCollateralRatio();
+  const mintCR = useMintRedeemCollateralRatio();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
     core.getDefaultCollateral(),

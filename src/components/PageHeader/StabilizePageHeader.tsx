@@ -1,16 +1,19 @@
-import { KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Container from '../../components/Container';
+import { Link } from 'react-router-dom';
+import InfoIcon from '@material-ui/icons/Info';
 import { useMediaQuery } from 'react-responsive';
-import theme from '../../theme';
+import { KeyboardArrowRight } from '@material-ui/icons';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+
+import theme from '../../theme';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import useGlobalCollateralRatio from '../../hooks/state/controller/useGlobalCollateralRatio';
+
 import CustomToolTip from '../CustomTooltip';
+import Container from '../../components/Container';
+
+import useGlobalCollateralRatio from '../../hooks/state/controller/useGlobalCollateralRatio';
 
 interface PageHeaderProps {
   icon?: React.ReactNode;
@@ -23,6 +26,7 @@ interface PageHeaderProps {
   parentLinkTitle?: string;
   mobile?: boolean;
 }
+
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -39,6 +43,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
   }),
 )(LinearProgress);
+
 const StabilizePageHeader: React.FC<PageHeaderProps> = ({
   icon,
   subtitle,
@@ -152,6 +157,7 @@ const ALignRightOnMobile = styled.div`
     align-self: flex-end;
   } ;
 `;
+
 const StyledPageContent = styled.div`
   display: flex;
   flex-direction: row;
@@ -246,6 +252,7 @@ const StyledSubtitle = styled.h3`
   padding: 0;
   margin-top: 4px;
 `;
+
 const SecondParaDescription = styled.h3`
   color: ${(props) => props.theme.color.grey[400]};
   font-size: 18px;
@@ -283,4 +290,5 @@ const LearnMore = styled.a`
     opacity: 0.88;
   }
 `;
+
 export default StabilizePageHeader;
