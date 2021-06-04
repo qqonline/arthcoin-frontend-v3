@@ -169,13 +169,22 @@ const Home: React.FC = () => {
           <br />
           <span className="title-brand-name">ARTH</span>
           <br />
-          <div className="slogans">
+          {/*<div className="slogans">
             <p className="slogan slogan1">World’s first non-inflationary money.</p>
             <p className="slogan slogan2">ARTH protects you from fiat inflation.</p>
             <p className="slogan slogan3">ARTH protects you from financial crisis.</p>
             <p className="slogan slogan4">ARTH is stable.</p>
             <p className="slogan slogan5">ARTH is lightning fast.</p>
             <p className="slogan slogan6">ARTH is the first stablecoin that is resistant to black swan events.</p>
+          </div>*/}
+          <div className="slogans">
+            <div className="cubespinner">
+              <div className="slogan face1">World’s first non-inflationary money.</div>
+              <div className="slogan face2">ARTH is stable.</div>
+              <div className="slogan face3">ARTH is lightning fast.</div>
+              <div className="slogan face4">ARTH protects you from financial crisis.</div>
+              {/*<div className="slogan face5">ARTH protects you from financial crisis.</div>*/}
+            </div>
           </div>
         </div>
         {/*<div className="title-down-text">
