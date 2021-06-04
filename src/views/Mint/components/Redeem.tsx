@@ -193,7 +193,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
             labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={
-              Number(getDisplayBalance(stabilityFeeAmount, 2, 2))
+              Number(getDisplayBalance(stabilityFeeAmount, 18, 3))
                 .toLocaleString('en-US', { maximumFractionDigits: 2 })
             }
           />
@@ -291,7 +291,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
                   redeemCR.lt(1e6)
-                    ? 'Currently Redeem Collateral ratio is 0%' 
+                    ? 'Currently Redeem Collateral ratio is 0%'
                     : ''
                 }
               />
@@ -315,8 +315,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 disabled={redeemCR.lt(1e6)}
                 SymbolText={selectedCollateral}
                 DisableMsg={
-                  redeemCR.lt(1e6) 
-                    ? 'Currently Redeem Collateral ratio is 0%' 
+                  redeemCR.lt(1e6)
+                    ? 'Currently Redeem Collateral ratio is 0%'
                     : ''
                 }
               />
@@ -345,7 +345,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   <OneLineInput>
                     <BeforeChip>
                       {
-                        Number(getDisplayBalance(stabilityFeeAmount, 2, 2))
+                        Number(getDisplayBalance(stabilityFeeAmount, 18, 3))
                           .toLocaleString('en-US', { maximumFractionDigits: 2 })
                       }
                     </BeforeChip>
@@ -376,8 +376,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                             size={'lg'}
                             disabled={
                               redeemCR.lt(1e6) ||
-                              isInputFieldError || 
-                              isArthApproved || 
+                              isInputFieldError ||
+                              isArthApproved ||
                               !Number(arthValue)
                             }
                             onClick={approveCollat}
@@ -395,8 +395,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                             size={'lg'}
                             disabled={
                               redeemCR.lt(1e6) ||
-                              isInputFieldError || 
-                              isMAHAApproved || 
+                              isInputFieldError ||
+                              isMAHAApproved ||
                               stabilityFeeAmount.lte(0)
                             }
                             onClick={approveARTHX}
