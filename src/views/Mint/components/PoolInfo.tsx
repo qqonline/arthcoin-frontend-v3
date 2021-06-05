@@ -78,11 +78,16 @@ export default ({ selectedCollateralCoin }: IProps) => {
         <div style={{ marginBottom: '12px' }}>
           <OneLineInput>
             <div style={{ flex: 1 }}>
-              <TextForInfoTitle>Pool Balance</TextForInfoTitle>
+              <TextForInfoTitle>
+                Pool Balance
+              </TextForInfoTitle>
             </div>
-            <InputLabelSpanRight>
-              {prettyNumber(getDisplayBalance(poolBalance, 18))}
-            </InputLabelSpanRight>
+            <OneLineInput>
+              <InputLabelSpanRight>
+                {prettyNumber(getDisplayBalance(poolBalance, 18))}
+              </InputLabelSpanRight>
+              <BeforeChip className="custom-mahadao-chip">{selectedCollateralCoin}</BeforeChip>
+            </OneLineInput>
           </OneLineInput>
         </div>
         <div style={{ marginBottom: '12px' }}>
@@ -191,6 +196,21 @@ const InputLabelSpanRight = styled.span`
   color: rgba(255, 255, 255, 0.88);
   margin-right: 5px;
 `;
+
+const BeforeChip = styled.span`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0 4px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.64);
+`
 
 const RightBottomCard = styled.div`
   margin-top: 16px;

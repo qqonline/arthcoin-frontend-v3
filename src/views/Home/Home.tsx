@@ -180,9 +180,9 @@ const Home: React.FC = () => {
           <div className="slogans">
             <div className="cubespinner">
               <div className="slogan face1">World’s first non-inflationary money.</div>
-              <div className="slogan face2">ARTH is stable.</div>
+              <div className="slogan face2">Protects you from financial crisis.</div>
               <div className="slogan face3">ARTH is lightning fast.</div>
-              <div className="slogan face4">ARTH protects you from financial crisis.</div>
+              <div className="slogan face4">ARTH is the first stablecoin that is resistant to black swan events.</div>
               {/*<div className="slogan face5">ARTH protects you from financial crisis.</div>*/}
             </div>
           </div>
