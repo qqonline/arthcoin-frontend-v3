@@ -739,32 +739,32 @@ const Home: React.FC = () => {
             </div>
             <div className="col-12 col-sm-6 bottom-right">
               <div className="social-items">
-                <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
+                <a id="social-twitter" href="https://twitter.com/TheMahaDAO" target="_blank">
                   <button className="button3">
                     <i className="fab fa-twitter" />
                   </button>
                 </a>
-                <a id="social-medium" href="https://medium.com/mahadao">
+                <a id="social-medium" href="https://medium.com/mahadao" target="_blank">
                   <button className="button3">
                     <i className="fab fa-medium" />
                   </button>
                 </a>
-                <a id="social-telegram" href="https://t.me/MahaDAO">
+                <a id="social-telegram" href="https://t.me/MahaDAO" target="_blank">
                   <button className="button3">
                     <i className="fab fa-telegram-plane" />
                   </button>
                 </a>
-                <a id="social-github" href="https://github.com/mahadao">
+                <a id="social-github" href="https://github.com/mahadao" target="_blank">
                   <button className="button3">
                     <i className="fab fa-github" />
                   </button>
                 </a>
-                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
+                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/" target="_blank">
                   <button className="button3">
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="https://discord.gg/V6sr3fe">
+                <a id="social-discord" href="https://discord.gg/V6sr3fe" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>
