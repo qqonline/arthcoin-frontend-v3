@@ -71,7 +71,7 @@ export class BasisCash {
     this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 18);
     this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH', 18);
 
-    this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
+    // this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 
     this.ArthMahaLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'ARTH-MAHA LP');
     this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
