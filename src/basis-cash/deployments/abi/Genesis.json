@@ -1,0 +1,116 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "__arthContractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "__arthxContractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "__arthController",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "arthAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "arthxOutMin",
+        "type": "uint256"
+      }
+    ],
+    "name": "RedeemAlgorithmicARTH",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "_ARTH",
+    "outputs": [
+      {
+        "internalType": "contract IARTH",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "_ARTHX",
+    "outputs": [
+      {
+        "internalType": "contract IARTHX",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "_arthController",
+    "outputs": [
+      {
+        "internalType": "contract IARTHController",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "arthAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "arthxOutMin",
+        "type": "uint256"
+      }
+    ],
+    "name": "redeemAlgorithmicARTH",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCollateralGMUBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function",
+    "constant": true
+  }
+]

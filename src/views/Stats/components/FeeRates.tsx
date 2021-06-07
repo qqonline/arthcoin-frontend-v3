@@ -77,8 +77,8 @@ const BondingDiscount: React.FC = () => {
           <OneLine>
             <BeforeChip>
               {
-                Number(stabilityFee.toString())
-                  .toLocaleString('en-US', { maximumFractionDigits: 2 })
+                Number(getDisplayBalance(stabilityFee, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </BeforeChip>
           </OneLine>

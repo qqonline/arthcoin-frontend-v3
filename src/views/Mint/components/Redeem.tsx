@@ -87,7 +87,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     return BigNumber
       .from(parseUnits(`${arthValue}`, 18))
       .mul(stabilityFee)
-      .div(100);
+      .div(1e6);
   }, [arthValue, stabilityFee]);
 
   const handleRedeem = () => {

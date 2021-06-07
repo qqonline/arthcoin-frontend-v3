@@ -103,10 +103,8 @@ export default ({ selectedCollateralCoin }: IProps) => {
             </div>
             <InputLabelSpanRight>
               {
-                Number(stabilityFee.toString())
-                  .toLocaleString('en-US', { maximumFractionDigits: 2})
-                // Number(getDisplayBalance(stabilityFee, 2, 2))
-                //   .toLocaleString('en-US', { maximumFractionDigits: 2})
+                Number(getDisplayBalance(stabilityFee, 4, 4))
+                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </InputLabelSpanRight>
           </OneLineInput>

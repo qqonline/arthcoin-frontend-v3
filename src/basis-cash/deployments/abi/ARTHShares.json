@@ -974,12 +974,12 @@
   },
   {
     "inputs": [],
-    "name": "taxCurve",
+    "name": "taxPercent",
     "outputs": [
       {
-        "internalType": "contract ITaxCurve",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1194,19 +1194,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract ITaxCurve",
-        "name": "curve",
-        "type": "address"
-      }
-    ],
-    "name": "setTaxCurve",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_controller",
         "type": "address"
@@ -1226,6 +1213,19 @@
       }
     ],
     "name": "setTaxController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTaxPercent",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1348,20 +1348,6 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTaxPercent",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [

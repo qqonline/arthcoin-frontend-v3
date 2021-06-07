@@ -33,11 +33,6 @@
       },
       {
         "internalType": "address",
-        "name": "__ARTHMAHAOracle",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "__arthController",
         "type": "address"
       },
@@ -201,19 +196,6 @@
     "outputs": [
       {
         "internalType": "contract IARTH",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "_ARTHMAHAOracle",
-    "outputs": [
-      {
-        "internalType": "contract ISimpleOracle",
         "name": "",
         "type": "address"
       }
@@ -598,19 +580,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract ISimpleOracle",
-        "name": "oracle",
-        "type": "address"
-      }
-    ],
-    "name": "setARTHMAHAOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_collateralGMUOracleAddress",
         "type": "address"
@@ -734,24 +703,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "arthAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "arthxOutMin",
-        "type": "uint256"
-      }
-    ],
-    "name": "redeemAlgorithmicARTH",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "collectRedemption",
     "outputs": [],
@@ -831,7 +782,7 @@
   },
   {
     "inputs": [],
-    "name": "getARTHMAHAPrice",
+    "name": "getGlobalCR",
     "outputs": [
       {
         "internalType": "uint256",
