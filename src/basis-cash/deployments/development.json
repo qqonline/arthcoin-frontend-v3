@@ -1,142 +1,142 @@
 {
   "ArthController": {
-    "address": "0xDC850d48422dFF748c884f9F12423eb8AC058171",
+    "address": "0x30b18a2eB060FE35F49c3d1f5695eDcfE091E00a",
     "abi": "ArthController"
   },
   "Genesis": {
-    "address": "0x2fb493bE93eBC5E5a8C397995Abc9910E1E5828f",
+    "address": "0x59c2C95899742297b169D71456C57e1c98edA673",
     "abi": "Genesis"
   },
   "StakeARTHMAHA": {
-    "address": "0xDe1C8Ef6D64c33C4FC10564564e68D7680258e04",
+    "address": "0x8f9EDfbdFd7d70c892f917aa5dfCba57d4ee5D45",
     "abi": "BoostedStaking"
   },
   "StakeARTH": {
-    "address": "0x0CE0C5d2dC628Fff3C06003a5D2c889E8c63fD39",
+    "address": "0x7614E90FD996a77886F4A7593A17ad8Cf79cc42C",
     "abi": "BoostedStaking"
   },
   "StakeARTHWETH": {
-    "address": "0x707f13AE2c799458F9CC123b1075f7D6783A717b",
+    "address": "0x8882F04BbE8763F52019099b92951356E6917B75",
     "abi": "BoostedStaking"
   },
   "StakeARTHX": {
-    "address": "0xeB583A55a404A4D71AaCd3FEfE5e179641e4e918",
+    "address": "0x27C4923519be57f8aB2b23b5BADB77Fd3D86EE82",
     "abi": "BoostedStaking"
   },
   "StakeARTHXWETH": {
-    "address": "0xD3bFa45b99cd952ca8917ff4020bEB829Ac4d8FA",
+    "address": "0xEB35d2EE9f8eA45B6Df7715814A6e91f9e42E732",
     "abi": "BoostedStaking"
   },
   "UniswapPairOracle_ARTH_WETH": {
-    "address": "0x59E717D51C6EbEC19e78D85Ba777C5e0BeE205C0",
+    "address": "0xD1Af4C5632eb253f6D8f9EB4511f2bb789D0658F",
     "abi": "UniswapPairOracle"
   },
   "UniswapPairOracle_ARTHX_WETH": {
-    "address": "0x9738A515A4BC9F190C5ef941A14848BfC025dEF4",
+    "address": "0xc5141D85E0cc0A431a6FfC2Dd2e911E8A05698e7",
     "abi": "UniswapPairOracle"
   },
   "GMUOracle": {
-    "address": "0x4EBBb4dB4DAcdF135C8Ed127cb32A399ec836F2e",
+    "address": "0x1F97786B6653925B5914A23100C7467DC795d547",
     "abi": "GMUOracle"
   },
   "Oracle_USDC": {
-    "address": "0x33EbC159CDCed0BcaF5c066AbdBAA651Da296E66",
+    "address": "0xcd4ff27805097D6C1F2d66b8f5f5F9abcb7B64e5",
     "abi": "Oracle"
   },
   "Oracle_USDT": {
-    "address": "0x2324AB44DDbd7D79b782E0055Df44239BB826186",
+    "address": "0xFB002653a53876Bf01ee8E78635Bf6db760fBF31",
     "abi": "Oracle"
   },
   "ArthPoolLibrary": {
-    "address": "0x8685276fc81b8f71747f8b662e009901f05b1852",
+    "address": "0x7c1828Acab3f9Eb097A67ca826d5F2D57cd8205D",
     "abi": "ArthPoolLibrary"
   },
   "MockChainlinkAggregatorV3": {
-    "address": "0x06913b7f5767C1396aCdf5AE4245A1C100E09814",
+    "address": "0xa8E08Cff17cb3A60628a27f5800c04814eE50dCC",
     "abi": "MockChainlinkAggregatorV3"
   },
   "MockUSDCChainlinkAggregator": {
-    "address": "0x2D5d58dDCeD02A3ea2af645424443F7A4848Ea14",
+    "address": "0x7E09CE2Fd16Fe3C1b384ea42D33bd36d42178b2F",
     "abi": "MockChainlinkAggregatorV3"
   },
   "MockUSDTChainlinkAggregator": {
-    "address": "0x08DA966F1Cd382ae49548CB39335a157aEbfEec0",
+    "address": "0x4F51B18A49e9740e38E2320707146860e42d4eB8",
     "abi": "MockChainlinkAggregatorV3"
   },
   "PoolToken": {
-    "address": "0x804646bBCa21CA6059b00f02c03E590a8e7CB68A",
+    "address": "0xbdDB4e92d6D548fC78bf62B84D560cdCab938bB7",
     "abi": "PoolToken"
   },
   "Pool_USDC": {
-    "address": "0x04BCb39efDa5547d3157670D169aF562910aDf00",
+    "address": "0xC4DCe284E24624f76dB5695cfe76691b59294a64",
     "abi": "ArthPool"
   },
   "Pool_USDT": {
-    "address": "0x0bE48Dd179bb839be05A08067EC990622CaD1D60",
+    "address": "0x1DbC42E3bDFb6681870278CD4E26352D8Dff8F4b",
     "abi": "ArthPool"
   },
   "ArthPoolRouter": {
-    "address": "0x02BEd36DCb7Abc067CbdBa7aFDCEEB9d096572Ea",
+    "address": "0xbd33179BCDa8cCd8A7E5ABCe232A59a56a13C9b7",
     "abi": "ArthPoolRouter"
   },
   "Faucet": {
-    "address": "0x5C6A8dA5941e0C5990Ea8E91ea0a1fA7e021E27e",
+    "address": "0x5D08be73B0698579BDD2773796593db1936B8b9c",
     "abi": "Faucet"
   },
   "ARTHStablecoin": {
-    "address": "0x5173dD75f4dab515606468697990E61faAD4e7dF",
+    "address": "0x206a1e0BFE2EEdFa16d979be3a9f60E0B0e6d7Db",
     "abi": "ARTHStablecoin"
   },
   "ARTHShares": {
-    "address": "0x9375424A6049C4e9421dAA62d516EFA5Ee0b9f09",
+    "address": "0x27eeC8259818F868429a0745C96B75A69ff14456",
     "abi": "ARTHShares"
   },
   "MahaToken": {
-    "address": "0xF7A95A7B7740724CC8A4e46Af6CdB049bDA6f3e9",
+    "address": "0xfC563cc811C2a5bf36e7EEf75B83399C5f45bf6b",
     "abi": "MahaToken"
   },
   "UniswapV2Factory": {
-    "address": "0xCA787b0acb237fdB40f577a2361C53F39e87C9bf",
+    "address": "0x6002273bA5541A0A994a2b2eeCcDeCF541d4ADF0",
     "abi": "UniswapV2Factory"
   },
   "UniswapV2Router02": {
-    "address": "0x679D4dC2f5A0A49d887856FD1581975a4C17f1Ff",
+    "address": "0x144F863c13C94948B093DF5d0a9f65bE2f85E3F3",
     "abi": "UniswapV2Router02"
   },
   "DAI": {
-    "address": "0xAC615fee1ddB6651f264B25141475AF6d71E2957",
+    "address": "0x4e4731E46Ed0aAf9721baaBcea3c965789e2A593",
     "abi": "IERC20"
   },
   "USDT": {
-    "address": "0xE2Dcad6DCbD535CF36C87987D40E127aC569C6a9",
+    "address": "0x48BEEA8E7Ed8085DF243BfCf3B6583Fb28d3CfFb",
     "abi": "IERC20"
   },
   "USDC": {
-    "address": "0xdea1052dab4E3E15CcbCab686a2d1743A8e0b053",
+    "address": "0xf7208f917138E8Bada5cC9D01b512a650ceD1803",
     "abi": "IERC20"
   },
   "WETH": {
-    "address": "0x8F2F0B84E428964F2735Fd6bAad38eA91562985D",
+    "address": "0x3147091d055ca1E8958159A54b156fE10b261595",
     "abi": "IWETH"
   },
   "WBTC": {
-    "address": "0xAC615fee1ddB6651f264B25141475AF6d71E2957",
+    "address": "0x4e4731E46Ed0aAf9721baaBcea3c965789e2A593",
     "abi": "IERC20"
   },
   "Multicall": {
-    "address": "0x88B34C9D6DC8a1aEcEb844cCFA7505447C49bb85",
+    "address": "0x5DD5E0d947ca58e199ce00B8A486AEaBa41a78EA",
     "abi": "Multicall"
   },
   "ArthMahaLP": {
-    "address": "0xa714aA0135F90A4E9096CCF359d47cDB6f1bffEE",
+    "address": "0xBD8FdC4D5740D281C85aF41Be5C76dB868610c34",
     "abi": "UniswapV2Pair"
   },
   "ArthxWethLP": {
-    "address": "0x31cb6151552D5117ce9d72DA62C876759D851bDc",
+    "address": "0x3E2A970648FEC329B21e601403F702Dbc5CF0392",
     "abi": "UniswapV2Pair"
   },
   "ArthWethLP": {
-    "address": "0x6b248AA7EAce87E7e29e46673C3Ed9eCCB305c62",
+    "address": "0xd25d35A4E71277346841740B71594CeEAF5A8b47",
     "abi": "UniswapV2Pair"
   }
 }

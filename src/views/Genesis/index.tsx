@@ -263,6 +263,11 @@ const Genesis = (props: WithSnackbarProps) => {
     collateralPool.address
   );
 
+  const [genesisApproveStatus, genesisApprove] = useApprove(
+    currentToken,
+    core.contracts['Genesis'].address
+  );
+
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
     BigNumber.from(parseUnits(`${arthValue}`, 18)),
@@ -304,6 +309,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
+
+  const isGenesisApproved = genesisApproveStatus === ApprovalState.APPROVED;
+  const isGenesisApproving = genesisApproveStatus === ApprovalState.PENDING;
 
   return (
     <>
@@ -634,7 +642,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       localStorage.removeItem('disconnectWallet')
                     })}
                   />
-                ) : !isApproved ? (
+                ) : (type === 'Commit' && !isApproved) || (type === 'Swap' && !isGenesisApproved) ? (
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
@@ -646,11 +654,14 @@ const Genesis = (props: WithSnackbarProps) => {
                       (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
                       (type === 'Swap' && Number(arthValue) === 0)
                     }
-                    onClick={approve}
+                    onClick={
+                      type === 'Commit'
+                        ? approve
+                        : genesisApprove
+                    }
                     loading={isApproving}
                   />
                 ) : (
-                  <>
                     <Button
                       text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                       size={'lg'}
@@ -666,17 +677,6 @@ const Genesis = (props: WithSnackbarProps) => {
                       }
                       onClick={() => setOpenModal(1)}
                     />
-                    <br />
-                    {redeemableBalances[0].gt(0) ||
-                      (redeemableBalances[1].gt(0) && (
-                        <Button
-                          text={'Collect Redeemption'}
-                          size={'lg'}
-                          variant={'default'}
-                          onClick={collectRedeemption}
-                        />
-                      ))}
-                  </>
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>
