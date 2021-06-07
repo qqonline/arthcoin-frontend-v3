@@ -169,13 +169,22 @@ const Home: React.FC = () => {
           <br />
           <span className="title-brand-name">ARTH</span>
           <br />
-          <div className="slogans">
+          {/*<div className="slogans">
             <p className="slogan slogan1">World’s first non-inflationary money.</p>
             <p className="slogan slogan2">ARTH protects you from fiat inflation.</p>
             <p className="slogan slogan3">ARTH protects you from financial crisis.</p>
             <p className="slogan slogan4">ARTH is stable.</p>
             <p className="slogan slogan5">ARTH is lightning fast.</p>
             <p className="slogan slogan6">ARTH is the first stablecoin that is resistant to black swan events.</p>
+          </div>*/}
+          <div className="slogans">
+            <div className="cubespinner">
+              <div className="slogan face1">World’s first non-inflationary money.</div>
+              <div className="slogan face2">Protects you from financial crisis.</div>
+              <div className="slogan face3">ARTH is lightning fast.</div>
+              <div className="slogan face4">ARTH is the first stablecoin that is resistant to black swan events.</div>
+              {/*<div className="slogan face5">ARTH protects you from financial crisis.</div>*/}
+            </div>
           </div>
         </div>
         {/*<div className="title-down-text">
@@ -730,32 +739,32 @@ const Home: React.FC = () => {
             </div>
             <div className="col-12 col-sm-6 bottom-right">
               <div className="social-items">
-                <a id="social-twitter" href="https://twitter.com/TheMahaDAO">
+                <a id="social-twitter" href="https://twitter.com/TheMahaDAO" target="_blank">
                   <button className="button3">
                     <i className="fab fa-twitter" />
                   </button>
                 </a>
-                <a id="social-medium" href="https://medium.com/mahadao">
+                <a id="social-medium" href="https://medium.com/mahadao" target="_blank">
                   <button className="button3">
                     <i className="fab fa-medium" />
                   </button>
                 </a>
-                <a id="social-telegram" href="https://t.me/MahaDAO">
+                <a id="social-telegram" href="https://t.me/MahaDAO" target="_blank">
                   <button className="button3">
                     <i className="fab fa-telegram-plane" />
                   </button>
                 </a>
-                <a id="social-github" href="https://github.com/mahadao">
+                <a id="social-github" href="https://github.com/mahadao" target="_blank">
                   <button className="button3">
                     <i className="fab fa-github" />
                   </button>
                 </a>
-                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/">
+                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/" target="_blank">
                   <button className="button3">
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="https://discord.gg/V6sr3fe">
+                <a id="social-discord" href="https://discord.gg/V6sr3fe" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>

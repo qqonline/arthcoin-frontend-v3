@@ -94,14 +94,14 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                   <SecondParaDescription>{secondParaDescription}</SecondParaDescription>
                 )}
               </div>
-              {!mobile ? (
+              {/*{!mobile ? (
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
-                  {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
+                   <div style={{ maxWidth: '30%', flex: 0.3 }}>
                   <TextForInfoTitle>
                     Collateral Ratio
                     <CustomToolTip toolTipText={'loreum ipsum'} />
                   </TextForInfoTitle>
-                  {/* </div> */}
+                   </div>
                   <PercentNumber style={{ margin: '0px 12px' }}>
                     {
                       Number(getDisplayBalance(globalCR, 4, 4))
@@ -115,13 +115,13 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: 40 }}>
-                  {/* <div style={{ maxWidth: '30%', flex: 0.3 }}> */}
+                   <div style={{ maxWidth: '30%', flex: 0.3 }}>
                   <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '12px' }}>
                     <TextForInfoTitle>
                       Collateral Ratio
                       <CustomToolTip toolTipText={'loreum ipsum'} />
                     </TextForInfoTitle>
-                    {/* </div> */}
+                     </div>
                     <PercentNumber style={{ margin: '0px 12px' }}>
                       {getDisplayBalance(globalCR, 4)}%
                     </PercentNumber>
@@ -131,7 +131,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
                     value={Number(getDisplayBalance(globalCR, 4, 2))}
                   />
                 </div>
-              )}
+              )}*/}
             </div>
           </StyledTextContainer>
           <ALignRightOnMobile>{icon}</ALignRightOnMobile>

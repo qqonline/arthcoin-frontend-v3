@@ -11,8 +11,6 @@ type props = {
 const CustomToolTip: React.FC<props> = (props) => {
   const { toolTipText, iconStyle } = props;
 
-  return <div />;
-
   if (!toolTipText) {
     return <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)' }} />;
   }
