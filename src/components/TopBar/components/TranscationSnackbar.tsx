@@ -90,7 +90,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        View on Etherscan ↗
+                        View on Explorer ↗
                       </AnchorTag>
                     )
                   }
