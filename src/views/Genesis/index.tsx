@@ -181,15 +181,15 @@ const Genesis = (props: WithSnackbarProps) => {
         location: 'https://arthcoin.com/',
         details:
           'The ARTH v2 Geneis, which will be live on the Polygon network. Visit https://arthcoin.com/ to be a part of genesis.',
-        startsAt: new Date('15 June 2021 15:00:00 GMT').toString(),
-        endsAt: new Date('15 June 2021 16:00:00 GMT').toString(),
+        startsAt: core.config.genesisLaunchDate.toString(),
+        endsAt: new Date('22 June 2021 16:00:00 GMT').toString(),
       };
       setLink(makeUrls(event).google);
     };
 
     window.scrollTo(0, 0);
     onClick();
-  }, []);
+  }, [core.config.genesisLaunchDate]);
 
   const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) =>
     amount.mul(discount).div(1e6);
@@ -439,7 +439,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <PageSubHeading>
               <StartsIn>Starts in</StartsIn>
               <Countdown
-                date={Date.now() + 550000000}
+                date={core.config.genesisLaunchDate}
                 renderer={({ days, hours, minutes, seconds, completed }) => {
                   return (
                     <HeaderSpan>
