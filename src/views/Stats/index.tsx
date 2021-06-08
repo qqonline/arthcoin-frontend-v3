@@ -15,7 +15,6 @@ import RewardRates from './components/RewardRates';
 import Container from '../../components/Container';
 import PageHeader from '../../components/PageHeader';
 import BondingDiscount from './components/BondingDiscount';
-import CollateralRatio from './components/CollateralRatio';
 import CustomToolTip from '../../components/CustomTooltip';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
@@ -123,7 +122,7 @@ const Home: React.FC = () => {
                         </TextForInfoTitle>
                       </HeaderSubtitle>
                     }
-                    <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
+                    <ButtonDiv style={{ width: '100%', marginBottom: '70px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
                         <ToLink
                           to={'/stabilize/recollateralize'}
@@ -182,7 +181,7 @@ const Home: React.FC = () => {
                   </Grid>
                 </Grid>
                 <div className="border-bottom width-100" />
-                <Grid item sm={12} md={12} lg={12} style={{ padding: '24px 0 0 0' }}>
+                <Grid item sm={12} md={12} lg={12} style={{ padding: '60px 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
                     <CustomToolTip toolTipText={'loreum ipsum'} />
