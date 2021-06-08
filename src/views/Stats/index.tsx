@@ -78,7 +78,7 @@ const Home: React.FC = () => {
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <Card className={'custom-mahadao-box'}>
               <Grid item sm={12} md={12} lg={12} direction={'column'}>
-                <Grid
+                {/*<Grid
                   item
                   sm={12}
                   md={12}
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
                 >
                   <CollateralRatio />
                 </Grid>
-                <div className="border-bottom" />
+                <div className="border-bottom" />*/}
                 <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
                     <InfoDiv style={{ marginTop: '24px' }}>
@@ -125,28 +125,28 @@ const Home: React.FC = () => {
                     }
                     <ButtonDiv style={{ width: '100%', marginBottom: '24px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
-                        <ToLink 
+                        <ToLink
                           to={'/stabilize/recollateralize'}
                         >
-                          <ButtonText 
+                          <ButtonText
                             style={
-                              stabilizeState !== 'recollateralize' 
-                                ? {  color : 'rgba(255, 255, 255, 0.16)'}  
+                              stabilizeState !== 'recollateralize'
+                                ? {  color : 'rgba(255, 255, 255, 0.16)'}
                                 : { color: '#F7653B' }
                               }
                           >
                             Recollateralize
                           </ButtonText>
                         </ToLink>
-                        <img 
-                          alt='Arrow right' 
+                        <img
+                          alt='Arrow right'
                           src={
                             stabilizeState === 'recollateralize'
                               ? arrowRight
                               : arrowRightDisabled
                           }
-                          height={18} 
-                          style={{ marginLeft: 8 }} 
+                          height={18}
+                          style={{ marginLeft: 8 }}
                         />
                       </IconButtons>
                       <div
@@ -167,15 +167,15 @@ const Home: React.FC = () => {
                             Buyback
                           </ButtonText>
                         </ToLink>
-                        <img 
-                          alt='Arrow right' 
+                        <img
+                          alt='Arrow right'
                           src={
                             stabilizeState === 'buyback'
                               ? arrowRight
                               : arrowRightDisabled
                           }
-                          height={18} 
-                          style={{ marginLeft: 8 }} 
+                          height={18}
+                          style={{ marginLeft: 8 }}
                         />
                       </IconButtons>
                     </ButtonDiv>
@@ -238,7 +238,7 @@ const Home: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CoinsPrice />
-            <BasicInfo 
+            <BasicInfo
               targetCollateralValue={targetCollateralValue}
               globalCollateralValue={globalCollateralValue}
             />

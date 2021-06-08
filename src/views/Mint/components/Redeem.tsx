@@ -291,7 +291,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
                   redeemCR.lt(1e6)
-                    ? 'Currently Redeem Collateral ratio is not 100%' 
+                    ? 'Currently Redeem Collateral ratio is not 100%'
                     : ''
                 }
               />
@@ -315,8 +315,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 disabled={redeemCR.lt(1e6)}
                 SymbolText={selectedCollateral}
                 DisableMsg={
-                  redeemCR.lt(1e6) 
-                    ? 'Currently Redeem Collateral ratio is not 100%' 
+                  redeemCR.lt(1e6)
+                    ? 'Currently Redeem Collateral ratio is not 100%'
                     : ''
                 }
               />
@@ -447,6 +447,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
         buttonText={'Checkout Staking Pools'}
         buttonHref={'/#/farming'}
+        buttonType={'default'}
       />
     </>
   );

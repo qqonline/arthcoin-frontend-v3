@@ -156,7 +156,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const core = useCore();
-  const { account, connect } = useWallet(); 
+  const { account, connect } = useWallet();
   const arthxPrice = useARTHXOraclePrice();
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
@@ -236,12 +236,12 @@ const Genesis = (props: WithSnackbarProps) => {
       18
     );
   }, [
-    arthValue, 
-    tradingFee, 
-    collateralGMUPrice, 
-    arthxPrice, 
-    collateralValue, 
-    tokenDecimals, 
+    arthValue,
+    tradingFee,
+    collateralGMUPrice,
+    arthxPrice,
+    collateralValue,
+    tokenDecimals,
     type
   ]);
 
@@ -600,7 +600,7 @@ const Genesis = (props: WithSnackbarProps) => {
                           <OneLineInputwomargin>
                             <div style={{ flex: 1 }}>
                               <TextWithIcon>
-                                + Bonus
+                                Bonus
                             <CustomToolTip toolTipText={'loreum ipsum'} />
                               </TextWithIcon>
                             </div>
@@ -616,7 +616,7 @@ const Genesis = (props: WithSnackbarProps) => {
                           <OneLineInputwomargin>
                             <div style={{ flex: 1 }}>
                               <TextWithIcon>
-                                - Trading Fee
+                                Trading Fee
                             <CustomToolTip toolTipText={'loreum ipsum'} />
                               </TextWithIcon>
                             </div>

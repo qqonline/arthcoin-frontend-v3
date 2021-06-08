@@ -9,7 +9,7 @@ const StakeBox: React.FC = () => {
     <CustomInfoCard className={'custom-mahadao-box'}>
       <CustomInfoCardDetails>
         <Grid container>
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
             <TextWithIcon>
               Farming pools are a great way to earn rewards by staking your $ARTH
             </TextWithIcon>
