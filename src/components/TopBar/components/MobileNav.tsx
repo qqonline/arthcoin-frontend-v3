@@ -184,13 +184,14 @@ const StyledNav = styled.nav`
   z-index: 100;
   flex-direction: column;
   // justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 73px;
   width: 100%;
   left: 0px;
   background: #1e1d1d;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  height: 100%;
+  height: 100vh;
+  overflow-y: scroll;
 `;
 
 const StyledLink = styled(NavLink)`
