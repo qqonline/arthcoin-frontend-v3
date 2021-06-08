@@ -254,7 +254,7 @@ export const MobileFarm = (props: IProps) => {
                           }
                         }
                       </CountUp> */}
-                        <p>{currentEarnedARTHX}</p>
+                        <span>{currentEarnedARTHX}</span>
                         {' '}
                         ARTHX
                       </InfoDivRightSpan>
@@ -282,7 +282,7 @@ export const MobileFarm = (props: IProps) => {
                           }
                         }
                       </CountUp> */}
-                        <p>{currentEarnedMAHA}</p>
+                        <span>{currentEarnedMAHA}</span>
                         {' '}
                         MAHA
                       </InfoDivRightSpan>

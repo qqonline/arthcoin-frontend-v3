@@ -186,7 +186,7 @@ export default (props: IProps) => {
                       }
                     }
                   </CountUp> */}
-                  <p>{currentEarnedARTHX}</p>
+                  <span>{currentEarnedARTHX}</span>
                   {' '}
                   ARTHX
                   {' + '}
@@ -212,7 +212,7 @@ export default (props: IProps) => {
                       }
                     }
                   </CountUp> */}
-                  <p>{currentEarnedMAHA}</p>
+                  <span>{currentEarnedMAHA}</span>
                   {' '}
                   MAHA
                 </TableMainTextStyle>
