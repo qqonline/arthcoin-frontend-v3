@@ -164,7 +164,7 @@ export default (props: IProps) => {
               <>
                 Earned:
                 <TableMainTextStyle style = {{ marginLeft: '10px' }}>
-                  <CountUp
+                  {/* <CountUp
                     end={initEarnedARTHX}
                     delay={0}
                     decimals={6}
@@ -185,11 +185,12 @@ export default (props: IProps) => {
                         return <span ref={countUpRef} />
                       }
                     }
-                  </CountUp>
+                  </CountUp> */}
+                  <p>{currentEarnedARTHX}</p>
                   {' '}
                   ARTHX
                   {' + '}
-                  <CountUp
+                  {/* <CountUp
                     end={initEarnedMAHA}
                     delay={0}
                     redraw={true}
@@ -210,7 +211,8 @@ export default (props: IProps) => {
                         return <span ref={countUpRef} />
                       }
                     }
-                  </CountUp>
+                  </CountUp> */}
+                  <p>{currentEarnedMAHA}</p>
                   {' '}
                   MAHA
                 </TableMainTextStyle>

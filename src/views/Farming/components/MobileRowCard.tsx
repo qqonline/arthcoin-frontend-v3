@@ -232,7 +232,7 @@ export const MobileFarm = (props: IProps) => {
                   <div>
                       <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
                       <InfoDivRightSpan>
-                      <CountUp
+                      {/* <CountUp
                         end={initEarnedARTHX}
                         delay={0}
                         decimals={6}
@@ -253,13 +253,14 @@ export const MobileFarm = (props: IProps) => {
                             return <span ref={countUpRef} />
                           }
                         }
-                      </CountUp>
+                      </CountUp> */}
+                        <p>{currentEarnedARTHX}</p>
                         {' '}
                         ARTHX
                       </InfoDivRightSpan>
                       <InfoDivLeftSpan>+</InfoDivLeftSpan>
                       <InfoDivRightSpan>
-                      <CountUp
+                      {/* <CountUp
                         end={initEarnedMAHA}
                         delay={0}
                         redraw={true}
@@ -280,7 +281,8 @@ export const MobileFarm = (props: IProps) => {
                             return <span ref={countUpRef} />
                           }
                         }
-                      </CountUp>
+                      </CountUp> */}
+                        <p>{currentEarnedMAHA}</p>
                         {' '}
                         MAHA
                       </InfoDivRightSpan>
