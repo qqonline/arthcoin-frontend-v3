@@ -669,10 +669,13 @@ const Genesis = (props: WithSnackbarProps) => {
                       disabled={
                         // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                         isInputFieldError ||
-                        !isApproved ||
                         (type === 'Commit'
                           ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
                           : !Number(arthValue)
+                        ) ||
+                        (type === 'Commit'
+                          ? !isApproved
+                          : !isGenesisApproved
                         )
                       }
                       onClick={() => setOpenModal(1)}
