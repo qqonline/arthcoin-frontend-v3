@@ -4,13 +4,14 @@ import { useCallback, useEffect, useState } from 'react';
 
 import config from '../config';
 import useCore from './useCore';
+import { useBlockNumber } from '../state/application/hooks';
 
 export default () => {
   const [value, setValue] = useState({ maha: BigNumber.from(0), arthx: BigNumber.from(0) });
   
   const core = useCore();
   const {account} = useWallet();
-
+  const blockNumber = useBlockNumber();
   const pow = BigNumber.from(10).pow(18)
 
   const fetchCashPrice = useCallback(async () => {
@@ -41,7 +42,7 @@ export default () => {
 
     const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
     return () => clearInterval(refreshInterval);
-  }, [setValue, core, account, fetchCashPrice]);
+  }, [blockNumber, setValue, core, account, fetchCashPrice]);
 
   return value
 };
