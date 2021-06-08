@@ -72,7 +72,7 @@ const MobileNav = (props: props) => {
           >
             Genesis
           </StyledLink>
-          <StyledLink
+          {/* <StyledLink
             exact
             activeClassName="active"
             to="/stats"
@@ -106,8 +106,13 @@ const MobileNav = (props: props) => {
           </StyledLink>
           <StyledLink exact activeClassName="active" to="/faucet" onClick={() => props.onClick()}>
             Faucet
-          </StyledLink>
-          <StyledLink exact activeClassName="active" to="/rebase" onClick={() => props.onClick()}>
+          </StyledLink> */}
+          <StyledLink
+            exact
+            activeClassName="active"
+            to="/rebase"
+            onClick={() => props.onClick()}
+          >
             Rebase
           </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">
@@ -152,26 +157,31 @@ const MobileNav = (props: props) => {
           )}
         </div>
       ) : (
-        <WalletInternal disconnect={disconnect} walletInfo={walletInfo} setWalletInfo={(val: boolean) => setWallet(val)} />
+        <WalletInternal
+          disconnect={disconnect}
+          walletInfo={walletInfo}
+          setWalletInfo={(val: boolean) => setWallet(val)}
+        />
       )}
       <StyledButton>
         <div style={{ maxWidth: '340px', width: '100%', margin: '10px 10px 0px 10px' }}>
           {/* <AccountButton /> */}
-          {!walletInfo && <Button
-            variant={'transparent'}
-            text={!account ? 'Connect' : 'Wallet Info'}
-            onClick={async () => {
-              if (!account) {
-                await connect('injected')
-                  .then(() => {
+          {!walletInfo && (
+            <Button
+              variant={'transparent'}
+              text={!account ? 'Connect' : 'Wallet Info'}
+              onClick={async () => {
+                if (!account) {
+                  await connect('injected').then(() => {
                     setWallet(!walletInfo);
-                    localStorage.removeItem('disconnectWallet')
-                  })
-              } else {
-                setWallet(!walletInfo);
-              }
-            }}
-          />}
+                    localStorage.removeItem('disconnectWallet');
+                  });
+                } else {
+                  setWallet(!walletInfo);
+                }
+              }}
+            />
+          )}
         </div>
       </StyledButton>
     </StyledNav>

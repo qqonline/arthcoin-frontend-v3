@@ -102,8 +102,7 @@ withStyles({
   marked: {
     color: 'red',
   },
-  markLabel: {
-  },
+  markLabel: {},
   track: {
     height: 3,
     borderRadius: 3,
@@ -151,7 +150,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [collateralValue, setCollateralValue] = useState<string>('0');
-  const [timerHeader, setHeader] = useState<boolean>(false);
+  const [timerHeader, setHeader] = useState<boolean>(true);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
@@ -177,41 +176,38 @@ const Genesis = (props: WithSnackbarProps) => {
 
   useEffect(() => {
     const onClick = () => {
-      let event: TCalendarEvent = {
+      const event: TCalendarEvent = {
         name: 'ARTH-v2 Genesis',
-        location: 'Online',
-        details: 'Genesis',
-        startsAt: new Date('1 may 2021 12:30:00').toString(),
-        endsAt: new Date('1 may 2021 20:30:00').toString(),
+        location: 'https://arthcoin.com/',
+        details:
+          'The ARTH v2 Geneis, which will be live on the Polygon network. Visit https://arthcoin.com/ to be a part of genesis.',
+        startsAt: new Date('15 June 2021 15:00:00 GMT').toString(),
+        endsAt: new Date('15 June 2021 16:00:00 GMT').toString(),
       };
       setLink(makeUrls(event).google);
     };
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     onClick();
   }, []);
 
-  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) => amount.mul(discount).div(1e6);
+  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) =>
+    amount.mul(discount).div(1e6);
 
   const calcExpectReceiveAmount = (
     inAssetPrice: BigNumber,
     outAssetprice: BigNumber,
     amount: number | string,
     inAssetDecimals: number,
-    outAssetDecimals: number) => (
+    outAssetDecimals: number,
+  ) =>
     inAssetPrice
-      .mul(BigNumber.from(
-        parseUnits(`${amount}`, inAssetDecimals)
-      ))
-      .mul(
-        BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals)
-      )
-      .div(outAssetprice)
-  );
+      .mul(BigNumber.from(parseUnits(`${amount}`, inAssetDecimals)))
+      .mul(BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals))
+      .div(outAssetprice);
 
   const tradingFee = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${arthValue}`, 18))
+    return BigNumber.from(parseUnits(`${arthValue}`, 18))
       .mul(redeemFee)
       .div(1e6);
   }, [arthValue, redeemFee]);
@@ -225,7 +221,7 @@ const Genesis = (props: WithSnackbarProps) => {
         arthxPrice,
         collateralValue,
         tokenDecimals,
-        18
+        18,
       );
 
     return calcExpectReceiveAmount(
@@ -233,7 +229,7 @@ const Genesis = (props: WithSnackbarProps) => {
       arthxPrice,
       Number(arthValue) - Number(getDisplayBalance(tradingFee, 18, 6)),
       18,
-      18
+      18,
     );
   }, [
     arthValue,
@@ -242,7 +238,7 @@ const Genesis = (props: WithSnackbarProps) => {
     arthxPrice,
     collateralValue,
     tokenDecimals,
-    type
+    type,
   ]);
 
   const arthxDiscount = useMemo(() => {
@@ -251,21 +247,18 @@ const Genesis = (props: WithSnackbarProps) => {
   }, [arthxRecieve, arthxPrice, recollateralizationDiscount]);
 
   const totalArthxRecieve = useMemo(() => {
-    return arthxRecieve.add(arthxDiscount)
+    return arthxRecieve.add(arthxDiscount);
   }, [arthxDiscount, arthxRecieve]);
 
   const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
   const currentToken = core.tokens[currentCoin];
   const currentValue = type === 'Commit' ? collateralValue : arthValue;
 
-  const [approveStatus, approve] = useApprove(
-    currentToken,
-    collateralPool.address
-  );
+  const [approveStatus, approve] = useApprove(currentToken, collateralPool.address);
 
   const [genesisApproveStatus, genesisApprove] = useApprove(
     currentToken,
-    core.contracts['Genesis'].address
+    core.contracts['Genesis'].address,
   );
 
   const redeemARTH = useRedeemAlgorithmicARTH(
@@ -283,9 +276,9 @@ const Genesis = (props: WithSnackbarProps) => {
   const bondingDiscount = [
     {
       label: 'Current discount',
-      value: `${Number(getDisplayBalance(recollateralizationDiscount, 4, 4))
-          .toLocaleString('en-US', { maximumFractionDigits: 4 })
-        }%`,
+      value: `${Number(
+        getDisplayBalance(recollateralizationDiscount, 4, 4),
+      ).toLocaleString('en-US', { maximumFractionDigits: 4 })}%`,
     },
     {
       label: 'Starting ARTHX Price',
@@ -293,9 +286,9 @@ const Genesis = (props: WithSnackbarProps) => {
     },
     {
       label: 'Discounted ARTHX Price',
-      value: `$${Number(getDisplayBalance(arthxPrice, 6, 6))
-          .toLocaleString('en-US', { maximumFractionDigits: 6 })
-        }`,
+      value: `$${Number(getDisplayBalance(arthxPrice, 6, 6)).toLocaleString('en-US', {
+        maximumFractionDigits: 6,
+      })}`,
     },
   ];
 
@@ -342,28 +335,22 @@ const Genesis = (props: WithSnackbarProps) => {
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
-          {
-            type !== 'Commit' &&
+          {type !== 'Commit' && (
             <TransparentInfoDiv
               labelData={`Trading Fee`}
               rightLabelUnit={'ARTH'}
-              rightLabelValue={
-                Number(getDisplayBalance(tradingFee, 18, 6))
-                  .toLocaleString('en-US', {maximumFractionDigits: 6})
-                }
+              rightLabelValue={Number(
+                getDisplayBalance(tradingFee, 18, 6),
+              ).toLocaleString('en-US', { maximumFractionDigits: 6 })}
             />
-          }
+          )}
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={
-              Number(getDisplayBalance(
-                type === 'Commit' ? totalArthxRecieve : arthxRecieve,
-                18,
-                3
-              )).toLocaleString()
-            }
+            rightLabelValue={Number(
+              getDisplayBalance(type === 'Commit' ? totalArthxRecieve : arthxRecieve, 18, 3),
+            ).toLocaleString()}
           />
           <Grid
             container
@@ -386,7 +373,9 @@ const Genesis = (props: WithSnackbarProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `${type} ${Number(currentValue).toLocaleString()} ${currentCoin} cancelled`
+                        data1: `${type} ${Number(
+                          currentValue,
+                        ).toLocaleString()} ${currentCoin} cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -401,9 +390,9 @@ const Genesis = (props: WithSnackbarProps) => {
                   !isApproved ||
                   !Number(currentValue) ||
                   (type === 'Commit'
-                    ? !Number(totalArthxRecieve) || percentageCompleted.gt(BigNumber.from(10).pow(18)) :
-                    !Number(arthxRecieve)
-                  )
+                    ? !Number(totalArthxRecieve) ||
+                      percentageCompleted.gt(BigNumber.from(10).pow(18))
+                    : !Number(arthxRecieve))
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -439,10 +428,10 @@ const Genesis = (props: WithSnackbarProps) => {
               />
             </div>
             <HeaderSpan>
-              {
-                Number(getDisplayBalance(percentageCompleted, 16, 3))
-                  .toLocaleString('en-US', { maximumFractionDigits: 2 })
-              }% Completed
+              {Number(getDisplayBalance(percentageCompleted, 16, 3)).toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+              })}
+              % Completed
             </HeaderSpan>
           </PageSubHeading>
         ) : (
@@ -543,7 +532,9 @@ const Genesis = (props: WithSnackbarProps) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+                    errorCallback={(flag: boolean) => {
+                      setIsInputFieldError(flag);
+                    }}
                     DisableMsg={
                       percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
@@ -566,12 +557,14 @@ const Genesis = (props: WithSnackbarProps) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
-                  // DisableMsg={
-                  //   percentageCompleted.gt(BigNumber.from(10).pow(18))
-                  //     ? 'Currently Genesis is 100% Completed'
-                  //     : ''
-                  // }
+                    errorCallback={(flag: boolean) => {
+                      setIsInputFieldError(flag);
+                    }}
+                    // DisableMsg={
+                    //   percentageCompleted.gt(BigNumber.from(10).pow(18))
+                    //     ? 'Currently Genesis is 100% Completed'
+                    //     : ''
+                    // }
                   />
                 )}
                 <PlusMinusArrow>
@@ -594,55 +587,53 @@ const Genesis = (props: WithSnackbarProps) => {
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
-                    {
-                      type === 'Commit'
-                        ? (
-                          <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Bonus
+                    {type === 'Commit' ? (
+                      <OneLineInputwomargin>
+                        <div style={{ flex: 1 }}>
+                          <TextWithIcon>
+                            Bonus
                             <CustomToolTip toolTipText={'loreum ipsum'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                              </BeforeChip>
-                              <TagChips>ARTHX</TagChips>
-                            </OneLineInputwomargin>
-                          </OneLineInputwomargin>
-                        )
-                        : (
-                          <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Trading Fee
+                          </TextWithIcon>
+                        </div>
+                        <OneLineInputwomargin>
+                          <BeforeChip className={'custom-mahadao-chip'}>
+                            {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                          </BeforeChip>
+                          <TagChips>ARTHX</TagChips>
+                        </OneLineInputwomargin>
+                      </OneLineInputwomargin>
+                    ) : (
+                      <OneLineInputwomargin>
+                        <div style={{ flex: 1 }}>
+                          <TextWithIcon>
+                            Trading Fee
                             <CustomToolTip toolTipText={'loreum ipsum'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {
-                                  Number(getDisplayBalance(tradingFee, 18, 6))
-                                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
-                                }
-                              </BeforeChip>
-                              <TagChips>ARTH</TagChips>
-                            </OneLineInputwomargin>
-                          </OneLineInputwomargin>
-                        )
-                    }
+                          </TextWithIcon>
+                        </div>
+                        <OneLineInputwomargin>
+                          <BeforeChip className={'custom-mahadao-chip'}>
+                            {Number(
+                              getDisplayBalance(tradingFee, 18, 6),
+                            ).toLocaleString('en-US', { maximumFractionDigits: 6 })}
+                          </BeforeChip>
+                          <TagChips>ARTH</TagChips>
+                        </OneLineInputwomargin>
+                      </OneLineInputwomargin>
+                    )}
                   </ReceiveContainer>
                 </div>
-                {!!!account ? (
+                {/* {!!!account ? (
                   <Button
                     text={'Connect Wallet'}
                     size={'lg'}
-                    onClick={() => connect('injected').then(() => {
-                      localStorage.removeItem('disconnectWallet')
-                    })}
+                    onClick={() =>
+                      connect('injected').then(() => {
+                        localStorage.removeItem('disconnectWallet');
+                      })
+                    }
                   />
-                ) : (type === 'Commit' && !isApproved) || (type === 'Swap' && !isGenesisApproved) ? (
+                ) : (type === 'Commit' && !isApproved) ||
+                  (type === 'Swap' && !isGenesisApproved) ? (
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
@@ -651,36 +642,30 @@ const Genesis = (props: WithSnackbarProps) => {
                       isInputFieldError ||
                       isApproving ||
                       (type === 'Commit' && Number(collateralValue) === 0) ||
-                      (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
+                      (type === 'Commit' &&
+                        percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
                       (type === 'Swap' && Number(arthValue) === 0)
                     }
-                    onClick={
-                      type === 'Commit'
-                        ? approve
-                        : genesisApprove
-                    }
+                    onClick={type === 'Commit' ? approve : genesisApprove}
                     loading={isApproving}
                   />
                 ) : (
-                    <Button
-                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                      size={'lg'}
-                      variant={'default'}
-                      disabled={
-                        // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                        isInputFieldError ||
-                        (type === 'Commit'
-                          ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
-                          : !Number(arthValue)
-                        ) ||
-                        (type === 'Commit'
-                          ? !isApproved
-                          : !isGenesisApproved
-                        )
-                      }
-                      onClick={() => setOpenModal(1)}
-                    />
-                )}
+                  <Button
+                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                    size={'lg'}
+                    variant={'default'}
+                    disabled={
+                      // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      isInputFieldError ||
+                      (type === 'Commit'
+                        ? !Number(collateralValue) ||
+                          percentageCompleted.gt(BigNumber.from(10).pow(18))
+                        : !Number(arthValue)) ||
+                      (type === 'Commit' ? !isApproved : !isGenesisApproved)
+                    }
+                    onClick={() => setOpenModal(1)}
+                  />
+                )} */}
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>

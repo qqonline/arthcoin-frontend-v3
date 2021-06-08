@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import './index.css';
@@ -57,31 +57,25 @@ const App: React.FC = () => {
   }, []);
 
   const makeUnPassive = (ev: any) => {
-    ev.preventDefault()
-  }
+    ev.preventDefault();
+  };
 
   useEffect(() => {
-    document
-      .body
-      .addEventListener('touchmove', makeUnPassive, { passive: true })
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
 
-    return () => (
-      document
-        .body
-        .removeEventListener('touchmove', makeUnPassive)
-    )
-  }, [])
+    return () => document.body.removeEventListener('touchmove', makeUnPassive);
+  }, []);
 
   return (
     <Providers>
       <Router>
         <TopBar />
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <Home />
           </Route>
           <Route path="/stats">
-            <Stats />{' '}
+            <Stats />
           </Route>
           <Route path="/farming">
             <Page>
@@ -107,22 +101,23 @@ const App: React.FC = () => {
             <Page>
               <Pools />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/genesis">
             <Page>
               <Genesis />
             </Page>
           </Route>
-          <Route path="/faucet">
+          {/* <Route path="/faucet">
             <Page>
               <Faucet />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/rebase">
             <Page>
               <Rebase />
             </Page>
           </Route>
+          <Redirect to="/genesis" />
         </Switch>
       </Router>
     </Providers>

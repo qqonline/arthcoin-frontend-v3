@@ -66,90 +66,58 @@ const TopBar: React.FC = () => {
     <TopBarContainer>
       <StyledTopBar>
         {/*<Container size="lg">*/}
-          <StyledTopBarInner>
-            <div className="dialog-class">
-              <Logo />
-              <HideonPhone>
-                <Nav />
-              </HideonPhone>
-            </div>
+        <StyledTopBarInner>
+          <div className="dialog-class">
+            <Logo />
             <HideonPhone>
-              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                <TxButton />
-                {network.name !== '' && (
-                  <CustomNetwork>
-                    <ColorIcon colorCode={network.color} />
-                    <span>{network.name}</span>
-                  </CustomNetwork>
-                )}
-                {false && (
-                  <Select
-                    labelId="demo-customized-select-label"
-                    id="demo-customized-select"
-                    value={netWrokType}
-                    label="Mainnet"
-                    onChange={handleChange}
-                    input={<BootstrapInput />}
-                    IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
-                  >
-                    <MenuItem value="mainnet">
-                      <ColorIcon colorCode="#11af60" />
-                      Mainnet
-                    </MenuItem>
-                    <MenuItem value="ropsten">
-                      <ColorIcon colorCode="#FA4C69" />
-                      Ropsten
-                    </MenuItem>
-                    <MenuItem value="kovan">
-                      <ColorIcon colorCode="#7A3CF6" />
-                      Kovan
-                    </MenuItem>
-                    <MenuItem value="rinkeby">
-                      <ColorIcon colorCode="#FCB400" />
-                      Rinkeby
-                    </MenuItem>
-                    <MenuItem value="goerli">
-                      <ColorIcon colorCode="#BD9CFF" />
-                      Goerli
-                    </MenuItem>
-                  </Select>
-                )}
-                <AccountButton />
-              </div>
+              <Nav />
             </HideonPhone>
+          </div>
+          <HideonPhone>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              <TxButton />
+              {network.name !== '' && false && (
+                <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>
+              )}
+              <AccountButton />
+            </div>
+          </HideonPhone>
 
-            <HideOnBigScreen>
-              <div className="dialog-class">
-                {!!account && (
-                  <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
-                    <TxButton />
-                  </div>
-                )}
-                {network.name !== '' && (
-                  <CustomNetwork>
-                    <ColorIcon colorCode={network.color} />
-                    <span>{network.name}</span>
-                  </CustomNetwork>
-                )}
-                {!showMobileMenu ? (
-                  <MenuIcon
-                    style={{ color: 'white' }}
-                    className="pointer"
-                    onClick={() => toggleMobileMenu(true)}
-                  />
-                ) : (
-                  <img
-                    src={CloseIcon}
-                    width="24px"
-                    alt=""
-                    className="pointer"
-                    onClick={() => toggleMobileMenu(false)}
-                  />
-                )}
-              </div>
-            </HideOnBigScreen>
-            {showMobileMenu && <MobileNav onClick={() => toggleMobileMenu(false)} />}
-          </StyledTopBarInner>
+          <HideOnBigScreen>
+            <div className="dialog-class">
+              {!!account && (
+                <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
+                  <TxButton />
+                </div>
+              )}
+              {network.name !== '' && (
+                <CustomNetwork>
+                  <ColorIcon colorCode={network.color} />
+                  <span>{network.name}</span>
+                </CustomNetwork>
+              )}
+              {!showMobileMenu ? (
+                <MenuIcon
+                  style={{ color: 'white' }}
+                  className="pointer"
+                  onClick={() => toggleMobileMenu(true)}
+                />
+              ) : (
+                <img
+                  src={CloseIcon}
+                  width="24px"
+                  alt=""
+                  className="pointer"
+                  onClick={() => toggleMobileMenu(false)}
+                />
+              )}
+            </div>
+          </HideOnBigScreen>
+          {showMobileMenu && <MobileNav onClick={() => toggleMobileMenu(false)} />}
+        </StyledTopBarInner>
         {/*</Container>*/}
       </StyledTopBar>
       {showWarning && (
@@ -277,7 +245,7 @@ const StyledTopBarInner = styled.div`
   width: 100%;
   padding: 0 24px;
   flex-wrap: wrap;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0 16px;
   }
 `;
