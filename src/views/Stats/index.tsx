@@ -125,7 +125,11 @@ const Home: React.FC = () => {
                     <ButtonDiv style={{ width: '100%', marginBottom: '70px' }}>
                       <IconButtons style={{ color: '#F7653B' }}>
                         <ToLink
-                          to={'/stabilize/recollateralize'}
+                          to={
+                            stabilizeState === 'recollateralize'
+                              ? '/stabilize/recollateralize'
+                              : '#'
+                          }
                         >
                           <ButtonText
                             style={
@@ -157,7 +161,11 @@ const Home: React.FC = () => {
                         }}
                       />
                       <IconButtons style={{ color: 'rgba(255, 255, 255, 0.16)' }}>
-                        <ToLink to={'/stabilize/buyback'}>
+                        <ToLink to={
+                          stabilizeState === 'buyback'
+                            ? '/stabilize/buyback'
+                            : '#'
+                        }>
                           <ButtonText style={
                             stabilizeState !== 'buyback'
                               ? { color: 'rgba(255, 255, 255, 0.16)' }
