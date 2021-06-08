@@ -408,7 +408,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     )}
                     {redeemableBalances[0].gt(0) || redeemableBalances[1].gt(0) ? (
                       <Button
-                        text={'Redemption'}
+                        text={'Collect Redemption'}
                         size={'lg'}
                         variant={'default'}
                         onClick={collectRedeemption}
@@ -445,8 +445,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         title={'Redeeming ARTH successful!'}
         subTitle={''}
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
-        buttonText={'Checkout Staking Pools'}
-        buttonHref={'/#/farming'}
+        buttonText={'Collect your redeemed amount and checkout Staking Pools'}
         buttonType={'default'}
       />
     </>
