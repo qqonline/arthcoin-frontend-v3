@@ -7,6 +7,7 @@ import MintTabContent from './components/Mint';
 import Container from '../../components/Container';
 import RedeemTabContent from './components/Redeem';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+import LoadingPage from '../../components/LoadingPage';
 
 const Boardrooms = (props: WithSnackbarProps) => {
   // @ts-ignore
@@ -19,6 +20,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
   return (
     <>
       <GradientDiv />
+      {/*<LoadingPage/>*/}
       <Container size="lg">
         {type === 'mint' && (
           <MintTabContent setType={(type: 'mint' | 'redeem') => setType(type)} />
