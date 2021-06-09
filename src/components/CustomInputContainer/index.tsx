@@ -17,7 +17,7 @@ type props = {
   value?: string;
   DefaultValue: string;
   LogoSymbol: string;
-  hasDropDown: boolean;
+  hasDropDown?: boolean;
   disabled?: boolean;
   SymbolText: string;
   setText?: (val: string) => void;
@@ -51,7 +51,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     ILabelInfoValue,
     DefaultValue,
     LogoSymbol,
-    hasDropDown,
+    hasDropDown = false,
     SymbolText,
     tagText = '',
     dropDownValues,

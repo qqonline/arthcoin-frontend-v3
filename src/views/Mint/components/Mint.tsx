@@ -7,6 +7,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
+import plusSign from '../../../assets/svg/plus.svg';
 
 import PoolInfo from './PoolInfo';
 import MintModal from './MintModal';
@@ -32,23 +33,28 @@ interface IProps {
 const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
+  const [arthxValue, setArthxValue] = useState<string>('0');
+
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
-  const core = useCore();
   const { account, connect } = useWallet();
   const mintCR = useMintRedeemCollateralRatio();
+
+  const core = useCore();
+  const arthBalance = useTokenBalance(core.ARTH);
+  const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(
-    core.getDefaultCollateral(),
-  );
+
+  const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(core.getDefaultCollateral(),);
+  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
   const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
-  const arthBalance = useTokenBalance(core.ARTH);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
+
   const [collatApproveStatus, approveCollat] = useApprove(
     core.tokens[selectedCollateralCoin],
     collateralPool.address,
@@ -71,6 +77,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
+      setArthxValue('0');
       return;
     }
 
@@ -95,6 +102,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
+      setArthxValue('0');
       return;
     }
 
@@ -112,6 +120,30 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       )
       .div(collateralToGMUPrice);
     setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+  };
+
+  const onARTHXValueChange = async (val: string) => {
+    if (val === '' || collateralToGMUPrice.lte(0)) {
+      setCollateralValue('0');
+      setArthValue('0');
+      setArthxValue('0');
+      return;
+    }
+
+    let check: boolean = ValidateNumber(val);
+    setArthxValue(check ? val : String(Number(val)));
+    if (!check) return;
+    const valueInNumber: number = Number(val);
+    if (!valueInNumber) return;
+
+    // const finalCollateralValue = BigNumber
+    //   .from(parseUnits(`${valueInNumber}`, 18))
+    //   .mul(1e6)
+    //   .div(
+    //     BigNumber.from(10).pow(18 - tokenDecimals)
+    //   )
+    //   .div(collateralToGMUPrice);
+    // setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
   };
 
   return (
@@ -192,6 +224,23 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     : ''
                 }
               />
+              <PlusMinusArrow>
+                <img src={plusSign} alt="plus" />
+              </PlusMinusArrow>
+              <CustomInputContainer
+                ILabelValue={'You receive'}
+                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
+                DefaultValue={arthxValue.toString()}
+                ILabelInfoValue={''}
+                LogoSymbol={'ARTHX'}
+                // disabled={mintCR.lt(1e6)}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+                setText={(val: string) => {
+                  onARTHXValueChange(val);
+                }}
+                // DisableMsg={}
+              />
               <div>
                 <TcContainer>
                   <OneLineInputwomargin>
@@ -235,9 +284,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                               }
                               size={'lg'}
                               disabled={
-                                mintCR.lt(1e6) || 
+                                mintCR.lt(1e6) ||
                                 isInputFieldError ||
-                                isCollatApproved || 
+                                isCollatApproved ||
                                 !Number(collateralValue)
                               }
                               onClick={approveCollat}

@@ -8,6 +8,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
+import plusSign from '../../../assets/svg/plus.svg';
 
 import PoolInfo from './PoolInfo';
 import TransparentInfoDiv from './InfoDiv';
@@ -39,22 +40,28 @@ interface IProps {
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
+  const [arthxValue, setArthxValue] = useState<string>('0');
+
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
-  const core = useCore();
   const { account, connect } = useWallet();
+  const redeemCR = useMintRedeemCollateralRatio();
+
+  const core = useCore();
+  const arthBalance = useTokenBalance(core.ARTH);
+  const arthxBalance = useTokenBalance(core.ARTH);
+
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
     core.getDefaultCollateral(),
   );
   const tokenDecimals = useTokenDecimals(selectedCollateral);
   const redeemableBalances = useRedeemableBalances(selectedCollateral);
-  const arthBalance = useTokenBalance(core.ARTH);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const redeemCR = useMintRedeemCollateralRatio();
   const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
   const redeemFee = usePoolRedeemFees(selectedCollateral);
@@ -121,6 +128,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
+      setArthxValue('0');
       return;
     }
 
@@ -141,6 +149,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
+      setArthxValue('0');
       return;
     }
 
@@ -158,6 +167,30 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         .div(collateralToGMUPrice);
       setCollateralValue(getDisplayBalance(finalCollateralValue, 6));
     }
+  };
+
+  const onARTHXValueChange = async (val: string) => {
+    if (val === '' || collateralToGMUPrice.lte(0)) {
+      setCollateralValue('0');
+      setArthValue('0');
+      setArthxValue('0');
+      return;
+    }
+
+    let check: boolean = ValidateNumber(val);
+    setArthxValue(check ? val : String(Number(val)));
+    if (!check) return;
+    const valueInNumber: number = Number(val);
+    if (!valueInNumber) return;
+
+    // if (redeemCR.gt(0)) {
+    //   const finalCollateralValue = BigNumber
+    //     .from(parseUnits(`${valueInNumber}`, 18))
+    //     .mul(1e6)
+    //     .div(BigNumber.from(10).pow(18 - tokenDecimals))
+    //     .div(collateralToGMUPrice);
+    //   setCollateralValue(getDisplayBalance(finalCollateralValue, 6));
+    // }
   };
 
   return (
@@ -287,6 +320,28 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
                 setText={onARTHValueChange}
+                tagText={'MAX'}
+                errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+                DisableMsg={
+                  redeemCR.lt(1e6)
+                    ? 'Currently Redeem Collateral ratio is not 100%'
+                    : ''
+                }
+              />
+              <PlusMinusArrow>
+                <img src={plusSign} alt="plus" />
+              </PlusMinusArrow>
+              <CustomInputContainer
+                ILabelValue={'Enter ARTHX Amount'}
+                IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
+                ILabelInfoValue={''}
+                DefaultValue={arthxValue.toString()}
+                LogoSymbol={'ARTHX'}
+                disabled={redeemCR.lt(1e6)}
+                hasDropDown={false}
+                SymbolText={'ARTHX'}
+                inputMode={'decimal'}
+                setText={onARTHXValueChange}
                 tagText={'MAX'}
                 errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
                 DisableMsg={
