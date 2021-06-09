@@ -21,10 +21,11 @@ import useCore from '../../../hooks/useCore';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useTokenBalance from '../../../hooks/state/useTokenBalance';
+import useARTHXPrice from '../../../hooks/state/controller/useARTHXPrice';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import useMintRedeemCollateralRatio from '../../../hooks/state/useMintRedeemCollateralRatio';
+
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -41,7 +42,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
   const { account, connect } = useWallet();
-  const mintCR = useMintRedeemCollateralRatio();
+  const mintCR = BigNumber.from(11e5);
 
   const core = useCore();
   const arthBalance = useTokenBalance(core.ARTH);
@@ -52,6 +53,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);
   const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  const arthxPrice = useARTHXPrice();
   const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
@@ -87,15 +89,27 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    const finalArthValue = collateralToGMUPrice
-      .mul(BigNumber.from(
-        parseUnits(`${valueInNumber}`, tokenDecimals)
-      ))
-      .mul(
-        BigNumber.from(10).pow(18 - tokenDecimals)
-      )
+    const bnCollateralAmount = BigNumber.from(
+      parseUnits(`${valueInNumber}`, tokenDecimals)
+    );
+    const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
+
+    const totalCollateralValue = collateralToGMUPrice
+      .mul(bnCollateralAmount)
+      .mul(bnMissingDecimals)
       .div(1e6);
+
+    const finalArthValue = totalCollateralValue
+      .mul(1e6)
+      .div(mintCR);
+
+    const finalArthxValue = totalCollateralValue
+      .sub(finalArthValue)
+      .mul(1e6)
+      .div(arthxPrice); 
+
     setArthValue(getDisplayBalance(finalArthValue, 18));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -112,13 +126,24 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    const finalCollateralValue = BigNumber
-      .from(parseUnits(`${valueInNumber}`, 18))
+    const bnArthValue = BigNumber.from(parseUnits(`${valueInNumber}`, 18));
+    const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
+    
+    const finalCollateralValueD18 = bnArthValue
+      .mul(mintCR)
+      .div(1e6);
+
+    const finalArthxValue = finalCollateralValueD18
+      .sub(bnArthValue)
       .mul(1e6)
-      .div(
-        BigNumber.from(10).pow(18 - tokenDecimals)
-      )
-      .div(collateralToGMUPrice);
+      .div(arthxPrice);
+
+    const finalCollateralValue = finalCollateralValueD18
+      .mul(1e6)
+      .div(collateralToGMUPrice)
+      .div(bnMissingDecimals);
+
+    setArthxValue(getDisplayBalance(finalArthxValue, 18));
     setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
   };
 
@@ -179,7 +204,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
                 ILabelInfoValue={''}
-                disabled={mintCR.lt(1e6)}
+                disabled={mintCR.lte(1e6)}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -191,7 +216,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                   }, 1000);
                 }}
                 DisableMsg={
-                  mintCR.lt(1e6)
+                  mintCR.lte(1e6)
                     ? 'Currently Mint Collateral ratio is not 100%'
                     : ''
                 }
@@ -212,14 +237,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 LogoSymbol={'ARTH'}
-                disabled={mintCR.lt(1e6)}
+                disabled={mintCR.lte(1e6)}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 setText={(val: string) => {
                   onARTHValueChange(val);
                 }}
                 DisableMsg={
-                  mintCR.lt(1e6)
+                  mintCR.lte(1e6)
                     ? 'Currently Mint Collateral ratio is not 100%'
                     : ''
                 }
@@ -284,7 +309,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                               }
                               size={'lg'}
                               disabled={
-                                mintCR.lt(1e6) ||
+                                mintCR.lte(1e6) ||
                                 isInputFieldError ||
                                 isCollatApproved ||
                                 !Number(collateralValue)
@@ -301,7 +326,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                           size={'lg'}
                           variant={'default'}
                           disabled={
-                            mintCR.lt(1e6) ||
+                            mintCR.lte(1e6) ||
                             isInputFieldError ||
                             !isCollatApproved ||
                             !Number(arthValue) ||
