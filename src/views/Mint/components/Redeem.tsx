@@ -50,6 +50,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const { account, connect } = useWallet();
   const redeemCR = BigNumber.from(11e5);
 
+  const arthxRatio = useMemo(() => {
+    return redeemCR.sub(BigNumber.from(1e6));
+  }, [redeemCR]);
+
+  const arthRatio = useMemo(() => {
+    return BigNumber.from(1e6).sub(arthxRatio)
+  }, [arthxRatio]);
+
   const core = useCore();
   const arthBalance = useTokenBalance(core.ARTH);
   const arthxBalance = useTokenBalance(core.ARTHX);
@@ -150,17 +158,18 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6);
 
     const finalArthValue = totalCollateralValue
-      .mul(1e6)
-      .div(redeemCR);
+      .mul(arthRatio)
+      .div(1e6)
 
     const finalArthxValue = totalCollateralValue
-      .sub(finalArthValue)
+      .mul(arthxRatio)
       .mul(1e6)
+      .div(1e6)
       .div(arthxPrice);
 
     setArthValue(getDisplayBalance(finalArthValue, 18));
     setArthxValue(getDisplayBalance(finalArthxValue, 18));
-  }
+  };
 
   const onARTHValueChange = async (val: string) => {
     if (val === '' || collateralToGMUPrice.lte(0)) {
@@ -180,8 +189,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
 
     const finalCollateralValueD18 = bnArthValue
-      .mul(redeemCR)
-      .div(1e6);
+      .mul(1e6)
+      .div(arthRatio);
 
     const finalArthxValue = finalCollateralValueD18
       .sub(bnArthValue)
@@ -211,14 +220,24 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    // if (redeemCR.gt(0)) {
-    //   const finalCollateralValue = BigNumber
-    //     .from(parseUnits(`${valueInNumber}`, 18))
-    //     .mul(1e6)
-    //     .div(BigNumber.from(10).pow(18 - tokenDecimals))
-    //     .div(collateralToGMUPrice);
-    //   setCollateralValue(getDisplayBalance(finalCollateralValue, 6));
-    // }
+    const bnArthxValue = BigNumber.from(parseUnits(`${valueInNumber}`, 18));
+    const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
+
+    const finalCollateralValueD18 = bnArthxValue
+      .mul(arthxPrice)
+      .mul(1e6)
+      .div(1e6)
+      .div(arthxRatio);
+
+    const finalArthValue = finalCollateralValueD18.sub(bnArthxValue)
+
+    const finalCollateralValue = finalCollateralValueD18
+      .mul(1e6)
+      .div(collateralToGMUPrice)
+      .div(bnMissingDecimals);
+
+    setArthValue(getDisplayBalance(finalArthValue, 18));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
   };
 
   return (
