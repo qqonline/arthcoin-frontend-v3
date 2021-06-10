@@ -62,6 +62,14 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     collateralPool.address,
   );
 
+  const arthxRatio = useMemo(() => {
+    return mintCR.sub(BigNumber.from(1e6));
+  }, [mintCR]);
+
+  const arthRatio = useMemo(() => {
+    return BigNumber.from(1e6).sub(arthxRatio)
+  }, [arthxRatio]);
+
   useEffect(() => window.scrollTo(0, 0), []);
 
   const isWalletConnected = !!account;
@@ -100,12 +108,13 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6);
 
     const finalArthValue = totalCollateralValue
-      .mul(1e6)
-      .div(mintCR);
+      .mul(arthRatio)
+      .div(1e6)
 
     const finalArthxValue = totalCollateralValue
-      .sub(finalArthValue)
+      .mul(arthxRatio)
       .mul(1e6)
+      .div(1e6)
       .div(arthxPrice); 
 
     setArthValue(getDisplayBalance(finalArthValue, 18));
@@ -130,8 +139,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
     
     const finalCollateralValueD18 = bnArthValue
-      .mul(mintCR)
-      .div(1e6);
+      .mul(1e6)
+      .div(arthRatio);
 
     const finalArthxValue = finalCollateralValueD18
       .sub(bnArthValue)
@@ -161,14 +170,24 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
     const valueInNumber: number = Number(val);
     if (!valueInNumber) return;
 
-    // const finalCollateralValue = BigNumber
-    //   .from(parseUnits(`${valueInNumber}`, 18))
-    //   .mul(1e6)
-    //   .div(
-    //     BigNumber.from(10).pow(18 - tokenDecimals)
-    //   )
-    //   .div(collateralToGMUPrice);
-    // setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+    const bnArthxValue = BigNumber.from(parseUnits(`${valueInNumber}`, 18));
+    const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
+
+    const finalCollateralValueD18 = bnArthxValue
+      .mul(arthxPrice)
+      .mul(1e6)
+      .div(1e6)
+      .div(arthxRatio);
+
+    const finalArthValue = finalCollateralValueD18.sub(bnArthxValue)
+
+    const finalCollateralValue = finalCollateralValueD18
+      .mul(1e6)
+      .div(collateralToGMUPrice)
+      .div(bnMissingDecimals);
+
+    setArthValue(getDisplayBalance(finalArthValue, 18));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
   };
 
   return (
