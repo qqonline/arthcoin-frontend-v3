@@ -34,6 +34,7 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
+import Lottery from './views/Lottery';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -121,6 +122,11 @@ const App: React.FC = () => {
           <Route path="/rebase">
             <Page>
               <Rebase />
+            </Page>
+          </Route>
+          <Route path="/lottery">
+            <Page>
+              <Lottery />
             </Page>
           </Route>
         </Switch>
