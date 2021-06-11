@@ -20,23 +20,14 @@ export const WinModal = (props: IProps) => {
                 handleClose={props.toggleOpen}
                 open={props.open}
                 modalBodyStyle={{
-                    // backgroundColor: 'linear-gradient(180deg, rgba(72, 66, 62, 0) -19.91%, #373030 350.27%)',
-                    // backgroundImage: "url(" + backgroundMask + ")",
-                    // backgroundSize: 'cover',
-                    // backgroundRepeat: 'repeat',
-                    // backgroundPosition: '5%',
                     padding: 0,
-                    // width: '100%'
                 }}
                 modalContainerStyle={{ padding: 0 }}
             >
                 <MainDiv style={{
-                    // backgroundColor: 'linear-gradient(180deg, rgba(72, 66, 62, 0) -19.91%, #373030 350.27%)',
                     backgroundImage: "url(" + backgroundMask + ")",
                     backgroundSize: '80%',
-                    // backgroundRepeat: 'repeat',
                     backgroundPosition: '65%',
-                    // padding: '32px 24px'
                 }}>
                     <GradientDiv />
                     <div style={{padding: '32px 24px', zIndex: 6}}>
