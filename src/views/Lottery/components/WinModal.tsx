@@ -5,7 +5,7 @@ import CustomModal from '../../../components/CustomModal';
 import CloseIcon from '../../../assets/img/CloseIcon.svg';
 import happyMask from '../../../assets/svg/happyMask.svg';
 import sadMask from '../../../assets/svg/sadMask.svg';
-
+import backgroundMask from '../../../assets/svg/backgroundMask.svg';
 interface IProps {
     open: boolean;
     toggleOpen: () => void
@@ -19,13 +19,32 @@ export const WinModal = (props: IProps) => {
                 closeButton
                 handleClose={props.toggleOpen}
                 open={props.open}
-                // modalBodyStyle={{}}
-                modalContainerStyle={{background: 'transparent'}}
+                modalBodyStyle={{
+                    // backgroundColor: 'linear-gradient(180deg, rgba(72, 66, 62, 0) -19.91%, #373030 350.27%)',
+                    // backgroundImage: "url(" + backgroundMask + ")",
+                    // backgroundSize: 'cover',
+                    // backgroundRepeat: 'repeat',
+                    // backgroundPosition: '5%',
+                    padding: 0,
+                    // width: '100%'
+                }}
+                modalContainerStyle={{ padding: 0 }}
             >
-                    <MainDiv>
-                        <img style={{ position: 'absolute', display: 'flex', top: 5, right: 0, zIndex: 2 }} src={CloseIcon} height={24} onClick={props.toggleOpen} />
+                <MainDiv style={{
+                    // backgroundColor: 'linear-gradient(180deg, rgba(72, 66, 62, 0) -19.91%, #373030 350.27%)',
+                    backgroundImage: "url(" + backgroundMask + ")",
+                    backgroundSize: '80%',
+                    // backgroundRepeat: 'repeat',
+                    backgroundPosition: '65%',
+                    // padding: '32px 24px'
+                }}>
+                    <GradientDiv />
+                    <div style={{padding: '32px 24px', zIndex: 6}}>
+                        <img style={{ position: 'absolute', display: 'flex', top: 10, right: 20, zIndex: 2, border: '0.5px solid grey', backgroundColor: 'black' }} src={CloseIcon} height={24} onClick={props.toggleOpen} />
 
-                        <MaskDiv>
+                        <MaskDiv style={{
+
+                        }}>
                             <img src={happyMask} height={100} />
                         </MaskDiv>
 
@@ -49,12 +68,21 @@ export const WinModal = (props: IProps) => {
                                 />
                             </div>
                         </ButtonContainer>
-                    </MainDiv>
+                    </div>
+                </MainDiv>
             </CustomModal>
         </>
     )
 }
 
+const GradientDiv = styled.div`
+    background: linear-gradient(180deg, rgba(72, 66, 62, 0) -19.91%, #373030 61.27%);
+    height: 100%;
+    position: absolute;
+    // border: 1px solid;
+    width: 100%;
+    z-index: 1;
+`;
 const MainDiv = styled.div`
 display: flex;
 flex-direction: column;
@@ -68,6 +96,7 @@ width: 100%;
 align-items: center;
 justify-content: center;
 position: relative;
+height: 100%;
 `;
 
 const WinnerText = styled.div`
@@ -79,6 +108,7 @@ line-height: 32px;
 text-align: center;
 color: #FFFFFF;
 margin: 40px 0 0 0;
+z-index: 2;
 `;
 
 const ButtonContainer = styled.div`
@@ -86,4 +116,5 @@ display: flex;
 width: 100%;
 margin: 32px 0 0 0;
 flex-direction: column;
+z-index: 2;
 `;

@@ -133,7 +133,7 @@ const CustomModal: React.FC<props> = ({
   if (openModal) {
     modalJsx = (
       <Dialog
-        // style={modalContainerStyle}
+        style={modalContainerStyle}
         fullScreen={fullScreen}
         fullWidth={mobile}
         onClose={handleCloseModal}
@@ -153,7 +153,7 @@ const CustomModal: React.FC<props> = ({
             alignItems: 'center',
             justifyContent: 'center',
             // width: '100%'
-            // ...modalTitleStyle
+            ...modalTitleStyle
           }}
           id='customized-dialog-title'
           onClose={handleCloseModal}
@@ -165,7 +165,7 @@ const CustomModal: React.FC<props> = ({
           background: 'linear-gradient(180deg, #48423E 0%, #373030 100%)',
           borderTop: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '24px 32px',
-          // ...modalBodyStyle
+          ...modalBodyStyle
         }} dividers>
           <div style={{}}>{children}</div>
         </DialogContent>
