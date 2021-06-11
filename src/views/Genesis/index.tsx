@@ -55,6 +55,7 @@ import usePercentageCompleted from '../../hooks/state/controller/usePercentageCo
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
+import TicketGreen from '../../assets/svg/TicketGreen.svg';
 
 withStyles({
   root: {
@@ -637,6 +638,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     }
                   </ReceiveContainer>
                 </div>
+                <CustomBadgeAlert>
+                  <Logo src={TicketGreen} alt='TicketBg' />
+                  <Text>You will get 3 lottery tickets to win prize.</Text>
+                </CustomBadgeAlert>
                 {!!!account ? (
                   <Button
                     text={'Connect Wallet'}
@@ -688,8 +693,16 @@ const Genesis = (props: WithSnackbarProps) => {
             </LeftTopCard>
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
-            <BondingDiscount dataObj={bondingDiscount} />
+            {/*<BondingDiscount dataObj={bondingDiscount} />*/}
             <UnderstandMore dataObj={understandMore} />
+            <LotteryBox className={'custom-mahadao-box'}>
+              <LotteryBoxText>
+                Genesis participate can issue lottery tickets to win exiting MAHA Prizes
+              </LotteryBoxText>
+              <LotteryBoxAction>
+                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'}/>
+              </LotteryBoxAction>
+            </LotteryBox>
           </Grid>
           <Grid item lg={1} />
         </Grid>
@@ -709,6 +722,33 @@ const Genesis = (props: WithSnackbarProps) => {
     </>
   );
 };
+
+const CustomBadgeAlert = styled.div`
+  border: 1px solid #20C974;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 32px;
+`
+
+const Logo = styled.img`
+  width: 16px;
+  height: 16px;
+`
+
+const Text = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: #20C974;
+  flex: 1;
+  padding-left: 10px;
+  margin-bottom: 0;
+`
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
@@ -948,5 +988,25 @@ const TagChips = styled.div`
   border-radius: 4px;
   padding: 2px 4px;
 `;
+
+const LotteryBox = styled.div`
+  background: radial-gradient(145.27% 168.64% at 130.87% -118.64%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%),
+  linear-gradient(252.98deg, #E44D75 10.74%, #EB822C 87.31%);
+  margin-top: 24px;
+`
+
+const LotteryBoxText = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 12px;
+`
+
+const LotteryBoxAction = styled.div`
+  width: 50%;
+`
 
 export default withSnackbar(Genesis);
