@@ -42,13 +42,37 @@ const Lottery = () => {
         <CardConatiner>
           <Grid container spacing={2}>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard/>
+              <LotteryCard
+                // image={}
+                cardtitle={'FIRST EVER MAHA NFT'}
+                changeToWin={{
+                    text: 'Your Chance to win',
+                    perc: '20%',
+                  }}
+                buttonText={'Increase Your Chance to Win'}
+                buttonClick={() => {}}
+              />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard/>
+              <LotteryCard
+                // image={}
+                cardtitle={'$25k worth of MAHA'}
+                moreInfoMsg={'Requires 20 more ticket to participate in winning this prize! '}
+                buttonText={'Issue More Tickets'}
+                buttonClick={() => {}}
+              />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard/>
+              <LotteryCard
+                // image={}
+                cardtitle={'FIRST EVER MAHA NFT'}
+                changeToWin={{
+                  text: 'Your Chance to win',
+                  perc: '20%',
+                }}
+                buttonText={'Increase Your Chance to Win'}
+                buttonClick={() => {}}
+              />
             </Grid>
           </Grid>
         </CardConatiner>

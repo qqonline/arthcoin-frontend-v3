@@ -5,28 +5,36 @@ import styled from 'styled-components';
 import warningLogo from '../../assets/svg/warningIcon.svg';
 
 type props = {
-
+  image?: string;
+  cardtitle: string;
+  changeToWin?: {
+    text: string;
+    perc: string;
+  }
+  moreInfoMsg?: string;
+  buttonText: string;
+  buttonClick: () => void;
 };
 
 const LotteryCard: React.FC<props> = (props) => {
-  const { } = props;
+  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText, buttonClick} = props;
 
   return (
     <LotteryCardConatiner className={'custom-mahadao-box'}>
       <FeatureImage src={FeatureI} alt={'feature'}/>
       <CardBody>
-        <CardTitle>FIRST EVER MAHA NFT</CardTitle>
-        <ChnageWin>
-          <ChnageWinDesc>Your Chance to win </ChnageWinDesc>
-          <Perc>20%</Perc>
-        </ChnageWin>
-        <CustomBadgeAlert>
-          <Logo src={warningLogo} alt="TicketBg"/>
-          <Text>Requires 20 more ticket to participate in winning this prize! </Text>
-        </CustomBadgeAlert>
+        <CardTitle>{cardtitle}</CardTitle>
+        {changeToWin && <ChnageWin>
+          <ChnageWinDesc>{changeToWin.text}</ChnageWinDesc>
+          <Perc>{changeToWin.perc}</Perc>
+        </ChnageWin>}
+        {moreInfoMsg !== '' && <CustomBadgeAlert>
+          <Logo src={warningLogo} alt='TicketBg' />
+          <Text>{moreInfoMsg}</Text>
+        </CustomBadgeAlert>}
       </CardBody>
       <CardAction>
-        <Button text={'Increase Your Chance to Win'} size={'sm'} to={'/farming'}/>
+        <Button text={buttonText} size={'sm'} to={'/farming'} onClick={() => buttonClick()}/>
       </CardAction>
     </LotteryCardConatiner>
   );
@@ -38,6 +46,9 @@ const LotteryCardConatiner = styled.div`
   width: 100%;
   min-height: 434px;
   padding: 0px;
+  @media (max-width: 600px) {
+    min-height: auto;
+  }
 `
 
 const FeatureImage = styled.img`
@@ -84,6 +95,11 @@ const Perc = styled.span`
 const CardAction = styled.div`
   padding: 24px;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  @media (max-width: 600px) {
+    position: static;
+  }
 `
 
 const CustomBadgeAlert = styled.div`
