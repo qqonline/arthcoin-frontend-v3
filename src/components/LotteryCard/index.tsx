@@ -17,11 +17,11 @@ type props = {
 };
 
 const LotteryCard: React.FC<props> = (props) => {
-  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText, buttonClick} = props;
+  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText, buttonClick } = props;
 
   return (
     <LotteryCardConatiner className={'custom-mahadao-box'}>
-      <FeatureImage src={FeatureI} alt={'feature'}/>
+      <FeatureImage src={FeatureI} alt={'feature'} />
       <CardBody>
         <CardTitle>{cardtitle}</CardTitle>
         {changeToWin && <ChnageWin>
@@ -34,7 +34,9 @@ const LotteryCard: React.FC<props> = (props) => {
         </CustomBadgeAlert>}
       </CardBody>
       <CardAction>
-        <Button text={buttonText} size={'sm'} to={'/farming'} onClick={() => buttonClick()}/>
+        {buttonClick ?
+          <Button text={buttonText} size={'sm'} onClick={() => buttonClick()} /> :
+          <Button text={buttonText} size={'sm'} to={'/farming'} />}
       </CardAction>
     </LotteryCardConatiner>
   );
