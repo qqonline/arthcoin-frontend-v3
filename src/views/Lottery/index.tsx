@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
@@ -7,25 +7,47 @@ import CustomToolTip from '../../components/CustomTooltip';
 import TicketLogoImg from '../../assets/svg/ShortTicket.svg'
 import TicketBgLogo from '../../assets/svg/bgLogo.svg';
 import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
+import questionMark from '../../assets/svg/questionMark.svg';
 import Button from '../../components/Button';
 import LotteryCard from '../../components/LotteryCard';
+import { CriteriaModal } from './components/CriteriaModal';
+import { WinModal } from './components/WinModal'
+import { LoseModal } from './components/LoseModal'
 
 const Lottery = () => {
+  const [criteriaModal, setCriteriaModal] = useState(false)
+  const [winModal, setWin] = useState(false)
+  const [loseModal, setLose] = useState(false)
   return (
     <div>
+      <CriteriaModal
+        open={criteriaModal}
+        toggleOpen={() => { setCriteriaModal(!criteriaModal) }}
+      />
+      <WinModal
+        open={winModal}
+        toggleOpen={() => { setWin(!winModal) }}
+      />
+
+      <LoseModal
+        open={loseModal}
+        toggleOpen={() => { setLose(!loseModal) }}
+      />
       <HeadingContainer>
         <Container size="lg">
           <MainSection>
             <LeftMainSection>
               <Heading>
                 MAHA PRIZES
-                <CustomToolTip toolTipText={'Loreum Ipsum'}/>
+                <img src={questionMark} height={24} onClick={() => {
+                  setCriteriaModal(true)
+                }} />
               </Heading>
               <SubHeading>Win exiting prizes by lottery tickets</SubHeading>
             </LeftMainSection>
             <RightMainSection>
               <Ticket>
-                <BgImage src={TicketBgLogo} alt="TicketBg"/>
+                <BgImage src={TicketBgLogo} alt="TicketBg" />
                 <TicketHead>Your Lottery Tickets</TicketHead>
                 <TicketDataSection>
                   <TicketLogo src={TicketLogoImg} alt="Ticket" />
@@ -46,11 +68,11 @@ const Lottery = () => {
                 // image={}
                 cardtitle={'FIRST EVER MAHA NFT'}
                 changeToWin={{
-                    text: 'Your Chance to win',
-                    perc: '20%',
-                  }}
+                  text: 'Your Chance to win',
+                  perc: '20%',
+                }}
                 buttonText={'Increase Your Chance to Win'}
-                buttonClick={() => {}}
+                buttonClick={() => { }}
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -59,7 +81,9 @@ const Lottery = () => {
                 cardtitle={'$25k worth of MAHA'}
                 moreInfoMsg={'Requires 20 more ticket to participate in winning this prize! '}
                 buttonText={'Issue More Tickets'}
-                buttonClick={() => {}}
+                buttonClick={() => {
+                  setWin(true)
+                }}
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -71,7 +95,9 @@ const Lottery = () => {
                   perc: '20%',
                 }}
                 buttonText={'Increase Your Chance to Win'}
-                buttonClick={() => {}}
+                buttonClick={() => {
+                  setLose(true)
+                }}
               />
             </Grid>
           </Grid>
