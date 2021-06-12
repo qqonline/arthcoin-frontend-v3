@@ -81,18 +81,20 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   useEffect(() => window.scrollTo(0, 0), []);
 
+  const collateralOutMinAfterFee = useMemo(() => {
+    const feePrecision = BigNumber.from(1e6);
+
+    return BigNumber
+      .from(parseUnits(`${collateralValue}`, tokenDecimals))
+      .mul(feePrecision.sub(redeemFee))
+      .div(feePrecision);
+  }, [redeemFee, collateralValue, tokenDecimals]);
+
   const tradingFee = useMemo(() => {
     return BigNumber
       .from(parseUnits(`${collateralValue}`, tokenDecimals))
-      .mul(redeemFee)
-      .div(1e6)
-  }, [collateralValue, tokenDecimals, redeemFee]);
-
-  const collateralOutMinAfterFee = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${collateralValue}`, tokenDecimals))
-      .sub(tradingFee);
-  }, [tradingFee, collateralValue, tokenDecimals]);
+      .sub(collateralOutMinAfterFee)
+  }, [collateralValue, tokenDecimals, collateralOutMinAfterFee]);
 
   const redeemARTH = useRedeemARTH(
     selectedCollateral,
@@ -109,14 +111,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   }, [arthValue, stabilityFee]);
 
   const handleRedeem = () => {
-    console.log(
-      'Redeem data',
-      selectedCollateral,
-      BigNumber.from(parseUnits(`${arthValue}`, 18)).toString(),
-      BigNumber.from(parseUnits(`${arthxValue}`, 18)).toString(),
-      collateralOutMinAfterFee.toString()
-    );
-
     redeemARTH(() => {
       setOpenModal(2);
       setSuccessModal(true);
