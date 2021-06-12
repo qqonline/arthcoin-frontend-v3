@@ -181,8 +181,8 @@ const Home: React.FC = () => {
             <div className="cubespinner">
               <div className="slogan face1">World’s first non-inflationary money.</div>
               <div className="slogan face2">Protects you from financial crisis.</div>
-              <div className="slogan face3">ARTH is lightning fast.</div>
-              <div className="slogan face4">ARTH is the first stablecoin that is resistant to black swan events.</div>
+              <div className="slogan face3">Is lightning fast.</div>
+              <div className="slogan face4">Is the first stablecoin that is resistant to black swan events.</div>
               {/*<div className="slogan face5">ARTH protects you from financial crisis.</div>*/}
             </div>
           </div>
@@ -764,7 +764,7 @@ const Home: React.FC = () => {
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="https://discord.gg/V6sr3fe" target="_blank">
+                <a id="social-discord" href="https://discord.gg/a9KsJD3" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>
