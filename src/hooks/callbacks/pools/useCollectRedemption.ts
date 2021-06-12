@@ -10,24 +10,28 @@ export default function (collateralToken: string) {
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
 
-  const action = useCallback(async (): Promise<void> => {
-    const pool = core.getCollatearalPool(collateralToken);
-    
-    try{
-      const response = await pool.collectRedemption();
+  const action = useCallback(
+    async (callback: () => void): Promise<void> => {
+      const pool = core.getCollatearalPool(collateralToken);
+      
+      try{
+        const response = await pool.collectRedemption();
 
-      addTransaction(response, {
-        summary: `Collect redeemption ARTH`
-      });
-    } catch(e) {
-      addPopup({
-        error: {
-          message: formatErrorMessage(e?.data?.message || e?.message),
-          stack: e?.stack
-        }
-      });
-    }
-  }, [core, addPopup, collateralToken, addTransaction]);
+        addTransaction(response, {
+          summary: `Collect redeemption ARTH`
+        });
+
+        if (callback) callback();
+      } catch(e) {
+        addPopup({
+          error: {
+            message: formatErrorMessage(e?.data?.message || e?.message),
+            stack: e?.stack
+          }
+        });
+      }
+    }, [core, addPopup, collateralToken, addTransaction]
+  );
 
   return action;
 }

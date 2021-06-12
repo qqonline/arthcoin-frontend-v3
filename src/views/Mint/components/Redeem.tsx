@@ -44,6 +44,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [successCollectModal, setSuccessCollectModal] = useState<boolean>(false);
 
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
 
@@ -563,7 +564,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       text={'Collect Redemption'}
                       size={'lg'}
                       variant={'default'}
-                      onClick={collectRedeemption}
+                        onClick={() => collectRedeemption(() => setSuccessCollectModal(true))}
                     />
                   </>
                 )}
@@ -582,8 +583,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
         title={'Redeeming ARTH successful!'}
         subTitle={''}
         subsubTitle={'Your ARTH has now been redeemed for its underlying collateral'}
-        buttonText={'Collect your redeemed amount and checkout Staking Pools'}
-        buttonType={'default'}
+      />
+      <CustomSuccessModal
+        modalOpen={successCollectModal}
+        setModalOpen={() => setSuccessCollectModal(false)}
+        title={'Collecting redeemed collateral successful!'}
+        subTitle={''}
+        subsubTitle={'Your redeemed amount has now being collected'}
       />
     </>
   );
