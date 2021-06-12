@@ -9,8 +9,8 @@ export default (message: string): string => {
   if (message.includes('overflow')) return 'Error';
 
   // Fail safes like overflows etc.;
-  return 'Error';
+  // return 'Error';
 
   // For testing to know errors.
-  // return message[0].toUpperCase() + message.slice(1).toLowerCase();
+  return message[0].toUpperCase() + message.slice(1).toLowerCase();
 };

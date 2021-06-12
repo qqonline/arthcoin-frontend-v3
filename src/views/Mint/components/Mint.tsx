@@ -198,6 +198,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
         collateralValue={collateralValue}
         selectedCollateralCoin={selectedCollateralCoin}
         arthValue={arthValue}
+        arthxValue={arthxValue}
         openModal={openModal}
         tradingFee={tradingFee}
         onClose={() => setOpenModal(0)}

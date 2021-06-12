@@ -14,14 +14,14 @@ import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
-import useMintRedeemCollateralRatio from '../../../hooks/state/useMintRedeemCollateralRatio';
+import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
 
 interface IProps {
   selectedCollateralCoin: string;
 }
 
 export default ({ selectedCollateralCoin }: IProps) => {
-  const cr = useMintRedeemCollateralRatio();
+  const cr = useGlobalCollateralRatio();
   const arthxPrice = useARTHXOraclePrice();
   const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
   const mintingFee = usePoolMintingFees(selectedCollateralCoin);

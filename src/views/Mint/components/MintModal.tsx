@@ -126,6 +126,7 @@ interface IProps {
   arthValue: string;
   mintCR: BigNumber;
   tradingFee: BigNumber;
+  arthxValue: string;
 }
 
 const MintModal = (props: WithSnackbarProps & IProps) => {
@@ -137,7 +138,8 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
     arthValue,
     selectedCollateralCoin,
     mintCR,
-    tradingFee
+    tradingFee,
+    arthxValue
   } = props;
 
   const [calcDuration, setDuration] = useState<number>(DEFAULT_CALC);
@@ -183,7 +185,8 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
   const mintARTH = useMintARTH(
     selectedCollateralCoin,
     BigNumber.from(parseUnits(`${collateralValue}`, tokenDecimals)),
-    arthOutMinAfterFee
+    arthOutMinAfterFee,
+    BigNumber.from(parseUnits(`${arthxValue}`, 18)),
   );
 
   return (
@@ -221,6 +224,11 @@ const MintModal = (props: WithSnackbarProps & IProps) => {
             labelData={`You will mint`}
             rightLabelUnit={'ARTH'}
             rightLabelValue={Number(arthValue).toLocaleString()}
+          />
+          <TransparentInfoDiv
+            labelData={`You will mint`}
+            rightLabelUnit={'ARTHX'}
+            rightLabelValue={Number(arthxValue).toLocaleString()}
           />
           {
             /* <CheckboxDiv>

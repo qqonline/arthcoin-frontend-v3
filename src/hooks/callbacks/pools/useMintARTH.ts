@@ -11,12 +11,14 @@ import { useTransactionAdder } from '../../../state/transactions/hooks';
 export default function (
   collateralToken: string, 
   collateralAmount: BigNumber,
-  arthOutMin: BigNumber
+  arthOutMin: BigNumber,
+  arthxOutMin: BigNumber
 ) {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
   const arthOutMinAfterSlippage = useApplySlippage(arthOutMin);
+  const arthxOutMinAfterSlippage = useApplySlippage(arthxOutMin);
 
   const action = useCallback(async (callback: () => void): Promise<void> => {
     const pool = core.getCollatearalPool(collateralToken);
@@ -24,7 +26,8 @@ export default function (
     try {
       const response = await pool.mint1t1ARTH(
         collateralAmount,
-        arthOutMinAfterSlippage
+        arthOutMinAfterSlippage,
+        arthxOutMinAfterSlippage
       );
       
       addTransaction(response, {
@@ -47,7 +50,8 @@ export default function (
     arthOutMinAfterSlippage,
     addPopup,
     addTransaction, 
-    arthOutMin
+    arthOutMin,
+    arthxOutMinAfterSlippage
   ]);
 
   return action;

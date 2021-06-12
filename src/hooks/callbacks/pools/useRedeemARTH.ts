@@ -11,6 +11,7 @@ import { useTransactionAdder } from '../../../state/transactions/hooks';
 export default function (
   collateralToken: string,
   arthAmount: BigNumber,
+  arthxAmount: BigNumber,
   collateralOutMin: BigNumber
 ) {
   const core = useCore();
@@ -23,8 +24,9 @@ export default function (
       const pool = core.getCollatearalPool(collateralToken);
 
       try {
-        const response = await pool.redeem1t1ARTH(
+        const response = await pool.redeem(
           arthAmount,
+          arthxAmount,
           collateralOutMinAfterSlippage,
         );
 
@@ -48,7 +50,8 @@ export default function (
       collateralToken, 
       arthAmount, 
       addPopup,
-      addTransaction
+      addTransaction,
+      arthxAmount
     ],
   );
 

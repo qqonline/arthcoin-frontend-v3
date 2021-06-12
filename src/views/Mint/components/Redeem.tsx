@@ -70,7 +70,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const redeemableBalances = useRedeemableBalances(selectedCollateral);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const [mahaApproveStatus, approveARTHX] = useApprove(core.MAHA, collateralPool.address);
+  const [mahaApproveStatus, approveMAHA] = useApprove(core.MAHA, collateralPool.address);
+  const [arthxApproveStatus, approveARTHX] = useApprove(core.ARTHX, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
   const redeemFee = usePoolRedeemFees(selectedCollateral);
   const stabilityFee = useStabilityFee();
@@ -96,6 +97,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const redeemARTH = useRedeemARTH(
     selectedCollateral,
     BigNumber.from(parseUnits(`${arthValue}`, 18)),
+    BigNumber.from(parseUnits(`${arthxValue}`, 18)),
     collateralOutMinAfterFee
   );
 
@@ -120,17 +122,26 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   const isArthApproved = arthApproveStatus === ApprovalState.APPROVED;
   const isArthApproving = arthApproveStatus === ApprovalState.PENDING;
 
-  const isArthMahaApproved = useMemo(() => {
-    if (stabilityFeeAmount.lte(0) && Number(arthValue)) return !!account && isArthApproved;
-    if (stabilityFeeAmount.gt(0) && !Number(arthValue)) return !!account && isArthApproved;
+  const isArthxApproved = arthxApproveStatus === ApprovalState.APPROVED;
+  const isArthxApproving = arthxApproveStatus === ApprovalState.PENDING;
 
-    return isArthApproved && isMAHAApproved && !!account;
+  const isArthMahaArthxApproved = useMemo(() => {
+    if (stabilityFeeAmount.lte(0) && Number(arthValue) && Number(arthxValue)) 
+      return !!account && isArthApproved && isArthxApproved;
+    if (stabilityFeeAmount.gt(0) && !Number(arthValue) && Number(arthxValue)) 
+      return !!account && isArthApproved && isArthxApproved;
+    if (stabilityFeeAmount.gt(0) && Number(arthValue) && !Number(arthxValue))
+      return !!account && isArthApproved && isArthApproved;
+
+    return isArthApproved && isMAHAApproved && isArthxApproved && !!account;
   }, [
     account,
     isMAHAApproved,
     isArthApproved,
     stabilityFeeAmount,
-    arthValue
+    arthValue,
+    isArthxApproved,
+    arthxValue
   ]);
 
   const onCollateralValueChange = async (val: string) => {
@@ -253,9 +264,15 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       >
         <>
           <TransparentInfoDiv
-            labelData={`Your redeem amount`}
+            labelData={`Your ARTH redeem amount`}
             rightLabelUnit={'ARTH'}
             rightLabelValue={Number(arthValue).toLocaleString()}
+          />
+
+          <TransparentInfoDiv
+            labelData={`Your ARTHX redeem amount`}
+            rightLabelUnit={'ARTHX'}
+            rightLabelValue={Number(arthxValue).toLocaleString()}
           />
 
           <TransparentInfoDiv
@@ -327,7 +344,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                 disabled={
                   redeemCR.lte(1e6) ||
                   isInputFieldError ||
-                  !isArthMahaApproved ||
+                  !isArthMahaArthxApproved ||
                   !Number(collateralValue) ||
                   !Number(arthValue)
                 }
@@ -464,58 +481,66 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   />
                 ) : (
                   <>
-                    {!isArthMahaApproved && (
-                      <>
-                        <ApproveButtonContainer>
-                          <Button
-                            text={
-                              isArthApproved
-                                ? `Approved ARTH`
-                                : !isArthApproving
-                                  ? `Approve ARTH`
-                                  : 'Approving...'
-                            }
-                            size={'lg'}
-                            disabled={
-                              redeemCR.lte(1e6) ||
-                              isInputFieldError ||
-                              isArthApproved ||
-                              !Number(arthValue)
-                            }
-                            onClick={approveCollat}
-                            loading={isArthApproving}
-                          />
-                          <div style={{ padding: 5 }} />
-                          <Button
-                            text={
-                              isMAHAApproved
-                                ? 'Approved MAHA'
-                                : !isMAHAApproving
-                                  ? `Approve MAHA`
-                                  : 'Approving...'
-                            }
-                            size={'lg'}
-                            disabled={
-                              redeemCR.lte(1e6) ||
-                              isInputFieldError ||
-                              isMAHAApproved ||
-                              stabilityFeeAmount.lte(0)
-                            }
-                            onClick={approveARTHX}
-                            loading={isMAHAApproving}
-                          />
-                        </ApproveButtonContainer>
-                        <br />
-                      </>
-                    )}
-                    {redeemableBalances[0].gt(0) || redeemableBalances[1].gt(0) ? (
+                    <ApproveButtonContainer>
                       <Button
-                        text={'Collect Redemption'}
+                        text={
+                          isArthApproved
+                            ? `Approved ARTH`
+                            : !isArthApproving
+                              ? `Approve ARTH`
+                              : 'Approving...'
+                        }
                         size={'lg'}
-                        variant={'default'}
-                        onClick={collectRedeemption}
+                        disabled={
+                          redeemCR.lte(1e6) ||
+                          isInputFieldError ||
+                          isArthApproved ||
+                          !Number(arthValue)
+                        }
+                        onClick={approveCollat}
+                        loading={isArthApproving}
                       />
-                    ) : (
+                      <div style={{ padding: 5 }} />
+                      <Button
+                        text={
+                          isMAHAApproved
+                            ? 'Approved MAHA'
+                            : !isMAHAApproving
+                              ? `Approve MAHA`
+                              : 'Approving...'
+                        }
+                        size={'lg'}
+                        disabled={
+                          redeemCR.lte(1e6) ||
+                          isInputFieldError ||
+                          isMAHAApproved ||
+                          stabilityFeeAmount.lte(0)
+                        }
+                        onClick={approveMAHA}
+                        loading={isMAHAApproving}
+                      />
+                    </ApproveButtonContainer>
+                    <br />
+                    <ApproveButtonContainer>
+                      <Button
+                        text={
+                          isArthApproved
+                            ? `Approved ARTHX`
+                            : !isArthxApproving
+                              ? `Approve ARTHX`
+                              : 'Approving...'
+                        }
+                        size={'lg'}
+                        disabled={
+                          redeemCR.lte(1e6) ||
+                          isInputFieldError ||
+                          isArthxApproved ||
+                          !Number(arthxValue)
+                        }
+                        onClick={approveARTHX}
+                        loading={isArthxApproving}
+                      />
+                      <div style={{ padding: 5 }} />
                       <Button
                         text={'Redeem'}
                         size={'lg'}
@@ -523,13 +548,21 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                         disabled={
                           redeemCR.lte(1e6) ||
                           isInputFieldError ||
-                          !isArthMahaApproved ||
+                          !isArthMahaArthxApproved ||
                           !Number(collateralValue) ||
                           !Number(arthValue)
                         }
                         onClick={() => setOpenModal(1)}
                       />
-                    )}
+                    </ApproveButtonContainer>
+                    <br />
+                    <Button
+                      disabled={redeemableBalances[0].lte(0) && redeemableBalances[1].lte(0)}
+                      text={'Collect Redemption'}
+                      size={'lg'}
+                      variant={'default'}
+                      onClick={collectRedeemption}
+                    />
                   </>
                 )}
               </div>
