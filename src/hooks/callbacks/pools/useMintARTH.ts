@@ -24,7 +24,7 @@ export default function (
     const pool = core.getCollatearalPool(collateralToken);
 
     try {
-      const response = await pool.mint1t1ARTH(
+      const response = await pool.mint(
         collateralAmount,
         arthOutMinAfterSlippage,
         arthxOutMinAfterSlippage

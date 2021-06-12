@@ -671,10 +671,20 @@
         "internalType": "uint256",
         "name": "arthOutMin",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "arthxOutMin",
+        "type": "uint256"
       }
     ],
-    "name": "mint1t1ARTH",
+    "name": "mint",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "",
@@ -693,11 +703,16 @@
       },
       {
         "internalType": "uint256",
+        "name": "arthxAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "collateralOutMin",
         "type": "uint256"
       }
     ],
-    "name": "redeem1t1ARTH",
+    "name": "redeem",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

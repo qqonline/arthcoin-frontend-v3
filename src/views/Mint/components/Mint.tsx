@@ -117,8 +117,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6)
       .div(arthxPrice); 
 
-    setArthValue(getDisplayBalance(finalArthValue, 18));
-    setArthxValue(getDisplayBalance(finalArthxValue, 18));
+    setArthValue(getDisplayBalance(finalArthValue, 18, tokenDecimals));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18, tokenDecimals));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -152,8 +152,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .div(collateralToGMUPrice)
       .div(bnMissingDecimals);
 
-    setArthxValue(getDisplayBalance(finalArthxValue, 18));
-    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18, tokenDecimals));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals, tokenDecimals));
   };
 
   const onARTHXValueChange = async (val: string) => {
@@ -186,8 +186,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
       .div(collateralToGMUPrice)
       .div(bnMissingDecimals);
 
-    setArthValue(getDisplayBalance(finalArthValue, 18));
-    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+    setArthValue(getDisplayBalance(finalArthValue, 18, tokenDecimals));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals, tokenDecimals));
   };
 
   return (

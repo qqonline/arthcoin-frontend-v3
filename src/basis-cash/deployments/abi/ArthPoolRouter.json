@@ -105,6 +105,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "arthxOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "secs",
         "type": "uint256"
       },
@@ -114,7 +119,7 @@
         "type": "address"
       }
     ],
-    "name": "mint1t1ARTHAndStake",
+    "name": "mintAndStake",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -200,6 +205,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "arthxOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "secs",
         "type": "uint256"
       },
@@ -209,7 +219,7 @@
         "type": "address"
       }
     ],
-    "name": "mint1t1ARTHAndStakeWithETH",
+    "name": "mintAndStakeWithETH",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function",

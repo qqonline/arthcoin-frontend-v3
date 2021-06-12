@@ -7,8 +7,8 @@ import { BigNumber } from '@ethersproject/bignumber';
 import React, { useEffect, useMemo, useState } from 'react';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 
-import arrowDown from '../../../assets/svg/arrowDown.svg';
 import plusSign from '../../../assets/svg/plus.svg';
+import arrowDown from '../../../assets/svg/arrowDown.svg';
 
 import PoolInfo from './PoolInfo';
 import TransparentInfoDiv from './InfoDiv';
@@ -109,6 +109,14 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   }, [arthValue, stabilityFee]);
 
   const handleRedeem = () => {
+    console.log(
+      'Redeem data',
+      selectedCollateral,
+      BigNumber.from(parseUnits(`${arthValue}`, 18)).toString(),
+      BigNumber.from(parseUnits(`${arthxValue}`, 18)).toString(),
+      collateralOutMinAfterFee.toString()
+    );
+
     redeemARTH(() => {
       setOpenModal(2);
       setSuccessModal(true);
@@ -178,8 +186,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(1e6)
       .div(arthxPrice);
 
-    setArthValue(getDisplayBalance(finalArthValue, 18));
-    setArthxValue(getDisplayBalance(finalArthxValue, 18));
+    setArthValue(getDisplayBalance(finalArthValue, 18, tokenDecimals));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18, tokenDecimals));
   };
 
   const onARTHValueChange = async (val: string) => {
@@ -213,8 +221,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(collateralToGMUPrice)
       .div(bnMissingDecimals);
 
-    setArthxValue(getDisplayBalance(finalArthxValue, 18));
-    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+    setArthxValue(getDisplayBalance(finalArthxValue, 18, tokenDecimals));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals, tokenDecimals));
   };
 
   const onARTHXValueChange = async (val: string) => {
@@ -247,8 +255,8 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
       .div(collateralToGMUPrice)
       .div(bnMissingDecimals);
 
-    setArthValue(getDisplayBalance(finalArthValue, 18));
-    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals));
+    setArthValue(getDisplayBalance(finalArthValue, 18, tokenDecimals));
+    setCollateralValue(getDisplayBalance(finalCollateralValue, tokenDecimals, tokenDecimals));
   };
 
   return (
@@ -524,7 +532,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <ApproveButtonContainer>
                       <Button
                         text={
-                          isArthApproved
+                          isArthxApproved
                             ? `Approved ARTHX`
                             : !isArthxApproving
                               ? `Approve ARTHX`
