@@ -241,6 +241,12 @@ const Genesis = (props: WithSnackbarProps) => {
     type
   ]);
 
+  const lotteryAmount = useMemo(() => {
+    if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
+    const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
+    return gmuCollateralValue.mul(collateralGMUPrice).div(1000).div(1e6);
+  }, [collateralValue, collateralGMUPrice, tokenDecimals]);
+
   const arthxDiscount = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
     return calcDiscountOnCommit(arthxRecieve, recollateralizationDiscount);
@@ -606,10 +612,16 @@ const Genesis = (props: WithSnackbarProps) => {
                     }
                   </ReceiveContainer>
                 </div>
-                <CustomBadgeAlert>
-                  <Logo src={TicketGreen} alt='TicketBg' />
-                  <Text>You will get 3 lottery tickets to win prize.</Text>
-                </CustomBadgeAlert>
+                {
+                  type === 'Commit' &&
+                  <CustomBadgeAlert>
+                    <Logo src={TicketGreen} alt='TicketBg' />
+                    <Text>You will get {
+                      Number(getDisplayBalance(lotteryAmount, tokenDecimals, 0)).toLocaleString()
+                    } lottery tickets to win prize.
+                    </Text>
+                  </CustomBadgeAlert>
+                }
                 {!!!account ? (
                   <Button
                     text={'Connect Wallet'}

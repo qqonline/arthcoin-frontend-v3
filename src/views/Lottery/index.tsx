@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
-import Container from '../../components/Container';
-import CustomToolTip from '../../components/CustomTooltip';
-import TicketLogoImg from '../../assets/svg/ShortTicket.svg'
-import TicketBgLogo from '../../assets/svg/bgLogo.svg';
-import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
-import questionMark from '../../assets/svg/questionMark.svg';
 import Button from '../../components/Button';
+import { WinModal } from './components/WinModal';
+import Container from '../../components/Container';
+import { LoseModal } from './components/LoseModal';
 import LotteryCard from '../../components/LotteryCard';
+import TicketBgLogo from '../../assets/svg/bgLogo.svg';
+import CustomToolTip from '../../components/CustomTooltip';
 import { CriteriaModal } from './components/CriteriaModal';
-import { WinModal } from './components/WinModal'
-import { LoseModal } from './components/LoseModal'
+import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
+import questionMark from '../../assets/svg/questionMark.svg';
+import { WalletAutoConnect } from '../../components/WalletAutoConnect';
+import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
+
+import useCore from '../../hooks/useCore';
+import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 
 const Lottery = () => {
-  const [criteriaModal, setCriteriaModal] = useState(false)
-  const [winModal, setWin] = useState(false)
-  const [loseModal, setLose] = useState(false)
+  const [winModal, setWin] = useState(false);
+  const [loseModal, setLose] = useState(false);
+  const [criteriaModal, setCriteriaModal] = useState(false);
+
+  WalletAutoConnect();
+
+  const core = useCore();
+  const lotteryBalance = useLotteryBalance(core.myAccount);
+
   return (
     <div>
       <CriteriaModal
@@ -39,7 +49,7 @@ const Lottery = () => {
             <LeftMainSection>
               <Heading>
                 MAHA PRIZES
-                <img src={questionMark} height={24} onClick={() => {
+                <img src={questionMark} alt='Question mark' height={24} onClick={() => {
                   setCriteriaModal(true)
                 }} />
               </Heading>
@@ -51,7 +61,7 @@ const Lottery = () => {
                 <TicketHead>Your Lottery Tickets</TicketHead>
                 <TicketDataSection>
                   <TicketLogo src={TicketLogoImg} alt="Ticket" />
-                  <TicketData>50</TicketData>
+                  <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>
                 </TicketDataSection>
                 <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
                 <TicketBuyAction>Issue More Tickets</TicketBuyAction>

@@ -18,6 +18,7 @@ export const ArthPoolLibrary = require('./abi/ArthPoolLibrary.json');
 export const UniswapV2Factory = require('./abi/UniswapV2Factory.json');
 export const UniswapPairOracle = require('./abi/UniswapPairOracle.json');
 export const UniswapV2Router02 = require('./abi/UniswapV2Router02.json');
+export const LotteryRaffle = require('./abi/LotteryRaffle.json');
 export const MockChainlinkAggregatorV3 = require('./abi/MockChainlinkAggregatorV3');
 
 type IABIS = {
@@ -45,6 +46,7 @@ const ret: IABIS = {
   UniswapV2Factory,
   UniswapV2Pair,
   UniswapV2Router02,
+  LotteryRaffle,
   MockChainlinkAggregatorV3
 }
 
