@@ -424,14 +424,14 @@
         "type": "string"
       },
       {
-        "internalType": "string",
-        "name": "criteria",
-        "type": "string"
-      },
-      {
         "internalType": "address",
         "name": "nftAddress",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "criteria",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -662,9 +662,9 @@
         "type": "string"
       },
       {
-        "internalType": "string",
+        "internalType": "uint256",
         "name": "_criteria",
-        "type": "string"
+        "type": "uint256"
       },
       {
         "internalType": "address",
