@@ -23,7 +23,6 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 interface IProps {
   pool: StakingContract;
   stakedBalance: BigNumber;
-  initialClaimableBalance: BigNumber;
   claimableBalance: BigNumber;
   rates: {
     maha: BigNumber;
@@ -43,20 +42,7 @@ export const MobileFarm = (props: IProps) => {
   const tokenBalance = useTokenBalance(depositTokenContract);
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
-  const ratePerMillisecond = 0.001;
   const pow = BigNumber.from(10).pow(18);
-  
-  const initEarnedARTHX = Number(getDisplayBalance(
-    props?.initialClaimableBalance?.mul(props?.rates?.arthx).div(pow),
-    18,
-    6
-  ));
-
-  const initEarnedMAHA = Number(getDisplayBalance(
-    props?.initialClaimableBalance?.mul(props?.rates?.maha).div(pow),
-    18,
-    6
-  ));
 
   const currentEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
@@ -232,56 +218,12 @@ export const MobileFarm = (props: IProps) => {
                   <div>
                       <InfoDivLeftSpan>Unclaimed Rewards:</InfoDivLeftSpan>
                       <InfoDivRightSpan>
-                      {/* <CountUp
-                        end={initEarnedARTHX}
-                        delay={0}
-                        decimals={6}
-                        redraw={true}
-                        duration={
-                          initEarnedARTHX
-                            ? initEarnedARTHX / ratePerMillisecond
-                            : 1500
-                        }
-                        preserveValue={true}
-                        formattingFn={
-                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                        }
-                      >
-                        {
-                          ({ countUpRef, start, update }) => {
-                            if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
-                            return <span ref={countUpRef} />
-                          }
-                        }
-                      </CountUp> */}
                         <span>{currentEarnedARTHX}</span>
                         {' '}
                         ARTHX
                       </InfoDivRightSpan>
                       <InfoDivLeftSpan>+</InfoDivLeftSpan>
                       <InfoDivRightSpan>
-                      {/* <CountUp
-                        end={initEarnedMAHA}
-                        delay={0}
-                        redraw={true}
-                        decimals={6}
-                        duration={
-                          initEarnedMAHA
-                            ? initEarnedMAHA / ratePerMillisecond
-                            : 1500
-                        }
-                        preserveValue={true}
-                        formattingFn={
-                          (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                        }
-                      >
-                        {
-                          ({ countUpRef, start, update }) => {
-                            if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
-                            return <span ref={countUpRef} />
-                          }
-                        }
-                      </CountUp> */}
                         <span>{currentEarnedMAHA}</span>
                         {' '}
                         MAHA

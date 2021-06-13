@@ -19,7 +19,6 @@ import useTokenBalance from '../../../hooks/state/useTokenBalance';
 type IProps = {
   pool: StakingContract;
   stakedBalance: BigNumber;
-  initialClaimableBalance: BigNumber;
   claimableBalance: BigNumber;
   rates: {
     maha: BigNumber;
@@ -44,21 +43,8 @@ export default (props: IProps) => {
   const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
 
-  const ratePerMillisecond = 0.1;
   const pow = BigNumber.from(10).pow(18);
-
-  const initEarnedARTHX = Number(getDisplayBalance(
-    props?.initialClaimableBalance?.mul(props?.rates?.arthx).div(pow),
-    18,
-    6
-  ));
-
-  const initEarnedMAHA = Number(getDisplayBalance(
-    props?.initialClaimableBalance?.mul(props?.rates?.maha).div(pow),
-      18,
-      6
-  ));
-
+  
   const currentEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
@@ -164,54 +150,10 @@ export default (props: IProps) => {
               <>
                 Earned:
                 <TableMainTextStyle style = {{ marginLeft: '10px' }}>
-                  {/* <CountUp
-                    end={initEarnedARTHX}
-                    delay={0}
-                    decimals={6}
-                    redraw={true}
-                    duration={
-                      initEarnedARTHX
-                        ? initEarnedARTHX / ratePerMillisecond
-                        : 1500
-                    }
-                    preserveValue={true}
-                    formattingFn={
-                      (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                    }
-                  >
-                    {
-                      ({ countUpRef, start, update }) => {
-                        if (initEarnedARTHX !== currentEarnedARTHX) update(currentEarnedARTHX)
-                        return <span ref={countUpRef} />
-                      }
-                    }
-                  </CountUp> */}
                   <span>{currentEarnedARTHX}</span>
                   {' '}
                   ARTHX
                   {' + '}
-                  {/* <CountUp
-                    end={initEarnedMAHA}
-                    delay={0}
-                    redraw={true}
-                    decimals={6}
-                    duration={
-                      initEarnedMAHA
-                        ? initEarnedMAHA / ratePerMillisecond
-                        : 1500
-                    }
-                    preserveValue={true}
-                    formattingFn={
-                      (val: number) => val.toLocaleString('en-US', { maximumFractionDigits: 6, minimumFractionDigits: 3 })
-                    }
-                  >
-                    {
-                      ({ countUpRef, start, update }) => {
-                        if (initEarnedMAHA !== currentEarnedMAHA) update(currentEarnedMAHA)
-                        return <span ref={countUpRef} />
-                      }
-                    }
-                  </CountUp> */}
                   <span>{currentEarnedMAHA}</span>
                   {' '}
                   MAHA
