@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
+import {BigNumber} from '@ethersproject/bignumber';
 
 import Button from '../../components/Button';
 import { WinModal } from './components/WinModal';
@@ -16,7 +17,10 @@ import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
 
 import useCore from '../../hooks/useCore';
+import usePrizeCounter from '../../hooks/state/usePrizeCounter';
+import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
+
 
 const Lottery = () => {
   const [winModal, setWin] = useState(false);
@@ -27,6 +31,13 @@ const Lottery = () => {
 
   const core = useCore();
   const lotteryBalance = useLotteryBalance(core.myAccount);
+  const prizeCounter = usePrizeCounter();
+  const tokenCounter = useTokenCounter();
+
+  const yourPercentOfWinning = useMemo(() => {
+    if (tokenCounter.lte(0)) return BigNumber.from(0);
+    return lotteryBalance.mul(100).div(tokenCounter);
+  }, [lotteryBalance, tokenCounter])
 
   return (
     <div>
@@ -79,7 +90,7 @@ const Lottery = () => {
                 cardtitle={'FIRST EVER MAHA NFT'}
                 changeToWin={{
                   text: 'Your Chance to win',
-                  perc: '20%',
+                  perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
                 }}
                 buttonText={'Increase Your Chance to Win'}
                 buttonClick={() => { }}
@@ -102,7 +113,7 @@ const Lottery = () => {
                 cardtitle={'FIRST EVER MAHA NFT'}
                 changeToWin={{
                   text: 'Your Chance to win',
-                  perc: '20%',
+                  perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
                 }}
                 buttonText={'Increase Your Chance to Win'}
                 buttonClick={() => {
