@@ -236,14 +236,13 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
     const bnArthxValue = BigNumber.from(parseUnits(`${valueInNumber}`, 18));
     const bnMissingDecimals = BigNumber.from(10).pow(18 - tokenDecimals);
+    const bnARTHXGMUValue = bnArthxValue.mul(arthxPrice).div(1e6);
 
-    const finalCollateralValueD18 = bnArthxValue
-      .mul(arthxPrice)
+    const finalCollateralValueD18 = bnARTHXGMUValue
       .mul(1e6)
-      .div(1e6)
       .div(arthxRatio);
 
-    const finalArthValue = finalCollateralValueD18.sub(bnArthxValue)
+    const finalArthValue = finalCollateralValueD18.sub(bnARTHXGMUValue)
 
     const finalCollateralValue = finalCollateralValueD18
       .mul(1e6)
