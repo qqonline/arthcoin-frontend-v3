@@ -424,6 +424,11 @@
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "criteria",
+        "type": "string"
+      },
+      {
         "internalType": "address",
         "name": "nftAddress",
         "type": "address"
@@ -654,6 +659,11 @@
       {
         "internalType": "string",
         "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_criteria",
         "type": "string"
       },
       {
