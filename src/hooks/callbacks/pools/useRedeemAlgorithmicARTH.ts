@@ -20,7 +20,7 @@ export default function (
 
   const action = useCallback(
     async (callback: () => void): Promise<void> => {
-      const pool = core.contracts['Genesis'];
+      const pool = core.getCollatearalGenesis(collateralToken);
       
       try {
         const response = await pool.redeemAlgorithmicARTH(

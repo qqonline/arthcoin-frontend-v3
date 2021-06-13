@@ -31,7 +31,6 @@ import CustomModal from '../../components/CustomModal';
 import { CustomSnack } from '../../components/SnackBar';
 import prettyNumber from '../../components/PrettyNumber';
 import UnderstandMore from './components/UnderstandMore';
-import BondingDiscount from './components/BondingDiscount';
 import CustomToolTip from '../../components/CustomTooltip';
 import SlippageContainer from '../../components/SlippageContainer';
 import CustomSuccessModal from '../../components/CustomSuccesModal';
@@ -48,8 +47,6 @@ import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
-import useRedeemableBalances from '../../hooks/state/pools/useRedeemableBalances';
-import useCollectRedemption from '../../hooks/callbacks/pools/useCollectRedemption';
 import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import usePerformRecollateralize from '../../hooks/callbacks/pools/performRecollateralize';
@@ -162,13 +159,11 @@ const Genesis = (props: WithSnackbarProps) => {
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
-  const collectRedeemption = useCollectRedemption(selectedCollateral);
-  const redeemableBalances = useRedeemableBalances(selectedCollateral);
   const tokenDecimals = useTokenDecimals(selectedCollateral);
   const arthBalance = useTokenBalance(core.ARTH);
   const arthCirculatingSupply = useARTHCirculatingSupply();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
   const redeemFee = usePoolRedeemFees(selectedCollateral);
@@ -261,12 +256,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const [approveStatus, approve] = useApprove(
     currentToken,
-    collateralPool.address
-  );
-
-  const [genesisApproveStatus, genesisApprove] = useApprove(
-    currentToken,
-    core.contracts['Genesis'].address
+    collateralGenesis.address
   );
 
   const redeemARTH = useRedeemAlgorithmicARTH(
@@ -281,25 +271,6 @@ const Genesis = (props: WithSnackbarProps) => {
     totalArthxRecieve,
   );
 
-  const bondingDiscount = [
-    {
-      label: 'Current discount',
-      value: `${Number(getDisplayBalance(recollateralizationDiscount, 4, 4))
-          .toLocaleString('en-US', { maximumFractionDigits: 4 })
-        }%`,
-    },
-    {
-      label: 'Starting ARTHX Price',
-      value: '$0.01',
-    },
-    {
-      label: 'Discounted ARTHX Price',
-      value: `$${Number(getDisplayBalance(arthxPrice, 6, 6))
-          .toLocaleString('en-US', { maximumFractionDigits: 6 })
-        }`,
-    },
-  ];
-
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
     'ARTHX is a deflationary token that charges a 5% fee on every transfer which goes to stakers.',
@@ -310,9 +281,6 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
-
-  const isGenesisApproved = genesisApproveStatus === ApprovalState.APPROVED;
-  const isGenesisApproving = genesisApproveStatus === ApprovalState.PENDING;
 
   return (
     <>
@@ -397,16 +365,16 @@ const Genesis = (props: WithSnackbarProps) => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <Button
                 disabled={
-                  // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                  percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                   isInputFieldError ||
                   (type === 'Commit'
-                    ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
+                    ? !Number(collateralValue)
                     : !Number(arthValue)
                   ) ||
                   !Number(currentValue) ||
                   (type === 'Commit'
-                    ? !Number(totalArthxRecieve) || percentageCompleted.gt(BigNumber.from(10).pow(18)) :
-                    !Number(arthxRecieve)
+                    ? !Number(totalArthxRecieve)
+                    : !Number(arthxRecieve)
                   )
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
@@ -564,18 +532,18 @@ const Genesis = (props: WithSnackbarProps) => {
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
-                    // disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
+                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
                     errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
-                  // DisableMsg={
-                  //   percentageCompleted.gt(BigNumber.from(10).pow(18))
-                  //     ? 'Currently Genesis is 100% Completed'
-                  //     : ''
-                  // }
+                    DisableMsg={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18))
+                        ? 'Currently Genesis is 100% Completed'
+                        : ''
+                    }
                   />
                 )}
                 <PlusMinusArrow>
@@ -650,23 +618,19 @@ const Genesis = (props: WithSnackbarProps) => {
                       localStorage.removeItem('disconnectWallet')
                     })}
                   />
-                ) : (type === 'Commit' && !isApproved) || (type === 'Swap' && !isGenesisApproved) ? (
+                ) : !isApproved ? (
                   <Button
                     text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
                     size={'lg'}
                     disabled={
-                      // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                       isInputFieldError ||
                       isApproving ||
                       (type === 'Commit' && Number(collateralValue) === 0) ||
                       (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
                       (type === 'Swap' && Number(arthValue) === 0)
                     }
-                    onClick={
-                      type === 'Commit'
-                        ? approve
-                        : genesisApprove
-                    }
+                    onClick={approve}
                     loading={isApproving}
                   />
                 ) : (
@@ -675,16 +639,13 @@ const Genesis = (props: WithSnackbarProps) => {
                       size={'lg'}
                       variant={'default'}
                       disabled={
-                        // percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                        percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                         isInputFieldError ||
                         (type === 'Commit'
                           ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
                           : !Number(arthValue)
                         ) ||
-                        (type === 'Commit'
-                          ? !isApproved
-                          : !isGenesisApproved
-                        )
+                        !isApproved
                       }
                       onClick={() => setOpenModal(1)}
                     />

@@ -183,6 +183,14 @@ export class BasisCash {
     if (collateral === 'ETH') return this.contracts.Pool_ETH;
   };
 
+  getCollatearalGenesis = (collateral: string) => {
+    if (collateral === 'USDT') return this.contracts.GenesisUSDT;
+    if (collateral === 'USDC') return this.contracts.GenesisUSDC;
+    if (collateral === 'DAI') return this.contracts.GenesisDAI;
+    if (collateral === 'WBTC') return this.contracts.GenesisWBTC;
+    if (collateral === 'ETH') return this.contracts.GenesisETH;
+  };
+
   gasOptions(gas: BigNumber): Overrides {
     const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
     return {
