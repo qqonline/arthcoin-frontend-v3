@@ -23,7 +23,7 @@ const BondingDiscount: React.FC = () => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Mint Fee
-              <CustomToolTip toolTipText={'loreum ipsum'} />
+              <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with minting new ARTH.'} />
             </TextWithIcon>
           </div>
           <OneLine>
@@ -39,7 +39,7 @@ const BondingDiscount: React.FC = () => {
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Redeem Fee
-              <CustomToolTip toolTipText={'loreum ipsum'} />
+              <CustomToolTip toolTipText={'Fee (charged in respective collateral) associated with redeeming collateral.'} />
             </TextWithIcon>
           </div>
           <OneLine>
@@ -51,7 +51,7 @@ const BondingDiscount: React.FC = () => {
             </BeforeChip>
           </OneLine>
         </OneLine>
-        <OneLine>
+        {/* <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Buyback Fee
@@ -66,12 +66,12 @@ const BondingDiscount: React.FC = () => {
               }%
             </BeforeChip>
           </OneLine>
-        </OneLine>
+        </OneLine> */}
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
               Stability fee
-              <CustomToolTip toolTipText={'loreum ipsum'} />
+              <CustomToolTip toolTipText={'Fee (charged in MAHA) associated with redeeming collateral.'} />
             </TextWithIcon>
           </div>
           <OneLine>
@@ -89,7 +89,7 @@ const BondingDiscount: React.FC = () => {
 };
 
 const CustomInfoCard = styled.div`
-  min-height: 220px;
+  // min-height: 220px;
   @media (max-width: 600px) {
     min-height: auto;
     margin-top: 8px;

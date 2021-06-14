@@ -12,32 +12,47 @@ type props = {
     perc: string;
   }
   moreInfoMsg?: string;
-  buttonText: string;
-  buttonClick: () => void;
+  buttonText?: string;
+  buttonClick?: () => void;
 };
 
 const LotteryCard: React.FC<props> = (props) => {
-  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText, buttonClick } = props;
+  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText = "", buttonClick } = props;
 
   return (
     <LotteryCardConatiner className={'custom-mahadao-box'}>
-      <FeatureImage src={FeatureI} alt={'feature'} />
+      <FeatureImage src={image || FeatureI} alt={'Feature image'} />
       <CardBody>
         <CardTitle>{cardtitle}</CardTitle>
-        {changeToWin && <ChnageWin>
-          <ChnageWinDesc>{changeToWin.text}</ChnageWinDesc>
-          <Perc>{changeToWin.perc}</Perc>
-        </ChnageWin>}
-        {moreInfoMsg !== '' && <CustomBadgeAlert>
-          <Logo src={warningLogo} alt='TicketBg' />
-          <Text>{moreInfoMsg}</Text>
-        </CustomBadgeAlert>}
+        {
+          changeToWin && 
+          <ChnageWin>
+            <ChnageWinDesc>{changeToWin.text}</ChnageWinDesc>
+            <Perc>{changeToWin.perc}</Perc>
+          </ChnageWin>
+        }
+        {
+          buttonText === '' &&
+          <br />
+        }
+        {
+          moreInfoMsg !== '' && 
+          <CustomBadgeAlert>
+            <Logo src={warningLogo} alt='TicketBg' />
+            <Text>{moreInfoMsg}</Text>
+          </CustomBadgeAlert>
+        }
       </CardBody>
-      <CardAction>
-        {buttonClick ?
-          <Button text={buttonText} size={'sm'} onClick={() => buttonClick()} /> :
-          <Button text={buttonText} size={'sm'} to={'/farming'} />}
-      </CardAction>
+      {
+        buttonText &&
+        <CardAction>
+          {
+            buttonClick
+              ? <Button text={buttonText} size={'sm'} onClick={() => buttonClick()} />
+              : <Button text={buttonText} size={'sm'} to={'/genesis'} />
+          }
+        </CardAction>
+      }
     </LotteryCardConatiner>
   );
 };

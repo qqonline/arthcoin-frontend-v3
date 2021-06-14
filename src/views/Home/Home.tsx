@@ -199,7 +199,7 @@ const Home: React.FC = () => {
         <div className="button-container">
           <a
             target="_blank"
-            href="https://mahaswap.com/"
+            href="https://quickswap.exchange/"
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
@@ -207,7 +207,7 @@ const Home: React.FC = () => {
           </a>
           <a
             target="_blank"
-            href="https://mahaswap.com/"
+            href="https://www.youtube.com/watch?v=H94S32HXqmU"
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
@@ -715,7 +715,14 @@ const Home: React.FC = () => {
               </p>
             </div>
             <div className="action-button">
-              <button className="button-small-bg">Buy ARTH Now</button>
+              <a
+                target="_blank"
+                href="https://quickswap.exchange/"
+                id="no-txt-decoration"
+                rel="noopener noreferrer"
+              >
+                <button className="button-small-bg">Buy ARTH Now</button>
+              </a>
             </div>
           </div>
           <div className="row bottom-most">
@@ -764,7 +771,7 @@ const Home: React.FC = () => {
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="https://discord.gg/a9KsJD3" target="_blank">
+                <a id="social-discord" href="https://discord.gg/kyzp79SK" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>

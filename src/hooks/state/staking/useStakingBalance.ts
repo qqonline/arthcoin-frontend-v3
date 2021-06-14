@@ -19,7 +19,7 @@ export default (stakingContract: string) => {
     }
     
     const contract = core.contracts[stakingContract]
-    setValue(await contract.unlockedBalanceOf(core.myAccount));
+    setValue(await contract.balanceOf(core.myAccount));
   }, [core.contracts, account, core.myAccount, stakingContract]);
 
   useEffect(() => {

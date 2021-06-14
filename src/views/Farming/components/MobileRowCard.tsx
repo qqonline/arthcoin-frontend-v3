@@ -28,6 +28,7 @@ interface IProps {
     maha: BigNumber;
     arthx: BigNumber;
   };
+  onExitClick: () => void;
   onDepositClick: () => void;
   onWithdrawClick: () => void;
   onClaimClick: () => void;
@@ -222,7 +223,7 @@ export const MobileFarm = (props: IProps) => {
                         {' '}
                         ARTHX
                       </InfoDivRightSpan>
-                      <InfoDivLeftSpan>+</InfoDivLeftSpan>
+                      <InfoDivLeftSpan>+ </InfoDivLeftSpan>
                       <InfoDivRightSpan>
                         <span>{currentEarnedMAHA}</span>
                         {' '}
@@ -233,6 +234,22 @@ export const MobileFarm = (props: IProps) => {
                       >
                         Claim
                       </Withdraw>
+                  </div>
+                </InfoDiv>
+                <Divider
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    margin: '15px 0px',
+                  }}
+                  variant={'middle'}
+                />
+                <InfoDiv>
+                  <div>
+                    <Withdraw
+                      onClick={props.onExitClick}
+                    >
+                      Claim and Withdraw
+                    </Withdraw>
                   </div>
                 </InfoDiv>
               </OpenableDiv>

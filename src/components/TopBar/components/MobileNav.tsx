@@ -88,14 +88,14 @@ const MobileNav = (props: props) => {
           >
             Mint/Redeem
           </StyledLink>
-          <StyledLink
+          {/* <StyledLink
             exact
             activeClassName="active"
             to="/stabilize/recollateralize"
             onClick={() => props.onClick()}
           >
             Stabilize
-          </StyledLink>
+          </StyledLink> */}
           <StyledLink
             exact
             activeClassName="active"

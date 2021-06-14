@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { BigNumber } from '@ethersproject/bignumber';
 
+import warningLogo from '../../../assets/svg/warningIcon.svg';
+
 import { ModeProps } from '../index';
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
@@ -84,6 +86,15 @@ export default (props: IProps) => {
           <TagChips>{symbol}</TagChips>
         </OneLine>
       </OneLine>
+      <br />
+      <br />
+      {
+        props.claimableBalance.gt(0) &&
+        <CustomBadgeAlert>
+          <Logo src={warningLogo} alt='TicketBg' />
+          <Text>You have unclaimed rewards withdrawing before claiming the rewards could lead to loss of rewards</Text>
+        </CustomBadgeAlert>
+      }
       <Grid
         container
         spacing={2}
@@ -95,14 +106,9 @@ export default (props: IProps) => {
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button 
-            text={
-              props.claimableBalance.lte(0) 
-                ? 'Withdraw'
-                : 'You have unclaimed rewards'
-            } 
+            text={'Withdraw'} 
             size={'lg'}
             disabled={
-              props.claimableBalance.gt(0) || 
               isInputFieldError || 
               !Number(val)
             }
@@ -113,6 +119,15 @@ export default (props: IProps) => {
     </CustomModal>
   );
 };
+
+const CustomBadgeAlert = styled.div`
+  border: 1px solid #FCB400;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  align-items: flex-start;
+`
 
 const OneLine = styled.div`
   display: flex;
@@ -143,4 +158,22 @@ const TagChips = styled.div`
   font-weight: 300;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.64);
+`;
+
+const Logo = styled.img`
+  width: 13.33px;
+  height: 13.33px;
+  margin-top: 2px;
+`;
+
+const Text = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FCB400;
+  flex: 1;
+  padding-left: 10px;
+  margin-bottom: 0;
 `;

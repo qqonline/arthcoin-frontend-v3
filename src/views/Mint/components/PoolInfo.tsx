@@ -103,7 +103,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Stability Fee
-                <CustomToolTip toolTipText={'loreum ipsum'} />
+                <CustomToolTip toolTipText={'Fee (charged in MAHA) associated with redeeming collateral.'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
@@ -119,7 +119,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Minting Fee
-                <CustomToolTip toolTipText={'loreum ipsum'} />
+                <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with minting new ARTH.'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
@@ -135,7 +135,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
             <div style={{ flex: 1 }}>
               <TextForInfoTitle>
                 Redeeming Fee
-                <CustomToolTip toolTipText={'loreum ipsum'} />
+                <CustomToolTip toolTipText={'Fee (charged in respective collateral) associated with redeeming collateral.'} />
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>

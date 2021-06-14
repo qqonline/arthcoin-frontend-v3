@@ -92,7 +92,7 @@ const Home: React.FC = () => {
                   <CollateralRatio />
                 </Grid>
                 <div className="border-bottom" />*/}
-                <Grid item sm={12} md={12} lg={12}>
+                {/* <Grid item sm={12} md={12} lg={12}>
                   <Grid container alignItems={'center'} justify={'center'}>
                     <InfoDiv style={{ marginTop: '24px' }}>
                       {
@@ -187,12 +187,12 @@ const Home: React.FC = () => {
                       </IconButtons>
                     </ButtonDiv>
                   </Grid>
-                </Grid>
-                <div className="border-bottom width-100" />
-                <Grid item sm={12} md={12} lg={12} style={{ padding: '60px 0 0 0' }}>
+                </Grid> */}
+                {/* <div className="border-bottom width-100" /> */}
+                <Grid item sm={12} md={12} lg={12} style={{ padding: '0 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'$GMU worth of collateral currently present in each individual pool of the protocol.'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid
@@ -242,24 +242,24 @@ const Home: React.FC = () => {
                 </Grid>
               </Grid>
             </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-            <CoinsPrice />
             <BasicInfo
               targetCollateralValue={targetCollateralValue}
               globalCollateralValue={globalCollateralValue}
             />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <CoinsPrice />
             <StakeBox />
           </Grid>
         </Grid>
         <Grid container spacing={2} style={{ marginTop: '8px' }}>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <BondingDiscount stats />
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          {/* <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <RewardRates />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          </Grid> */}
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <FeeRates />
           </Grid>
         </Grid>
