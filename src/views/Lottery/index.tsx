@@ -22,10 +22,6 @@ import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 
 
 const Lottery = () => {
-  const [winModal, setWin] = useState(false);
-  const [loseModal, setLose] = useState(false);
-  const [criteriaModal, setCriteriaModal] = useState(false);
-
   WalletAutoConnect();
 
   const core = useCore();
