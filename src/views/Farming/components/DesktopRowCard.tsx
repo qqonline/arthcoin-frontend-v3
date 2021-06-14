@@ -27,6 +27,7 @@ type IProps = {
   onDepositClick: () => void;
   onWithdrawClick: () => void;
   onClaimClick: () => void;
+  onExitClick: () => void;
 };
 
 export default (props: IProps) => {
@@ -145,6 +146,9 @@ export default (props: IProps) => {
                 {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
               </TableMainTextStyle>  
               <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
+            </div>
+            <div style={{ display: 'flex' }}>
+              <WithdrawClaimButton onClick={props.onExitClick}>Withdraw & Claim</WithdrawClaimButton>
             </div>
             <div style={{ display: 'flex' }}>              
               <>

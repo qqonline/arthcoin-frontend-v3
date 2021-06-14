@@ -4,6 +4,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 
 import { ModeProps } from '../index';
 import ClaimModal from './ClaimModal';
+import ExitModal from './ExitModal';
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import MobileRowCard from './MobileRowCard';
@@ -36,6 +37,20 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const claimableBalance = useStakingRewards(pool.contract);
 
   const rates = usePoolTokenRates();
+
+  const [onPresentExitModal, onDismissExitModal] = useModal(
+    <ExitModal
+      pool={pool}
+      stakedBalance={stakedBalance}
+      claimableBalance={claimableBalance}
+      isMobile={isMobile}
+      onCancel={() => onDismissExitModal()}
+      rates={rates}
+      closeSuccessModal={() => setSuccessModal(false)}
+      openSuccessModal={() => setSuccessModal(true)}
+      toggleSuccessModal={() => { setSuccessModal(!successModal) }}
+    />,
+  );
 
   const [onPresentClaimModal, onDismissClaimModal] = useModal(
     <ClaimModal
@@ -91,6 +106,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
           claimableBalance={claimableBalance}
           stakedBalance={stakedBalance}
           rates={rates}
+          onExitClick={onPresentExitModal}
           onDepositClick={onPresentDepositModal}
           onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}
@@ -101,6 +117,7 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
           claimableBalance={claimableBalance}
           stakedBalance={stakedBalance}
           rates={rates}
+          onExitClick={onPresentExitModal}
           onDepositClick={onPresentDepositModal}
           onClaimClick={onPresentClaimModal}
           onWithdrawClick={onPresentWithdrawModal}

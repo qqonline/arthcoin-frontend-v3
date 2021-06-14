@@ -14,7 +14,7 @@ export default function (stakingContract: string) {
     const contract = core.contracts[stakingContract];
 
     try {
-      const response = await contract.quit();
+      const response = await contract.exit();
 
       addTransaction(response, {
         summary: `Claim rewards and and withdraw`
