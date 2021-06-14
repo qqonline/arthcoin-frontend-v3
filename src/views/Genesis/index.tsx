@@ -45,7 +45,6 @@ import useCore from '../../hooks/useCore';
 import useTokenDecimals from '../../hooks/useTokenDecimals';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
-import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
@@ -159,7 +158,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
   const arthxPrice = useARTHXOraclePrice();
-  const lotteryBalance = useLotteryBalance(core.myAccount);
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
@@ -671,23 +669,14 @@ const Genesis = (props: WithSnackbarProps) => {
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
             <UnderstandMore dataObj={understandMore} />
-            {/* <LotteryBox className={'custom-mahadao-box'}>
+            <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
                 Genesis participate can issue lottery tickets to win exiting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
                 <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'}/>
               </LotteryBoxAction>
-            </LotteryBox> */}
-              <Ticket>
-                <BgImage src={TicketBgLogo} alt="TicketBg" />
-                <TicketHead>Your Lottery Tickets</TicketHead>
-                <TicketDataSection>
-                  <TicketLogo src={TicketLogoImg} alt="Ticket" />
-                  <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>
-                </TicketDataSection>
-                <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
-              </Ticket>
+            </LotteryBox>
           </Grid>
           <Grid item lg={1} />
         </Grid>
