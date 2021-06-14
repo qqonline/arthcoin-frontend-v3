@@ -44,9 +44,9 @@ const Lottery = () => {
             <LeftMainSection>
               <Heading>
                 MAHA PRIZES
-                <img src={questionMark} alt='Question mark' height={24} onClick={() => {
+                {/* <img src={questionMark} alt='Question mark' height={24} onClick={() => {
                   setCriteriaModal(true)
-                }} />
+                }} /> */}
               </Heading>
               <SubHeading>Win exciting prizes by lottery tickets</SubHeading>
             </LeftMainSection>
