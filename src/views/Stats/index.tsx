@@ -192,7 +192,7 @@ const Home: React.FC = () => {
                 <Grid item sm={12} md={12} lg={12} style={{ padding: '0 0 0 0' }}>
                   <TitleString style={{ textAlign: isMobile ? 'center' : 'left' }}>
                     Collateral Breakdown
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'$GMU worth of collateral currently present in each individual pool of the protocol.'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
                     <Grid
@@ -253,13 +253,13 @@ const Home: React.FC = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2} style={{ marginTop: '8px' }}>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <BondingDiscount stats />
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          {/* <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <RewardRates />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          </Grid> */}
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <FeeRates />
           </Grid>
         </Grid>

@@ -27,7 +27,7 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Available to mint
-                <CustomToolTip toolTipText={'loreum ipsum'} />
+                <CustomToolTip toolTipText={'Amount of ARTH available to mint across all pools.'} />
               </TextWithIcon>
               <BeforeChip>
                 {
@@ -51,7 +51,7 @@ const BasicInfo: React.FC<props> = (props) => {
             <div>
               <TextWithIcon>
                 Total Collateral Value
-                <CustomToolTip toolTipText={'loreum ipsum'} />
+                <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
               </TextWithIcon>
               <BeforeChip>
                 ${

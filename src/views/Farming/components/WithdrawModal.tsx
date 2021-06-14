@@ -92,7 +92,7 @@ export default (props: IProps) => {
         props.claimableBalance.gt(0) &&
         <CustomBadgeAlert>
           <Logo src={warningLogo} alt='TicketBg' />
-          <Text>You have unclaimed rewards, withdrawing before claiming could lead to loss of rewards</Text>
+          <Text>You have unclaimed rewards withdrawing before claiming the rewards could lead to loss of rewards</Text>
         </CustomBadgeAlert>
       }
       <Grid

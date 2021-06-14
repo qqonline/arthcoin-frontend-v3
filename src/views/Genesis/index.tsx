@@ -460,7 +460,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
                     ARTH Circulating Supply
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'The amount of ARTH already in circulation.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {prettyNumber(getDisplayBalance(arthCirculatingSupply))}
@@ -469,7 +469,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {prettyNumber(getDisplayBalance(committedCollateral, 18))}
@@ -566,7 +566,7 @@ const Genesis = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
                           ARTHX
-                          <CustomToolTip toolTipText={'loreum ipsum'} />
+                          <CustomToolTip toolTipText={'Amount of ARTHX received for commiting collateral.'} />
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
@@ -583,7 +583,7 @@ const Genesis = (props: WithSnackbarProps) => {
                             <div style={{ flex: 1 }}>
                               <TextWithIcon>
                                 Bonus
-                            <CustomToolTip toolTipText={'loreum ipsum'} />
+                                <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
                               </TextWithIcon>
                             </div>
                             <OneLineInputwomargin>
@@ -599,7 +599,7 @@ const Genesis = (props: WithSnackbarProps) => {
                             <div style={{ flex: 1 }}>
                               <TextWithIcon>
                                 Trading Fee
-                            <CustomToolTip toolTipText={'loreum ipsum'} />
+                                <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with swapping ARTH for ARTHX during genesis.'} />
                               </TextWithIcon>
                             </div>
                             <OneLineInputwomargin>

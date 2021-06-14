@@ -109,7 +109,7 @@ const SlippageContainer: React.FC = () => {
           <CustomSlippageBox>
             <CTitle>
               Slippage Tolerance
-              <CustomToolTip toolTipText={'loreum ipsum'} />
+              <CustomToolTip toolTipText={'The limit of price slippage you are willing to accept.'} />
             </CTitle>
             <ButtonsBox>
               {

@@ -196,7 +196,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
                     Amount Remaining to Raise
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}
@@ -205,7 +205,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip toolTipText={'loreum ipsum'} />
+                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {prettyNumber(getDisplayBalance(committedCollateral, 18))}

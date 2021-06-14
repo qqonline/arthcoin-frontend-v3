@@ -25,7 +25,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
               <HtmlTooltip
                 title={
                   <React.Fragment>
-                    <ToolTipFont>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</ToolTipFont>
+                    <ToolTipFont>The current % of reward given for committing collateral during genesis.</ToolTipFont>
                   </React.Fragment>
                 }>
                 <InfoIcon fontSize="default" style={{ transform: 'scale(0.6)', marginBottom: '4px'}} />
@@ -63,7 +63,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
 };
 
 const CustomInfoCard = styled.div`
-  min-height: 262px;
+  // min-height: 262px;
   @media (max-width: 600px) {
     margin-top: 8px;
   }
