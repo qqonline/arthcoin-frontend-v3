@@ -110,6 +110,9 @@ const MobileNav = (props: props) => {
           <StyledLink exact activeClassName="active" to="/rebase" onClick={() => props.onClick()}>
             Rebase
           </StyledLink>
+          <StyledLink exact activeClassName="active" to="/lottery" onClick={() => props.onClick()}>
+            Lottery
+          </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
           </StyledLink>*/}
@@ -190,7 +193,7 @@ const StyledNav = styled.nav`
   left: 0px;
   background: #1e1d1d;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  height: 100vh;
+  height: calc(100vh - 72px);
   overflow-y: scroll;
 `;
 

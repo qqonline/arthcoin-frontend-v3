@@ -195,13 +195,13 @@ const HideonPhone = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: none;
   } ;
 `;
 const HideOnBigScreen = styled.div`
   display: none;
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: block;
   } ;
 `;
