@@ -4,21 +4,19 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import {BigNumber} from '@ethersproject/bignumber';
 
-import Button from '../../components/Button';
 import { WinModal } from './components/WinModal';
 import Container from '../../components/Container';
 import { LoseModal } from './components/LoseModal';
 import LotteryCard from '../../components/LotteryCard';
 import TicketBgLogo from '../../assets/svg/bgLogo.svg';
-import CustomToolTip from '../../components/CustomTooltip';
 import { CriteriaModal } from './components/CriteriaModal';
 import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
 import questionMark from '../../assets/svg/questionMark.svg';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
-import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
 
 import useCore from '../../hooks/useCore';
-import usePrizeCounter from '../../hooks/state/usePrizeCounter';
+import usePrizes from '../../hooks/state/usePrizes';
+import usePrizeResult from '../../hooks/state/usePrizeResult';
 import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 
@@ -32,8 +30,10 @@ const Lottery = () => {
 
   const core = useCore();
   const lotteryBalance = useLotteryBalance(core.myAccount);
-  const prizeCounter = usePrizeCounter();
   const tokenCounter = useTokenCounter();
+  const prizes = usePrizes();
+
+  console.log('Counter', prizes);
 
   const yourPercentOfWinning = useMemo(() => {
     if (tokenCounter.lte(0)) return BigNumber.from(0);
@@ -42,19 +42,6 @@ const Lottery = () => {
 
   return (
     <div>
-      <CriteriaModal
-        open={criteriaModal}
-        toggleOpen={() => { setCriteriaModal(!criteriaModal) }}
-      />
-      <WinModal
-        open={winModal}
-        toggleOpen={() => { setWin(!winModal) }}
-      />
-
-      <LoseModal
-        open={loseModal}
-        toggleOpen={() => { setLose(!loseModal) }}
-      />
       <HeadingContainer>
         <Container size="lg">
           <MainSection>
@@ -85,43 +72,59 @@ const Lottery = () => {
       <Container size={'lg'}>
         <CardConatiner>
           <Grid container spacing={2}>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard
-                // image={}
-                cardtitle={'FIRST EVER MAHA NFT'}
-                changeToWin={{
-                  text: 'Your Chance to win',
-                  perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
-                }}
-                buttonText={'Increase Your Chance to Win'}
-                buttonClick={() => { }}
-              />
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard
-                // image={}
-                cardtitle={'$25k worth of MAHA'}
-                moreInfoMsg={'Requires 20 ticket to participate in winning this prize! '}
-                buttonText={'Get More Tickets'}
-                buttonClick={() => {
-                  setWin(true)
-                }}
-              />
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <LotteryCard
-                // image={}
-                cardtitle={'FIRST EVER MAHA NFT'}
-                changeToWin={{
-                  text: 'Your Chance to win',
-                  perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
-                }}
-                buttonText={'Increase Your Chance to Win'}
-                buttonClick={() => {
-                  setLose(true)
-                }}
-              />
-            </Grid>
+            {
+              prizes.map((prize, i) => (
+                prize.winner !== '0x0000000000000000000000000000000000000000'
+                  ? (
+                    <Grid item lg={4} md={4} sm={12} xs={12}>
+                      <LotteryCard
+                        key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                        image={prize?.image || ''}
+                        cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                        changeToWin={{
+                          text: 'Your change to win',
+                          perc: '0%'
+                        }}
+                        moreInfoMsg={
+                          'This prize has been won.'
+                        }
+                      />
+                    </Grid>
+                  )
+                  : (
+                    Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
+                      ? (
+                        <Grid item lg={4} md={4} sm={12} xs={12}>
+                          <LotteryCard
+                            key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                            image={prize?.image || ''}
+                            cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                            changeToWin={{
+                              text: 'Your Chance to win',
+                              perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
+                            }}
+                            buttonText={'Increase Your Chance to Win'}
+                          />
+                        </Grid>
+                      )
+                      : (
+                        <Grid item lg={4} md={4} sm={12} xs={12}>
+                          <LotteryCard
+                            image={prize?.image || ''}
+                            key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                            cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                            moreInfoMsg={
+                              `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
+                              } ticket to participate in winning this prize! `
+                            }
+                            buttonText={'Get More Tickets'}
+                          />
+                        </Grid>
+                      )
+                  )
+                )
+              )
+            }
           </Grid>
         </CardConatiner>
       </Container>
