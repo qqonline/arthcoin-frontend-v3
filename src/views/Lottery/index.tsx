@@ -1,12 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import {BigNumber} from '@ethersproject/bignumber';
 
-import { WinModal } from './components/WinModal';
 import Container from '../../components/Container';
-import { LoseModal } from './components/LoseModal';
 import LotteryCard from '../../components/LotteryCard';
 import TicketBgLogo from '../../assets/svg/bgLogo.svg';
 import { CriteriaModal } from './components/CriteriaModal';
@@ -16,7 +14,6 @@ import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 import useCore from '../../hooks/useCore';
 import usePrizes from '../../hooks/state/usePrizes';
-import usePrizeResult from '../../hooks/state/usePrizeResult';
 import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 
@@ -29,13 +26,11 @@ const Lottery = () => {
   const tokenCounter = useTokenCounter();
   const prizes = usePrizes();
 
-  console.log('Counter', prizes);
-
   const yourPercentOfWinning = useMemo(() => {
     if (tokenCounter.lte(0)) return BigNumber.from(0);
     return lotteryBalance.mul(100).div(tokenCounter);
   }, [lotteryBalance, tokenCounter])
-
+  
   return (
     <div>
       <HeadingContainer>
@@ -65,65 +60,75 @@ const Lottery = () => {
           </MainSection>
         </Container>
       </HeadingContainer>
-      <Container size={'lg'}>
-        <CardConatiner>
-          <Grid container spacing={2}>
-            {
-              prizes.map((prize, i) => (
-                prize.winner !== '0x0000000000000000000000000000000000000000'
-                  ? (
-                    <Grid item lg={4} md={4} sm={12} xs={12}>
-                      <LotteryCard
-                        key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                        image={prize?.image || ''}
-                        cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                        changeToWin={{
-                          text: 'Your change to win',
-                          perc: '0%'
-                        }}
-                        moreInfoMsg={
-                          'This prize has been won.'
-                        }
-                      />
-                    </Grid>
-                  )
-                  : (
-                    Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
-                      ? (
-                        <Grid item lg={4} md={4} sm={12} xs={12}>
-                          <LotteryCard
-                            key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                            image={prize?.image || ''}
-                            cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                            changeToWin={{
-                              text: 'Your Chance to win',
-                              perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
-                            }}
-                            buttonText={'Increase Your Chance to Win'}
-                          />
-                        </Grid>
-                      )
-                      : (
-                        <Grid item lg={4} md={4} sm={12} xs={12}>
-                          <LotteryCard
-                            image={prize?.image || ''}
-                            key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                            cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                            moreInfoMsg={
-                              `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
-                              } ticket to participate in winning this prize! `
-                            }
-                            buttonText={'Get More Tickets'}
-                          />
-                        </Grid>
-                      )
-                  )
-                )
-              )
-            }
-          </Grid>
-        </CardConatiner>
-      </Container>
+      {
+        prizes.length > 0
+          ? (
+            <Container size={'lg'}>
+              <CardConatiner>
+                <Grid container spacing={2}>
+                  {
+                    prizes.map((prize, i) => (
+                      prize.winner !== '0x0000000000000000000000000000000000000000'
+                        ? (
+                          <Grid item lg={4} md={4} sm={12} xs={12}>
+                            <LotteryCard
+                              key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                              image={prize?.image || ''}
+                              cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                              changeToWin={{
+                                text: 'Your change to win',
+                                perc: '0%'
+                              }}
+                              moreInfoMsg={
+                                prize.winner === core.myAccount
+                                  ? 'You have won this prize.'
+                                  : 'This prize has been won.'
+                              }
+                            />
+                          </Grid>
+                        )
+                        : (
+                          Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
+                            ? (
+                              <Grid item lg={4} md={4} sm={12} xs={12}>
+                                <LotteryCard
+                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                                  image={prize?.image || ''}
+                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                  changeToWin={{
+                                    text: 'Your Chance to win',
+                                    perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
+                                  }}
+                                  buttonText={'Increase Your Chance to Win'}
+                                />
+                              </Grid>
+                            )
+                            : (
+                              <Grid item lg={4} md={4} sm={12} xs={12}>
+                                <LotteryCard
+                                  image={prize?.image || ''}
+                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                  moreInfoMsg={
+                                    `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
+                                    } ticket to participate in winning this prize! `
+                                  }
+                                  buttonText={'Get More Tickets'}
+                                />
+                              </Grid>
+                            )
+                        )
+                    )
+                    )
+                  }
+                </Grid>
+              </CardConatiner>
+            </Container>
+          )
+          : (
+            <h2>No prizes for now</h2>
+          )
+      }
     </div>
   );
 };
