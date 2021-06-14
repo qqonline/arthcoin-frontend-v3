@@ -23,6 +23,9 @@ import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 
 import calendar from '../../assets/svg/calendar.svg';
 import arrowDown from '../../assets/svg/arrowDown.svg';
+import TicketBgLogo from '../../assets/svg/bgLogo.svg';
+import TicketGreen from '../../assets/svg/TicketGreen.svg';
+import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
 
 import Button from '../../components/Button';
 import Container from '../../components/Container';
@@ -42,6 +45,7 @@ import useCore from '../../hooks/useCore';
 import useTokenDecimals from '../../hooks/useTokenDecimals';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
+import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
 import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
@@ -52,7 +56,6 @@ import usePerformRecollateralize from '../../hooks/callbacks/performRecollateral
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import TicketGreen from '../../assets/svg/TicketGreen.svg';
 
 withStyles({
   root: {
@@ -156,6 +159,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
   const arthxPrice = useARTHXOraclePrice();
+  const lotteryBalance = useLotteryBalance(core.myAccount);
   const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
@@ -666,16 +670,24 @@ const Genesis = (props: WithSnackbarProps) => {
             </LeftTopCard>
           </Grid>
           <Grid item lg={5} md={12} sm={12} xs={12}>
-            {/*<BondingDiscount dataObj={bondingDiscount} />*/}
             <UnderstandMore dataObj={understandMore} />
-            <LotteryBox className={'custom-mahadao-box'}>
+            {/* <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
                 Genesis participate can issue lottery tickets to win exiting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
                 <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'}/>
               </LotteryBoxAction>
-            </LotteryBox>
+            </LotteryBox> */}
+              <Ticket>
+                <BgImage src={TicketBgLogo} alt="TicketBg" />
+                <TicketHead>Your Lottery Tickets</TicketHead>
+                <TicketDataSection>
+                  <TicketLogo src={TicketLogoImg} alt="Ticket" />
+                  <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>
+                </TicketDataSection>
+                <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
+              </Ticket>
           </Grid>
           <Grid item lg={1} />
         </Grid>
@@ -779,6 +791,38 @@ const HeaderSpan = styled.span`
   display: flex;
   margin: 0 0 0 8px;
   color: #ffffff;
+`;
+
+const BgImage = styled.img`
+  height: 68px;
+  width: 88px;
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translate(0,-50%);
+`;
+
+const TicketHead = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FFFFFF;
+  margin-bottom: 2px;
+`;
+
+const TicketDataSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24px;
+`;
+
+const TicketLogo = styled.img`
+  height: 32px;
+  width: 32px;
 `;
 
 const StartsIn = styled.div`
@@ -930,6 +974,19 @@ const TextForInfoTitle = styled.div`
   opacity: 0.64;
 `;
 
+const Ticket = styled.div`
+  background: linear-gradient(180deg, #2D2D2D 0%, #1C1C1C 100%);
+  border-radius: 12px;
+  margin-top: 24px;
+  height: 158px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
 const BeforeChip = styled.span`
   font-family: Inter;
   font-style: normal;
@@ -962,10 +1019,43 @@ const TagChips = styled.div`
   padding: 2px 4px;
 `;
 
+const TicketData = styled.span`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: #FFFFFF;
+  margin-left: 12px;
+`
+
+const TicketBuyTitle = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 4px;
+`
+
+const TicketBuyAction = styled(Link)`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FF7F57;
+  cursor: pointer;
+  &:hover {
+    color: #FF7F57;
+  }
+`;
+
 const LotteryBox = styled.div`
   background: radial-gradient(145.27% 168.64% at 130.87% -118.64%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%),
   linear-gradient(252.98deg, #E44D75 10.74%, #EB822C 87.31%);
-  margin-top: 24px;
+  margin-top: 24spx;
 `
 
 const LotteryBoxText = styled.p`

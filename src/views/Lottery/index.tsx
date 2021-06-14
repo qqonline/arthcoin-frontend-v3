@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import {BigNumber} from '@ethersproject/bignumber';
 
@@ -64,7 +65,7 @@ const Lottery = () => {
                   setCriteriaModal(true)
                 }} />
               </Heading>
-              <SubHeading>Win exiting prizes by lottery tickets</SubHeading>
+              <SubHeading>Win exciting prizes by lottery tickets</SubHeading>
             </LeftMainSection>
             <RightMainSection>
               <Ticket>
@@ -75,7 +76,7 @@ const Lottery = () => {
                   <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>
                 </TicketDataSection>
                 <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
-                <TicketBuyAction>Issue More Tickets</TicketBuyAction>
+                <TicketBuyAction to={'/genesis'}>Get More Tickets</TicketBuyAction>
               </Ticket>
             </RightMainSection>
           </MainSection>
@@ -100,8 +101,8 @@ const Lottery = () => {
               <LotteryCard
                 // image={}
                 cardtitle={'$25k worth of MAHA'}
-                moreInfoMsg={'Requires 20 more ticket to participate in winning this prize! '}
-                buttonText={'Issue More Tickets'}
+                moreInfoMsg={'Requires 20 ticket to participate in winning this prize! '}
+                buttonText={'Get More Tickets'}
                 buttonClick={() => {
                   setWin(true)
                 }}
@@ -197,7 +198,7 @@ const Ticket = styled.div`
   @media (max-width: 600px) {
     width: 100%;
   }
-`
+`;
 
 const BgImage = styled.img`
   height: 68px;
@@ -251,7 +252,7 @@ const TicketBuyTitle = styled.p`
   margin-bottom: 4px;
 `
 
-const TicketBuyAction = styled.p`
+const TicketBuyAction = styled(Link)`
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
@@ -259,8 +260,11 @@ const TicketBuyAction = styled.p`
   line-height: 130%;
   color: #FF7F57;
   cursor: pointer;
-`
+  &:hover {
+    color: #FF7F57;
+  }
+`;
 
 const CardConatiner = styled.div`
   margin-top: 40px;
-`
+`;

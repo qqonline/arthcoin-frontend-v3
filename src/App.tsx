@@ -89,11 +89,11 @@ const App: React.FC = () => {
               <Farming />
             </Page>
           </Route>
-          <Route path="/stabilize/:stabilizeType">
+          {/* <Route path="/stabilize/:stabilizeType">
             <Page>
               <Stablize />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/mint/:paramType">
             <Page>
               <Mint />

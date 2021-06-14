@@ -158,7 +158,7 @@ export const WalletInternal = (props: IProps) => {
                         <IconButton>
                             <TokenSymbol symbol={'ARTHX'} size={44} />
                         </IconButton>
-                        <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTHX</span>
+                        <span>{Number(getDisplayBalance(arthxBalance)).toLocaleString()} ARTHX</span>
                     </RowName>
                     <DollarValue>
                         {/* ${props?.walletData?.arthxDollars} */}

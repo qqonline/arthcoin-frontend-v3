@@ -14,9 +14,9 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/mint/mint">
         Mint/Redeem
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/stabilize/recollateralize">
+      {/* <StyledLink exact activeClassName="active" to="/stabilize/recollateralize">
         Stabilize
-      </StyledLink>
+      </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/farming">
         Farming
       </StyledLink>
@@ -29,9 +29,9 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/rebase">
         Rebase
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/lottery">
+      {/* <StyledLink exact activeClassName="active" to="/lottery">
         Lottery
-      </StyledLink>
+      </StyledLink> */}
       {/* <StyledLink exact activeClassName="active" to="/pools">
         Pools
       </StyledLink> */}
