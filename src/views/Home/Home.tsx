@@ -153,6 +153,8 @@ const Home: React.FC = () => {
           View token contract on Etherscan
         </ModalHyperLink>
       </Modal>
+
+
       <div id="header-gradient"></div>
       {/*<div className="chakra"></div>*/}
       {/*<div className="gradient-red-1"></div>*/}
