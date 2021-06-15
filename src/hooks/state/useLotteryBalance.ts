@@ -5,8 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../useCore';
 import { useBlockNumber } from '../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  balance: BigNumber;
+}
+
 const useLotteryBalance = (address: string) => {
-  const [balance, setBalance] = useState(BigNumber.from(0));
+  const [customState, setCustomState] = useState<State>({ isLoading: true, balance: BigNumber.from(0) });
 
   const core = useCore();
   const { account } = useWallet();
@@ -15,12 +20,12 @@ const useLotteryBalance = (address: string) => {
 
   const fetchBalance = useCallback(async () => {
     if (!account) {
-      setBalance(BigNumber.from(0))
+      setCustomState({isLoading: false, balance: BigNumber.from(0)})
       return;
     }
  
     const bal = await lottery.balanceOf(core.myAccount);
-    setBalance(bal);
+    setCustomState({isLoading: false, balance: bal});
   }, [core, account, lottery]);
 
   useEffect(() => {
@@ -33,7 +38,7 @@ const useLotteryBalance = (address: string) => {
     }
   }, [address, blockNumber, account, core.isUnlocked, fetchBalance, lottery]);
 
-  return balance;
+  return customState;
 };
 
 export default useLotteryBalance;

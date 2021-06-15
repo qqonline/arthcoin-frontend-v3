@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import {BigNumber} from '@ethersproject/bignumber';
 
-import Container from '../../components/Container';
-import LotteryCard from '../../components/LotteryCard';
 import TicketBgLogo from '../../assets/svg/bgLogo.svg';
 import { CriteriaModal } from './components/CriteriaModal';
-import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
 import questionMark from '../../assets/svg/questionMark.svg';
+import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
+
+import Container from '../../components/Container';
+import LotteryCard from '../../components/LotteryCard';
+
+import LoadingPage from '../../components/LoadingPage';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 import useCore from '../../hooks/useCore';
@@ -17,20 +20,23 @@ import usePrizes from '../../hooks/state/usePrizes';
 import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 
-
 const Lottery = () => {
   WalletAutoConnect();
 
   const core = useCore();
-  const lotteryBalance = useLotteryBalance(core.myAccount);
-  const tokenCounter = useTokenCounter();
-  const prizes = usePrizes();
+  const { isLoading: isLotteryBalanceLoading, balance: lotteryBalance} = useLotteryBalance(core.myAccount);
+  const { isLoading: isTokenCounterLoading, value: tokenCounter} = useTokenCounter();
+  const {isLoading: isPrizesLoading, value: prizes} = usePrizes();
 
-  const yourPercentOfWinning = useMemo(() => {
+   const yourPercentOfWinning = useMemo(() => {
     if (tokenCounter.lte(0)) return BigNumber.from(0);
     return lotteryBalance.mul(100).div(tokenCounter);
   }, [lotteryBalance, tokenCounter])
-  
+
+  if (isLotteryBalanceLoading) return <LoadingPage />
+  if (isTokenCounterLoading) return <LoadingPage />
+  if (isPrizesLoading) return <LoadingPage />
+
   return (
     <div>
       <HeadingContainer>
@@ -126,7 +132,7 @@ const Lottery = () => {
             </Container>
           )
           : (
-            <h2>No prizes for now</h2>
+            <NoPrizesHeading>No prizes for now</NoPrizesHeading>
           )
       }
     </div>
@@ -179,6 +185,18 @@ const Heading = styled.div`
   line-height: 44px;
   color: #FFFFFF;
   opacity: 0.88;
+`
+
+const NoPrizesHeading = styled.div`
+  font-family: Syne;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 42px;
+  line-height: 44px;
+  color: #FFFFFF;
+  opacity: 0.88;
+  text-align: center;
+  margin-top: 100px;
 `
 
 const SubHeading = styled.p`
