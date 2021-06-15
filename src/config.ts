@@ -40,9 +40,7 @@ const configurations: { [env: string]: Configuration } = {
     networkName: 'Matic Mumbai Testnet',
     chainId: 80001,
     etherscanUrl: 'https://explorer-mumbai.maticvigil.com',
-    defaultProvider:
-      'https://rpc-mumbai.matic.today',
-      // 'https://bitter-twilight-moon.quiknode.io/a7bc771b-a15c-49a6-9e23-a1106f86b2db/g9PahkWuM3pjJMRqNA39cUyZpov8PMSH5MbcKSJs4zrqyGwEsuUajCGSpWmFbvVU7HboSbF6lauR38Y0Zyr8NQ==/',
+    defaultProvider:'https://rpc-mumbai.matic.today',
     deployments: require('./basis-cash/deployments/maticMumbai.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
@@ -91,7 +89,7 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
 
 export const stakingContracts: StakingContract[] = [
   {
-    platform: 'uniswap',
+    platform: 'sushiswap',
     contract: 'StakeARTHWETH',
     kind: 'vested',
     depositToken: 'ArthWethLP',
@@ -103,21 +101,8 @@ export const stakingContracts: StakingContract[] = [
     sort: 0,
     categories: ['all', 'arth'],
   },
-  // { // NOT yet deployed.
-  //   platform: 'uniswap',
-  //   contract: 'StakeARTHMAHA',
-  //   kind: 'vested',
-  //   depositToken: 'ArthWethLP',
-  //   depositTokenSymbols: ['MAHA', 'WETH'],
-  //   depositTokenKind: 'single',
-  //   earnTokenName: 'ARTHX',
-  //   finished: false,
-  //   networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
-  //   sort: 0,
-  //   categories: ['all', 'maha'],
-  // },
   {
-    platform: 'uniswap',
+    platform: 'sushiswap',
     contract: 'StakeARTHXWETH',
     kind: 'vested',
     depositToken: 'ArthxWethLP',
@@ -130,7 +115,7 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arthx'],
   },
   {
-    platform: 'arth',
+    platform: '',
     contract: 'StakeARTHX',
     kind: 'vested',
     depositToken: 'ARTHX',
@@ -143,7 +128,7 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arthx'],
   },
   {
-    platform: 'uniswap',
+    platform: 'sushiswap',
     contract: 'StakeARTHMAHA',
     kind: 'vested',
     depositToken: 'ArthMahaLP',
@@ -156,7 +141,7 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'maha', 'arth'],
   },
   {
-    platform: 'arth',
+    platform: '',
     contract: 'StakeARTH',
     kind: 'vested',
     depositToken: 'ARTH',
@@ -172,21 +157,17 @@ export const stakingContracts: StakingContract[] = [
 
 
 export const tradingPairs: TradingPairs[] = [
-  // { // NOT yet deployed
-  //   tokens: ['MAHA', 'WETH'],
-  //   paltform: 'uniswapV2'
-  // },
   {
     tokens: ['MAHA', 'ARTH'],
-    paltform: 'uniswapV2'
+    paltform: 'sushiswap'
   },
   {
     tokens: ['ARTH', 'WETH'],
-    paltform: 'uniswapV2'
+    paltform: 'sushiswap'
   },
   {
     tokens: ['ARTHX', 'WETH'],
-    paltform: 'uniswapV2'
+    paltform: 'sushiswap'
   },
 ];
 

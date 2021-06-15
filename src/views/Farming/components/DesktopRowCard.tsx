@@ -1,4 +1,3 @@
-import CountUp from 'react-countup';
 import styled from 'styled-components';
 import React, { useMemo } from 'react';
 import { useWallet } from 'use-wallet';
@@ -9,7 +8,9 @@ import Button from '../../../components/Button';
 import TokenSymbol from '../../../components/TokenSymbol';
 
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
+import sushiswap from '../../../assets/svg/SushiswapWhite.svg';
 
+import config from '../../../config';
 import useCore from '../../../hooks/useCore';
 import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
@@ -40,10 +41,10 @@ export default (props: IProps) => {
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
   const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
-  const uniswapLink = `https://app.uniswap.org/#/add/v2/${tokenAddresses.join('/')}`;
-  const etherscan = `https://rinkeby.etherscan.io/address/${tokenAddresses[0]}`;
+  const uniswapLink = `https://app.sushi.com/add/${tokenAddresses.join('/')}`;
+  const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
-
+  
   const pow = BigNumber.from(10).pow(18);
   
   const currentEarnedARTHX = useMemo(() => {
@@ -62,6 +63,11 @@ export default (props: IProps) => {
     ))
   }, [props, pow]);
 
+  const getImage = (platform: string) => {
+    if (platform === 'sushiswap') return sushiswap;
+    return uniswap;
+  } 
+
   return (
     <CustomCardGrid>
       <Grid
@@ -70,8 +76,9 @@ export default (props: IProps) => {
         alignItems={'center'}
       >
         {
-          props.pool.platform === 'uniswap' && 
-          <CardIcon src={uniswap} height={32} />}
+          props.pool.platform && 
+          <CardIcon src={getImage(props.pool.platform)} height={32} />
+        }
           <Grid item lg={3} style={{ display: 'flex' }}>
             <div>
               {props.pool.depositTokenSymbols.map((token, index) => (
@@ -81,22 +88,22 @@ export default (props: IProps) => {
                   style={index === 1 ? { marginLeft: '-6px' } : {}}
                 />
               ))}
-              {/* <TokenSymbol symbol={props?.pair[1]} size={45} style={{ marginLeft: '-12px' }} /> */}
             </div>
             <div style={{ marginLeft: '16px' }}>
               <TableMainTextStyle>
                 {props.pool.depositTokenSymbols.join(' - ')}
               </TableMainTextStyle>
-              {props.pool.platform === 'uniswap' ? (
-                <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
-                  Add Liquidity
-                </AddLiquidityButton>
-              ) : (
-                <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
-                  View Etherscan
-                </AddLiquidityButton>
-              )
-          }
+              {
+                props.pool.platform ? (
+                  <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
+                    Add Liquidity
+                  </AddLiquidityButton>
+                ) : (
+                  <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
+                    View Etherscan
+                  </AddLiquidityButton>
+                )
+              }
           </div>
         </Grid>
         <Grid item lg={3}>

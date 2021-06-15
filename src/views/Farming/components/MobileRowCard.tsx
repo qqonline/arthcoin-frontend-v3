@@ -1,4 +1,3 @@
-import CountUp from 'react-countup';
 import React, {useMemo} from 'react';
 import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
@@ -6,14 +5,15 @@ import InfoIcon from '@material-ui/icons/Info';
 import { Grid, Divider } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 
-import farmingSVG from '../../../assets/svg/farming.svg';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
+import sushiswap from '../../../assets/svg/SushiswapWhite.svg';
 
 import Card from '../../../components/Card';
 import Button from '../../../components/Button';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
 
+import config from '../../../config';
 import useCore from '../../../hooks/useCore';
 import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
@@ -43,6 +43,10 @@ export const MobileFarm = (props: IProps) => {
   const tokenBalance = useTokenBalance(depositTokenContract);
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
+  const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
+  const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
+  const uniswapLink = `https://app.sushi.com/add/${tokenAddresses.join('/')}`;
+  const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`
   const pow = BigNumber.from(10).pow(18);
 
   const currentEarnedARTHX = useMemo(() => {
@@ -63,11 +67,16 @@ export const MobileFarm = (props: IProps) => {
 
   const isWalletConnected = !!account;
 
+  const getImage = (platform: string) => {
+    if (platform === 'sushiswap') return sushiswap;
+    return uniswap;
+  }
+
   return (
     <StyledCardWrapper>
       <CardIcon>
         <div style={{ zIndex: 15, background: '#2A2827', borderRadius: 36 }}>
-          <img src={uniswap} alt="Uniswap logo" height={32} />
+          <img src={getImage(props.pool.platform)} alt="Uniswap logo" height={32} />
         </div>
       </CardIcon>
       <Card>
@@ -108,7 +117,17 @@ export const MobileFarm = (props: IProps) => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
                 <StyledTitle>{props.pool.depositTokenSymbols.join('-')}</StyledTitle>
-                <StyledSubTitle>Add Liquidity</StyledSubTitle>
+                {
+                  props.pool.platform ? (
+                    <StyledSubTitle onClick={() => window.open(uniswapLink, '_blank')}>
+                      Add Liquidity
+                    </StyledSubTitle>
+                  ) : (
+                      <StyledSubTitle onClick={() => window.open(etherscan, '_blank')}>
+                      View Etherscan
+                      </StyledSubTitle>
+                  )
+                }
               </div>
             </CardHeaderDiv>
             <Grid
@@ -124,7 +143,7 @@ export const MobileFarm = (props: IProps) => {
               >
                 <DescriptionDiv>
                   Wallet
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
+                  {/* <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} /> */}
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
                   <MainSpan>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</MainSpan>
