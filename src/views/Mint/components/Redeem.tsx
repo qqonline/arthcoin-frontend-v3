@@ -544,7 +544,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       />
                       <div style={{ padding: 5 }} />
                       <Button
-                        text={'Redeem'}
+                        text={'Request Redeem'}
                         size={'lg'}
                         variant={'default'}
                         disabled={
@@ -560,7 +560,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <br />
                     <Button
                       disabled={redeemableBalances[0].lte(0) && redeemableBalances[1].lte(0)}
-                      text={'Collect Redemption'}
+                      text={'Redeem'}
                       size={'lg'}
                       variant={'default'}
                         onClick={() => collectRedeemption(() => setSuccessCollectModal(true))}

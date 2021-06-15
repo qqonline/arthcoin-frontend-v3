@@ -300,7 +300,7 @@ const Genesis = (props: WithSnackbarProps) => {
         subsubTitle={
           'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
         }
-        buttonText={'Stake your ARTH'}
+        buttonText={'Stake your ARTHX'}
         buttonType={'default'}
         buttonTo={'/farming'}
       />

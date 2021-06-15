@@ -78,9 +78,13 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
             </SnackBarInnerContainer>
             {isLoading ? (
               <SnackBarLoading>
-                <NotificationsNoneIcon className="margin-left-right-20" />
+                <NotificationsNoneIcon className="margin-left-16-right-12" />
                 <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{content.txn?.summary}</span>
+                  <span 
+                    style={{display: 'flex', textAlign: 'left'}} 
+                    className="margin-bottom-10">
+                      {content.txn?.summary}
+                  </span>
                   {
                     config.etherscanUrl !== '' && content.txn?.hash !== ''
                     && 
@@ -98,7 +102,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               </SnackBarLoading>
             ) : isScucess ? (
               <SnackBarRedeem>
-                <NotificationsNoneIcon className="margin-left-right-20" />
+                <NotificationsNoneIcon className=".margin-left-16-right-12" />
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
                   {
@@ -118,7 +122,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               </SnackBarRedeem>
             ) : (
               <SnackBarRedeemCancelled>
-                <NotificationsNoneIcon className="margin-left-right-20" />
+                <NotificationsNoneIcon className=".margin-left-16-right-12" />
                 <div className="dialog-class display-flex-column">
                     <span className="margin-bottom-10">{content.txn?.summary || content.error?.message}</span>
                 </div>

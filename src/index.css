@@ -698,6 +698,11 @@ body.modal-open {
   margin-right: 20px;
 }
 
+.margin-left-16-right-12 {
+  margin-left: 16px;
+  margin-right: 12px;
+}
+
 .margin-left-right-15 {
   margin-left: 15px;
   margin-right: 15px;
