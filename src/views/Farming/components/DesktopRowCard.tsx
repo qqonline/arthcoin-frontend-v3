@@ -100,7 +100,7 @@ export default (props: IProps) => {
                   </AddLiquidityButton>
                 ) : (
                   <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
-                    View Etherscan
+                    View on Explorer
                   </AddLiquidityButton>
                 )
               }

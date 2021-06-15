@@ -246,7 +246,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const lotteryAmount = useMemo(() => {
     if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
     const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
-    return gmuCollateralValue.mul(collateralGMUPrice).div(1000).div(1e6);
+    return gmuCollateralValue.mul(collateralGMUPrice).div(10).div(1e6);
   }, [collateralValue, collateralGMUPrice, tokenDecimals]);
 
   const arthxDiscount = useMemo(() => {

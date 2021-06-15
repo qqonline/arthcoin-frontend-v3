@@ -39,7 +39,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}
           >
             <span className="margin-bottom-5">{title}</span>
-            <SubTitle href={tokenUrl}>{`${title} on Etherscan`}</SubTitle>
+            <SubTitle href={tokenUrl}>{`${title} on Explorer`}</SubTitle>
           </div>
         </CardHeader>
         <CardContent>

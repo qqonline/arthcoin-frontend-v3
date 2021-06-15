@@ -124,7 +124,7 @@ export const MobileFarm = (props: IProps) => {
                     </StyledSubTitle>
                   ) : (
                       <StyledSubTitle onClick={() => window.open(etherscan, '_blank')}>
-                      View Etherscan
+                      View on Explorer
                       </StyledSubTitle>
                   )
                 }
