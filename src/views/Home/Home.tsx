@@ -91,6 +91,7 @@ const DEFAULT_CALC = 1440;
 const Home: React.FC = () => {
   const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const [openModal, toggleModal] = useState(false);
+  const [showVideo, setShowVideo] = useState<boolean>(false);
   const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1990);
   const [arthValue, setArth] = useState(1.2);
@@ -208,10 +209,12 @@ const Home: React.FC = () => {
             <button className="button-small-bg">Buy ARTH</button>
           </a>
           <a
-            target="_blank"
-            href="https://www.youtube.com/watch?v=H94S32HXqmU"
+            // target="_blank"
+            // href="https://www.youtube.com/watch?v=H94S32HXqmU"
             id="no-txt-decoration"
             rel="noopener noreferrer"
+            data-toggle="modal" data-target="#videoModal"  href="javascript:void(0)"
+            onClick={() => setShowVideo(true)}
           >
             <button className="button-small-transparent">
               <img src={rightArrow} height={20} style={{ marginRight: '8px' }} />
@@ -220,6 +223,19 @@ const Home: React.FC = () => {
           </a>
         </div>
       </section>
+      {showVideo && <div id='videoModal' className='custom-video-modal'>
+        <div className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <span className='close-btn' data-dismiss='modal' onClick={() => setShowVideo(false)}></span>
+            </div>
+            <div className='video-outer'>
+              <iframe id='video' src='https://www.youtube.com/embed/H94S32HXqmU' frameBorder='0'
+                      allow='accelerometer; autoplay;' allowFullScreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>}
       <section id="section-main-info">
         <div
           className="main-conatiner"
