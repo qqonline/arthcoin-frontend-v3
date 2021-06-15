@@ -37,3 +37,8 @@ export interface TokenStat {
   priceInDAI: BigNumber;
   totalSupply: BigNumber;
 }
+
+export interface Platform {
+  addLiquidityUrl: string;
+  swapUrl: string;
+}

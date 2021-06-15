@@ -6,6 +6,8 @@ import Button from '../../../components/Button';
 import useCore from '../../../hooks/useCore';
 import { TradingPairs } from '../../../basis-cash/types';
 
+import config, { platformURL } from '../../../config';
+
 interface IProps {
   info: TradingPairs;
 }
@@ -19,8 +21,13 @@ const CustomRowCard = (props: IProps) => {
   const address1 = token1.symbol === 'WETH' ? 'ETH' : token1.address;
   const address2 = token2.symbol === 'WETH' ? 'ETH' : token2.address;
 
-  const link = `https://app.uniswap.org/#/add/v2/${address1}/${address2}`;
-  const tradelink = `https://app.uniswap.org/#/swap?inputCurrency=${address1}&outputCurrency=${address2}&use=V2`;
+  const link = platformURL[config.platform] && platformURL[config.platform].addLiquidityUrl
+    ? `${platformURL[config.platform].addLiquidityUrl}/${address1}/${address2}`
+    : `https://app.uniswap.org/#/add/v2/${address1}/${address2}`;
+
+  const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
+    ? `${platformURL[config.platform].swapUrl}?inputCurrency=${address1}&outputCurrency=${address2}`
+    : `https://app.uniswap.org/#/swap?inputCurrency=${address1}&outputCurrency=${address2}&use=V2`;
 
   return (
     <CustomCardGrid>

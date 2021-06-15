@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
 
-import config from '../../../config';
+import config, { platformURL } from '../../../config';
 import useCore from '../../../hooks/useCore';
 import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
@@ -45,7 +45,7 @@ export const MobileFarm = (props: IProps) => {
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
   const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
-  const uniswapLink = `https://app.sushi.com/add/${tokenAddresses.join('/')}`;
+  const uniswapLink = `${platformURL[props.pool.platform]?.addLiquidityUrl || 'https:app.uniswap.org/swap'}/${tokenAddresses.join('/')}`;
   const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`
   const pow = BigNumber.from(10).pow(18);
 

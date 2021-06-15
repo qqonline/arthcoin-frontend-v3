@@ -4,7 +4,7 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 
 import TokenSymbol from '../../../components/TokenSymbol';
 
-import config from '../../../config';
+import config, {platformURL} from '../../../config';
 import useTotalSupply from '../../../hooks/useTotalSupply';
 import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -74,10 +74,14 @@ const HomeCard: React.FC<HomeCardProps> = ({
         </CardContent>
         <UniswapLink
           target="_blank"
-          href={`https://app.uniswap.org/#/swap?inputCurrency=${address}`}
+          href={
+            platformURL[config.platform] && platformURL[config.platform].swapUrl
+              ? `${platformURL[config.platform]?.swapUrl}?inputCurrency=${address}`
+              : `https://app.uniswap.org/#/swap?inputCurrency=${address}`
+          }
         >
           <LinkText>
-            Buy {symbol} from Uniswap <CallMadeIcon style={{ fontSize: 15 }} />
+            Buy {symbol} from {config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()} <CallMadeIcon style={{ fontSize: 15 }} />
           </LinkText>
         </UniswapLink>
       </Card>
