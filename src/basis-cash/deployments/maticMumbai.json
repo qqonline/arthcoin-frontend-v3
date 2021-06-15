@@ -1,34 +1,34 @@
 {
   "ArthController": {
-    "address": "0x0D33CC0c0E3B9997Bc217823FbC32Aa08680E7b8",
+    "address": "0x82DcC678E6A6907d0614f88933C1bcF9D85755BE",
     "abi": "ArthController"
   },
   "StakeARTHMAHA": {
-    "address": "0x0dc18424aCD927Ae1cDBbF252eACbbE41E43fB6e",
+    "address": "0x8F8C1f14AEDe781e77503B1aB1058B59C459859a",
     "abi": "BasicStaking"
   },
   "StakeARTH": {
-    "address": "0xb2b19Af6e019ef34809aE97279251f301B267C14",
+    "address": "0x762C19A11250EDA8347Fbb43454c7fde094ce838",
     "abi": "BasicStaking"
   },
   "StakeARTHWETH": {
-    "address": "0xd238792BcF757f780D0E45155F00E8490B2824aC",
+    "address": "0x60BC582924c909f0F66238D407e7Ccf6e1f527DC",
     "abi": "BasicStaking"
   },
   "StakeARTHX": {
-    "address": "0x50EEFB589e408da4F0d6aaf2524CB5678b89AB05",
+    "address": "0x394ADB5Bd40B5373Fb69c9Bf58B94b53c9437630",
     "abi": "BasicStaking"
   },
   "StakeARTHXWETH": {
-    "address": "0xd79F7384804B4E4ee6731AE9d7b8f3439D7FcA8d",
+    "address": "0x2Be189b5a70626d9bEAA87975a18910FFd578309",
     "abi": "BasicStaking"
   },
   "UniswapPairOracle_ARTH_WETH": {
-    "address": "0xAFD847155bf1C16EE624ecE2565f61dD012aD5f9",
+    "address": "0x313BDacB38294F9b36504BF5eD69517Ad655E96f",
     "abi": "UniswapPairOracle"
   },
   "UniswapPairOracle_ARTHX_WETH": {
-    "address": "0x6ED280C9Ec89c6A6278468901A0854fEA63D7FA7",
+    "address": "0x008a40e65A6f1E79726D98659f1fB4c67b9C53e5",
     "abi": "UniswapPairOracle"
   },
   "GMUOracle": {
@@ -60,7 +60,7 @@
     "abi": "ArthPoolLibrary"
   },
   "PoolToken": {
-    "address": "0x9c2eC09EAA199fbB735244Fe89B7154366F2Dc15",
+    "address": "0x4068FA43EE597834E232A77E3Aa8c8dB7aa50Fe0",
     "abi": "PoolToken"
   },
   "Pool_USDC": {
@@ -72,19 +72,19 @@
     "abi": "ArthPool"
   },
   "ArthPoolRouter": {
-    "address": "0xF1e20033C9F2E802D4E7d08ed2B9c574F26B0a30",
+    "address": "0xf71838dB25dCeC6FCbc5a0e8e3ef0f492E5A4930",
     "abi": "ArthPoolRouter"
   },
   "Faucet": {
-    "address": "0xCf47FA6f08140FE4f81978480546dd0fb7443Ec7",
+    "address": "0x73FEAA9561eD365F316F640fA500B704389129fD",
     "abi": "Faucet"
   },
   "ARTHStablecoin": {
-    "address": "0x99748B2AF96E1995A0AdFE2Bc16Bf028CA5554F2",
+    "address": "0xd84231bC02f05054668804E5E5620A4c15071f9b",
     "abi": "ARTHStablecoin"
   },
   "ARTHShares": {
-    "address": "0xb9541703C842CA8c67E46a1c969cc249E3d2A693",
+    "address": "0x9A3f99aCc89079C00948f74d768f12D290C8bdaf",
     "abi": "ARTHShares"
   },
   "MahaToken": {
@@ -92,11 +92,11 @@
     "abi": "MahaToken"
   },
   "UniswapV2Factory": {
-    "address": "0x90914687d7bcac6F4b4F106586fDb87CB5fBFcC5",
+    "address": "0xc35DADB65012eC5796536bD9864eD8773aBc74C4",
     "abi": "UniswapV2Factory"
   },
   "UniswapV2Router02": {
-    "address": "0x111250a91471Bc54277BEF153538A7dcb59510E2",
+    "address": "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
     "abi": "UniswapV2Router02"
   },
   "DAI": {
@@ -112,7 +112,7 @@
     "abi": "IERC20"
   },
   "WETH": {
-    "address": "0x2E9aB50b6825662495b922204A71f07A722B8820",
+    "address": "0x5B67676a984807a212b1c59eBFc9B3568a474F0a",
     "abi": "IWETH"
   },
   "WBTC": {
@@ -120,15 +120,15 @@
     "abi": "IERC20"
   },
   "ArthMahaLP": {
-    "address": "0xB7EdC3bd608DF7E1FCaf10AB1f3691499eDf0C78",
+    "address": "0x28387fFdf904921e209Aad38EA05Ee620210c6F1",
     "abi": "UniswapV2Pair"
   },
   "ArthxWethLP": {
-    "address": "0xAb392322c0A8f8EAb206A1764E2e2CBC2b5Bb434",
+    "address": "0x45e8E8091431c6C3f343c61de55e43Af8D43F2d6",
     "abi": "UniswapV2Pair"
   },
   "ArthWethLP": {
-    "address": "0x9d81B3D12c6aBf4f0E8DD64A183715243f923940",
+    "address": "0x13383e97Efa71E339adbA3920DD14d3452001633",
     "abi": "UniswapV2Pair"
   }
 }
