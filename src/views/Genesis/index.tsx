@@ -168,7 +168,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
-  const redeemFee = usePoolRedeemFees(selectedCollateral);
   const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
   WalletAutoConnect();
@@ -207,13 +206,6 @@ const Genesis = (props: WithSnackbarProps) => {
       .div(outAssetprice)
   );
 
-  const tradingFee = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${arthValue}`, 18))
-      .mul(redeemFee)
-      .div(1e6);
-  }, [arthValue, redeemFee]);
-
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
@@ -229,13 +221,12 @@ const Genesis = (props: WithSnackbarProps) => {
     return calcExpectReceiveAmount(
       BigNumber.from(1e6),
       arthxPrice,
-      Number(arthValue) - Number(getDisplayBalance(tradingFee, 18, 6)),
+      Number(arthValue),
       18,
       18
     );
   }, [
     arthValue,
-    tradingFee,
     collateralGMUPrice,
     arthxPrice,
     collateralValue,
@@ -319,17 +310,6 @@ const Genesis = (props: WithSnackbarProps) => {
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
-          {
-            type !== 'Commit' &&
-            <TransparentInfoDiv
-              labelData={`Trading Fee`}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={
-                Number(getDisplayBalance(tradingFee, 18, 6))
-                  .toLocaleString('en-US', {maximumFractionDigits: 6})
-                }
-            />
-          }
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
           <TransparentInfoDiv
             labelData={`You will receive`}
@@ -575,42 +555,23 @@ const Genesis = (props: WithSnackbarProps) => {
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                     {
-                      type === 'Commit'
-                        ? (
+                      type === 'Commit' &&
+                      (
+                        <OneLineInputwomargin>
+                          <div style={{ flex: 1 }}>
+                            <TextWithIcon>
+                              Bonus
+                              <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
+                            </TextWithIcon>
+                          </div>
                           <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Bonus
-                                <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                              </BeforeChip>
-                              <TagChips>ARTHX</TagChips>
-                            </OneLineInputwomargin>
+                            <BeforeChip className={'custom-mahadao-chip'}>
+                              {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                            </BeforeChip>
+                            <TagChips>ARTHX</TagChips>
                           </OneLineInputwomargin>
-                        )
-                        : (
-                          <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Trading Fee
-                                <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with swapping ARTH for ARTHX during genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {
-                                  Number(getDisplayBalance(tradingFee, 18, 6))
-                                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
-                                }
-                              </BeforeChip>
-                              <TagChips>ARTH</TagChips>
-                            </OneLineInputwomargin>
-                          </OneLineInputwomargin>
-                        )
+                        </OneLineInputwomargin>
+                      )
                     }
                   </ReceiveContainer>
                 </div>
