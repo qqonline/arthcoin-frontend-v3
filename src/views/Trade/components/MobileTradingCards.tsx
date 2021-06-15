@@ -27,8 +27,8 @@ export default (props: IProps) => {
 
   const token1 = core.tokens[props.info.tokens[0]];
   const token2 = core.tokens[props.info.tokens[1]];
-  const address1 = token1.symbol === 'WETH' ? 'ETH' : token1.address;
-  const address2 = token2.symbol === 'WETH' ? 'ETH' : token2.address;
+  const address1 = token1.symbol === 'WMATIC' ? 'ETH' : token1.address;
+  const address2 = token2.symbol === 'WMATIC' ? 'ETH' : token2.address;
 
   const link = platformURL[config.platform] && platformURL[config.platform].addLiquidityUrl 
     ? `${platformURL[config.platform].addLiquidityUrl}/${address1}/${address2}`

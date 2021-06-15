@@ -50,8 +50,8 @@ const configurations: { [env: string]: Configuration } = {
     gasLimitMultiplier: 1.1,
     defaultCollateral: 'USDT',
     supportedCollaterals: ['USDT', 'USDC'],
-    arthTradingPairs: ['ETH', 'MAHA'],
-    arthxTradingPairs: ['ETH', 'ARTH'],
+    arthTradingPairs: ['MATIC', 'MAHA'],
+    arthxTradingPairs: ['MATIC', 'ARTH'],
     platform: 'sushiswap'
   },
   production: {
@@ -107,8 +107,8 @@ export const stakingContracts: StakingContract[] = [
     platform: 'sushiswap',
     contract: 'StakeARTHWETH',
     kind: 'vested',
-    depositToken: 'ArthWethLP',
-    depositTokenSymbols: ['ARTH', 'WETH'],
+    depositToken: 'ArthWmaticLP',
+    depositTokenSymbols: ['ARTH', 'WMATIC'],
     depositTokenKind: 'single',
     earnTokenName: 'ARTHX',
     finished: false,
@@ -120,8 +120,8 @@ export const stakingContracts: StakingContract[] = [
     platform: 'sushiswap',
     contract: 'StakeARTHXWETH',
     kind: 'vested',
-    depositToken: 'ArthxWethLP',
-    depositTokenSymbols: ['ARTHX', 'WETH'],
+    depositToken: 'ArthxWmaticLP',
+    depositTokenSymbols: ['ARTHX', 'WMATIC'],
     depositTokenKind: 'single',
     earnTokenName: 'ARTHX',
     finished: false,
@@ -177,11 +177,11 @@ export const tradingPairs: TradingPairs[] = [
     paltform: 'sushiswap'
   },
   {
-    tokens: ['ARTH', 'WETH'],
+    tokens: ['ARTH', 'WMATIC'],
     paltform: 'sushiswap'
   },
   {
-    tokens: ['ARTHX', 'WETH'],
+    tokens: ['ARTHX', 'WMATIC'],
     paltform: 'sushiswap'
   },
 ];

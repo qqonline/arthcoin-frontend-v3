@@ -29,12 +29,12 @@ export class BasisCash {
   USDT: ERC20;
   USDC: ERC20;
   WBTC: ERC20;
-  WETH: ERC20;
+  WMATIC: ERC20;
   PoolToken: ERC20;
 
-  ArthWethLP: ERC20;
-  MahaWethLP: ERC20;
-  ArthxWethLP: ERC20;
+  ArthWmaticLP: ERC20;
+  MahaWmaticLP: ERC20;
+  ArthxWmaticLP: ERC20;
   ArthMahaLP: ERC20;
 
   tokens: {
@@ -69,14 +69,14 @@ export class BasisCash {
     this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT', 6);
     this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC', 6);
     this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 18);
-    this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH', 18);
+    this.WMATIC = new ERC20(deployments.WETH?.address, provider, 'WMATIC', 18);
 
     // this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 
     this.ArthMahaLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'ARTH-MAHA LP');
-    this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
-    this.ArthxWethLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-ETH LP');
-    this.ArthWethLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-ETH LP');
+    this.MahaWmaticLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-WMATIC LP');
+    this.ArthxWmaticLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-WMATIC LP');
+    this.ArthWmaticLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-WMATIC LP');
     this.PoolToken = new ERC20(deployments.PoolToken?.address, provider, 'ARTH-RT');
 
     this.tokens = {
@@ -87,21 +87,21 @@ export class BasisCash {
       USDT: this.USDT,
       USDC: this.USDC,
       WBTC: this.WBTC,
-      WETH: this.WETH,
+      WMATIC: this.WMATIC,
 
       ArthMahaLP: this.ArthMahaLP,
-      MahaWethLP: this.MahaWethLP,
-      ArthxWethLP: this.ArthxWethLP,
-      ArthWethLP: this.ArthWethLP,
+      MahaWmaticLP: this.MahaWmaticLP,
+      ArthxWmaticLP: this.ArthxWmaticLP,
+      ArthWmaticLP: this.ArthWmaticLP,
     };
 
     this.config = cfg;
     this.provider = provider;
 
     this.tradingPairs = {
-      'ARTH': [this.ArthMahaLP, this.ArthWethLP],
-      'MAHA': [this.ArthMahaLP, this.MahaWethLP],
-      'ARTHX': [this.ArthxWethLP]
+      'ARTH': [this.ArthMahaLP, this.ArthWmaticLP],
+      'MAHA': [this.ArthMahaLP, this.MahaWmaticLP],
+      'ARTHX': [this.ArthxWmaticLP]
     }
   }
 
@@ -129,9 +129,9 @@ export class BasisCash {
       this.USDT,
       this.PoolToken,
       this.ArthMahaLP,
-      this.MahaWethLP,
-      this.ArthxWethLP,
-      this.ArthWethLP,
+      this.MahaWmaticLP,
+      this.ArthxWmaticLP,
+      this.ArthWmaticLP,
     ];
 
     for (const token of tokens) {
