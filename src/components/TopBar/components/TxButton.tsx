@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useWallet } from 'use-wallet';
 import useModal from '../../../hooks/useModal';
@@ -11,12 +11,14 @@ interface TxButtonProps {}
 const TxButton: React.FC<TxButtonProps> = () => {
   const { account } = useWallet();
   
-  const [onPresentTransactionModal, onDismissTransactionModal] = useModal(
-    <TxModal onDismiss={() => onDismissTransactionModal()} />,
-  );
+  // const [onPresentTransactionModal, onDismissTransactionModal] = useModal(
+  //   <TxModal onDismiss={() => onDismissTransactionModal()} />,
+  // );
+
+  const [modal, setModal] = useState<boolean>(false);
   
   return (
-    <>
+    <div>
       {!!account && (
         <StyledTxButton>
           <HtmlTooltip enterTouchDelay={5000} title="Transaction">
@@ -24,7 +26,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
               src={transcationIcon}
               width="24px"
               className="pointer"
-              onClick={() => onPresentTransactionModal()}
+              onClick={() => setModal(true)}
               alt="transactionIcon"
             />
           </HtmlTooltip>
@@ -36,7 +38,8 @@ const TxButton: React.FC<TxButtonProps> = () => {
           /> */}
         </StyledTxButton>
       )}
-    </>
+      {modal && <TxModal onDismiss={() => setModal(false)} />}
+    </div>
   );
 };
 
