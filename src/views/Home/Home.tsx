@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 import Modal from '../../components/NewModal/index';
 import './styles/index.sass';
 import warning from '../../assets/svg/warning.svg';
