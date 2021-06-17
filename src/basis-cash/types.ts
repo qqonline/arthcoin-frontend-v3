@@ -1,8 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber';
 import { ChainId } from '@uniswap/sdk';
-// import { BigNumber, Contract } from 'ethers';
-// import { Boardrooms, BoardroomsV2, Vaults } from './config';
-// import ERC20 from './ERC20';
+import { BigNumber } from '@ethersproject/bignumber';
 
 export type ContractName = string;
 

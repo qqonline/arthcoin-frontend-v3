@@ -14,15 +14,12 @@ export type Configuration = {
   defaultProvider: string;
   deployments: Deployments;
   config?: EthereumConfig;
-
   defaultCollateral: string;
   supportedCollaterals: string[];
   arthTradingPairs: string[];
   arthxTradingPairs: string[];
-
   genesisLaunchDate: Date;
   genesisEndDate: Date;
-
   refreshInterval: number;
   gasLimitMultiplier: number;
   platform: string;

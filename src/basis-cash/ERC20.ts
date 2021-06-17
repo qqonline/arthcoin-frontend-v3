@@ -1,8 +1,8 @@
 import { BigNumber, Contract } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { Provider } from '@ethersproject/abstract-provider';
 import { TransactionResponse } from '@ethersproject/providers';
-import { formatUnits } from 'ethers/lib/utils';
 
 class ERC20 {
   protected contract: Contract;
@@ -62,7 +62,8 @@ class ERC20 {
   async displayedTotalSupply(): Promise<string> {
     const supply = await this.totalSupply();
     return Number(formatUnits(supply, this.decimal)).toFixed(0);
-  }}
+  }
+}
 
 export default ERC20;
 

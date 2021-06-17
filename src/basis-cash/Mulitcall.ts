@@ -1,6 +1,5 @@
-import { EventEmitter } from 'events'
-const multicall = require('@makerdao/multicall')
-
+import { EventEmitter } from 'events';
+const multicall = require('@makerdao/multicall');
 
 export interface IMulticallInput {
   key: string
@@ -8,7 +7,6 @@ export interface IMulticallInput {
   call: (string | number)[]
   convertResult: (val: any) => any
 }
-
 
 export default class Multicall extends EventEmitter {
   calls: IMulticallInput[] = []
@@ -69,7 +67,7 @@ export default class Multicall extends EventEmitter {
     this.watcher = multicall.createWatcher(this._getMutlicallCalls(this.calls), config)
     this.watcher.subscribe(this._processUpdates);
 
-    // Start the watcher polling
+    // Start the watcher polling.
     this.watcher.start();
   }
 }

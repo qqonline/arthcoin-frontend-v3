@@ -11,7 +11,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -44,11 +43,6 @@ code {
   font-family: Inter, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/*::-webkit-scrollbar {
-  width: 0px !important; !* Remove scrollbar space *!
-  background: transparent !important; !* Optional: just make scrollbar invisible *!
-}*/
-
 ::-webkit-scrollbar {
   -webkit-appearance: none !important;
   width: 4px !important;
@@ -59,11 +53,6 @@ code {
   border-radius: 10px !important;
 }
 
-/*IMPORTANT*/
-/*.css-2b097c-container{*/
-/*  background-color: #1F1E1E !important;*/
-/*  width: 100px !important;*/
-/*}*/
 .css-yk16xz-control{
   background-color:transparent !important;
   border: 0px solid transparent !important;
@@ -151,9 +140,6 @@ code {
   border: 1px solid #F09700;
 }
 
-.input-default {
-}
-
 .input-font-error {
   font-family: Inter;
   font-style: normal;
@@ -175,12 +161,6 @@ code {
   margin-top: 4px;
   margin-bottom: 0;
 }
-
-.input-font-default {
-}
-
-
-
 
 .MuiInputBase-input{
   font-family: Inter !important;
@@ -206,21 +186,6 @@ code {
 @keyframes spin { 100% { -webkit-transform: rotate(180deg); transform:rotate(180deg); } }
 
 .chakra-home {
-  /*animation: chakra-animate 50s infinite linear;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  position: fixed;
-  top: 40px;
-  z-index: -1;
-  width: 100%;*/
-
-  /*-webkit-animation: chakra-animate 50s linear infinite;*/
-  /* animation: chakra-animate 50s linear infinite; */
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -238,7 +203,6 @@ code {
   position: absolute;
   opacity: 0.1;
   top: 400px;
-  /* animation: up-down 10s infinite alternate; */
   background-image: url('views/Home/images//gradient-circle.png');
   background-position: center;
   background-size: cover;
@@ -252,7 +216,6 @@ code {
   position: absolute;
   opacity: 0.5;
   top: 400px;
-  /* animation: up-down 10s infinite alternate; */
   background-image: url('views/Home/images//gradient-circle.png');
   background-size: contain;
   height: 100%;
@@ -369,9 +332,7 @@ body {
 .overlay-center-child {
   position: absolute;
   top: 50%;
-  /* position the top  edge of the element at the middle of the parent */
   left: 50%;
-  /* position the left edge of the element at the middle of the parent */
   transform: translate(-50%, -50%);
   overflow-y: scroll;
 }
@@ -523,9 +484,6 @@ body.modal-open {
   color: #000000;
 }
 
-/* END: COLOR */
-
-/* START: BACKGROUND */
 .no-background {
   background: none;
 }
@@ -599,10 +557,6 @@ body.modal-open {
   opacity: 0.6;
 }
 
-/* END: BACKGROUND */
-
-/* START: SHADOW */
-
 .no-shadow {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -617,9 +571,6 @@ body.modal-open {
   filter: blur(2.5px);
 }
 
-/* END: SHADOW */
-
-/* START: MARGIN */
 .no-margin {
   margin: 0px;
 }
@@ -899,9 +850,6 @@ body.modal-open {
   margin-right: 0px;
 }
 
-/* END: MARGIN */
-
-/* START: PADDING */
 .no-padding {
   padding: 0px;
 }
@@ -1170,9 +1118,6 @@ body.modal-open {
   padding-right: 5px;
 }
 
-/* END: PADDING */
-
-/* START: TEXT FORMAT */
 .medium-bold {
   font-weight: 500;
 }
@@ -1390,18 +1335,13 @@ ul {
   list-style-type: none; /* no default bullets */
 }
 
-ul li {
-  /* font-family: Arial; */
-  /* font-size: 18px; */
-}
-
 li {
   padding-block: 5px;
   line-height: 200%;
   text-anchor: start;
 }
 
-li::before { /* the custom styled bullets */
+li::before {
   background-color: white;
   border-radius: 50%;
   content: "";
@@ -1454,9 +1394,6 @@ li::before { /* the custom styled bullets */
   letter-spacing: 1px;
 }
 
-/* END: TEXT FORMAT */
-
-/* START: HEADING/H1,H2... */
 .heading1 {
   font-size: 28px;
 }
@@ -1473,13 +1410,6 @@ li::before { /* the custom styled bullets */
   font-size: 18px;
 }
 
-/* START: HEADING/H1,H2... */
-
-/* START: HOVER */
-
-/* END: HOVER */
-
-/* START: BOX FORMAT */
 .relative {
   position: relative;
 }
@@ -2021,12 +1951,6 @@ li::before { /* the custom styled bullets */
   line-height: 20px;
 }
 
-/*  END: CUSTOME */
-
-/*
-   * Responsive text aligning
-   * http://ohryan.ca/2014/08/14/set-responsive-text-alignment-bootstrap-3/
-   */
 .text-xs-left {
   text-align: left;
 }
