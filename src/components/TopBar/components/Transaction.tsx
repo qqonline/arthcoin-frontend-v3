@@ -58,9 +58,7 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
   const pending = !tx.receipt;
   const success =
     !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined');
-  const date = tx?.confirmedTime || 0
-
-  console.log('TransactionDetails', tx)
+  const date =  tx?.confirmedTime || tx?.addedTime
 
   return (
     <TransactionWrapper>
