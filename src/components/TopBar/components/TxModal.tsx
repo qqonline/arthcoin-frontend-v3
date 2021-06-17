@@ -60,54 +60,55 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
               </CrossIcon>
             </RightSubHeader>
           </ModalHeader>
-          {
-            pending?.length > 0
-              ? (
-                <>
-                  <Label text="Pending transactions" />
-                  <StyledTransactionList>
-                    {pending.map((tx) => (
-                      <Transaction key={tx.hash} tx={tx} />
-                    ))}
-                  </StyledTransactionList>
-                  <Spacer size="sm" />
-                </>
-              ) : (
-                <div className="margin-top-bottom-20">
-                  <Label text="No pending transactions." color="#777" />
-                </div>
-              )
-          }
-          {
-            confirmed?.length > 0
-              ? (
-                <>
-                  <Divider
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.08)',
-                      margin: '15px 0px',
-                    }}
-                  />
-                  <StyledTitleArea style={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
-                    <Label text="Recent transactions" />
-                    {"  "}
-                    <StyledClearIconWrapper>
-                      <Trash onClick={clearAllTransactions} size="16" />
-                    </StyledClearIconWrapper>
-                  </StyledTitleArea>
-                  <StyledTransactionList>
-                    {confirmed.map((tx) => (
-                      <Transaction key={tx.hash} tx={tx} />
-                    ))}
-                  </StyledTransactionList>
-                </>
-              )
-              : (
-                <div className="margin-top-bottom-20">
-                  <Label text="No recent transactions." color="#777" />
-                </div>
-              )
-          }
+          <ModalBody>
+            {sortedRecentTransactions.length === 0 && <NoTransaction>You haven’t done any transaction yet.</NoTransaction>}
+            <StyledTransactionList>
+              {sortedRecentTransactions.map((tx) => (
+                <Transaction key={tx.hash} tx={tx} />
+              ))}
+            </StyledTransactionList>
+            <Spacer size="sm" />
+            {/*{
+              pending?.length > 0
+                ? (
+
+                ) : (
+                  <div className="margin-top-bottom-20">
+                    <Label text="No pending transactions." color="#777" />
+                  </div>
+                )
+            }
+            {
+              confirmed?.length > 0
+                ? (
+                  <>
+                    <Divider
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.08)',
+                        margin: '15px 0px',
+                      }}
+                    />
+                    <StyledTitleArea style={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
+                      <Label text="Recent transactions" />
+                      {"  "}
+                      <StyledClearIconWrapper>
+                        <Trash onClick={clearAllTransactions} size="16" />
+                      </StyledClearIconWrapper>
+                    </StyledTitleArea>
+                    <StyledTransactionList>
+                      {confirmed.map((tx) => (
+                        <Transaction key={tx.hash} tx={tx} />
+                      ))}
+                    </StyledTransactionList>
+                  </>
+                )
+                : (
+                  <div className="margin-top-bottom-20">
+                    <Label text="No recent transactions." color="#777" />
+                  </div>
+                )
+            }*/}
+          </ModalBody>
         </WalletDiv>
       </PositionDiv>
     </MainDiv>
@@ -153,11 +154,13 @@ const WalletDiv = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  margin: 24px;
+  padding: 12px 24px 12px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
+
 
 const Title = styled.p`
   font-family: Inter;
@@ -166,6 +169,7 @@ const Title = styled.p`
   font-size: 16px;
   line-height: 24px;
   color: #FFFFFF;
+  margin-bottom: 0;
 `
 
 const RightSubHeader = styled.div`
@@ -182,16 +186,32 @@ const ClearAll = styled.p`
   line-height: 130%;
   color: rgba(255, 255, 255, 0.32);
   cursor: pointer;
+  margin-bottom: 0;
 `
 
 const CrossIcon = styled.div`
-  margin-top: -12px;
+  margin-right: -12px;
 `
 
 const StyledTitleArea = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const ModalBody = styled.div`
+  padding: 24px;
+`
+
+const NoTransaction = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 0;
+`
+
 
 const StyledClearIconWrapper = styled.div`
   color: ${({ theme }) => theme.color.grey[300]};
