@@ -20,6 +20,8 @@ import usePrizes from '../../hooks/state/usePrizes';
 import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 import Loader from 'react-spinners/BeatLoader';
+import FadeLoader from 'react-spinners/FadeLoader';
+
 
 const Lottery = () => {
   WalletAutoConnect();
@@ -34,9 +36,87 @@ const Lottery = () => {
     return lotteryBalance.mul(100).div(tokenCounter);
   }, [lotteryBalance, tokenCounter])
 
+  console.log('isPrizesLoading', isPrizesLoading, prizes)
+
   // if (isLotteryBalanceLoading) return <LoadingPage />
   // if (isTokenCounterLoading) return <LoadingPage />
   // if (isPrizesLoading) return <LoadingPage />
+
+  const RenderCards = () => {
+     if (isPrizesLoading) {
+       return (
+        <Loader color={'#ffffff'} loading={isTokenCounterLoading} size={8} margin={2} />
+       )
+     } else if (prizes.length > 0) {
+       return (
+         <Container size={'lg'}>
+           <CardConatiner>
+             <Grid container spacing={2}>
+               {
+                 prizes.map((prize, i) => (
+                     prize.winner !== '0x0000000000000000000000000000000000000000'
+                       ? (
+                         <Grid item lg={4} md={4} sm={12} xs={12}>
+                           <LotteryCard
+                             key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                             image={prize?.image || ''}
+                             cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                             changeToWin={{
+                               text: 'Your change to win',
+                               perc: '0%'
+                             }}
+                             moreInfoMsg={
+                               prize.winner === core.myAccount
+                                 ? 'You have won this prize.'
+                                 : 'This prize has been won.'
+                             }
+                           />
+                         </Grid>
+                       )
+                       : (
+                         Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
+                           ? (
+                             <Grid item lg={4} md={4} sm={12} xs={12}>
+                               <LotteryCard
+                                 key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                                 image={prize?.image || ''}
+                                 cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                 changeToWin={{
+                                   text: 'Your Chance to win',
+                                   perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
+                                 }}
+                                 buttonText={'Increase Your Chance to Win'}
+                               />
+                             </Grid>
+                           )
+                           : (
+                             <Grid item lg={4} md={4} sm={12} xs={12}>
+                               <LotteryCard
+                                 image={prize?.image || ''}
+                                 key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                                 cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                 moreInfoMsg={
+                                   `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
+                                   } ticket to participate in winning this prize! `
+                                 }
+                                 buttonText={'Get More Tickets'}
+                               />
+                             </Grid>
+                           )
+                       )
+                   )
+                 )
+               }
+             </Grid>
+           </CardConatiner>
+         </Container>
+       )
+     } else {
+       return (
+         <NoPrizesHeading>No prizes for now</NoPrizesHeading>
+       )
+     }
+  }
 
   return (
     <div>
@@ -73,8 +153,9 @@ const Lottery = () => {
           </MainSection>
         </Container>
       </HeadingContainer>
-      {
-        prizes.length > 0
+      {RenderCards()}
+      {/*{
+        prizes.length > 0 && !isPrizesLoading
           ? (
             <Container size={'lg'}>
               <CardConatiner>
@@ -141,7 +222,7 @@ const Lottery = () => {
           : (
             <NoPrizesHeading>No prizes for now</NoPrizesHeading>
           )
-      }
+      }*/}
     </div>
   );
 };
