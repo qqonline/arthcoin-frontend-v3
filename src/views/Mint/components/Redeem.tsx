@@ -148,7 +148,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   ]);
 
   const onCollateralValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -186,7 +186,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0) || arthRatio.lte(0) || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -221,7 +221,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxRatio.lte(0) || collateralToGMUPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -544,7 +544,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       />
                       <div style={{ padding: 5 }} />
                       <Button
-                        text={'Redeem'}
+                        text={'Request Redeem'}
                         size={'lg'}
                         variant={'default'}
                         disabled={
@@ -560,7 +560,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     <br />
                     <Button
                       disabled={redeemableBalances[0].lte(0) && redeemableBalances[1].lte(0)}
-                      text={'Collect Redemption'}
+                      text={'Redeem'}
                       size={'lg'}
                       variant={'default'}
                         onClick={() => collectRedeemption(() => setSuccessCollectModal(true))}

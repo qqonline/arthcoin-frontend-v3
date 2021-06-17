@@ -44,7 +44,7 @@ export const MobileFarm = (props: IProps) => {
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
-  const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
+  const tokenAddresses = tokens.map((t) => (t.symbol === 'WMATIC' ? 'ETH' : t.address));
   const uniswapLink = `${platformURL[props.pool.platform]?.addLiquidityUrl || 'https:app.uniswap.org/swap'}/${tokenAddresses.join('/')}`;
   const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`
   const pow = BigNumber.from(10).pow(18);
@@ -124,7 +124,7 @@ export const MobileFarm = (props: IProps) => {
                     </StyledSubTitle>
                   ) : (
                       <StyledSubTitle onClick={() => window.open(etherscan, '_blank')}>
-                      View Etherscan
+                      View on Explorer
                       </StyledSubTitle>
                   )
                 }

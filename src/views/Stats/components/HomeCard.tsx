@@ -27,7 +27,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   const liquidity = useUniswapLiquidity(symbol);
   const circulatingSupply = useCirculatingSupply(symbol);
 
-  const tokenUrl = `${config.etherscanUrl}/token/${address}`;
+  const tokenUrl = `${config.etherscanUrl}/address/${address}`;
   
   return (
     <Wrapper>
@@ -39,7 +39,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}
           >
             <span className="margin-bottom-5">{title}</span>
-            <SubTitle href={tokenUrl}>{`${title} on Etherscan`}</SubTitle>
+            <SubTitle target="_blank" href={tokenUrl}>{`${title} on Explorer`}</SubTitle>
           </div>
         </CardHeader>
         <CardContent>

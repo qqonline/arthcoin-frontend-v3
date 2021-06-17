@@ -168,7 +168,6 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
-  const redeemFee = usePoolRedeemFees(selectedCollateral);
   const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
 
   WalletAutoConnect();
@@ -207,13 +206,6 @@ const Genesis = (props: WithSnackbarProps) => {
       .div(outAssetprice)
   );
 
-  const tradingFee = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${arthValue}`, 18))
-      .mul(redeemFee)
-      .div(1e6);
-  }, [arthValue, redeemFee]);
-
   const arthxRecieve = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
@@ -229,13 +221,12 @@ const Genesis = (props: WithSnackbarProps) => {
     return calcExpectReceiveAmount(
       BigNumber.from(1e6),
       arthxPrice,
-      Number(arthValue) - Number(getDisplayBalance(tradingFee, 18, 6)),
+      Number(arthValue),
       18,
       18
     );
   }, [
     arthValue,
-    tradingFee,
     collateralGMUPrice,
     arthxPrice,
     collateralValue,
@@ -246,7 +237,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const lotteryAmount = useMemo(() => {
     if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
     const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
-    return gmuCollateralValue.mul(collateralGMUPrice).div(1000).div(1e6);
+    return gmuCollateralValue.mul(collateralGMUPrice).div(10).div(1e6);
   }, [collateralValue, collateralGMUPrice, tokenDecimals]);
 
   const arthxDiscount = useMemo(() => {
@@ -281,7 +272,6 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is a deflationary token that charges a 10% fee on every transfer which goes to stakers and liquidity providers',
     'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
     'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
     'The discount decreases over time as more collateral is committed.',
@@ -300,7 +290,7 @@ const Genesis = (props: WithSnackbarProps) => {
         subsubTitle={
           'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
         }
-        buttonText={'Stake your ARTH'}
+        buttonText={'Stake your ARTHX'}
         buttonType={'default'}
         buttonTo={'/farming'}
       />
@@ -319,17 +309,6 @@ const Genesis = (props: WithSnackbarProps) => {
             rightLabelUnit={currentCoin}
             rightLabelValue={Number(currentValue).toLocaleString()}
           />
-          {
-            type !== 'Commit' &&
-            <TransparentInfoDiv
-              labelData={`Trading Fee`}
-              rightLabelUnit={'ARTH'}
-              rightLabelValue={
-                Number(getDisplayBalance(tradingFee, 18, 6))
-                  .toLocaleString('en-US', {maximumFractionDigits: 6})
-                }
-            />
-          }
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
           <TransparentInfoDiv
             labelData={`You will receive`}
@@ -575,42 +554,23 @@ const Genesis = (props: WithSnackbarProps) => {
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                     {
-                      type === 'Commit'
-                        ? (
+                      type === 'Commit' &&
+                      (
+                        <OneLineInputwomargin>
+                          <div style={{ flex: 1 }}>
+                            <TextWithIcon>
+                              Bonus
+                              <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
+                            </TextWithIcon>
+                          </div>
                           <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Bonus
-                                <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                              </BeforeChip>
-                              <TagChips>ARTHX</TagChips>
-                            </OneLineInputwomargin>
+                            <BeforeChip className={'custom-mahadao-chip'}>
+                              {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                            </BeforeChip>
+                            <TagChips>ARTHX</TagChips>
                           </OneLineInputwomargin>
-                        )
-                        : (
-                          <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Trading Fee
-                                <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with swapping ARTH for ARTHX during genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {
-                                  Number(getDisplayBalance(tradingFee, 18, 6))
-                                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
-                                }
-                              </BeforeChip>
-                              <TagChips>ARTH</TagChips>
-                            </OneLineInputwomargin>
-                          </OneLineInputwomargin>
-                        )
+                        </OneLineInputwomargin>
+                      )
                     }
                   </ReceiveContainer>
                 </div>

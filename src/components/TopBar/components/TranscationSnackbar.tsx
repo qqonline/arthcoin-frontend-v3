@@ -80,10 +80,11 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
               <SnackBarLoading>
                 <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{content.txn?.summary}</span>
+                  <span className="margin-bottom-10">
+                    {content.txn?.summary}
+                  </span>
                   {
-                    config.etherscanUrl !== '' && content.txn?.hash !== ''
-                    && 
+                    config.etherscanUrl !== '' && content.txn?.hash !== '' && 
                     (
                       <AnchorTag
                         href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
@@ -102,25 +103,24 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
                 <div className="dialog-class display-flex-column">
                   <span className="margin-bottom-10">{content.txn?.summary}</span>
                   {
-                    config.etherscanUrl !== '' && content.txn?.hash !== ''
-                    && 
+                    config.etherscanUrl !== '' && content.txn?.hash !== '' && 
                     (
-                        <AnchorTag
-                          href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          View on Etherscan ↗
-                        </AnchorTag>
+                      <AnchorTag
+                        href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        View on Explorer ↗
+                      </AnchorTag>
                     )
                   }
                 </div>
               </SnackBarRedeem>
             ) : (
               <SnackBarRedeemCancelled>
-                <NotificationsNoneIcon className="margin-left-right-20" />
+                  <NotificationsNoneIcon className="margin-left-right-20" />
                 <div className="dialog-class display-flex-column">
-                    <span className="margin-bottom-10">{content.txn?.summary || content.error?.message}</span>
+                  <span>{content.txn?.summary || content.error?.message}</span>
                 </div>
               </SnackBarRedeemCancelled>
             )}

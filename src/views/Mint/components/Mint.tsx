@@ -77,6 +77,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
 
   const tradingFee = useMemo(() => {
+    if (mintingFee.lte(0)) return BigNumber.from(0);
+
     return BigNumber
       .from(parseUnits(`${arthValue}`, 18))
       .mul(mintingFee)
@@ -84,7 +86,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   }, [arthValue, mintingFee]);
 
   const onCollateralValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -122,7 +124,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || collateralToGMUPrice.lte(0) || arthxPrice.lte(0) || arthRatio.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -157,7 +159,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || collateralToGMUPrice.lte(0) || arthxRatio.lte(0)) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');

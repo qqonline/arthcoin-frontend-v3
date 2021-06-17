@@ -11,6 +11,9 @@ import USDLogo from './images/logo/USD.svg'
 import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 
+import useCore from '../../hooks/useCore';
+import config, { platformURL } from '../../config';
+
 const useSliderStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -111,12 +114,20 @@ const Home: React.FC = () => {
     setSliderValue(value);
   };
 
+  const core = useCore();
+
+  const token1 = core.tokens.ARTH;
+
+  const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
+    ? `${platformURL[config.platform].swapUrl}?inputCurrency=${'ETH'}&outputCurrency=${token1.address}`
+    : `https://app.uniswap.org/#/swap?inputCurrency=${'ETH'}&outputCurrency=${token1.address}&use=V2`;
+
   return (
     <div>
       <Modal
         title="Disclaimer"
         titleLogo={
-          <img src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
+          <img alt={'Warning'} src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
         }
         open={openModal}
         handleClose={handleClose}
@@ -203,7 +214,7 @@ const Home: React.FC = () => {
         <div className="button-container">
           <a
             target="_blank"
-            href="https://quickswap.exchange/"
+            href={tradelink}
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
@@ -736,7 +747,7 @@ const Home: React.FC = () => {
             <div className="action-button">
               <a
                 target="_blank"
-                href="https://quickswap.exchange/"
+                href={tradelink}
                 id="no-txt-decoration"
                 rel="noopener noreferrer"
               >
