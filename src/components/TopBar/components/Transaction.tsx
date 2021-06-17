@@ -85,28 +85,6 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
       <StateWrapper pending={pending} success={success}>
         {pending? 'Pending': success? '': 'Failed'}
       </StateWrapper>
-
-
-      {/*<TransactionState
-        href={`${config.etherscanUrl}/tx/${tx.hash}`}
-        target="_blank"
-        pending={pending}
-        success={success}
-      >
-        <IconWrapper pending={pending} success={success}>
-          {pending ? (
-            <MiniLoader stroke='white' />
-          ) : success ? (
-            <CheckCircle size="16" />
-          ) : (
-            <Triangle size="16" />
-          )}
-        </IconWrapper>
-        <RowFixed>
-          <TransactionStatusText>{summary ?? tx.hash} ↗</TransactionStatusText>
-        </RowFixed>
-
-      </TransactionState>*/}
     </TransactionWrapper>
   );
 };

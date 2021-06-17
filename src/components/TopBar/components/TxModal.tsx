@@ -37,7 +37,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
   const confirmed = sortedRecentTransactions
     .filter((tx) => tx.receipt)
     .slice(0, MAX_TRANSACTION_HISTORY);
-  
+
   const handleClose = () => {
     toggleModal(false);
     onDismiss();
@@ -69,7 +69,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
               </div>
             )}
             <StyledTransactionList>
-              {sortedRecentTransactions.map((tx) => (
+              {sortedRecentTransactions.slice(0, MAX_TRANSACTION_HISTORY).map((tx) => (
                 <Transaction key={tx.hash} tx={tx} />
               ))}
             </StyledTransactionList>
@@ -207,6 +207,8 @@ const StyledTitleArea = styled.div`
 
 const ModalBody = styled.div`
   padding: 24px;
+  overflow-y: scroll;
+  max-height: calc(360px - 72px);
 `
 
 const NoTransaction = styled.p`
