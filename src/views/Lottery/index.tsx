@@ -27,25 +27,22 @@ const Lottery = () => {
   WalletAutoConnect();
 
   const core = useCore();
+  const { isLoading: isPrizesLoading, value: prizes } = usePrizes();
+  const { isLoading: isTokenCounterLoading, value: tokenCounter } = useTokenCounter();
   const { isLoading: isLotteryBalanceLoading, balance: lotteryBalance} = useLotteryBalance(core.myAccount);
-  const { isLoading: isTokenCounterLoading, value: tokenCounter} = useTokenCounter();
-  const {isLoading: isPrizesLoading, value: prizes} = usePrizes();
-
-   const yourPercentOfWinning = useMemo(() => {
-    if (tokenCounter.lte(0)) return BigNumber.from(0);
-    return lotteryBalance.mul(100).div(tokenCounter);
-  }, [lotteryBalance, tokenCounter])
-
-  console.log('isPrizesLoading', isPrizesLoading, prizes)
-
-  // if (isLotteryBalanceLoading) return <LoadingPage />
-  // if (isTokenCounterLoading) return <LoadingPage />
-  // if (isPrizesLoading) return <LoadingPage />
+  
+  const [isPercentLoading, yourPercentOfWinning] = useMemo(() => {
+    if (isTokenCounterLoading || isLotteryBalanceLoading) return [true, BigNumber.from(0)]
+    if (tokenCounter.lte(0)) return [false, BigNumber.from(0)];
+    return [false, lotteryBalance.mul(100).div(tokenCounter)];
+  }, [lotteryBalance, tokenCounter, isLotteryBalanceLoading, isTokenCounterLoading ])
 
   const RenderCards = () => {
      if (isPrizesLoading) {
        return (
-        <Loader color={'#ffffff'} loading={isTokenCounterLoading} size={8} margin={2} />
+         <NoPrizesHeading>
+          <FadeLoader color={'#ffffff'} loading={isPrizesLoading} margin={2} />
+        </NoPrizesHeading>
        )
      } else if (prizes.length > 0) {
        return (
@@ -59,6 +56,7 @@ const Lottery = () => {
                          <Grid item lg={4} md={4} sm={12} xs={12}>
                            <LotteryCard
                              key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                             isDataLoading={false}
                              image={prize?.image || ''}
                              cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
                              changeToWin={{
@@ -81,9 +79,10 @@ const Lottery = () => {
                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
                                  image={prize?.image || ''}
                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                 isDataLoading={isPercentLoading}
                                  changeToWin={{
-                                   text: 'Your Chance to win',
-                                   perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
+                                    text: 'Your Chance to win',
+                                    perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
                                  }}
                                  buttonText={'Increase Your Chance to Win'}
                                />
@@ -95,9 +94,10 @@ const Lottery = () => {
                                  image={prize?.image || ''}
                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                                 isDataLoading={isLotteryBalanceLoading}
                                  moreInfoMsg={
                                    `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
-                                   } ticket to participate in winning this prize! `
+                                   } more ticket to participate in winning this prize! `
                                  }
                                  buttonText={'Get More Tickets'}
                                />
@@ -113,7 +113,7 @@ const Lottery = () => {
        )
      } else {
        return (
-         <NoPrizesHeading>No prizes for now</NoPrizesHeading>
+         <NoPrizesHeading>Prizes have not been updated.</NoPrizesHeading>
        )
      }
   }
@@ -138,12 +138,12 @@ const Lottery = () => {
                 <TicketHead>Your Lottery Tickets</TicketHead>
                 <TicketDataSection>
                   <TicketLogo src={TicketLogoImg} alt="Ticket" />
-                  {/*{!isLotteryBalanceLoading ? <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>*/}
-                  {/*:<Loader color={'#ffffff'} loading={isTokenCounterLoading} size={10} margin={2}/>}*/}
                   <TicketData>
-                    {isLotteryBalanceLoading? (
-                      <Loader color={'#ffffff'} loading={isTokenCounterLoading} size={8} margin={2} />) :
-                      (Number(lotteryBalance.toString()).toLocaleString())}
+                    {
+                      isLotteryBalanceLoading
+                        ? <Loader color={'#ffffff'} loading={isLotteryBalanceLoading} size={8} margin={2} />
+                        : Number(lotteryBalance.toString()).toLocaleString()
+                    }
                   </TicketData>
                 </TicketDataSection>
                 <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
@@ -153,76 +153,9 @@ const Lottery = () => {
           </MainSection>
         </Container>
       </HeadingContainer>
-      {RenderCards()}
-      {/*{
-        prizes.length > 0 && !isPrizesLoading
-          ? (
-            <Container size={'lg'}>
-              <CardConatiner>
-                <Grid container spacing={2}>
-                  {
-                    prizes.map((prize, i) => (
-                      prize.winner !== '0x0000000000000000000000000000000000000000'
-                        ? (
-                          <Grid item lg={4} md={4} sm={12} xs={12}>
-                            <LotteryCard
-                              key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                              image={prize?.image || ''}
-                              cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                              changeToWin={{
-                                text: 'Your change to win',
-                                perc: '0%'
-                              }}
-                              moreInfoMsg={
-                                prize.winner === core.myAccount
-                                  ? 'You have won this prize.'
-                                  : 'This prize has been won.'
-                              }
-                            />
-                          </Grid>
-                        )
-                        : (
-                          Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
-                            ? (
-                              <Grid item lg={4} md={4} sm={12} xs={12}>
-                                <LotteryCard
-                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                                  image={prize?.image || ''}
-                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                                  changeToWin={{
-                                    text: 'Your Chance to win',
-                                    perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
-                                  }}
-                                  buttonText={'Increase Your Chance to Win'}
-                                />
-                              </Grid>
-                            )
-                            : (
-                              <Grid item lg={4} md={4} sm={12} xs={12}>
-                                <LotteryCard
-                                  image={prize?.image || ''}
-                                  key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                                  cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                                  moreInfoMsg={
-                                    `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
-                                    } ticket to participate in winning this prize! `
-                                  }
-                                  buttonText={'Get More Tickets'}
-                                />
-                              </Grid>
-                            )
-                        )
-                    )
-                    )
-                  }
-                </Grid>
-              </CardConatiner>
-            </Container>
-          )
-          : (
-            <NoPrizesHeading>No prizes for now</NoPrizesHeading>
-          )
-      }*/}
+      {
+        RenderCards()
+      }
     </div>
   );
 };
@@ -285,6 +218,11 @@ const NoPrizesHeading = styled.div`
   opacity: 0.88;
   text-align: center;
   margin-top: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 `
 
 const SubHeading = styled.p`

@@ -2,6 +2,8 @@ import React from 'react';
 import FeatureI from '../../assets/img/photo-1490077476659-095159692ab5.jpeg';
 import Button from '../Button';
 import styled from 'styled-components';
+import Loader from 'react-spinners/BeatLoader';
+
 import warningLogo from '../../assets/svg/warningIcon.svg';
 
 type props = {
@@ -13,11 +15,12 @@ type props = {
   }
   moreInfoMsg?: string;
   buttonText?: string;
+  isDataLoading: boolean;
   buttonClick?: () => void;
 };
 
 const LotteryCard: React.FC<props> = (props) => {
-  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText = "", buttonClick } = props;
+  const { image, cardtitle, changeToWin = null, moreInfoMsg = "", buttonText = "", isDataLoading, buttonClick } = props;
 
   return (
     <LotteryCardConatiner className={'custom-mahadao-box'}>
@@ -25,22 +28,32 @@ const LotteryCard: React.FC<props> = (props) => {
       <CardBody>
         <CardTitle>{cardtitle}</CardTitle>
         {
-          changeToWin && 
-          <ChnageWin>
-            <ChnageWinDesc>{changeToWin.text}</ChnageWinDesc>
-            <Perc>{changeToWin.perc}</Perc>
-          </ChnageWin>
+          isDataLoading
+            ? (
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+            )
+            : changeToWin && (
+              <ChnageWin>
+                <ChnageWinDesc>{changeToWin.text}</ChnageWinDesc>
+                <Perc>{changeToWin.perc}</Perc>
+              </ChnageWin>
+            )
         }
         {
           buttonText === '' &&
           <br />
         }
         {
-          moreInfoMsg !== '' && 
-          <CustomBadgeAlert>
-            <Logo src={warningLogo} alt='TicketBg' />
-            <Text>{moreInfoMsg}</Text>
-          </CustomBadgeAlert>
+          isDataLoading
+            ? (
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+            )
+            : moreInfoMsg !== '' &&  (
+              <CustomBadgeAlert>
+                <Logo src={warningLogo} alt='TicketBg' />
+                <Text>{moreInfoMsg}</Text>
+              </CustomBadgeAlert>
+            )
         }
       </CardBody>
       {
