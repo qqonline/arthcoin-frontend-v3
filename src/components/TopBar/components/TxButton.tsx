@@ -18,7 +18,7 @@ const TxButton: React.FC<TxButtonProps> = () => {
   const [modal, setModal] = useState<boolean>(false);
   
   return (
-    <div>
+    <div style={{display: 'flex'}}>
       {!!account && (
         <StyledTxButton>
           <HtmlTooltip enterTouchDelay={5000} title="Transaction">

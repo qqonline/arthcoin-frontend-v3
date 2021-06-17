@@ -1,7 +1,6 @@
-import { Trash } from 'react-feather';
 import styled from 'styled-components';
-import { Divider } from '@material-ui/core';
 import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom'
 
 import Label from '../../Label';
 import Button from '../../Button';
@@ -52,7 +51,9 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
           <ModalHeader>
             <Title>Recent Transactions</Title>
             <RightSubHeader>
-              <ClearAll onClick={clearAllTransactions}>Clear all</ClearAll>
+              {sortedRecentTransactions.length > 0 && (
+                <ClearAll onClick={clearAllTransactions}>Clear all</ClearAll>
+              )}
               <CrossIcon>
                 <IconButton aria-label="close" onClick={() => handleClose()}>
                   <img src={CloseIcon} width="24px" alt="" />
@@ -61,7 +62,12 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
             </RightSubHeader>
           </ModalHeader>
           <ModalBody>
-            {sortedRecentTransactions.length === 0 && <NoTransaction>You haven’t done any transaction yet.</NoTransaction>}
+            {sortedRecentTransactions.length === 0 && (
+              <div>
+                <NoTransaction>You haven’t done any transaction yet.</NoTransaction>
+                <CallToAction to={'/mint/mint'} onClick={() => handleClose()}>Mint Arth</CallToAction>
+              </div>
+            )}
             <StyledTransactionList>
               {sortedRecentTransactions.map((tx) => (
                 <Transaction key={tx.hash} tx={tx} />
@@ -154,7 +160,8 @@ const WalletDiv = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  padding: 12px 24px 12px 24px;
+  margin: 12px 24px 0 24px;
+  padding: 0 0 12px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
@@ -209,9 +216,27 @@ const NoTransaction = styled.p`
   font-size: 16px;
   line-height: 150%;
   color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 0;
+  margin-bottom: 8px;
+  padding: 0 12px;
+  text-align: center;
 `
 
+const CallToAction = styled(Link)`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 150%;
+  color: #F7653B;
+  text-align: center;
+  width: 100%;
+  display: block;
+  &:hover {
+    color: #F7653B;
+  }
+
+
+`
 
 const StyledClearIconWrapper = styled.div`
   color: ${({ theme }) => theme.color.grey[300]};

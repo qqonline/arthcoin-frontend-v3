@@ -47,7 +47,6 @@ const StateWrapper = styled.div<{ pending: boolean; success?: boolean }>`
   font-weight: normal;
   font-size: 12px;
   line-height: 130%;
-  color: #FA4C69;
 `;
 
 interface TransactionProps {
