@@ -77,7 +77,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
   useEffect(() => {
     checkForErrorAndWarning(DefaultValue);
-  }, [DefaultValue])
+  }, [DefaultValue, LogoSymbol, IBalanceValue])
 
   const Redirection = () => {
     if (props?.href) {
