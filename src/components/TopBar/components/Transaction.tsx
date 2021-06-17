@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CheckCircle, Triangle } from 'react-feather';
+import { format } from 'timeago.js';
 
-import MiniLoader from '../../MiniLoader';
 import { TransactionDetails } from '../../../state/transactions/reducer';
 import config from '../../../config';
-import { RowFixed } from '../../Row';
 import SuccessIcon from '../../../assets/svg/SuccessTransaction.svg';
 import FailedIcon from '../../../assets/svg/failedTransaction.svg';
 import PendingIcon from '../../../assets/svg/pendingTransaction.svg';
@@ -61,6 +59,7 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
   const pending = !tx.receipt;
   const success =
     !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined');
+  const date = tx?.confirmedTime || 0
 
   console.log('TransactionDetails', tx)
 
@@ -84,7 +83,7 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
           target="_blank">
           {summary ?? tx.hash}
         </Title>
-        <Date>2 hours ago //Static</Date>
+        <Date>{format(date)}</Date>
       </InfoSection>
       <StateWrapper pending={pending} success={success}>
         {pending? 'Pending': success? '': 'Failed'}
