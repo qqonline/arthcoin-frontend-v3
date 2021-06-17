@@ -65,11 +65,11 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
             {sortedRecentTransactions.length === 0 && (
               <div>
                 <NoTransaction>You haven’t done any transaction yet.</NoTransaction>
-                <CallToAction to={'/mint/mint'} onClick={() => handleClose()}>Mint Arth</CallToAction>
+                <CallToAction to={'/mint/mint'} onClick={() => handleClose()}>Mint ARTH</CallToAction>
               </div>
             )}
             <StyledTransactionList>
-              {sortedRecentTransactions.slice(0, MAX_TRANSACTION_HISTORY).map((tx) => (
+              {sortedRecentTransactions.map((tx) => (
                 <Transaction key={tx.hash} tx={tx} />
               ))}
             </StyledTransactionList>
