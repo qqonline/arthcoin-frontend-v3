@@ -19,6 +19,7 @@ import useCore from '../../hooks/useCore';
 import usePrizes from '../../hooks/state/usePrizes';
 import useTokenCounter from '../../hooks/state/useTokenCounter';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
+import Loader from 'react-spinners/BeatLoader';
 
 const Lottery = () => {
   WalletAutoConnect();
@@ -33,9 +34,9 @@ const Lottery = () => {
     return lotteryBalance.mul(100).div(tokenCounter);
   }, [lotteryBalance, tokenCounter])
 
-  if (isLotteryBalanceLoading) return <LoadingPage />
-  if (isTokenCounterLoading) return <LoadingPage />
-  if (isPrizesLoading) return <LoadingPage />
+  // if (isLotteryBalanceLoading) return <LoadingPage />
+  // if (isTokenCounterLoading) return <LoadingPage />
+  // if (isPrizesLoading) return <LoadingPage />
 
   return (
     <div>
@@ -57,7 +58,13 @@ const Lottery = () => {
                 <TicketHead>Your Lottery Tickets</TicketHead>
                 <TicketDataSection>
                   <TicketLogo src={TicketLogoImg} alt="Ticket" />
-                  <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>
+                  {/*{!isLotteryBalanceLoading ? <TicketData>{Number(lotteryBalance.toString()).toLocaleString()}</TicketData>*/}
+                  {/*:<Loader color={'#ffffff'} loading={isTokenCounterLoading} size={10} margin={2}/>}*/}
+                  <TicketData>
+                    {isLotteryBalanceLoading? (
+                      <Loader color={'#ffffff'} loading={isTokenCounterLoading} size={8} margin={2} />) :
+                      (Number(lotteryBalance.toString()).toLocaleString())}
+                  </TicketData>
                 </TicketDataSection>
                 <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
                 <TicketBuyAction to={'/genesis'}>Get More Tickets</TicketBuyAction>
