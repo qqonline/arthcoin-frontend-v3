@@ -35,19 +35,14 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   const classes = useStyles();
   const [openSnackbar, setOpen] = React.useState(open);
 
-  const isScucess = content?.txn?.success
-  const isLoading = content?.txn?.loading
+  const isScucess = content?.txn?.success;
+  const isLoading = content?.txn?.loading;
   
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    if (reason === 'clickaway') return;
 
     setOpen(false);
-
-    if (handleCancel) {
-      handleCancel();
-    }
+    if (handleCancel) handleCancel();
   };
 
   function SlideTransition(props: TransitionProps) {
@@ -56,77 +51,95 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
 
   return (
     <div className={classes.root}>
-      {openSnackbar && (
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={3000}
-          TransitionComponent={SlideTransition}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <SnackBarParent>
-            <SnackBarInnerContainer>
-              {notificationCount && <NotificationCount>{notificationCount}</NotificationCount>}
-              Transaction
-              <img
-                src={CloseIcon}
-                width="24px"
-                alt=""
-                className="pointer"
-                onClick={handleClose}
-              />
-            </SnackBarInnerContainer>
-            {isLoading ? (
-              <SnackBarLoading>
-                <NotificationsNoneIcon className="margin-left-right-20" />
-                <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">
-                    {content.txn?.summary}
-                  </span>
-                  {
-                    config.etherscanUrl !== '' && content.txn?.hash !== '' && 
-                    (
-                      <AnchorTag
-                        href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        View on Explorer ↗
-                      </AnchorTag>
-                    )
-                  }
-                </div>
-              </SnackBarLoading>
-            ) : isScucess ? (
-              <SnackBarRedeem>
-                <NotificationsNoneIcon className="margin-left-right-20" />
-                <div className="dialog-class display-flex-column">
-                  <span className="margin-bottom-10">{content.txn?.summary}</span>
-                  {
-                    config.etherscanUrl !== '' && content.txn?.hash !== '' && 
-                    (
-                      <AnchorTag
-                        href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        View on Explorer ↗
-                      </AnchorTag>
-                    )
-                  }
-                </div>
-              </SnackBarRedeem>
-            ) : (
-              <SnackBarRedeemCancelled>
-                  <NotificationsNoneIcon className="margin-left-right-20" />
-                <div className="dialog-class display-flex-column">
-                  <span>{content.txn?.summary || content.error?.message}</span>
-                </div>
-              </SnackBarRedeemCancelled>
-            )}
-          </SnackBarParent>
-        </Snackbar>
-      )}
+      {
+        openSnackbar && (
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={3000}
+            TransitionComponent={SlideTransition}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            <SnackBarParent>
+              <SnackBarInnerContainer>
+                { notificationCount && <NotificationCount>{notificationCount}</NotificationCount> }
+                Transaction
+                <img
+                  src={CloseIcon}
+                  width="24px"
+                  alt=""
+                  className="pointer"
+                  onClick={handleClose}
+                />
+              </SnackBarInnerContainer>
+              {
+                isLoading 
+                  ? (
+                    <SnackBarLoading>
+                      <NotificationsNoneIcon className="margin-left-right-20" />
+                      <div className="dialog-class display-flex-column-baseline">
+                        <Summary className={
+                          config.etherscanUrl !== '' && content.txn?.hash !== ''
+                            ? "margin-bottom-10"
+                            : ""
+                        }>
+                          {content.txn?.summary}
+                        </Summary>
+                        {
+                          config.etherscanUrl !== '' && content.txn?.hash !== '' && 
+                          (
+                            <AnchorTag
+                              href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              View on Explorer ↗
+                            </AnchorTag>
+                          )
+                        }
+                      </div>
+                    </SnackBarLoading>
+                  ) 
+                  : isScucess 
+                      ? (
+                        <SnackBarRedeem>
+                          <NotificationsNoneIcon className="margin-left-right-20" />
+                          <div className="dialog-class display-flex-column-baseline">
+                            <Summary className={
+                              config.etherscanUrl !== '' && content.txn?.hash !== ''
+                                ? "margin-bottom-10"
+                                : ""
+                            }>
+                              {content.txn?.summary}
+                            </Summary>
+                            {
+                              config.etherscanUrl !== '' && content.txn?.hash !== '' && 
+                              (
+                                <AnchorTag
+                                  href={`${config.etherscanUrl}/tx/${content.txn?.hash}`}
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  View on Explorer ↗
+                                </AnchorTag>
+                              )
+                            }
+                          </div>
+                        </SnackBarRedeem>
+                      ) 
+                      : (
+                        <SnackBarRedeemCancelled>
+                            <NotificationsNoneIcon className="margin-left-right-20" />
+                          <div className="dialog-class display-flex-column-baseline">
+                            <Summary>{content.txn?.summary || content.error?.message}</Summary>
+                          </div>
+                        </SnackBarRedeemCancelled>
+                      )
+                }
+            </SnackBarParent>
+          </Snackbar>
+        )
+      }
     </div>
   );
 };
@@ -137,7 +150,7 @@ const AnchorTag = styled.a`
     color: #000000;
     text-decoration: underline;
   }
-`
+`;
 
 const SnackBarInnerContainer = styled.div`
   display: flex;
@@ -170,6 +183,11 @@ const SnackBarLoading = styled.div`
   width: 100%;
   justify-content: start;
   align-items: center;
+`;
+
+const Summary = styled.span`
+  word-wrap: break-word;
+  white-space: normal;
 `;
 
 const SnackBarRedeemCancelled = styled.div`

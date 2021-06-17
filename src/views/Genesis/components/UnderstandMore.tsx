@@ -39,9 +39,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
 export default UnderstandMore;
 
 const CustomInfoCard = styled.div`
-  //margin-top: 16px;
   @media (max-width: 600px) {
-    //margin-top: 24px;
   }
 `;
 

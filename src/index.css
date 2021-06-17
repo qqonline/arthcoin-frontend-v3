@@ -1492,6 +1492,20 @@ li::before {
   flex-direction: column;
 }
 
+.display-flex-column-baseline {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: -o-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  justify-content: baseline;
+}
+
 .flex-shrink {
   flex-shrink: 1;
 }

@@ -134,4 +134,5 @@ const TransInfoDiv = styled.div`
   display: flex;
   align-items: center;
 `;
+
 export default TransparentInfoDiv;
