@@ -51,12 +51,14 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
         <WalletDiv>
           <ModalHeader>
             <Title>Recent Transactions</Title>
-            <div>
-              <ClearAll>Clear all</ClearAll>
-              <IconButton aria-label="close" onClick={() => handleClose()}>
-                <img src={CloseIcon} width="24px" alt="" />
-              </IconButton>
-            </div>
+            <RightSubHeader>
+              <ClearAll onClick={clearAllTransactions}>Clear all</ClearAll>
+              <CrossIcon>
+                <IconButton aria-label="close" onClick={() => handleClose()}>
+                  <img src={CloseIcon} width="24px" alt="" />
+                </IconButton>
+              </CrossIcon>
+            </RightSubHeader>
           </ModalHeader>
           {
             pending?.length > 0
@@ -166,8 +168,10 @@ const Title = styled.p`
   color: #FFFFFF;
 `
 
-const LeftHeaderSection = styled.div`
-
+const RightSubHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `
 
 const ClearAll = styled.p`
@@ -177,8 +181,12 @@ const ClearAll = styled.p`
   font-size: 12px;
   line-height: 130%;
   color: rgba(255, 255, 255, 0.32);
+  cursor: pointer;
 `
 
+const CrossIcon = styled.div`
+  margin-top: -12px;
+`
 
 const StyledTitleArea = styled.div`
   display: flex;

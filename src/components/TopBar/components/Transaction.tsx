@@ -57,9 +57,6 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
         pending={pending}
         success={success}
       >
-        <RowFixed>
-          <TransactionStatusText>{summary ?? tx.hash} ↗</TransactionStatusText>
-        </RowFixed>
         <IconWrapper pending={pending} success={success}>
           {pending ? (
             <MiniLoader stroke='white' />
@@ -69,6 +66,10 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
             <Triangle size="16" />
           )}
         </IconWrapper>
+        <RowFixed>
+          <TransactionStatusText>{summary ?? tx.hash} ↗</TransactionStatusText>
+        </RowFixed>
+
       </TransactionState>
     </TransactionWrapper>
   );
