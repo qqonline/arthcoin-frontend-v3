@@ -6,14 +6,16 @@ import MiniLoader from '../../MiniLoader';
 import { TransactionDetails } from '../../../state/transactions/reducer';
 import config from '../../../config';
 import { RowFixed } from '../../Row';
+import SuccessIcon from '../../../assets/svg/SuccessTransaction.svg';
+import FailedIcon from '../../../assets/svg/failedTransaction.svg';
+import PendingIcon from '../../../assets/svg/pendingTransaction.svg';
 
 const TransactionWrapper = styled.div`
   display: flex;
-  height: 30px;
+  justify-content: space-between;
 `;
 
 const TransactionStatusText = styled.div`
-  margin-right: 0.5rem;
   display: flex;
   align-items: center;
   :hover {
@@ -39,6 +41,17 @@ const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
     pending ? theme.primary1 : success ? theme.green1 : theme.red1};
 `;
 
+const StateWrapper = styled.div<{ pending: boolean; success?: boolean }>`
+  color: ${({ pending, success, theme }) =>
+    pending ? '#FCB400' : success ? '#00000000' : '#FA4C69'};
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FA4C69;
+`;
+
 interface TransactionProps {
   tx: TransactionDetails;
 }
@@ -49,9 +62,36 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
   const success =
     !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined');
 
+  console.log('TransactionDetails', tx)
+
   return (
     <TransactionWrapper>
-      <TransactionState
+      <IconWrapper pending={pending} success={success}>
+        {pending ? (
+            <img src={PendingIcon} alt="arrow" />
+          // <MiniLoader stroke='white' />
+        ) : success ? (
+            <img src={SuccessIcon} alt="arrow" />
+          // <CheckCircle size="16" />
+        ) : (
+          <img src={FailedIcon} alt="arrow" />
+          // <Triangle size="16" />
+        )}
+      </IconWrapper>
+      <InfoSection>
+        <Title
+          href={`${config.etherscanUrl}/tx/${tx.hash}`}
+          target="_blank">
+          {summary ?? tx.hash}
+        </Title>
+        <Date>2 hours ago //Static</Date>
+      </InfoSection>
+      <StateWrapper pending={pending} success={success}>
+        {pending? 'Pending': success? '': 'Failed'}
+      </StateWrapper>
+
+
+      {/*<TransactionState
         href={`${config.etherscanUrl}/tx/${tx.hash}`}
         target="_blank"
         pending={pending}
@@ -70,9 +110,43 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
           <TransactionStatusText>{summary ?? tx.hash} ↗</TransactionStatusText>
         </RowFixed>
 
-      </TransactionState>
+      </TransactionState>*/}
     </TransactionWrapper>
   );
 };
+
+const InfoSection = styled.div`
+  flex: 1;
+  text-align: left;
+  margin-bottom: 16px;
+  margin-left: 14px;
+`
+
+const Title = styled.a`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 4px;
+  cursor: pointer;
+  &:hover {
+    color: rgba(255, 255, 255, 0.88);
+  }
+  
+`
+
+const Date = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 130%;
+  color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 0;
+
+
+`
 
 export default Transaction;
