@@ -381,10 +381,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={`${getDisplayBalance(arthBalance)}`}
+                isBalanceLoading={isARTHBalanceLoading}
                 ILabelInfoValue={''}
                 DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isARTHBalanceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
@@ -403,10 +404,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX Amount'}
                 IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
+                isBalanceLoading={isARTHXBalanceLoading}
                 ILabelInfoValue={''}
                 DefaultValue={arthxValue.toString()}
                 LogoSymbol={'ARTHX'}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isARTHXBalanceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
@@ -425,6 +427,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
+                isBalanceLoading={isCollateralBalanceLoading}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateral}
                 hasDropDown={true}
@@ -436,7 +439,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     onCollateralValueChange(collateralValue.toString());
                   }, 1000);
                 }}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isCollateralBalanceLoading}
                 SymbolText={selectedCollateral}
                 DisableMsg={
                   redeemCR.lte(1e6)

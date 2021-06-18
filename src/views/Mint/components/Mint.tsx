@@ -236,8 +236,9 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter Collateral'}
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
+                isBalanceLoading={iscollateralBalanceLoading}
                 ILabelInfoValue={''}
-                disabled={mintCR.lte(1e6)}
+                disabled={mintCR.lte(1e6) || iscollateralBalanceLoading }
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -267,10 +268,11 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'You will receive'}
                 IBalanceValue={`${getDisplayBalance(arthBalance)}`}
+                isBalanceLoading={isarthBalanceLoading}
                 DefaultValue={arthValue.toString()}
                 ILabelInfoValue={''}
                 LogoSymbol={'ARTH'}
-                disabled={mintCR.lte(1e6)}
+                disabled={mintCR.lte(1e6) || isarthBalanceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 setText={(val: string) => {
@@ -288,10 +290,11 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
+                isBalanceLoading={isarthxBalanceLoading}
                 DefaultValue={arthxValue.toString()}
                 ILabelInfoValue={''}
                 LogoSymbol={'ARTHX'}
-                // disabled={mintCR.lt(1e6)}
+                disabled={isarthxBalanceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 setText={(val: string) => {

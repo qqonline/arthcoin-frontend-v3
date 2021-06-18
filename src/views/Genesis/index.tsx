@@ -527,12 +527,13 @@ const Genesis = (props: WithSnackbarProps) => {
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
                     IBalanceValue={getDisplayBalance(arthBalance)}
+                    isBalanceLoading={isARTHBalanceLoading}
                     ILabelInfoValue={''}
                     DefaultValue={arthValue.toString()}
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
+                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18)) || isARTHBalanceLoading}
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : '0');

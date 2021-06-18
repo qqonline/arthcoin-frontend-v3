@@ -53,8 +53,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 Number(getDisplayBalance(arthxPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              { isARTHXOracleLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(arthxPrice, 6, 6))
+                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -64,12 +67,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*${
-                Number(getDisplayBalance(collatearlPrice, 6, 6))
+              { isCollateralPoolPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(collatearlPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -82,12 +84,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*{
-                Number(getDisplayBalance(cr, 4, 4))
+              { isGlobalCollateraLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(cr, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -100,8 +101,10 @@ export default ({ selectedCollateralCoin }: IProps) => {
             </div>
             <OneLineInput>
               <InputLabelSpanRight>
-                {/*{prettyNumber(getDisplayBalance(poolBalance, 18))}*/}
-                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                { isCollateralPoolLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : prettyNumber(getDisplayBalance(poolBalance, 18))
+                }
               </InputLabelSpanRight>
               <BeforeChip className="custom-mahadao-chip">{selectedCollateralCoin}</BeforeChip>
             </OneLineInput>
@@ -113,8 +116,10 @@ export default ({ selectedCollateralCoin }: IProps) => {
                   <TextForInfoTitle>Available to Mint</TextForInfoTitle>
                 </div>
                 <InputLabelSpanRight>
-                  {/*{prettyNumber(getDisplayBalance(availableToMint, 18, 3))}*/}
-                  <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  { isAvailableToMintLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(availableToMint, 18, 3))
+                  }
                 </InputLabelSpanRight>
               </OneLineInput>
             </div>
@@ -127,12 +132,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*{
-                Number(getDisplayBalance(stabilityFee, 4, 4))
+              { isStabilityFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(stabilityFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -145,11 +149,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*{
-                Number(getDisplayBalance(mintingFee, 4, 4))
+              { isPoolMintingLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mintingFee, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%*/}
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
@@ -162,12 +166,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*{
-                Number(getDisplayBalance(redeemingFee, 4, 4))
+              { isPoolRedeemFeesLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(redeemingFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </InputLabelSpanRight>
           </OneLineInput>
         </div>
