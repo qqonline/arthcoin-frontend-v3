@@ -22,14 +22,23 @@ interface IProps {
 }
 
 export default ({ selectedCollateralCoin }: IProps) => {
-  const cr = useGlobalCollateralRatio();
-  const arthxPrice = useARTHXOraclePrice();
-  const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
-  const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
-  const stabilityFee = useStabilityFee();
-  const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  const availableToMint = useAvailableToMint(selectedCollateralCoin);
+  const { isLoading: isGlobalCollateraLoading, value: cr } = useGlobalCollateralRatio();
+  const { isLoading: isARTHXOracleLoading, value: arthxPrice } = useARTHXOraclePrice();
+  const { isLoading: isCollateralPoolLoading, value: poolBalance } = useCollateralPoolBalance(selectedCollateralCoin);;
+  const { isLoading: isPoolMintingLoading, value: mintingFee } = usePoolMintingFees(selectedCollateralCoin);
+  const { isLoading: isPoolRedeemFeesLoading, value: redeemingFee } = usePoolRedeemFees(selectedCollateralCoin);
+  const { isLoading: isStabilityFeeLoading, value: stabilityFee } = useStabilityFee();
+  const { isLoading: isCollateralPoolPriceLoading, value: collatearlPrice } = useCollateralPoolPrice(selectedCollateralCoin);
+  const { isLoading: isAvailableToMintLoading, value: availableToMint } = useAvailableToMint(selectedCollateralCoin);
+
+  // const cr = useGlobalCollateralRatio();
+  // const arthxPrice = useARTHXOraclePrice();
+  // const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
+  // const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+  // const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
+  // const stabilityFee = useStabilityFee();
+  // const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  // const availableToMint = useAvailableToMint(selectedCollateralCoin);
 
   return (
     <>

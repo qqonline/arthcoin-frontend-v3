@@ -27,6 +27,7 @@ import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import Loader from 'react-spinners/BeatLoader';
+import usePrizes from '../../hooks/state/usePrizes';
 
 withStyles({
   root: {
@@ -117,9 +118,13 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  const percentageCompleted = usePercentageCompleted();
-  const committedCollateral = useGlobalCollateralValue();
-  const arthCirculatingSupply = useARTHCirculatingSupply();
+  const { isLoading: isPercLoading, value: percentageCompleted } = usePercentageCompleted();
+  const { isLoading: isGlobalCollateralLoading, value: committedCollateral } = usePercentageCompleted();
+  const { isLoading: isARTHCirculatingLoading, value: arthCirculatingSupply } = usePercentageCompleted();
+
+  // const percentageCompleted = usePercentageCompleted();
+  // const committedCollateral = useGlobalCollateralValue();
+  // const arthCirculatingSupply = useARTHCirculatingSupply();
 
   WalletAutoConnect();
 
