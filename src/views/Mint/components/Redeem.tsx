@@ -38,18 +38,24 @@ interface IProps {
 }
 
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
-  const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
   const [arthxValue, setArthxValue] = useState<string>('0');
+  const [collateralValue, setCollateralValue] = useState<string>('0');
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [successCollectModal, setSuccessCollectModal] = useState<boolean>(false);
 
-  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
-
-  const { account, connect } = useWallet();
   const redeemCR = BigNumber.from(11e5);
+
+  const core = useCore();
+  const { account, connect } = useWallet();
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
+    core.getDefaultCollateral(),
+  );
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   const arthxRatio = useMemo(() => {
     return redeemCR.sub(BigNumber.from(1e6));
@@ -59,25 +65,22 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     return BigNumber.from(1e6).sub(arthxRatio)
   }, [arthxRatio]);
 
-  const core = useCore();
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthxBalance = useTokenBalance(core.ARTHX);
-
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
-    core.getDefaultCollateral(),
-  );
+ 
+  const {isLoading: isARTHBalanceLoading, value: arthBalance} = useTokenBalance(core.ARTH);
+  const {isLoading: isARTHXBalanceLoading, value: arthxBalance} = useTokenBalance(core.ARTHX);
+ 
   const tokenDecimals = useTokenDecimals(selectedCollateral);
-  const redeemableBalances = useRedeemableBalances(selectedCollateral);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const {isLoading: isRedeemableBalancesLoading, value: redeemableBalances} = useRedeemableBalances(selectedCollateral);
+  const {isLoading: isCollateralBalanceLoading, value: collateralBalance} = useTokenBalance(core.tokens[selectedCollateral]);
+  const {isLoading: isRedeemFeeLoading, value: redeemFee} = usePoolRedeemFees(selectedCollateral);
+  const {isLoading: isStabilityFeeLoading, value: stabilityFee} = useStabilityFee();
+  const {isLoading: isCollateralPriceLoading, value: collateralToGMUPrice} = useCollateralPoolPrice(selectedCollateral);
+  const {isLoading: isARTHXLoading, value: arthxPrice} = useARTHXPrice();
+
   const [mahaApproveStatus, approveMAHA] = useApprove(core.MAHA, collateralPool.address);
   const [arthxApproveStatus, approveARTHX] = useApprove(core.ARTHX, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
-  const redeemFee = usePoolRedeemFees(selectedCollateral);
-  const stabilityFee = useStabilityFee();
-  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
-  const arthxPrice = useARTHXPrice();
+
   const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   useEffect(() => window.scrollTo(0, 0), []);
@@ -609,7 +612,9 @@ const LeftTopCardHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
 const LeftTopCardContainer = styled.div``;
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
