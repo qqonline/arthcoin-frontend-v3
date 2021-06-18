@@ -34,11 +34,11 @@ type IProps = {
 export default (props: IProps) => {
   const core = useCore();
   const { account, connect } = useWallet();
+  
+  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
+  const {isLoading: isTokenBalanceLoading, value: tokenBalance} = useTokenBalance(depositTokenContract);
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
-  const tokenBalance = useTokenBalance(depositTokenContract);
-  const tokenDecimals = useTokenDecimals(props.pool.depositToken);
-
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
   const tokenAddresses = tokens.map((t) => (t.symbol === 'WMATIC' ? 'ETH' : t.address));
   const uniswapLink = `${platformURL[props.pool.platform]?.addLiquidityUrl || 'https:app.uniswap.org/swap'}/${tokenAddresses.join('/')}`;

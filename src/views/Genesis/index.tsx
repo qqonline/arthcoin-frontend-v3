@@ -14,6 +14,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { parseUnits } from 'ethers/lib/utils';
+import Loader from 'react-spinners/BeatLoader';
 import { useMediaQuery } from 'react-responsive';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
@@ -51,7 +52,6 @@ import usePerformRecollateralize from '../../hooks/callbacks/performRecollateral
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import Loader from 'react-spinners/BeatLoader';
 
 withStyles({
   root: {
@@ -154,18 +154,19 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const core = useCore();
   const { account, connect } = useWallet();
-  const arthxPrice = useARTHXOraclePrice();
-  const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const tokenDecimals = useTokenDecimals(selectedCollateral);
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthCirculatingSupply = useARTHCirculatingSupply();
-  const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
-  const committedCollateral = useGlobalCollateralValue();
-  const percentageCompleted = usePercentageCompleted();
-  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
+
+  const {isLoading: isARTHXPriceLoading, value: arthxPrice} = useARTHXOraclePrice();
+  const {isLoading: isRecollateralizationDiscountLoading, value: recollateralizationDiscount} = useRecollateralizationDiscount();
+  const {isLoading: isARTHBalanceLoading, value: arthBalance} = useTokenBalance(core.ARTH);
+  const {isLoading: isARTHCirculatingSupplyLoading, value: arthCirculatingSupply} = useARTHCirculatingSupply();
+  const {isLoading: isCollateralBalanceLoading, value: collateralBalnace} = useTokenBalance(core.tokens[selectedCollateral]);
+  const {isLoading: isCommitedCollateralLoading, value: committedCollateral} = useGlobalCollateralValue();
+  const {isLoading: isPercentageCompletedLoading, value: percentageCompleted} = usePercentageCompleted();
+  const {isLoading: isCollateralPriceLoading, value: collateralGMUPrice} = useCollateralPoolPrice(selectedCollateral);
 
   WalletAutoConnect();
 
@@ -204,6 +205,7 @@ const Genesis = (props: WithSnackbarProps) => {
   );
 
   const arthxRecieve = useMemo(() => {
+    if (isARTHXPriceLoading || isCollateralPriceLoading ) return BigNumber.from(0);
     if (arthxPrice.lte(0)) return BigNumber.from(0);
 
     if (type === 'Commit' && Number(collateralValue))
@@ -228,14 +230,17 @@ const Genesis = (props: WithSnackbarProps) => {
     arthxPrice,
     collateralValue,
     tokenDecimals,
-    type
+    type,
+    isCollateralPriceLoading,
+    isARTHXPriceLoading
   ]);
 
   const lotteryAmount = useMemo(() => {
+    if (isCollateralPriceLoading) return BigNumber.from(0)
     if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
     const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
     return gmuCollateralValue.mul(collateralGMUPrice).div(10).div(1e6);
-  }, [collateralValue, collateralGMUPrice, tokenDecimals]);
+  }, [collateralValue, collateralGMUPrice, tokenDecimals, isCollateralPriceLoading]);
 
   const arthxDiscount = useMemo(() => {
     if (arthxPrice.lte(0)) return BigNumber.from(0);
