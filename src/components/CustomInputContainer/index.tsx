@@ -8,6 +8,7 @@ import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
 import { checkForAfterDecimalDigits, correctString, ValidateNumber } from './RegexValidation';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
   ILabelValue: string;
@@ -58,7 +59,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     ondropDownValueChange,
     multiIcons = false,
     symbols,
-    disabled,
+    disabled = false,
     Istate = 'default',
     msg = '',
     DisableMsg = '',
@@ -154,7 +155,8 @@ const CustomInputContainer: React.FC<props> = (props) => {
             {ILabelInfoValue !== '' && Redirection()}
           </ILabelLeft>
           <ILabelRight>
-            {showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>}
+            <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+            {/*{showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>}*/}
           </ILabelRight>
         </ILabelContainer>
         <IFieldConatiner className={`input-${ICStates.IState}`}>
@@ -169,6 +171,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
               flex: 1,
               fontFamily: 'Inter !important',
             }}
+            disabled={disabled}
             type={'string'}
             onChange={(event) => {
               const value = event.target.value;
@@ -305,6 +308,7 @@ const ILabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 12px;
 `;
 const ILabelLeft = styled.div`
   display: flex;
@@ -319,7 +323,7 @@ const ILabel = styled.p`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
+  margin-bottom: 0;
 `;
 const ILabelInfo = styled.p`
   font-family: Inter;

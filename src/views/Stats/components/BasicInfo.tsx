@@ -10,6 +10,7 @@ import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useAllPoolAvailableToMint from '../../../hooks/state/pools/useAllPoolAvailableToMint';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
   targetCollateralValue: BigNumber;
@@ -30,15 +31,10 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'Amount of ARTH available to mint across all pools.'} />
               </TextWithIcon>
               <BeforeChip>
-                {
-                  prettyNumber(getDisplayBalance(
-                    totalAvailableToMint,
-                    18,
-                    6
-                  ))
-                }{
-                  ' ARTH'
-                }
+                {/*{prettyNumber(getDisplayBalance(totalAvailableToMint, 18, 6))}*/}
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                {' ARTH'}
+
               </BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>
@@ -54,9 +50,9 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
               </TextWithIcon>
               <BeforeChip>
-                ${
-                  prettyNumber(getDisplayBalance(props.globalCollateralValue))
-                }
+                {'$ '}
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                {/*{prettyNumber(getDisplayBalance(props.globalCollateralValue))}*/}
               </BeforeChip>
             </div>
             <ToLink to={'/mint/mint'}>

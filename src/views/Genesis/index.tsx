@@ -51,6 +51,7 @@ import usePerformRecollateralize from '../../hooks/callbacks/performRecollateral
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
+import Loader from 'react-spinners/BeatLoader';
 
 withStyles({
   root: {
@@ -440,7 +441,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'The amount of ARTH already in circulation.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(arthCirculatingSupply))}
+                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    {/*{prettyNumber(getDisplayBalance(arthCirculatingSupply))}*/}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
@@ -449,7 +451,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
+                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    {/*{prettyNumber(getDisplayBalance(committedCollateral, 18))}*/}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>

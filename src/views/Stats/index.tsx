@@ -17,10 +17,6 @@ import PageHeader from '../../components/PageHeader';
 import BondingDiscount from './components/BondingDiscount';
 import CustomToolTip from '../../components/CustomTooltip';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
-
-import arrowRight from '../../assets/svg/arrowRight.svg';
-import arrowRightDisabled from '../../assets/svg/arrowRightDisabed.svg';
-
 import { colors } from './types';
 import useCore from '../../hooks/useCore';
 import prettyNumber from '../../components/PrettyNumber';
@@ -29,6 +25,7 @@ import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue
 import useTargetCollateralValue from '../../hooks/state/useTargetCollateralValue';
 import useAllPoolCollateralValue from '../../hooks/state/pools/useAllPoolCollateralValue';
 import useAllPoolExcessCollateralValue from '../../hooks/state/pools/useAllPoolAccessCollateral';
+import FadeLoader from 'react-spinners/FadeLoader';
 
 const Home: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
@@ -195,17 +192,11 @@ const Home: React.FC = () => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently present in each individual pool of the protocol.'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
-                    <Grid
-                      item
-                      sm={12}
-                      md={12}
-                      lg={12}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: isMobile ? 'column' : 'row',
-                      }}
-                    >
+                    { false && <Grid item sm={12} md={12} lg={12} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexDirection: isMobile ? 'column' : 'row',
+                    }}>
                       <Grid item sm={12} md={6} lg={6}>
                         <PieChart balances={formattedPoolValues} />
                       </Grid>
@@ -227,16 +218,21 @@ const Home: React.FC = () => {
                                 </PercentCardLabel>
                                 <PercentCardValue>
                                   ${
-                                    prettyNumber(b.amount)
-                                  } - {
-                                    Number(b.percentage).toLocaleString('en-US', {maximumFractionDigits: 2})
-                                  }%
+                                  prettyNumber(b.amount)
+                                } - {
+                                  Number(b.percentage).toLocaleString('en-US', { maximumFractionDigits: 2 })
+                                }%
                                 </PercentCardValue>
                               </PercentCardInfo>
                             ))
                           }
                         </PercentCard>
                       </Grid>
+                    </Grid>}
+
+
+                    <Grid item sm={12} md={12} lg={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '210px' }}>
+                      <FadeLoader color={'#ffffff'} loading={true} margin={2} />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -298,7 +294,6 @@ const Home: React.FC = () => {
 
 const ToLink = styled(Link)`
   z-index: 1;
-  colo
 `;
 
 const GradientDiv = styled.div`
@@ -324,7 +319,7 @@ const Card = styled.div``;
 const PercentCard = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content space-between;
+  //justify-content: space-between;
   width: 100%;
   align-items: center;
   height: fit-content;
@@ -333,7 +328,7 @@ const PercentCard = styled.div`
 const PercentCardInfo = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content space-between;
+  //justify-content space-between;
   width: 100%;
   margin: 6px;
 `;
