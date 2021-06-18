@@ -402,8 +402,10 @@ const Genesis = (props: WithSnackbarProps) => {
                 </div>
                 <HeaderSpan>
                   {
-                    Number(getDisplayBalance(percentageCompleted, 16, 3))
-                      .toLocaleString('en-US', { maximumFractionDigits: 2 })
+                    isPercentageCompletedLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : Number(getDisplayBalance(percentageCompleted, 16, 3))
+                          .toLocaleString('en-US', { maximumFractionDigits: 2 })
                   }% Completed
                 </HeaderSpan>
               </PageSubHeading>
@@ -446,9 +448,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'The amount of ARTH already in circulation.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {isARTHXPriceLoading
-                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                      : prettyNumber(getDisplayBalance(arthCirculatingSupply))
+                    {
+                      isARTHCirculatingSupplyLoading
+                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                        : prettyNumber(getDisplayBalance(arthCirculatingSupply))
                     }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
@@ -458,9 +461,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {isCommitedCollateralLoading
-                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                      : prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    {
+                      isCommitedCollateralLoading
+                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                        : prettyNumber(getDisplayBalance(committedCollateral, 18))
                     }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
