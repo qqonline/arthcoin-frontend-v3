@@ -46,9 +46,11 @@ const Recollatateralize = (props: WithSnackbarProps & Iprops) => {
   const [selectedCollateral, setSelectedCollateralCoin] = useState(core.getDefaultCollateral());
   const tokenDecimals = useTokenDecimals(selectedCollateral);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
-  const recollateralizationDiscount = useRecollateralizationDiscount();
   const collateralPool = core.getCollatearalPool(selectedCollateral);
+  
+  const {isLoading: isCollteralBalanceLoading, value: collateralBalance} = useTokenBalance(core.tokens[selectedCollateral]);
+  const {isLoading: isRecollateralizeDiscountLoading, value: recollateralizationDiscount} = useRecollateralizationDiscount();
+  
   const [approveStatus, approve] = useApprove(
     core.tokens[selectedCollateral],
     collateralPool.address,
