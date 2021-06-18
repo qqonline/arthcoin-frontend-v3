@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
 import { BigNumber } from '@ethersproject/bignumber';
 
 import Button from '../../../components/Button';
 import CustomModal from '../../../components/CustomModal';
-import DynamicSlider from '../../../components/DynamicSlider';
 import CustomInputContainer from '../../../components/CustomInputContainer';
 import { ValidateNumber } from '../../../components/CustomInputContainer/RegexValidation';
 
@@ -28,9 +27,8 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [val, setValue] = useState<string>('0');
-  const [sliderValue, setSliderValue] = useState<number>(0);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   
   const core = useCore();
   const contract = core.contracts[props.pool.contract];
@@ -96,9 +94,7 @@ export default (props: IProps) => {
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
-
-        {/*<DynamicSlider onSliderChange={setSliderValue} />*/}
-
+        
         <Grid
           container
           spacing={2}

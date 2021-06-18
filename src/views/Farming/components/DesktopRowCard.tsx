@@ -10,8 +10,8 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
 import sushiswap from '../../../assets/svg/SushiswapWhite.svg';
 
-import config, {platformURL} from '../../../config';
 import useCore from '../../../hooks/useCore';
+import config, {platformURL} from '../../../config';
 import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
 import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -36,8 +36,8 @@ export default (props: IProps) => {
   const { account, connect } = useWallet();
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
-  const tokenBalance = useTokenBalance(depositTokenContract);
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
+  const {isLoading: isTokenBalanceLoading, value: tokenBalance} = useTokenBalance(depositTokenContract);
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
   const tokenAddresses = tokens.map((t) => (t.symbol === 'WMATIC' ? 'ETH' : t.address));
