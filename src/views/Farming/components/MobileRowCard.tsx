@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
-import InfoIcon from '@material-ui/icons/Info';
+import Loader from 'react-spinners/BeatLoader';
 import { Grid, Divider } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 
@@ -146,7 +146,13 @@ export const MobileFarm = (props: IProps) => {
                   Wallet
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <MainSpan>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</MainSpan>
+                  <MainSpan>
+                    {
+                      isTokenBalanceLoading
+                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                        : Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()
+                    }
+                  </MainSpan>
                 </div>
               </Grid>
             </Grid>
