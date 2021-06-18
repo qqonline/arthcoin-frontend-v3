@@ -35,12 +35,11 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           </div>
           <OneLine>
             <BeforeChip>
-              {/*{
-                Number(getDisplayBalance(discount, 4, 4))
+              {isDiscountLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(discount, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </BeforeChip>
           </OneLine>
         </OneLine>

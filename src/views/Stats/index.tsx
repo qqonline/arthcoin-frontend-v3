@@ -192,48 +192,48 @@ const Home: React.FC = () => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently present in each individual pool of the protocol.'} />
                   </TitleString>
                   <Grid container style={{}} direction={isMobile ? 'column' : 'row'}>
-                    { false && <Grid item sm={12} md={12} lg={12} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      flexDirection: isMobile ? 'column' : 'row',
-                    }}>
-                      <Grid item sm={12} md={6} lg={6}>
-                        <PieChart balances={formattedPoolValues} />
-                      </Grid>
-                      <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
-                        <PercentCard>
-                          {
-                            formattedPoolValues.map((b, i) => (
-                              <PercentCardInfo key={b.name}>
-                                <PercentCardLabel>
-                                  <div
-                                    style={{
-                                      height: 14,
-                                      width: 14,
-                                      background: colors[i],
-                                      borderRadius: 7,
-                                    }}
-                                  />
-                                  <OpacitySpan>{b.name}</OpacitySpan>
-                                </PercentCardLabel>
-                                <PercentCardValue>
-                                  ${
-                                  prettyNumber(b.amount)
-                                } - {
-                                  Number(b.percentage).toLocaleString('en-US', { maximumFractionDigits: 2 })
-                                }%
-                                </PercentCardValue>
-                              </PercentCardInfo>
-                            ))
-                          }
-                        </PercentCard>
-                      </Grid>
-                    </Grid>}
-
-
-                    <Grid item sm={12} md={12} lg={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '210px' }}>
-                      <FadeLoader color={'#ffffff'} loading={true} margin={2} />
-                    </Grid>
+                    { isGlobalCollateralValueLoading
+                      ? (<Grid item sm={12} md={12} lg={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '210px' }}>
+                          <FadeLoader color={'#ffffff'} loading={true} margin={2} />
+                        </Grid>)
+                      : (<Grid item sm={12} md={12} lg={12} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: isMobile ? 'column' : 'row',
+                      }}>
+                        <Grid item sm={12} md={6} lg={6}>
+                          <PieChart balances={formattedPoolValues} />
+                        </Grid>
+                        <Grid item style={{ width: '100%' }} sm={12} md={6} lg={6}>
+                          <PercentCard>
+                            {
+                              formattedPoolValues.map((b, i) => (
+                                <PercentCardInfo key={b.name}>
+                                  <PercentCardLabel>
+                                    <div
+                                      style={{
+                                        height: 14,
+                                        width: 14,
+                                        background: colors[i],
+                                        borderRadius: 7,
+                                      }}
+                                    />
+                                    <OpacitySpan>{b.name}</OpacitySpan>
+                                  </PercentCardLabel>
+                                  <PercentCardValue>
+                                    ${
+                                    prettyNumber(b.amount)
+                                  } - {
+                                    Number(b.percentage).toLocaleString('en-US', { maximumFractionDigits: 2 })
+                                  }%
+                                  </PercentCardValue>
+                                </PercentCardInfo>
+                              ))
+                            }
+                          </PercentCard>
+                        </Grid>
+                      </Grid>)
+                    }
                   </Grid>
                 </Grid>
               </Grid>
@@ -241,6 +241,7 @@ const Home: React.FC = () => {
             <BasicInfo
               targetCollateralValue={targetCollateralValue}
               globalCollateralValue={globalCollateralValue}
+              isGlobalCollateralValueLoading={isGlobalCollateralValueLoading}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>

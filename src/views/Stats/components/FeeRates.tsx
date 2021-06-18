@@ -29,12 +29,11 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {/*{
-                Number(getDisplayBalance(mintingFee, 4, 4))
-                  .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              { isMintingFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mintingFee, 4, 4))
+                    .toLocaleString('en-US', {maximumFractionDigits: 4})
+              }
             </BeforeChip>
           </OneLine>
         </OneLine>
@@ -47,12 +46,11 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {/*{
-                Number(getDisplayBalance(redeemingFee, 4, 4))
+              { isRedeemingFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(redeemingFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }%
             </BeforeChip>
           </OneLine>
         </OneLine>
@@ -81,12 +79,11 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {/*{
-                Number(getDisplayBalance(stabilityFee, 4, 4))
+              { isStabilityFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(stabilityFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }%
             </BeforeChip>
           </OneLine>
         </OneLine>

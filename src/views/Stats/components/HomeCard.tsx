@@ -47,8 +47,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
             <StyledValue>
-              {/*{prettyNumber(getDisplayBalance(liquidity))}*/}
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              { isLiquidityLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(liquidity))
+              }
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -56,8 +58,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Circulating Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {/*{prettyNumber(getDisplayBalance(circulatingSupply))}*/}
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              { isCirculatingSupplyLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(circulatingSupply))
+              }
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -65,8 +69,10 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Total Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {/*{prettyNumber(getDisplayBalance(totalSupply))}*/}
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              { isTotalSupplyLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(totalSupply))
+              }
             </StyledValue>
           </CardSection>
         </CardContent>

@@ -22,12 +22,11 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              {/*${
-                Number(getDisplayBalance(arthPrice, 6, 6))
+              {isARTHPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(arthPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </BeforeChip>
           </div>
         </OneLine>
@@ -37,12 +36,11 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              {/*${
-                Number(getDisplayBalance(arthxPrice, 6, 6))
+              {isARTHXPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(arthxPrice, 6, 6))
                   .toLocaleString('en-US', {maximumFractionDigits: 6})
-              }*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </BeforeChip>
           </div>
         </OneLine>
@@ -52,12 +50,11 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              {/*${
-                Number(getDisplayBalance(mahaPrice, 6, 6))
+              {isMAHAPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mahaPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }*/}
-
-              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              }
             </BeforeChip>
           </div>
         </OneLine>
