@@ -25,6 +25,7 @@ import useARTHXPrice from '../../../hooks/state/controller/useARTHXPrice';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
+import usePercentageCompleted from '../../../hooks/state/controller/usePercentageCompleted';
 
 
 interface IProps {
@@ -47,15 +48,23 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const core = useCore();
   const arthBalance = useTokenBalance(core.ARTH);
   const arthxBalance = useTokenBalance(core.ARTHX);
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(core.getDefaultCollateral(),);
   const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
-  const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  const arthxPrice = useARTHXPrice();
-  const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
-  const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
+  const { isLoading: ismintingFeeLoading, value: mintingFee } = usePoolMintingFees(selectedCollateralCoin);
+  const { isLoading: iscollateralToGMUPriceLoading, value: collateralToGMUPrice } = useCollateralPoolPrice(selectedCollateralCoin);
+  const { isLoading: isarthxPriceLoading, value: arthxPrice } = useARTHXPrice();
+  const tokenDecimals  = useTokenDecimals(selectedCollateralCoin);
+  const { isLoading: iscollateralPoolLoading, value: collateralPool } = core.getCollatearalPool(selectedCollateralCoin);
+
+
+  // const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
+  // const mintingFee = usePoolMintingFees(selectedCollateralCoin);
+  // const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
+  // const arthxPrice = useARTHXPrice();
+  // const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
+  // const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
   const [collatApproveStatus, approveCollat] = useApprove(
     core.tokens[selectedCollateralCoin],
