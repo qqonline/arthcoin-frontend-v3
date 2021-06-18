@@ -337,7 +337,7 @@ const ILabelInfo = styled.p`
   line-height: 20px;
   color: #f7653b;
   margin-left: 5px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 `;
 const ILabelBalance = styled.p`
   font-family: Inter;
@@ -347,7 +347,7 @@ const ILabelBalance = styled.p`
   line-height: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
+  margin-bottom: 0;
 `;
 const LLabel = styled.div`
   display: flex;

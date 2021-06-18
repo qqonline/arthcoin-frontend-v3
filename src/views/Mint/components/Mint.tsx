@@ -59,7 +59,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const { isLoading: iscollateralToGMUPriceLoading, value: collateralToGMUPrice } = useCollateralPoolPrice(selectedCollateralCoin);
   const { isLoading: isarthxPriceLoading, value: arthxPrice } = useARTHXPrice();
   const tokenDecimals  = useTokenDecimals(selectedCollateralCoin);
-  const { isLoading: iscollateralPoolLoading, value: collateralPool } = core.getCollatearalPool(selectedCollateralCoin);
+  // const { isLoading: iscollateralPoolLoading, value: collateralPool } = core.getCollatearalPool(selectedCollateralCoin);
 
 
   // const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
@@ -67,7 +67,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   // const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
   // const arthxPrice = useARTHXPrice();
   // const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
-  // const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
+  const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
   const [collatApproveStatus, approveCollat] = useApprove(
     core.tokens[selectedCollateralCoin],

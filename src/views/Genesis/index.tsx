@@ -462,7 +462,6 @@ const Genesis = (props: WithSnackbarProps) => {
                       ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                       : prettyNumber(getDisplayBalance(committedCollateral, 18))
                     }
-                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>

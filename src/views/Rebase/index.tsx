@@ -119,12 +119,8 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   const { isLoading: isPercLoading, value: percentageCompleted } = usePercentageCompleted();
-  const { isLoading: isGlobalCollateralLoading, value: committedCollateral } = usePercentageCompleted();
-  const { isLoading: isARTHCirculatingLoading, value: arthCirculatingSupply } = usePercentageCompleted();
-
-  // const percentageCompleted = usePercentageCompleted();
-  // const committedCollateral = useGlobalCollateralValue();
-  // const arthCirculatingSupply = useARTHCirculatingSupply();
+  const { isLoading: isGlobalCollateralLoading, value: committedCollateral } = useGlobalCollateralValue();
+  const { isLoading: isARTHCirculatingLoading, value: arthCirculatingSupply } = useARTHCirculatingSupply();
 
   WalletAutoConnect();
 
