@@ -10,6 +10,7 @@ import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useUniswapLiquidity from '../../../hooks/useUniswapLiquidity';
 import useCirculatingSupply from '../../../hooks/useCirculatingSupply';
+import Loader from 'react-spinners/BeatLoader';
 
 interface HomeCardProps {
   title: string;
@@ -46,9 +47,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(liquidity))
-              }
+              {/*{prettyNumber(getDisplayBalance(liquidity))}*/}
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -56,9 +56,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Circulating Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(circulatingSupply))
-              }
+              {/*{prettyNumber(getDisplayBalance(circulatingSupply))}*/}
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -66,9 +65,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Total Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(totalSupply))
-              }
+              {/*{prettyNumber(getDisplayBalance(totalSupply))}*/}
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </StyledValue>
           </CardSection>
         </CardContent>

@@ -8,6 +8,7 @@ import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
+import Loader from 'react-spinners/BeatLoader';
 
 const BondingDiscount: React.FC = () => {
   const buybackFee = useBuybackFee();
@@ -28,10 +29,12 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
+              {/*{
                 Number(getDisplayBalance(mintingFee, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%
+              }%*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </OneLine>
         </OneLine>
@@ -44,10 +47,12 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
+              {/*{
                 Number(getDisplayBalance(redeemingFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
+              }%*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </OneLine>
         </OneLine>
@@ -76,10 +81,12 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
+              {/*{
                 Number(getDisplayBalance(stabilityFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
+              }%*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </OneLine>
         </OneLine>

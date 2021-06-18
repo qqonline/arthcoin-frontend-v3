@@ -5,6 +5,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
 import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
+import Loader from 'react-spinners/BeatLoader';
 
 const CoinsPrice: React.FC = () => {
   const arthPrice = useARTHOraclePrice();
@@ -21,10 +22,12 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
+              {/*${
                 Number(getDisplayBalance(arthPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }
+              }*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </div>
         </OneLine>
@@ -34,10 +37,12 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
+              {/*${
                 Number(getDisplayBalance(arthxPrice, 6, 6))
                   .toLocaleString('en-US', {maximumFractionDigits: 6})
-              }
+              }*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </div>
         </OneLine>
@@ -47,10 +52,12 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
+              {/*${
                 Number(getDisplayBalance(mahaPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }
+              }*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </div>
         </OneLine>
