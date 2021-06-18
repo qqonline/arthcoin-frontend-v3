@@ -31,12 +31,12 @@ const FarmingCard = (props: WithSnackbarProps & IProps) => {
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const depositTokenContract = core.tokens[pool.depositToken];
-  const tokenBalance = useTokenBalance(depositTokenContract);
+  const {isLoading: isTokenBalanceLoading, value: tokenBalance} = useTokenBalance(depositTokenContract);
 
-  const stakedBalance = useStakingBalance(pool.contract);
-  const claimableBalance = useStakingRewards(pool.contract);
+  const {isLoading: isStakedBalanceLoading, value: stakedBalance} = useStakingBalance(pool.contract);
+  const {isLoading: isClaimableBlanceLoading, value: claimableBalance} = useStakingRewards(pool.contract);
 
-  const rates = usePoolTokenRates();
+  const {isLoading: isRatesLoading, value: rates} = usePoolTokenRates();
 
   const [onPresentExitModal, onDismissExitModal] = useModal(
     <ExitModal
