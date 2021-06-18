@@ -45,6 +45,10 @@ export default (props: IProps) => {
   const uniswapLink = `${platformURL[props.pool.platform]?.addLiquidityUrl || 'https:app.uniswap.org/swap'}/${tokenAddresses.join('/')}`;
   const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
+
+  /*if (props.pool.depositTokenSymbols[0] === 'ARTHX' && !props.pool.depositTokenSymbols[1]) {
+    console.log('tokenBalance.lte(0)', tokenBalance.lte(0), props.pool.depositTokenSymbols, tokenBalance);
+  }*/
   
   const pow = BigNumber.from(10).pow(18);
   

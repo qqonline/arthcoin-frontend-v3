@@ -165,9 +165,6 @@ const Genesis = (props: WithSnackbarProps) => {
                 }}
               />
             </PageSubHeading>
-            <PageSubSubHeading>
-              For 100 ARTH it would value 80 ARTH at 20% rebase
-            </PageSubSubHeading>
           </div>
         <PageSubHeading>
           <div style={{}}>
@@ -187,6 +184,9 @@ const Genesis = (props: WithSnackbarProps) => {
             }% Rebase
           </HeaderSpan>
         </PageSubHeading>
+        <PageSubSubHeading>
+          For 100 ARTH it would value 80 ARTH at 20% rebase
+        </PageSubSubHeading>
 
       </div>
       <Container size="lg">

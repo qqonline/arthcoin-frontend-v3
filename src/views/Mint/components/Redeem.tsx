@@ -282,7 +282,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
-            labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
             rightLabelValue={
               Number(getDisplayBalance(tradingFee, tokenDecimals))
@@ -292,7 +291,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
           <TransparentInfoDiv
             labelData={`Stability Fee`}
-            labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={
               Number(getDisplayBalance(stabilityFeeAmount, 18, 3))
