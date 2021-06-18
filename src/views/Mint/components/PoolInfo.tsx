@@ -31,15 +31,6 @@ export default ({ selectedCollateralCoin }: IProps) => {
   const { isLoading: isCollateralPoolPriceLoading, value: collatearlPrice } = useCollateralPoolPrice(selectedCollateralCoin);
   const { isLoading: isAvailableToMintLoading, value: availableToMint } = useAvailableToMint(selectedCollateralCoin);
 
-  // const cr = useGlobalCollateralRatio();
-  // const arthxPrice = useARTHXOraclePrice();
-  // const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
-  // const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  // const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
-  // const stabilityFee = useStabilityFee();
-  // const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  // const availableToMint = useAvailableToMint(selectedCollateralCoin);
-
   return (
     <>
       <RightTopCard className={'custom-mahadao-box'}>
@@ -49,11 +40,8 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>ARTHX GMU Price</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {/*${
-                Number(getDisplayBalance(arthxPrice, 6, 6))
-                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }*/}
-              { isARTHXOracleLoading
+              { 
+                isARTHXOracleLoading
                   ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                   : Number(getDisplayBalance(arthxPrice, 6, 6))
                     .toLocaleString('en-US', { maximumFractionDigits: 6 })

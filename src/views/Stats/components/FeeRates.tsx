@@ -1,17 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loader from 'react-spinners/BeatLoader';
 
 import CustomToolTip from '../../../components/CustomTooltip';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
-import Loader from 'react-spinners/BeatLoader';
 
 const BondingDiscount: React.FC = () => {
-  const {isLoading: isBuyBackFeeLoading, value: buybackFee} = useBuybackFee();
   const {isLoading: isStabilityFeeLoading, value: stabilityFee} = useStabilityFee();
   const {isLoading: isMintingFeeLoading, value: mintingFee} = usePoolMintingFees('');
   const {isLoading: isRedeemingFeeLoading, value: redeemingFee} = usePoolRedeemFees('');
@@ -33,7 +31,7 @@ const BondingDiscount: React.FC = () => {
                 ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                 : Number(getDisplayBalance(mintingFee, 4, 4))
                     .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }
+              }%
             </BeforeChip>
           </OneLine>
         </OneLine>
@@ -54,22 +52,6 @@ const BondingDiscount: React.FC = () => {
             </BeforeChip>
           </OneLine>
         </OneLine>
-        {/* <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Buyback Fee
-              <CustomToolTip toolTipText={'loreum ipsum'} />
-            </TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>
-              {
-                Number(getDisplayBalance(buybackFee, 4, 4))
-                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
-            </BeforeChip>
-          </OneLine>
-        </OneLine> */}
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>

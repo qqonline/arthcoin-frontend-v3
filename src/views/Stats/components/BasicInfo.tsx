@@ -13,7 +13,6 @@ import useAllPoolAvailableToMint from '../../../hooks/state/pools/useAllPoolAvai
 import Loader from 'react-spinners/BeatLoader';
 
 type props = {
-  targetCollateralValue: BigNumber;
   globalCollateralValue: BigNumber;
   isGlobalCollateralValueLoading: boolean;
 };
@@ -32,9 +31,10 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'Amount of ARTH available to mint across all pools.'} />
               </TextWithIcon>
               <BeforeChip>
-                {isAvailabelToMintLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                  : prettyNumber(getDisplayBalance(totalAvailableToMint, 18, 6))
+                {
+                  isAvailabelToMintLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(totalAvailableToMint, 18, 6))
                 }
               </BeforeChip>
             </div>
@@ -52,9 +52,10 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>
                 {'$ '}
-                {props.isGlobalCollateralValueLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                  : prettyNumber(getDisplayBalance(props.globalCollateralValue))
+                {
+                  props.isGlobalCollateralValueLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(props.globalCollateralValue))
                 }
               </BeforeChip>
             </div>

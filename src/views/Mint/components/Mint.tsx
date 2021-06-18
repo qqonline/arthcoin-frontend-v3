@@ -5,6 +5,7 @@ import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from '@ethersproject/bignumber';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { useEffect, useMemo, useState } from 'react';
+import Loader from 'react-spinners/BeatLoader';
 
 import arrowDown from '../../../assets/svg/arrowDown.svg';
 import plusSign from '../../../assets/svg/plus.svg';
@@ -25,8 +26,6 @@ import useARTHXPrice from '../../../hooks/state/controller/useARTHXPrice';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import useApprove, { ApprovalState } from '../../../hooks/callbacks/useApprove';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
-import usePercentageCompleted from '../../../hooks/state/controller/usePercentageCompleted';
-
 
 interface IProps {
   setType: (type: 'mint' | 'redeem') => void;
@@ -49,8 +48,6 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const { isLoading: isarthBalanceLoading, value: arthBalance } = useTokenBalance(core.ARTH);
   const { isLoading: isarthxBalanceLoading, value: arthxBalance } = useTokenBalance(core.ARTHX);
 
-  // const arthBalance = useTokenBalance(core.ARTH);
-  // const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
 
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(core.getDefaultCollateral(),);
@@ -59,14 +56,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const { isLoading: iscollateralToGMUPriceLoading, value: collateralToGMUPrice } = useCollateralPoolPrice(selectedCollateralCoin);
   const { isLoading: isarthxPriceLoading, value: arthxPrice } = useARTHXPrice();
   const tokenDecimals  = useTokenDecimals(selectedCollateralCoin);
-  // const { isLoading: iscollateralPoolLoading, value: collateralPool } = core.getCollatearalPool(selectedCollateralCoin);
 
-
-  // const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
-  // const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  // const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  // const arthxPrice = useARTHXPrice();
-  // const tokenDecimals = useTokenDecimals(selectedCollateralCoin);
   const collateralPool = core.getCollatearalPool(selectedCollateralCoin);
 
   const [collatApproveStatus, approveCollat] = useApprove(
@@ -88,17 +78,21 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const isCollatApproved = collatApproveStatus === ApprovalState.APPROVED;
   const isCollatApproving = collatApproveStatus === ApprovalState.PENDING;
 
-  const tradingFee = useMemo(() => {
-    if (mintingFee.lte(0)) return BigNumber.from(0);
+  const [isTradingFeeLoading, tradingFee] = useMemo(() => {
+    if (ismintingFeeLoading) return [true, BigNumber.from(0)]
+    if (mintingFee.lte(0)) return [false, BigNumber.from(0)];
 
-    return BigNumber
+    return [
+      false,
+      BigNumber
       .from(parseUnits(`${arthValue}`, 18))
       .mul(mintingFee)
-      .div(1e6);
-  }, [arthValue, mintingFee]);
+      .div(1e6)
+    ];
+  }, [arthValue, mintingFee, ismintingFeeLoading]);
 
   const onCollateralValueChange = async (val: string) => {
-    if (val === '' || arthxPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0) || isarthxPriceLoading || iscollateralToGMUPriceLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -136,7 +130,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0) || arthxPrice.lte(0) || arthRatio.lte(0)) {
+    if (val === '' || collateralToGMUPrice.lte(0) || arthxPrice.lte(0) || arthRatio.lte(0) || isarthxPriceLoading || iscollateralToGMUPriceLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -171,7 +165,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0) || arthxRatio.lte(0)) {
+    if (val === '' || collateralToGMUPrice.lte(0) || arthxRatio.lte(0) || isarthxPriceLoading || iscollateralToGMUPriceLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -238,7 +232,7 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
                 isBalanceLoading={iscollateralBalanceLoading}
                 ILabelInfoValue={''}
-                disabled={mintCR.lte(1e6) || iscollateralBalanceLoading }
+                disabled={mintCR.lte(1e6) || iscollateralBalanceLoading || iscollateralToGMUPriceLoading}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateralCoin}
                 hasDropDown={true}
@@ -294,13 +288,17 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 DefaultValue={arthxValue.toString()}
                 ILabelInfoValue={''}
                 LogoSymbol={'ARTHX'}
-                disabled={isarthxBalanceLoading}
+                disabled={mintCR.lte(1e6) || isarthxBalanceLoading || isarthxPriceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 setText={(val: string) => {
                   onARTHXValueChange(val);
                 }}
-                // DisableMsg={}
+                DisableMsg={
+                  mintCR.lte(1e6)
+                    ? 'Currently Mint Collateral ratio is not 100%'
+                    : ''
+                }
               />
               <div>
                 <TcContainer>
@@ -313,8 +311,10 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                     <OneLineInputwomargin>
                       <BeforeChip>
                         {
-                          Number(getDisplayBalance(tradingFee, 18, 6))
-                            .toLocaleString('en-US', {maximumFractionDigits: 6})
+                          isTradingFeeLoading
+                            ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                            : Number(getDisplayBalance(tradingFee, 18, 6))
+                              .toLocaleString('en-US', {maximumFractionDigits: 6})
                         }
                       </BeforeChip>
                       <TagChips>ARTH</TagChips>
