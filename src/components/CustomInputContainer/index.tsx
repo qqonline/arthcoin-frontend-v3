@@ -37,6 +37,7 @@ type props = {
   msg?: string;
   DisableMsg?: string;
   errorCallback?: (flag: boolean) => void;
+  isBalanceLoading?: boolean;
 };
 
 interface ICStatesInterface {
@@ -65,6 +66,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
     DisableMsg = '',
     IWarningstate = 'default',
     warningMsg = '',
+    isBalanceLoading = false,
   } = props;
 
   const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: Istate, IMsg: msg });
@@ -155,8 +157,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
             {ILabelInfoValue !== '' && Redirection()}
           </ILabelLeft>
           <ILabelRight>
-            <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-            {/*{showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>}*/}
+            { isBalanceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>
+            }
           </ILabelRight>
         </ILabelContainer>
         <IFieldConatiner className={`input-${ICStates.IState}`}>

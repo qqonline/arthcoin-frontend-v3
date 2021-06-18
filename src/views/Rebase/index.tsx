@@ -205,8 +205,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {/*{prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}*/}
-                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    {isARTHCirculatingLoading && isGlobalCollateralLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))
+                    }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
@@ -215,8 +217,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {/*{prettyNumber(getDisplayBalance(committedCollateral, 18))}*/}
-                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    {isGlobalCollateralLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
