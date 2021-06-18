@@ -24,9 +24,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
   symbol,
   address,
 }) => {
-  const totalSupply = useTotalSupply(symbol);
-  const liquidity = useUniswapLiquidity(symbol);
-  const circulatingSupply = useCirculatingSupply(symbol);
+  const {isLoading: isTotalSupplyLoading, value: totalSupply} = useTotalSupply(symbol);
+  const {isLoading: isLiquidityLoading, value: liquidity} = useUniswapLiquidity(symbol);
+  const {isLoading: isCirculatingSupplyLoading, value: circulatingSupply} = useCirculatingSupply(symbol);
 
   const tokenUrl = `${config.etherscanUrl}/address/${address}`;
   

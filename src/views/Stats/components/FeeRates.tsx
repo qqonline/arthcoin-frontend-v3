@@ -11,10 +11,10 @@ import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 import Loader from 'react-spinners/BeatLoader';
 
 const BondingDiscount: React.FC = () => {
-  const buybackFee = useBuybackFee();
-  const stabilityFee = useStabilityFee();
-  const mintingFee = usePoolMintingFees('');
-  const redeemingFee = usePoolRedeemFees('');
+  const {isLoading: isBuyBackFeeLoading, value: buybackFee} = useBuybackFee();
+  const {isLoading: isStabilityFeeLoading, value: stabilityFee} = useStabilityFee();
+  const {isLoading: isMintingFeeLoading, value: mintingFee} = usePoolMintingFees('');
+  const {isLoading: isRedeemingFeeLoading, value: redeemingFee} = usePoolRedeemFees('');
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
