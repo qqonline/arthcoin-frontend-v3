@@ -132,12 +132,19 @@ const TopBar: React.FC = () => {
                     <TxButton />
                   </div>
                 )}
-                {network.name !== '' && (
+                {/*{network.name !== '' && (
                   <CustomNetwork>
                     <ColorIcon colorCode={network.color} />
                     <span>{network.name}</span>
                   </CustomNetwork>
-                )}
+                )}*/}
+                <div style={{marginRight: '12px'}}>
+                  <Button
+                    text={'Buy Maha'}
+                    size={'sm'}
+                    onClick={() => window.open('https://mahadao.com')}
+                  />
+                </div>
                 {!showMobileMenu ? (
                   <MenuIcon
                     style={{ color: 'white' }}
