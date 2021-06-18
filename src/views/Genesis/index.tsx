@@ -446,8 +446,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'The amount of ARTH already in circulation.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                    {/*{prettyNumber(getDisplayBalance(arthCirculatingSupply))}*/}
+                    {isARTHXPriceLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(arthCirculatingSupply))
+                    }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
@@ -456,8 +458,11 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
+                    {isCommitedCollateralLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    }
                     <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                    {/*{prettyNumber(getDisplayBalance(committedCollateral, 18))}*/}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
@@ -497,6 +502,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
                     IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
+                    isBalanceLoading={isCollateralBalanceLoading}
                     ILabelInfoValue={''}
                     DefaultValue={collateralValue.toString()}
                     LogoSymbol={selectedCollateral}
@@ -505,7 +511,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     ondropDownValueChange={setSelectedCollateralCoin}
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18))}
+                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18)) || isCollateralBalanceLoading}
                     setText={(val: string) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
