@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useMemo } from 'react';
 import { useWallet } from 'use-wallet';
 import Grid from '@material-ui/core/Grid';
+import Loader from 'react-spinners/BeatLoader';
 import { BigNumber } from '@ethersproject/bignumber';
 
 import Button from '../../../components/Button';
@@ -81,67 +82,71 @@ export default (props: IProps) => {
         }
           <Grid item lg={3} style={{ display: 'flex' }}>
             <div>
-              {props.pool.depositTokenSymbols.map((token, index) => (
-                <TokenSymbol
-                  symbol={token}
-                  size={44}
-                  style={index === 1 ? { marginLeft: '-6px' } : {}}
-                />
-              ))}
+              {
+                props.pool.depositTokenSymbols.map((token, index) => (
+                  <TokenSymbol
+                    symbol={token}
+                    size={44}
+                    style={index === 1 ? { marginLeft: '-6px' } : {}}
+                  />
+                ))
+              }
             </div>
             <div style={{ marginLeft: '16px' }}>
               <TableMainTextStyle>
                 {props.pool.depositTokenSymbols.join(' - ')}
               </TableMainTextStyle>
               {
-                props.pool.platform ? (
-                  <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
-                    Add Liquidity
-                  </AddLiquidityButton>
-                ) : (
-                  <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
-                    View on Explorer
-                  </AddLiquidityButton>
-                )
+                props.pool.platform 
+                  ? (
+                    <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
+                      Add Liquidity
+                    </AddLiquidityButton>
+                  ) 
+                  : (
+                    <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
+                      View on Explorer
+                    </AddLiquidityButton>
+                  )
               }
           </div>
         </Grid>
         <Grid item lg={3}>
-          <TableMainTextStyle>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</TableMainTextStyle>
+          <TableMainTextStyle>
+            {
+              isTokenBalanceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()
+            }
+          </TableMainTextStyle>
         </Grid>
         <Grid item lg={2}>
           <TableMainTextStyle>{/* {props?.apy} */}</TableMainTextStyle>
         </Grid>
         <Grid item lg={2}>
           <TableMainTextStyle>MAHA + ARTHX</TableMainTextStyle>
-          {/* <TableMainTextStyle>
-            <Countdown
-              date={props?.poolEndDate || Date.now() + 550000000}
-              renderer={({ days, hours, minutes, seconds, completed }) => {
-                return (
-                  <span>{days}d : {hours}h : {minutes}m : {seconds}s left </span>
-                )
-              }}
-            />
-          </TableMainTextStyle>
-          <DayText>
-            {props?.poolDur}
-          </DayText> */}
         </Grid>
         <Grid item lg={2}>
-          {!isWalletConnected ? (
-            <Button text={'Connect Wallet'} size={'lg'} onClick={() =>
-              connect('injected').then(() => {
-                localStorage.removeItem('disconnectWallet')
-              })} />
-          ) : (
-            <Button
-              disabled={tokenBalance.lte(0)}
-              text="Deposit"
-              size={'sm'}
-              onClick={props.onDepositClick}
-            />
-          )}
+          {
+            !isWalletConnected 
+              ? (
+                <Button 
+                  text={'Connect Wallet'} 
+                  size={'lg'} 
+                  onClick={() =>
+                    connect('injected').then(() => {
+                      localStorage.removeItem('disconnectWallet')
+                    })} 
+                  />
+              ) : (
+                <Button
+                  disabled={tokenBalance.lte(0)}
+                  text="Deposit"
+                  size={'sm'}
+                  onClick={props.onDepositClick}
+                />
+              )
+          }
         </Grid>
       </Grid>
       {
