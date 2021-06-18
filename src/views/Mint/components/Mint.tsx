@@ -46,12 +46,15 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
   const mintCR = BigNumber.from(11e5);
 
   const core = useCore();
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthxBalance = useTokenBalance(core.ARTHX);
+  const { isLoading: isarthBalanceLoading, value: arthBalance } = useTokenBalance(core.ARTH);
+  const { isLoading: isarthxBalanceLoading, value: arthxBalance } = useTokenBalance(core.ARTHX);
 
+  // const arthBalance = useTokenBalance(core.ARTH);
+  // const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+
   const [selectedCollateralCoin, setSelectedCollateralCoin] = useState(core.getDefaultCollateral(),);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateralCoin]);
+  const { isLoading: iscollateralBalanceLoading, value: collateralBalance } = useTokenBalance(core.tokens[selectedCollateralCoin]);
   const { isLoading: ismintingFeeLoading, value: mintingFee } = usePoolMintingFees(selectedCollateralCoin);
   const { isLoading: iscollateralToGMUPriceLoading, value: collateralToGMUPrice } = useCollateralPoolPrice(selectedCollateralCoin);
   const { isLoading: isarthxPriceLoading, value: arthxPrice } = useARTHXPrice();
