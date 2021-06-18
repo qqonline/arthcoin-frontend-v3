@@ -6,8 +6,15 @@ import config from '../config';
 import useCore from './useCore';
 import { useBlockNumber } from '../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: {
+    [asset: string]: BigNumber
+  };
+}
+
 export default () => {
-  const [value, setValue] = useState({ maha: BigNumber.from(0), arthx: BigNumber.from(0) });
+  const [value, setValue] = useState({isLoading: true, value: { maha: BigNumber.from(0), arthx: BigNumber.from(0)}});
   
   const core = useCore();
   const {account} = useWallet();
@@ -17,8 +24,11 @@ export default () => {
   const fetchCashPrice = useCallback(async () => {
     if (!account) {
       setValue({
-        maha: BigNumber.from(0), 
-        arthx: BigNumber.from(0)
+        isLoading: false,
+        value: {
+          maha: BigNumber.from(0), 
+          arthx: BigNumber.from(0)
+        }
       });
       return;
     }
@@ -32,7 +42,10 @@ export default () => {
     const rateARTHX = tokenARTHXBalance.mul(pow).div(tokenRTSupply);
     const rates = { maha: rateMaha, arthx: rateARTHX }
 
-    setValue(rates);
+    setValue({
+      isLoading: false,
+      value: rates
+    });
   }, [core.ARTHX, core.MAHA, account, core.PoolToken, core.contracts, pow]);
 
   useEffect(() => {

@@ -4,8 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default () => {
-  const [value, setValue] = useState<BigNumber>(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
 
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -19,7 +24,7 @@ export default () => {
     const excessCollaterals = await Promise.all(promises);
     const totalExcessCollateral = excessCollaterals.reduce((a, b) => a.add(b), BigNumber.from(0));
 
-    setValue(totalExcessCollateral);
+    setValue({isLoading: false, value: totalExcessCollateral});
   }, [core]);
 
   useEffect(() => {

@@ -5,8 +5,13 @@ import useCore from '../../useCore';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default (collateralPoolToken: string) => {
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
 
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -20,14 +25,15 @@ export default (collateralPoolToken: string) => {
     const collateralPrice = await pool.getCollateralPrice();
     const poolBalance = await token.balanceOf(pool.address);
   
-    if (poolBalance.gt(poolCeiling)) setValue(BigNumber.from(0));
-    else setValue(
-      poolCeiling
+    if (poolBalance.gt(poolCeiling)) setValue({isLoading: false, value: BigNumber.from(0)});
+    else setValue({
+      isLoading: false,
+      value: poolCeiling
         .sub(poolBalance)
         .mul(collateralPrice)
         .mul(BigNumber.from(10).pow(18 - tokenDecimals))
         .div(1e6)
-    );
+    });
   }, [collateralPoolToken, tokenDecimals, core]);
 
   useEffect(() => {

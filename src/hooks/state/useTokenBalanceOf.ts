@@ -6,8 +6,13 @@ import useCore from '../useCore';
 import ERC20 from '../../basis-cash/ERC20';
 import {useBlockNumber} from '../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 const useTokenBalanceOf = (token: ERC20, address: string) => {
-  const [balance, setBalance] = useState(BigNumber.from(0));
+  const [balance, setBalance] = useState<State>({isLoading: true, value: BigNumber.from(0)});
   
   const core = useCore();
   const { account } = useWallet();
@@ -15,11 +20,12 @@ const useTokenBalanceOf = (token: ERC20, address: string) => {
   
   const fetchBalance = useCallback(async () => {
     if (!account) {
-      setBalance(BigNumber.from(0))
+      setBalance({isLoading: false, value: BigNumber.from(0)})
       return;
     }
+    
     const bal = await token.balanceOf(address);
-    setBalance(bal);
+    setBalance({isLoading: false, value: bal});
   }, [address, account, token]);
 
   useEffect(() => {

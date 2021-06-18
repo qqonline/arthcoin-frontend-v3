@@ -5,8 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default (stakingContract: string) => {
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
   
   const core = useCore();
   const {account} = useWallet();
@@ -14,12 +19,12 @@ export default (stakingContract: string) => {
 
   const fetchValue = useCallback(async () => {
     if (!account) {
-      setValue(BigNumber.from(0));
+      setValue({isLoading: false, value: BigNumber.from(0)});
       return;
     }
 
     const contract = core.contracts[stakingContract];
-    setValue(await contract.earned(core.myAccount));
+    setValue({isLoading: false, value: await contract.earned(core.myAccount)});
   }, [core.contracts, account, core.myAccount, stakingContract]);
 
   useEffect(() => {

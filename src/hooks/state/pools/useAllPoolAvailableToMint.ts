@@ -5,8 +5,13 @@ import useCore from '../../useCore';
 import useTokenDecimals from '../../useTokenDecimals';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default () => {
-  const [value, setValue] = useState<BigNumber>(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
 
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -34,7 +39,7 @@ export default () => {
     const poolAvailableToMint = await Promise.all(promises);
     const totalAvailableToMint = poolAvailableToMint.reduce((a, b) => a.add(b), BigNumber.from(0));
 
-    setValue(totalAvailableToMint);
+    setValue({isLoading: false, value: totalAvailableToMint});
   }, [core]);
 
   useEffect(() => {
