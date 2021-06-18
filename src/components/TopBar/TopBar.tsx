@@ -76,12 +76,19 @@ const TopBar: React.FC = () => {
             <HideonPhone>
               <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 <TxButton />
-                {network.name !== '' && (
+                {/*{network.name !== '' && (
                   <CustomNetwork>
                     <ColorIcon colorCode={network.color} />
                     <span>{network.name}</span>
                   </CustomNetwork>
-                )}
+                )}*/}
+                <div style={{marginRight: '12px'}}>
+                  <Button
+                    text={'Buy Maha'}
+                    size={'sm'}
+                    onClick={() => window.open('https://mahadao.com')}
+                  />
+                </div>
                 {false && (
                   <Select
                     labelId="demo-customized-select-label"
