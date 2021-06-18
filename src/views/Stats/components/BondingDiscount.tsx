@@ -6,6 +6,7 @@ import HtmlTooltip from '../../../components/HtmlTooltip';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
   stats?: boolean;
@@ -34,10 +35,12 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
+              {/*{
                 Number(getDisplayBalance(discount, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%
+              }%*/}
+
+              <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
             </BeforeChip>
           </OneLine>
         </OneLine>

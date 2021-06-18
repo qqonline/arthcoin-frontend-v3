@@ -26,6 +26,7 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
+import Loader from 'react-spinners/BeatLoader';
 
 withStyles({
   root: {
@@ -199,7 +200,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}
+                    {/*{prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}*/}
+                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
@@ -208,7 +210,8 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
+                    {/*{prettyNumber(getDisplayBalance(committedCollateral, 18))}*/}
+                    <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
