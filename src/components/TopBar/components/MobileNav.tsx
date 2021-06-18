@@ -111,7 +111,7 @@ const MobileNav = (props: props) => {
             Rebase
           </StyledLink>
           <StyledLink exact activeClassName="active" to="/lottery" onClick={() => props.onClick()}>
-            Lottery
+            Prizes
           </StyledLink>
           {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
