@@ -31,6 +31,10 @@ const UnderstandMore: React.FC<props> = (props: props) => {
           <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={"_blank"}>Go to ARTH V 2.0 article to learn more</a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
+        <LearnMore>
+          <a href={'https://mahadao.com/arthx.html'} rel="noopener noreferrer" target={"_blank"}>Learn about Arthx</a>
+          <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
+        </LearnMore>
       </CustomInfoCardDetails>
     </CustomInfoCard>
   );

@@ -286,8 +286,8 @@ const MintTabContent = (props: WithSnackbarProps & IProps) => {
                 IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
                 isBalanceLoading={isarthxBalanceLoading}
                 DefaultValue={arthxValue.toString()}
-                ILabelInfoValue={''}
                 LogoSymbol={'ARTHX'}
+                ILabelInfoValue={"How can I get it ?"}
                 disabled={mintCR.lte(1e6) || isarthxBalanceLoading || isarthxPriceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}

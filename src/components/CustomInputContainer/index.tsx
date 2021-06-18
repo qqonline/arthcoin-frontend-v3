@@ -338,6 +338,7 @@ const ILabelInfo = styled.p`
   color: #f7653b;
   margin-left: 5px;
   margin-bottom: 0;
+  cursor: pointer;
 `;
 const ILabelBalance = styled.p`
   font-family: Inter;
