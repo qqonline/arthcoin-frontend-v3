@@ -31,10 +31,10 @@ const Home: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const core = useCore();
-  const allPoolsValue = useAllPoolCollateralValue();
-  const globalCollateralValue = useGlobalCollateralValue();
-  const targetCollateralValue = useTargetCollateralValue();
-  const allPoolsExcessCollateralValue = useAllPoolExcessCollateralValue();
+  const {isLoading: isPoolsValueLoading, value: allPoolsValue} = useAllPoolCollateralValue();
+  const {isLoading: isGlobalCollateralValueLoading, value: globalCollateralValue} = useGlobalCollateralValue();
+  const {isLoading: isTargetValueLoading, value: targetCollateralValue} = useTargetCollateralValue();
+  const {isLoading: isPoolExcessCollatValue, value: allPoolsExcessCollateralValue} = useAllPoolExcessCollateralValue();
 
   WalletAutoConnect();
 

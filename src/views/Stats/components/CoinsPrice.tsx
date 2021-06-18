@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loader from 'react-spinners/BeatLoader';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
 import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
-import Loader from 'react-spinners/BeatLoader';
 
 const CoinsPrice: React.FC = () => {
-  const arthPrice = useARTHOraclePrice();
-  const mahaPrice = useMAHAOraclePrice();
-  const arthxPrice = useARTHXOraclePrice();
+  const {isLoading: isARTHPriceLoading, value: arthPrice} = useARTHOraclePrice();
+  const {isLoading: isMAHAPriceLoading, value: mahaPrice} = useMAHAOraclePrice();
+  const {isLoading: isARTHXPriceLoading, value: arthxPrice} = useARTHXOraclePrice();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>

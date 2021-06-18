@@ -13,7 +13,7 @@ type props = {
 };
 
 const BondingDiscount: React.FC<props> = (props: props) => {
-  const discount = useRecollateralizationDiscount();
+  const {isLoading: isDiscountLoading, value: discount} = useRecollateralizationDiscount();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>

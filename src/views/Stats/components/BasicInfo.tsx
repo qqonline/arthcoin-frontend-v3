@@ -18,7 +18,7 @@ type props = {
 };
 
 const BasicInfo: React.FC<props> = (props) => {
-  const totalAvailableToMint = useAllPoolAvailableToMint();
+  const {isLoading: isAvailabelToMintLoading, value: totalAvailableToMint} = useAllPoolAvailableToMint();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
