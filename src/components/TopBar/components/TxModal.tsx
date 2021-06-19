@@ -157,6 +157,11 @@ const WalletDiv = styled.div`
   width: 380px;
   z-index: 10;
   transition: 1s ease-in-out;
+  @media (max-width: 600px) {
+    width: 100vw;
+    left: 0;
+    right: 0;
+  }
 `;
 
 const ModalHeader = styled.div`

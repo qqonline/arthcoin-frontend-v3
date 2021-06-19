@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,6 +17,7 @@ import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
 import useCore from '../../hooks/useCore';
 import Button from '../Button';
+import { useLocation } from 'react-router-dom';
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -60,7 +61,17 @@ const TopBar: React.FC = () => {
     name: 'Testnet',
     color: '#11af60',
   };
-  // const [showWallet, setShowWallet] = useState<boolean>(true)
+
+  let location = useLocation();
+  React.useEffect(() => {
+    console.log('location', location.pathname)
+    // ga.send(["pageview", location.pathname]);
+  }, [location]);
+
+  //working code for tracking page views ?minor bug
+  /*useEffect(() => {
+    console.log('window', window.location.pathname);
+  }, [window.location.pathname])*/
 
   return (
     <TopBarContainer>
@@ -74,8 +85,7 @@ const TopBar: React.FC = () => {
               </HideonPhone>
             </div>
             <HideonPhone>
-              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                <TxButton />
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
                 {/*{network.name !== '' && (
                   <CustomNetwork>
                     <ColorIcon colorCode={network.color} />
@@ -84,43 +94,12 @@ const TopBar: React.FC = () => {
                 )}*/}
                 <div style={{marginRight: '12px'}}>
                   <Button
-                    text={'Buy Maha'}
+                    text={'Get MAHA'}
                     size={'sm'}
                     onClick={() => window.open('https://mahadao.com')}
                   />
                 </div>
-                {false && (
-                  <Select
-                    labelId="demo-customized-select-label"
-                    id="demo-customized-select"
-                    value={netWrokType}
-                    label="Mainnet"
-                    onChange={handleChange}
-                    input={<BootstrapInput />}
-                    IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
-                  >
-                    <MenuItem value="mainnet">
-                      <ColorIcon colorCode="#11af60" />
-                      Mainnet
-                    </MenuItem>
-                    <MenuItem value="ropsten">
-                      <ColorIcon colorCode="#FA4C69" />
-                      Ropsten
-                    </MenuItem>
-                    <MenuItem value="kovan">
-                      <ColorIcon colorCode="#7A3CF6" />
-                      Kovan
-                    </MenuItem>
-                    <MenuItem value="rinkeby">
-                      <ColorIcon colorCode="#FCB400" />
-                      Rinkeby
-                    </MenuItem>
-                    <MenuItem value="goerli">
-                      <ColorIcon colorCode="#BD9CFF" />
-                      Goerli
-                    </MenuItem>
-                  </Select>
-                )}
+                <TxButton />
                 <AccountButton />
               </div>
             </HideonPhone>

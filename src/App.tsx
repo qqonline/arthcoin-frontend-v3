@@ -50,34 +50,7 @@ const Providers: React.FC = ({ children }) => {
   );
 };
 
-function usePageViews() {
-  let location = useLocation()
-
-  useEffect(() => {
-    console.log('location', location)
-      // ga.send(['pageview', location.pathname])
-    }, [location])
-}
-
 const App: React.FC = () => {
-  // const location = useLocation();
-
-  /*let history = createMemoryHistory();
-  useEffect(() => {
-    console.log('location');
-    history.listen(({ action, location }) => {
-      // The current location changed.
-      console.log('location change', action, location);
-    });
-  }, [history])*/
-
-  /*const history = useHistory()
-  useEffect(() => {
-    history.listen((location) => {
-      console.log(`You changed the page to: ${location}`)
-    })
-  },[history])*/
-
   // Init animate on scroll
   useEffect(() => {
     // Mixpanel.track('Test', {'test': '123', 'key': 'pair'});

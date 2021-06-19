@@ -75,9 +75,8 @@ const AccountModal: React.FC<props> = (props) => {
       <PositionDiv>
         <WalletDiv>
           <StyledLink>
-            <span>Your Account</span>
             <AccountDetails>
-              <IconButton>
+              <IconButton style={{marginLeft: '-12px'}}>
                 <img height={32} src={metamask} alt="metamask" />
               </IconButton>
               <span>{truncateMiddle(account, 15)}</span>
@@ -95,6 +94,9 @@ const AccountModal: React.FC<props> = (props) => {
                 <img height={24} src={copy} alt="copy" />
                 </IconButton>
               </HtmlTooltip>
+              <NetworkDiv colorCode={'#FCB40012'}>
+                <NetworkName colorCode={'#FCB400'}> TestNet </NetworkName>
+              </NetworkDiv>
 
             </AccountDetails>
           </StyledLink>
@@ -222,15 +224,15 @@ const WalletDiv = styled.div`
 const StyledLink = styled.div`
   padding: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  &:hover {
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.64);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(70px);
-  }
-  &.active {
-    color: rgba(255, 255, 255, 0.88);
-  }
+  //&:hover {
+  //  border-radius: 12px;
+  //  color: rgba(255, 255, 255, 0.64);
+  //  background: rgba(255, 255, 255, 0.04);
+  //  backdrop-filter: blur(70px);
+  //}
+  //&.active {
+  //  color: rgba(255, 255, 255, 0.88);
+  //}
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -248,7 +250,27 @@ const AccountDetails = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  width: 100%;
 `;
+
+const NetworkDiv = styled.div`
+  background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
+  border-radius: 6px;
+  padding: 4px 12px;
+`
+
+const NetworkName = styled.div`
+  color: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+`
+
+
 
 const StyledRows = styled.div`
   display: flex;
