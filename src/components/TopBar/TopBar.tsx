@@ -18,6 +18,7 @@ import ExpandMore from '../../assets/img/ExpandMore.svg';
 import useCore from '../../hooks/useCore';
 import Button from '../Button';
 import { useLocation } from 'react-router-dom';
+import { Mixpanel } from '../../analytics/Mixpanel';
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -62,9 +63,10 @@ const TopBar: React.FC = () => {
     color: '#11af60',
   };
 
+  // ScreenView Analytics
   let location = useLocation();
   React.useEffect(() => {
-    console.log('location', location.pathname)
+    Mixpanel.track(`ScreenView:${location.pathname}`);
     // ga.send(["pageview", location.pathname]);
   }, [location]);
 

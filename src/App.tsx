@@ -32,7 +32,6 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
-import { Mixpanel } from './analytics/Mixpanel';
 
 
 const Providers: React.FC = ({ children }) => {
@@ -53,7 +52,6 @@ const Providers: React.FC = ({ children }) => {
 const App: React.FC = () => {
   // Init animate on scroll
   useEffect(() => {
-    // Mixpanel.track('Test', {'test': '123', 'key': 'pair'});
     AOS.init();
   }, []);
 
