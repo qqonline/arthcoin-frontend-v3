@@ -10,6 +10,8 @@ import arthLogobg from './images/logo/ARTH-bg.svg'
 import USDLogo from './images/logo/USD.svg'
 import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
+import { createMemoryHistory } from 'history';
+
 
 import useCore from '../../hooks/useCore';
 import config, { platformURL } from '../../config';
@@ -121,6 +123,16 @@ const Home: React.FC = () => {
   const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
     ? `${platformURL[config.platform].swapUrl}?inputCurrency=${'ETH'}&outputCurrency=${token1.address}`
     : `https://app.uniswap.org/#/swap?inputCurrency=${'ETH'}&outputCurrency=${token1.address}&use=V2`;
+
+  let history = createMemoryHistory();
+
+  useEffect(() => {
+    console.log('location');
+    history.listen(({ action, location }) => {
+      // The current location changed.
+      console.log('location change', action, location);
+    });
+  }, [history])
 
   return (
     <div>

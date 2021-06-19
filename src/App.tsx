@@ -60,6 +60,8 @@ function usePageViews() {
 }
 
 const App: React.FC = () => {
+  // const location = useLocation();
+
   /*let history = createMemoryHistory();
   useEffect(() => {
     console.log('location');
