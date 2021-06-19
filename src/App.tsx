@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+// import { createMemoryHistory } from 'history';
 
 import './App.css';
 import './index.css';
@@ -31,6 +32,7 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
+import { Mixpanel } from './analytics/Mixpanel';
 
 
 const Providers: React.FC = ({ children }) => {
@@ -48,9 +50,35 @@ const Providers: React.FC = ({ children }) => {
   );
 };
 
+function usePageViews() {
+  let location = useLocation()
+
+  useEffect(() => {
+    console.log('location', location)
+      // ga.send(['pageview', location.pathname])
+    }, [location])
+}
+
 const App: React.FC = () => {
+  /*let history = createMemoryHistory();
+  useEffect(() => {
+    console.log('location');
+    history.listen(({ action, location }) => {
+      // The current location changed.
+      console.log('location change', action, location);
+    });
+  }, [history])*/
+
+  /*const history = useHistory()
+  useEffect(() => {
+    history.listen((location) => {
+      console.log(`You changed the page to: ${location}`)
+    })
+  },[history])*/
+
   // Init animate on scroll
   useEffect(() => {
+    // Mixpanel.track('Test', {'test': '123', 'key': 'pair'});
     AOS.init();
   }, []);
 
@@ -59,14 +87,10 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    document
-      .body
-      .addEventListener('touchmove', makeUnPassive, { passive: true })
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true })
 
     return () => (
-      document
-        .body
-        .removeEventListener('touchmove', makeUnPassive)
+      document.body.removeEventListener('touchmove', makeUnPassive)
     )
   }, [])
 
