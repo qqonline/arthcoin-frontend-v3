@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
 // import { createMemoryHistory } from 'history';
 
 import './App.css';
@@ -66,8 +66,6 @@ const App: React.FC = () => {
       document.body.removeEventListener('touchmove', makeUnPassive)
     )
   }, [])
-
-
 
   return (
     <Providers>

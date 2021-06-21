@@ -52,9 +52,9 @@ const configurations: { [env: string]: Configuration } = {
     gasLimitMultiplier: 1.1,
     defaultCollateral: 'USDT',
     blockchainToken: 'MATIC',
-    supportedCollaterals: ['USDT', 'USDC'],
-    arthTradingPairs: ['MATIC', 'MAHA'],
-    arthxTradingPairs: ['MATIC', 'ARTH'],
+    supportedCollaterals: ['USDT', 'USDC', 'WETH', 'WBTC', 'MATIC'],
+    arthTradingPairs: ['ARTHX', 'MAHA'],
+    arthxTradingPairs: ['ARTH'],
     platform: 'sushiswap',
   },
   matic: {
@@ -189,4 +189,4 @@ export const tradingPairs: TradingPairs[] = [
   },
 ];
 
-export default configurations['development'];
+export default configurations['stagingMatic'];
