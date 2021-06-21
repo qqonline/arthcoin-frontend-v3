@@ -457,7 +457,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
-                    Commited Collateral
+                    Committed Collateral
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
@@ -597,7 +597,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <Logo src={TicketGreen} alt='TicketBg' />
                     <Text>You will get {
                       Number(getDisplayBalanceToken(lotteryAmount, currentToken, 0)).toLocaleString()
-                    } lottery tickets to win NFT prize(s).
+                    } lottery ticket(s) to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>
                 }
@@ -652,7 +652,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <UnderstandMore dataObj={understandMore} />
             <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
-                Genesis participate can issue lottery tickets to win exciting MAHA Prizes
+                Genesis participants can issue lottery tickets to win exciting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
                 <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} />

@@ -22,7 +22,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
-              Current discount
+              Current Discount
               <HtmlTooltip
                 title={
                   <React.Fragment>
@@ -45,7 +45,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
         </OneLine>
         <OneLine>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>Minimum discount</TextWithIcon>
+            <TextWithIcon>Minimum Discount</TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>0.075%</BeforeChip>
@@ -53,7 +53,7 @@ const BondingDiscount: React.FC<props> = (props: props) => {
         </OneLine>
         <OneLine>
           <div style={{ flex: 1 }}>
-            <TextWithIcon>Maximum discount</TextWithIcon>
+            <TextWithIcon>Maximum Discount</TextWithIcon>
           </div>
           <OneLine>
             <BeforeChip>30%</BeforeChip>

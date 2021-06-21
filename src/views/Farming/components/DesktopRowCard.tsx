@@ -8,6 +8,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import Button from '../../../components/Button';
 import TokenSymbol from '../../../components/TokenSymbol';
 
+import dfyn from '../../../assets/img/DFYN.png';
 import uniswap from '../../../assets/svg/UniswapWhite.svg';
 import sushiswap from '../../../assets/svg/SushiswapWhite.svg';
 
@@ -66,6 +67,7 @@ export default (props: IProps) => {
 
   const getImage = (platform: string) => {
     if (platform === 'sushiswap') return sushiswap;
+    if (platform === 'dfyn') return dfyn;
     return uniswap;
   }
 
