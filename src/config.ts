@@ -135,7 +135,7 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arthx'],
   },
   {
-    platform: 'sushiswap',
+    platform: 'dfyn',
     contract: 'StakeARTHMAHA',
     kind: 'unlocked',
     depositToken: 'ArthMahaLP',
@@ -165,15 +165,11 @@ export const stakingContracts: StakingContract[] = [
 export const tradingPairs: TradingPairs[] = [
   {
     tokens: ['MAHA', 'ARTH'],
-    paltform: 'sushiswap',
+    platform: 'dfyn',
   },
   {
-    tokens: ['ARTH', 'WETH'],
-    paltform: 'sushiswap',
-  },
-  {
-    tokens: ['ARTHX', 'WETH'],
-    paltform: 'sushiswap',
+    tokens: ['ARTHX', 'ARTHX'],
+    platform: 'dfyn',
   },
 ];
 

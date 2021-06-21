@@ -35,7 +35,7 @@ export interface StakingContract {
 
 export interface TradingPairs {
   tokens: [string, string];
-  paltform: 'uniswapV2' | 'uniswapV3' | 'quickswap' | 'sushiswap' | 'dfyn' | 'cryption';
+  platform: 'uniswapV2' | 'uniswapV3' | 'quickswap' | 'sushiswap' | 'dfyn' | 'cryption';
 }
 
 export interface TokenStat {
