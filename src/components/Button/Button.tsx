@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
 import Loader from "react-spinners/PulseLoader";
+import { Mixpanel } from '../../analytics/Mixpanel';
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ interface ButtonProps {
   variant?: 'default' | 'transparent' | 'outlined' | 'rounded';
   loading?: boolean;
   tracking_id?: string;
+  value?: string;
 }
 
 function variantToStyle(variant: string = 'default', color: any) {
@@ -71,6 +73,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   loading= false,
   tracking_id= '',
+  value,
 }) => {
   const { color, spacing } = useContext(ThemeContext);
 
@@ -141,7 +144,14 @@ const Button: React.FC<ButtonProps> = ({
       border={border}
       disabled={disabled || loading}
       fontSize={fontSize}
-      onClick={onClick}
+      onClick={() => {
+        if (value){
+          Mixpanel.track(`buttonClick:${tracking_id}`, {value: value})
+        } else {
+          Mixpanel.track(`buttonClick:${tracking_id}`)
+        }
+        onClick()
+      }}
       padding={buttonPadding}
       size={buttonSize}
       id={tracking_id}

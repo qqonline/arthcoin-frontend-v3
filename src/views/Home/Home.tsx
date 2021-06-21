@@ -797,7 +797,7 @@ const Home: React.FC = () => {
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="https://discord.gg/kyzp79SK" target="_blank">
+                <a id="social-discord" href="http://discord.gg/mahadao" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>

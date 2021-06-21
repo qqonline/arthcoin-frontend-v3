@@ -348,6 +348,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
+
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -642,6 +643,7 @@ const Genesis = (props: WithSnackbarProps) => {
                           !isApproved
                         }
                         onClick={() => setOpenModal(1)}
+                        tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
                       />
                     )
                 }
@@ -655,7 +657,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 Genesis participate can issue lottery tickets to win exciting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
-                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} />
+                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} tracking_id={'learn_more_genesis_to_lottery'} />
               </LotteryBoxAction>
             </LotteryBox>
           </Grid>

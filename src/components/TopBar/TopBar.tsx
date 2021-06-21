@@ -95,6 +95,7 @@ const TopBar: React.FC = () => {
                   text={'Get MAHA'}
                   size={'sm'}
                   onClick={() => window.open('https://mahadao.com')}
+                  tracking_id={'get_MAHA'}
                 />
               </div>
               <TxButton />
@@ -120,6 +121,7 @@ const TopBar: React.FC = () => {
                   text={'Get MAHA'}
                   size={'sm'}
                   onClick={() => window.open('https://mahadao.com')}
+                  tracking_id={'get_MAHA'}
                 />
               </div>
               {!showMobileMenu ? (
