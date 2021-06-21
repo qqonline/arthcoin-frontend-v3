@@ -348,7 +348,8 @@ const Genesis = (props: WithSnackbarProps) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-
+                tracking_id={type === 'Commit' ? 'cancel_commit_collateral' : 'cancel_swap_arth'}
+                value={type === 'Commit' ? collateralValue : arthValue}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -372,6 +373,8 @@ const Genesis = (props: WithSnackbarProps) => {
                   if (type === 'Commit') recollateralize(() => setOpenModal(2));
                   else redeemARTH(() => setOpenModal(2));
                 }}
+                tracking_id={type === 'Commit' ? 'confirm_commit_collateral' : 'confirm_swap_arth'}
+                value={type === 'Commit' ? collateralValue : arthValue}
               />
             </Grid>
           </Grid>
@@ -611,6 +614,7 @@ const Genesis = (props: WithSnackbarProps) => {
                         onClick={() => connect('injected').then(() => {
                           localStorage.removeItem('disconnectWallet')
                         })}
+                        tracking_id={'connect_wallet'}
                       />
                     )
                     : !isApproved ? (
@@ -644,6 +648,7 @@ const Genesis = (props: WithSnackbarProps) => {
                         }
                         onClick={() => setOpenModal(1)}
                         tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
+                        value={type === 'Commit' ? collateralValue : arthValue}
                       />
                     )
                 }
