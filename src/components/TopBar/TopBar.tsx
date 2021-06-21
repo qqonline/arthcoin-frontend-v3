@@ -85,34 +85,19 @@ const TopBar: React.FC = () => {
           <div className="dialog-class">
             <Logo />
             <HideonPhone>
-              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
-                {/*{network.name !== '' && (
-                  <CustomNetwork>
-                    <ColorIcon colorCode={network.color} />
-                    <span>{network.name}</span>
-                  </CustomNetwork>
-                )}*/}
-                <div style={{ marginRight: '12px' }}>
-                  <Button
-                    text={'Get MAHA'}
-                    size={'sm'}
-                    onClick={() => window.open('https://mahadao.com')}
-                  />
-                </div>
-                <TxButton />
-                <AccountButton />
-              </div>
+              <Nav isMainnet={isMainnet}/>
             </HideonPhone>
           </div>
           <HideonPhone>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
+              <div style={{marginRight: '12px'}}>
+                <Button
+                  text={'Get MAHA'}
+                  size={'sm'}
+                  onClick={() => window.open('https://mahadao.com')}
+                />
+              </div>
               <TxButton />
-              {network.name !== '' && (
-                <CustomNetwork>
-                  <ColorIcon colorCode={network.color} />
-                  <span>{network.name}</span>
-                </CustomNetwork>
-              )}
               <AccountButton />
             </div>
           </HideonPhone>
@@ -132,7 +117,7 @@ const TopBar: React.FC = () => {
                 )}*/}
               <div style={{ marginRight: '12px' }}>
                 <Button
-                  text={'Buy Maha'}
+                  text={'Get MAHA'}
                   size={'sm'}
                   onClick={() => window.open('https://mahadao.com')}
                 />
@@ -217,7 +202,6 @@ const StyledTopBar = styled.div`
   // display: flex;
   // width: 100%;
   // top: 0;
-
   //background: #151414;
   ox-sizing: border-box;
   margin: 0 auto;
@@ -279,7 +263,7 @@ const StyledTopBarInner = styled.div`
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
   justify-content: space-between;
-  //max-width: ${(props) => props.theme.siteWidth}px;
+    //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   padding: 0 24px;
   flex-wrap: wrap;

@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-const Nav: React.FC = () => {
+interface props {
+  isMainnet: boolean
+}
+
+const Nav = (props: props) => {
+
   return (
     <StyledNav>
       <StyledLink exact activeClassName="active" to="/genesis">
@@ -23,9 +28,12 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/trade">
         Trade
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/faucet">
-        Faucet
-      </StyledLink>
+      {
+        !props.isMainnet && (
+          <StyledLink exact activeClassName="active" to="/faucet">
+            Faucet
+          </StyledLink>)
+      }
       <StyledLink exact activeClassName="active" to="/rebase">
         Rebase
       </StyledLink>
