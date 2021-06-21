@@ -4,8 +4,8 @@ export type Deployments = {
   [contractName: string]: {
     address: string;
     abi: string;
-  }
-}
+  };
+};
 
 export type Configuration = {
   chainId: ChainId;
@@ -14,7 +14,7 @@ export type Configuration = {
   defaultProvider: string;
   deployments: Deployments;
   config?: EthereumConfig;
-
+  blockchainToken: 'MATIC' | 'ETH' | 'BNB';
   defaultCollateral: string;
   supportedCollaterals: string[];
   arthTradingPairs: string[];

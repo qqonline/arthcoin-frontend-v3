@@ -6,13 +6,12 @@ import { useBlockNumber } from '../../../state/application/hooks';
 
 export default () => {
   const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
-  
+
   const core = useCore();
   const blockNumber = useBlockNumber();
 
   const fetchCashPrice = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    console.log(await controller.getARTHXPrice())
     setPrice(await controller.getARTHXPrice());
   }, [core.contracts.ArthController]);
 

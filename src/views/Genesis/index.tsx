@@ -43,7 +43,7 @@ import { ValidateNumber } from '../../components/CustomInputContainer/RegexValid
 
 import useCore from '../../hooks/useCore';
 import useTokenDecimals from '../../hooks/useTokenDecimals';
-import { getDisplayBalance } from '../../utils/formatBalance';
+import { getDisplayBalance, getDisplayBalanceToken } from '../../utils/formatBalance';
 import useTokenBalance from '../../hooks/state/useTokenBalance';
 import usePoolRedeemFees from '../../hooks/state/pools/usePoolRedeemFees';
 import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
@@ -166,6 +166,8 @@ const Genesis = (props: WithSnackbarProps) => {
   const arthCirculatingSupply = useARTHCirculatingSupply();
   const collateralBalnace = useTokenBalance(core.tokens[selectedCollateral]);
   const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
+
+  console.log('sdf', collateralGenesis)
   const committedCollateral = useGlobalCollateralValue();
   const percentageCompleted = usePercentageCompleted();
   const redeemFee = usePoolRedeemFees(selectedCollateral);
@@ -509,7 +511,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
+                    IBalanceValue={getDisplayBalanceToken(collateralBalnace, currentToken)}
                     ILabelInfoValue={''}
                     DefaultValue={collateralValue.toString()}
                     LogoSymbol={selectedCollateral}
@@ -533,7 +535,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 ) : (
                   <CustomInputContainer
                     ILabelValue={'Enter ARTH'}
-                    IBalanceValue={getDisplayBalance(arthBalance)}
+                    IBalanceValue={getDisplayBalanceToken(arthBalance, core.ARTH)}
                     ILabelInfoValue={''}
                     // value={arthValue.toString()}
                     DefaultValue={arthValue.toString()}
@@ -569,48 +571,29 @@ const Genesis = (props: WithSnackbarProps) => {
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {Number(getDisplayBalance(arthxRecieve, 18, 3)).toLocaleString()}
+                          {Number(getDisplayBalanceToken(arthxRecieve, core.ARTHX, 3)).toLocaleString()}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
                     {
                       type === 'Commit'
-                        ? (
+                      && (
+                        <OneLineInputwomargin>
+                          <div style={{ flex: 1 }}>
+                            <TextWithIcon>
+                              Bonus
+                              <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
+                            </TextWithIcon>
+                          </div>
                           <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Bonus
-                                <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                              </BeforeChip>
-                              <TagChips>ARTHX</TagChips>
-                            </OneLineInputwomargin>
+                            <BeforeChip className={'custom-mahadao-chip'}>
+                              {Number(getDisplayBalanceToken(arthxDiscount, core.ARTHX, 3)).toLocaleString()}
+                            </BeforeChip>
+                            <TagChips>ARTHX</TagChips>
                           </OneLineInputwomargin>
-                        )
-                        : (
-                          <OneLineInputwomargin>
-                            <div style={{ flex: 1 }}>
-                              <TextWithIcon>
-                                Trading Fee
-                                <CustomToolTip toolTipText={'Fee (charged in ARTH) associated with swapping ARTH for ARTHX during genesis.'} />
-                              </TextWithIcon>
-                            </div>
-                            <OneLineInputwomargin>
-                              <BeforeChip className={'custom-mahadao-chip'}>
-                                {
-                                  Number(getDisplayBalance(tradingFee, 18, 6))
-                                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
-                                }
-                              </BeforeChip>
-                              <TagChips>ARTH</TagChips>
-                            </OneLineInputwomargin>
-                          </OneLineInputwomargin>
-                        )
+                        </OneLineInputwomargin>
+                      )
                     }
                   </ReceiveContainer>
                 </div>
@@ -619,7 +602,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   <CustomBadgeAlert>
                     <Logo src={TicketGreen} alt='TicketBg' />
                     <Text>You will get {
-                      Number(getDisplayBalance(lotteryAmount, tokenDecimals, 0)).toLocaleString()
+                      Number(getDisplayBalanceToken(lotteryAmount, currentToken, 0)).toLocaleString()
                     } lottery tickets to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>

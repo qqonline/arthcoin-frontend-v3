@@ -66,7 +66,7 @@ export class BasisCash {
     // this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI', 18);
     this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT', 6);
     this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC', 6);
-    this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 18);
+    this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 8);
     this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH', 18);
 
     // this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
@@ -84,6 +84,7 @@ export class BasisCash {
       USDC: this.USDC,
       WBTC: this.WBTC,
       WETH: this.WETH,
+      ETH: this.WETH,
 
       ArthMahaLP: this.ArthMahaLP,
       ArthArthxLP: this.ArthxArthLP,
@@ -175,7 +176,9 @@ export class BasisCash {
     if (collateral === 'USDC') return this.contracts.Pool_USDC;
     if (collateral === 'DAI') return this.contracts.Pool_DAI;
     if (collateral === 'WBTC') return this.contracts.Pool_WBTC;
-    if (collateral === 'ETH') return this.contracts.Pool_ETH;
+    if (collateral === 'ETH' || collateral === 'WETH') return this.contracts.Pool_WETH;
+    if (collateral === 'MATIC' || collateral === 'WMATIC') return this.contracts.Pool_WMATIC;
+    throw new Error('unkown collateral pool: ' + collateral);
   };
 
   getCollatearalGenesis = (collateral: string) => {
@@ -183,7 +186,9 @@ export class BasisCash {
     if (collateral === 'USDC') return this.contracts.GenesisUSDC;
     if (collateral === 'DAI') return this.contracts.GenesisDAI;
     if (collateral === 'WBTC') return this.contracts.GenesisWBTC;
-    if (collateral === 'ETH') return this.contracts.GenesisETH;
+    if (collateral === 'ETH' || collateral === 'WETH') return this.contracts.GenesisWETH;
+    if (collateral === 'MATIC' || collateral === 'WMATIC') return this.contracts.GenesisWMATIC;
+    throw new Error('unkown genesis pool: ' + collateral);
   };
 
   gasOptions(gas: BigNumber): Overrides {

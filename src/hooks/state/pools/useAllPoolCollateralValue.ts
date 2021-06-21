@@ -5,8 +5,8 @@ import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
 interface IValues {
-  poolToken: string
-  value: BigNumber
+  poolToken: string;
+  value: BigNumber;
 }
 
 export default () => {
@@ -16,17 +16,20 @@ export default () => {
   const blockNumber = useBlockNumber();
 
   const fetchValue = useCallback(async () => {
-    const promises = core.getCollateralTypes().map(collateralPoolToken => {
-      const pool = core.getCollatearalPool(collateralPoolToken)
+    const promises = core.getCollateralTypes().map((collateralPoolToken) => {
+      const pool = core.getCollatearalPool(collateralPoolToken);
+      console.log('test', collateralPoolToken);
       return pool.getCollateralGMUBalance();
-    })
+    });
 
-    const vals = await Promise.all(promises)
+    const vals = await Promise.all(promises);
 
     const results = vals.map((val, i) => ({
       poolToken: core.getCollateralTypes()[i],
-      value: val
-    }))
+      value: val,
+    }));
+
+    console.log('fuck', results);
 
     setValue(results);
   }, [core]);
