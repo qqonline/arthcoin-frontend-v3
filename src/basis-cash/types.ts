@@ -17,10 +17,15 @@ export interface CollateralPool {
 export interface StakingContract {
   platform: string;
   contract: ContractName;
-  kind: 'linear' | 'vested';
-  depositTokenKind: 'single' | 'uniswap-v2-lp' | 'sushiswap-v2-lp';
+  kind: 'locked' | 'unlocked';
+  depositTokenKind:
+    | 'single'
+    | 'uniswap-v2-lp'
+    | 'sushiswap-v2-lp'
+    | 'dfyn-v2-lp'
+    | 'cryption-v2-lp';
   depositTokenSymbols: string[];
-  depositToken: string
+  depositToken: string;
   earnTokenName: ContractName;
   sort: number;
   finished: boolean;
@@ -30,7 +35,7 @@ export interface StakingContract {
 
 export interface TradingPairs {
   tokens: [string, string];
-  paltform: 'uniswapV2' | 'uniswapV3' | 'quickswap' | 'sushiswap';
+  paltform: 'uniswapV2' | 'uniswapV3' | 'quickswap' | 'sushiswap' | 'dfyn' | 'cryption';
 }
 
 export interface TokenStat {

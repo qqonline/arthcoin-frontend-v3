@@ -40,7 +40,7 @@ const configurations: { [env: string]: Configuration } = {
     networkName: 'Matic Mumbai Testnet',
     chainId: 80001,
     etherscanUrl: 'https://explorer-mumbai.maticvigil.com',
-    defaultProvider:'https://rpc-mumbai.matic.today',
+    defaultProvider: 'https://rpc-mumbai.matic.today',
     deployments: require('./basis-cash/deployments/maticMumbai.json'),
     genesisLaunchDate: new Date('2021-01-15T14:00:00Z'),
     genesisEndDate: new Date('2021-01-15T14:00:00Z'),
@@ -50,6 +50,21 @@ const configurations: { [env: string]: Configuration } = {
     supportedCollaterals: ['USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
+  },
+  matic: {
+    networkName: 'Matic Mainnet',
+    chainId: 137,
+    etherscanUrl: 'https://polygonscan.com',
+    defaultProvider: 'https://rpc-mainnet.maticvigil.com/',
+    deployments: require('./basis-cash/deployments/matic.json'),
+    genesisLaunchDate: new Date('2021-01-22T15:00:00Z'),
+    genesisEndDate: new Date('2021-01-29T15:00:00Z'),
+    refreshInterval: 10000,
+    gasLimitMultiplier: 1.1,
+    defaultCollateral: 'USDT',
+    supportedCollaterals: ['USDT', 'USDC', 'WBTC', 'WETH', 'WMATIC'],
+    arthTradingPairs: ['ARTHX', 'MAHA'],
+    arthxTradingPairs: ['ARTH'],
   },
   production: {
     networkName: 'Ethereum Mainnet',
@@ -86,90 +101,74 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
   },
 };
 
-
 export const stakingContracts: StakingContract[] = [
   {
-    platform: 'sushiswap',
-    contract: 'StakeARTHWETH',
-    kind: 'vested',
-    depositToken: 'ArthWethLP',
-    depositTokenSymbols: ['ARTH', 'WETH'],
+    platform: 'dfyn',
+    contract: 'StakeARTHXARTH',
+    kind: 'unlocked',
+    depositToken: 'ArthArthxLP',
+    depositTokenSymbols: ['ARTH', 'ARTHX'],
     depositTokenKind: 'single',
-    earnTokenName: 'ARTHX',
+    earnTokenName: 'ARTHX_MAHA_POOL',
     finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337, 137],
     sort: 0,
     categories: ['all', 'arth'],
   },
   {
-    platform: 'sushiswap',
-    contract: 'StakeARTHXWETH',
-    kind: 'vested',
-    depositToken: 'ArthxWethLP',
-    depositTokenSymbols: ['ARTHX', 'WETH'],
-    depositTokenKind: 'single',
-    earnTokenName: 'ARTHX',
-    finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
-    sort: 0,
-    categories: ['all', 'arthx'],
-  },
-  {
     platform: '',
     contract: 'StakeARTHX',
-    kind: 'vested',
+    kind: 'unlocked',
     depositToken: 'ARTHX',
     depositTokenSymbols: ['ARTHX'],
     depositTokenKind: 'single',
-    earnTokenName: 'MAHA',
+    earnTokenName: 'ARTHX_MAHA_POOL',
     finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337, 137],
     sort: 0,
     categories: ['all', 'arthx'],
   },
   {
     platform: 'sushiswap',
     contract: 'StakeARTHMAHA',
-    kind: 'vested',
+    kind: 'unlocked',
     depositToken: 'ArthMahaLP',
     depositTokenSymbols: ['ARTH', 'MAHA'],
     depositTokenKind: 'single',
-    earnTokenName: 'MAHA',
+    earnTokenName: 'ARTHX_MAHA_POOL',
     finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337, 137],
     sort: 0,
     categories: ['all', 'maha', 'arth'],
   },
   {
     platform: '',
     contract: 'StakeARTH',
-    kind: 'vested',
+    kind: 'unlocked',
     depositToken: 'ARTH',
     depositTokenSymbols: ['ARTH'],
     depositTokenKind: 'single',
-    earnTokenName: 'MAHA',
+    earnTokenName: 'ARTHX_MAHA_POOL',
     finished: false,
-    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
+    networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337, 137],
     sort: 0,
     categories: ['all', 'arth'],
   },
 ];
 
-
 export const tradingPairs: TradingPairs[] = [
   {
     tokens: ['MAHA', 'ARTH'],
-    paltform: 'sushiswap'
+    paltform: 'sushiswap',
   },
   {
     tokens: ['ARTH', 'WETH'],
-    paltform: 'sushiswap'
+    paltform: 'sushiswap',
   },
   {
     tokens: ['ARTHX', 'WETH'],
-    paltform: 'sushiswap'
+    paltform: 'sushiswap',
   },
 ];
 
-
-export default configurations['stagingMatic'];
+export default configurations['matic'];
