@@ -20,33 +20,6 @@ import Button from '../Button';
 import { useLocation } from 'react-router-dom';
 import { Mixpanel } from '../../analytics/Mixpanel';
 
-const BootstrapInput = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      borderRadius: 8,
-      color: 'white',
-      border: '1px solid white',
-      fontSize: 14,
-      padding: '0px 15px',
-      marginRight: '20px',
-      'label + &': {
-        marginTop: theme.spacing(3),
-      },
-    },
-    input: {
-      position: 'relative',
-      backgroundColor: 'transparent',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '10px 26px 10px 12px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      '&:focus': {
-        borderRadius: 8,
-      },
-    },
-  }),
-)(InputBase);
-
 const TopBar: React.FC = () => {
   const { account, chainId } = useWallet();
   const core = useCore();
@@ -71,11 +44,6 @@ const TopBar: React.FC = () => {
     Mixpanel.track(`ScreenView:${location.pathname}`);
     // ga.send(["pageview", location.pathname]);
   }, [location]);
-
-  //working code for tracking page views ?minor bug
-  /*useEffect(() => {
-    console.log('window', window.location.pathname);
-  }, [window.location.pathname])*/
 
   return (
     <TopBarContainer>
