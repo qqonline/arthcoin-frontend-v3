@@ -7,8 +7,18 @@
         "type": "address"
       },
       {
+        "internalType": "contract IERC20",
+        "name": "_arthx",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_maha",
+        "type": "address"
+      },
+      {
         "internalType": "address",
-        "name": "_creatorAddress",
+        "name": "_owner",
         "type": "address"
       },
       {
@@ -168,6 +178,34 @@
   },
   {
     "inputs": [],
+    "name": "ARTHX",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "ARTHXGMUOracle",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapPairOracle",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "COLLATERAL_RATIO_PAUSER",
     "outputs": [
       {
@@ -210,10 +248,10 @@
   },
   {
     "inputs": [],
-    "name": "MAHAARTHOracle",
+    "name": "MAHA",
     "outputs": [
       {
-        "internalType": "contract IUniswapPairOracle",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -224,21 +262,7 @@
   },
   {
     "inputs": [],
-    "name": "_ARTHETHOracle",
-    "outputs": [
-      {
-        "internalType": "contract IUniswapPairOracle",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "_ARTHXETHOracle",
+    "name": "MAHAGMUOracle",
     "outputs": [
       {
         "internalType": "contract IUniswapPairOracle",
@@ -258,20 +282,6 @@
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "_ETHGMUPricer",
-    "outputs": [
-      {
-        "internalType": "contract IChainlinkOracle",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -335,48 +345,6 @@
     "constant": true
   },
   {
-    "inputs": [],
-    "name": "_ethGMUPricerDecimals",
-    "outputs": [
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "_recollateralizeDiscountCruve",
-    "outputs": [
-      {
-        "internalType": "contract ICurve",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "arthETHOracleAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -405,34 +373,6 @@
       }
     ],
     "name": "arthPoolsArray",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "arthxAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "arthxETHOracleAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -480,48 +420,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "controllerAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "creatorAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "ethGMUConsumerAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -649,20 +547,6 @@
   },
   {
     "inputs": [],
-    "name": "mahaArthOracleAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "maxGenesisDuration",
     "outputs": [
       {
@@ -723,6 +607,20 @@
     "outputs": [
       {
         "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "recollateralizeDiscountCruve",
+    "outputs": [
+      {
+        "internalType": "contract ICurve",
         "name": "",
         "type": "address"
       }
@@ -859,20 +757,6 @@
   },
   {
     "inputs": [],
-    "name": "wethAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "deactivateGenesis",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -933,38 +817,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "controller",
-        "type": "address"
-      }
-    ],
-    "name": "setControllerAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_globalCollateralRatio",
         "type": "uint256"
       }
     ],
     "name": "setGlobalCollateralRatio",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_arthxAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setARTHXAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -986,29 +844,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_ethGMUConsumerAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setETHGMUOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_arthxOracleAddress",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_wethAddress",
-        "type": "address"
       }
     ],
-    "name": "setARTHXETHOracle",
+    "name": "setARTHXGMUOracle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1021,25 +861,7 @@
         "type": "address"
       }
     ],
-    "name": "setMAHARTHOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_arthOracleAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_wethAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setARTHETHOracle",
+    "name": "setMAHAGMUOracle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1141,7 +963,21 @@
   },
   {
     "inputs": [],
-    "name": "getARTHPrice",
+    "name": "getMAHAPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getARTHXPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1170,48 +1006,6 @@
   {
     "inputs": [],
     "name": "getARTHXGenesisPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getARTHXPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getMAHAPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getETHGMUPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1392,11 +1186,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1495,6 +1284,26 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      }
+    ],
+    "name": "isPool",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",

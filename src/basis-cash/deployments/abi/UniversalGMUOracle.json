@@ -13,17 +13,17 @@
       },
       {
         "internalType": "contract IUniswapPairOracle",
-        "name": "pairOracle_",
+        "name": "uniswapOracle_",
         "type": "address"
       },
       {
-        "internalType": "contract IChainlinkOracle",
-        "name": "oracle_",
+        "internalType": "contract AggregatorV3Interface",
+        "name": "chainlinkFeed_",
         "type": "address"
       },
       {
-        "internalType": "contract IChainlinkOracle",
-        "name": "ethGMUOracle_",
+        "internalType": "contract IOracle",
+        "name": "GMUOracle_",
         "type": "address"
       }
     ],
@@ -51,6 +51,19 @@
   },
   {
     "inputs": [],
+    "name": "GMUOracle",
+    "outputs": [
+      {
+        "internalType": "contract IOracle",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "base",
     "outputs": [
       {
@@ -64,10 +77,10 @@
   },
   {
     "inputs": [],
-    "name": "ethGMUOracle",
+    "name": "chainlinkFeed",
     "outputs": [
       {
-        "internalType": "contract IChainlinkOracle",
+        "internalType": "contract AggregatorV3Interface",
         "name": "",
         "type": "address"
       }
@@ -83,19 +96,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "oracle",
-    "outputs": [
-      {
-        "internalType": "contract IChainlinkOracle",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -120,19 +120,6 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "pairOracle",
-    "outputs": [
-      {
-        "internalType": "contract IUniswapPairOracle",
         "name": "",
         "type": "address"
       }
@@ -174,34 +161,34 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "contract IChainlinkOracle",
-        "name": "oracle_",
-        "type": "address"
-      }
-    ],
-    "name": "setOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
-    "name": "getETHGMUPrice",
+    "name": "uniswapOracle",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract IUniswapPairOracle",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract AggregatorV3Interface",
+        "name": "oracle_",
+        "type": "address"
+      }
+    ],
+    "name": "setchainlinkFeed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "getPairWETHPrice",
+    "name": "getGMUPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -240,6 +227,24 @@
   },
   {
     "inputs": [],
+    "name": "getRawPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getPrice",
     "outputs": [
       {
@@ -249,6 +254,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getDecimalPercision",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
     "type": "function"
   }
 ]

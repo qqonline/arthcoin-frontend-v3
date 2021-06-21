@@ -1,22 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_oracleAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_ownerAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_timelockAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -784,35 +768,7 @@
   },
   {
     "inputs": [],
-    "name": "oracleAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "ownerAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -980,20 +936,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "timelockAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1182,19 +1124,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newOracle",
-        "type": "address"
-      }
-    ],
-    "name": "setOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_controller",
         "type": "address"
       }
@@ -1260,37 +1189,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newTimelock",
-        "type": "address"
-      }
-    ],
-    "name": "setTimelock",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "arthContractAddress",
         "type": "address"
       }
     ],
     "name": "setARTHAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_ownerAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
