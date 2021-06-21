@@ -16,7 +16,7 @@ interface ButtonProps {
   variant?: 'default' | 'transparent' | 'outlined' | 'rounded';
   loading?: boolean;
   tracking_id?: string;
-  value?: string;
+  value?: object;
 }
 
 function variantToStyle(variant: string = 'default', color: any) {
@@ -73,7 +73,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   loading= false,
   tracking_id= '',
-  value,
+  value=null,
 }) => {
   const { color, spacing } = useContext(ThemeContext);
 
@@ -146,7 +146,7 @@ const Button: React.FC<ButtonProps> = ({
       fontSize={fontSize}
       onClick={() => {
         if (value){
-          Mixpanel.track(`buttonClick:${tracking_id}`, {value: value})
+          Mixpanel.track(`buttonClick:${tracking_id}`, value)
         } else {
           Mixpanel.track(`buttonClick:${tracking_id}`)
         }
