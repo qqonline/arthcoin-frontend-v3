@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 
   return (
     <Page>
-      <GradientDiv />
+      {/*<GradientDiv />*/}
       <PageHeader
         subtitle="View information about the current ARTH protocol"
         title="Analytics"
