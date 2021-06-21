@@ -3,13 +3,18 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../../useCore';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default () => {
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
   const core = useCore();
 
   const fetchValue = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    setValue(await controller.getStabilityFee());
+    setValue({isLoading: false, value: await controller.getStabilityFee()});
   }, [core]);
 
   useEffect(() => {

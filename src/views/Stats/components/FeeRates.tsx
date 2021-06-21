@@ -1,19 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loader from 'react-spinners/BeatLoader';
 
 import CustomToolTip from '../../../components/CustomTooltip';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import useBuybackFee from '../../../hooks/state/controller/useBuybackFee';
 import usePoolRedeemFees from '../../../hooks/state/pools/usePoolRedeemFees';
 import useStabilityFee from '../../../hooks/state/controller/useStabilityFee';
 import usePoolMintingFees from '../../../hooks/state/pools/usePoolMintingFees';
 
 const BondingDiscount: React.FC = () => {
-  const buybackFee = useBuybackFee();
-  const stabilityFee = useStabilityFee();
-  const mintingFee = usePoolMintingFees('');
-  const redeemingFee = usePoolRedeemFees('');
+  const {isLoading: isStabilityFeeLoading, value: stabilityFee} = useStabilityFee();
+  const {isLoading: isMintingFeeLoading, value: mintingFee} = usePoolMintingFees('');
+  const {isLoading: isRedeemingFeeLoading, value: redeemingFee} = usePoolRedeemFees('');
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -28,9 +27,10 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
-                Number(getDisplayBalance(mintingFee, 4, 4))
-                  .toLocaleString('en-US', {maximumFractionDigits: 4})
+              { isMintingFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mintingFee, 4, 4))
+                    .toLocaleString('en-US', {maximumFractionDigits: 4})
               }%
             </BeforeChip>
           </OneLine>
@@ -44,29 +44,14 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
-                Number(getDisplayBalance(redeemingFee, 4, 4))
+              { isRedeemingFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(redeemingFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </BeforeChip>
           </OneLine>
         </OneLine>
-        {/* <OneLine>
-          <div style={{ flex: 1 }}>
-            <TextWithIcon>
-              Buyback Fee
-              <CustomToolTip toolTipText={'loreum ipsum'} />
-            </TextWithIcon>
-          </div>
-          <OneLine>
-            <BeforeChip>
-              {
-                Number(getDisplayBalance(buybackFee, 4, 4))
-                  .toLocaleString('en-US', { maximumFractionDigits: 4 })
-              }%
-            </BeforeChip>
-          </OneLine>
-        </OneLine> */}
         <OneLine>
           <div style={{ flex: 1 }}>
             <TextWithIcon>
@@ -76,8 +61,9 @@ const BondingDiscount: React.FC = () => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
-                Number(getDisplayBalance(stabilityFee, 4, 4))
+              { isStabilityFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(stabilityFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </BeforeChip>

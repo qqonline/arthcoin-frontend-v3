@@ -19,14 +19,16 @@ export default () => {
   const fetchValue = useCallback(async () => {
     const controller = core.contracts.LotteryRaffle;
     const prizeCounterLength = Number(prizeCounter.toString());
-    if (!prizeCounter) return;
+    if (!prizeCounterLength) return;
 
     const prizes = [];
-    for (let i = 0; i < prizeCounterLength; i++) {
+    let i = 0;
+    for (i; i < prizeCounterLength; i++) {
       const prize = await controller.prizes(`prize${i+1}`);
       prizes.push(prize);
     }
 
+    if (prizeCounterLength !== i) return;
     setCustomState({isLoading: false, value: prizes});
   }, [core.contracts.LotteryRaffle, prizeCounter]);
 

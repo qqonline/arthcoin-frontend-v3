@@ -86,19 +86,16 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
             background: 'rgba(255, 255, 255, 0.08)',
             margin: '15px 0px',
           }}
-        // variant={'middle'}
         />
 
         <TransparentInfoDiv
           labelData={`And receive`}
-          // labelToolTipData={'testing'}
           rightLabelUnit={'ARTHX'}
           rightLabelValue={Number(receiveShare).toLocaleString()}
         />
 
         <TransparentInfoDiv
           labelData={`Along with a bonus of`}
-          // labelToolTipData={'testing'}
           rightLabelUnit={'ARTHX'}
           rightLabelValue={Number(receiveBonus).toLocaleString()}
         />
@@ -121,7 +118,6 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
                 };
                 props.enqueueSnackbar('timepass', options);
               }}
-            // onClick={handleClose}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -134,7 +130,6 @@ const RecollatateralizeModal = (props: WithSnackbarProps & IProps) => {
                 !Number(collateralAmount) ||
                 !Number(receiveShare)
               }
-              // textStyles={{ color: '#F5F5F5' }}
               size={'lg'}
               onClick={() => {
                 recollateralize(() => {

@@ -10,14 +10,15 @@ import arrowRightWhite from '../../../assets/svg/arrowRightWhite.svg';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useAllPoolAvailableToMint from '../../../hooks/state/pools/useAllPoolAvailableToMint';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
-  targetCollateralValue: BigNumber;
   globalCollateralValue: BigNumber;
+  isGlobalCollateralValueLoading: boolean;
 };
 
 const BasicInfo: React.FC<props> = (props) => {
-  const totalAvailableToMint = useAllPoolAvailableToMint();
+  const {isLoading: isAvailabelToMintLoading, value: totalAvailableToMint} = useAllPoolAvailableToMint();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -31,13 +32,9 @@ const BasicInfo: React.FC<props> = (props) => {
               </TextWithIcon>
               <BeforeChip>
                 {
-                  prettyNumber(getDisplayBalance(
-                    totalAvailableToMint,
-                    18,
-                    6
-                  ))
-                }{
-                  ' ARTH'
+                  isAvailabelToMintLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(totalAvailableToMint, 18, 6))
                 }
               </BeforeChip>
             </div>
@@ -54,8 +51,11 @@ const BasicInfo: React.FC<props> = (props) => {
                 <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
               </TextWithIcon>
               <BeforeChip>
-                ${
-                  prettyNumber(getDisplayBalance(props.globalCollateralValue))
+                {'$ '}
+                {
+                  props.isGlobalCollateralValueLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(props.globalCollateralValue))
                 }
               </BeforeChip>
             </div>

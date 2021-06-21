@@ -6,6 +6,7 @@ import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from '@ethersproject/bignumber';
 import React, { useEffect, useMemo, useState } from 'react';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
+import Loader from 'react-spinners/BeatLoader';
 
 import plusSign from '../../../assets/svg/plus.svg';
 import arrowDown from '../../../assets/svg/arrowDown.svg';
@@ -38,18 +39,24 @@ interface IProps {
 }
 
 const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
-  const [collateralValue, setCollateralValue] = useState<string>('0');
   const [arthValue, setArthValue] = useState<string>('0');
   const [arthxValue, setArthxValue] = useState<string>('0');
+  const [collateralValue, setCollateralValue] = useState<string>('0');
 
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [successModal, setSuccessModal] = useState<boolean>(false);
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [successCollectModal, setSuccessCollectModal] = useState<boolean>(false);
 
-  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
-
-  const { account, connect } = useWallet();
   const redeemCR = BigNumber.from(11e5);
+
+  const core = useCore();
+  const { account, connect } = useWallet();
+  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
+  const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
+    core.getDefaultCollateral(),
+  );
+  const collateralPool = core.getCollatearalPool(selectedCollateral);
 
   const arthxRatio = useMemo(() => {
     return redeemCR.sub(BigNumber.from(1e6));
@@ -59,43 +66,45 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
     return BigNumber.from(1e6).sub(arthxRatio)
   }, [arthxRatio]);
 
-  const core = useCore();
-  const arthBalance = useTokenBalance(core.ARTH);
-  const arthxBalance = useTokenBalance(core.ARTHX);
-
-  const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
-  const [selectedCollateral, setSelectedReceiveRedeemCoin] = useState(
-    core.getDefaultCollateral(),
-  );
+ 
+  const {isLoading: isARTHBalanceLoading, value: arthBalance} = useTokenBalance(core.ARTH);
+  const {isLoading: isARTHXBalanceLoading, value: arthxBalance} = useTokenBalance(core.ARTHX);
+ 
   const tokenDecimals = useTokenDecimals(selectedCollateral);
-  const redeemableBalances = useRedeemableBalances(selectedCollateral);
-  const collateralBalance = useTokenBalance(core.tokens[selectedCollateral]);
-  const collateralPool = core.getCollatearalPool(selectedCollateral);
+  const {isLoading: isRedeemableBalancesLoading, value: redeemableBalances} = useRedeemableBalances(selectedCollateral);
+  const {isLoading: isCollateralBalanceLoading, value: collateralBalance} = useTokenBalance(core.tokens[selectedCollateral]);
+  const {isLoading: isRedeemFeeLoading, value: redeemFee} = usePoolRedeemFees(selectedCollateral);
+  const {isLoading: isStabilityFeeLoading, value: stabilityFee} = useStabilityFee();
+  const {isLoading: isCollateralPriceLoading, value: collateralToGMUPrice} = useCollateralPoolPrice(selectedCollateral);
+  const {isLoading: isARTHXLoading, value: arthxPrice} = useARTHXPrice();
+
   const [mahaApproveStatus, approveMAHA] = useApprove(core.MAHA, collateralPool.address);
   const [arthxApproveStatus, approveARTHX] = useApprove(core.ARTHX, collateralPool.address);
   const [arthApproveStatus, approveCollat] = useApprove(core.ARTH, collateralPool.address);
-  const redeemFee = usePoolRedeemFees(selectedCollateral);
-  const stabilityFee = useStabilityFee();
-  const collateralToGMUPrice = useCollateralPoolPrice(selectedCollateral);
-  const arthxPrice = useARTHXPrice();
+
   const collectRedeemption = useCollectRedemption(selectedCollateral);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   const collateralOutMinAfterFee = useMemo(() => {
+    if (isRedeemFeeLoading) return BigNumber.from(parseUnits(`${collateralValue}`, tokenDecimals));
     const feePrecision = BigNumber.from(1e6);
 
     return BigNumber
       .from(parseUnits(`${collateralValue}`, tokenDecimals))
       .mul(feePrecision.sub(redeemFee))
       .div(feePrecision);
-  }, [redeemFee, collateralValue, tokenDecimals]);
+  }, [redeemFee, collateralValue, tokenDecimals, isRedeemFeeLoading]);
 
-  const tradingFee = useMemo(() => {
-    return BigNumber
-      .from(parseUnits(`${collateralValue}`, tokenDecimals))
-      .sub(collateralOutMinAfterFee)
-  }, [collateralValue, tokenDecimals, collateralOutMinAfterFee]);
+  const [tradingFeeIsLoading, tradingFee] = useMemo(() => {
+    if (isRedeemFeeLoading) return [true, BigNumber.from(0)]
+    return [
+      false,
+      BigNumber
+        .from(parseUnits(`${collateralValue}`, tokenDecimals))
+        .sub(collateralOutMinAfterFee)
+    ]
+  }, [collateralValue, tokenDecimals, collateralOutMinAfterFee, isRedeemFeeLoading]);
 
   const redeemARTH = useRedeemARTH(
     selectedCollateral,
@@ -148,7 +157,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   ]);
 
   const onCollateralValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0) || isCollateralPriceLoading || isARTHXLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -186,7 +195,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxPrice.lte(0) || arthRatio.lte(0) || collateralToGMUPrice.lte(0) || isCollateralPriceLoading || isARTHXLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -221,7 +230,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
   };
 
   const onARTHXValueChange = async (val: string) => {
-    if (val === '' || collateralToGMUPrice.lte(0)) {
+    if (val === '' || arthxRatio.lte(0) || collateralToGMUPrice.lte(0) || isCollateralPriceLoading || isARTHXLoading) {
       setCollateralValue('0');
       setArthValue('0');
       setArthxValue('0');
@@ -279,7 +288,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
           <TransparentInfoDiv
             labelData={`Trading Fee`}
-            labelToolTipData={'testing'}
             rightLabelUnit={selectedCollateral}
             rightLabelValue={
               Number(getDisplayBalance(tradingFee, tokenDecimals))
@@ -289,7 +297,6 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
 
           <TransparentInfoDiv
             labelData={`Stability Fee`}
-            labelToolTipData={'testing'}
             rightLabelUnit={'MAHA'}
             rightLabelValue={
               Number(getDisplayBalance(stabilityFeeAmount, 18, 3))
@@ -378,10 +385,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter Redeem Amount'}
                 IBalanceValue={`${getDisplayBalance(arthBalance)}`}
+                isBalanceLoading={isARTHBalanceLoading}
                 ILabelInfoValue={''}
                 DefaultValue={arthValue.toString()}
                 LogoSymbol={'ARTH'}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isARTHBalanceLoading}
                 hasDropDown={false}
                 SymbolText={'ARTH'}
                 inputMode={'decimal'}
@@ -400,10 +408,11 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'Enter ARTHX Amount'}
                 IBalanceValue={`${getDisplayBalance(arthxBalance)}`}
+                isBalanceLoading={isARTHXBalanceLoading}
                 ILabelInfoValue={''}
                 DefaultValue={arthxValue.toString()}
                 LogoSymbol={'ARTHX'}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isARTHXBalanceLoading || isARTHXLoading}
                 hasDropDown={false}
                 SymbolText={'ARTHX'}
                 inputMode={'decimal'}
@@ -422,6 +431,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
               <CustomInputContainer
                 ILabelValue={'You receive'}
                 IBalanceValue={`${getDisplayBalance(collateralBalance, tokenDecimals)}`}
+                isBalanceLoading={isCollateralBalanceLoading}
                 DefaultValue={collateralValue.toString()}
                 LogoSymbol={selectedCollateral}
                 hasDropDown={true}
@@ -433,7 +443,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     onCollateralValueChange(collateralValue.toString());
                   }, 1000);
                 }}
-                disabled={redeemCR.lte(1e6)}
+                disabled={redeemCR.lte(1e6) || isCollateralBalanceLoading || isCollateralPriceLoading}
                 SymbolText={selectedCollateral}
                 DisableMsg={
                   redeemCR.lte(1e6)
@@ -449,8 +459,10 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                   <OneLineInputwomargin>
                     <BeforeChip>
                       {
-                        Number(getDisplayBalance(tradingFee, tokenDecimals))
-                          .toLocaleString('en-US', { maximumFractionDigits: tokenDecimals })
+                        tradingFeeIsLoading
+                          ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                          : Number(getDisplayBalance(tradingFee, tokenDecimals))
+                            .toLocaleString('en-US', { maximumFractionDigits: tokenDecimals })
                       }
                     </BeforeChip>
                     <TagChips>{selectedCollateral}</TagChips>
@@ -544,7 +556,7 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                       />
                       <div style={{ padding: 5 }} />
                       <Button
-                        text={'Redeem'}
+                        text={'Request Redeem'}
                         size={'lg'}
                         variant={'default'}
                         disabled={
@@ -559,8 +571,9 @@ const RedeemTabContent = (props: WithSnackbarProps & IProps) => {
                     </ApproveButtonContainer>
                     <br />
                     <Button
+                      loading={isRedeemableBalancesLoading}
                       disabled={redeemableBalances[0].lte(0) && redeemableBalances[1].lte(0)}
-                      text={'Collect Redemption'}
+                      text={'Redeem'}
                       size={'lg'}
                       variant={'default'}
                         onClick={() => collectRedeemption(() => setSuccessCollectModal(true))}
@@ -609,7 +622,9 @@ const LeftTopCardHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
 const LeftTopCardContainer = styled.div``;
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;

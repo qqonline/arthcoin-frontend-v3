@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import { getDisplayBalance } from '../../../utils/formatBalance';
-import useCore from '../../../hooks/useCore';
-import TokenSymbol from '../../TokenSymbol';
-import { IconButton } from '@material-ui/core';
-import metamask from '../../../assets/svg/metamask.svg';
-import copy from '../../../assets/svg/copy.svg';
-import Button from '../../Button';
-import Grid from '@material-ui/core/Grid';
-import CustomModal from '../../CustomModal';
-import useTokenBalanceOf from '../../../hooks/state/useTokenBalanceOf';
 import { useWallet } from 'use-wallet';
-import { truncateMiddle } from '../../../utils/formatBalance';
+import React, { useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { IconButton } from '@material-ui/core';
+import Loader from 'react-spinners/BeatLoader';
+
+import TokenSymbol from '../../TokenSymbol';
 import HtmlTooltip from '../../HtmlTooltip';
+
+import useCore from '../../../hooks/useCore';
+import { truncateMiddle } from '../../../utils/formatBalance';
+import { getDisplayBalance } from '../../../utils/formatBalance';
+import useTokenBalanceOf from '../../../hooks/state/useTokenBalanceOf';
+
+import copy from '../../../assets/svg/copy.svg';
+import metamask from '../../../assets/svg/metamask.svg';
+
+import Button from '../../Button';
+import CustomModal from '../../CustomModal';
 
 interface props {
   onClose: () => void;
 }
 
 const AccountModal: React.FC<props> = (props) => {
-  const core = useCore();
-
-  const { account, reset } = useWallet();
-
+  const [toolTipText, settoolTipText] = useState<string>('Copy');
   const [ConfirmationModal, setConfirmationModal] = useState<boolean>(false);
 
-  const arthBalance = useTokenBalanceOf(core.ARTH, account);
-  const mahaBalance = useTokenBalanceOf(core.MAHA, account);
-  const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
-  const [toolTipText, settoolTipText] = useState<string>('Copy')
-
+  const core = useCore();
+  const { account, reset } = useWallet();
+  const {isLoading: isARTHBalanceLoading, value: arthBalance} = useTokenBalanceOf(core.ARTH, account);
+  const {isLoading: isMAHABalanceLoading, value: mahaBalance} = useTokenBalanceOf(core.MAHA, account);
+  const {isLoading: isARTHXBalanceLoading, value: arthxBalance} = useTokenBalanceOf(core.ARTHX, account);
+  
   return (
     <MainDiv>
       <BackgroundAbsolute onClick={props.onClose} />
@@ -72,9 +75,8 @@ const AccountModal: React.FC<props> = (props) => {
       <PositionDiv>
         <WalletDiv>
           <StyledLink>
-            <span>Your Account</span>
             <AccountDetails>
-              <IconButton>
+              <IconButton style={{marginLeft: '-12px'}}>
                 <img height={32} src={metamask} alt="metamask" />
               </IconButton>
               <span>{truncateMiddle(account, 15)}</span>
@@ -92,6 +94,9 @@ const AccountModal: React.FC<props> = (props) => {
                 <img height={24} src={copy} alt="copy" />
                 </IconButton>
               </HtmlTooltip>
+              <NetworkDiv colorCode={'#FCB40012'}>
+                <NetworkName colorCode={'#FCB400'}> TestNet </NetworkName>
+              </NetworkDiv>
 
             </AccountDetails>
           </StyledLink>
@@ -101,7 +106,11 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'MAHA'} size={44} />
               </IconButton>
-              <span>{Number(getDisplayBalance(mahaBalance)).toLocaleString()} MAHA</span>
+              {
+                isMAHABalanceLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(mahaBalance)).toLocaleString()
+              } MAHA
             </RowName>
             {/* <DollarValue>${props?.walletData?.mahaDollars}</DollarValue> */}
           </StyledRows>
@@ -111,7 +120,13 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTH'} size={44} />
               </IconButton>
-              <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTH</span>
+              <span>
+                {
+                  isARTHBalanceLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : Number(getDisplayBalance(arthBalance)).toLocaleString()
+                } ARTH
+              </span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.arthDollars}</DollarValue> */}
           </StyledRows>
@@ -121,7 +136,13 @@ const AccountModal: React.FC<props> = (props) => {
               <IconButton>
                 <TokenSymbol symbol={'ARTHX'} size={44} />
               </IconButton>
-              <span>{Number(getDisplayBalance(arthxBalance)).toLocaleString()} ARTHX</span>
+              <span>
+                {
+                  isARTHXBalanceLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : Number(getDisplayBalance(arthxBalance)).toLocaleString()
+                } ARTHX
+              </span>
             </RowName>
             {/* <DollarValue>${props?.walletData?.arthxDollars}</DollarValue> */}
           </StyledRows>
@@ -149,6 +170,7 @@ const BackgroundAbsolute = styled.div`
   height: 100vh;
   z-index: 1;
 `;
+
 const PrimaryText = styled.p`
   font-family: Inter;
   font-style: normal;
@@ -202,15 +224,15 @@ const WalletDiv = styled.div`
 const StyledLink = styled.div`
   padding: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  &:hover {
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.64);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(70px);
-  }
-  &.active {
-    color: rgba(255, 255, 255, 0.88);
-  }
+  //&:hover {
+  //  border-radius: 12px;
+  //  color: rgba(255, 255, 255, 0.64);
+  //  background: rgba(255, 255, 255, 0.04);
+  //  backdrop-filter: blur(70px);
+  //}
+  //&.active {
+  //  color: rgba(255, 255, 255, 0.88);
+  //}
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -228,10 +250,29 @@ const AccountDetails = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  width: 100%;
 `;
 
+const NetworkDiv = styled.div`
+  background: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
+  border-radius: 6px;
+  padding: 4px 12px;
+`
+
+const NetworkName = styled.div`
+  color: ${(colorProps: { colorCode: string }) => colorProps.colorCode};
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+`
+
+
+
 const StyledRows = styled.div`
-  // margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -248,7 +289,6 @@ const RowName = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.88);
-  // border: 1px solid;
   margin-left: -15px;
 `;
 

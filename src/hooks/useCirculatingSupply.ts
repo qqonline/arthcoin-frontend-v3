@@ -4,15 +4,25 @@ import { useEffect, useState, useCallback } from 'react';
 import useTotalSupply from './useTotalSupply';
 import useUniswapLiquidity from './useUniswapLiquidity';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 const useCirculatingSupply = (asset: string) => {
-  const [circulatingSupply, setCirculatingSupply] = useState<BigNumber>(BigNumber.from(0));
+  const [circulatingSupply, setCirculatingSupply] = useState<State>({isLoading: true, value: BigNumber.from(0)});
   
-  const totalSupply = useTotalSupply(asset);
-  const uniswapLiquidity = useUniswapLiquidity(asset);
+  const {isLoading: isTotalSupplyLoading, value: totalSupply }= useTotalSupply(asset);
+  const {isLoading: isLiquidityLoading, value: uniswapLiquidity }= useUniswapLiquidity(asset);
 
   const fetchCashPrice = useCallback(async () => {
-    setCirculatingSupply(totalSupply.sub(uniswapLiquidity));
-  }, [uniswapLiquidity, totalSupply]);
+    if (isTotalSupplyLoading || isLiquidityLoading) return;
+
+    setCirculatingSupply({
+      isLoading: false,
+      value: totalSupply.sub(uniswapLiquidity)
+    });
+  }, [uniswapLiquidity, totalSupply, isTotalSupplyLoading, isLiquidityLoading]);
 
   useEffect(() => {
     fetchCashPrice().catch((err) =>

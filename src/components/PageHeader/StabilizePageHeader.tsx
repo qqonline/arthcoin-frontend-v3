@@ -1,16 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import InfoIcon from '@material-ui/icons/Info';
 import { useMediaQuery } from 'react-responsive';
 import { KeyboardArrowRight } from '@material-ui/icons';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 
 import theme from '../../theme';
-import { getDisplayBalance } from '../../utils/formatBalance';
 
-import CustomToolTip from '../CustomTooltip';
 import Container from '../../components/Container';
 
 import useGlobalCollateralRatio from '../../hooks/state/controller/useGlobalCollateralRatio';
@@ -57,7 +54,7 @@ const StabilizePageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const isDesktopOrLaptop = useMediaQuery({ query: '(min-device-width: 800px)' });
 
-  const globalCR = useGlobalCollateralRatio();
+  const {isLoading: isCRLoading, value: globalCR} = useGlobalCollateralRatio();
 
   return (
     <StyledPageHeader>

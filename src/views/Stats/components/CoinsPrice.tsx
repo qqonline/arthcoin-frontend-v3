@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loader from 'react-spinners/BeatLoader';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useARTHOraclePrice from '../../../hooks/state/controller/useARTHPrice';
@@ -7,9 +8,9 @@ import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 
 const CoinsPrice: React.FC = () => {
-  const arthPrice = useARTHOraclePrice();
-  const mahaPrice = useMAHAOraclePrice();
-  const arthxPrice = useARTHXOraclePrice();
+  const {isLoading: isARTHPriceLoading, value: arthPrice} = useARTHOraclePrice();
+  const {isLoading: isMAHAPriceLoading, value: mahaPrice} = useMAHAOraclePrice();
+  const {isLoading: isARTHXPriceLoading, value: arthxPrice} = useARTHXOraclePrice();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -21,8 +22,9 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
-                Number(getDisplayBalance(arthPrice, 6, 6))
+              {isARTHPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(arthPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
@@ -34,8 +36,9 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
-                Number(getDisplayBalance(arthxPrice, 6, 6))
+              {isARTHXPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(arthxPrice, 6, 6))
                   .toLocaleString('en-US', {maximumFractionDigits: 6})
               }
             </BeforeChip>
@@ -47,8 +50,9 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              ${
-                Number(getDisplayBalance(mahaPrice, 6, 6))
+              {isMAHAPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mahaPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>

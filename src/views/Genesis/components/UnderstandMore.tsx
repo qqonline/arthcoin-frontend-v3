@@ -28,7 +28,11 @@ const UnderstandMore: React.FC<props> = (props: props) => {
           }
         </ul>
         <LearnMore>
-          <a href={'https://docs.arthcoin.com'} target={"_blank"}>Go to ARTH V 2.0 article to learn more</a>
+          <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={"_blank"}>Go to ARTH V 2.0 article to learn more</a>
+          <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
+        </LearnMore>
+        <LearnMore>
+          <a href={'https://mahadao.com/arthx.html'} rel="noopener noreferrer" target={"_blank"}>Learn about Arthx</a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
       </CustomInfoCardDetails>
@@ -39,9 +43,7 @@ const UnderstandMore: React.FC<props> = (props: props) => {
 export default UnderstandMore;
 
 const CustomInfoCard = styled.div`
-  //margin-top: 16px;
   @media (max-width: 600px) {
-    //margin-top: 24px;
   }
 `;
 

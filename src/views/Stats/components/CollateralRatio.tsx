@@ -29,7 +29,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const CollateralRatio: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const globalCR = useGlobalCollateralRatio();
+  const {isLoading: isCollateralRatioLoading, value: globalCR} = useGlobalCollateralRatio();
 
   const CollateralRatioPercentage = () => {
     return (

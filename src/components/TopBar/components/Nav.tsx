@@ -30,7 +30,7 @@ const Nav: React.FC = () => {
         Rebase
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/lottery">
-        Lottery
+        Prizes
       </StyledLink>
       {/* <StyledLink exact activeClassName="active" to="/pools">
         Pools

@@ -6,13 +6,14 @@ import HtmlTooltip from '../../../components/HtmlTooltip';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useRecollateralizationDiscount from '../../../hooks/state/controller/useRecollateralizationDiscount';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
   stats?: boolean;
 };
 
 const BondingDiscount: React.FC<props> = (props: props) => {
-  const discount = useRecollateralizationDiscount();
+  const {isLoading: isDiscountLoading, value: discount} = useRecollateralizationDiscount();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -34,10 +35,11 @@ const BondingDiscount: React.FC<props> = (props: props) => {
           </div>
           <OneLine>
             <BeforeChip>
-              {
-                Number(getDisplayBalance(discount, 4, 4))
+              {isDiscountLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(discount, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
-              }%
+              }
             </BeforeChip>
           </OneLine>
         </OneLine>

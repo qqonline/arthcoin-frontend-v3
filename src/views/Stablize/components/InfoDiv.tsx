@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import InfoIcon from '@material-ui/icons/Info';
 
 import CustomToolTip from '../../../components/CustomTooltip';
 

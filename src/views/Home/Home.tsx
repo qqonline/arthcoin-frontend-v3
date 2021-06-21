@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 import './styles/index.sass';
-import { Slider, withStyles } from '@material-ui/core';
+import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
 import arthLogo from './img/arth-coin-1.svg'
 import arthLogobg from './images/logo/ARTH-bg.svg'
 import Modal from '../../components/NewModal/index';
 import rightArrow from './images/polygon.svg'
-import styled from 'styled-components';
 import USDLogo from './images/logo/USD.svg'
 import warning from '../../assets/svg/warning.svg';
 
+import useCore from '../../hooks/useCore';
+import config, { platformURL } from '../../config';
+
+const useSliderStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      // color: 'white'
+    },
+    margin: {
+      height: theme.spacing(3),
+    },
+  }),
+);
 
 function valuetext(value: number) {
   return `${value}`;
@@ -78,7 +92,8 @@ const PrettoRestrictSlider = withStyles({
 const Home: React.FC = () => {
   const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const [openModal, toggleModal] = useState(false);
-
+  const [showVideo, setShowVideo] = useState<boolean>(false);
+  const sliderClasses = useSliderStyles();
   const [sliderValue, setSliderValue] = React.useState(1990);
   const [arthValue, setArth] = useState(1.2);
   const [fiatValue, setFiat] = useState(0.6);
@@ -95,12 +110,20 @@ const Home: React.FC = () => {
     setSliderValue(value);
   };
 
+  const core = useCore();
+
+  const token1 = core.tokens.ARTH;
+
+  const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
+    ? `${platformURL[config.platform].swapUrl}?inputCurrency=${'ETH'}&outputCurrency=${token1.address}`
+    : `https://app.uniswap.org/#/swap?inputCurrency=${'ETH'}&outputCurrency=${token1.address}&use=V2`;
+
   return (
     <div>
       <Modal
         title="Disclaimer"
         titleLogo={
-          <img src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
+          <img alt={'Warning'} src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
         }
         open={openModal}
         handleClose={handleClose}
@@ -139,6 +162,8 @@ const Home: React.FC = () => {
           View token contract on Etherscan
         </ModalHyperLink>
       </Modal>
+
+
       <div id="header-gradient"></div>
       {/*<div className="chakra"></div>*/}
       {/*<div className="gradient-red-1"></div>*/}
@@ -185,17 +210,19 @@ const Home: React.FC = () => {
         <div className="button-container">
           <a
             target="_blank"
-            href="https://quickswap.exchange/"
+            href={tradelink}
             id="no-txt-decoration"
             rel="noopener noreferrer"
           >
             <button className="button-small-bg">Buy ARTH</button>
           </a>
           <a
-            target="_blank"
-            href="https://www.youtube.com/watch?v=H94S32HXqmU"
+            // target="_blank"
+            // href="https://www.youtube.com/watch?v=H94S32HXqmU"
             id="no-txt-decoration"
             rel="noopener noreferrer"
+            data-toggle="modal" data-target="#videoModal" href="javascript:void(0)"
+            onClick={() => setShowVideo(true)}
           >
             <button className="button-small-transparent">
               <img src={rightArrow} height={20} style={{ marginRight: '8px' }} />
@@ -204,6 +231,19 @@ const Home: React.FC = () => {
           </a>
         </div>
       </section>
+      {showVideo && <div id='videoModal' className='custom-video-modal'>
+        <div className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <span className='close-btn' data-dismiss='modal' onClick={() => setShowVideo(false)}></span>
+            </div>
+            <div className='video-outer'>
+              <iframe id='video' src='https://www.youtube.com/embed/H94S32HXqmU' frameBorder='0'
+                allow='accelerometer; autoplay;' allowFullScreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>}
       <section id="section-main-info">
         <div
           className="main-conatiner"
@@ -703,7 +743,7 @@ const Home: React.FC = () => {
             <div className="action-button">
               <a
                 target="_blank"
-                href="https://quickswap.exchange/"
+                href={tradelink}
                 id="no-txt-decoration"
                 rel="noopener noreferrer"
               >

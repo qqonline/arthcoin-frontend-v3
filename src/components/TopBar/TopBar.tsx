@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,6 +17,8 @@ import InfoIcon from '../../assets/img/InfoIcon.svg';
 import ExpandMore from '../../assets/img/ExpandMore.svg';
 import useCore from '../../hooks/useCore';
 import Button from '../Button';
+import { useLocation } from 'react-router-dom';
+import { Mixpanel } from '../../analytics/Mixpanel';
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -55,14 +57,25 @@ const TopBar: React.FC = () => {
     setNetworkType(event.target.value as string);
   };
 
+  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc']
+
   const showWarning = core.config.chainId !== chainId;
   const network = {
     name: 'Testnet',
     color: '#11af60',
   };
 
-  const isMainnet = core.config.networkName === 'matic' || core.config.networkName === 'ethereum'
-  // const [showWallet, setShowWallet] = useState<boolean>(true)
+  // ScreenView Analytics
+  let location = useLocation();
+  React.useEffect(() => {
+    Mixpanel.track(`ScreenView:${location.pathname}`);
+    // ga.send(["pageview", location.pathname]);
+  }, [location]);
+
+  //working code for tracking page views ?minor bug
+  /*useEffect(() => {
+    console.log('window', window.location.pathname);
+  }, [window.location.pathname])*/
 
   return (
     <TopBarContainer>
@@ -72,7 +85,23 @@ const TopBar: React.FC = () => {
           <div className="dialog-class">
             <Logo />
             <HideonPhone>
-              <Nav />
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
+                {/*{network.name !== '' && (
+                  <CustomNetwork>
+                    <ColorIcon colorCode={network.color} />
+                    <span>{network.name}</span>
+                  </CustomNetwork>
+                )}*/}
+                <div style={{ marginRight: '12px' }}>
+                  <Button
+                    text={'Get MAHA'}
+                    size={'sm'}
+                    onClick={() => window.open('https://mahadao.com')}
+                  />
+                </div>
+                <TxButton />
+                <AccountButton />
+              </div>
             </HideonPhone>
           </div>
           <HideonPhone>
@@ -95,12 +124,19 @@ const TopBar: React.FC = () => {
                   <TxButton />
                 </div>
               )}
-              {network.name !== '' && (
-                <CustomNetwork>
-                  <ColorIcon colorCode={network.color} />
-                  <span>{network.name}</span>
-                </CustomNetwork>
-              )}
+              {/*{network.name !== '' && (
+                  <CustomNetwork>
+                    <ColorIcon colorCode={network.color} />
+                    <span>{network.name}</span>
+                  </CustomNetwork>
+                )}*/}
+              <div style={{ marginRight: '12px' }}>
+                <Button
+                  text={'Buy Maha'}
+                  size={'sm'}
+                  onClick={() => window.open('https://mahadao.com')}
+                />
+              </div>
               {!showMobileMenu ? (
                 <MenuIcon
                   style={{ color: 'white' }}

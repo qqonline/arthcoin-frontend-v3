@@ -26,6 +26,8 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
 import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
+import Loader from 'react-spinners/BeatLoader';
+import usePrizes from '../../hooks/state/usePrizes';
 
 withStyles({
   root: {
@@ -116,9 +118,9 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
-  const percentageCompleted = usePercentageCompleted();
-  const committedCollateral = useGlobalCollateralValue();
-  const arthCirculatingSupply = useARTHCirculatingSupply();
+  const { isLoading: isPercLoading, value: percentageCompleted } = usePercentageCompleted();
+  const { isLoading: isGlobalCollateralLoading, value: committedCollateral } = useGlobalCollateralValue();
+  const { isLoading: isARTHCirculatingLoading, value: arthCirculatingSupply } = useARTHCirculatingSupply();
 
   WalletAutoConnect();
 
@@ -163,9 +165,6 @@ const Genesis = (props: WithSnackbarProps) => {
                 }}
               />
             </PageSubHeading>
-            <PageSubSubHeading>
-              For 100 ARTH it would value 80 ARTH at 20% rebase
-            </PageSubSubHeading>
           </div>
         <PageSubHeading>
           <div style={{}}>
@@ -185,6 +184,9 @@ const Genesis = (props: WithSnackbarProps) => {
             }% Rebase
           </HeaderSpan>
         </PageSubHeading>
+        <PageSubSubHeading>
+          For 100 ARTH it would value 80 ARTH at 20% rebase
+        </PageSubSubHeading>
 
       </div>
       <Container size="lg">
@@ -199,7 +201,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))}
+                    {isARTHCirculatingLoading && isGlobalCollateralLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))
+                    }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
@@ -208,7 +213,10 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {prettyNumber(getDisplayBalance(committedCollateral, 18))}
+                    {isGlobalCollateralLoading
+                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                      : prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    }
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>

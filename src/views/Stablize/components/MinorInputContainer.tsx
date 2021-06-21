@@ -59,43 +59,37 @@ const MinorInputContainer: React.FC<props> = (props) => {
             if (hasDropDown) setModalOpen(!modalOpen);
           }}
         >
-          {/*<Select
-            width='500px'
-            style={{
-
-              background: 'red'
-            }}
-            options={options}
-            defaultValue={options[0]}
-            components={{ Option: IconOption, Menu }}
-            menuColor='red'
-
-          />*/}
           <IFieldRightContainerLogo>
             <TokenSymbol symbol={LogoSymbol} size={25} />
           </IFieldRightContainerLogo>
           <IFieldRightContainerText>{SymbolText}</IFieldRightContainerText>
-          {hasDropDown && (
-            <IFieldRightContainerDropDown>
-              {/*<KeyboardArrowDown fontSize='default' />*/}
-              <img src={DownArrow} alt="down" height={20} style={{ marginLeft: 10 }} />
-            </IFieldRightContainerDropDown>
-          )}
+          
+          {
+            hasDropDown && (
+              <IFieldRightContainerDropDown>
+                <img src={DownArrow} alt="down" height={20} style={{ marginLeft: 10 }} />
+              </IFieldRightContainerDropDown>
+            )
+          }
 
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <BackgroundAbsolute
-              onClick={() => {
-                setModalOpen(!modalOpen);
-              }}
-            />
-          )}
+          {
+            modalOpen && hasDropDown && ondropDownValueChange && (
+              <BackgroundAbsolute
+                onClick={() => {
+                  setModalOpen(!modalOpen);
+                }}
+              />
+            )
+          }
 
-          {modalOpen && hasDropDown && ondropDownValueChange && (
-            <CustomDropDown
-              dropDownValues={dropDownValues}
-              ondropDownValueChange={ondropDownValueChange}
-            />
-          )}
+          {
+            modalOpen && hasDropDown && ondropDownValueChange && (
+              <CustomDropDown
+                dropDownValues={dropDownValues}
+                ondropDownValueChange={ondropDownValueChange}
+              />
+            )
+          }
         </IFieldRightContainer>
       </IFieldConatiner>
     </IConatiner>

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import { useWallet } from 'use-wallet';
 import styled from 'styled-components';
-import InfoIcon from '@material-ui/icons/Info';
+import Loader from 'react-spinners/BeatLoader';
 import { Grid, Divider } from '@material-ui/core';
 import { BigNumber } from '@ethersproject/bignumber';
 
@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import CardContent from '../../../components/CardContent';
 import TokenSymbol from '../../../components/TokenSymbol';
 
-import config from '../../../config';
+import config, { platformURL } from '../../../config';
 import useCore from '../../../hooks/useCore';
 import { StakingContract } from '../../../basis-cash';
 import useTokenDecimals from '../../../hooks/useTokenDecimals';
@@ -40,12 +40,12 @@ export const MobileFarm = (props: IProps) => {
   const { account, connect } = useWallet();
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
-  const tokenBalance = useTokenBalance(depositTokenContract);
+  const {isLoading: isTokenBalanceLoading, value: tokenBalance} = useTokenBalance(depositTokenContract);
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
-  const tokenAddresses = tokens.map((t) => (t.symbol === 'WETH' ? 'ETH' : t.address));
-  const uniswapLink = `https://app.sushi.com/add/${tokenAddresses.join('/')}`;
+  const tokenAddresses = tokens.map((t) => (t.symbol === 'WMATIC' ? 'ETH' : t.address));
+  const uniswapLink = `${platformURL[props.pool.platform]?.addLiquidityUrl || 'https:app.uniswap.org/swap'}/${tokenAddresses.join('/')}`;
   const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`
   const pow = BigNumber.from(10).pow(18);
 
@@ -118,15 +118,16 @@ export const MobileFarm = (props: IProps) => {
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
                 <StyledTitle>{props.pool.depositTokenSymbols.join('-')}</StyledTitle>
                 {
-                  props.pool.platform ? (
-                    <StyledSubTitle onClick={() => window.open(uniswapLink, '_blank')}>
-                      Add Liquidity
-                    </StyledSubTitle>
-                  ) : (
-                      <StyledSubTitle onClick={() => window.open(etherscan, '_blank')}>
-                      View Etherscan
+                  props.pool.platform 
+                    ? (
+                      <StyledSubTitle onClick={() => window.open(uniswapLink, '_blank')}>
+                        Add Liquidity
                       </StyledSubTitle>
-                  )
+                    ) : (
+                        <StyledSubTitle onClick={() => window.open(etherscan, '_blank')}>
+                        View on Explorer
+                        </StyledSubTitle>
+                    )
                 }
               </div>
             </CardHeaderDiv>
@@ -143,64 +144,29 @@ export const MobileFarm = (props: IProps) => {
               >
                 <DescriptionDiv>
                   Wallet
-                  {/* <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} /> */}
                 </DescriptionDiv>
                 <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <MainSpan>{Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()}</MainSpan>
-                  {/* <SecondSpan>{'100'}</SecondSpan> */}
+                  <MainSpan>
+                    {
+                      isTokenBalanceLoading
+                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                        : Number(getDisplayBalance(tokenBalance, tokenDecimals, 3)).toLocaleString()
+                    }
+                  </MainSpan>
                 </div>
               </Grid>
-              {/* <Grid
-                item
-                xs={12}
-                direction={'row'}
-                justify={'space-between'}
-                style={{ display: 'flex', marginTop: 15 }}
-              >
-                <DescriptionDiv>
-                  APY
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                </DescriptionDiv>
-                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  <MainSpan>{props?.apy}</MainSpan>
-                </div>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                direction={'row'}
-                justify={'space-between'}
-                style={{ display: 'flex', marginTop: 15 }}
-              >
-                <DescriptionDiv style={{ maxWidth: 100 }}>
-                  Reward
-                  <InfoIcon style={{ marginLeft: 5 }} fontSize={'small'} />
-                </DescriptionDiv>
-                <div style={{ flexDirection: 'column', display: 'flex' }}>
-                  {/* <Countdown
-                    date={props?.poolEndDate || Date.now() + 550000000}
-                    renderer={({ days, hours, minutes, seconds, completed }) => {
-                      return (
-                        <MainSpan>
-                          {days}d : {hours}h : {minutes}m : {seconds}s left{' '}
-                        </MainSpan>
-                      );
-                    }}
-                  /> */}
-              {/* <SecondSpan>{props?.rewards}</SecondSpan> */}
-              {/* <MainSpan>
-                    {props?.rewards}
-                  </MainSpan> */}
-              {/* </div> */}
-              {/* </Grid> */}
             </Grid>
             <ButtonContainer>
               <div style={{ marginTop: 15 }}>
                 {!isWalletConnected ? (
-                  <Button text={'Connect Wallet'} size={'lg'} onClick={() =>
-                    connect('injected').then(() => {
-                      localStorage.removeItem('disconnectWallet')
-                    })} />
+                  <Button 
+                    text={'Connect Wallet'} 
+                    size={'lg'} 
+                    onClick={() =>
+                      connect('injected').then(() => {
+                        localStorage.removeItem('disconnectWallet')
+                      })} 
+                    />
                 ) : (
                   <Button
                     disabled={tokenBalance.lte(0)}
@@ -309,7 +275,6 @@ const ButtonContainer = styled.div`
   width: 100%;
   margin-top: 10px;
   flex-direction: column;
-  //   height:
 `;
 
 const OpenableDiv = styled.div`
@@ -321,9 +286,7 @@ const OpenableDiv = styled.div`
   width: 100%;
   flex-direction: column;
   text-align: center;
-  // align-items: center;
   justify-content: center;
-  // transform: matrix(1, 0, 0, -1, 0, 0);
   padding: 20px 0px;
 `;
 
@@ -331,7 +294,6 @@ const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px 0px 0px 0px;
-  // padding:
   text-align: center;
   align-items: center;
 `;
@@ -369,7 +331,6 @@ const InfoDivRightSpan = styled.div`
 const StyledCardWrapper = styled.div`
   display: flex;
   margin-bottom: 24px;
-  // max-width: 500px;
   width: 100%;
   position: relative;
 `;
@@ -381,7 +342,6 @@ const StyledContent = styled.div`
   height: 100%;
   position: relative;
   justify-content: space-between;
-  // background: red
 `;
 
 const StyledInfoSlots = styled.div`
@@ -390,12 +350,14 @@ const StyledInfoSlots = styled.div`
   padding-top: 5px;
   padding-bottom: 5px;
 `;
+
 const LockinDiv = styled.div`
   display: flex;
   text-align: center;
   padding-bottom: 3px;
   padding-top: 35px;
 `;
+
 const StyledInfoSlot = styled.div`
   padding-left: 5px;
   padding-right: 5px;
@@ -406,17 +368,20 @@ const SlotTitle = styled.div`
   font-weight: 300;
   font-size: 16px;
 `;
+
 const PercentageTilte = styled.span`
   text-align: center;
   font-weight: 300;
   font-size: 16px;
   color: #ffffff;
 `;
+
 const BoldText = styled.span`
   font-weight: 600;
   font-size: 18px;
   margin-right: 5px;
 `;
+
 const PercentageContainer = styled.div`
   background: rgba(255, 255, 255, 0.16);
   border-radius: 60px;
@@ -441,14 +406,9 @@ const CardHeaderDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  // background: grey;
 `;
 
 const CardIcon = styled.div`
-  // display: flex;
-  // flex-direction: row;
-  // align-items: center;
-  // background: grey;
   position: absolute;
   margin: -16px 0px 0px 0px;
   left: 45%;
@@ -458,7 +418,6 @@ const DiscountDivContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  // background: yellow;
   border-radius: 8px;
   width: 100%;
   padding: 0px 5px 10px 5px;
@@ -484,12 +443,10 @@ const DiscountDiv = styled.div`
 
 const TitleText = styled.div`
   font-size: 12px;
-  // margin-right: 5px;
   font-weight: bold;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
-  // line-height: 20px;
   text-align: center;
   align-items: center;
   color: #ffffff;

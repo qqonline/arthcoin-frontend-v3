@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+// import { createMemoryHistory } from 'history';
 
 import './App.css';
 import './index.css';
@@ -13,20 +14,17 @@ import theme from './theme';
 
 import Home from './views/Home';
 import Mint from './views/Mint';
-import Trade from './views/Trade';
 import Pools from './views/Pools';
 import Stats from './views/Stats';
+import Rebase from './views/Rebase';
 import Faucet from './views/Faucet';
 import Page from './components/Page';
 import Genesis from './views/Genesis';
 import Farming from './views/Farming';
-import Stablize from './views/Stablize';
-import Rebase from './views/Rebase';
+import Lottery from './views/Lottery';
 import TopBar from './components/TopBar';
 import Popups from './components/Popups';
 import TemporaryTrade from './views/Trade';
-import BuyBack from './views/Stablize/components/BuyBack';
-import Recollatateralize from './views/Stablize/components/Recollatateralize';
 
 import store from './state';
 import config from './config';
@@ -34,7 +32,7 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
-import Lottery from './views/Lottery';
+
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -62,14 +60,10 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    document
-      .body
-      .addEventListener('touchmove', makeUnPassive, { passive: true })
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true })
 
     return () => (
-      document
-        .body
-        .removeEventListener('touchmove', makeUnPassive)
+      document.body.removeEventListener('touchmove', makeUnPassive)
     )
   }, [])
 
@@ -93,11 +87,6 @@ const App: React.FC = () => {
               <Farming />
             </Page>
           </Route>
-          {/* <Route path="/stabilize/:stabilizeType">
-            <Page>
-              <Stablize />
-            </Page>
-          </Route> */}
           <Route path="/mint/:paramType">
             <Page availableNetworks={[137, 1337]}>
               <Mint />

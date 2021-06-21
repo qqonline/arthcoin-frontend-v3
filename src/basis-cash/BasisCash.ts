@@ -30,6 +30,7 @@ export class BasisCash {
   USDC: ERC20;
   WBTC: ERC20;
   WETH: ERC20;
+  WMATIC: ERC20;
   PoolToken: ERC20;
 
   ArthxArthLP: ERC20;
@@ -90,8 +91,6 @@ export class BasisCash {
       ArthArthxLP: this.ArthxArthLP,
     };
 
-    console.log(this.tokens);
-
     this.config = cfg;
     this.provider = provider;
 
@@ -100,7 +99,6 @@ export class BasisCash {
       MAHA: [this.ArthMahaLP],
       ARTHX: [this.ArthxArthLP],
     };
-    console.log('fuck');
   }
 
   /**

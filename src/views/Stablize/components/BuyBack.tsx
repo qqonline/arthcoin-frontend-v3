@@ -47,15 +47,17 @@ const BuyBack = (props: WithSnackbarProps & Iprops) => {
   const core = useCore();
   const { account, connect } = useWallet();
   const [selectedCollateral, setSelectedCoin] = useState(core.getDefaultCollateral());
-  const arthxBalance = useTokenBalance(core.ARTHX);
   const collateralTypes = useMemo(() => core.getCollateralTypes(), [core]);
   const collateralPool = core.getCollatearalPool(selectedCollateral);
-  const arthxPrice = useARTHXOraclePrice();
-  const [approveStatus, approve] = useApprove(core.ARTHX, collateralPool.address);
-  const collateralToBeBoughtBack = useCollateralPoolExcessCollat(selectedCollateral);
-  const collateralGMUPrice = useCollateralPoolPrice(selectedCollateral);
   const tokenDecimals = useTokenDecimals(selectedCollateral);
-  const buybackFee = useBuybackFee();
+  
+  const {isLoading: isARTHXBalanceLoading, value: arthxBalance} = useTokenBalance(core.ARTHX);
+  const {isLoading: isARTHXPriceLoading, value: arthxPrice} = useARTHXOraclePrice();
+  const {isLoading: isExcessCollateralLoading, value: collateralToBeBoughtBack} = useCollateralPoolExcessCollat(selectedCollateral);
+  const {isLoading: isCollateralPriceLoading, value: collateralGMUPrice} = useCollateralPoolPrice(selectedCollateral);
+  const {isLoading: isFeeLoading, value: buybackFee} = useBuybackFee();
+
+  const [approveStatus, approve] = useApprove(core.ARTHX, collateralPool.address);
 
   useEffect(() => window.scrollTo(0, 0), []);
 

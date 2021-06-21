@@ -4,8 +4,13 @@ import { BigNumber } from 'ethers';
 import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber[];
+}
+
 export default (collateralPoolToken: string) => {
-  const [value, setValue] = useState([BigNumber.from(0), BigNumber.from(0)]);
+  const [value, setValue] = useState({isLoading: true, value: [BigNumber.from(0), BigNumber.from(0)]});
   
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -15,7 +20,7 @@ export default (collateralPoolToken: string) => {
 
     const arthxBal = await pool.redeemARTHXBalances(core.myAccount)
     const collateralBal = await pool.redeemCollateralBalances(core.myAccount)
-    setValue([collateralBal, arthxBal]);
+    setValue({isLoading: false, value: [collateralBal, arthxBal]});
   }, [collateralPoolToken, core]);
 
   useEffect(() => {

@@ -4,8 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default () => {
-  const [value, setValue] = useState(BigNumber.from(1));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(1)});
 
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -16,8 +21,8 @@ export default () => {
     const currentGlobalValue = await contract.getGlobalCollateralValue();
 
     targetValue.gte(currentGlobalValue)
-      ? setValue(targetValue.sub(currentGlobalValue))
-      : setValue(BigNumber.from(0));
+      ? setValue({isLoading: false, value: targetValue.sub(currentGlobalValue)})
+      : setValue({isLoading: false, value: BigNumber.from(0)});
   }, [core.contracts]);
 
   useEffect(() => {

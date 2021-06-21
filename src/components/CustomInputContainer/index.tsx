@@ -7,7 +7,8 @@ import TokenSymbol from '../TokenSymbol';
 import CustomDropDown from '../CustomDropDown';
 import DownArrow from '../../assets/img/ArrowDown.svg';
 import { Link } from 'react-router-dom';
-import { checkForAfterDecimalDigits, correctString } from './RegexValidation';
+import { checkForAfterDecimalDigits, correctString, ValidateNumber } from './RegexValidation';
+import Loader from 'react-spinners/BeatLoader';
 
 type props = {
   ILabelValue: string;
@@ -36,6 +37,7 @@ type props = {
   msg?: string;
   DisableMsg?: string;
   errorCallback?: (flag: boolean) => void;
+  isBalanceLoading?: boolean;
 };
 
 interface ICStatesInterface {
@@ -58,12 +60,13 @@ const CustomInputContainer: React.FC<props> = (props) => {
     ondropDownValueChange,
     multiIcons = false,
     symbols,
-    disabled,
+    disabled = false,
     Istate = 'default',
     msg = '',
     DisableMsg = '',
     IWarningstate = 'default',
     warningMsg = '',
+    isBalanceLoading = false,
   } = props;
 
   const [ICStates, setICStates] = useState<ICStatesInterface>({ IState: Istate, IMsg: msg });
@@ -77,7 +80,7 @@ const CustomInputContainer: React.FC<props> = (props) => {
 
   useEffect(() => {
     checkForErrorAndWarning(DefaultValue);
-  }, [DefaultValue])
+  }, [DefaultValue, LogoSymbol, IBalanceValue])
 
   const Redirection = () => {
     if (props?.href) {
@@ -154,7 +157,10 @@ const CustomInputContainer: React.FC<props> = (props) => {
             {ILabelInfoValue !== '' && Redirection()}
           </ILabelLeft>
           <ILabelRight>
-            {showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>}
+            { isBalanceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : showBalance && <ILabelBalance>{`Balance  ${Number(IBalanceValue).toLocaleString()}`}</ILabelBalance>
+            }
           </ILabelRight>
         </ILabelContainer>
         <IFieldConatiner className={`input-${ICStates.IState}`}>
@@ -169,9 +175,15 @@ const CustomInputContainer: React.FC<props> = (props) => {
               flex: 1,
               fontFamily: 'Inter !important',
             }}
-            type={'number'}
+            disabled={disabled}
+            type={'string'}
             onChange={(event) => {
               const value = event.target.value;
+              if (value === '') {
+              } else {
+                if (!ValidateNumber(value)) return
+              }
+
               if (Number(value) && Number(value) <= 0) return;
               checkForErrorAndWarning(value).then((data) => {
                 if (data) props?.setText(value.length > 1 ? correctString(value) : value);
@@ -300,6 +312,7 @@ const ILabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 12px;
 `;
 const ILabelLeft = styled.div`
   display: flex;
@@ -314,7 +327,7 @@ const ILabel = styled.p`
   font-size: 14px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
+  margin-bottom: 0;
 `;
 const ILabelInfo = styled.p`
   font-family: Inter;
@@ -324,7 +337,8 @@ const ILabelInfo = styled.p`
   line-height: 20px;
   color: #f7653b;
   margin-left: 5px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
+  cursor: pointer;
 `;
 const ILabelBalance = styled.p`
   font-family: Inter;
@@ -334,7 +348,7 @@ const ILabelBalance = styled.p`
   line-height: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 12px;
+  margin-bottom: 0;
 `;
 const LLabel = styled.div`
   display: flex;

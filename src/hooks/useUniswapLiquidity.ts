@@ -3,8 +3,13 @@ import { useEffect, useState, useCallback } from 'react';
 
 import useCore from './useCore';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 const useUniswapLiquidity = (asset: string) => {
-  const [liquidity, setLiquidity] = useState<BigNumber>(BigNumber.from(0));
+  const [liquidity, setLiquidity] = useState<State>({isLoading: true, value: BigNumber.from(0)});
 
   const core = useCore();
   const token = core.tokens[asset];
@@ -14,7 +19,7 @@ const useUniswapLiquidity = (asset: string) => {
     const pairBalances = await Promise.all(tradingPairs.map(pair => token.balanceOf(pair.address)));
     const totalBalance = pairBalances.reduce((a, b) => a.add(b), BigNumber.from(0));
 
-    setLiquidity(totalBalance);
+    setLiquidity({isLoading: false, value: totalBalance});
   }, [token, tradingPairs]);
 
   useEffect(() => {

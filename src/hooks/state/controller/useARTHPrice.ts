@@ -1,14 +1,26 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { useCallback, useEffect, useState } from 'react';
+
 import useCore from '../../useCore';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+};
+
 export default () => {
-  const [price, setPrice] = useState<BigNumber>(BigNumber.from(0));
+  const [customState, setCustomState] = useState<State>({
+    isLoading: true,
+    value: BigNumber.from(0),
+  });
   const core = useCore();
 
   const fetchCashPrice = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    // setPrice(await controller.getARTHPrice());
+    setCustomState({
+      isLoading: false,
+      value: await controller.getARTHPrice(),
+    });
   }, [core.contracts.ArthController]);
 
   useEffect(() => {
@@ -17,5 +29,5 @@ export default () => {
     );
   }, [fetchCashPrice]);
 
-  return price;
+  return customState;
 };

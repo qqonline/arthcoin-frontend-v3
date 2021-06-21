@@ -4,12 +4,13 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 
 import TokenSymbol from '../../../components/TokenSymbol';
 
-import config from '../../../config';
+import config, {platformURL} from '../../../config';
 import useTotalSupply from '../../../hooks/useTotalSupply';
 import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useUniswapLiquidity from '../../../hooks/useUniswapLiquidity';
 import useCirculatingSupply from '../../../hooks/useCirculatingSupply';
+import Loader from 'react-spinners/BeatLoader';
 
 interface HomeCardProps {
   title: string;
@@ -23,11 +24,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
   symbol,
   address,
 }) => {
-  const totalSupply = useTotalSupply(symbol);
-  const liquidity = useUniswapLiquidity(symbol);
-  const circulatingSupply = useCirculatingSupply(symbol);
+  const {isLoading: isTotalSupplyLoading, value: totalSupply} = useTotalSupply(symbol);
+  const {isLoading: isLiquidityLoading, value: liquidity} = useUniswapLiquidity(symbol);
+  const {isLoading: isCirculatingSupplyLoading, value: circulatingSupply} = useCirculatingSupply(symbol);
 
-  const tokenUrl = `${config.etherscanUrl}/token/${address}`;
+  const tokenUrl = `${config.etherscanUrl}/address/${address}`;
   
   return (
     <Wrapper>
@@ -39,15 +40,16 @@ const HomeCard: React.FC<HomeCardProps> = ({
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}
           >
             <span className="margin-bottom-5">{title}</span>
-            <SubTitle href={tokenUrl}>{`${title} on Etherscan`}</SubTitle>
+            <SubTitle target="_blank" href={tokenUrl}>{`${title} on Explorer`}</SubTitle>
           </div>
         </CardHeader>
         <CardContent>
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(liquidity))
+              { isLiquidityLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(liquidity))
               }
             </StyledValue>
           </CardSection>
@@ -56,8 +58,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Circulating Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(circulatingSupply))
+              { isCirculatingSupplyLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(circulatingSupply))
               }
             </StyledValue>
           </CardSection>
@@ -66,18 +69,23 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Total Supply
             </StyledSupplyLabel>
             <StyledValue>
-              {
-                prettyNumber(getDisplayBalance(totalSupply))
+              { isTotalSupplyLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : prettyNumber(getDisplayBalance(totalSupply))
               }
             </StyledValue>
           </CardSection>
         </CardContent>
         <UniswapLink
           target="_blank"
-          href={`https://app.uniswap.org/#/swap?inputCurrency=${address}`}
+          href={
+            platformURL[config.platform] && platformURL[config.platform].swapUrl
+              ? `${platformURL[config.platform]?.swapUrl}?inputCurrency=${address}`
+              : `https://app.uniswap.org/#/swap?inputCurrency=${address}`
+          }
         >
           <LinkText>
-            Buy {symbol} from Uniswap <CallMadeIcon style={{ fontSize: 15 }} />
+            Buy {symbol} from {config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()} <CallMadeIcon style={{ fontSize: 15 }} />
           </LinkText>
         </UniswapLink>
       </Card>

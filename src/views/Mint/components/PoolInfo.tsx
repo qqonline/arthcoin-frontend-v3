@@ -15,20 +15,21 @@ import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 import useCollateralPoolPrice from '../../../hooks/state/pools/useCollateralPoolPrice';
 import useCollateralPoolBalance from '../../../hooks/state/pools/useCollateralPoolBalance';
 import useGlobalCollateralRatio from '../../../hooks/state/controller/useGlobalCollateralRatio';
+import Loader from 'react-spinners/BeatLoader';
 
 interface IProps {
   selectedCollateralCoin: string;
 }
 
 export default ({ selectedCollateralCoin }: IProps) => {
-  const cr = useGlobalCollateralRatio();
-  const arthxPrice = useARTHXOraclePrice();
-  const poolBalance = useCollateralPoolBalance(selectedCollateralCoin);
-  const mintingFee = usePoolMintingFees(selectedCollateralCoin);
-  const redeemingFee = usePoolRedeemFees(selectedCollateralCoin);
-  const stabilityFee = useStabilityFee();
-  const collatearlPrice = useCollateralPoolPrice(selectedCollateralCoin);
-  const availableToMint = useAvailableToMint(selectedCollateralCoin);
+  const { isLoading: isGlobalCollateraLoading, value: cr } = useGlobalCollateralRatio();
+  const { isLoading: isARTHXOracleLoading, value: arthxPrice } = useARTHXOraclePrice();
+  const { isLoading: isCollateralPoolLoading, value: poolBalance } = useCollateralPoolBalance(selectedCollateralCoin);;
+  const { isLoading: isPoolMintingLoading, value: mintingFee } = usePoolMintingFees(selectedCollateralCoin);
+  const { isLoading: isPoolRedeemFeesLoading, value: redeemingFee } = usePoolRedeemFees(selectedCollateralCoin);
+  const { isLoading: isStabilityFeeLoading, value: stabilityFee } = useStabilityFee();
+  const { isLoading: isCollateralPoolPriceLoading, value: collatearlPrice } = useCollateralPoolPrice(selectedCollateralCoin);
+  const { isLoading: isAvailableToMintLoading, value: availableToMint } = useAvailableToMint(selectedCollateralCoin);
 
   return (
     <>
@@ -39,9 +40,11 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>ARTHX GMU Price</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              ${
-                Number(getDisplayBalance(arthxPrice, 6, 6))
-                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              ${ 
+                isARTHXOracleLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(arthxPrice, 6, 6))
+                    .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </InputLabelSpanRight>
           </OneLineInput>
@@ -52,8 +55,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
               <TextForInfoTitle>Collateral GMU Price</TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              ${
-                Number(getDisplayBalance(collatearlPrice, 6, 6))
+              ${ isCollateralPoolPriceLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(collatearlPrice, 6, 6))
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </InputLabelSpanRight>
@@ -68,8 +72,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {
-                Number(getDisplayBalance(cr, 4, 4))
+              { isGlobalCollateraLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(cr, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </InputLabelSpanRight>
@@ -84,7 +89,10 @@ export default ({ selectedCollateralCoin }: IProps) => {
             </div>
             <OneLineInput>
               <InputLabelSpanRight>
-                {prettyNumber(getDisplayBalance(poolBalance, 18))}
+                { isCollateralPoolLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : prettyNumber(getDisplayBalance(poolBalance, 18))
+                }
               </InputLabelSpanRight>
               <BeforeChip className="custom-mahadao-chip">{selectedCollateralCoin}</BeforeChip>
             </OneLineInput>
@@ -95,7 +103,13 @@ export default ({ selectedCollateralCoin }: IProps) => {
                 <div style={{ flex: 1 }}>
                   <TextForInfoTitle>Available to Mint</TextForInfoTitle>
                 </div>
-                <InputLabelSpanRight>{prettyNumber(getDisplayBalance(availableToMint, 18, 3))}</InputLabelSpanRight>
+                <InputLabelSpanRight>
+                  { isAvailableToMintLoading
+                    ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    : prettyNumber(getDisplayBalance(availableToMint, 18, 3))
+                  }
+                </InputLabelSpanRight>
+            <BeforeChip className="custom-mahadao-chip">ARTH</BeforeChip>
               </OneLineInput>
             </div>
         <div style={{ marginBottom: '12px' }}>
@@ -107,8 +121,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {
-                Number(getDisplayBalance(stabilityFee, 4, 4))
+              { isStabilityFeeLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(stabilityFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </InputLabelSpanRight>
@@ -123,8 +138,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {
-                Number(getDisplayBalance(mintingFee, 4, 4))
+              { isPoolMintingLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(mintingFee, 4, 4))
                   .toLocaleString('en-US', {maximumFractionDigits: 4})
               }%
             </InputLabelSpanRight>
@@ -139,8 +155,9 @@ export default ({ selectedCollateralCoin }: IProps) => {
               </TextForInfoTitle>
             </div>
             <InputLabelSpanRight>
-              {
-                Number(getDisplayBalance(redeemingFee, 4, 4))
+              { isPoolRedeemFeesLoading
+                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                : Number(getDisplayBalance(redeemingFee, 4, 4))
                   .toLocaleString('en-US', { maximumFractionDigits: 4 })
               }%
             </InputLabelSpanRight>

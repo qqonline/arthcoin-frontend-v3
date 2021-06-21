@@ -27,6 +27,7 @@ import YFI from '../../assets/img/YFI.webp';
 import DSD from '../../assets/img/DSD.webp';
 import MATIC from '../../assets/img/Matic.webp';
 import RSR from '../../assets/img/RSR.webp';
+import WMATIC from '../../assets/img/Matic.webp';
 import WBTC from '../../assets/img/WBTC.svg';
 import ARTHX from '../../assets/img/ARTHX.svg';
 
@@ -58,6 +59,7 @@ const logosBySymbol: { [title: string]: string } = {
   RSR: RSR,
   WBTC: WBTC,
   ARTHX: ARTHX,
+  WMATIC: WMATIC,
 
   'ARTH_DAI-UNI-LPv2': bacLogo,
   'ARTH_DAI-MAHA-LPv1': bacLogo,

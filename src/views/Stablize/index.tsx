@@ -17,7 +17,7 @@ export default () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const core = useCore();
-  const recollateralizableValue = useArthxRedeemRewards();
+  const {isLoading: isRecollateralizableValueLoading, value: recollateralizableValue} = useArthxRedeemRewards();
   
   WalletAutoConnect();
 

@@ -6,6 +6,7 @@ import AccountModal from './AccountModal';
 import walletIcon from '../../../assets/svg/wallet-24.svg';
 import CustomModal from '../../CustomModal';
 import Loader from 'react-spinners/PulseLoader';
+import { Mixpanel } from '../../../analytics/Mixpanel';
 
 interface AccountButtonProps { }
 
@@ -35,6 +36,7 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
             variant="transparent"
             onClick={() => {
               connect('injected').then(() => {
+                // Mixpanel.identify(account);
                 localStorage.removeItem('disconnectWallet')
               })
             }}
@@ -42,15 +44,16 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
             text="Connect"
           />
         ) : (
-          <Button
+          /*<Button
             onClick={() => toggleModal(true)}
             size="sm"
             variant={'transparent'}
             text={truncateMiddle(account, 15, '.....')}
           >
-            <img alt="wallet" src={walletIcon} className="margin-right-10" />
-          </Button>
-        )}
+            <img alt="wallet" src={walletIcon} className="margin-right-10" onClick={() => toggleModal(true)}/>
+          </Button>*/
+          <img alt="wallet" src={walletIcon} className="margin-right-10" onClick={() => toggleModal(true)}/>
+          )}
       </StyledAccountButton>
     </>
   );

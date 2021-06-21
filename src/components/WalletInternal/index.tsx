@@ -1,205 +1,215 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { useWallet } from 'use-wallet';
+import React, { useState } from 'react';
+import Loader from 'react-spinners/BeatLoader';
+import { useMediaQuery } from 'react-responsive';
 import { Container, Grid, IconButton } from '@material-ui/core';
+
 import copy from '../../assets/svg/copy.svg';
 import metamask from '../../assets/svg/metamask.svg';
+
+import Button from '../Button';
 import TokenSymbol from '../TokenSymbol';
 import CustomModal from '../CustomModal';
-import Button from '../Button';
-import { useMediaQuery } from 'react-responsive';
-import useCore from '../../hooks/useCore';
-import { useWallet } from 'use-wallet';
-import useTokenBalanceOf from '../../hooks/state/useTokenBalanceOf';
-import { getDisplayBalance } from '../../utils/formatBalance';
 import HtmlTooltip from '../HtmlTooltip';
 
-import Toast from 'react-bootstrap/Toast'
+import useCore from '../../hooks/useCore';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import useTokenBalanceOf from '../../hooks/state/useTokenBalanceOf';
 
 interface IProps {
-    // walletData?: {
-    //     accountNumber: string;
-    //     mahaTokens: number;
-    //     mahaDollars: number;
-    //     arthTokens: number;
-    //     arthDollars: number;
-    //     arthxTokens: number;
-    //     arthxDollars: number;
-    // }
-    disconnect?: boolean;
-    setWalletInfo: (val: boolean) => void;
-    walletInfo: boolean
+  disconnect?: boolean;
+  setWalletInfo: (val: boolean) => void;
+  walletInfo: boolean;
 }
+
 export const WalletInternal = (props: IProps) => {
+  const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props.disconnect);
+  const isMobile = useMediaQuery({ 'maxWidth': '600px' });
+  const [toolTipText, settoolTipText] = useState<string>('copy');
 
+  const core = useCore();
+  const { account, reset } = useWallet();
+  const { isLoading: isARTHBalanceLoading, value: arthBalance } = useTokenBalanceOf(core.ARTH, account);
+  const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(core.MAHA, account);
+  const { isLoading: isARTHXBalanceLoading, value: arthxBalance } = useTokenBalanceOf(core.ARTHX, account);
+  
+  const onClose = () => {
+    setConfirmationModal(false)
+  }
 
-    const isMobile = useMediaQuery({ 'maxWidth': '600px' })
-    const core = useCore();
-    const { account, reset } = useWallet();
+  const truncateMiddle = function (fullStr: string = '12345678922500025', strLen: number, separator?: string) {
+    if (fullStr.length <= strLen) return fullStr;
 
-    const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props.disconnect);
+    separator = separator || '...';
 
-    const arthBalance = useTokenBalanceOf(core.ARTH, account);
-    const mahaBalance = useTokenBalanceOf(core.MAHA, account);
-    const arthxBalance = useTokenBalanceOf(core.ARTHX, account);
-    const [toolTipText, settoolTipText] = useState<string>('copy')
-    const onClose = () => {
-        setConfirmationModal(false)
-    }
+    var sepLen = separator.length,
+      charsToShow = strLen - sepLen,
+      frontChars = Math.ceil(charsToShow / 3),
+      backChars = Math.floor(charsToShow / 3);
 
-    const truncateMiddle = function (fullStr: string = '12345678922500025', strLen: number, separator?: string) {
-        if (fullStr.length <= strLen) return fullStr;
+    return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
+  };
 
-        separator = separator || '...';
+  return (
+    <>
+      <Container style={{ background: '#1e1d1d', marginTop: -2 }}>
+        <CustomModal
+          closeButton
+          handleClose={onClose}
+          open={ConfirmationModal}
+          modalTitleStyle={{}}
+          modalContainerStyle={{}}
+          modalBodyStyle={{}}
+          title={`Disconnect Wallet`}
+        >
+          <div>
+            <PrimaryText>Are you sure you want to disconnect {truncateMiddle(account, 15)} ?</PrimaryText>
+            <SecondaryText>{account}</SecondaryText>
+            <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+              <Grid item lg={6} md={6} sm={12} xs={12}>
+                <Button
+                  variant={'transparent'}
+                  text="Cancel"
+                  size={'lg'}
+                  onClick={() => {
+                      onClose();
+                  }}
+                />
+              </Grid>
+              <Grid item lg={6} md={6} sm={12} xs={12}>
+                <Button
+                  text={'Disconnect'}
+                  size={'lg'}
+                  onClick={async () => {
+                      // Disconnect wallet code here.
+                      onClose();
+                      localStorage.setItem('disconnectWallet', '1');
+                      reset();
+                      props.setWalletInfo(false);
+                      window.location.reload();
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </CustomModal>
 
-        var sepLen = separator.length,
-            charsToShow = strLen - sepLen,
-            frontChars = Math.ceil(charsToShow / 3),
-            backChars = Math.floor(charsToShow / 3);
+        <StyledLink>
+          <span>
+            Your Account
+          </span>
+          <AccountDetails>
+              <IconButton>
+                <img alt='Metamask' height={32} src={metamask} />
+              </IconButton>
+              <span>{truncateMiddle(account, 15)}</span>
+            <HtmlTooltip
+              title={
+                <React.Fragment>
+                  <span>{toolTipText}</span>
+                </React.Fragment>
+              }
+            >
+              <IconButton onClick={() => {
+                navigator.clipboard.writeText(account.toString())
+                settoolTipText('Copied!')
+              }}>
+                <img alt='Copy' height={24} src={copy} />
+              </IconButton>
+            </HtmlTooltip>
+          </AccountDetails>
+        </StyledLink>
 
-        return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
-    };
-    return (
-        <>
-            <Container style={{ background: '#1e1d1d', marginTop: -2 }}>
-                <CustomModal
-                    closeButton
-                    handleClose={onClose}
-                    open={ConfirmationModal}
-                    modalTitleStyle={{}}
-                    modalContainerStyle={{}}
-                    modalBodyStyle={{}}
-                    title={`Disconnect Wallet`}
-                >
-                    <div>
-                        <PrimaryText>Are you sure you want to disconnect {truncateMiddle(account, 15)} ?</PrimaryText>
-                        <SecondaryText>{account}</SecondaryText>
-                        <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
-                            <Grid item lg={6} md={6} sm={12} xs={12}>
-                                <Button
-                                    variant={'transparent'}
-                                    text="Cancel"
-                                    size={'lg'}
-                                    onClick={() => {
-                                        onClose();
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item lg={6} md={6} sm={12} xs={12}>
-                                <Button
-                                    text={'Disconnect'}
-                                    size={'lg'}
-                                    onClick={async () => {
-                                        // Disconnect wallet code here
-                                        onClose();
-                                        localStorage.setItem('disconnectWallet', '1')
-                                        reset()
-                                        props.setWalletInfo(false)
-                                        window.location.reload();
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                    </div>
-                </CustomModal>
+        <StyledRows>
+          <RowName>
+            <IconButton>
+              <TokenSymbol symbol={'MAHA'} size={44} />
+            </IconButton>
+            <span>
+                {
+                isMAHABalanceLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(mahaBalance)).toLocaleString()
+              } MAHA
+            </span>
+          </RowName>
+          <DollarValue>
+            {/* ${props?.walletData?.mahaDollars} */}
+          </DollarValue>
+        </StyledRows>
 
-                <StyledLink>
-                    <span>
-                        Your Account
-                    </span>
-                    <AccountDetails>
-                        <IconButton>
-                            <img height={32} src={metamask} />
-                        </IconButton>
-                        <span>{truncateMiddle(account, 15)}</span>
-                      <HtmlTooltip
-                        title={
-                          <React.Fragment>
-                            <span>{toolTipText}</span>
-                          </React.Fragment>
-                        }
-                      >
-                        <IconButton onClick={() => {
-                          navigator.clipboard.writeText(account.toString())
-                          settoolTipText('Copied!')
-                        }}>
-                            <img height={24} src={copy} />
-                        </IconButton>
-                      </HtmlTooltip>
-                    </AccountDetails>
-                </StyledLink>
+        <StyledRows>
+          <RowName>
+            <IconButton>
+              <TokenSymbol symbol={'ARTH'} size={44} />
+            </IconButton>
+            <span>
+              {
+                isARTHBalanceLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(arthBalance)).toLocaleString()
+              } ARTH
+            </span>
+          </RowName>
+          <DollarValue>
+            {/* ${props?.walletData?.arthDollars} */}
+          </DollarValue>
+        </StyledRows>
 
-                <StyledRows>
-                    <RowName>
-                        <IconButton>
-                            <TokenSymbol symbol={'MAHA'} size={44} />
-                        </IconButton>
-                        <span>{Number(getDisplayBalance(mahaBalance)).toLocaleString()} MAHA</span>
-                    </RowName>
-                    <DollarValue>
-                        {/* ${props?.walletData?.mahaDollars} */}
-                    </DollarValue>
-                </StyledRows>
+        <StyledRows>
+          <RowName>
+            <IconButton>
+              <TokenSymbol symbol={'ARTHX'} size={44} />
+            </IconButton>
+            <span>
+              {
+                isARTHXBalanceLoading
+                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                  : Number(getDisplayBalance(arthxBalance)).toLocaleString()
+              } ARTHX
+            </span>
+          </RowName>
+          <DollarValue>
+            {/* ${props?.walletData?.arthxDollars} */}
+          </DollarValue>
+        </StyledRows>
 
-                <StyledRows>
-                    <RowName>
-                        <IconButton>
-                            <TokenSymbol symbol={'ARTH'} size={44} />
-                        </IconButton>
-                        <span>{Number(getDisplayBalance(arthBalance)).toLocaleString()} ARTH</span>
-                    </RowName>
-                    <DollarValue>
-                        {/* ${props?.walletData?.arthDollars} */}
-                    </DollarValue>
-                </StyledRows>
-
-                <StyledRows>
-                    <RowName>
-                        <IconButton>
-                            <TokenSymbol symbol={'ARTHX'} size={44} />
-                        </IconButton>
-                        <span>{Number(getDisplayBalance(arthxBalance)).toLocaleString()} ARTHX</span>
-                    </RowName>
-                    <DollarValue>
-                        {/* ${props?.walletData?.arthxDollars} */}
-                    </DollarValue>
-                </StyledRows>
-
-                <StyledRows style={{ marginBottom: -5 }}>
-                    <Button
-                        variant={'transparent'}
-                        text={'Disconnect'}
-                        onClick={async () => {
-                            setConfirmationModal(true)
-                        }}
-                    />
-                </StyledRows>
-            </Container>
-        </>
-    )
+        <StyledRows style={{ marginBottom: -5 }}>
+          <Button
+            variant={'transparent'}
+            text={'Disconnect'}
+            onClick={async () => {
+                setConfirmationModal(true)
+            }}
+          />
+        </StyledRows>
+      </Container>
+    </>
+  )
 }
 
 const StyledLink = styled.div`
-    height: 80px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    &:hover {
-        color: rgba(255, 255, 255, 0.64);
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(70px);
-    }
-    &.active {
-        color: rgba(255, 255, 255, 0.88);
-    }
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    color: #FFFFFF;
-    cursor: pointer;
+  height: 80px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  &:hover {
+    color: rgba(255, 255, 255, 0.64);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(70px);
+  }
+  &.active {
+    color: rgba(255, 255, 255, 0.88);
+  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  cursor: pointer;
 `;
 
 const PrimaryText = styled.p`
@@ -234,36 +244,35 @@ const AccountDetails = styled.div`
 `;
 
 const StyledRows = styled.div`
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 20px 0px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0px;
 `;
 
 const RowName = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: baseline;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    color: rgba(255, 255, 255, 0.88);
-    // border: 1px solid;
-    margin-left: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: baseline;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.88);
+  margin-left: -15px;
 `;
 
 const DollarValue = styled.div`
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: right;
-    color: rgba(255, 255, 255, 0.64);
-    display: flex;
-    align-items: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.64);
+  display: flex;
+  align-items: center;
 `;

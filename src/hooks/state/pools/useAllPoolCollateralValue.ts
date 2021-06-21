@@ -9,8 +9,13 @@ interface IValues {
   value: BigNumber;
 }
 
+type State = {
+  isLoading: boolean;
+  value: IValues[];
+}
+
 export default () => {
-  const [value, setValue] = useState<IValues[]>([]);
+  const [value, setValue] = useState<State>({ isLoading: true, value: []});
 
   const core = useCore();
   const blockNumber = useBlockNumber();
@@ -31,7 +36,7 @@ export default () => {
 
     console.log('fuck', results);
 
-    setValue(results);
+    setValue({isLoading: false, value: results});
   }, [core]);
 
   useEffect(() => {

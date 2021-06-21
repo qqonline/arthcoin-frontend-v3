@@ -4,15 +4,20 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../../useCore';
 import { useBlockNumber } from '../../../state/application/hooks';
 
+type State = {
+  isLoading: boolean;
+  value: BigNumber;
+}
+
 export default (collateralPoolToken: string) => {
-  const [value, setValue] = useState(BigNumber.from(0));
+  const [value, setValue] = useState<State>({isLoading: true, value: BigNumber.from(0)});
   
   const core = useCore();
   const blockNumber = useBlockNumber();
 
   const fetchValue = useCallback(async () => {
     const pool = core.getCollatearalPool(collateralPoolToken);
-    setValue(await pool.getAvailableExcessCollateralDV());
+    setValue({isLoading: false, value: await pool.getAvailableExcessCollateralDV()});
   }, [collateralPoolToken, core]);
 
   useEffect(() => {

@@ -19,12 +19,11 @@ export type Configuration = {
   supportedCollaterals: string[];
   arthTradingPairs: string[];
   arthxTradingPairs: string[];
-
   genesisLaunchDate: Date;
   genesisEndDate: Date;
-
   refreshInterval: number;
   gasLimitMultiplier: number;
+  platform: string;
 };
 
 export type EthereumConfig = {

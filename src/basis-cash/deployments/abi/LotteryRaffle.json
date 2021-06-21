@@ -1,19 +1,15 @@
-[
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "genesis",
-        "type": "address[]"
-      }
-    ],
+[{
+    "inputs": [{
+      "internalType": "address[]",
+      "name": "genesis",
+      "type": "address[]"
+    }],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -37,8 +33,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -62,8 +57,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "bytes32",
         "name": "role",
@@ -87,8 +81,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "bytes32",
         "name": "role",
@@ -112,8 +105,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "bytes32",
         "name": "role",
@@ -137,8 +129,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
+    "inputs": [{
         "indexed": true,
         "internalType": "address",
         "name": "from",
@@ -163,20 +154,17 @@
   {
     "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bytes32",
+      "name": "",
+      "type": "bytes32"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -193,68 +181,55 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
+    "inputs": [{
+      "internalType": "address",
+      "name": "owner",
+      "type": "address"
+    }],
     "name": "balanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }],
     "name": "getApproved",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
-    ],
+    "inputs": [{
+      "internalType": "bytes32",
+      "name": "role",
+      "type": "bytes32"
+    }],
     "name": "getRoleAdmin",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bytes32",
+      "name": "",
+      "type": "bytes32"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -271,8 +246,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -284,20 +258,17 @@
       }
     ],
     "name": "hasRole",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "owner",
         "type": "address"
@@ -309,28 +280,23 @@
       }
     ],
     "name": "isApprovedForAll",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "name": "lotteries",
-    "outputs": [
-      {
+    "outputs": [{
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
@@ -353,73 +319,59 @@
   {
     "inputs": [],
     "name": "name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
+    "outputs": [{
+      "internalType": "string",
+      "name": "",
+      "type": "string"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "name": "ownerByAddress",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }],
     "name": "ownerOf",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "name": "owners",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
@@ -427,28 +379,23 @@
   {
     "inputs": [],
     "name": "prizeCounter",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
+    "inputs": [{
+      "internalType": "string",
+      "name": "",
+      "type": "string"
+    }],
     "name": "prizes",
-    "outputs": [
-      {
+    "outputs": [{
         "internalType": "string",
         "name": "description",
         "type": "string"
@@ -484,8 +431,7 @@
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -502,8 +448,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -520,8 +465,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -543,8 +487,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -571,8 +514,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "operator",
         "type": "address"
@@ -591,13 +533,11 @@
   {
     "inputs": [],
     "name": "symbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
+    "outputs": [{
+      "internalType": "string",
+      "name": "",
+      "type": "string"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
@@ -605,33 +545,27 @@
   {
     "inputs": [],
     "name": "tokenCounter",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }],
     "name": "tokenURI",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
+    "outputs": [{
+      "internalType": "string",
+      "name": "",
+      "type": "string"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
@@ -639,20 +573,17 @@
   {
     "inputs": [],
     "name": "totalTickets",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -674,28 +605,23 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "inputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "name": "usersLotteries",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "string",
         "name": "_prize",
         "type": "string"
@@ -732,8 +658,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "string",
         "name": "_prize",
         "type": "string"
@@ -750,8 +675,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "_to",
         "type": "address"
@@ -768,21 +692,17 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_prize",
-        "type": "string"
-      }
-    ],
+    "inputs": [{
+      "internalType": "string",
+      "name": "_prize",
+      "type": "string"
+    }],
     "name": "checkResult",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
@@ -790,60 +710,49 @@
   {
     "inputs": [],
     "name": "getTokenCounts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [{
+      "internalType": "uint256",
+      "name": "_id",
+      "type": "uint256"
+    }],
     "name": "tokenIdOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{
+      "internalType": "address",
+      "name": "",
+      "type": "address"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
-    ],
+    "inputs": [{
+      "internalType": "address",
+      "name": "_address",
+      "type": "address"
+    }],
     "name": "usersLottery",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true
   },
   {
-    "inputs": [
-      {
+    "inputs": [{
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -865,32 +774,26 @@
       }
     ],
     "name": "onERC721Received",
-    "outputs": [
-      {
-        "internalType": "bytes4",
-        "name": "",
-        "type": "bytes4"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bytes4",
+      "name": "",
+      "type": "bytes4"
+    }],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
-    ],
+    "inputs": [{
+      "internalType": "bytes4",
+      "name": "interfaceId",
+      "type": "bytes4"
+    }],
     "name": "supportsInterface",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }],
     "stateMutability": "view",
     "type": "function",
     "constant": true

@@ -2,7 +2,7 @@ import { ChainId } from '@uniswap/sdk';
 
 import { CollateralPool } from './basis-cash';
 import { Configuration } from './basis-cash/config';
-import { StakingContract, TradingPairs } from './basis-cash/types';
+import { StakingContract, TradingPairs, Platform } from './basis-cash/types';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
@@ -20,6 +20,7 @@ const configurations: { [env: string]: Configuration } = {
     supportedCollaterals: ['USDT', 'USDC', 'WETH', 'WBTC', 'MATIC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
+    platform: 'uniswap',
   },
   staging: {
     networkName: 'Rinkeby',
@@ -37,6 +38,7 @@ const configurations: { [env: string]: Configuration } = {
     supportedCollaterals: ['USDT', 'USDC'],
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
+    platform: 'uniswap',
   },
   stagingMatic: {
     networkName: 'Matic Mumbai Testnet',
@@ -51,8 +53,9 @@ const configurations: { [env: string]: Configuration } = {
     defaultCollateral: 'USDT',
     blockchainToken: 'MATIC',
     supportedCollaterals: ['USDT', 'USDC'],
-    arthTradingPairs: ['ETH', 'MAHA'],
-    arthxTradingPairs: ['ETH', 'ARTH'],
+    arthTradingPairs: ['MATIC', 'MAHA'],
+    arthxTradingPairs: ['MATIC', 'ARTH'],
+    platform: 'sushiswap',
   },
   matic: {
     networkName: 'Matic Mainnet',
@@ -70,6 +73,7 @@ const configurations: { [env: string]: Configuration } = {
     supportedCollaterals: ['USDT', 'USDC', 'WBTC', 'WETH', 'WMATIC'],
     arthTradingPairs: ['ARTHX', 'MAHA'],
     arthxTradingPairs: ['ARTH'],
+    platform: 'sushiswap',
   },
   ethereum: {
     networkName: 'Ethereum Mainnet',
@@ -87,6 +91,7 @@ const configurations: { [env: string]: Configuration } = {
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
     supportedCollaterals: ['ETH', 'WBTC', 'USDT', 'USDC'],
+    platform: 'uniswap',
   },
 };
 
@@ -104,6 +109,17 @@ export const collateralPools: { [contractName: string]: CollateralPool } = {
     finished: true,
     networks: [ChainId.MAINNET, ChainId.RINKEBY, 1337],
     sort: 0,
+  },
+};
+
+export const platformURL: { [platform: string]: Platform } = {
+  sushiswap: {
+    addLiquidityUrl: 'https://app.sushi.com/add',
+    swapUrl: 'https://app.sushi.com/swap',
+  },
+  uniswap: {
+    addLiquidityUrl: 'https://app.uniswap.org/#/add/v2',
+    swapUrl: 'https://app.uniswap.org/#/swap',
   },
 };
 
