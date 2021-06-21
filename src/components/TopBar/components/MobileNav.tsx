@@ -134,6 +134,7 @@ const MobileNav = (props: props) => {
                 setWallet(!walletInfo);
               }
             }}
+            tracking_id={!account ? 'connect_wallet' : ''}
           />}
         </div>
       </StyledButton>

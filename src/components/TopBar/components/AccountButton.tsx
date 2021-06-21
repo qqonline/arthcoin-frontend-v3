@@ -42,6 +42,7 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
             }}
             size="sm"
             text="Connect"
+            tracking_id={'connect_wallet'}
           />
         ) : (
           /*<Button
@@ -52,7 +53,7 @@ const AccountButton: React.FC<AccountButtonProps> = () => {
           >
             <img alt="wallet" src={walletIcon} className="margin-right-10" onClick={() => toggleModal(true)}/>
           </Button>*/
-          <img alt="wallet" src={walletIcon} className="margin-right-10" onClick={() => toggleModal(true)}/>
+          <img alt="wallet" src={walletIcon} className="margin-right-10" onClick={() => toggleModal(true)} id={'disconnect_wallet'}/>
           )}
       </StyledAccountButton>
     </>

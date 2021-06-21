@@ -89,6 +89,7 @@ export const WalletInternal = (props: IProps) => {
                       props.setWalletInfo(false);
                       window.location.reload();
                   }}
+                  tracking_id={'disconnect_wallet'}
                 />
               </Grid>
             </Grid>

@@ -14,6 +14,7 @@ interface ButtonProps {
   theme?: 'default' | 'secondary' | 'tertiary';
   variant?: 'default' | 'transparent' | 'outlined' | 'rounded';
   loading?: boolean;
+  tracking_id?: string;
 }
 
 function variantToStyle(variant: string = 'default', color: any) {
@@ -69,6 +70,7 @@ const Button: React.FC<ButtonProps> = ({
   theme,
   variant,
   loading= false,
+  tracking_id= '',
 }) => {
   const { color, spacing } = useContext(ThemeContext);
 
@@ -142,6 +144,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       padding={buttonPadding}
       size={buttonSize}
+      id={tracking_id}
     >
       {!loading && children}
       {!loading && ButtonChild}

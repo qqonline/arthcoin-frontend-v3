@@ -83,6 +83,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
               ? `${platformURL[config.platform]?.swapUrl}?inputCurrency=${address}`
               : `https://app.uniswap.org/#/swap?inputCurrency=${address}`
           }
+          id={`buy_${symbol}_from_${config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()}`}
         >
           <LinkText>
             Buy {symbol} from {config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()} <CallMadeIcon style={{ fontSize: 15 }} />

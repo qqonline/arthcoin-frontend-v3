@@ -426,7 +426,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 </PageSubHeading>
                 {
                   calendarLink && (
-                    <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
+                    <HeaderButton onClick={() => window.open(calendarLink, '_blank')} id={'google_calendar'}>
                       <img src={calendar} alt="calendar" height={24} />
                       <span style={{ marginLeft: 8 }}>Add to Calendar</span>
                     </HeaderButton>

@@ -71,6 +71,7 @@ const CustomRowCard = (props: IProps) => {
             onClick={() => {
               window.open(tradelink, '_blank');
             }}
+            tracking_id={`trade_${props?.info.tokens[0]}_${props?.info.tokens[1]}`}
           />
         </Grid>
       </Grid>
