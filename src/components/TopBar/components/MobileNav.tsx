@@ -38,8 +38,10 @@ const BootstrapInput = withStyles((theme: Theme) =>
 )(InputBase);
 
 interface props {
+  isMainnet: boolean
   onClick: () => void;
 }
+
 const MobileNav = (props: props) => {
   // const { walletInfo: Wallet } = props
   const { account, connect } = useWallet();
@@ -51,15 +53,6 @@ const MobileNav = (props: props) => {
   const [walletInfo, setWallet] = useState<boolean>(false);
   const [disconnect, setDisconnect] = useState<boolean>(false);
 
-  let dummyWallet = {
-    accountNumber: '123123123123123123',
-    mahaTokens: 50,
-    mahaDollars: 500,
-    arthTokens: 50,
-    arthDollars: 500,
-    arthxTokens: 50,
-    arthxDollars: 500,
-  };
   return (
     <StyledNav>
       {!walletInfo ? (
@@ -104,9 +97,13 @@ const MobileNav = (props: props) => {
           >
             Farming
           </StyledLink>
-          <StyledLink exact activeClassName="active" to="/faucet" onClick={() => props.onClick()}>
-            Faucet
-          </StyledLink>
+          {
+            !props.isMainnet && (
+              <StyledLink exact activeClassName="active" to="/faucet" onClick={() => props.onClick()}>
+                Faucet
+              </StyledLink>
+            )
+          }
           <StyledLink exact activeClassName="active" to="/rebase" onClick={() => props.onClick()}>
             Rebase
           </StyledLink>
@@ -116,43 +113,6 @@ const MobileNav = (props: props) => {
           {/*<StyledLink exact activeClassName="active" to="/farming">
             Pools
           </StyledLink>*/}
-          {false && (
-            <StyledButton>
-              <div style={{ maxWidth: '340px', width: '100%', margin: '0px 15px' }}>
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={netWrokType}
-                  fullWidth
-                  label="Mainnet"
-                  onChange={handleChange}
-                  input={<BootstrapInput />}
-                  IconComponent={() => <img src={ExpandMore} width="24px" alt="" />}
-                >
-                  <MenuItem value="mainnet">
-                    <ColorIcon colorCode="#11af60" />
-                    Mainnet
-                  </MenuItem>
-                  <MenuItem value="ropsten">
-                    <ColorIcon colorCode="#FA4C69" />
-                    Ropsten
-                  </MenuItem>
-                  <MenuItem value="kovan">
-                    <ColorIcon colorCode="#7A3CF6" />
-                    Kovan
-                  </MenuItem>
-                  <MenuItem value="rinkeby">
-                    <ColorIcon colorCode="#FCB400" />
-                    Rinkeby
-                  </MenuItem>
-                  <MenuItem value="goerli">
-                    <ColorIcon colorCode="#BD9CFF" />
-                    Goerli
-                  </MenuItem>
-                </Select>
-              </div>
-            </StyledButton>
-          )}
         </div>
       ) : (
         <WalletInternal disconnect={disconnect} walletInfo={walletInfo} setWalletInfo={(val: boolean) => setWallet(val)} />

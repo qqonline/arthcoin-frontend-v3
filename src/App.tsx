@@ -73,6 +73,8 @@ const App: React.FC = () => {
     )
   }, [])
 
+
+
   return (
     <Providers>
       <Router>
@@ -82,10 +84,12 @@ const App: React.FC = () => {
             <Home />
           </Route>
           <Route path="/stats">
-            <Stats />{' '}
+            <Page availableNetworks={[137, 1337]}>
+              <Stats />
+            </Page>
           </Route>
           <Route path="/farming">
-            <Page>
+            <Page availableNetworks={[137, 1337]}>
               <Farming />
             </Page>
           </Route>
@@ -95,17 +99,17 @@ const App: React.FC = () => {
             </Page>
           </Route> */}
           <Route path="/mint/:paramType">
-            <Page>
+            <Page availableNetworks={[137, 1337]}>
               <Mint />
             </Page>
           </Route>
           <Route path="/trade">
-            <Page>
+            <Page availableNetworks={[137, 1337]}>
               <TemporaryTrade />
             </Page>
           </Route>
           <Route path="/pools">
-            <Page>
+            <Page availableNetworks={[137, 1337]}>
               <Pools />
             </Page>
           </Route>
@@ -115,7 +119,7 @@ const App: React.FC = () => {
             </Page>
           </Route>
           <Route path="/faucet">
-            <Page>
+            <Page availableNetworks={[1337]}>
               <Faucet />
             </Page>
           </Route>

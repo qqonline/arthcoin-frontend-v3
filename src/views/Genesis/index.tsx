@@ -326,8 +326,8 @@ const Genesis = (props: WithSnackbarProps) => {
               rightLabelUnit={'ARTH'}
               rightLabelValue={
                 Number(getDisplayBalance(tradingFee, 18, 6))
-                  .toLocaleString('en-US', {maximumFractionDigits: 6})
-                }
+                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
+              }
             />
           }
           <Divider style={{ background: 'rgba(255, 255, 255, 0.08)', margin: '15px 0px' }} />
@@ -620,7 +620,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <Logo src={TicketGreen} alt='TicketBg' />
                     <Text>You will get {
                       Number(getDisplayBalance(lotteryAmount, tokenDecimals, 0)).toLocaleString()
-                    } lottery tickets to win prize.
+                    } lottery tickets to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>
                 }
@@ -648,21 +648,21 @@ const Genesis = (props: WithSnackbarProps) => {
                     loading={isApproving}
                   />
                 ) : (
-                    <Button
-                      text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                      size={'lg'}
-                      variant={'default'}
-                      disabled={
-                        percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                        isInputFieldError ||
-                        (type === 'Commit'
-                          ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
-                          : !Number(arthValue)
-                        ) ||
-                        !isApproved
-                      }
-                      onClick={() => setOpenModal(1)}
-                    />
+                  <Button
+                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                    size={'lg'}
+                    variant={'default'}
+                    disabled={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      isInputFieldError ||
+                      (type === 'Commit'
+                        ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
+                        : !Number(arthValue)
+                      ) ||
+                      !isApproved
+                    }
+                    onClick={() => setOpenModal(1)}
+                  />
                 )}
               </LeftTopCardContainer>
             </LeftTopCard>
@@ -671,10 +671,10 @@ const Genesis = (props: WithSnackbarProps) => {
             <UnderstandMore dataObj={understandMore} />
             <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
-                Genesis participate can issue lottery tickets to win exiting MAHA Prizes
+                Genesis participants can issue lottery tickets to win exiting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
-                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'}/>
+                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} />
               </LotteryBoxAction>
             </LotteryBox>
           </Grid>

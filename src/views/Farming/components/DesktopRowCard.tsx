@@ -37,6 +37,8 @@ export default (props: IProps) => {
 
   const depositTokenContract = core.tokens[props.pool.depositToken];
   const tokenBalance = useTokenBalance(depositTokenContract);
+
+  console.log(props.pool.depositToken)
   const tokenDecimals = useTokenDecimals(props.pool.depositToken);
 
   const tokens = props.pool.depositTokenSymbols.map((p) => core.tokens[p]);
@@ -44,9 +46,9 @@ export default (props: IProps) => {
   const uniswapLink = `https://app.sushi.com/add/${tokenAddresses.join('/')}`;
   const etherscan = `${config.etherscanUrl}/address/${tokenAddresses[0]}`;
   const isWalletConnected = !!account;
-  
+
   const pow = BigNumber.from(10).pow(18);
-  
+
   const currentEarnedARTHX = useMemo(() => {
     return Number(getDisplayBalance(
       props?.claimableBalance?.mul(props?.rates?.arthx).div(pow),
@@ -66,7 +68,7 @@ export default (props: IProps) => {
   const getImage = (platform: string) => {
     if (platform === 'sushiswap') return sushiswap;
     return uniswap;
-  } 
+  }
 
   return (
     <CustomCardGrid>
@@ -76,34 +78,34 @@ export default (props: IProps) => {
         alignItems={'center'}
       >
         {
-          props.pool.platform && 
+          props.pool.platform &&
           <CardIcon src={getImage(props.pool.platform)} height={32} />
         }
-          <Grid item lg={3} style={{ display: 'flex' }}>
-            <div>
-              {props.pool.depositTokenSymbols.map((token, index) => (
-                <TokenSymbol
-                  symbol={token}
-                  size={44}
-                  style={index === 1 ? { marginLeft: '-6px' } : {}}
-                />
-              ))}
-            </div>
-            <div style={{ marginLeft: '16px' }}>
-              <TableMainTextStyle>
-                {props.pool.depositTokenSymbols.join(' - ')}
-              </TableMainTextStyle>
-              {
-                props.pool.platform ? (
-                  <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
-                    Add Liquidity
-                  </AddLiquidityButton>
-                ) : (
-                  <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
-                    View Etherscan
-                  </AddLiquidityButton>
-                )
-              }
+        <Grid item lg={3} style={{ display: 'flex' }}>
+          <div>
+            {props.pool.depositTokenSymbols.map((token, index) => (
+              <TokenSymbol
+                symbol={token}
+                size={44}
+                style={index === 1 ? { marginLeft: '-6px' } : {}}
+              />
+            ))}
+          </div>
+          <div style={{ marginLeft: '16px' }}>
+            <TableMainTextStyle>
+              {props.pool.depositTokenSymbols.join(' - ')}
+            </TableMainTextStyle>
+            {
+              props.pool.platform ? (
+                <AddLiquidityButton onClick={() => window.open(uniswapLink, '_blank')}>
+                  Add Liquidity
+                </AddLiquidityButton>
+              ) : (
+                <AddLiquidityButton onClick={() => window.open(etherscan, '_blank')}>
+                  View Etherscan
+                </AddLiquidityButton>
+              )
+            }
           </div>
         </Grid>
         <Grid item lg={3}>
@@ -151,16 +153,16 @@ export default (props: IProps) => {
               Your Locked state:
               <TableMainTextStyle style={{ marginLeft: '10px' }}>
                 {Number(getDisplayBalance(props.stakedBalance, tokenDecimals, 3)).toLocaleString()}
-              </TableMainTextStyle>  
+              </TableMainTextStyle>
               <WithdrawClaimButton onClick={props.onWithdrawClick}>Withdraw</WithdrawClaimButton>
             </div>
             <div style={{ display: 'flex' }}>
               <WithdrawClaimButton onClick={props.onExitClick}>Withdraw & Claim</WithdrawClaimButton>
             </div>
-            <div style={{ display: 'flex' }}>              
+            <div style={{ display: 'flex' }}>
               <>
                 Earned:
-                <TableMainTextStyle style = {{ marginLeft: '10px' }}>
+                <TableMainTextStyle style={{ marginLeft: '10px' }}>
                   <span>{currentEarnedARTHX}</span>
                   {' '}
                   ARTHX

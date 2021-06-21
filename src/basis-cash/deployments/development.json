@@ -1,134 +1,162 @@
 {
   "ArthController": {
-    "address": "0x11BC78d5ed67168cD03bcF82e555E7051f5893BF",
+    "address": "0x8386065fFcac85373688DB0149b655A55893c242",
     "abi": "ArthController"
   },
+  "LotteryRaffle": {
+    "address": "0x0a59309911003337445d08C1996b5C1770AC28C5",
+    "abi": "LotteryRaffle"
+  },
+  "ArthPoolRouter": {
+    "address": "0xAB7da8adEc6303BA10c304726E9BaFfaD3d62F4F",
+    "abi": "ArthPoolRouter"
+  },
+  "PoolToken": {
+    "address": "0x8e8012D89e8C7204FF8A48fE2611D2322a17857d",
+    "abi": "PoolToken"
+  },
   "StakeARTHMAHA": {
-    "address": "0x0e32e1B533F7a1E508296Ef417D34a5A79703AA7",
+    "address": "0xCA6e52a242Bad6ea4f9A10412c5bf1c836216AB6",
     "abi": "BasicStaking"
   },
   "StakeARTH": {
-    "address": "0x770b8fBD5428D361db60CC9Fcb127fE97f1B9c1E",
+    "address": "0x1eDfaa8851a84A99A3a0328363D94c9be96FA88c",
     "abi": "BasicStaking"
   },
-  "StakeARTHWETH": {
-    "address": "0xAD3BF8e3bCA17360E6BE9EC4774545f1CB97e8e5",
+  "StakeARTHXARTH": {
+    "address": "0x82Ec6250aE61Dbb9ca64b23E837cDA891a6d60a8",
     "abi": "BasicStaking"
   },
   "StakeARTHX": {
-    "address": "0x5B506b73D84Ad9D20B8176b44e92F7E7B3897d82",
+    "address": "0x7861605d541584f6b13636F5FFe556D4A3d0865A",
     "abi": "BasicStaking"
   },
-  "StakeARTHXWETH": {
-    "address": "0xd31e019a1c490F7A579F2df38deEE16a64e21138",
-    "abi": "BasicStaking"
+  "Oracle_USDC": {
+    "address": "0x0B6f1a8E39E24eB4bB4d418be9De097B9A2616d9",
+    "abi": "UniversalGMUOracle"
   },
-  "UniswapPairOracle_ARTH_WETH": {
-    "address": "0x4515f82BEc7F5Ec73bD2407566E6f6eAEd827595",
-    "abi": "UniswapPairOracle"
+  "Oracle_USDT": {
+    "address": "0x79F1A6144B60C34601f646595285DC0864D2173B",
+    "abi": "UniversalGMUOracle"
   },
-  "UniswapPairOracle_ARTHX_WETH": {
-    "address": "0x401dfa6dc48a85BB2683E9fffd2573B4013D3623",
-    "abi": "UniswapPairOracle"
+  "Oracle_WBTC": {
+    "address": "0x75d1007B9D10b8848c37516215bEbb4a11d61C69",
+    "abi": "UniversalGMUOracle"
+  },
+  "Oracle_WMATIC": {
+    "address": "0x7439814439fC81a17576D09eBCC6946d61256180",
+    "abi": "UniversalGMUOracle"
+  },
+  "Oracle_WETH": {
+    "address": "0xB6ACA01d85970262c0Eb2394B0E2765Ad0bE10f3",
+    "abi": "UniversalGMUOracle"
   },
   "GMUOracle": {
-    "address": "0x16a616F210d948c8636baE954E84Ac77623C967D",
+    "address": "0xe9AD4A8db5226E9F05916aEc38B68CAB802aC549",
     "abi": "GMUOracle"
   },
+  "UniswapPairOracle_ARTH_ARTHX": {
+    "address": "0x2B17FC647E021E3Eea727c1A1c7d70e472916B90",
+    "abi": "UniswapPairOracle"
+  },
+  "UniswapPairOracle_MAHA_ARTH": {
+    "address": "0x0c47F1b61c8cE815061eBdA1c2dE36cD6134a4d9",
+    "abi": "UniswapPairOracle"
+  },
   "GenesisUSDC": {
-    "address": "0x62637F29D48f72D050B5164420146Ae5aaCCbc11",
+    "address": "0xdEB104953dc38E784877aD2d6e4f7e968874F79f",
     "abi": "Genesis"
   },
   "GenesisUSDT": {
-    "address": "0x0FFeb8785202c1280A37b1672deB2ACBCC8C415A",
+    "address": "0x97F7D45D8205976F29e26E825D3Be59250F0cB9b",
     "abi": "Genesis"
   },
-  "LotteryRaffle": {
-    "address": "0x9faDFf2512fC67777571769203e2994c5E43955c",
-    "abi": "LotteryRaffle"
+  "GenesisWBTC": {
+    "address": "0xf19B2A9CB6Ba4B9d2956fEb77b819aB8c2ae6BD1",
+    "abi": "Genesis"
   },
-  "Oracle_USDC": {
-    "address": "0xe95C72cdF9c339049C6F7c517a4443D2634FAcd7",
-    "abi": "Oracle"
+  "GenesisWMATIC": {
+    "address": "0xCb95d5C59B8624a9aE981Ef81556b25DbA6C57B2",
+    "abi": "Genesis"
   },
-  "Oracle_USDT": {
-    "address": "0x53d28ba608Fba4daa731536b32E92FdF389369F0",
-    "abi": "Oracle"
+  "GenesisWETH": {
+    "address": "0xe93B3eCC96bD7c026aA1dB322A333556d972e7BB",
+    "abi": "Genesis"
   },
   "ArthPoolLibrary": {
-    "address": "0x56B383a8888917f62B5c7C6f42919B716f023417",
+    "address": "0xf7455F6aE008E9a7999f3Af45d68DB9DBD436E38",
     "abi": "ArthPoolLibrary"
   },
-  "PoolToken": {
-    "address": "0x22eeB8A50112da14756268AE80e59cc5c423D082",
-    "abi": "PoolToken"
-  },
   "Pool_USDC": {
-    "address": "0xa52A6AD2c5dadAb056EA286645d6A93031d7dF4c",
+    "address": "0x34e07f55D9c951328EeF087888886AFe720161B7",
     "abi": "ArthPool"
   },
   "Pool_USDT": {
-    "address": "0x4C2ba8db65403df469b84e5c489fB5AeFE3b591e",
+    "address": "0x35Fd4d435d83304b3A25c740D855D27F39CD447d",
     "abi": "ArthPool"
   },
-  "ArthPoolRouter": {
-    "address": "0x038E48BB9301CfA1115F9A01b7Ba11cEF963946b",
-    "abi": "ArthPoolRouter"
+  "Pool_WBTC": {
+    "address": "0x10C6CC42b999a4725C3a3DDc93843eef3c9F21C4",
+    "abi": "ArthPool"
+  },
+  "Pool_WMATIC": {
+    "address": "0xc5C5c0Ad986A7074621eAa8823Ed28C28a2F63f6",
+    "abi": "ArthPool"
+  },
+  "Pool_WETH": {
+    "address": "0x47776bBb703c9AAfe32e8262ADe3d23A2d6ac37b",
+    "abi": "ArthPool"
   },
   "Faucet": {
-    "address": "0xA6d5c2180e84Bf5c316add996a048C3bfb3a334A",
+    "address": "0x648c3a86e897858041aC80Fe2Fb0Ba0583283147",
     "abi": "Faucet"
   },
   "ARTHStablecoin": {
-    "address": "0xeCe64665f34f466996FdA6aE843F6f756e8Df085",
+    "address": "0xf03600660EeD8dea0907B9ccB7a3C513C2016852",
     "abi": "ARTHStablecoin"
   },
   "ARTHShares": {
-    "address": "0x3bfB5437d2C994c3BFcd12bf946669753eA68C8b",
+    "address": "0xbF418228f60F0A72daC08e0e2b056D8d97eaBfbF",
     "abi": "ARTHShares"
   },
   "MahaToken": {
-    "address": "0x1835c3E62Be54fc8Ef5A609E390e2872e5C25911",
+    "address": "0x84F0AF65439E24751Ccc2243D1fFe51aDF6372c3",
     "abi": "MahaToken"
   },
   "UniswapV2Factory": {
-    "address": "0x72637611801011118Bb1c6E51c09795e6673387B",
+    "address": "0x41Ce219cF65365227a1c72755d9aF0457fcbCAC5",
     "abi": "UniswapV2Factory"
   },
   "UniswapV2Router02": {
-    "address": "0x78f4E2e54b880C73Da177b9dcb60b39dD8A2aD5C",
+    "address": "0x742Cd58F6e91b8f160c49b56054b67AEF6e7FF98",
     "abi": "UniswapV2Router02"
   },
-  "DAI": {
-    "address": "0x24Ee303948800E19bdf94FAAF5579a9C4e20675F",
-    "abi": "IERC20"
-  },
   "USDT": {
-    "address": "0x4E83373AbeD2646Cf5f58620C4b86Ecd5b686fa7",
+    "address": "0xb0498a2F7dabf17831d5FcB4016A1bAF8803eC11",
     "abi": "IERC20"
   },
   "USDC": {
-    "address": "0xdBF13e7D8216A40bb5151ce1a78f8Ebbc98C19BE",
+    "address": "0x121A6cebD392d0Fe57450BF0F500824f46e4A686",
     "abi": "IERC20"
   },
   "WETH": {
-    "address": "0x0726B5a07fAeb74b594eaDCf8f0e528bC46F8D96",
+    "address": "0xCa693Fc62117966c02b922A2D3330EBf2977Bb25",
     "abi": "IWETH"
   },
   "WBTC": {
-    "address": "0x24Ee303948800E19bdf94FAAF5579a9C4e20675F",
+    "address": "0x97315456D80eF98C5250b1A43897032463943F7e",
+    "abi": "IERC20"
+  },
+  "WMATIC": {
+    "address": "0x4cb8c09B190f70ada3948eB1768C2BEB1d39eA04",
     "abi": "IERC20"
   },
   "ArthMahaLP": {
-    "address": "0xeFE8a189EDc4639967c7120eD47E6E4a1c1E0225",
+    "address": "0xD51086F2439BB3F67dD29D5B1A1868Fb388E2186",
     "abi": "UniswapV2Pair"
   },
-  "ArthxWethLP": {
-    "address": "0xc443b038652C38225c804D22222C865e3a447b4B",
-    "abi": "UniswapV2Pair"
-  },
-  "ArthWethLP": {
-    "address": "0x2497791dEEcdaAF98A98C678017C810AE4C62f17",
+  "ArthArthxLP": {
+    "address": "0xcf8eDbd4A9AE88b5b9527E7B7D6E5593C3550fb7",
     "abi": "UniswapV2Pair"
   }
 }

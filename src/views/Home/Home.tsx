@@ -1,26 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import Modal from '../../components/NewModal/index';
+import React, { useState } from 'react';
 import './styles/index.sass';
-import warning from '../../assets/svg/warning.svg';
-import rightArrow from './images/polygon.svg'
+import { Slider, withStyles } from '@material-ui/core';
+import { useMediaQuery } from 'react-responsive';
 import arthLogo from './img/arth-coin-1.svg'
 import arthLogobg from './images/logo/ARTH-bg.svg'
+import Modal from '../../components/NewModal/index';
+import rightArrow from './images/polygon.svg'
+import styled from 'styled-components';
 import USDLogo from './images/logo/USD.svg'
-import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
-import { useMediaQuery } from 'react-responsive';
+import warning from '../../assets/svg/warning.svg';
 
-const useSliderStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      // color: 'white'
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }),
-);
 
 function valuetext(value: number) {
   return `${value}`;
@@ -85,17 +74,14 @@ const PrettoRestrictSlider = withStyles({
 })(Slider);
 
 
-const DEFAULT_CALC = 1440;
-
 
 const Home: React.FC = () => {
   const isMobile = useMediaQuery({ 'maxWidth': '600px' })
   const [openModal, toggleModal] = useState(false);
-  const sliderClasses = useSliderStyles();
+
   const [sliderValue, setSliderValue] = React.useState(1990);
   const [arthValue, setArth] = useState(1.2);
   const [fiatValue, setFiat] = useState(0.6);
-  let sliderRef = useRef<any>()
   const handleClose = () => {
     toggleModal(false);
   };

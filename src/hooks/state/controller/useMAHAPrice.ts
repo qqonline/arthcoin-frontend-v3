@@ -13,7 +13,7 @@ export default () => {
 
   useEffect(() => {
     fetchCashPrice().catch((err) =>
-      console.error(`Failed to fetch uniswap price: ${err.stack}`),
+      console.error(`Failed to fetch maha/arth price: ${err.stack}`),
     );
   }, [fetchCashPrice]);
 

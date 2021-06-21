@@ -1,13 +1,13 @@
 import { TransactionResponse } from '@ethersproject/providers';
 import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 
+import { Configuration } from './config';
+import { ContractName } from './types';
+import { getDefaultProvider } from '../utils/provider';
+import ABIS from './deployments/abi';
 import ERC20 from './ERC20';
 import Multicall from './Mulitcall';
-import ABIS from './deployments/abi';
-import { ContractName } from './types';
 import UniswapPair from './UniswapPair';
-import { Configuration } from './config';
-import { getDefaultProvider } from '../utils/provider';
 import UniswapV2Router02ABI from './UniswapV2Router02.abi.json';
 
 /**
@@ -32,9 +32,7 @@ export class BasisCash {
   WETH: ERC20;
   PoolToken: ERC20;
 
-  ArthWethLP: ERC20;
-  MahaWethLP: ERC20;
-  ArthxWethLP: ERC20;
+  ArthxArthLP: ERC20;
   ArthMahaLP: ERC20;
 
   tokens: {
@@ -43,12 +41,12 @@ export class BasisCash {
 
   tradingPairs: {
     [name: string]: ERC20[];
-  }
+  };
 
   assetLockContracts: {
     [name: string]: Array<Contract | ERC20>;
-  }
-  
+  };
+
   multicall: Multicall;
 
   constructor(cfg: Configuration) {
@@ -65,7 +63,7 @@ export class BasisCash {
     this.MAHA = new ERC20(deployments.MahaToken.address, provider, 'MAHA', 18);
     this.ARTHX = new ERC20(deployments.ARTHShares.address, provider, 'ARTHX', 18);
 
-    this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI', 18);
+    // this.DAI = new ERC20(deployments.DAI?.address, provider, 'DAI', 18);
     this.USDT = new ERC20(deployments.USDT?.address, provider, 'USDT', 6);
     this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC', 6);
     this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 18);
@@ -74,9 +72,7 @@ export class BasisCash {
     // this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 
     this.ArthMahaLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'ARTH-MAHA LP');
-    this.MahaWethLP = new ERC20(deployments.ArthMahaLP?.address, provider, 'MAHA-ETH LP');
-    this.ArthxWethLP = new ERC20(deployments.ArthxWethLP?.address, provider, 'ARTHX-ETH LP');
-    this.ArthWethLP = new ERC20(deployments.ArthWethLP?.address, provider, 'ARTH-ETH LP');
+    this.ArthxArthLP = new ERC20(deployments.ArthArthxLP?.address, provider, 'ARTHX-ARTH LP');
     this.PoolToken = new ERC20(deployments.PoolToken?.address, provider, 'ARTH-RT');
 
     this.tokens = {
@@ -90,19 +86,20 @@ export class BasisCash {
       WETH: this.WETH,
 
       ArthMahaLP: this.ArthMahaLP,
-      MahaWethLP: this.MahaWethLP,
-      ArthxWethLP: this.ArthxWethLP,
-      ArthWethLP: this.ArthWethLP,
+      ArthArthxLP: this.ArthxArthLP,
     };
+
+    console.log(this.tokens);
 
     this.config = cfg;
     this.provider = provider;
 
     this.tradingPairs = {
-      'ARTH': [this.ArthMahaLP, this.ArthWethLP],
-      'MAHA': [this.ArthMahaLP, this.MahaWethLP],
-      'ARTHX': [this.ArthxWethLP]
-    }
+      ARTH: [this.ArthMahaLP, this.ArthxArthLP],
+      MAHA: [this.ArthMahaLP],
+      ARTHX: [this.ArthxArthLP],
+    };
+    console.log('fuck');
   }
 
   /**
@@ -129,15 +126,13 @@ export class BasisCash {
       this.USDT,
       this.PoolToken,
       this.ArthMahaLP,
-      this.MahaWethLP,
-      this.ArthxWethLP,
-      this.ArthWethLP,
+      this.ArthxArthLP,
     ];
 
     for (const token of tokens) {
       if (token && token.address) token.connect(this.signer);
     }
-    
+
     /*
       this.multicall.addCalls([
         {

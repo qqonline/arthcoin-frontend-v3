@@ -55,7 +55,8 @@ const configurations: { [env: string]: Configuration } = {
     networkName: 'Matic Mainnet',
     chainId: 137,
     etherscanUrl: 'https://polygonscan.com',
-    defaultProvider: 'https://rpc-mainnet.maticvigil.com/',
+    defaultProvider:
+      'https://solitary-crimson-wind.matic.quiknode.pro/d9d5c0846efe6098a99c0a8a2c7238692ca33ce0/',
     deployments: require('./basis-cash/deployments/matic.json'),
     genesisLaunchDate: new Date('2021-01-22T15:00:00Z'),
     genesisEndDate: new Date('2021-01-29T15:00:00Z'),
@@ -171,4 +172,4 @@ export const tradingPairs: TradingPairs[] = [
   },
 ];
 
-export default configurations['matic'];
+export default configurations['development'];

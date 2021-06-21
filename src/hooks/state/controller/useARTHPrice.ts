@@ -8,7 +8,7 @@ export default () => {
 
   const fetchCashPrice = useCallback(async () => {
     const controller = core.contracts.ArthController;
-    setPrice(await controller.getARTHPrice());
+    // setPrice(await controller.getARTHPrice());
   }, [core.contracts.ArthController]);
 
   useEffect(() => {
