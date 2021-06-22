@@ -274,6 +274,44 @@ const Genesis = (props: WithSnackbarProps) => {
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
 
+  const showDepositWETH = config.blockchainToken === currentCoin.replace('W', '')
+
+  const addMaticToMetamask = () => {
+    // @ts-ignore
+    if (window.ethereum) {
+      // @ts-ignore
+      window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          "chainId": "0x89",
+          "chainName": "Matic Network",
+          "rpcUrls": ["https://rpc-mainnet.maticvigil.com/"],
+          "iconUrls": [
+            "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png"
+          ],
+          "blockExplorerUrls": [
+            "https://polygonscan.com/"
+          ],
+          "nativeCurrency": {
+            "name": "Matic Token",
+            "symbol": "MATIC",
+            "decimals": 18
+          }
+        }], // you must have access to the specified account
+      })
+        .then((result: any) => {
+        })
+        .catch((error: any) => {
+          if (error.code === 4001) {
+            // EIP-1193 userRejectedRequest error
+            console.log('We can encrypt anything without the key.');
+          } else {
+            console.error(error);
+          }
+        });
+    }
+  }
+
   return (
     <>
       <CustomSuccessModal
@@ -427,27 +465,12 @@ const Genesis = (props: WithSnackbarProps) => {
         <ConnectionNote>
           To participate in the Genesis, you must either be connected to the Ethereum network or
           to the Matic/Polygon network.
+          <br />
+          <br />
+          <div onClick={addMaticToMetamask} style={{ textDecoration: 'underline' }}>
+            Click here to add Polygon to your Metamask
+          </div>
         </ConnectionNote>
-        <br />
-        <Grid container style={{}} spacing={2}>
-          <Grid item lg={2} md={1} sm={1} xs={1}/>
-          <Grid item lg={4} md={5} sm={5} xs={5}>
-            <Button
-              text={'Switch to Polygon'}
-              size={'lg'}
-              onClick={() => {}}
-            />
-          </Grid>
-          <Grid item lg={4} md={5} sm={5} xs={5}>
-            <Button
-              text={'Switch to Matic'}
-              size={'lg'}
-              onClick={() => {}}
-            />
-          </Grid>
-          <Grid item lg={2} md={1} sm={1} xs={1}/>
-        </Grid>
-
         {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
 
       </div>
@@ -641,13 +664,19 @@ const Genesis = (props: WithSnackbarProps) => {
                   />
                 ) : (
                   <>
-                    <Button
-                      text={'Deposit WETH'}
-                      size={'lg'}
-                      onClick={() => setdepositModal(true)}
-                      tracking_id={'deposit_weth'}
-                    />
-                    <br />
+                    {
+                      showDepositWETH && (
+                        <>
+                          <Button
+                            text={`Convert your ${config.blockchainToken} into ${currentCoin}`}
+                            size={'lg'}
+                            onClick={() => setdepositModal(true)}
+                            tracking_id={'deposit_weth'}
+                          />
+                          <br />
+                        </>
+                      )
+                    }
                     {!isApproved ? (
                       <Button
                         text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
