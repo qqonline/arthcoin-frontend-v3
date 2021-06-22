@@ -267,7 +267,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
     'ARTHX is minted whenever a user deposits collatearl to mint ARTH.',
-    'ARTHX is burnt whenever a user redeems ARTH for the underlying collatearl',
+    'ARTHX is burnt whenever a user redeems ARTH for the underlying collateral',
     'The discount follows a bonding curve and decreases over time as more collateral is committed.',
   ];
 
