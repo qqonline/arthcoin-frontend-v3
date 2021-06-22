@@ -82,9 +82,9 @@ const App: React.FC = () => {
       <Router>
         <TopBar />
         <Switch>
-          {/* <Route path="/" exact>
+           <Route path="/" exact>
             <Home />
-          </Route> */}
+          </Route>
           <Route path="/stats">
             <Page availableNetworks={[137, 1337]}>
               <Stats />
