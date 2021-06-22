@@ -79,15 +79,15 @@ const App: React.FC = () => {
       <Router>
         <TopBar />
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <Home />
-          </Route>
+          </Route> */}
           <Route path="/stats">
             <Page availableNetworks={[137, 1337]}>
               <Stats />
             </Page>
           </Route>
-          <Route path="/farming">
+          {/* <Route path="/farming">
             <Page availableNetworks={[137, 1337]}>
               <Farming />
             </Page>
@@ -106,17 +106,17 @@ const App: React.FC = () => {
             <Page availableNetworks={[137, 1337]}>
               <Pools />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/genesis">
             <Page>
               <Genesis />
             </Page>
           </Route>
-          <Route path="/faucet">
+          {/* <Route path="/faucet">
             <Page availableNetworks={[1337]}>
               <Faucet />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/rebase">
             <Page>
               <Rebase />

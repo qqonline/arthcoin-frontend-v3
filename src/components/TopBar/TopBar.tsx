@@ -57,7 +57,7 @@ const TopBar: React.FC = () => {
     setNetworkType(event.target.value as string);
   };
 
-  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc']
+  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc'];
 
   const showWarning = core.config.chainId !== chainId;
   const network = {
@@ -85,12 +85,20 @@ const TopBar: React.FC = () => {
           <div className="dialog-class">
             <Logo />
             <HideonPhone>
-              <Nav isMainnet={isMainnet}/>
+              <Nav isMainnet={isMainnet} />
             </HideonPhone>
           </div>
           <HideonPhone>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
-              <div style={{marginRight: '12px'}}>
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '100%',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ marginRight: '12px' }}>
                 <Button
                   text={'Get MAHA'}
                   size={'sm'}
@@ -139,7 +147,9 @@ const TopBar: React.FC = () => {
               )}
             </div>
           </HideOnBigScreen>
-          {showMobileMenu && <MobileNav isMainnet={isMainnet} onClick={() => toggleMobileMenu(false)} />}
+          {showMobileMenu && (
+            <MobileNav isMainnet={isMainnet} onClick={() => toggleMobileMenu(false)} />
+          )}
         </StyledTopBarInner>
         {/*</Container>*/}
       </StyledTopBar>
@@ -263,11 +273,11 @@ const StyledTopBarInner = styled.div`
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
   justify-content: space-between;
-    //max-width: ${(props) => props.theme.siteWidth}px;
+  //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   padding: 0 24px;
   flex-wrap: wrap;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0 16px;
   }
 `;
