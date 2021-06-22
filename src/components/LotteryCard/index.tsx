@@ -74,7 +74,7 @@ export default LotteryCard;
 
 const LotteryCardConatiner = styled.div`
   width: 100%;
-  min-height: 434px;
+  //min-height: 434px;
   padding: 0px;
   @media (max-width: 600px) {
     min-height: auto;
@@ -83,12 +83,12 @@ const LotteryCardConatiner = styled.div`
 
 const FeatureImage = styled.img`
   width: 100%;
-  height: 222px;
+  //height: 222px;
   border-radius: 12px 12px 0px 0px;
 `
 
 const CardBody = styled.div`
-  padding: 24px 24px 0 24px;
+  padding: 24px 24px 86px 24px;
 `
 
 const CardTitle = styled.p`

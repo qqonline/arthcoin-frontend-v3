@@ -13,14 +13,6 @@ export default () => {
 
   const prizesHardcoded = [
     {
-      criteria: BigNumber.from(10),
-      description: "MAHA Lambo",
-      image: "https://lh3.googleusercontent.com/FFYxezBkbNmZ01vI5_P_aIyYbFX8Djvnvom0MV6JZYuFGTbiEoxX86fZsSWad7Ze4n-GozPyPUUJg0ndHMgvAiJx3x3DuHZsKkP0EQ",
-      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
-      tokenId: BigNumber.from(1),
-      winner: "0x0000000000000000000000000000000000000000",
-    },
-    {
       criteria: BigNumber.from(5),
       description: "MAHA Verses Fiat",
       image: "https://i.imgur.com/4Ro2mQx.jpeg",
@@ -43,7 +35,15 @@ export default () => {
       nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
       tokenId: BigNumber.from(1),
       winner: "0x0000000000000000000000000000000000000000",
-    }
+    },
+    {
+      criteria: BigNumber.from(10),
+      description: "MAHA Lambo",
+      image: "https://lh3.googleusercontent.com/FFYxezBkbNmZ01vI5_P_aIyYbFX8Djvnvom0MV6JZYuFGTbiEoxX86fZsSWad7Ze4n-GozPyPUUJg0ndHMgvAiJx3x3DuHZsKkP0EQ",
+      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
+      tokenId: BigNumber.from(1),
+      winner: "0x0000000000000000000000000000000000000000",
+    },
   ]
 
   const [customState, setCustomState] = useState<State>({ isLoading: false, value: prizesHardcoded })
