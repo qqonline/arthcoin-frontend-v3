@@ -54,6 +54,7 @@ import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgor
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import useConfig from '../../hooks/useConfig';
 import DepositModal from './components/DepositModal';
+import { Mixpanel } from '../../analytics/Mixpanel';
 
 withStyles({
   root: {
@@ -512,8 +513,12 @@ const Genesis = (props: WithSnackbarProps) => {
                 <div style={{ display: 'flex', flex: '1' }}>
                   <TabContainer
                     onClick={() => {
-                      if (type !== 'Commit') setType('Commit');
+                      if (type !== 'Commit') {
+                        Mixpanel.track(`buttonClick:commitCollateral_tab`)
+                        setType('Commit');
+                      }
                     }}
+                    id={'commitCollateral_tab'}
                   >
                     {type === 'Commit' && <ActiveTab />}
                     {type !== 'Commit' ? (
@@ -524,8 +529,12 @@ const Genesis = (props: WithSnackbarProps) => {
                   </TabContainer>
                   <TabContainer
                     onClick={() => {
-                      if (type !== 'Swap') setType('Swap');
+                      if (type !== 'Swap') {
+                        Mixpanel.track(`buttonClick:swap_tab`)
+                        setType('Swap');
+                      }
                     }}
+                    id={'swap_tab'}
                   >
                     {type === 'Swap' && <ActiveTab />}
                     {type !== 'Swap' ? (
