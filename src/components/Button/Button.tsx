@@ -150,7 +150,7 @@ const Button: React.FC<ButtonProps> = ({
         } else {
           Mixpanel.track(`buttonClick:${tracking_id}`)
         }
-        onClick()
+        if (onClick) onClick()
       }}
       padding={buttonPadding}
       size={buttonSize}

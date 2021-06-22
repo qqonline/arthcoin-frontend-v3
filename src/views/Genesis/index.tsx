@@ -645,6 +645,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     text={'Deposit WETH'}
                     size={'lg'}
                     onClick={() => setdepositModal(true)}
+                    tracking_id={'deposit_weth'}
                   />
                   <br />
                   {!isApproved ? (
