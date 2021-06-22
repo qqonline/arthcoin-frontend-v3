@@ -6,12 +6,8 @@ export const WalletAutoConnect = async () => {
   const shouldBeDisconnected = localStorage.getItem('disconnectWallet');
 
   useEffect(() => {
-    if (!shouldBeDisconnected && !!!account)
-      connect('injected')
-        .then((id) => {
-          console.log('id', account, id);
-        });
+    // if (!shouldBeDisconnected && !!!account) connect('injected');
   });
 
   return true;
-}
+};

@@ -2,7 +2,7 @@ import AOS from 'aos';
 import { Provider } from 'react-redux';
 import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
-import { UseWalletProvider } from 'use-wallet';
+import { useWallet, UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
 import {
   HashRouter as Router,
@@ -12,7 +12,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-// import { createMemoryHistory } from 'history';
+import ConnectionNotice from './views/Genesis/ConnectionNotice';
 
 import './App.css';
 import './index.css';
@@ -40,6 +40,7 @@ import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import useConfig from './hooks/useConfig';
+import Button from './components/Button';
 
 const Providers: React.FC = ({ children }) => {
   const config = useConfig();
@@ -63,6 +64,12 @@ const App: React.FC = () => {
   // Init animate on scroll
   useEffect(() => {
     AOS.init();
+
+    // @ts-ignore
+    window.ethereum.on('chainChanged', (chainId) => {
+      // handle the new network
+      console.log('change');
+    });
   }, []);
 
   const makeUnPassive = (ev: any) => {
@@ -82,7 +89,7 @@ const App: React.FC = () => {
       <Router>
         <TopBar />
         <Switch>
-           {/*<Route path="/" exact>
+          {/*<Route path="/" exact>
             <Home />
           </Route>*/}
           <Route path="/stats">
@@ -139,8 +146,23 @@ const App: React.FC = () => {
 
 const AppContent: React.FC = ({ children }) => {
   const core = useCore();
+  const { account, connect } = useWallet();
+
+  useEffect(() => {
+    // @ts-ignore
+    window.ethereum.on('chainChanged', (chainId) => {
+      window.location.reload();
+    });
+  }, []);
 
   if (!core) return <div />;
+  if (!account)
+    return (
+      <div style={{ maxWidth: 500, margin: '100px auto' }}>
+        <ConnectionNotice />
+        <Button onClick={() => connect('injected')}>Connect Wallet</Button>
+      </div>
+    );
 
   return (
     <ModalsProvider>
