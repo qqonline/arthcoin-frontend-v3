@@ -267,7 +267,7 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is minted whenever a user deposits collatearl to mint ARTH.',
+    'ARTHX is minted whenever a user deposits collateral to mint ARTH.',
     'ARTHX is burnt whenever a user redeems ARTH for the underlying collateral',
     'The discount follows a bonding curve and decreases over time as more collateral is committed.',
   ];
@@ -321,7 +321,7 @@ const Genesis = (props: WithSnackbarProps) => {
         setModalOpen={() => setOpenModal(0)}
         title={type === 'Commit' ? 'Committing collateral!' : 'Swapping ARTH'}
         subsubTitle={
-          'Your transaction is now being mined on the blockchain. You should consider adding collatearl to earn NFT rewards.'
+          'Your transaction is now being mined on the blockchain. You should consider adding collateral to earn NFT rewards.'
         }
       // buttonText={'Stake your ARTHX'}
       // buttonType={'default'}
