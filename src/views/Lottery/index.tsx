@@ -11,13 +11,11 @@ import TicketLogoImg from '../../assets/svg/ShortTicket.svg';
 
 import Container from '../../components/Container';
 import LotteryCard from '../../components/LotteryCard';
-
-import LoadingPage from '../../components/LoadingPage';
 import { WalletAutoConnect } from '../../components/WalletAutoConnect';
 
 import useCore from '../../hooks/useCore';
 import usePrizes from '../../hooks/state/usePrizes';
-import useTokenCounter from '../../hooks/state/useTokenCounter';
+import useTotalTickets from '../../hooks/state/useTotalTickets';
 import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 import Loader from 'react-spinners/BeatLoader';
 import FadeLoader from 'react-spinners/FadeLoader';
@@ -27,16 +25,16 @@ const Lottery = () => {
 
   const core = useCore();
   const { isLoading: isPrizesLoading, value: prizes } = usePrizes();
-  const { isLoading: isTokenCounterLoading, value: tokenCounter } = useTokenCounter();
+  const { isLoading: isTotalTicketsLoading, value: totalTickets } = useTotalTickets();
   const { isLoading: isLotteryBalanceLoading, balance: lotteryBalance } = useLotteryBalance(
     core.myAccount,
   );
 
   const [isPercentLoading, yourPercentOfWinning] = useMemo(() => {
-    if (isTokenCounterLoading || isLotteryBalanceLoading) return [true, BigNumber.from(0)];
-    if (tokenCounter.lte(0)) return [false, BigNumber.from(0)];
-    return [false, lotteryBalance.mul(100).div(tokenCounter)];
-  }, [lotteryBalance, tokenCounter, isLotteryBalanceLoading, isTokenCounterLoading]);
+    if (isTotalTicketsLoading || isLotteryBalanceLoading) return [true, BigNumber.from(0)];
+    if (totalTickets.lte(0)) return [false, BigNumber.from(0)];
+    return [false, lotteryBalance.mul(100).div(totalTickets)];
+  }, [lotteryBalance, totalTickets, isLotteryBalanceLoading, isTotalTicketsLoading]);
 
   const RenderCards = () => {
     if (isPrizesLoading) {

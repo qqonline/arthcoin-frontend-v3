@@ -3,7 +3,7 @@ import { useWallet } from 'use-wallet';
 import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../useCore';
-import { useBlockNumber } from '../../state/application/hooks';
+import useTokenCounter from './useTokenCounter';
 
 type State = {
   isLoading: boolean;
@@ -15,17 +15,29 @@ const useLotteryBalance = (address: string) => {
 
   const core = useCore();
   const { account } = useWallet();
+  const { isLoading: isTokenCounterLoading, value: tokenCounter } = useTokenCounter();
+  
   const lottery = core.contracts['LotteryRaffle'];
 
   const fetchBalance = useCallback(async () => {
+    if (isTokenCounterLoading) {
+      setCustomState({ isLoading: true, balance: BigNumber.from(0) })
+      return;
+    }
+
     if (!account) {
       setCustomState({ isLoading: false, balance: BigNumber.from(0) })
       return;
     }
 
-    const bal = await lottery.balanceOf(core.myAccount);
-    setCustomState({ isLoading: false, balance: bal });
-  }, [core, account, lottery]);
+    let totalTickets = BigNumber.from(0);
+    for (let i = 1; i <= Number(`${tokenCounter.toString()}`); i++) {
+      const ticket = await lottery.lotteries(i);
+      if (account === ticket?.owner) totalTickets = totalTickets.add(ticket?.weight || 0);
+    }
+
+    setCustomState({ isLoading: false, balance: totalTickets });
+  }, [account, isTokenCounterLoading, lottery, tokenCounter]);
 
   useEffect(() => {
     if (core.isUnlocked && address) {
