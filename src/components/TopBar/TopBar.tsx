@@ -92,7 +92,7 @@ const TopBar: React.FC = () => {
                 <Button
                   text={'Get MAHA'}
                   size={'sm'}
-                  onClick={() => window.open('https://mahadao.com')}
+                  onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0xb4d930279552397bba2ee473229f89ec245bc365')}
                   tracking_id={'get_MAHA'}
                 />
               </div>
