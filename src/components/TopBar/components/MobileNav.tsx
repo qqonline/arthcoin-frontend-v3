@@ -65,22 +65,22 @@ const MobileNav = (props: props) => {
           >
             Genesis
           </StyledLink>
-          <StyledLink
+          {/*<StyledLink
             exact
             activeClassName="active"
             to="/stats"
             onClick={() => props.onClick()}
           >
             Analytics
-          </StyledLink>
-          <StyledLink
+          </StyledLink>*/}
+          {/*<StyledLink
             exact
             activeClassName="active"
             to="/mint/mint"
             onClick={() => props.onClick()}
           >
             Mint/Redeem
-          </StyledLink>
+          </StyledLink>*/}
           {/* <StyledLink
             exact
             activeClassName="active"
@@ -89,14 +89,14 @@ const MobileNav = (props: props) => {
           >
             Stabilize
           </StyledLink> */}
-          <StyledLink
+         {/* <StyledLink
             exact
             activeClassName="active"
             to="/farming"
             onClick={() => props.onClick()}
           >
             Farming
-          </StyledLink>
+          </StyledLink>*/}
           {
             !props.isMainnet && (
               <StyledLink exact activeClassName="active" to="/faucet" onClick={() => props.onClick()}>
