@@ -5,8 +5,8 @@ import { TokenStat } from '../../../basis-cash/types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { commify } from 'ethers/lib/utils';
-import config from '../../../config';
 import { getDisplayBalance } from '../../../utils/formatBalance';
+import useConfig from '../../../hooks/useConfig';
 
 interface HomeCardProps {
   title: string;
@@ -25,6 +25,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
   supplyLabel = 'Total Supply',
   stat,
 }) => {
+  const config = useConfig();
   const tokenUrl = `${config.etherscanUrl}/token/${address}`;
   return (
     <Wrapper>

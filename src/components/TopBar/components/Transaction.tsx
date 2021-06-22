@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { format } from 'timeago.js';
 
 import { TransactionDetails } from '../../../state/transactions/reducer';
-import config from '../../../config';
 import SuccessIcon from '../../../assets/svg/SuccessTransaction.svg';
 import FailedIcon from '../../../assets/svg/failedTransaction.svg';
 import PendingIcon from '../../../assets/svg/pendingTransaction.svg';
+import useConfig from '../../../hooks/useConfig';
 
 const TransactionWrapper = styled.div`
   display: flex;
@@ -58,16 +58,18 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
   const pending = !tx.receipt;
   const success =
     !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined');
-  const date =  tx?.confirmedTime || tx?.addedTime
+  const date = tx?.confirmedTime || tx?.addedTime
+
+  const config = useConfig();
 
   return (
     <TransactionWrapper>
       <IconWrapper pending={pending} success={success}>
         {pending ? (
-            <img src={PendingIcon} alt="arrow" />
+          <img src={PendingIcon} alt="arrow" />
           // <MiniLoader stroke='white' />
         ) : success ? (
-            <img src={SuccessIcon} alt="arrow" />
+          <img src={SuccessIcon} alt="arrow" />
           // <CheckCircle size="16" />
         ) : (
           <img src={FailedIcon} alt="arrow" />
@@ -83,7 +85,7 @@ const Transaction: React.FC<TransactionProps> = ({ tx }) => {
         <Date>{format(date)}</Date>
       </InfoSection>
       <StateWrapper pending={pending} success={success}>
-        {pending? 'Pending': success? '': 'Failed'}
+        {pending ? 'Pending' : success ? '' : 'Failed'}
       </StateWrapper>
     </TransactionWrapper>
   );
@@ -108,7 +110,7 @@ const Title = styled.a`
   &:hover {
     color: rgba(255, 255, 255, 0.88);
   }
-  
+
 `
 
 const Date = styled.p`

@@ -339,7 +339,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   props.enqueueSnackbar('timepass', options);
                 }}
                 tracking_id={type === 'Commit' ? 'cancel_commit_collateral' : 'cancel_swap_arth'}
-                value={type === 'Commit' ? {value:collateralValue , collateral: selectedCollateral}: {value:arthValue , collateral: selectedCollateral}}
+                value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -358,7 +358,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   else redeemARTH(() => setOpenModal(2));
                 }}
                 tracking_id={type === 'Commit' ? 'confirm_commit_collateral' : 'confirm_swap_arth'}
-                value={type === 'Commit' ? {value:collateralValue , collateral: selectedCollateral}: {value:arthValue , collateral: selectedCollateral}}
+                value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
               />
             </Grid>
           </Grid>
@@ -519,7 +519,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 {type === 'Commit' ? (
                   <CustomInputContainer
                     ILabelValue={'Enter Collateral'}
-                    IBalanceValue={getDisplayBalance(collateralBalnace, 6)}
+                    IBalanceValue={getDisplayBalanceToken(collateralBalnace, currentToken)}
                     isBalanceLoading={isCollateralBalanceLoading}
                     ILabelInfoValue={''}
                     DefaultValue={collateralValue.toString()}
@@ -641,50 +641,50 @@ const Genesis = (props: WithSnackbarProps) => {
                   />
                 ) : (
                   <>
-                  <Button
-                    text={'Deposit WETH'}
-                    size={'lg'}
-                    onClick={() => setdepositModal(true)}
-                    tracking_id={'deposit_weth'}
-                  />
-                  <br />
-                  {!isApproved ? (
-                  <Button
-                    text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
-                    size={'lg'}
-                    disabled={
-                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                      isInputFieldError ||
-                      isApproving ||
-                      (type === 'Commit' && Number(collateralValue) === 0) ||
-                      (type === 'Commit' &&
-                        percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
-                      (type === 'Swap' && Number(arthValue) === 0)
-                    }
-                    onClick={approve}
-                    loading={isApproving}
-                  />
-                ) : (
-                  <Button
-                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                    size={'lg'}
-                    variant={'default'}
-                    disabled={
-                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                      isInputFieldError ||
-                      (type === 'Commit'
-                          ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
-                          : !Number(arthValue)
-                      ) ||
-                      !isApproved
-                    }
-                    onClick={() => setOpenModal(1)}
-                    tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
-                    value={type === 'Commit' ? {value:collateralValue , collateral: selectedCollateral}: {value:arthValue , collateral: selectedCollateral}}
-                  />
-                )}
+                    <Button
+                      text={'Deposit WETH'}
+                      size={'lg'}
+                      onClick={() => setdepositModal(true)}
+                      tracking_id={'deposit_weth'}
+                    />
+                    <br />
+                    {!isApproved ? (
+                      <Button
+                        text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
+                        size={'lg'}
+                        disabled={
+                          percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                          isInputFieldError ||
+                          isApproving ||
+                          (type === 'Commit' && Number(collateralValue) === 0) ||
+                          (type === 'Commit' &&
+                            percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
+                          (type === 'Swap' && Number(arthValue) === 0)
+                        }
+                        onClick={approve}
+                        loading={isApproving}
+                      />
+                    ) : (
+                      <Button
+                        text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                        size={'lg'}
+                        variant={'default'}
+                        disabled={
+                          percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                          isInputFieldError ||
+                          (type === 'Commit'
+                            ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
+                            : !Number(arthValue)
+                          ) ||
+                          !isApproved
+                        }
+                        onClick={() => setOpenModal(1)}
+                        tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
+                        value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
+                      />
+                    )}
                   </>
-                  )}
+                )}
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>
@@ -703,7 +703,7 @@ const Genesis = (props: WithSnackbarProps) => {
         </Grid>
       </Container>
 
-      { depositModal && <DepositModal
+      {depositModal && <DepositModal
         onCancel={() => setdepositModal(false)}
         onDeposit={() => {
         }}
@@ -713,11 +713,11 @@ const Genesis = (props: WithSnackbarProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTHX successful!'}
-        // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
-        // subTitleLink={'/#/farming'}
-        // buttonText={'Stake your ARTHX'}
-        // buttonType={'default'}
-        // buttonHref={'/#/farming'}
+      // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
+      // subTitleLink={'/#/farming'}
+      // buttonText={'Stake your ARTHX'}
+      // buttonType={'default'}
+      // buttonHref={'/#/farming'}
       />
     </>
   );

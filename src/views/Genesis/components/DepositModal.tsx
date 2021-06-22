@@ -13,6 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '../../../components/Button';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import { useWallet } from 'use-wallet';
+import useDepositWETH from '../../../hooks/callbacks/useDepositWETH';
 
 interface IProps {
   onCancel: () => void;
@@ -23,36 +25,13 @@ export default (props: IProps) => {
   const [val, setValue] = useState<string>('0');
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
+  const { balance } = useWallet()
 
-  const symbol = 'ARTH' // change this for the collateral
-  const tokenDecimals = 8 //token decimals over hee
+  const symbol = 'ETH' // change this for the collateral
 
-  // const core = useCore();
-  // const contract = core.contracts[props.pool.contract];
-  // const tokenDecimals = useTokenDecimals(props.pool.depositToken);
-  // const [approveStatus, approve] = useApprove(
-  //   core.tokens[props.pool.depositToken],
-  //   contract.address,
-  // );
-  //
-  // const symbol = props.pool.depositTokenSymbols.join('-');
-  //
-  // const stake = useStakingDeposit(
-  //   props.pool.contract,
-  //   Number(val),
-  //   props.pool.depositToken,
-  //   symbol
-  // );
-  //
-  // const handleStaking = () => {
-  //   stake(() => {
-  //     props.onCancel();
-  //     props.openSuccessModal();
-  //   });
-  // }
-  //
-  // const isApproved = approveStatus === ApprovalState.APPROVED;
-  // const isApproving = approveStatus === ApprovalState.PENDING;
+
+  const decimals = BigNumber.from(10).pow(18)
+  const desposit = useDepositWETH('ETH', BigNumber.from(Number(val) * 1000).mul(decimals).div(1000))
 
   return (
     <CustomModal
@@ -62,16 +41,16 @@ export default (props: IProps) => {
       modalTitleStyle={{}}
       modalContainerStyle={{}}
       modalBodyStyle={{}}
-      title={`Modal Header over here`}
+      title={`Convert ETH to WETH`}
     >
       <div>
         <CustomInputContainer
-          ILabelValue={`Some Text over here`}
-          IBalanceValue={'0'} //pass the balance here for MAX to work
+          ILabelValue={`ETH to convert`}
+          IBalanceValue={getDisplayBalance(BigNumber.from(balance), 18)} //pass the balance here for MAX to work
           showBalance={false}
           ILabelInfoValue={''}
           DefaultValue={String(val)}
-          LogoSymbol={'ARTH'}
+          LogoSymbol={'ETH'}
           hasDropDown={false}
           SymbolText={symbol}
           setText={(t) => {
@@ -86,7 +65,7 @@ export default (props: IProps) => {
         <OneLine>
           <div style={{ flex: 1 }}></div>
           <OneLine>
-            <BeforeChip>Balance: //Balance over heere</BeforeChip>
+            <BeforeChip>Balance: {getDisplayBalance(BigNumber.from(balance), 18)}</BeforeChip>
             <TagChips>{symbol}</TagChips>
           </OneLine>
         </OneLine>
@@ -110,7 +89,7 @@ export default (props: IProps) => {
               loading={false}
               text={'Deposit'}
               size={'lg'}
-              onClick={() => {}}
+              onClick={() => desposit()}
               disabled={false}
             />
           </Grid>
