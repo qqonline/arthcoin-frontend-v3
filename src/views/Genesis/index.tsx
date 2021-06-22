@@ -721,7 +721,7 @@ const Genesis = (props: WithSnackbarProps) => {
       />
     </>
   );
-};
+}
 
 const CustomBadgeAlert = styled.div`
   border: 1px solid #20c974;
