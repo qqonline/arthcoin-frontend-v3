@@ -65,7 +65,7 @@ const TxModal: React.FC<props> = ({ onDismiss }) => {
             {sortedRecentTransactions.length === 0 && (
               <div>
                 <NoTransaction>You haven’t done any transaction yet.</NoTransaction>
-                <CallToAction to={'/mint/mint'} onClick={() => handleClose()}>Mint ARTH</CallToAction>
+                <CallToAction to={'/genesis'} onClick={() => handleClose()}>Commit Collateral</CallToAction>
               </div>
             )}
             <StyledTransactionList>
