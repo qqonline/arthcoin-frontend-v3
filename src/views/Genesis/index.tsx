@@ -53,6 +53,7 @@ import usePercentageCompleted from '../../hooks/state/controller/usePercentageCo
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
 import useConfig from '../../hooks/useConfig';
+import DepositModal from './components/DepositModal';
 
 withStyles({
   root: {
@@ -142,6 +143,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
+  const [depositModal, setdepositModal] = useState<boolean>(false);
   const [calendarLink, setLink] = useState('');
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
@@ -640,17 +642,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <Button
                       text={'Deposit WETH'}
                       size={'lg'}
-                      disabled={
-                        percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                        isInputFieldError ||
-                        isApproving ||
-                        (type === 'Commit' && Number(collateralValue) === 0) ||
-                        (type === 'Commit' &&
-                          percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
-                        (type === 'Swap' && Number(arthValue) === 0)
-                      }
-                      onClick={approve}
-                      loading={isApproving}
+                      onClick={() => setdepositModal(true)}
                     />
                     <br />
                     {!isApproved ? (
@@ -710,6 +702,12 @@ const Genesis = (props: WithSnackbarProps) => {
           <Grid item lg={1} />
         </Grid>
       </Container>
+
+      { depositModal && <DepositModal
+        onCancel={() => setdepositModal(false)}
+        onDeposit={() => {
+        }}
+      />}
 
       <CustomSuccessModal
         modalOpen={successModal}
@@ -975,7 +973,7 @@ const LotteryBox = styled.div`
       rgba(255, 255, 255, 0) 100%
     ),
     linear-gradient(252.98deg, #e44d75 10.74%, #eb822c 87.31%);
-  margin-top: 24spx;
+  margin-top: 24px;
 `;
 
 const LotteryBoxText = styled.p`
