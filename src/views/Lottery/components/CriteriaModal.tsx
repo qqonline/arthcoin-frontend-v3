@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import CustomModal from '../../../components/CustomModal';
 
 interface IProps {
-  data: {id: number, value: string},
+  data?: {id: number, value: string},
   open: boolean;
   toggleOpen: () => void
 }
