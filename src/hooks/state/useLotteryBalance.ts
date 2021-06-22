@@ -15,17 +15,16 @@ const useLotteryBalance = (address: string) => {
 
   const core = useCore();
   const { account } = useWallet();
-  const blockNumber = useBlockNumber();
   const lottery = core.contracts['LotteryRaffle'];
 
   const fetchBalance = useCallback(async () => {
     if (!account) {
-      setCustomState({isLoading: false, balance: BigNumber.from(0)})
+      setCustomState({ isLoading: false, balance: BigNumber.from(0) })
       return;
     }
- 
+
     const bal = await lottery.balanceOf(core.myAccount);
-    setCustomState({isLoading: false, balance: bal});
+    setCustomState({ isLoading: false, balance: bal });
   }, [core, account, lottery]);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const useLotteryBalance = (address: string) => {
         ),
       );
     }
-  }, [address, blockNumber, account, core.isUnlocked, fetchBalance, lottery]);
+  }, [address, account, core.isUnlocked, fetchBalance, lottery]);
 
   return customState;
 };

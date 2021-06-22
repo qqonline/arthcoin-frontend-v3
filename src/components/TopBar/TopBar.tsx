@@ -57,13 +57,9 @@ const TopBar: React.FC = () => {
     setNetworkType(event.target.value as string);
   };
 
-  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc'];
+  const isMainnet = core.config.chainId in [137, 1, 'bsc'];
 
-  const showWarning = core.config.chainId !== chainId;
-  const network = {
-    name: 'Testnet',
-    color: '#11af60',
-  };
+  const showWarning = false; // core.config.chainId !== chainId;
 
   // ScreenView Analytics
   let location = useLocation();

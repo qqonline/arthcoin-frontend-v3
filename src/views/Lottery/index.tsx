@@ -113,13 +113,10 @@ const Lottery = () => {
         <Container size="lg">
           <MainSection>
             <LeftMainSection>
-              <Heading>
-                MAHA PRIZES
-                {/* <img src={questionMark} alt='Question mark' height={24} onClick={() => {
-                  setCriteriaModal(true)
-                }} /> */}
-              </Heading>
-              <SubHeading>Win exciting prizes by lottery tickets</SubHeading>
+              <Heading>MAHA NFT PRIZES</Heading>
+              <SubHeading>
+                Win exlcusive NFT prizes by committing collateral to the Genesis
+              </SubHeading>
             </LeftMainSection>
             <RightMainSection>
               <Ticket>

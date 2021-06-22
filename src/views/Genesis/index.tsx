@@ -52,6 +52,8 @@ import usePerformRecollateralize from '../../hooks/callbacks/performRecollateral
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
+import useConfig from '../../hooks/useConfig';
+import DepositModal from './components/DepositModal';
 
 withStyles({
   root: {
@@ -141,13 +143,14 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Genesis = (props: WithSnackbarProps) => {
+  const [depositModal, setdepositModal] = useState<boolean>(false);
   const [calendarLink, setLink] = useState('');
   const [arthValue, setArthValue] = useState<string>('0');
   const [openModal, setOpenModal] = useState<0 | 1 | 2>(0);
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [collateralValue, setCollateralValue] = useState<string>('0');
-  const [timerHeader, setHeader] = useState<boolean>(false);
+  const [timerHeader, setHeader] = useState<boolean>(true);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
@@ -184,6 +187,8 @@ const Genesis = (props: WithSnackbarProps) => {
     window.scrollTo(0, 0)
     onClick();
   }, []);
+
+  const config = useConfig();
 
   const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) =>
     amount.mul(discount).div(1e6);
@@ -365,10 +370,12 @@ const Genesis = (props: WithSnackbarProps) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
           padding: '40px 0px',
         }}
       >
         <PageHeading>{timerHeader ? 'JOIN THE GENESIS' : 'GENESIS'}</PageHeading>
+
         {!timerHeader ? (
           <PageSubHeading>
             <div style={{}}>
@@ -397,7 +404,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <PageSubHeading>
               <StartsIn>Starts in</StartsIn>
               <Countdown
-                date={Date.now() + 550000000}
+                date={new Date(config.genesisLaunchDate)}
                 renderer={({ days, hours, minutes, seconds, completed }) => {
                   return (
                     <HeaderSpan>
@@ -415,6 +422,14 @@ const Genesis = (props: WithSnackbarProps) => {
             )}
           </div>
         )}
+
+        <br />
+        <ConnectionNote>
+          To participate in the Genesis, you must either be connected to the Ethereum network or
+          to the Matic/Polygon network.
+        </ConnectionNote>
+        <br />
+        {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
       </div>
       <Container size="lg">
         <Grid container style={{}} spacing={2}>
@@ -594,53 +609,61 @@ const Genesis = (props: WithSnackbarProps) => {
                     </Text>
                   </CustomBadgeAlert>
                 )}
-                {
-                  !!!account
-                    ? (
-                      <Button
-                        text={'Connect Wallet'}
-                        size={'lg'}
-                        onClick={() => connect('injected').then(() => {
-                          localStorage.removeItem('disconnectWallet')
-                        })}
-                        tracking_id={'connect_wallet'}
-                      />
-                    )
-                    : !isApproved ? (
-                      <Button
-                        text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
-                        size={'lg'}
-                        disabled={
-                          percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                          isInputFieldError ||
-                          isApproving ||
-                          (type === 'Commit' && Number(collateralValue) === 0) ||
-                          (type === 'Commit' && percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
-                          (type === 'Swap' && Number(arthValue) === 0)
-                        }
-                        onClick={approve}
-                        loading={isApproving}
-                      />
-                    ) : (
-                      <Button
-                        text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
-                        size={'lg'}
-                        variant={'default'}
-                        disabled={
-                          percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
-                          isInputFieldError ||
-                          (type === 'Commit'
-                            ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
-                            : !Number(arthValue)
-                          ) ||
-                          !isApproved
-                        }
-                        onClick={() => setOpenModal(1)}
-                        tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
-                        value={type === 'Commit' ? {value:collateralValue , collateral: selectedCollateral}: {value:arthValue , collateral: selectedCollateral}}
-                      />
-                    )
-                }
+                {!!!account ? (
+                  <Button
+                    text={'Connect Wallet'}
+                    size={'lg'}
+                    onClick={() =>
+                      connect('injected').then(() => {
+                        localStorage.removeItem('disconnectWallet');
+                      })
+                    }
+                  />
+                ) : (
+                  <>
+                  <Button
+                    text={'Deposit WETH'}
+                    size={'lg'}
+                    onClick={() => setdepositModal(true)}
+                  />
+                  <br />
+                  {!isApproved ? (
+                  <Button
+                    text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
+                    size={'lg'}
+                    disabled={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      isInputFieldError ||
+                      isApproving ||
+                      (type === 'Commit' && Number(collateralValue) === 0) ||
+                      (type === 'Commit' &&
+                        percentageCompleted.gt(BigNumber.from(10).pow(18))) ||
+                      (type === 'Swap' && Number(arthValue) === 0)
+                    }
+                    onClick={approve}
+                    loading={isApproving}
+                  />
+                ) : (
+                  <Button
+                    text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
+                    size={'lg'}
+                    variant={'default'}
+                    disabled={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      isInputFieldError ||
+                      (type === 'Commit'
+                          ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
+                          : !Number(arthValue)
+                      ) ||
+                      !isApproved
+                    }
+                    onClick={() => setOpenModal(1)}
+                    tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
+                    value={type === 'Commit' ? {value:collateralValue , collateral: selectedCollateral}: {value:arthValue , collateral: selectedCollateral}}
+                  />
+                )}
+                  </>
+                  )}
               </LeftTopCardContainer>
             </LeftTopCard>
           </Grid>
@@ -659,6 +682,12 @@ const Genesis = (props: WithSnackbarProps) => {
         </Grid>
       </Container>
 
+      { depositModal && <DepositModal
+        onCancel={() => setdepositModal(false)}
+        onDeposit={() => {
+        }}
+      />}
+
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
@@ -671,7 +700,7 @@ const Genesis = (props: WithSnackbarProps) => {
       />
     </>
   );
-};
+}
 
 const CustomBadgeAlert = styled.div`
   border: 1px solid #20c974;
@@ -938,6 +967,13 @@ const LotteryBoxText = styled.p`
 
 const LotteryBoxAction = styled.div`
   width: 50%;
+`;
+
+const ConnectionNote = styled.div`
+  width: 50%;
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
 `;
 
 export default withSnackbar(Genesis);
