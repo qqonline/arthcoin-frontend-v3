@@ -5,7 +5,10 @@ let env_check = false;
 
 let actions = {
   identify: (id) => {
-    if (env_check) mixpanel.identify(id);
+    if (env_check) {
+      console.log('env_check', id);
+      mixpanel.identify(id);
+    }
   },
   alias: (id) => {
     if (env_check) mixpanel.alias(id);

@@ -45,6 +45,13 @@ const TopBar: React.FC = () => {
     // ga.send(["pageview", location.pathname]);
   }, [location]);
 
+  useEffect(() => {
+    if (account) {
+      Mixpanel.identify(account);
+      Mixpanel.people.set({ walletId: account });
+    }
+  }, [account])
+
   return (
     <TopBarContainer>
       <StyledTopBar>
