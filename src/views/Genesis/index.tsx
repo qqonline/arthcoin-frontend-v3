@@ -429,7 +429,27 @@ const Genesis = (props: WithSnackbarProps) => {
           to the Matic/Polygon network.
         </ConnectionNote>
         <br />
+        <Grid container style={{}} spacing={2}>
+          <Grid item lg={2} md={1} sm={1} xs={1}/>
+          <Grid item lg={4} md={5} sm={5} xs={5}>
+            <Button
+              text={'Switch to Polygon'}
+              size={'lg'}
+              onClick={() => {}}
+            />
+          </Grid>
+          <Grid item lg={4} md={5} sm={5} xs={5}>
+            <Button
+              text={'Switch to Matic'}
+              size={'lg'}
+              onClick={() => {}}
+            />
+          </Grid>
+          <Grid item lg={2} md={1} sm={1} xs={1}/>
+        </Grid>
+
         {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
+
       </div>
       <Container size="lg">
         <Grid container style={{}} spacing={2}>
@@ -973,7 +993,7 @@ const ConnectionNote = styled.div`
   width: 50%;
   text-align: center;
   color: #fff;
-  margin: 0 auto;
+  margin: 24px auto;
 `;
 
 export default withSnackbar(Genesis);
