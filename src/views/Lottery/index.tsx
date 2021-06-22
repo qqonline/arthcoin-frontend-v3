@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import {BigNumber} from '@ethersproject/bignumber';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import TicketBgLogo from '../../assets/svg/bgLogo.svg';
 import { CriteriaModal } from './components/CriteriaModal';
@@ -22,101 +22,90 @@ import useLotteryBalance from '../../hooks/state/useLotteryBalance';
 import Loader from 'react-spinners/BeatLoader';
 import FadeLoader from 'react-spinners/FadeLoader';
 
-
 const Lottery = () => {
   WalletAutoConnect();
 
   const core = useCore();
   const { isLoading: isPrizesLoading, value: prizes } = usePrizes();
   const { isLoading: isTokenCounterLoading, value: tokenCounter } = useTokenCounter();
-  const { isLoading: isLotteryBalanceLoading, balance: lotteryBalance} = useLotteryBalance(core.myAccount);
-  
+  const { isLoading: isLotteryBalanceLoading, balance: lotteryBalance } = useLotteryBalance(
+    core.myAccount,
+  );
+
   const [isPercentLoading, yourPercentOfWinning] = useMemo(() => {
-    if (isTokenCounterLoading || isLotteryBalanceLoading) return [true, BigNumber.from(0)]
+    if (isTokenCounterLoading || isLotteryBalanceLoading) return [true, BigNumber.from(0)];
     if (tokenCounter.lte(0)) return [false, BigNumber.from(0)];
     return [false, lotteryBalance.mul(100).div(tokenCounter)];
-  }, [lotteryBalance, tokenCounter, isLotteryBalanceLoading, isTokenCounterLoading ])
+  }, [lotteryBalance, tokenCounter, isLotteryBalanceLoading, isTokenCounterLoading]);
 
   const RenderCards = () => {
-     if (isPrizesLoading) {
-       return (
-         <NoPrizesHeading>
+    if (isPrizesLoading) {
+      return (
+        <NoPrizesHeading>
           <FadeLoader color={'#ffffff'} loading={isPrizesLoading} margin={2} />
         </NoPrizesHeading>
-       )
-     } else if (prizes.length > 0) {
-       return (
-         <Container size={'lg'}>
-           <CardConatiner>
-             <Grid container spacing={2}>
-               {
-                 prizes.map((prize, i) => (
-                     prize.winner !== '0x0000000000000000000000000000000000000000'
-                       ? (
-                         <Grid item lg={4} md={4} sm={12} xs={12}>
-                           <LotteryCard
-                             key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                             isDataLoading={false}
-                             image={prize?.image || ''}
-                             cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                             changeToWin={{
-                               text: 'Your change to win',
-                               perc: '0%'
-                             }}
-                             moreInfoMsg={
-                               prize.winner === core.myAccount
-                                 ? 'You have won this prize.'
-                                 : 'This prize has been won.'
-                             }
-                           />
-                         </Grid>
-                       )
-                       : (
-                         Number(prize.criteria.toString()) <= Number(lotteryBalance.toString())
-                           ? (
-                             <Grid item lg={4} md={4} sm={12} xs={12}>
-                               <LotteryCard
-                                 key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                                 image={prize?.image || ''}
-                                 cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                                 isDataLoading={isPercentLoading}
-                                 changeToWin={{
-                                    text: 'Your Chance to win',
-                                    perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%'
-                                 }}
-                                 buttonText={'Increase Your Chance to Win'}
-                               />
-                             </Grid>
-                           )
-                           : (
-                             <Grid item lg={4} md={4} sm={12} xs={12}>
-                               <LotteryCard
-                                 image={prize?.image || ''}
-                                 key={prize?.nftAddress || prize?.tokenId?.toString() || i}
-                                 cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
-                                 isDataLoading={isLotteryBalanceLoading}
-                                 moreInfoMsg={
-                                   `Requires ${Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
-                                   } more ticket to participate in winning this prize! `
-                                 }
-                                 buttonText={'Get More Tickets'}
-                               />
-                             </Grid>
-                           )
-                       )
-                   )
-                 )
-               }
-             </Grid>
-           </CardConatiner>
-         </Container>
-       )
-     } else {
-       return (
-         <NoPrizesHeading>Prizes have not been updated.</NoPrizesHeading>
-       )
-     }
-  }
+      );
+    } else if (prizes.length > 0) {
+      return (
+        <Container size={'lg'}>
+          <CardConatiner>
+            <Grid container spacing={2}>
+              {prizes.map((prize, i) =>
+                prize.winner !== '0x0000000000000000000000000000000000000000' ? (
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <LotteryCard
+                      key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                      isDataLoading={false}
+                      image={prize?.image || ''}
+                      cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                      changeToWin={{
+                        text: 'Your change to win',
+                        perc: '0%',
+                      }}
+                      moreInfoMsg={
+                        prize.winner === core.myAccount
+                          ? 'You have won this prize.'
+                          : 'This prize has been won.'
+                      }
+                    />
+                  </Grid>
+                ) : Number(prize.criteria.toString()) <= Number(lotteryBalance.toString()) ? (
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <LotteryCard
+                      key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                      image={prize?.image || ''}
+                      cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                      isDataLoading={isPercentLoading}
+                      changeToWin={{
+                        text: 'Your Chance to win',
+                        perc: Number(yourPercentOfWinning.toString()).toLocaleString() + '%',
+                      }}
+                      buttonText={'Increase Your Chance to Win'}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <LotteryCard
+                      image={prize?.image || ''}
+                      key={prize?.nftAddress || prize?.tokenId?.toString() || i}
+                      cardtitle={prize?.description?.toUpperCase() || 'MAHADAO NFT PRIZE'}
+                      isDataLoading={isLotteryBalanceLoading}
+                      moreInfoMsg={`Requires ${
+                        Number(prize.criteria.toString()) - Number(lotteryBalance.toString())
+                      } more ticket to participate in winning this prize! `}
+                      buttonText={'Get More Tickets'}
+                    />
+                  </Grid>
+                ),
+              )}
+            </Grid>
+          </CardConatiner>
+        </Container>
+      );
+    } else {
+      return <NoPrizesHeading>Prizes have not been updated.</NoPrizesHeading>;
+    }
+  };
 
   return (
     <div>
@@ -139,11 +128,16 @@ const Lottery = () => {
                 <TicketDataSection>
                   <TicketLogo src={TicketLogoImg} alt="Ticket" />
                   <TicketData>
-                    {
-                      isLotteryBalanceLoading
-                        ? <Loader color={'#ffffff'} loading={isLotteryBalanceLoading} size={8} margin={2} />
-                        : Number(lotteryBalance.toString()).toLocaleString()
-                    }
+                    {isLotteryBalanceLoading ? (
+                      <Loader
+                        color={'#ffffff'}
+                        loading={isLotteryBalanceLoading}
+                        size={8}
+                        margin={2}
+                      />
+                    ) : (
+                      Number(lotteryBalance.toString()).toLocaleString()
+                    )}
                   </TicketData>
                 </TicketDataSection>
                 <TicketBuyTitle>More Lottery Tickets. Higher chances</TicketBuyTitle>
@@ -153,9 +147,7 @@ const Lottery = () => {
           </MainSection>
         </Container>
       </HeadingContainer>
-      {
-        RenderCards()
-      }
+      {RenderCards()}
     </div>
   );
 };
@@ -163,15 +155,19 @@ const Lottery = () => {
 export default Lottery;
 
 const HeadingContainer = styled.div`
-  background: radial-gradient(145.27% 168.64% at 130.87% -118.64%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%),
-  linear-gradient(252.98deg, #E44D75 10.74%, #EB822C 87.31%);
+  background: radial-gradient(
+      145.27% 168.64% at 130.87% -118.64%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(252.98deg, #e44d75 10.74%, #eb822c 87.31%);
   width: 100vw;
   height: 238px;
   margin-top: 1px;
   @media (max-width: 600px) {
     height: auto;
   }
-`
+`;
 
 const MainSection = styled.div`
   display: flex;
@@ -182,21 +178,20 @@ const MainSection = styled.div`
   @media (max-width: 600px) {
     flex-direction: column;
   }
-`
+`;
 
 const LeftMainSection = styled.div`
   flex: 1;
   @media (max-width: 600px) {
     margin-bottom: 40px;
   }
-`
+`;
 
 const RightMainSection = styled.div`
   @media (max-width: 600px) {
     width: 100%;
   }
-  
-`
+`;
 
 const Heading = styled.div`
   font-family: Syne;
@@ -204,9 +199,9 @@ const Heading = styled.div`
   font-weight: bold;
   font-size: 42px;
   line-height: 44px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.88;
-`
+`;
 
 const NoPrizesHeading = styled.div`
   font-family: Syne;
@@ -214,7 +209,7 @@ const NoPrizesHeading = styled.div`
   font-weight: bold;
   font-size: 42px;
   line-height: 44px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.88;
   text-align: center;
   margin-top: 100px;
@@ -223,7 +218,7 @@ const NoPrizesHeading = styled.div`
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-`
+`;
 
 const SubHeading = styled.p`
   font-family: Inter;
@@ -231,12 +226,12 @@ const SubHeading = styled.p`
   font-weight: normal;
   font-size: 14px;
   line-height: 140%;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.88;
-`
+`;
 
 const Ticket = styled.div`
-  background: linear-gradient(180deg, #2D2D2D 0%, #1C1C1C 100%);
+  background: linear-gradient(180deg, #2d2d2d 0%, #1c1c1c 100%);
   border-radius: 12px;
   width: 392px;
   height: 158px;
@@ -254,8 +249,8 @@ const BgImage = styled.img`
   position: absolute;
   right: -30px;
   top: 50%;
-  transform: translate(0,-50%);
-`
+  transform: translate(0, -50%);
+`;
 
 const TicketHead = styled.p`
   font-family: Inter;
@@ -263,9 +258,9 @@ const TicketHead = styled.p`
   font-weight: normal;
   font-size: 12px;
   line-height: 130%;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 2px;
-`
+`;
 
 const TicketDataSection = styled.div`
   display: flex;
@@ -273,12 +268,12 @@ const TicketDataSection = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 24px;
-`
+`;
 
 const TicketLogo = styled.img`
   height: 32px;
   width: 32px;
-`
+`;
 
 const TicketData = styled.span`
   font-family: Inter;
@@ -286,9 +281,9 @@ const TicketData = styled.span`
   font-weight: bold;
   font-size: 24px;
   line-height: 32px;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-left: 12px;
-`
+`;
 
 const TicketBuyTitle = styled.p`
   font-family: Inter;
@@ -298,7 +293,7 @@ const TicketBuyTitle = styled.p`
   line-height: 130%;
   color: rgba(255, 255, 255, 0.64);
   margin-bottom: 4px;
-`
+`;
 
 const TicketBuyAction = styled(Link)`
   font-family: Inter;
@@ -306,10 +301,10 @@ const TicketBuyAction = styled(Link)`
   font-weight: normal;
   font-size: 12px;
   line-height: 130%;
-  color: #FF7F57;
+  color: #ff7f57;
   cursor: pointer;
   &:hover {
-    color: #FF7F57;
+    color: #ff7f57;
   }
 `;
 

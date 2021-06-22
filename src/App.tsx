@@ -4,7 +4,14 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 // import { createMemoryHistory } from 'history';
 
 import './App.css';
@@ -32,12 +39,17 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
-
+import useConfig from './hooks/useConfig';
 
 const Providers: React.FC = ({ children }) => {
+  // @ts-ignore
+  const currentNetworkId = Number(window.ethereum.networkVersion) || 1;
+
+  // const currentNetwork =
+
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider chainId={config.chainId} connectors={{ injected: {} }}>
+      <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
         <Provider store={store}>
           <Updaters />
           <BasisCashProvider>
@@ -56,31 +68,31 @@ const App: React.FC = () => {
   }, []);
 
   const makeUnPassive = (ev: any) => {
-    ev.preventDefault()
-  }
+    ev.preventDefault();
+  };
 
   useEffect(() => {
-    document.body.addEventListener('touchmove', makeUnPassive, { passive: true })
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
+    return () => document.body.removeEventListener('touchmove', makeUnPassive);
+  }, []);
 
-    return () => (
-      document.body.removeEventListener('touchmove', makeUnPassive)
-    )
-  }, [])
+  const config = useConfig();
+  if (!config) return <div>loading config</div>;
 
   return (
     <Providers>
       <Router>
         <TopBar />
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <Home />
-          </Route>
+          </Route> */}
           <Route path="/stats">
             <Page availableNetworks={[137, 1337]}>
               <Stats />
             </Page>
           </Route>
-          <Route path="/farming">
+          {/* <Route path="/farming">
             <Page availableNetworks={[137, 1337]}>
               <Farming />
             </Page>
@@ -99,17 +111,17 @@ const App: React.FC = () => {
             <Page availableNetworks={[137, 1337]}>
               <Pools />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/genesis">
             <Page>
               <Genesis />
             </Page>
           </Route>
-          <Route path="/faucet">
+          {/* <Route path="/faucet">
             <Page availableNetworks={[1337]}>
               <Faucet />
             </Page>
-          </Route>
+          </Route> */}
           <Route path="/rebase">
             <Page>
               <Rebase />
@@ -120,6 +132,7 @@ const App: React.FC = () => {
               <Lottery />
             </Page>
           </Route>
+          <Redirect to="/genesis"></Redirect>
         </Switch>
       </Router>
     </Providers>

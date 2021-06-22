@@ -99,8 +99,7 @@ withStyles({
   marked: {
     color: 'red',
   },
-  markLabel: {
-  },
+  markLabel: {},
   track: {
     height: 3,
     borderRadius: 3,
@@ -186,23 +185,20 @@ const Genesis = (props: WithSnackbarProps) => {
     onClick();
   }, []);
 
-  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) => amount.mul(discount).div(1e6);
+  const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) =>
+    amount.mul(discount).div(1e6);
 
   const calcExpectReceiveAmount = (
     inAssetPrice: BigNumber,
     outAssetprice: BigNumber,
     amount: number | string,
     inAssetDecimals: number,
-    outAssetDecimals: number) => (
+    outAssetDecimals: number,
+  ) =>
     inAssetPrice
-      .mul(BigNumber.from(
-        parseUnits(`${amount}`, inAssetDecimals)
-      ))
-      .mul(
-        BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals)
-      )
-      .div(outAssetprice)
-  );
+      .mul(BigNumber.from(parseUnits(`${amount}`, inAssetDecimals)))
+      .mul(BigNumber.from(10).pow(outAssetDecimals - inAssetDecimals))
+      .div(outAssetprice);
 
   const arthxRecieve = useMemo(() => {
     if (isARTHXPriceLoading || isCollateralPriceLoading) return BigNumber.from(0);
@@ -214,16 +210,10 @@ const Genesis = (props: WithSnackbarProps) => {
         arthxPrice,
         collateralValue,
         tokenDecimals,
-        18
+        18,
       );
 
-    return calcExpectReceiveAmount(
-      BigNumber.from(1e6),
-      arthxPrice,
-      Number(arthValue),
-      18,
-      18
-    );
+    return calcExpectReceiveAmount(BigNumber.from(1e6), arthxPrice, Number(arthValue), 18, 18);
   }, [
     arthValue,
     collateralGMUPrice,
@@ -232,14 +222,14 @@ const Genesis = (props: WithSnackbarProps) => {
     tokenDecimals,
     type,
     isCollateralPriceLoading,
-    isARTHXPriceLoading
+    isARTHXPriceLoading,
   ]);
 
   const lotteryAmount = useMemo(() => {
-    if (isCollateralPriceLoading) return BigNumber.from(0)
+    if (isCollateralPriceLoading) return BigNumber.from(0);
     if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
     const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
-    return gmuCollateralValue.mul(collateralGMUPrice).div(10).div(1e6);
+    return gmuCollateralValue.mul(collateralGMUPrice).div(1000).div(1e6);
   }, [collateralValue, collateralGMUPrice, tokenDecimals, isCollateralPriceLoading]);
 
   const arthxDiscount = useMemo(() => {
@@ -248,17 +238,14 @@ const Genesis = (props: WithSnackbarProps) => {
   }, [arthxRecieve, arthxPrice, recollateralizationDiscount]);
 
   const totalArthxRecieve = useMemo(() => {
-    return arthxRecieve.add(arthxDiscount)
+    return arthxRecieve.add(arthxDiscount);
   }, [arthxDiscount, arthxRecieve]);
 
   const currentCoin = type === 'Commit' ? selectedCollateral : 'ARTH';
   const currentToken = core.tokens[currentCoin];
   const currentValue = type === 'Commit' ? collateralValue : arthValue;
 
-  const [approveStatus, approve] = useApprove(
-    currentToken,
-    collateralGenesis.address
-  );
+  const [approveStatus, approve] = useApprove(currentToken, collateralGenesis.address);
 
   const redeemARTH = useRedeemAlgorithmicARTH(
     selectedCollateral,
@@ -314,13 +301,9 @@ const Genesis = (props: WithSnackbarProps) => {
           <TransparentInfoDiv
             labelData={`You will receive`}
             rightLabelUnit={'ARTHX'}
-            rightLabelValue={
-              Number(getDisplayBalance(
-                type === 'Commit' ? totalArthxRecieve : arthxRecieve,
-                18,
-                3
-              )).toLocaleString()
-            }
+            rightLabelValue={Number(
+              getDisplayBalance(type === 'Commit' ? totalArthxRecieve : arthxRecieve, 18, 3),
+            ).toLocaleString()}
           />
           <Grid
             container
@@ -343,7 +326,9 @@ const Genesis = (props: WithSnackbarProps) => {
                       CustomSnack({
                         onClose: props.closeSnackbar,
                         type: 'red',
-                        data1: `${type} ${Number(currentValue).toLocaleString()} ${currentCoin} cancelled`
+                        data1: `${type} ${Number(
+                          currentValue,
+                        ).toLocaleString()} ${currentCoin} cancelled`,
                       }),
                   };
                   props.enqueueSnackbar('timepass', options);
@@ -357,15 +342,9 @@ const Genesis = (props: WithSnackbarProps) => {
                 disabled={
                   percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                   isInputFieldError ||
-                  (type === 'Commit'
-                    ? !Number(collateralValue)
-                    : !Number(arthValue)
-                  ) ||
+                  (type === 'Commit' ? !Number(collateralValue) : !Number(arthValue)) ||
                   !Number(currentValue) ||
-                  (type === 'Commit'
-                    ? !Number(totalArthxRecieve)
-                    : !Number(arthxRecieve)
-                  )
+                  (type === 'Commit' ? !Number(totalArthxRecieve) : !Number(arthxRecieve))
                 }
                 text={type === 'Commit' ? 'Commit Collateral' : 'Swap ARTH'}
                 size={'lg'}
@@ -390,55 +369,52 @@ const Genesis = (props: WithSnackbarProps) => {
         }}
       >
         <PageHeading>{timerHeader ? 'JOIN THE GENESIS' : 'GENESIS'}</PageHeading>
-        {
-          !timerHeader
-            ? (
-              <PageSubHeading>
-                <div style={{}}>
-                  <BorderLinearProgress
-                    variant="determinate"
-                    value={
-                      percentageCompleted.gt(BigNumber.from(10).pow(18))
-                        ? 100
-                        : Number(getDisplayBalance(percentageCompleted, 16, 3))
-                    }
-                  />
-                </div>
-                <HeaderSpan>
-                  {
-                    isPercentageCompletedLoading
-                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                      : Number(getDisplayBalance(percentageCompleted, 16, 3))
-                        .toLocaleString('en-US', { maximumFractionDigits: 2 })
-                  }% Completed
-                </HeaderSpan>
-              </PageSubHeading>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                <PageSubHeading>
-                  <StartsIn>Starts in</StartsIn>
-                  <Countdown
-                    date={Date.now() + 550000000}
-                    renderer={({ days, hours, minutes, seconds, completed }) => {
-                      return (
-                        <HeaderSpan>
-                          {days}d : {hours}h : {minutes}m : {seconds}s
-                        </HeaderSpan>
-                      );
-                    }}
-                  />
-                </PageSubHeading>
-                {
-                  calendarLink && (
-                    <HeaderButton onClick={() => window.open(calendarLink, '_blank')} id={'google_calendar'}>
-                      <img src={calendar} alt="calendar" height={24} />
-                      <span style={{ marginLeft: 8 }}>Add to Calendar</span>
-                    </HeaderButton>
-                  )
+        {!timerHeader ? (
+          <PageSubHeading>
+            <div style={{}}>
+              <BorderLinearProgress
+                variant="determinate"
+                value={
+                  percentageCompleted.gt(BigNumber.from(10).pow(18))
+                    ? 100
+                    : Number(getDisplayBalance(percentageCompleted, 16, 3))
                 }
-              </div>
-            )
-        }
+              />
+            </div>
+            <HeaderSpan>
+              {isPercentageCompletedLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(percentageCompleted, 16, 3)).toLocaleString('en-US', {
+                  maximumFractionDigits: 2,
+                })
+              )}
+              % Completed
+            </HeaderSpan>
+          </PageSubHeading>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <PageSubHeading>
+              <StartsIn>Starts in</StartsIn>
+              <Countdown
+                date={Date.now() + 550000000}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  return (
+                    <HeaderSpan>
+                      {days}d : {hours}h : {minutes}m : {seconds}s
+                    </HeaderSpan>
+                  );
+                }}
+              />
+            </PageSubHeading>
+            {calendarLink && (
+              <HeaderButton onClick={() => window.open(calendarLink, '_blank')}>
+                <img src={calendar} alt="calendar" height={24} />
+                <span style={{ marginLeft: 8 }}>Add to Calendar</span>
+              </HeaderButton>
+            )}
+          </div>
+        )}
       </div>
       <Container size="lg">
         <Grid container style={{}} spacing={2}>
@@ -452,24 +428,26 @@ const Genesis = (props: WithSnackbarProps) => {
                     <CustomToolTip toolTipText={'The amount of ARTH already in circulation.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {
-                      isARTHCirculatingSupplyLoading
-                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                        : prettyNumber(getDisplayBalance(arthCirculatingSupply))
-                    }
+                    {isARTHCirculatingSupplyLoading ? (
+                      <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    ) : (
+                      prettyNumber(getDisplayBalance(arthCirculatingSupply))
+                    )}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
+                    <CustomToolTip
+                      toolTipText={'$GMU worth of collateral currently in the protocol.'}
+                    />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {
-                      isCommitedCollateralLoading
-                        ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                        : prettyNumber(getDisplayBalance(committedCollateral, 18))
-                    }
+                    {isCommitedCollateralLoading ? (
+                      <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    ) : (
+                      prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    )}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>
@@ -518,12 +496,17 @@ const Genesis = (props: WithSnackbarProps) => {
                     ondropDownValueChange={setSelectedCollateralCoin}
                     SymbolText={selectedCollateral}
                     inputMode={'numeric'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18)) || isCollateralBalanceLoading}
+                    disabled={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
+                      isCollateralBalanceLoading
+                    }
                     setText={(val: string) => {
                       setCollateralValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+                    errorCallback={(flag: boolean) => {
+                      setIsInputFieldError(flag);
+                    }}
                     DisableMsg={
                       percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
@@ -540,13 +523,17 @@ const Genesis = (props: WithSnackbarProps) => {
                     LogoSymbol={'ARTH'}
                     hasDropDown={false}
                     SymbolText={'ARTH'}
-                    disabled={percentageCompleted.gt(BigNumber.from(10).pow(18)) || isARTHBalanceLoading}
+                    disabled={
+                      percentageCompleted.gt(BigNumber.from(10).pow(18)) || isARTHBalanceLoading
+                    }
                     inputMode={'numeric'}
                     setText={(val: string) => {
                       setArthValue(ValidateNumber(val) ? val : '0');
                     }}
                     tagText={'MAX'}
-                    errorCallback={(flag: boolean) => { setIsInputFieldError(flag) }}
+                    errorCallback={(flag: boolean) => {
+                      setIsInputFieldError(flag);
+                    }}
                     DisableMsg={
                       percentageCompleted.gt(BigNumber.from(10).pow(18))
                         ? 'Currently Genesis is 100% Completed'
@@ -564,39 +551,43 @@ const Genesis = (props: WithSnackbarProps) => {
                       <div style={{ flex: 1 }}>
                         <TextWithIcon>
                           ARTHX
-                          <CustomToolTip toolTipText={'Amount of ARTHX received for commiting collateral.'} />
+                          <CustomToolTip
+                            toolTipText={'Amount of ARTHX received for commiting collateral.'}
+                          />
                         </TextWithIcon>
                       </div>
                       <OneLineInputwomargin>
                         <BeforeChip className={'custom-mahadao-chip'}>
-                          {Number(getDisplayBalanceToken(arthxRecieve, core.ARTHX, 3)).toLocaleString()}
+                          {Number(
+                            getDisplayBalanceToken(arthxRecieve, core.ARTHX, 3),
+                          ).toLocaleString()}
                         </BeforeChip>
                         <TagChips>ARTHX</TagChips>
                       </OneLineInputwomargin>
                     </OneLineInputwomargin>
-                    {
-                      type === 'Commit' &&
-                      (
+                    {type === 'Commit' && (
+                      <OneLineInputwomargin>
+                        <div style={{ flex: 1 }}>
+                          <TextWithIcon>
+                            Bonus
+                            <CustomToolTip
+                              toolTipText={
+                                'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'
+                              }
+                            />
+                          </TextWithIcon>
+                        </div>
                         <OneLineInputwomargin>
-                          <div style={{ flex: 1 }}>
-                            <TextWithIcon>
-                              Bonus
-                              <CustomToolTip toolTipText={'Extra ARTHX rewarded for committing collateral when the protocol is in genesis.'} />
-                            </TextWithIcon>
-                          </div>
-                          <OneLineInputwomargin>
-                            <BeforeChip className={'custom-mahadao-chip'}>
-                              {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
-                            </BeforeChip>
-                            <TagChips>ARTHX</TagChips>
-                          </OneLineInputwomargin>
+                          <BeforeChip className={'custom-mahadao-chip'}>
+                            {Number(getDisplayBalance(arthxDiscount, 18, 3)).toLocaleString()}
+                          </BeforeChip>
+                          <TagChips>ARTHX</TagChips>
                         </OneLineInputwomargin>
-                      )
-                    }
+                      </OneLineInputwomargin>
+                    )}
                   </ReceiveContainer>
                 </div>
-                {
-                  type === 'Commit' &&
+                {type === 'Commit' && (
                   <CustomBadgeAlert>
                     <Logo src={TicketGreen} alt='TicketBg' />
                     <Text>You will get {
@@ -659,7 +650,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <UnderstandMore dataObj={understandMore} />
             <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
-                Genesis participate can issue lottery tickets to win exciting MAHA Prizes
+                Genesis participants can issue lottery tickets to win exciting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
                 <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} tracking_id={'learn_more_genesis_to_lottery'} />
@@ -674,30 +665,30 @@ const Genesis = (props: WithSnackbarProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTHX successful!'}
-        subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
-        subTitleLink={'/#/farming'}
-        buttonText={'Stake your ARTHX'}
-        buttonType={'default'}
-        buttonHref={'/#/farming'}
+        // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
+        // subTitleLink={'/#/farming'}
+        // buttonText={'Stake your ARTHX'}
+        // buttonType={'default'}
+        // buttonHref={'/#/farming'}
       />
     </>
   );
 };
 
 const CustomBadgeAlert = styled.div`
-  border: 1px solid #20C974;
+  border: 1px solid #20c974;
   box-sizing: border-box;
   border-radius: 4px;
   padding: 8px;
   display: flex;
   align-items: flex-start;
   margin-bottom: 32px;
-`
+`;
 
 const Logo = styled.img`
   width: 16px;
   height: 16px;
-`
+`;
 
 const Text = styled.p`
   font-family: Inter;
@@ -705,11 +696,11 @@ const Text = styled.p`
   font-weight: 300;
   font-size: 12px;
   line-height: 130%;
-  color: #20C974;
+  color: #20c974;
   flex: 1;
   padding-left: 10px;
   margin-bottom: 0;
-`
+`;
 
 const GradientDiv = styled.div`
   background: linear-gradient(180deg, #2a2827 0%, rgba(42, 40, 39, 0) 100%);
@@ -928,8 +919,12 @@ const TagChips = styled.div`
 `;
 
 const LotteryBox = styled.div`
-  background: radial-gradient(145.27% 168.64% at 130.87% -118.64%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%),
-  linear-gradient(252.98deg, #E44D75 10.74%, #EB822C 87.31%);
+  background: radial-gradient(
+      145.27% 168.64% at 130.87% -118.64%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(252.98deg, #e44d75 10.74%, #eb822c 87.31%);
   margin-top: 24spx;
 `;
 

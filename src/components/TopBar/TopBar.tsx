@@ -20,6 +20,33 @@ import Button from '../Button';
 import { useLocation } from 'react-router-dom';
 import { Mixpanel } from '../../analytics/Mixpanel';
 
+const BootstrapInput = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      borderRadius: 8,
+      color: 'white',
+      border: '1px solid white',
+      fontSize: 14,
+      padding: '0px 15px',
+      marginRight: '20px',
+      'label + &': {
+        marginTop: theme.spacing(3),
+      },
+    },
+    input: {
+      position: 'relative',
+      backgroundColor: 'transparent',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '10px 26px 10px 12px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      '&:focus': {
+        borderRadius: 8,
+      },
+    },
+  }),
+)(InputBase);
+
 const TopBar: React.FC = () => {
   const { account, chainId } = useWallet();
   const core = useCore();
@@ -30,7 +57,7 @@ const TopBar: React.FC = () => {
     setNetworkType(event.target.value as string);
   };
 
-  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc']
+  const isMainnet = core.config.chainId in ['matic', 'ethereum', 'bsc'];
 
   const showWarning = core.config.chainId !== chainId;
   const network = {
@@ -60,7 +87,7 @@ const TopBar: React.FC = () => {
           <div className="dialog-class">
             <Logo />
             <HideonPhone>
-              <Nav isMainnet={isMainnet}/>
+              <Nav isMainnet={isMainnet} />
             </HideonPhone>
           </div>
           <HideonPhone>
@@ -95,7 +122,11 @@ const TopBar: React.FC = () => {
                 <Button
                   text={'Get MAHA'}
                   size={'sm'}
-                  onClick={() => window.open('https://mahadao.com')}
+                  onClick={() =>
+                    window.open(
+                      'https://app.uniswap.org/#/swap?outputCurrency=0xb4d930279552397bba2ee473229f89ec245bc365',
+                    )
+                  }
                   tracking_id={'get_MAHA'}
                 />
               </div>
@@ -116,7 +147,9 @@ const TopBar: React.FC = () => {
               )}
             </div>
           </HideOnBigScreen>
-          {showMobileMenu && <MobileNav isMainnet={isMainnet} onClick={() => toggleMobileMenu(false)} />}
+          {showMobileMenu && (
+            <MobileNav isMainnet={isMainnet} onClick={() => toggleMobileMenu(false)} />
+          )}
         </StyledTopBarInner>
         {/*</Container>*/}
       </StyledTopBar>
@@ -240,11 +273,11 @@ const StyledTopBarInner = styled.div`
   display: flex;
   height: ${(props) => props.theme.topBarSize}px;
   justify-content: space-between;
-    //max-width: ${(props) => props.theme.siteWidth}px;
+  //max-width: ${(props) => props.theme.siteWidth}px;
   width: 100%;
   padding: 0 24px;
   flex-wrap: wrap;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     padding: 0 16px;
   }
 `;

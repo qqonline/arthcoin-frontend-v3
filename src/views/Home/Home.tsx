@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import './styles/index.sass';
 import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
 import { useMediaQuery } from 'react-responsive';
-import arthLogo from './img/arth-coin-1.svg'
-import arthLogobg from './images/logo/ARTH-bg.svg'
+import arthLogo from './img/arth-coin-1.svg';
+import arthLogobg from './images/logo/ARTH-bg.svg';
 import Modal from '../../components/NewModal/index';
-import rightArrow from './images/polygon.svg'
-import USDLogo from './images/logo/USD.svg'
+import rightArrow from './images/polygon.svg';
+import USDLogo from './images/logo/USD.svg';
 import warning from '../../assets/svg/warning.svg';
 
 import useCore from '../../hooks/useCore';
-import config, { platformURL } from '../../config';
+import useConfig from '../../hooks/useConfig';
+import { platformURL } from '../../config';
 
 const useSliderStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,10 +88,8 @@ const PrettoRestrictSlider = withStyles({
   },
 })(Slider);
 
-
-
 const Home: React.FC = () => {
-  const isMobile = useMediaQuery({ 'maxWidth': '600px' })
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [openModal, toggleModal] = useState(false);
   const [showVideo, setShowVideo] = useState<boolean>(false);
   const sliderClasses = useSliderStyles();
@@ -102,34 +101,45 @@ const Home: React.FC = () => {
   };
 
   const handleCoffeeValues = (val: number | string) => {
-    setFiat(0.6 + (Number(val) - 1990) * 0.2)
-    setArth(1.2 - ((Number(val) - 1990) / 23.3) * 0.1)
-  }
+    setFiat(0.6 + (Number(val) - 1990) * 0.2);
+    setArth(1.2 - ((Number(val) - 1990) / 23.3) * 0.1);
+  };
   const handleSliderChange = (ev: any, value?: any) => {
-    handleCoffeeValues(value)
+    handleCoffeeValues(value);
     setSliderValue(value);
   };
 
   const core = useCore();
+  const config = useConfig();
 
   const token1 = core.tokens.ARTH;
 
-  const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
-    ? `${platformURL[config.platform].swapUrl}?inputCurrency=${'ETH'}&outputCurrency=${token1.address}`
-    : `https://app.uniswap.org/#/swap?inputCurrency=${'ETH'}&outputCurrency=${token1.address}&use=V2`;
+  const tradelink =
+    platformURL[config.platform] && platformURL[config.platform].swapUrl
+      ? `${platformURL[config.platform].swapUrl}?inputCurrency=${'ETH'}&outputCurrency=${
+          token1.address
+        }`
+      : `https://app.uniswap.org/#/swap?inputCurrency=${'ETH'}&outputCurrency=${
+          token1.address
+        }&use=V2`;
 
   return (
     <div>
       <Modal
         title="Disclaimer"
         titleLogo={
-          <img alt={'Warning'} src={warning} height={24} style={{ marginRight: 5, alignItems: 'center' }} />
+          <img
+            alt={'Warning'}
+            src={warning}
+            height={24}
+            style={{ marginRight: 5, alignItems: 'center' }}
+          />
         }
         open={openModal}
         handleClose={handleClose}
-      // titleLogo={
-      //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
-      // }
+        // titleLogo={
+        //   <img src={InfoOutlinedIcon} alt="" width="24px" style={{ marginRight: '10px' }} />
+        // }
       >
         <ModalText>
           <b>
@@ -163,7 +173,6 @@ const Home: React.FC = () => {
         </ModalHyperLink>
       </Modal>
 
-
       <div id="header-gradient"></div>
       {/*<div className="chakra"></div>*/}
       {/*<div className="gradient-red-1"></div>*/}
@@ -193,7 +202,9 @@ const Home: React.FC = () => {
               <div className="slogan face1">World’s first non-inflationary money.</div>
               <div className="slogan face2">Protects you from financial crisis.</div>
               <div className="slogan face3">Is lightning fast.</div>
-              <div className="slogan face4">Is the first stablecoin that is resistant to black swan events.</div>
+              <div className="slogan face4">
+                Is the first stablecoin that is resistant to black swan events.
+              </div>
               {/*<div className="slogan face5">ARTH protects you from financial crisis.</div>*/}
             </div>
           </div>
@@ -208,12 +219,7 @@ const Home: React.FC = () => {
         </div>*/}
 
         <div className="button-container">
-          <a
-            target="_blank"
-            href={tradelink}
-            id="no-txt-decoration"
-            rel="noopener noreferrer"
-          >
+          <a target="_blank" href={tradelink} id="no-txt-decoration" rel="noopener noreferrer">
             <button className="button-small-bg">Buy ARTH</button>
           </a>
           <a
@@ -221,7 +227,9 @@ const Home: React.FC = () => {
             // href="https://www.youtube.com/watch?v=H94S32HXqmU"
             id="no-txt-decoration"
             rel="noopener noreferrer"
-            data-toggle="modal" data-target="#videoModal" href="javascript:void(0)"
+            data-toggle="modal"
+            data-target="#videoModal"
+            href="javascript:void(0)"
             onClick={() => setShowVideo(true)}
           >
             <button className="button-small-transparent">
@@ -231,19 +239,30 @@ const Home: React.FC = () => {
           </a>
         </div>
       </section>
-      {showVideo && <div id='videoModal' className='custom-video-modal'>
-        <div className='modal-dialog'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <span className='close-btn' data-dismiss='modal' onClick={() => setShowVideo(false)}></span>
-            </div>
-            <div className='video-outer'>
-              <iframe id='video' src='https://www.youtube.com/embed/H94S32HXqmU' frameBorder='0'
-                allow='accelerometer; autoplay;' allowFullScreen></iframe>
+      {showVideo && (
+        <div id="videoModal" className="custom-video-modal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <span
+                  className="close-btn"
+                  data-dismiss="modal"
+                  onClick={() => setShowVideo(false)}
+                ></span>
+              </div>
+              <div className="video-outer">
+                <iframe
+                  id="video"
+                  src="https://www.youtube.com/embed/H94S32HXqmU"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay;"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>
-      </div>}
+      )}
       <section id="section-main-info">
         <div
           className="main-conatiner"
@@ -253,12 +272,12 @@ const Home: React.FC = () => {
         >
           <img src={arthLogo} height={45} className="info-logo" />
           <br />
-          <p className='main-heading'>Arth. Never lose buying power of your money.</p>
+          <p className="main-heading">Arth. Never lose buying power of your money.</p>
           <br />
-          <p className='section-description'>
-            Arth is designed to fight depreciation of wealth & help you pay less for more.
-            Your purchasing power increases as you preserve Arth. No matter the fluctuation in the market,
-            the value of your money never drops.
+          <p className="section-description">
+            Arth is designed to fight depreciation of wealth & help you pay less for more. Your
+            purchasing power increases as you preserve Arth. No matter the fluctuation in the
+            market, the value of your money never drops.
           </p>
         </div>
       </section>
@@ -309,14 +328,14 @@ const Home: React.FC = () => {
                 World’s first valuecoin
               </div>
               <div className="side-text">
-                Arth is a decentralized algorithmic currency that aims to
-                fight inflation irrespective of which direction the market moves,
-                ARTH coin holders will never lose their purchasing power.
+                Arth is a decentralized algorithmic currency that aims to fight inflation
+                irrespective of which direction the market moves, ARTH coin holders will never
+                lose their purchasing power.
               </div>
               <div className="side-text">
-                Arth gives you financial freedom with no volatility as
-                it’s a value-stable currency that you control.
-                Arth means wealth creation, one of the foremost goals of human life.
+                Arth gives you financial freedom with no volatility as it’s a value-stable
+                currency that you control. Arth means wealth creation, one of the foremost goals
+                of human life.
               </div>
             </div>
           </div>
@@ -330,8 +349,12 @@ const Home: React.FC = () => {
           <div className="left-container">
             {/* slider Space */}
             <p className="title">Value over time to buy one cup of coffee</p>
-            <p className="sub-title">Compare value with years <span className="tag">{sliderValue}</span></p>
-            <div style={{ width: isMobile ? '95%' : '75%', paddingInlineStart: isMobile ? 15 : 0 }}>
+            <p className="sub-title">
+              Compare value with years <span className="tag">{sliderValue}</span>
+            </p>
+            <div
+              style={{ width: isMobile ? '95%' : '75%', paddingInlineStart: isMobile ? 15 : 0 }}
+            >
               <PrettoRestrictSlider
                 defaultValue={1990}
                 getAriaValueText={valuetext}
@@ -381,8 +404,7 @@ const Home: React.FC = () => {
       </section>
       <section id="section-two-features">
         <p className="title">
-          Arth is the future of money filling up
-          your wallet soon with the maximum buying power
+          Arth is the future of money filling up your wallet soon with the maximum buying power
         </p>
         <div className="card-deck row">
           <div className="col-lg-6 col-sm-12">
@@ -447,8 +469,8 @@ const Home: React.FC = () => {
       <section id="section-application">
         <p className="title">Application & Usage</p>
         <p className="subtitle">
-          Arth is for students, shoppers, tourists, businessmen, employees,
-          passengers, institutions & governments. Anyone exchanging value.
+          Arth is for students, shoppers, tourists, businessmen, employees, passengers,
+          institutions & governments. Anyone exchanging value.
         </p>
         <div className="planet-container"></div>
       </section>
@@ -456,11 +478,11 @@ const Home: React.FC = () => {
         <div className="main-container">
           <p className="title">Technology</p>
           <p className="subtitle">
-            Arth is an algorithmic value-stable coin built using
-            robust strategies like vault optimization,
-            auto collateralisation ratio, automatic rebalancing mechanism,
-            anti-correlated asset selection, purchasing power pegging,
-            oracle pricefeeds and more. </p>
+            Arth is an algorithmic value-stable coin built using robust strategies like vault
+            optimization, auto collateralisation ratio, automatic rebalancing mechanism,
+            anti-correlated asset selection, purchasing power pegging, oracle pricefeeds and
+            more.{' '}
+          </p>
           <div className="tech-container">
             <div className="feature-image">
               <img
@@ -472,13 +494,11 @@ const Home: React.FC = () => {
             <div className="tech-info">
               <p className="info-title">Cross-border transactions</p>
               <p className="info-desc">
-                Deployed on Layer 2 Protocol,
-                Arth offers transactions speed of less than 3 seconds to cross the border from your wallet
-                to another across the globe.
-                The very near future version of Arth shall be a cross-chain solution that brings
-                the power of value coin to other blockchains like Ethereum and more
+                Deployed on Layer 2 Protocol, Arth offers transactions speed of less than 3
+                seconds to cross the border from your wallet to another across the globe. The
+                very near future version of Arth shall be a cross-chain solution that brings the
+                power of value coin to other blockchains like Ethereum and more
               </p>
-
             </div>
           </div>
           <div className="tech-container">
@@ -492,9 +512,9 @@ const Home: React.FC = () => {
             <div className="tech-info">
               <p className="info-title">Cross-chain liquidity</p>
               <p className="info-desc">
-                Arth is compatible with tokens and currencies from other
-                blockchains to create a massive liquidity pool across the chains.
-                You can stake, lend, borrow, trade Arth across chains. (coming soon)
+                Arth is compatible with tokens and currencies from other blockchains to create a
+                massive liquidity pool across the chains. You can stake, lend, borrow, trade
+                Arth across chains. (coming soon)
               </p>
             </div>
           </div>
@@ -504,8 +524,8 @@ const Home: React.FC = () => {
         <div className="main-container">
           <p className="title">Lead the revolution</p>
           <p className="subtitle">
-            Arth eliminates price instability and value erosion.
-            Control your financial future, increase your money’s worth.
+            Arth eliminates price instability and value erosion. Control your financial future,
+            increase your money’s worth.
           </p>
           <div className="cards-container row">
             <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
@@ -733,9 +753,7 @@ const Home: React.FC = () => {
         <div className="footer-content">
           <div className="top-most">
             <div className="msg">
-              <p className="title">
-                Arth. Money Reinvented
-              </p>
+              <p className="title">Arth. Money Reinvented</p>
               <p className="subtitle">
                 Join the mission as we establish a new standard of money. A better money.
               </p>
@@ -762,7 +780,11 @@ const Home: React.FC = () => {
                 {/*    width="140px"*/}
                 {/*  />*/}
                 {/*</div>*/}
-                <StyledLink href="https://mahadao.com/" target="_blank" style={{ marginLeft: 0 }}>
+                <StyledLink
+                  href="https://mahadao.com/"
+                  target="_blank"
+                  style={{ marginLeft: 0 }}
+                >
                   MAHADAO
                 </StyledLink>
                 <StyledLink href="https://docs.arthcoin.com" target="_blank">
@@ -820,7 +842,6 @@ const TimeSpan = styled.div`
   line-height: 130%;
   color: rgba(255, 255, 255, 0.88);
 `;
-
 
 const FooterEnd = styled.div`
   font-family: 'Syne', sans-serif;

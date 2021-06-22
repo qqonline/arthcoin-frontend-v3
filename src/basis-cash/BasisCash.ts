@@ -52,7 +52,7 @@ export class BasisCash {
 
   constructor(cfg: Configuration) {
     const { deployments } = cfg;
-    const provider = getDefaultProvider();
+    const provider = getDefaultProvider(cfg);
 
     this.contracts = {};
     for (const [name, deployment] of Object.entries(deployments)) {
