@@ -75,8 +75,7 @@ withStyles({
   marked: {
     color: 'red',
   },
-  markLabel: {
-  },
+  markLabel: {},
   track: {
     height: 3,
     borderRadius: 3,
@@ -119,24 +118,29 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const Genesis = (props: WithSnackbarProps) => {
   const { isLoading: isPercLoading, value: percentageCompleted } = usePercentageCompleted();
-  const { isLoading: isGlobalCollateralLoading, value: committedCollateral } = useGlobalCollateralValue();
-  const { isLoading: isARTHCirculatingLoading, value: arthCirculatingSupply } = useARTHCirculatingSupply();
+  const {
+    isLoading: isGlobalCollateralLoading,
+    value: committedCollateral,
+  } = useGlobalCollateralValue();
+  const {
+    isLoading: isARTHCirculatingLoading,
+    value: arthCirculatingSupply,
+  } = useARTHCirculatingSupply();
 
   WalletAutoConnect();
 
   const rebasePercentage = useMemo(() => {
     const percentScale = BigNumber.from(10).pow(18);
-    
-    return (
-      percentageCompleted.gt(percentScale)
-        ? BigNumber.from(0) 
-        : percentScale.sub(percentageCompleted)
-    );
+
+    return percentageCompleted.gt(percentScale)
+      ? BigNumber.from(0)
+      : percentScale.sub(percentageCompleted);
   }, [percentageCompleted]);
 
   const understandMore = [
     'A Rebase is a last resort mechanism where the circulating supply of a token is adjusted so that it forces the current market price to meet the target price. The first rebase token that was introduced was Ampleforth.',
-    'Rebase tokens work by changing the balance of a user\'s wallet so that the amount in the user\'s wallet changes but the net value stays the same.',
+    "Rebase tokens work by changing the balance of a user's wallet so that the amount in the user's wallet changes but the net value stays the same.",
+    'Rebase in the ARTH protocol is a one-time event. After the Genesis rebase, there will be no more rebase done in the future.',
   ];
 
   return (
@@ -151,21 +155,21 @@ const Genesis = (props: WithSnackbarProps) => {
         }}
       >
         <PageHeading>{'REBASE'}</PageHeading>
-          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <PageSubHeading>
-              <StartsIn>Starts in</StartsIn>
-              <Countdown
-                date={Date.now() + 550000000}
-                renderer={({ days, hours, minutes, seconds, completed }) => {
-                  return (
-                    <HeaderSpan>
-                      {days}d : {hours}h : {minutes}m : {seconds}s
-                    </HeaderSpan>
-                  );
-                }}
-              />
-            </PageSubHeading>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+          <PageSubHeading>
+            <StartsIn>Starts in</StartsIn>
+            <Countdown
+              date={new Date('30 Jun 2021 15:00:00 GMT')}
+              renderer={({ days, hours, minutes, seconds, completed }) => {
+                return (
+                  <HeaderSpan>
+                    {days}d : {hours}h : {minutes}m : {seconds}s
+                  </HeaderSpan>
+                );
+              }}
+            />
+          </PageSubHeading>
+        </div>
         <PageSubHeading>
           <div style={{}}>
             <BorderLinearProgress
@@ -178,16 +182,13 @@ const Genesis = (props: WithSnackbarProps) => {
             />
           </div>
           <HeaderSpan>
-            {
-              Number(getDisplayBalance(rebasePercentage, 16, 3))
-                .toLocaleString('en-US', { maximumFractionDigits: 2 })
-            }% Rebase
+            {Number(getDisplayBalance(rebasePercentage, 16, 3)).toLocaleString('en-US', {
+              maximumFractionDigits: 2,
+            })}
+            % Rebase
           </HeaderSpan>
         </PageSubHeading>
-        <PageSubSubHeading>
-          For 100 ARTH it would value 80 ARTH at 20% rebase
-        </PageSubSubHeading>
-
+        <PageSubSubHeading>For 100 ARTH it would value 80 ARTH at 20% rebase</PageSubSubHeading>
       </div>
       <Container size="lg">
         <Grid container>
@@ -198,25 +199,39 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
                     Amount Remaining to Raise
-                    <CustomToolTip toolTipText={'$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'} />
+                    <CustomToolTip
+                      toolTipText={
+                        '$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'
+                      }
+                    />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {isARTHCirculatingLoading && isGlobalCollateralLoading
-                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                      : prettyNumber(getDisplayBalance(arthCirculatingSupply.lt(committedCollateral)? BigNumber.from(0): arthCirculatingSupply.sub(committedCollateral)))
-                    }
+                    {isARTHCirculatingLoading && isGlobalCollateralLoading ? (
+                      <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    ) : (
+                      prettyNumber(
+                        getDisplayBalance(
+                          arthCirculatingSupply.lt(committedCollateral)
+                            ? BigNumber.from(0)
+                            : arthCirculatingSupply.sub(committedCollateral),
+                        ),
+                      )
+                    )}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Commited Collateral
-                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
+                    <CustomToolTip
+                      toolTipText={'$GMU worth of collateral currently in the protocol.'}
+                    />
                   </TextForInfoTitle>
                   <BeforeChipDark>
-                    {isGlobalCollateralLoading
-                      ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                      : prettyNumber(getDisplayBalance(committedCollateral, 18))
-                    }
+                    {isGlobalCollateralLoading ? (
+                      <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+                    ) : (
+                      prettyNumber(getDisplayBalance(committedCollateral, 18))
+                    )}
                   </BeforeChipDark>
                 </OneLineInputwomargin>
               </CustomInfoCardDetails>

@@ -10,10 +10,6 @@ type State = {
 }
 
 export default () => {
-  const [customState, setCustomState] = useState<State>({ isLoading: true, value: [] });
-
-  const core = useCore();
-  const prizeCounter = usePrizeCounter();
 
   const prizesHardcoded = [
     {
@@ -50,16 +46,7 @@ export default () => {
     }
   ]
 
-  const fetchValue = useCallback(async () => {
-
-    const prizes = prizesHardcoded
-
-    setCustomState({ isLoading: false, value: prizes });
-  }, [prizesHardcoded]);
-
-  useEffect(() => {
-    fetchValue().catch((err) => console.error(`Failed to fetch global CR: ${err.stack}`));
-  }, [fetchValue]);
+  const [customState, setCustomState] = useState<State>({ isLoading: false, value: prizesHardcoded })
 
   return customState;
 };

@@ -42,10 +42,8 @@ import BasisCashProvider from './contexts/BasisCashProvider';
 import useConfig from './hooks/useConfig';
 
 const Providers: React.FC = ({ children }) => {
-  // @ts-ignore
-  const currentNetworkId = Number(window.ethereum.networkVersion) || 1;
-
-  // const currentNetwork =
+  const config = useConfig();
+  const currentNetworkId = config.chainId;
 
   return (
     <ThemeProvider theme={theme}>
