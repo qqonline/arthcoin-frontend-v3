@@ -192,7 +192,7 @@ const Genesis = (props: WithSnackbarProps) => {
               <CustomInfoCardDetails>
                 <OneLineInputwomargin style={{ marginBottom: '20px' }}>
                   <TextForInfoTitle>
-                    Amount Remaining to Raise
+                    Remaining Amount To Be Raised
                     <CustomToolTip
                       toolTipText={
                         '$GMU worth of collateral yet to be raised for the protocol to reach the desired collateral ratio.'
