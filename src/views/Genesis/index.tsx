@@ -466,10 +466,9 @@ const Genesis = (props: WithSnackbarProps) => {
           To participate in the Genesis, you must either be connected to the Ethereum network or
           to the Matic/Polygon network.
           <br />
-          <br />
-          <div onClick={addMaticToMetamask} style={{ textDecoration: 'underline' }}>
+          <AddPolygon onClick={addMaticToMetamask}>
             Click here to add Polygon to your Metamask
-          </div>
+          </AddPolygon>
         </ConnectionNote>
         {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
 
@@ -1020,10 +1019,28 @@ const LotteryBoxAction = styled.div`
 `;
 
 const ConnectionNote = styled.div`
-  width: 50%;
+  width: 60%;
   text-align: center;
   color: #fff;
-  margin: 24px auto;
+  margin: 24px auto 0 auto;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+`;
+
+const AddPolygon = styled.p`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #FF7F57;
+  cursor: pointer;
 `;
 
 export default withSnackbar(Genesis);
