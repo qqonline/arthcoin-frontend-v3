@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -21,6 +21,8 @@ import Loader from 'react-spinners/BeatLoader';
 import FadeLoader from 'react-spinners/FadeLoader';
 
 const Lottery = () => {
+  const [criteriaModal, setCriteriaModal] = useState(false)
+
   WalletAutoConnect();
 
   const core = useCore();
@@ -107,11 +109,20 @@ const Lottery = () => {
 
   return (
     <div>
+      <CriteriaModal
+        open={criteriaModal}
+        toggleOpen={() => { setCriteriaModal(!criteriaModal) }}
+      />
       <HeadingContainer>
         <Container size="lg">
           <MainSection>
             <LeftMainSection>
-              <Heading>MAHA NFT PRIZES</Heading>
+              <Heading>
+                MAHA NFT PRIZES
+                <img src={questionMark} alt='Criterias' height={24} onClick={() => {
+                  setCriteriaModal(true)
+                }} />
+              </Heading>
               <SubHeading>
                 Win exlcusive NFT prizes by committing collateral to the Genesis
               </SubHeading>
