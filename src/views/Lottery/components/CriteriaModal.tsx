@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import CustomModal from '../../../components/CustomModal';
 
 interface IProps {
-  data?: {id: number, value: string},
+  data?: { id: number, value: string },
   open: boolean;
   toggleOpen: () => void
 }
@@ -12,19 +12,15 @@ interface IProps {
 let data = [
   {
     id: 1,
-    value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo in velit augue pharetra mollis libero molestie senectus.`
+    value: `Users who deposit 1000$ worth of collateral will win one lottery ticket.`
   },
   {
     id: 2,
-    value: `Consectetur at non, ullamcorper id dolor egestas duis imperdiet nec. Odio vivamus amet, suspendisse purus. Habitasse duis viverra a eget imperdiet feugiat odio tortor tellus.`
-  },
-  {
-    id: 3,
-    value: `Consectetur at non, ullamcorper id dolor egestas duis imperdiet nec. Odio vivamus amet, suspendisse purus. Habitasse duis viverra a eget imperdiet feugiat odio tortor tellus.`
+    value: `The more lottery tickets you have the more are your chances of winning the NFTs`
   },
   {
     id: 4,
-    value: `Consectetur at non, ullamcorper id dolor egestas duis imperdiet nec. Odio vivamus amet, suspendisse purus. Habitasse duis viverra a eget imperdiet feugiat odio tortor tellus.`
+    value: `Winners are decided on the 29th of June, 2021`
   },
 ]
 
@@ -32,7 +28,7 @@ export const CriteriaModal = (props: IProps) => {
   function ListItem(props: any) {
     return (
       <ListLi>
-          <ListSpan>{props.value}</ListSpan>
+        <ListSpan>{props.value}</ListSpan>
       </ListLi>
     );
   }
