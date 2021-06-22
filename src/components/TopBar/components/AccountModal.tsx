@@ -94,9 +94,9 @@ const AccountModal: React.FC<props> = (props) => {
                 <img height={24} src={copy} alt="copy" />
                 </IconButton>
               </HtmlTooltip>
-              <NetworkDiv colorCode={'#FCB40012'}>
+             {/* <NetworkDiv colorCode={'#FCB40012'}>
                 <NetworkName colorCode={'#FCB400'}> TestNet </NetworkName>
-              </NetworkDiv>
+              </NetworkDiv>*/}
 
             </AccountDetails>
           </StyledLink>
