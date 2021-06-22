@@ -117,6 +117,10 @@ export const platformURL: { [platform: string]: Platform } = {
     addLiquidityUrl: 'https://app.sushi.com/add',
     swapUrl: 'https://app.sushi.com/swap',
   },
+  dfyn: {
+    addLiquidityUrl: 'https://app.sushi.com/add',
+    swapUrl: 'https://app.sushi.com/swap',
+  },
   uniswap: {
     addLiquidityUrl: 'https://app.uniswap.org/#/add/v2',
     swapUrl: 'https://app.uniswap.org/#/swap',

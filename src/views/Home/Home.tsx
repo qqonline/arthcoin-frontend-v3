@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import './styles/index.sass';
 import { createStyles, makeStyles, Slider, Theme, withStyles } from '@material-ui/core';
@@ -11,8 +11,8 @@ import USDLogo from './images/logo/USD.svg';
 import warning from '../../assets/svg/warning.svg';
 
 import useCore from '../../hooks/useCore';
-import config, { platformURL } from '../../config';
 import useConfig from '../../hooks/useConfig';
+import { platformURL } from '../../config';
 
 const useSliderStyles = makeStyles((theme: Theme) =>
   createStyles({

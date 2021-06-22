@@ -32,10 +32,11 @@ import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
+import useConfig from './hooks/useConfig';
 
 const Providers: React.FC = ({ children }) => {
   // @ts-ignore
-  const currentNetworkId = window.ethereum.networkVersion;
+  const currentNetworkId = Number(window.ethereum.networkVersion) || 1;
 
   // const currentNetwork =
 
@@ -65,9 +66,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
-
     return () => document.body.removeEventListener('touchmove', makeUnPassive);
   }, []);
+
+  const config = useConfig();
+  if (!config) return <div>loading config</div>;
+
+  console.log('config', config);
 
   return (
     <Providers>

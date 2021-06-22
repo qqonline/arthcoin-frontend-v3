@@ -8,9 +8,9 @@ import useMAHAOraclePrice from '../../../hooks/state/controller/useMAHAPrice';
 import useARTHXOraclePrice from '../../../hooks/state/controller/useARTHXPrice';
 
 const CoinsPrice: React.FC = () => {
-  const {isLoading: isARTHPriceLoading, value: arthPrice} = useARTHOraclePrice();
-  const {isLoading: isMAHAPriceLoading, value: mahaPrice} = useMAHAOraclePrice();
-  const {isLoading: isARTHXPriceLoading, value: arthxPrice} = useARTHXOraclePrice();
+  const { isLoading: isARTHPriceLoading, value: arthPrice } = useARTHOraclePrice();
+  const { isLoading: isMAHAPriceLoading, value: mahaPrice } = useMAHAOraclePrice();
+  const { isLoading: isARTHXPriceLoading, value: arthxPrice } = useARTHXOraclePrice();
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
@@ -20,7 +20,7 @@ const CoinsPrice: React.FC = () => {
             <TextWithIcon>ARTH Current Price</TextWithIcon>
             <TargetPriceTag>Target Price: $1.00</TargetPriceTag>
           </div>
-          <div>
+          {/* <div>
             <BeforeChip>
               {isARTHPriceLoading
                 ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
@@ -28,7 +28,7 @@ const CoinsPrice: React.FC = () => {
                   .toLocaleString('en-US', { maximumFractionDigits: 6 })
               }
             </BeforeChip>
-          </div>
+          </div> */}
         </OneLine>
         <OneLine>
           <div>
@@ -36,11 +36,13 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              {isARTHXPriceLoading
-                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                : Number(getDisplayBalance(arthxPrice, 6, 6))
-                  .toLocaleString('en-US', {maximumFractionDigits: 6})
-              }
+              {isARTHXPriceLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(arthxPrice, 6, 6)).toLocaleString('en-US', {
+                  maximumFractionDigits: 6,
+                })
+              )}
             </BeforeChip>
           </div>
         </OneLine>
@@ -50,11 +52,13 @@ const CoinsPrice: React.FC = () => {
           </div>
           <div>
             <BeforeChip>
-              {isMAHAPriceLoading
-                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                : Number(getDisplayBalance(mahaPrice, 6, 6))
-                  .toLocaleString('en-US', { maximumFractionDigits: 6 })
-              }
+              {isMAHAPriceLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(mahaPrice, 6, 6)).toLocaleString('en-US', {
+                  maximumFractionDigits: 6,
+                })
+              )}
             </BeforeChip>
           </div>
         </OneLine>

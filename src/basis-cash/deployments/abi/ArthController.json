@@ -428,6 +428,20 @@
   },
   {
     "inputs": [],
+    "name": "collateralRaisedOnOtherChain",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "genesisTimestamp",
     "outputs": [
       {
@@ -804,6 +818,19 @@
   {
     "inputs": [
       {
+        "internalType": "address[]",
+        "name": "poolAddress",
+        "type": "address[]"
+      }
+    ],
+    "name": "addPools",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "poolAddress",
         "type": "address"
@@ -951,6 +978,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_collateralRaised",
+        "type": "uint256"
+      }
+    ],
+    "name": "setGlobalColletaralValue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "newTimelock",
         "type": "address"
@@ -1006,6 +1046,20 @@
   {
     "inputs": [],
     "name": "getARTHXGenesisPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getARTHXGenesisDiscount",
     "outputs": [
       {
         "internalType": "uint256",
