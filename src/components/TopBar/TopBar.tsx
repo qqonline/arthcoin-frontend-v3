@@ -88,7 +88,7 @@ const TopBar: React.FC = () => {
           </div>
           <HideonPhone>
             <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', width: '100%', alignItems: 'center' }}>
-              <div style={{marginRight: '12px'}}>
+              <div style={{ marginRight: '12px' }}>
                 <Button
                   text={'Get MAHA'}
                   size={'sm'}
@@ -149,14 +149,14 @@ const TopBar: React.FC = () => {
         </StyledTopBarInner>
         {/*</Container>*/}
       </StyledTopBar>
-      {showWarning && (
+      {/* {showWarning && (
         <ShowWarning>
           <ShowWarningInner>
             <img src={InfoIcon} alt="" width="24px" className="margin-right-5" />
             Please make sure that you are connected to {core.config.networkName}.
           </ShowWarningInner>
         </ShowWarning>
-      )}
+      )} */}
     </TopBarContainer>
   );
 };

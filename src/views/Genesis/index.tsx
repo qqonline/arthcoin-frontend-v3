@@ -266,9 +266,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
-    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
-    'The discount decreases over time as more collateral is committed.',
+    'ARTHX is minted whenever a user deposits collatearl to mint ARTH.',
+    'ARTHX is burnt whenever a user redeems ARTH for the underlying collatearl',
+    'The discount follows a bonding curve and decreases over time as more collateral is committed.',
   ];
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
