@@ -151,7 +151,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const [type, setType] = useState<'Commit' | 'Swap'>('Commit');
   const [successModal, setSuccessModal] = useState<boolean>(false);
   const [collateralValue, setCollateralValue] = useState<string>('0');
-  const [timerHeader, setHeader] = useState<boolean>(true);
+  const [timerHeader, setHeader] = useState<boolean>(false);
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
