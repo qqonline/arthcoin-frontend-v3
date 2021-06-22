@@ -68,7 +68,7 @@ export default (props: IProps) => {
     >
       <>
         <TransparentInfoDiv
-          labelData={`Your will receive`}
+          labelData={`You will receive`}
           rightLabelUnit={`Staked ${symbol}`}
           rightLabelValue={
             Number(getDisplayBalance(props.stakedBalance, tokenDecimals))

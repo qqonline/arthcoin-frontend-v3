@@ -234,7 +234,7 @@ const Home: React.FC = () => {
           >
             <button className="button-small-transparent">
               <img src={rightArrow} height={20} style={{ marginRight: '8px' }} />
-              Imagine. Arth
+              Imagine. ARTH
             </button>
           </a>
         </div>
@@ -272,12 +272,12 @@ const Home: React.FC = () => {
         >
           <img src={arthLogo} height={45} className="info-logo" />
           <br />
-          <p className="main-heading">Arth. Never lose buying power of your money.</p>
+          <p className='main-heading'>ARTH. Never lose buying power of your money.</p>
           <br />
-          <p className="section-description">
-            Arth is designed to fight depreciation of wealth & help you pay less for more. Your
-            purchasing power increases as you preserve Arth. No matter the fluctuation in the
-            market, the value of your money never drops.
+          <p className='section-description'>
+            ARTH is designed to fight depreciation of wealth & help you pay less for more.
+            Your purchasing power increases as you preserve ARTH. No matter the fluctuation in the market,
+            the value of your money never drops.
           </p>
         </div>
       </section>
@@ -328,14 +328,14 @@ const Home: React.FC = () => {
                 World’s first valuecoin
               </div>
               <div className="side-text">
-                Arth is a decentralized algorithmic currency that aims to fight inflation
-                irrespective of which direction the market moves, ARTH coin holders will never
-                lose their purchasing power.
+                ARTH is a decentralized algorithmic currency that aims to
+                fight inflation irrespective of which direction the market moves,
+                ARTH coin holders will never lose their purchasing power.
               </div>
               <div className="side-text">
-                Arth gives you financial freedom with no volatility as it’s a value-stable
-                currency that you control. Arth means wealth creation, one of the foremost goals
-                of human life.
+                ARTH gives you financial freedom with no volatility as
+                it’s a value-stable currency that you control.
+                ARTH means wealth creation, one of the foremost goals of human life.
               </div>
             </div>
           </div>
@@ -387,14 +387,14 @@ const Home: React.FC = () => {
               <div className="rate-input">
                 <div className="rate-value-card">
                   <span className="value positive">${arthValue.toFixed(2)}</span>
-                  <img src={arthLogobg} height={36} />
+                  <img src={arthLogobg} alt='ARTH Logo' height={36} />
                 </div>
                 <p className="input-label">ARTH Value Coin</p>
               </div>
               <div className="rate-input">
                 <div className="rate-value-card">
                   <span className="value negative">${fiatValue.toFixed(2)}</span>
-                  <img src={USDLogo} height={36} />
+                  <img src={USDLogo} alt='Fiat Logo' height={36} />
                 </div>
                 <p className="input-label">Fiat Currency</p>
               </div>
@@ -404,7 +404,8 @@ const Home: React.FC = () => {
       </section>
       <section id="section-two-features">
         <p className="title">
-          Arth is the future of money filling up your wallet soon with the maximum buying power
+          ARTH is the future of money filling up
+          your wallet soon with the maximum buying power
         </p>
         <div className="card-deck row">
           <div className="col-lg-6 col-sm-12">
@@ -469,8 +470,8 @@ const Home: React.FC = () => {
       <section id="section-application">
         <p className="title">Application & Usage</p>
         <p className="subtitle">
-          Arth is for students, shoppers, tourists, businessmen, employees, passengers,
-          institutions & governments. Anyone exchanging value.
+          ARTH is for students, shoppers, tourists, businessmen, employees,
+          passengers, institutions & governments. Anyone exchanging value.
         </p>
         <div className="planet-container"></div>
       </section>
@@ -478,11 +479,11 @@ const Home: React.FC = () => {
         <div className="main-container">
           <p className="title">Technology</p>
           <p className="subtitle">
-            Arth is an algorithmic value-stable coin built using robust strategies like vault
-            optimization, auto collateralisation ratio, automatic rebalancing mechanism,
-            anti-correlated asset selection, purchasing power pegging, oracle pricefeeds and
-            more.{' '}
-          </p>
+            ARTH is an algorithmic value-stable coin built using
+            robust strategies like vault optimization,
+            auto collateralisation ratio, automatic rebalancing mechanism,
+            anti-correlated asset selection, purchasing power pegging,
+            oracle pricefeeds and more. </p>
           <div className="tech-container">
             <div className="feature-image">
               <img
@@ -494,11 +495,13 @@ const Home: React.FC = () => {
             <div className="tech-info">
               <p className="info-title">Cross-border transactions</p>
               <p className="info-desc">
-                Deployed on Layer 2 Protocol, Arth offers transactions speed of less than 3
-                seconds to cross the border from your wallet to another across the globe. The
-                very near future version of Arth shall be a cross-chain solution that brings the
-                power of value coin to other blockchains like Ethereum and more
+                Deployed on Layer 2 Protocol,
+                ARTH offers a transaction speed of less than 3 seconds to cross the border from your wallet
+                to another across the globe.
+                The very near future version of ARTH shall be a cross-chain solution that brings
+                the power of value coin to other blockchains like Ethereum and more
               </p>
+
             </div>
           </div>
           <div className="tech-container">
@@ -512,9 +515,9 @@ const Home: React.FC = () => {
             <div className="tech-info">
               <p className="info-title">Cross-chain liquidity</p>
               <p className="info-desc">
-                Arth is compatible with tokens and currencies from other blockchains to create a
-                massive liquidity pool across the chains. You can stake, lend, borrow, trade
-                Arth across chains. (coming soon)
+                ARTH is compatible with tokens and currencies from other
+                blockchains to create a massive liquidity pool across the chains.
+                You can stake, lend, borrow, trade ARTH across chains. (coming soon)
               </p>
             </div>
           </div>
@@ -524,8 +527,8 @@ const Home: React.FC = () => {
         <div className="main-container">
           <p className="title">Lead the revolution</p>
           <p className="subtitle">
-            Arth eliminates price instability and value erosion. Control your financial future,
-            increase your money’s worth.
+            ARTH eliminates price instability and value erosion.
+            Control your financial future, increase your money’s worth.
           </p>
           <div className="cards-container row">
             <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
@@ -538,7 +541,7 @@ const Home: React.FC = () => {
             <div className="col-lg-4 col-md-4 col-sm-12 custom-col">
               <div className="Icard">
                 <span className="text">
-                  A timeless store of value that is preserved across the generations.
+                  A timeless store of value that is preserved across generations.
                 </span>
               </div>
             </div>
@@ -753,7 +756,9 @@ const Home: React.FC = () => {
         <div className="footer-content">
           <div className="top-most">
             <div className="msg">
-              <p className="title">Arth. Money Reinvented</p>
+              <p className="title">
+                ARTH. Money Reinvented
+              </p>
               <p className="subtitle">
                 Join the mission as we establish a new standard of money. A better money.
               </p>
@@ -794,32 +799,32 @@ const Home: React.FC = () => {
             </div>
             <div className="col-12 col-sm-6 bottom-right">
               <div className="social-items">
-                <a id="social-twitter" href="https://twitter.com/TheMahaDAO" target="_blank">
+                <a id="social-twitter" href="https://twitter.com/TheMahaDAO" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-twitter" />
                   </button>
                 </a>
-                <a id="social-medium" href="https://medium.com/mahadao" target="_blank">
+                <a id="social-medium" href="https://medium.com/mahadao" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-medium" />
                   </button>
                 </a>
-                <a id="social-telegram" href="https://t.me/MahaDAO" target="_blank">
+                <a id="social-telegram" href="https://t.me/MahaDAO" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-telegram-plane" />
                   </button>
                 </a>
-                <a id="social-github" href="https://github.com/mahadao" target="_blank">
+                <a id="social-github" href="https://github.com/mahadao" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-github" />
                   </button>
                 </a>
-                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/" target="_blank">
+                <a id="social-reddit" href="https://www.reddit.com/r/MahaDAO/" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-reddit" />
                   </button>
                 </a>
-                <a id="social-discord" href="http://discord.gg/mahadao" target="_blank">
+                <a id="social-discord" href="http://discord.gg/mahadao" rel="noopener noreferrer" target="_blank">
                   <button className="button3">
                     <i className="fab fa-discord" />
                   </button>

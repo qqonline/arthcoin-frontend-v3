@@ -16,7 +16,7 @@ const BondingDiscount: React.FC = () => {
 
   return (
     <CustomInfoCard className={'custom-mahadao-box'}>
-      <CustomInfoCardHeader>Fee rates</CustomInfoCardHeader>
+      <CustomInfoCardHeader>Fee Rates</CustomInfoCardHeader>
       <CustomInfoCardDetails>
         <OneLine>
           <div style={{ flex: 1 }}>

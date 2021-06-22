@@ -27,7 +27,7 @@ const BasicInfo: React.FC<props> = (props) => {
           <OneLine>
             <div>
               <TextWithIcon>
-                Available to mint
+                Available To Mint
                 <CustomToolTip toolTipText={'Amount of ARTH available to mint across all pools.'} />
               </TextWithIcon>
               <BeforeChip>

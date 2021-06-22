@@ -209,7 +209,7 @@ const Genesis = (props: WithSnackbarProps) => {
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
-                    Commited Collateral
+                    Committed Collateral
                     <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>

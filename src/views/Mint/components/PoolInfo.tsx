@@ -166,7 +166,7 @@ export default ({ selectedCollateralCoin }: IProps) => {
       </RightTopCard>
       <RightBottomCard className={'custom-mahadao-box'}>
         <RightBottomCardTitle>
-          Farming pools are great way to earn high interest by staking your $ARTH
+          Farming pools are a great way to earn high interest by staking your $ARTH
         </RightBottomCardTitle>
         <Grid container style={{ marginTop: '16px' }}>
           <Grid item lg={4}>

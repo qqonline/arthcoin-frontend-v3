@@ -26,20 +26,11 @@ const UnderstandMore: React.FC<props> = (props: props) => {
           ))}
         </ul>
         <LearnMore>
-          <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={'_blank'} id={'learn_more_genesis_to_Arthv2'}>
-            Read more about ARTH v2.0
-          </a>
+          <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={"_blank"}>Go to ARTH V2.0 article to learn more</a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
         <LearnMore>
-          <a
-            href={'https://docs.arthcoin.com/arth-101/what-is-arthx'}
-            rel="noopener noreferrer"
-            target={'_blank'}
-            id={'learn_more_genesis_to_arthx'}
-          >
-            Learn more about ARTHX
-          </a>
+          <a href={'https://mahadao.com/arthx.html'} rel="noopener noreferrer" target={"_blank"}>Learn about ARTHX</a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
       </CustomInfoCardDetails>

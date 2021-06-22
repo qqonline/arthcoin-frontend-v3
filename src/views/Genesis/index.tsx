@@ -437,10 +437,8 @@ const Genesis = (props: WithSnackbarProps) => {
                 </OneLineInputwomargin>
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
-                    Commited Collateral
-                    <CustomToolTip
-                      toolTipText={'$GMU worth of collateral currently in the protocol.'}
-                    />
+                    Committed Collateral
+                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {isCommitedCollateralLoading ? (
@@ -592,7 +590,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     <Logo src={TicketGreen} alt='TicketBg' />
                     <Text>You will get {
                       Number(getDisplayBalanceToken(lotteryAmount, currentToken, 0)).toLocaleString()
-                    } lottery tickets to win NFT prize(s).
+                    } lottery ticket(s) to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>
                 )}

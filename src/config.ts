@@ -125,11 +125,15 @@ export const platformURL: { [platform: string]: Platform } = {
     addLiquidityUrl: 'https://app.uniswap.org/#/add/v2',
     swapUrl: 'https://app.uniswap.org/#/swap',
   },
+  dfyn: {
+    addLiquidityUrl: 'https://app.sushi.com/add',
+    swapUrl: 'https://app.sushi.com/swap',
+  },
 };
 
 export const stakingContracts: StakingContract[] = [
   {
-    platform: 'dfyn',
+    platform: 'sushiswap',
     contract: 'StakeARTHXARTH',
     kind: 'unlocked',
     depositToken: 'ArthArthxLP',
@@ -155,7 +159,7 @@ export const stakingContracts: StakingContract[] = [
     categories: ['all', 'arthx'],
   },
   {
-    platform: 'dfyn',
+    platform: 'sushiswap',
     contract: 'StakeARTHMAHA',
     kind: 'unlocked',
     depositToken: 'ArthMahaLP',
@@ -185,11 +189,11 @@ export const stakingContracts: StakingContract[] = [
 export const tradingPairs: TradingPairs[] = [
   {
     tokens: ['MAHA', 'ARTH'],
-    platform: 'dfyn',
+    platform: 'sushiswap',
   },
   {
     tokens: ['ARTHX', 'ARTHX'],
-    platform: 'dfyn',
+    platform: 'sushiswap',
   },
 ];
 
