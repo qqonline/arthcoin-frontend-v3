@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { useWallet } from 'use-wallet';
 import useDepositWETH from '../../../hooks/callbacks/useDepositWETH';
+import useConfig from '../../../hooks/useConfig';
 
 interface IProps {
   onCancel: () => void;
@@ -27,11 +28,11 @@ export default (props: IProps) => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const { balance } = useWallet()
 
-  const symbol = 'ETH' // change this for the collateral
-
+  const config = useConfig()
+  const symbol = config.blockchainToken // change this for the collateral
 
   const decimals = BigNumber.from(10).pow(18)
-  const desposit = useDepositWETH('ETH', BigNumber.from(Number(val) * 1000).mul(decimals).div(1000))
+  const desposit = useDepositWETH(symbol, BigNumber.from(Number(val) * 1000).mul(decimals).div(1000))
 
   return (
     <CustomModal
@@ -41,16 +42,16 @@ export default (props: IProps) => {
       modalTitleStyle={{}}
       modalContainerStyle={{}}
       modalBodyStyle={{}}
-      title={`Convert ETH to WETH`}
+      title={`Wrap your tokens`}
     >
       <div>
         <CustomInputContainer
-          ILabelValue={`ETH to convert`}
+          ILabelValue={`${symbol} to convert`}
           IBalanceValue={getDisplayBalance(BigNumber.from(balance), 18)} //pass the balance here for MAX to work
           showBalance={false}
           ILabelInfoValue={''}
           DefaultValue={String(val)}
-          LogoSymbol={'ETH'}
+          LogoSymbol={symbol}
           hasDropDown={false}
           SymbolText={symbol}
           setText={(t) => {

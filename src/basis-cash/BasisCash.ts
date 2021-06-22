@@ -91,7 +91,7 @@ export class BasisCash {
       WETH: this.WETH,
       ETH: this.WETH,
 
-      MATIC: this.MATIC,
+      MATIC: this.WMATIC,
       WMATIC: this.WMATIC,
 
       ArthMahaLP: this.ArthMahaLP,
