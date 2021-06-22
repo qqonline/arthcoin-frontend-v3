@@ -31,6 +31,8 @@ export class BasisCash {
   WBTC: ERC20;
   WETH: ERC20;
   WMATIC: ERC20;
+
+  MATIC: ERC20;
   PoolToken: ERC20;
 
   ArthxArthLP: ERC20;
@@ -69,6 +71,8 @@ export class BasisCash {
     this.USDC = new ERC20(deployments.USDC?.address, provider, 'USDC', 6);
     this.WBTC = new ERC20(deployments.WBTC?.address, provider, 'WBTC', 8);
     this.WETH = new ERC20(deployments.WETH?.address, provider, 'WETH', 18);
+    this.WMATIC = new ERC20(deployments.WMATIC?.address, provider, 'WMATIC', 18);
+    this.MATIC = new ERC20(deployments.WMATIC?.address, provider, 'MATIC', 18);
 
     // this.multicall = new Multicall(cfg.defaultProvider, deployments.Multicall.address);
 
@@ -86,6 +90,9 @@ export class BasisCash {
       WBTC: this.WBTC,
       WETH: this.WETH,
       ETH: this.WETH,
+
+      MATIC: this.MATIC,
+      WMATIC: this.WMATIC,
 
       ArthMahaLP: this.ArthMahaLP,
       ArthArthxLP: this.ArthxArthLP,
@@ -123,6 +130,9 @@ export class BasisCash {
       this.USDT,
       this.WBTC,
       this.USDT,
+      this.WETH,
+      this.WMATIC,
+      this.MATIC,
       this.PoolToken,
       this.ArthMahaLP,
       this.ArthxArthLP,
