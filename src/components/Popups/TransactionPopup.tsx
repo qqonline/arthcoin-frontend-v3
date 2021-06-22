@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { AutoColumn } from '../Column';
 import { AutoRow } from '../Row';
 import { useWallet } from 'use-wallet';
-import config from '../../config';
+import useConfig from '../../hooks/useConfig';
 
 const RowNoFlex = styled(AutoRow)`
   flex-wrap: nowrap;
@@ -22,6 +22,8 @@ export default function TransactionPopup({
   const { chainId } = useWallet();
   const theme = useContext(ThemeContext);
 
+  const config = useConfig()
+
   return (
     <RowNoFlex>
       <div style={{ paddingRight: 16 }}>
@@ -36,7 +38,7 @@ export default function TransactionPopup({
           {summary ?? 'Hash: ' + hash.slice(0, 8) + '...' + hash.slice(58, 65)}
         </StyledPopupDesc>
         {chainId && (
-          <StyledLink target="_blank" href={`${config.etherscanUrl}/tx/${hash}`}>View on Etherscan</StyledLink>
+          <StyledLink target="_blank" href={`${config.etherscanUrl}/tx/${hash}`}>View on Explorer</StyledLink>
         )}
       </AutoColumn>
     </RowNoFlex>
