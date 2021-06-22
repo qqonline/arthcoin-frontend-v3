@@ -4,13 +4,14 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 
 import TokenSymbol from '../../../components/TokenSymbol';
 
-import config, {platformURL} from '../../../config';
+import config, { platformURL } from '../../../config';
 import useTotalSupply from '../../../hooks/useTotalSupply';
 import prettyNumber from '../../../components/PrettyNumber';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useUniswapLiquidity from '../../../hooks/useUniswapLiquidity';
 import useCirculatingSupply from '../../../hooks/useCirculatingSupply';
 import Loader from 'react-spinners/BeatLoader';
+import useConfig from '../../../hooks/useConfig';
 
 interface HomeCardProps {
   title: string;
@@ -19,17 +20,17 @@ interface HomeCardProps {
   uniswapInputAddress: string;
 }
 
-const HomeCard: React.FC<HomeCardProps> = ({
-  title,
-  symbol,
-  address,
-}) => {
-  const {isLoading: isTotalSupplyLoading, value: totalSupply} = useTotalSupply(symbol);
-  const {isLoading: isLiquidityLoading, value: liquidity} = useUniswapLiquidity(symbol);
-  const {isLoading: isCirculatingSupplyLoading, value: circulatingSupply} = useCirculatingSupply(symbol);
+const HomeCard: React.FC<HomeCardProps> = ({ title, symbol, address }) => {
+  const { isLoading: isTotalSupplyLoading, value: totalSupply } = useTotalSupply(symbol);
+  const { isLoading: isLiquidityLoading, value: liquidity } = useUniswapLiquidity(symbol);
+  const {
+    isLoading: isCirculatingSupplyLoading,
+    value: circulatingSupply,
+  } = useCirculatingSupply(symbol);
 
+  const config = useConfig();
   const tokenUrl = `${config.etherscanUrl}/address/${address}`;
-  
+
   return (
     <Wrapper>
       <Card className={'custom-mahadao-box'}>
@@ -47,10 +48,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
           <CardSection>
             <TextWithIcon>Liquidity</TextWithIcon>
             <StyledValue>
-              { isLiquidityLoading
-                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                : prettyNumber(getDisplayBalance(liquidity))
-              }
+              {isLiquidityLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                prettyNumber(getDisplayBalance(liquidity))
+              )}
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -58,10 +60,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Circulating Supply
             </StyledSupplyLabel>
             <StyledValue>
-              { isCirculatingSupplyLoading
-                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                : prettyNumber(getDisplayBalance(circulatingSupply))
-              }
+              {isCirculatingSupplyLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                prettyNumber(getDisplayBalance(circulatingSupply))
+              )}
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -69,10 +72,11 @@ const HomeCard: React.FC<HomeCardProps> = ({
               Total Supply
             </StyledSupplyLabel>
             <StyledValue>
-              { isTotalSupplyLoading
-                ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                : prettyNumber(getDisplayBalance(totalSupply))
-              }
+              {isTotalSupplyLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                prettyNumber(getDisplayBalance(totalSupply))
+              )}
             </StyledValue>
           </CardSection>
         </CardContent>
@@ -85,7 +89,9 @@ const HomeCard: React.FC<HomeCardProps> = ({
           }
         >
           <LinkText>
-            Buy {symbol} from {config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()} <CallMadeIcon style={{ fontSize: 15 }} />
+            Buy {symbol} from{' '}
+            {config.platform[0].toUpperCase() + config.platform.slice(1).toLowerCase()}{' '}
+            <CallMadeIcon style={{ fontSize: 15 }} />
           </LinkText>
         </UniswapLink>
       </Card>

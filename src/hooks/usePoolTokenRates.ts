@@ -2,9 +2,9 @@ import { BigNumber } from 'ethers';
 import { useWallet } from 'use-wallet';
 import { useCallback, useEffect, useState } from 'react';
 
-import config from '../config';
 import useCore from './useCore';
 import { useBlockNumber } from '../state/application/hooks';
+import useConfig from './useConfig';
 
 type State = {
   isLoading: boolean;
@@ -14,10 +14,11 @@ type State = {
 }
 
 export default () => {
-  const [value, setValue] = useState({isLoading: true, value: { maha: BigNumber.from(0), arthx: BigNumber.from(0)}});
-  
+  const [value, setValue] = useState({ isLoading: true, value: { maha: BigNumber.from(0), arthx: BigNumber.from(0) } });
+  const config = useConfig();
+
   const core = useCore();
-  const {account} = useWallet();
+  const { account } = useWallet();
   const blockNumber = useBlockNumber();
   const pow = BigNumber.from(10).pow(18)
 
@@ -26,7 +27,7 @@ export default () => {
       setValue({
         isLoading: false,
         value: {
-          maha: BigNumber.from(0), 
+          maha: BigNumber.from(0),
           arthx: BigNumber.from(0)
         }
       });
@@ -55,7 +56,7 @@ export default () => {
 
     const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
     return () => clearInterval(refreshInterval);
-  }, [blockNumber, setValue, core, account, fetchCashPrice]);
+  }, [blockNumber, setValue, core, account, fetchCashPrice, config.refreshInterval]);
 
   return value
 };

@@ -33,11 +33,15 @@ import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
 
-
 const Providers: React.FC = ({ children }) => {
+  // @ts-ignore
+  const currentNetworkId = window.ethereum.networkVersion;
+
+  // const currentNetwork =
+
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider chainId={config.chainId} connectors={{ injected: {} }}>
+      <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
         <Provider store={store}>
           <Updaters />
           <BasisCashProvider>
@@ -56,16 +60,14 @@ const App: React.FC = () => {
   }, []);
 
   const makeUnPassive = (ev: any) => {
-    ev.preventDefault()
-  }
+    ev.preventDefault();
+  };
 
   useEffect(() => {
-    document.body.addEventListener('touchmove', makeUnPassive, { passive: true })
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
 
-    return () => (
-      document.body.removeEventListener('touchmove', makeUnPassive)
-    )
-  }, [])
+    return () => document.body.removeEventListener('touchmove', makeUnPassive);
+  }, []);
 
   return (
     <Providers>

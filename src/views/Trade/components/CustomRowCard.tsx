@@ -7,6 +7,7 @@ import useCore from '../../../hooks/useCore';
 import { TradingPairs } from '../../../basis-cash/types';
 
 import config, { platformURL } from '../../../config';
+import useConfig from '../../../hooks/useConfig';
 
 interface IProps {
   info: TradingPairs;
@@ -14,6 +15,7 @@ interface IProps {
 
 const CustomRowCard = (props: IProps) => {
   const core = useCore();
+  const config = useConfig();
 
   const token1 = core.tokens[props.info.tokens[0]];
   const token2 = core.tokens[props.info.tokens[1]];
@@ -21,13 +23,17 @@ const CustomRowCard = (props: IProps) => {
   const address1 = token1.symbol === 'WMATIC' ? 'ETH' : token1.address;
   const address2 = token2.symbol === 'WMATIC' ? 'ETH' : token2.address;
 
-  const link = platformURL[config.platform] && platformURL[config.platform].addLiquidityUrl
-    ? `${platformURL[config.platform].addLiquidityUrl}/${address1}/${address2}`
-    : `https://app.uniswap.org/#/add/v2/${address1}/${address2}`;
+  const link =
+    platformURL[config.platform] && platformURL[config.platform].addLiquidityUrl
+      ? `${platformURL[config.platform].addLiquidityUrl}/${address1}/${address2}`
+      : `https://app.uniswap.org/#/add/v2/${address1}/${address2}`;
 
-  const tradelink = platformURL[config.platform] && platformURL[config.platform].swapUrl
-    ? `${platformURL[config.platform].swapUrl}?inputCurrency=${address2}&outputCurrency=${address1}`
-    : `https://app.uniswap.org/#/swap?inputCurrency=${address2}&outputCurrency=${address1}&use=V2`;
+  const tradelink =
+    platformURL[config.platform] && platformURL[config.platform].swapUrl
+      ? `${
+          platformURL[config.platform].swapUrl
+        }?inputCurrency=${address2}&outputCurrency=${address1}`
+      : `https://app.uniswap.org/#/swap?inputCurrency=${address2}&outputCurrency=${address1}&use=V2`;
 
   return (
     <CustomCardGrid>

@@ -5,12 +5,14 @@ import useDebounce from '../../hooks/useDebounce';
 import useIsWindowVisible from '../../hooks/useIsWindowVisible';
 import { updateBlockNumber } from './actions';
 import { getDefaultProvider } from '../../utils/provider';
+import useConfig from '../../hooks/useConfig';
 
 export default function Updater(): null {
   const { ethereum, chainId } = useWallet();
 
   const dispatch = useDispatch();
   const windowVisible = useIsWindowVisible();
+  const config = useConfig();
 
   const [state, setState] = useState<{
     chainId: number | undefined;
@@ -38,7 +40,7 @@ export default function Updater(): null {
     if (!ethereum || !chainId || !windowVisible) return undefined;
     setState({ chainId, blockNumber: null });
 
-    const provider = getDefaultProvider();
+    const provider = getDefaultProvider(config);
     provider
       .getBlockNumber()
       .then(blockNumberCallback)
@@ -49,8 +51,8 @@ export default function Updater(): null {
     provider.on('block', blockNumberCallback)
     return () => {
       provider.removeListener('block', blockNumberCallback);
-    }  
-  }, [dispatch, chainId, ethereum, blockNumberCallback, windowVisible]);
+    }
+  }, [dispatch, chainId, ethereum, blockNumberCallback, windowVisible, config]);
 
   const debouncedState = useDebounce(state, 100);
 

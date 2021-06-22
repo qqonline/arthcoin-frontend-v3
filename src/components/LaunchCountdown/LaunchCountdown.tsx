@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import config from '../../config';
 import Dial from '../Dial';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
+import useConfig from '../../hooks/useConfig';
 
 interface LaunchCountdownProps {
   deadline: Date;
@@ -15,6 +15,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({
   description,
   descriptionLink,
 }) => {
+  const config = useConfig();
   const percentage =
     ((Date.now() - config.genesisLaunchDate.getTime()) /
       (deadline.getTime() - config.genesisLaunchDate.getTime())) *

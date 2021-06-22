@@ -14,8 +14,16 @@ export const BasisCashProvider: React.FC = ({ children }) => {
   const [core, setBasisCash] = useState<BasisCash>();
 
   useEffect(() => {
-    if (!core) {
-      const basis = new BasisCash(config);
+    const configs = Object.values(config);
+
+    if (!core && !config) {
+      // @ts-ignore
+      const currentNetworkId = window.ethereum.networkVersion;
+      const currentConfig = configs.find((c) => Number(c.chainId) === Number(currentNetworkId));
+
+      console.log(currentConfig, currentNetworkId, configs);
+
+      const basis = new BasisCash(currentConfig);
       if (account) {
         // wallet was unlocked at initialization
         basis.unlockWallet(ethereum, account);

@@ -189,4 +189,4 @@ export const tradingPairs: TradingPairs[] = [
   },
 ];
 
-export default configurations['stagingMatic'];
+export default configurations;

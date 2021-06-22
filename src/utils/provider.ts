@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
-import config from '../config';
 import { web3ProviderFrom } from '../basis-cash/ether-utils';
+import { Configuration } from '../basis-cash/config';
 
-export function getDefaultProvider(): ethers.providers.BaseProvider {
+export function getDefaultProvider(config: Configuration): ethers.providers.BaseProvider {
   // @ts-ignore
   const _window: { ethereum?: any, web3?: any } = window
 
@@ -31,7 +31,7 @@ export function getDefaultProvider(): ethers.providers.BaseProvider {
 
 
 
-export function getGanacheProvider(): ethers.providers.JsonRpcProvider {
+export function getGanacheProvider(config: Configuration): ethers.providers.JsonRpcProvider {
   return new ethers.providers.JsonRpcProvider(
     web3ProviderFrom(config.defaultProvider),
     config.chainId,
