@@ -595,7 +595,7 @@ const Genesis = (props: WithSnackbarProps) => {
                     } lottery tickets to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>
-                }
+                )}
                 {
                   !!!account
                     ? (
@@ -925,7 +925,7 @@ const LotteryBox = styled.div`
       rgba(255, 255, 255, 0) 100%
     ),
     linear-gradient(252.98deg, #e44d75 10.74%, #eb822c 87.31%);
-  margin-top: 24spx;
+  margin-top: 24px;
 `;
 
 const LotteryBoxText = styled.p`
