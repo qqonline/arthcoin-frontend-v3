@@ -5,7 +5,7 @@ const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink href={buyBAS} target="_blank">
-        Get MAHA
+        Buy MAHA
       </StyledLink>
       <StyledLink href={buyBAC} target="_blank">
         Get ARTH
@@ -50,7 +50,7 @@ const StyledLink = styled.a`
   }
 `;
 const buyBAS =
-  'https://uniswap.exchange/swap?inputCurrency=0x6b175474e89094c44da98b954eedeac495271d0f&outputCurrency=0xa7ed29b253d8b4e3109ce07c80fc570f81b63696';
+  'https://app.uniswap.org/#/swap?outputCurrency=0xb4d930279552397bba2ee473229f89ec245bc365';
 const buyBAC =
   'https://uniswap.exchange/swap?inputCurrency=0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a&outputCurrency=0x6b175474e89094c44da98b954eedeac495271d0f';
 export default Nav;

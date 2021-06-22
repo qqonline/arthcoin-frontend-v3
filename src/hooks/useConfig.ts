@@ -7,6 +7,8 @@ const useConfig = () => {
   const currentNetworkId = window.ethereum.networkVersion;
   const currentConfig = configs.find((c) => Number(c.chainId) === Number(currentNetworkId));
 
+  if (!currentConfig) return config.matic;
+
   return currentConfig
 };
 

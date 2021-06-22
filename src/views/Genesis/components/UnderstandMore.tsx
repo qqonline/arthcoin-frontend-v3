@@ -21,18 +21,24 @@ const UnderstandMore: React.FC<props> = (props: props) => {
       <CustomInfoCardHeader>Understand how Genesis works</CustomInfoCardHeader>
       <CustomInfoCardDetails>
         <ul>
-          {
-            props?.dataObj?.map((obj) => (
-              <ListItem key={obj} value={obj} />
-            ))
-          }
+          {props?.dataObj?.map((obj) => (
+            <ListItem key={obj} value={obj} />
+          ))}
         </ul>
         <LearnMore>
-          <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={"_blank"}>Go to ARTH V 2.0 article to learn more</a>
+          <a href={'https://docs.arthcoin.com'} rel="noopener noreferrer" target={'_blank'}>
+            Read more about ARTH v2.0
+          </a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
         <LearnMore>
-          <a href={'https://mahadao.com/arthx.html'} rel="noopener noreferrer" target={"_blank"}>Learn about Arthx</a>
+          <a
+            href={'https://docs.arthcoin.com/arth-101/what-is-arthx'}
+            rel="noopener noreferrer"
+            target={'_blank'}
+          >
+            Learn more about ARTHX
+          </a>
           <CallMadeIcon style={{ fontSize: 15, marginLeft: 4 }} />
         </LearnMore>
       </CustomInfoCardDetails>

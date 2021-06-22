@@ -100,9 +100,13 @@ const TopBar: React.FC = () => {
             >
               <div style={{ marginRight: '12px' }}>
                 <Button
-                  text={'Get MAHA'}
+                  text={'Buy MAHA'}
                   size={'sm'}
-                  onClick={() => window.open('https://mahadao.com')}
+                  onClick={() =>
+                    window.open(
+                      'https://app.uniswap.org/#/swap?outputCurrency=0xb4d930279552397bba2ee473229f89ec245bc365',
+                    )
+                  }
                 />
               </div>
               <TxButton />
@@ -125,9 +129,13 @@ const TopBar: React.FC = () => {
                 )}*/}
               <div style={{ marginRight: '12px' }}>
                 <Button
-                  text={'Get MAHA'}
+                  text={'Buy MAHA'}
                   size={'sm'}
-                  onClick={() => window.open('https://mahadao.com')}
+                  onClick={() =>
+                    window.open(
+                      'https://app.uniswap.org/#/swap?outputCurrency=0xb4d930279552397bba2ee473229f89ec245bc365',
+                    )
+                  }
                 />
               </div>
               {!showMobileMenu ? (

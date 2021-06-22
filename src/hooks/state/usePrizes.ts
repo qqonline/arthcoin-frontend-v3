@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../useCore';
 import usePrizeCounter from './usePrizeCounter';
-import { useBlockNumber } from '../../state/application/hooks';
+import { BigNumber } from 'ethers';
 
 type State = {
   isLoading: boolean;
@@ -13,28 +13,53 @@ export default () => {
   const [customState, setCustomState] = useState<State>({ isLoading: true, value: [] });
 
   const core = useCore();
-  const blockNumber = useBlockNumber();
   const prizeCounter = usePrizeCounter();
 
-  const fetchValue = useCallback(async () => {
-    const controller = core.contracts.LotteryRaffle;
-    const prizeCounterLength = Number(prizeCounter.toString());
-    if (!prizeCounterLength) return;
-
-    const prizes = [];
-    let i = 0;
-    for (i; i < prizeCounterLength; i++) {
-      const prize = await controller.prizes(`prize${i+1}`);
-      prizes.push(prize);
+  const prizesHardcoded = [
+    {
+      criteria: BigNumber.from(10),
+      description: "MAHA Lambo",
+      image: "https://lh3.googleusercontent.com/FFYxezBkbNmZ01vI5_P_aIyYbFX8Djvnvom0MV6JZYuFGTbiEoxX86fZsSWad7Ze4n-GozPyPUUJg0ndHMgvAiJx3x3DuHZsKkP0EQ",
+      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
+      tokenId: BigNumber.from(1),
+      winner: "0x0000000000000000000000000000000000000000",
+    },
+    {
+      criteria: BigNumber.from(5),
+      description: "MAHA Verses Fiat",
+      image: "https://i.imgur.com/4Ro2mQx.jpeg",
+      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
+      tokenId: BigNumber.from(1),
+      winner: "0x0000000000000000000000000000000000000000",
+    },
+    {
+      criteria: BigNumber.from(1),
+      description: "MAHA to the moon",
+      image: "https://i.imgur.com/RTCw8Fm.jpeg",
+      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
+      tokenId: BigNumber.from(1),
+      winner: "0x0000000000000000000000000000000000000000",
+    },
+    {
+      criteria: BigNumber.from(1),
+      description: "MAHA all around the world",
+      image: "https://i.imgur.com/0T1BUW7.jpg",
+      nftAddress: "0xd917eddfbF33166aDE07de592B7eD1089E43308A",
+      tokenId: BigNumber.from(1),
+      winner: "0x0000000000000000000000000000000000000000",
     }
+  ]
 
-    if (prizeCounterLength !== i) return;
-    setCustomState({isLoading: false, value: prizes});
-  }, [core.contracts.LotteryRaffle, prizeCounter]);
+  const fetchValue = useCallback(async () => {
+
+    const prizes = prizesHardcoded
+
+    setCustomState({ isLoading: false, value: prizes });
+  }, [prizesHardcoded]);
 
   useEffect(() => {
     fetchValue().catch((err) => console.error(`Failed to fetch global CR: ${err.stack}`));
-  }, [blockNumber, fetchValue]);
+  }, [fetchValue]);
 
   return customState;
 };

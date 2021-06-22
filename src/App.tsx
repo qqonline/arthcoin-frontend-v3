@@ -4,7 +4,14 @@ import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { UseWalletProvider } from 'use-wallet';
 import { ThemeProvider } from 'styled-components';
-import { HashRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 // import { createMemoryHistory } from 'history';
 
 import './App.css';
@@ -72,8 +79,6 @@ const App: React.FC = () => {
   const config = useConfig();
   if (!config) return <div>loading config</div>;
 
-  console.log('config', config);
-
   return (
     <Providers>
       <Router>
@@ -127,6 +132,7 @@ const App: React.FC = () => {
               <Lottery />
             </Page>
           </Route>
+          <Redirect to="/genesis"></Redirect>
         </Switch>
       </Router>
     </Providers>

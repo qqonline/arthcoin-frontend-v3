@@ -246,7 +246,7 @@ const Genesis = (props: WithSnackbarProps) => {
     if (isCollateralPriceLoading) return BigNumber.from(0);
     if (!collateralValue || collateralGMUPrice.lte(0)) return BigNumber.from(0);
     const gmuCollateralValue = BigNumber.from(parseUnits(collateralValue, tokenDecimals));
-    return gmuCollateralValue.mul(collateralGMUPrice).div(10).div(1e6);
+    return gmuCollateralValue.mul(collateralGMUPrice).div(1000).div(1e6);
   }, [collateralValue, collateralGMUPrice, tokenDecimals, isCollateralPriceLoading]);
 
   const arthxDiscount = useMemo(() => {
@@ -278,9 +278,9 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const understandMore = [
     'Users can either commit collateral or swap ARTH to receive ARTHX.',
-    'ARTHX is minted whenever the protocol finds that it does not have enough collateral to back ARTH.',
-    'ARTHX is burnt when a user mints ARTH or when the protocol buys back ARTHX with excess collateral.',
-    'The discount decreases over time as more collateral is committed.',
+    'The bonus for committing collateral, decreases over time as more collateral is committed.',
+    'ARTHX is minted whenever the user deposits collateral and the protocol mints new ARTH tokens. ',
+    'ARTHX is burnt when a user wants to redeem their ARTH for the underlying collateral',
   ];
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
@@ -662,7 +662,7 @@ const Genesis = (props: WithSnackbarProps) => {
             <UnderstandMore dataObj={understandMore} />
             <LotteryBox className={'custom-mahadao-box'}>
               <LotteryBoxText>
-                Genesis participate can issue lottery tickets to win exciting MAHA Prizes
+                Genesis participants can issue lottery tickets to win exciting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
                 <Button
@@ -682,11 +682,11 @@ const Genesis = (props: WithSnackbarProps) => {
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTHX successful!'}
-        subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
-        subTitleLink={'/#/farming'}
-        buttonText={'Stake your ARTHX'}
-        buttonType={'default'}
-        buttonHref={'/#/farming'}
+        // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
+        // subTitleLink={'/#/farming'}
+        // buttonText={'Stake your ARTHX'}
+        // buttonType={'default'}
+        // buttonHref={'/#/farming'}
       />
     </>
   );
