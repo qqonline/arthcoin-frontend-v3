@@ -320,11 +320,11 @@ const Genesis = (props: WithSnackbarProps) => {
         setModalOpen={() => setOpenModal(0)}
         title={type === 'Commit' ? 'Committing collateral!' : 'Swapping ARTH'}
         subsubTitle={
-          'Your transaction is now being mined on the blockchain. You should consider staking your tokens to earn extra rewards!'
+          'Your transaction is now being mined on the blockchain. You should consider adding collatearl to earn NFT rewards.'
         }
-        buttonText={'Stake your ARTHX'}
-        buttonType={'default'}
-        buttonTo={'/farming'}
+      // buttonText={'Stake your ARTHX'}
+      // buttonType={'default'}
+      // buttonTo={'/farming'}
       />
       <CustomModal
         closeButton
