@@ -70,7 +70,7 @@ const configurations: { [env: string]: Configuration } = {
     gasLimitMultiplier: 1.1,
     defaultCollateral: 'USDT',
     blockchainToken: 'MATIC',
-    supportedCollaterals: ['USDT', 'USDC', 'WBTC', 'WETH', 'WMATIC'],
+    supportedCollaterals: ['USDC', 'USDT', 'WBTC', 'WMATIC', 'WETH'],
     arthTradingPairs: ['ARTHX', 'MAHA'],
     arthxTradingPairs: ['ARTH'],
     platform: 'sushiswap',
@@ -90,7 +90,7 @@ const configurations: { [env: string]: Configuration } = {
     blockchainToken: 'ETH',
     arthTradingPairs: ['ETH', 'MAHA'],
     arthxTradingPairs: ['ETH', 'ARTH'],
-    supportedCollaterals: ['USDT', 'USDC', 'WBTC', 'MATIC', 'WETH'],
+    supportedCollaterals: ['USDC', 'WBTC', 'MATIC', 'WETH'],
     platform: 'uniswap',
   },
 };

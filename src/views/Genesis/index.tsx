@@ -301,6 +301,7 @@ const Genesis = (props: WithSnackbarProps) => {
         }], // you must have access to the specified account
       })
         .then((result: any) => {
+          window.location.reload()
         })
         .catch((error: any) => {
           if (error.code === 4001) {
