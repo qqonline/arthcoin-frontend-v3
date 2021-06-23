@@ -162,9 +162,11 @@ const AppContent: React.FC = ({ children }) => {
   if (!core) return <div />;
   if (!account)
     return (
-      <div style={{ maxWidth: 500, margin: '100px auto' }}>
+      <div style={{ maxWidth: 500, margin: '100px auto', padding: 15, textAlign: 'center' }}>
         <ConnectionNotice />
         <Button onClick={() => connect('injected')}>Connect Wallet</Button>
+        <br />
+        <div>v3.0.0</div>
       </div>
     );
 
