@@ -46,6 +46,8 @@ const Providers: React.FC = ({ children }) => {
   const config = useConfig();
   const currentNetworkId = config.chainId;
 
+  console.log(currentNetworkId);
+
   return (
     <ThemeProvider theme={theme}>
       <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
