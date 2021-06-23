@@ -295,9 +295,6 @@ const Genesis = (props: WithSnackbarProps) => {
 
   const showDepositWETH = config.blockchainToken === currentCoin.replace('W', '');
 
-  // @ts-ignore
-  if (![1, 137].includes(Number(window.ethereum.networkVersion))) return <ConnectionNotice />;
-
   return (
     <>
       <CustomSuccessModal

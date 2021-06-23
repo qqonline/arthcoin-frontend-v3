@@ -46,6 +46,8 @@ const Providers: React.FC = ({ children }) => {
   const config = useConfig();
   const currentNetworkId = config.chainId;
 
+  console.log(currentNetworkId);
+
   return (
     <ThemeProvider theme={theme}>
       <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
@@ -150,17 +152,21 @@ const AppContent: React.FC = ({ children }) => {
 
   useEffect(() => {
     // @ts-ignore
-    window.ethereum.on('chainChanged', (chainId) => {
-      window.location.reload();
-    });
+    if (window.ethereum)
+      // @ts-ignore
+      window.ethereum.on('chainChanged', (chainId) => {
+        window.location.reload();
+      });
   }, []);
 
   if (!core) return <div />;
   if (!account)
     return (
-      <div style={{ maxWidth: 500, margin: '100px auto' }}>
+      <div style={{ maxWidth: 500, margin: '100px auto', padding: 15, textAlign: 'center' }}>
         <ConnectionNotice />
         <Button onClick={() => connect('injected')}>Connect Wallet</Button>
+        <br />
+        <div>v3.0.0</div>
       </div>
     );
 
