@@ -41,12 +41,11 @@ import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
 import useConfig from './hooks/useConfig';
 import Button from './components/Button';
+import LoadingPage from './components/LoadingPage';
 
 const Providers: React.FC = ({ children }) => {
   const config = useConfig();
   const currentNetworkId = config.chainId;
-
-  console.log(currentNetworkId);
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,12 +65,6 @@ const App: React.FC = () => {
   // Init animate on scroll
   useEffect(() => {
     AOS.init();
-
-    // @ts-ignore
-    window.ethereum.on('chainChanged', (chainId) => {
-      // handle the new network
-      console.log('change');
-    });
   }, []);
 
   const makeUnPassive = (ev: any) => {
@@ -84,7 +77,7 @@ const App: React.FC = () => {
   }, []);
 
   const config = useConfig();
-  if (!config) return <div>loading config</div>;
+  if (!config) return <LoadingPage/>;
 
   return (
     <Providers>
@@ -159,7 +152,7 @@ const AppContent: React.FC = ({ children }) => {
       });
   }, []);
 
-  if (!core) return <div />;
+  if (!core) return <LoadingPage/>;
   if (!account)
     return (
       <div style={{ maxWidth: 500, margin: '100px auto', padding: 15, textAlign: 'center' }}>
