@@ -46,8 +46,6 @@ const Providers: React.FC = ({ children }) => {
   const config = useConfig();
   const currentNetworkId = config.chainId;
 
-  console.log(currentNetworkId);
-
   return (
     <ThemeProvider theme={theme}>
       <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
@@ -155,7 +153,7 @@ const AppContent: React.FC = ({ children }) => {
     if (window.ethereum)
       // @ts-ignore
       window.ethereum.on('chainChanged', (chainId) => {
-        window.location.reload();
+        window.location.reload(true);
       });
   }, []);
 
