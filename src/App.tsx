@@ -150,9 +150,11 @@ const AppContent: React.FC = ({ children }) => {
 
   useEffect(() => {
     // @ts-ignore
-    window.ethereum.on('chainChanged', (chainId) => {
-      window.location.reload();
-    });
+    if (window.ethereum)
+      // @ts-ignore
+      window.ethereum.on('chainChanged', (chainId) => {
+        window.location.reload();
+      });
   }, []);
 
   if (!core) return <div />;
