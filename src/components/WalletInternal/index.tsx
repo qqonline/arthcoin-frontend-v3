@@ -25,20 +25,35 @@ interface IProps {
 
 export const WalletInternal = (props: IProps) => {
   const [ConfirmationModal, setConfirmationModal] = useState<boolean>(props.disconnect);
-  const isMobile = useMediaQuery({ 'maxWidth': '600px' });
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [toolTipText, settoolTipText] = useState<string>('copy');
 
   const core = useCore();
   const { account, reset } = useWallet();
-  const { isLoading: isARTHBalanceLoading, value: arthBalance } = useTokenBalanceOf(core.ARTH, account);
-  const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(core.MAHA, account);
-  const { isLoading: isARTHXBalanceLoading, value: arthxBalance } = useTokenBalanceOf(core.ARTHX, account);
-  
-  const onClose = () => {
-    setConfirmationModal(false)
-  }
+  const { isLoading: isARTHBalanceLoading, value: arthBalance } = useTokenBalanceOf(
+    core.ARTH,
+    account,
+  );
+  const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(
+    core.MAHA,
+    account,
+  );
+  const { isLoading: isARTHXBalanceLoading, value: arthxBalance } = useTokenBalanceOf(
+    core.ARTHX,
+    account,
+  );
 
-  const truncateMiddle = function (fullStr: string = '12345678922500025', strLen: number, separator?: string) {
+  console.log(account, 'fuck');
+
+  const onClose = () => {
+    setConfirmationModal(false);
+  };
+
+  const truncateMiddle = function (
+    fullStr: string = '12345678922500025',
+    strLen: number,
+    separator?: string,
+  ) {
     if (fullStr.length <= strLen) return fullStr;
 
     separator = separator || '...';
@@ -48,7 +63,9 @@ export const WalletInternal = (props: IProps) => {
       frontChars = Math.ceil(charsToShow / 3),
       backChars = Math.floor(charsToShow / 3);
 
-    return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
+    return (
+      fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars)
+    );
   };
 
   return (
@@ -64,16 +81,23 @@ export const WalletInternal = (props: IProps) => {
           title={`Disconnect Wallet`}
         >
           <div>
-            <PrimaryText>Are you sure you want to disconnect {truncateMiddle(account, 15)} ?</PrimaryText>
+            <PrimaryText>
+              Are you sure you want to disconnect {truncateMiddle(account, 15)} ?
+            </PrimaryText>
             <SecondaryText>{account}</SecondaryText>
-            <Grid container spacing={2} direction={isMobile ? 'column-reverse' : 'row'} style={{ marginTop: '32px' }}>
+            <Grid
+              container
+              spacing={2}
+              direction={isMobile ? 'column-reverse' : 'row'}
+              style={{ marginTop: '32px' }}
+            >
               <Grid item lg={6} md={6} sm={12} xs={12}>
                 <Button
                   variant={'transparent'}
                   text="Cancel"
                   size={'lg'}
                   onClick={() => {
-                      onClose();
+                    onClose();
                   }}
                 />
               </Grid>
@@ -82,12 +106,12 @@ export const WalletInternal = (props: IProps) => {
                   text={'Disconnect'}
                   size={'lg'}
                   onClick={async () => {
-                      // Disconnect wallet code here.
-                      onClose();
-                      localStorage.setItem('disconnectWallet', '1');
-                      reset();
-                      props.setWalletInfo(false);
-                      window.location.reload();
+                    // Disconnect wallet code here.
+                    onClose();
+                    localStorage.setItem('disconnectWallet', '1');
+                    reset();
+                    props.setWalletInfo(false);
+                    window.location.reload();
                   }}
                   tracking_id={'disconnect_wallet'}
                 />
@@ -97,14 +121,12 @@ export const WalletInternal = (props: IProps) => {
         </CustomModal>
 
         <StyledLink>
-          <span>
-            Your Account
-          </span>
+          <span>Your Account</span>
           <AccountDetails>
-              <IconButton>
-                <img alt='Metamask' height={32} src={metamask} />
-              </IconButton>
-              <span>{truncateMiddle(account, 15)}</span>
+            <IconButton>
+              <img alt="Metamask" height={32} src={metamask} />
+            </IconButton>
+            <span>{truncateMiddle(account, 15)}</span>
             <HtmlTooltip
               title={
                 <React.Fragment>
@@ -112,11 +134,13 @@ export const WalletInternal = (props: IProps) => {
                 </React.Fragment>
               }
             >
-              <IconButton onClick={() => {
-                navigator.clipboard.writeText(account.toString())
-                settoolTipText('Copied!')
-              }}>
-                <img alt='Copy' height={24} src={copy} />
+              <IconButton
+                onClick={() => {
+                  navigator.clipboard.writeText(account.toString());
+                  settoolTipText('Copied!');
+                }}
+              >
+                <img alt="Copy" height={24} src={copy} />
               </IconButton>
             </HtmlTooltip>
           </AccountDetails>
@@ -128,16 +152,15 @@ export const WalletInternal = (props: IProps) => {
               <TokenSymbol symbol={'MAHA'} size={44} />
             </IconButton>
             <span>
-                {
-                isMAHABalanceLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                  : Number(getDisplayBalance(mahaBalance)).toLocaleString()
-              } MAHA
+              {isMAHABalanceLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(mahaBalance)).toLocaleString()
+              )}{' '}
+              MAHA
             </span>
           </RowName>
-          <DollarValue>
-            {/* ${props?.walletData?.mahaDollars} */}
-          </DollarValue>
+          <DollarValue>{/* ${props?.walletData?.mahaDollars} */}</DollarValue>
         </StyledRows>
 
         <StyledRows>
@@ -146,16 +169,15 @@ export const WalletInternal = (props: IProps) => {
               <TokenSymbol symbol={'ARTH'} size={44} />
             </IconButton>
             <span>
-              {
-                isARTHBalanceLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                  : Number(getDisplayBalance(arthBalance)).toLocaleString()
-              } ARTH
+              {isARTHBalanceLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(arthBalance)).toLocaleString()
+              )}{' '}
+              ARTH
             </span>
           </RowName>
-          <DollarValue>
-            {/* ${props?.walletData?.arthDollars} */}
-          </DollarValue>
+          <DollarValue>{/* ${props?.walletData?.arthDollars} */}</DollarValue>
         </StyledRows>
 
         <StyledRows>
@@ -164,16 +186,15 @@ export const WalletInternal = (props: IProps) => {
               <TokenSymbol symbol={'ARTHX'} size={44} />
             </IconButton>
             <span>
-              {
-                isARTHXBalanceLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
-                  : Number(getDisplayBalance(arthxBalance)).toLocaleString()
-              } ARTHX
+              {isARTHXBalanceLoading ? (
+                <Loader color={'#ffffff'} loading={true} size={8} margin={2} />
+              ) : (
+                Number(getDisplayBalance(arthxBalance)).toLocaleString()
+              )}{' '}
+              ARTHX
             </span>
           </RowName>
-          <DollarValue>
-            {/* ${props?.walletData?.arthxDollars} */}
-          </DollarValue>
+          <DollarValue>{/* ${props?.walletData?.arthxDollars} */}</DollarValue>
         </StyledRows>
 
         <StyledRows style={{ marginBottom: -5 }}>
@@ -181,14 +202,14 @@ export const WalletInternal = (props: IProps) => {
             variant={'transparent'}
             text={'Disconnect'}
             onClick={async () => {
-                setConfirmationModal(true)
+              setConfirmationModal(true);
             }}
           />
         </StyledRows>
       </Container>
     </>
-  )
-}
+  );
+};
 
 const StyledLink = styled.div`
   height: 80px;
@@ -209,7 +230,7 @@ const StyledLink = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 `;
 

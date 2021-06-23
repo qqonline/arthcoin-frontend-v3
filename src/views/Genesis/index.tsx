@@ -21,6 +21,7 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { useEffect, useMemo, useState } from 'react';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 
+import ConnectionNotice from './ConnectionNotice';
 import calendar from '../../assets/svg/calendar.svg';
 import arrowDown from '../../assets/svg/arrowDown.svg';
 import TicketGreen from '../../assets/svg/TicketGreen.svg';
@@ -163,13 +164,30 @@ const Genesis = (props: WithSnackbarProps) => {
   const collateralGenesis = core.getCollatearalGenesis(selectedCollateral);
 
   const { isLoading: isARTHXPriceLoading, value: arthxPrice } = useARTHXOraclePrice();
-  const { isLoading: isRecollateralizationDiscountLoading, value: recollateralizationDiscount } = useRecollateralizationDiscount();
+  const {
+    isLoading: isRecollateralizationDiscountLoading,
+    value: recollateralizationDiscount,
+  } = useRecollateralizationDiscount();
   const { isLoading: isARTHBalanceLoading, value: arthBalance } = useTokenBalance(core.ARTH);
-  const { isLoading: isARTHCirculatingSupplyLoading, value: arthCirculatingSupply } = useARTHCirculatingSupply();
-  const { isLoading: isCollateralBalanceLoading, value: collateralBalnace } = useTokenBalance(core.tokens[selectedCollateral]);
-  const { isLoading: isCommitedCollateralLoading, value: committedCollateral } = useGlobalCollateralValue();
-  const { isLoading: isPercentageCompletedLoading, value: percentageCompleted } = usePercentageCompleted();
-  const { isLoading: isCollateralPriceLoading, value: collateralGMUPrice } = useCollateralPoolPrice(selectedCollateral);
+  const {
+    isLoading: isARTHCirculatingSupplyLoading,
+    value: arthCirculatingSupply,
+  } = useARTHCirculatingSupply();
+  const { isLoading: isCollateralBalanceLoading, value: collateralBalnace } = useTokenBalance(
+    core.tokens[selectedCollateral],
+  );
+  const {
+    isLoading: isCommitedCollateralLoading,
+    value: committedCollateral,
+  } = useGlobalCollateralValue();
+  const {
+    isLoading: isPercentageCompletedLoading,
+    value: percentageCompleted,
+  } = usePercentageCompleted();
+  const {
+    isLoading: isCollateralPriceLoading,
+    value: collateralGMUPrice,
+  } = useCollateralPoolPrice(selectedCollateral);
 
   WalletAutoConnect();
 
@@ -185,7 +203,7 @@ const Genesis = (props: WithSnackbarProps) => {
       setLink(makeUrls(event).google);
     };
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     onClick();
   }, []);
 
@@ -275,44 +293,7 @@ const Genesis = (props: WithSnackbarProps) => {
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
 
-  const showDepositWETH = config.blockchainToken === currentCoin.replace('W', '')
-
-  const addMaticToMetamask = () => {
-    // @ts-ignore
-    if (window.ethereum) {
-      // @ts-ignore
-      window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          "chainId": "0x89",
-          "chainName": "Matic Network",
-          "rpcUrls": ["https://rpc-mainnet.maticvigil.com/"],
-          "iconUrls": [
-            "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png"
-          ],
-          "blockExplorerUrls": [
-            "https://polygonscan.com/"
-          ],
-          "nativeCurrency": {
-            "name": "Matic Token",
-            "symbol": "MATIC",
-            "decimals": 18
-          }
-        }], // you must have access to the specified account
-      })
-        .then((result: any) => {
-          window.location.reload()
-        })
-        .catch((error: any) => {
-          if (error.code === 4001) {
-            // EIP-1193 userRejectedRequest error
-            console.log('We can encrypt anything without the key.');
-          } else {
-            console.error(error);
-          }
-        });
-    }
-  }
+  const showDepositWETH = config.blockchainToken === currentCoin.replace('W', '');
 
   return (
     <>
@@ -323,9 +304,9 @@ const Genesis = (props: WithSnackbarProps) => {
         subsubTitle={
           'Your transaction is now being mined on the blockchain. You should consider adding collateral to earn NFT rewards.'
         }
-      // buttonText={'Stake your ARTHX'}
-      // buttonType={'default'}
-      // buttonTo={'/farming'}
+        // buttonText={'Stake your ARTHX'}
+        // buttonType={'default'}
+        // buttonTo={'/farming'}
       />
       <CustomModal
         closeButton
@@ -378,8 +359,14 @@ const Genesis = (props: WithSnackbarProps) => {
                   };
                   props.enqueueSnackbar('timepass', options);
                 }}
-                tracking_id={type === 'Commit' ? 'cancel_commit_collateral' : 'cancel_swap_arth'}
-                value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
+                tracking_id={
+                  type === 'Commit' ? 'cancel_commit_collateral' : 'cancel_swap_arth'
+                }
+                value={
+                  type === 'Commit'
+                    ? { value: collateralValue, collateral: selectedCollateral }
+                    : { value: arthValue, collateral: selectedCollateral }
+                }
               />
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -397,8 +384,14 @@ const Genesis = (props: WithSnackbarProps) => {
                   if (type === 'Commit') recollateralize(() => setOpenModal(2));
                   else redeemARTH(() => setOpenModal(2));
                 }}
-                tracking_id={type === 'Commit' ? 'confirm_commit_collateral' : 'confirm_swap_arth'}
-                value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
+                tracking_id={
+                  type === 'Commit' ? 'confirm_commit_collateral' : 'confirm_swap_arth'
+                }
+                value={
+                  type === 'Commit'
+                    ? { value: collateralValue, collateral: selectedCollateral }
+                    : { value: arthValue, collateral: selectedCollateral }
+                }
               />
             </Grid>
           </Grid>
@@ -464,16 +457,8 @@ const Genesis = (props: WithSnackbarProps) => {
         )}
 
         <br />
-        <ConnectionNote>
-          To participate in the Genesis, you must either be connected to the Ethereum network or
-          to the Matic/Polygon network.
-          <br />
-          <AddPolygon onClick={addMaticToMetamask}>
-            Click here to add Polygon to your Metamask
-          </AddPolygon>
-        </ConnectionNote>
-        {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
 
+        {/* <ConnectionNote>Connect/Switch network popup here</ConnectionNote> */}
       </div>
       <Container size="lg">
         <Grid container style={{}} spacing={2}>
@@ -497,7 +482,9 @@ const Genesis = (props: WithSnackbarProps) => {
                 <OneLineInputwomargin>
                   <TextForInfoTitle>
                     Committed Collateral
-                    <CustomToolTip toolTipText={'$GMU worth of collateral currently in the protocol.'} />
+                    <CustomToolTip
+                      toolTipText={'$GMU worth of collateral currently in the protocol.'}
+                    />
                   </TextForInfoTitle>
                   <BeforeChipDark>
                     {isCommitedCollateralLoading ? (
@@ -515,7 +502,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   <TabContainer
                     onClick={() => {
                       if (type !== 'Commit') {
-                        Mixpanel.track(`buttonClick:commitCollateral_tab`)
+                        Mixpanel.track(`buttonClick:commitCollateral_tab`);
                         setType('Commit');
                       }
                     }}
@@ -531,7 +518,7 @@ const Genesis = (props: WithSnackbarProps) => {
                   <TabContainer
                     onClick={() => {
                       if (type !== 'Swap') {
-                        Mixpanel.track(`buttonClick:swap_tab`)
+                        Mixpanel.track(`buttonClick:swap_tab`);
                         setType('Swap');
                       }
                     }}
@@ -654,10 +641,13 @@ const Genesis = (props: WithSnackbarProps) => {
                 </div>
                 {type === 'Commit' && (
                   <CustomBadgeAlert>
-                    <Logo src={TicketGreen} alt='TicketBg' />
-                    <Text>You will get {
-                      Number(getDisplayBalanceToken(lotteryAmount, currentToken, 0)).toLocaleString()
-                    } lottery ticket(s) to win NFT prize(s).
+                    <Logo src={TicketGreen} alt="TicketBg" />
+                    <Text>
+                      You will get{' '}
+                      {Number(
+                        getDisplayBalanceToken(lotteryAmount, currentToken, 0),
+                      ).toLocaleString()}{' '}
+                      lottery ticket(s) to win NFT prize(s).
                     </Text>
                   </CustomBadgeAlert>
                 )}
@@ -673,19 +663,17 @@ const Genesis = (props: WithSnackbarProps) => {
                   />
                 ) : (
                   <>
-                    {
-                      showDepositWETH && (
-                        <>
-                          <Button
-                            text={`Convert your ${config.blockchainToken} into ${currentCoin}`}
-                            size={'lg'}
-                            onClick={() => setdepositModal(true)}
-                            tracking_id={'deposit_weth'}
-                          />
-                          <br />
-                        </>
-                      )
-                    }
+                    {showDepositWETH && (
+                      <>
+                        <Button
+                          text={`Convert your ${config.blockchainToken} into ${currentCoin}`}
+                          size={'lg'}
+                          onClick={() => setdepositModal(true)}
+                          tracking_id={'deposit_weth'}
+                        />
+                        <br />
+                      </>
+                    )}
                     {!isApproved ? (
                       <Button
                         text={!isApproving ? `Approve ${currentCoin}` : 'Approving...'}
@@ -711,14 +699,18 @@ const Genesis = (props: WithSnackbarProps) => {
                           percentageCompleted.gt(BigNumber.from(10).pow(18)) ||
                           isInputFieldError ||
                           (type === 'Commit'
-                            ? !Number(collateralValue) || percentageCompleted.gt(BigNumber.from(10).pow(18))
-                            : !Number(arthValue)
-                          ) ||
+                            ? !Number(collateralValue) ||
+                              percentageCompleted.gt(BigNumber.from(10).pow(18))
+                            : !Number(arthValue)) ||
                           !isApproved
                         }
                         onClick={() => setOpenModal(1)}
                         tracking_id={type === 'Commit' ? 'commit_collateral' : 'swap_arth'}
-                        value={type === 'Commit' ? { value: collateralValue, collateral: selectedCollateral } : { value: arthValue, collateral: selectedCollateral }}
+                        value={
+                          type === 'Commit'
+                            ? { value: collateralValue, collateral: selectedCollateral }
+                            : { value: arthValue, collateral: selectedCollateral }
+                        }
                       />
                     )}
                   </>
@@ -733,7 +725,13 @@ const Genesis = (props: WithSnackbarProps) => {
                 Genesis participants can issue lottery tickets to win exciting MAHA Prizes
               </LotteryBoxText>
               <LotteryBoxAction>
-                <Button text={'Learn More'} size={'lg'} variant={'transparent'} to={'/lottery'} tracking_id={'learn_more_genesis_to_lottery'} />
+                <Button
+                  text={'Learn More'}
+                  size={'lg'}
+                  variant={'transparent'}
+                  to={'/lottery'}
+                  tracking_id={'learn_more_genesis_to_lottery'}
+                />
               </LotteryBoxAction>
             </LotteryBox>
           </Grid>
@@ -741,25 +739,23 @@ const Genesis = (props: WithSnackbarProps) => {
         </Grid>
       </Container>
 
-      {depositModal && <DepositModal
-        onCancel={() => setdepositModal(false)}
-        onDeposit={() => {
-        }}
-      />}
+      {depositModal && (
+        <DepositModal onCancel={() => setdepositModal(false)} onDeposit={() => {}} />
+      )}
 
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTHX successful!'}
-      // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
-      // subTitleLink={'/#/farming'}
-      // buttonText={'Stake your ARTHX'}
-      // buttonType={'default'}
-      // buttonHref={'/#/farming'}
+        // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
+        // subTitleLink={'/#/farming'}
+        // buttonText={'Stake your ARTHX'}
+        // buttonType={'default'}
+        // buttonHref={'/#/farming'}
       />
     </>
   );
-}
+};
 
 const CustomBadgeAlert = styled.div`
   border: 1px solid #20c974;
@@ -1049,7 +1045,7 @@ const AddPolygon = styled.p`
   font-size: 16px;
   line-height: 150%;
   text-align: center;
-  color: #FF7F57;
+  color: #ff7f57;
   cursor: pointer;
 `;
 
