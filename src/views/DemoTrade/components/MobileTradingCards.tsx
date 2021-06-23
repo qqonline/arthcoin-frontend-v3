@@ -126,7 +126,7 @@ export default (props: IProps) => {
               <div style={{ marginTop: 15 }}>
                 <Button
                   size={'sm'}
-                  text={'Trade'}
+                  text={'DemoTrade'}
                   onClick={() => {
                     window.open(tradelink, '_blank');
                   }}

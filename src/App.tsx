@@ -29,9 +29,9 @@ import Page from './components/Page';
 import Genesis from './views/Genesis';
 import Farming from './views/Farming';
 import Lottery from './views/Lottery';
+import Trade from './views/Trade';
 import TopBar from './components/TopBar';
 import Popups from './components/Popups';
-import TemporaryTrade from './views/Trade';
 
 import store from './state';
 import config from './config';
@@ -92,7 +92,7 @@ const App: React.FC = () => {
               <Stats />
             </Page>
           </Route>
-          {/* <Route path="/farming">
+           <Route path="/farming">
             <Page availableNetworks={[137, 1337]}>
               <Farming />
             </Page>
@@ -104,9 +104,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/trade">
             <Page availableNetworks={[137, 1337]}>
-              <TemporaryTrade />
+              <Trade />
             </Page>
-          </Route> */}
+          </Route>
           <Route path="/pools">
             <Page availableNetworks={[137, 1337]}>
               <Pools />
