@@ -9,10 +9,7 @@ import {
   Route,
   Redirect,
   Switch,
-  useLocation,
-  useHistory,
 } from 'react-router-dom';
-import ConnectionNotice from './views/Genesis/ConnectionNotice';
 
 import './App.css';
 import './index.css';
@@ -31,23 +28,17 @@ import Farming from './views/Farming';
 import Lottery from './views/Lottery';
 import TopBar from './components/TopBar';
 import Popups from './components/Popups';
-import TemporaryTrade from './views/Trade';
 
 import store from './state';
-import config from './config';
 import useCore from './hooks/useCore';
 import Updaters from './state/Updaters';
 import ModalsProvider from './contexts/Modals';
 import BasisCashProvider from './contexts/BasisCashProvider';
-import useConfig from './hooks/useConfig';
+import config from './config';
 import Button from './components/Button';
 
 const Providers: React.FC = ({ children }) => {
-  const config = useConfig();
   const currentNetworkId = config.chainId;
-
-  console.log(currentNetworkId);
-
   return (
     <ThemeProvider theme={theme}>
       <UseWalletProvider chainId={currentNetworkId} connectors={{ injected: {} }}>
@@ -83,8 +74,6 @@ const App: React.FC = () => {
     return () => document.body.removeEventListener('touchmove', makeUnPassive);
   }, []);
 
-  const config = useConfig();
-  if (!config) return <div>loading config</div>;
 
   return (
     <Providers>
@@ -160,15 +149,6 @@ const AppContent: React.FC = ({ children }) => {
   }, []);
 
   if (!core) return <div />;
-  if (!account)
-    return (
-      <div style={{ maxWidth: 500, margin: '100px auto', padding: 15, textAlign: 'center' }}>
-        <ConnectionNotice />
-        <Button onClick={() => connect('injected')}>Connect Wallet</Button>
-        <br />
-        <div>v3.0.0</div>
-      </div>
-    );
 
   return (
     <ModalsProvider>

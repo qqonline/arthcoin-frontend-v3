@@ -21,41 +21,6 @@ import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { useEffect, useMemo, useState } from 'react';
 import makeUrls, { TCalendarEvent } from 'add-event-to-calendar';
 
-import calendar from '../../assets/svg/calendar.svg';
-import arrowDown from '../../assets/svg/arrowDown.svg';
-import TicketGreen from '../../assets/svg/TicketGreen.svg';
-
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import TransparentInfoDiv from './components/InfoDiv';
-import CustomModal from '../../components/CustomModal';
-import { CustomSnack } from '../../components/SnackBar';
-import prettyNumber from '../../components/PrettyNumber';
-import UnderstandMore from './components/UnderstandMore';
-import CustomToolTip from '../../components/CustomTooltip';
-import SlippageContainer from '../../components/SlippageContainer';
-import CustomSuccessModal from '../../components/CustomSuccesModal';
-import { WalletAutoConnect } from '../../components/WalletAutoConnect';
-import CustomInputContainer from '../../components/CustomInputContainer';
-import { ValidateNumber } from '../../components/CustomInputContainer/RegexValidation';
-
-import useCore from '../../hooks/useCore';
-import useTokenDecimals from '../../hooks/useTokenDecimals';
-import { getDisplayBalance, getDisplayBalanceToken } from '../../utils/formatBalance';
-import useTokenBalance from '../../hooks/state/useTokenBalance';
-import useApprove, { ApprovalState } from '../../hooks/callbacks/useApprove';
-import useARTHXOraclePrice from '../../hooks/state/controller/useARTHXPrice';
-import useGlobalCollateralValue from '../../hooks/state/useGlobalCollateralValue';
-import useARTHCirculatingSupply from '../../hooks/state/useARTHCirculatingSupply';
-import useCollateralPoolPrice from '../../hooks/state/pools/useCollateralPoolPrice';
-import usePerformRecollateralize from '../../hooks/callbacks/performRecollateralize';
-import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
-import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
-import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import useConfig from '../../hooks/useConfig';
-import DepositModal from './components/DepositModal';
-import { Mixpanel } from '../../analytics/Mixpanel';
-
 withStyles({
   root: {
     color: 'rgba(255, 255, 255, 0.32)',

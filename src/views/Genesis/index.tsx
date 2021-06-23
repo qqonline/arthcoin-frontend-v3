@@ -53,7 +53,7 @@ import usePerformRecollateralize from '../../hooks/callbacks/performRecollateral
 import usePercentageCompleted from '../../hooks/state/controller/usePercentageCompleted';
 import useRedeemAlgorithmicARTH from '../../hooks/callbacks/pools/useRedeemAlgorithmicARTH';
 import useRecollateralizationDiscount from '../../hooks/state/controller/useRecollateralizationDiscount';
-import useConfig from '../../hooks/useConfig';
+import config from '../../config';
 import DepositModal from './components/DepositModal';
 import { Mixpanel } from '../../analytics/Mixpanel';
 
@@ -207,8 +207,6 @@ const Genesis = (props: WithSnackbarProps) => {
     onClick();
   }, []);
 
-  const config = useConfig();
-
   const calcDiscountOnCommit = (amount: BigNumber, discount: BigNumber) =>
     amount.mul(discount).div(1e6);
 
@@ -304,9 +302,9 @@ const Genesis = (props: WithSnackbarProps) => {
         subsubTitle={
           'Your transaction is now being mined on the blockchain. You should consider adding collateral to earn NFT rewards.'
         }
-        // buttonText={'Stake your ARTHX'}
-        // buttonType={'default'}
-        // buttonTo={'/farming'}
+      // buttonText={'Stake your ARTHX'}
+      // buttonType={'default'}
+      // buttonTo={'/farming'}
       />
       <CustomModal
         closeButton
@@ -700,7 +698,7 @@ const Genesis = (props: WithSnackbarProps) => {
                           isInputFieldError ||
                           (type === 'Commit'
                             ? !Number(collateralValue) ||
-                              percentageCompleted.gt(BigNumber.from(10).pow(18))
+                            percentageCompleted.gt(BigNumber.from(10).pow(18))
                             : !Number(arthValue)) ||
                           !isApproved
                         }
@@ -740,18 +738,18 @@ const Genesis = (props: WithSnackbarProps) => {
       </Container>
 
       {depositModal && (
-        <DepositModal onCancel={() => setdepositModal(false)} onDeposit={() => {}} />
+        <DepositModal onCancel={() => setdepositModal(false)} onDeposit={() => { }} />
       )}
 
       <CustomSuccessModal
         modalOpen={successModal}
         setModalOpen={() => setSuccessModal(false)}
         title={'Minting ARTHX successful!'}
-        // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
-        // subTitleLink={'/#/farming'}
-        // buttonText={'Stake your ARTHX'}
-        // buttonType={'default'}
-        // buttonHref={'/#/farming'}
+      // subsubTitle={'You should consider stake your ARTHX to earn higher APY'}
+      // subTitleLink={'/#/farming'}
+      // buttonText={'Stake your ARTHX'}
+      // buttonType={'default'}
+      // buttonHref={'/#/farming'}
       />
     </>
   );
