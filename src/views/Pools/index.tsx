@@ -115,6 +115,7 @@ const Boardrooms = (props: WithSnackbarProps) => {
       </>
     );
   };
+
   return (
     <>
       <GradientDiv />
